@@ -1,0 +1,1 @@
+Close exactly both printed adaptive performance displays on the already constructed causal run, retaining explicit source convexity and lawful canonical instantiations. Preserve the separate required min/infimum benchmark and all chapter boundaries.

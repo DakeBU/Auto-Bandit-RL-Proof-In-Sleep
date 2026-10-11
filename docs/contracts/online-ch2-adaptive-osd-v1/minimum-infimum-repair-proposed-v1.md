@@ -1,0 +1,7 @@
+# Separate proposed repair: attainment at degenerate benchmark coefficients
+
+Pinned source is unchanged. Theorem4.14 printed40/PDF52 displays D sqrt(2S)=sqrt2 min_(eta>0)[D²/(2eta)+eta S/2], S=sum selected norm². Proposal only, not accepted: interpret the displayed optimum as infimum for all D,S>=0, retaining actual attained minimum when D,S>0, and distinguish the bothzero case.
+
+Audit: D1,S0 gives B(eta)=1/(2eta)>0, B(2eta)<B(eta), tending toward0 with no positive minimizer. D0,S1 gives B(eta)=eta/2>0, B(eta/2)<B(eta), also infimum0 unattained. D=S0 gives constant0, attained at every eta>0. D,S>0 gives unique eta=D/sqrtS, valueD sqrtS. These are compatible source situations: constant losses on a nontrivial feasible domain have S0,D>0; a singleton feasible set can have legal nonzero ambient affine supports and D0,S>0. Source skips zero supports, not the entire boundary. Thus adding D>0,S>0 to the whole regret theorem would weaken its stated regimes and is not proposed.
+
+Exact future Lean benchmark should reuse OnlineOptimalStep.upperBound with A=D²,B=S and existing lower_bound/positive argmin/zero decrease/zero_coefficients; prove IsGLB of positive-eta image for all D,S>=0, plus exact attainment classification and source factor sqrt2. This benchmark is algebra on actual energy S when linked, not an algorithm achieving every future-fixed optimum. It requires distinct repair review and exact header freeze before new production proof; no existing accepted contract or original source is changed by this proposal.

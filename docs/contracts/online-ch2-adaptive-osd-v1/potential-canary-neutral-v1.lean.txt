@@ -1,0 +1,45 @@
+import Mathlib
+
+noncomputable section
+open Finset
+namespace Neutral
+
+def P : ℕ → ℝ
+  | 0 => 3
+  | 1 => 1
+  | 2 => 3
+  | 3 => 2
+  | _ => 1
+
+def W : ℕ → ℝ
+  | 0 => 0
+  | 1 => 1
+  | 2 => 1
+  | _ => 2
+
+def Q : ℕ → ℝ
+  | 0 => -3
+  | 1 => -2
+  | 2 => -4
+  | _ => 7
+
+def Z : ℕ → ℝ
+  | 0 => 0
+  | _ => 5
+
+theorem certificate_one :
+    (∑ t ∈ range 4, (P t - P (t + 1)) * W t) ≤ 4 * W 3 - P 4 * W 3 ∧
+    (∑ t ∈ range 4, (P t - P (t + 1)) * W t) = 1 ∧
+    P 4 * W 3 = 2 ∧
+    (∑ t ∈ range 4, (P t - P (t + 1)) * W t) < 4 * W 3 - P 4 * W 3 ∧
+    W 0 = 0 ∧ W 1 = W 2 ∧ P 1 < P 2
+
+theorem certificate_two :
+    (∑ t ∈ range 3, (Q t - Q (t + 1)) * (0 : ℝ)) ≤
+      (-2 : ℝ) * 0 - Q 3 * 0 ∧
+    (∑ t ∈ range 1, (Z t - Z (t + 1)) * (2 : ℝ)) ≤
+      (1 : ℝ) * 2 - Z 1 * 2 ∧
+    (∑ t ∈ range 1, (Z t - Z (t + 1)) * (2 : ℝ)) = -10 ∧
+    (1 : ℝ) * 2 - Z 1 * 2 = -8
+
+end Neutral

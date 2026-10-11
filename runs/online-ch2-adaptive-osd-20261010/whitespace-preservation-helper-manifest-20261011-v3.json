@@ -1,0 +1,42 @@
+{
+  "mode": "prepared-only-no-application",
+  "plan": "runs/online-ch2-adaptive-osd-20261010/whitespace-preservation-proposal-20261011-v3.json",
+  "helper": "runs/online-ch2-adaptive-osd-20261010/apply-whitespace-preservation-prepared-20261011-v4.py",
+  "inputs": [
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/whitespace-preservation-proposal-20261011-v3.json",
+      "sha256": "127e3ad04c16cb09b6aa2cc814b31cfd0a7754e918e2efbdb517fca78f33e99d"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/apply-whitespace-preservation-prepared-20261011-v4.py",
+      "sha256": "79da064a13bdcaa28605b9efe2293bfefb707fc3f280a06f24e916088939fdf3"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/common.py",
+      "sha256": "f426be53126c83b41c92c20b7238b3c993ae2d73c6279a492df50559dfbc0be0"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/whitespace-exact-archival-diagnostics-20261011-v1.bin",
+      "sha256": "5438aab9bbb5470e5674ac66d863ad54b0b756ffce444df12e6ff52f183fe88a"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/whitespace-proposal-snapshots-20261011-v3/RUN-BEFORE.gitattributes",
+      "sha256": "aa6e3541e9a3a4c2be9a2d1238df4e61285669cb3b8c63e4437cab733e033ef6"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/whitespace-proposal-snapshots-20261011-v3/RUN-AFTER.gitattributes",
+      "sha256": "24eaf6a4b3b39a62326595c54c41df115b05dabe837778390b687eb2d57b6208"
+    }
+  ],
+  "retained_unusable_helper": "apply-whitespace-preservation-prepared-20261011-v3.py references absent common_raw_sha256 and is superseded by v4 with literal common hash",
+  "final_stage_requirement": "Parent stages all intended files, then --verify-final-staged. Checks OWN index/raw plus untracked set before creating two new receipts; parent must stage those receipts and rerun final commit guard. No staging by helper.",
+  "review_fields": [
+    "verdict=accepted",
+    "blocking_repairs=[]",
+    "approved_plan_raw_sha256",
+    "approved_helper_raw_sha256",
+    "ordinary_archival_waiver_approved=true"
+  ],
+  "expected_actual_diffcheck_exit": 2,
+  "ordinary_diagnostics": 7
+}

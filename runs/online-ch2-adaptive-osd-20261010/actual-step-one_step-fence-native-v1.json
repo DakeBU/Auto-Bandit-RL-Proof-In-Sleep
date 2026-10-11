@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "one_step",
+  "file": "BanditRLProof/OnlineAdaptiveOSD.lean",
+  "statement": "theorem one_step (V : Domain (E := E)) (α D : ℝ) (hα : 0 < α) (hD : 0 < D) (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hg : selected V α D loss x₁ p t ∈ SourceSubdifferential (loss t) (output V α D loss x₁ p t)) (u : E) (hu : u ∈ V.carrier) : (loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal ≤ (‖output V α D loss x₁ p t - u‖ ^ 2 - ‖output V α D loss x₁ p (t + 1) - u‖ ^ 2) * Real.sqrt (energy V α D loss x₁ p (t + 1)) / (2 * α * D) + α * D / 2 * (‖selected V α D loss x₁ p t‖ ^ 2 / Real.sqrt (energy V α D loss x₁ p (t + 1)))",
+  "statement_hash": "459a467438101b2672c2dd5fa987376dd75f8e3c5038914980f107018b90fcf5",
+  "source_assumptions": [],
+  "created_at": "2026-10-10T02:06:49+00:00"
+}

@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": "Mathlib.Finset.sum_range_by_parts",
+      "status": "API-read-and-typed",
+      "dependencies": []
+    },
+    {
+      "id": "potential",
+      "status": "draft",
+      "dependencies": [
+        "Mathlib.Finset.sum_range_by_parts"
+      ]
+    },
+    {
+      "id": "causal-history-energy-zero-skip",
+      "status": "required-draft",
+      "dependencies": [
+        "shared projection",
+        "SupportPolicy"
+      ]
+    },
+    {
+      "id": "same-trajectory-one-step",
+      "status": "required-draft",
+      "dependencies": [
+        "causal-history-energy-zero-skip",
+        "lemma_2_31"
+      ]
+    },
+    {
+      "id": "same-trajectory-adaptive-regret",
+      "status": "required-draft",
+      "dependencies": [
+        "potential",
+        "same-trajectory-one-step",
+        "OnlineAdaptiveEnergy.source_energy_term_bound"
+      ]
+    },
+    {
+      "id": "Eq4.4-and-Theorem4.14-bound",
+      "status": "required-draft",
+      "dependencies": [
+        "same-trajectory-adaptive-regret"
+      ]
+    },
+    {
+      "id": "source-min-infimum-repair",
+      "status": "required-separate-review",
+      "dependencies": []
+    }
+  ],
+  "source_claim_denominator": null,
+  "chapter_complete": false,
+  "whole_Goal": "active"
+}

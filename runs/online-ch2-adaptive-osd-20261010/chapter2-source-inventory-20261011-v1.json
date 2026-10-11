@@ -1,0 +1,2000 @@
+{
+  "schema_version": 1,
+  "actor": "/root/adaptive_decoder",
+  "role": "source inventory phase separate from completed blind canary decoding",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": null,
+  "source": {
+    "path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256_before": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "sha256_after": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "unchanged": true,
+    "version": "arXiv1912.13213v10",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "chapter": 2,
+    "printed_pages": [
+      8,
+      23
+    ],
+    "pdf_pages_1based": [
+      20,
+      35
+    ],
+    "main_text_end": "Section2.4 before Section2.5 exercises on printed23/PDF35"
+  },
+  "extraction": {
+    "tool": "pypdf",
+    "normalization": "extract_text then CRLF to LF, UTF-8 hashing",
+    "page_text_sha256": {
+      "20": "de7e87a2145f38d2b096e40bd76249a7996b112820ca2363edf801982936f5a7",
+      "21": "5ee8163a999f3dcf92544df9f77338a23e636173d093136273d10ba693816902",
+      "22": "c4a8a87ae3d011b8e23c734ca645a161735084a41b028bde0c1d04152c7ab4a2",
+      "23": "f763ae8608f89d4e4c4856e7be701f877d4168804649cc54158baefa441be627",
+      "24": "a80e5c0474df4c2c153786cb0bc4f69602e48e21874917d726d933964103d22a",
+      "25": "3ad18f76e0a1973b18682c5cc00139f3ab2ee470f6d3eaf0f5bd859f21a73d60",
+      "26": "eac8e5e65f9b5aec237ad52ad7169f93c47d75ed8b1002f4b4d261a973c3ebb7",
+      "27": "58d92553fab2263042b09fc29b3175d989cc324d326c5a512b2b59f397326220",
+      "28": "fc5f1c36f2124f1a4c04c2b56159420778760dc35f58924907058720a09214f5",
+      "29": "38f58d214ab8616aef7b7147338f7fd91ecdcf159b5286ea47092cf4ece81c46",
+      "30": "669b3f91ea4bda1846f3fb238276bc15d1f337a66b0aef3b1a51a747b6a2317d",
+      "31": "548bb33ca21e813960b1a93afd0cfb17c55da5695377fe6e9b10722f2562b39a",
+      "32": "9d84074c879672a1d98ff97fc4687de5c2e322c1f7dd908ee116a79b2e74a47d",
+      "33": "49b4535d054929f5ca79b643a28e6d2d691a88e73867319b1df55a0d3ca28b0a",
+      "34": "99c43c39e0c96e905d92cdcea129df41dd1e735ecca2eb24dc936d443c962a21",
+      "35": "61c8a8550a8200629e78803cc66df89f503b6c5130a6723a82ebbb331834571f"
+    },
+    "excerpt_rule": "450 characters starting at exact source_anchor in joined indicated pages; snippet is locator, not full contract"
+  },
+  "visual_inspection": {
+    "pdf_pages_1based": [
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      35
+    ],
+    "purpose": "fractions, constants, branch/domain qualifications and exercise separation",
+    "render_directory": "tmp/chapter2-source-inventory-20261011-v1"
+  },
+  "repository_snapshot": {
+    "path": "E:/ABRL/worktrees/research-online-book",
+    "branch": "codex/research-online-ch2-adaptive-osd",
+    "head": "0283616c8439b09fc49d5e35373ff74aa11371cc",
+    "dirty": true,
+    "changes_preserved": true
+  },
+  "inventory_status": "candidate; independent review pending; not frozen or complete",
+  "numbered_navigation_entries": 32,
+  "algorithm_boxes": 2,
+  "inventory_rows": 73,
+  "independent_mandatory_obligation_total": null,
+  "chapter_complete": false,
+  "source_inventory_accepted": false,
+  "proofs_or_metadata_modified": false,
+  "compiler_run": false,
+  "rows": [
+    {
+      "source_id": "Remark 2.1",
+      "kind": "Remark",
+      "printed_pages": [
+        9
+      ],
+      "pdf_pages_1based": [
+        21
+      ],
+      "source_anchor": "Remark 2.1",
+      "source_excerpt": "Remark 2.1I will now introduce some math concepts. If you have a background in Con-\nvex Analysis, this will be easy stuff for you. On the other hand, if you have never seen these\nthings before, they might look a bit scary. Let me tell you the right way to look at them:these\nare tools that will make our job easier. Without these tools, it would be basically impossible\nto design any online learning algorithm. And, no, it is not enough to test the a",
+      "source_excerpt_sha256": "fd28979492085b8ec6750f6c3a11b165df14c25ba4afca71fc9faf385ee39c0c",
+      "mathematical_statement": "Pedagogical motivation for convex analysis and proofs for adversarial guarantees.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": false,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Preserved navigation; no standalone theorem claim.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Definition 2.2",
+      "kind": "Definition",
+      "printed_pages": [
+        9
+      ],
+      "pdf_pages_1based": [
+        21
+      ],
+      "source_anchor": "Definition 2.2",
+      "source_excerpt": "Definition 2.2V ⊆R d isconvexif for anyx,y∈ Vand anyλ∈(0,1), we have\nλx+ (1−λ)y∈ V.\nIn words, this means that the setVhas no ‘holes’ or inward dents, see Figure 2.1.\nWe will make use ofextended-real-valued functions, that is, functions that take values\ninR∪ {−∞,+∞}. Forfan extended-real-valued function onR d, itsdomainis the set\ndomf={x∈R d :f(x)<+∞}.\nExtended-real-valued functions allow us to easily consider constrained sets and are a stan-\ndard",
+      "source_excerpt_sha256": "230c25b57c43c1c23db8364a5b00a786a7687093af3969ca98e73ba5d7aaaefa",
+      "mathematical_statement": "V subset R^d is convex iff lambda*x+(1-lambda)*y is in V for every x,y in V and 0<lambda<1.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Definition 2.3",
+      "kind": "Definition",
+      "printed_pages": [
+        10
+      ],
+      "pdf_pages_1based": [
+        22
+      ],
+      "source_anchor": "Definition 2.3",
+      "source_excerpt": "Definition 2.3Letf:R d →[−∞,+∞].fisconvexif the epigraph of the function,\n{(x, y)∈Rd+1 :y≥f(x)}, is convex.\nWe can see a visualization of this definition in Figure 2.2. Note that the definition implies\nthat the domain of a convex function is convex. TheιV(x)is convex iffVis convex, so each\nconvex set is associated with a convex function. Also, observe that iff:R d →(−∞,+∞]\nis convex,f+ι V :R d →(−∞,+∞], whereVis convex, is also convex.\nThe defini",
+      "source_excerpt_sha256": "911fdd58e387273d959f1cfd39644a8f7f020c3df3cd931710e0624ccdc26558",
+      "mathematical_statement": "f:R^d -> [-infinity,+infinity] is convex iff {(x,y) in R^(d+1): y>=f(x)} is convex; epigraph heights y are real.",
+      "dependencies": [
+        "Definition 2.2",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.4",
+      "kind": "Theorem",
+      "printed_pages": [
+        10
+      ],
+      "pdf_pages_1based": [
+        22
+      ],
+      "source_anchor": "Theorem 2.4",
+      "source_excerpt": "Theorem 2.4(Rockafellar, 1970, Theorem 4.1)Letf:R d →(−∞,+∞]be such that\ndomfis a convex set. Thenfis convex iff, for any0< λ <1, we have\nf(λx+ (1−λ)y)≤λf(x) + (1−λ)f(y),∀x,y∈domf .\nExample 2.5Affine functions,f(x) =⟨z,x⟩+b, are convex.\nExample 2.6Norms are always convex; the proof is left as an exercise.\nHow to recognize a convex function? In the most general case, you have to rely on its def-\ninition. However, most of the time, we will recogniz",
+      "source_excerpt_sha256": "ef77adc55414cb2e5dff72ea5e551857325d9dc4745036665c20d3d484f5dea8",
+      "mathematical_statement": "Let f:R^d -> (-infinity,+infinity] with convex dom f. Then f is convex iff f(lambda*x+(1-lambda)*y)<=lambda*f(x)+(1-lambda)*f(y) for every x,y in dom f and 0<lambda<1.",
+      "dependencies": [
+        "Definition 2.3",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "No minus infinity; explicit convex-domain hypothesis. Rockafellar Theorem4.1.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.5",
+      "kind": "Example",
+      "printed_pages": [
+        10
+      ],
+      "pdf_pages_1based": [
+        22
+      ],
+      "source_anchor": "Example 2.5",
+      "source_excerpt": "Example 2.5Affine functions,f(x) =⟨z,x⟩+b, are convex.\nExample 2.6Norms are always convex; the proof is left as an exercise.\nHow to recognize a convex function? In the most general case, you have to rely on its def-\ninition. However, most of the time, we will recognize them as being obtained by operations\nthat preserve convexity. For example:\n•Iffandgare convex, then their linear combination with non-negative weights is also\nconvex.\n•The composit",
+      "source_excerpt_sha256": "f21d35ed0c629a55faff17b681e1a3cf7de0861cee7519d41f5e4578d953085b",
+      "mathematical_statement": "Every affine function f(x)=<z,x>+b is convex.",
+      "dependencies": [
+        "Theorem 2.4"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.6",
+      "kind": "Example",
+      "printed_pages": [
+        10
+      ],
+      "pdf_pages_1based": [
+        22
+      ],
+      "source_anchor": "Example 2.6",
+      "source_excerpt": "Example 2.6Norms are always convex; the proof is left as an exercise.\nHow to recognize a convex function? In the most general case, you have to rely on its def-\ninition. However, most of the time, we will recognize them as being obtained by operations\nthat preserve convexity. For example:\n•Iffandgare convex, then their linear combination with non-negative weights is also\nconvex.\n•The composition with an affine transformation preserves the convexi",
+      "source_excerpt_sha256": "1929849371571fff1da2a3fd36e089cb79c6e65fd0327464ada3540aee96bc97",
+      "mathematical_statement": "Every norm is convex.",
+      "dependencies": [
+        "Theorem 2.4"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": true,
+      "boundary_notes": "proof left as exercise; still mandatory main text.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.7",
+      "kind": "Theorem",
+      "printed_pages": [
+        11
+      ],
+      "pdf_pages_1based": [
+        23
+      ],
+      "source_anchor": "Theorem 2.7",
+      "source_excerpt": "Theorem 2.7(Rockafellar, 1970, Theorem 25.1 and Corollary 25.1.1)Supposef:R d →\n(−∞,+∞]is a convex function and letx∈int domf. Iffis differentiable atxthen\nf(y)≥f(x) +⟨∇f(x),y−x⟩,∀y∈R d .\nWe will also use the first-order optimality condition for differentiable convex functions:\nTheorem 2.8LetVbe a non-empty convex set,x ⋆ ∈ V, andfa function convex and differ-\nentiable over an open set that containsV. Then,x ⋆ ∈argmin x∈V f(x)iff⟨∇f(x ⋆),y−\nx⋆⟩ ≥",
+      "source_excerpt_sha256": "d834485f2467f42af78fe35ad72afcf02122cc80562df8962a812746fcfafa98",
+      "mathematical_statement": "For convex f:R^d -> (-infinity,+infinity], x in interior(dom f), and f differentiable at x, f(y)>=f(x)+<gradient f(x),y-x> for all y in R^d.",
+      "dependencies": [
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Global support, including outside-domain y. Rockafellar Theorem25.1/Corollary25.1.1.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.8",
+      "kind": "Theorem",
+      "printed_pages": [
+        11
+      ],
+      "pdf_pages_1based": [
+        23
+      ],
+      "source_anchor": "Theorem 2.8",
+      "source_excerpt": "Theorem 2.8LetVbe a non-empty convex set,x ⋆ ∈ V, andfa function convex and differ-\nentiable over an open set that containsV. Then,x ⋆ ∈argmin x∈V f(x)iff⟨∇f(x ⋆),y−\nx⋆⟩ ≥0,∀y∈ V.\nProofLet us first assume thatx ⋆ satisfies⟨∇f(x ⋆),y−x ⋆⟩ ≥0,∀y∈ V. Then, by\nTheorem 2.7, for anyy∈ V, we have that\nf(y)≥f(x ⋆) +⟨∇f(x ⋆),y−x ⋆⟩ ≥f(x⋆),\nthat is,x ⋆ is the minimizer offoverV.\nNow, assume thatx⋆ is the minimizer offoverVand assume that there existsy∈ Vsu",
+      "source_excerpt_sha256": "e871d55be64006d37ea050ec5d551688d2c670c1dd549e0ab430f925746f65d8",
+      "mathematical_statement": "Let V be nonempty convex, x_star in V, and f convex and differentiable on an open set containing V. Then x_star minimizes f on V iff <gradient f(x_star),y-x_star>>=0 for every y in V.",
+      "dependencies": [
+        "Theorem 2.7"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Does not assert minimizer existence or require closed V.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.9",
+      "kind": "Theorem",
+      "printed_pages": [
+        11
+      ],
+      "pdf_pages_1based": [
+        23
+      ],
+      "source_anchor": "Theorem 2.9",
+      "source_excerpt": "Theorem 2.9(Jensen’s inequality)Letf:R d →(−∞,+∞]be a measurable convex\nfunction andxbe anR d-valued random element on some probability space such thatE[x]\nexists andx∈domfwith probability 1. Then, we have\nE[f(x)]≥f(E[x]).\nWe can now see our first OCO algorithm in the case that the functions are convex and\ndifferentiable.\n2.1.2 Online Gradient Descent\nIn the first chapter, we saw a simple strategy to obtain a logarithmic regret in the guessing\nga",
+      "source_excerpt_sha256": "29808fa28b4f9966aee17e1d48375c9282f4f0f971b942c58e0be486812c98df",
+      "mathematical_statement": "For measurable convex f:R^d -> (-infinity,+infinity] and R^d-valued random X on a probability space with E[X] existing and X in dom f almost surely, E[f(X)]>=f(E[X]).",
+      "dependencies": [
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Jensen; no separately printed finite E[f(X)] premise.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Algorithm 2.1",
+      "kind": "Algorithm",
+      "printed_pages": [
+        12
+      ],
+      "pdf_pages_1based": [
+        24
+      ],
+      "source_anchor": "Algorithm 2.1",
+      "source_excerpt": "Algorithm 2.1Projected Online Gradient Descent (OGD)\nRequire:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η1, . . . , ηT >0\n1:fort= 1toTdo\n2:Outputx t ∈ V\n3:Pay the lossℓ t(xt), for a convexℓ t, differentiable on an open set containingV\n4:Setg t =∇ℓ t(xt)\n5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2\n6:end for\nand, in the first round, we can play any admissible point. One might wonder if this strategy\nalways works, but the answer is negative!",
+      "source_excerpt_sha256": "c2196e797113a86367e003ca039bc13cebf9e0a03fdde277e6c5a17cf2d2f833",
+      "mathematical_statement": "Given nonempty closed convex V subset R^d, x_1 in V, positive eta_1,...,eta_T: for t=1,...,T output x_t, pay ell_t(x_t), where ell_t is convex and differentiable on an open set containing V; set g_t=gradient ell_t(x_t); set x_(t+1)=Pi_V(x_t-eta_t*g_t)=argmin_{y in V}||x_t-eta_t*g_t-y||_2.",
+      "dependencies": [
+        "unnumbered:game-regret",
+        "Proposition 2.11"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Output before current feedback; need actual causal algorithm, not assumed regret.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.10",
+      "kind": "Example",
+      "printed_pages": [
+        12
+      ],
+      "pdf_pages_1based": [
+        24
+      ],
+      "source_anchor": "Example 2.10",
+      "source_excerpt": "Example 2.10(Failure of FTL)LetV= [−1,1]and consider the sequence of losses\nℓt(x) =z tx, where\nz1 =−0.5,\nzt = 1, t= 2,4, . . .\nzt =−1, t= 3,5, . . .\nThen, apart from the first round where the prediction of FTL is arbitrary in[−1,1], the\npredictions of FTL will bex t = 1forteven andx t =−1fortodd. The cumulative loss\nof the FTL algorithm afterTrounds will therefore beT−1− x1\n2 while the cumulative\nloss of the fixed solutionu= 0is 0. Thus, the regr",
+      "source_excerpt_sha256": "c129cca091f807fa94e512498d0270d854e4a9c6183e789f8d33d31fa61f1302",
+      "mathematical_statement": "FTL on [-1,1], ell_t(x)=z_t*x, with z_1=-1/2, z_t=1 for even t and z_t=-1 for odd t>=3: arbitrary first x_1 in [-1,1], then x_t=1 for even t and -1 for odd t>=3. For T>=1 cumulative loss and regret against 0 equal T-1-x_1/2 >= T-3/2.",
+      "dependencies": [
+        "unnumbered:strict-past-FTL",
+        "Example 2.5"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "First prediction excluded from odd-time formula; empty horizon not covered by displayed identity.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Proposition 2.11",
+      "kind": "Proposition",
+      "printed_pages": [
+        12,
+        13
+      ],
+      "pdf_pages_1based": [
+        24,
+        25
+      ],
+      "source_anchor": "Proposition 2.11",
+      "source_excerpt": "Proposition 2.11Letx∈R d andy∈ V, whereV ⊆R d is a non-empty closed convex\nset and defineΠ V(x) := argminy∈V ∥x−y∥ 2. Then,∥Π V(x)−y∥ 2 ≤ ∥x−y∥2.\nProofFirst of all, observe thatargmin y∈V ∥x−y∥ 2 = argminy∈V\n1\n2 ∥x−y∥ 2\n2. So, from\nthe optimality condition of Theorem 2.8 on the functionf(y) = 1\n2 ∥x−y∥ 2\n2, we obtain\n⟨ΠV(x)−x,y−Π V(x)⟩ ≥0.\n2.1 Online Learning with Convex Differentiable Losses13\nTherefore,\n∥y−x∥ 2\n2 =∥y−Π V(x) + ΠV(x)−x∥ 2\n2\n=∥y−Π",
+      "source_excerpt_sha256": "e97ddc99d4b0e91f41f0131e6cd684000c7d4b7d5176e5ed075150f78ddb00c0",
+      "mathematical_statement": "For x in R^d, y in nonempty closed convex V, and unique Euclidean projection Pi_V(x)=argmin_{v in V}||x-v||_2, ||Pi_V(x)-y||_2<=||x-y||_2.",
+      "dependencies": [
+        "Theorem 2.8"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Subscript2 denotes norm; proof uses squared norms.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Lemma 2.12",
+      "kind": "Lemma",
+      "printed_pages": [
+        13
+      ],
+      "pdf_pages_1based": [
+        25
+      ],
+      "source_anchor": "Lemma 2.12",
+      "source_excerpt": "Lemma 2.12LetV ⊆R d be a non-empty closed convex set,ℓt be convex and differentiable\non an open set containingV, andη t >0. Setg t =∇ℓ t(xt)andx t+1 = ΠV(xt −η tgt).\nThen,∀u∈ V, the following inequality holds\nηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1\n2∥xt −u∥ 2\n2 − 1\n2∥xt+1 −u∥ 2\n2 + η2\nt\n2 ∥gt∥2\n2 .\nProofFrom Proposition 2.11 and Theorem 2.7, we have that\n∥xt+1 −u∥ 2\n2 − ∥xt −u∥ 2\n2 ≤ ∥xt −η tgt −u∥ 2\n2 − ∥xt −u∥ 2\n2\n=−2η t⟨gt,xt −u⟩+η 2\nt ∥gt∥2\n2\n≤ −2",
+      "source_excerpt_sha256": "7753bf251386fe271d6ec6b6716a6c509a2c2299127674548e81e7274c9f34c7",
+      "mathematical_statement": "For nonempty closed convex V, ell_t convex and differentiable on an open set containing V, eta_t>0, g_t=gradient ell_t(x_t), x_(t+1)=Pi_V(x_t-eta_t*g_t), every u in V satisfies eta_t*(ell_t(x_t)-ell_t(u)) <= eta_t*<g_t,x_t-u> <= (||x_t-u||_2^2-||x_(t+1)-u||_2^2)/2 + eta_t^2*||g_t||_2^2/2.",
+      "dependencies": [
+        "Theorem 2.7",
+        "Proposition 2.11",
+        "Algorithm 2.1"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Feasibility of x_t inherited from algorithm context.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.13",
+      "kind": "Theorem",
+      "printed_pages": [
+        13,
+        14
+      ],
+      "pdf_pages_1based": [
+        25,
+        26
+      ],
+      "source_anchor": "Theorem 2.13",
+      "source_excerpt": "Theorem 2.13LetV ⊆R d be a non-empty closed convex set with diameterD, that is,\nD:= sup x,y∈V ∥x−y∥ 2. Letℓ 1, . . . , ℓT be an arbitrary sequence of convex and differ-\nentiable functions on an open set containingV. Pick anyx 1 ∈ Vand assume0< ηt+1 ≤\nηt, t= 1, . . . , T−1. Then,∀u∈ V, Algorithm 2.1 satisfies the following regret bound\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤ D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nMoreover, ifηt is constant, i.e.,η t",
+      "source_excerpt_sha256": "77b57378a04785f0036c87a61a4af9e3833a333825bdb41178082d9b1e2a7dee",
+      "mathematical_statement": "Let V be nonempty closed convex with diameter D=sup_{x,y in V}||x-y||_2, arbitrary ell_1,...,ell_T convex and differentiable on an open set containing V, x_1 in V, and 0<eta_(t+1)<=eta_t for t=1,...,T-1. Algorithm2.1 with its positive steps satisfies for all u in V: Regret_T(u)<=D^2/(2*eta_T)+sum_{t=1}^T eta_t*||g_t||_2^2/2-||x_(T+1)-u||_2^2/(2*eta_T). Moreover, for constant eta_t=eta>0: Regret_T(u)<=||u-x_1||_2^2/(2*eta)+(eta/2)*sum_{t=1}^T||g_t||_2^2-||x_(T+1)-u||_2^2/(2*eta).",
+      "dependencies": [
+        "Algorithm 2.1",
+        "Lemma 2.12",
+        "unnumbered:weighted-distance-identity"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Both sharp branches mandatory; fixed branch valid for unbounded domains as printed14 states. Finite D needed for nonvacuous variable bound.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.14",
+      "kind": "Example",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "Example 2.14",
+      "source_excerpt": "Example 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, yt ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate, the resulting regret would beO(\n√\nT), which is worse than\nthe",
+      "source_excerpt_sha256": "fb360a288892e8d82df3702f3ee30f10f20bd853e8c161d380381fbdf71bf1a6",
+      "mathematical_statement": "Chapter1 square guessing: x_t,y_t in [0,1], ell_t(x)=(x-y_t)^2, derivative2*(x-y_t) bounded on [0,1], Pi_[0,1](x)=min(max(x,0),1). OGD with optimal constant step gives O(sqrt(T)) regret, worse than earlier Chapter1 guarantee; Chapter4 promises optimal tuning.",
+      "dependencies": [
+        "Algorithm 2.1",
+        "unnumbered:diameter-gradient-coarse-tuning",
+        "Chapter1:guessing-game"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "D=1,L=2 gives eta=1/(2 sqrt(T)), bound2 sqrt(T) as deduction. Upper bound alone is not an algorithmic lower bound proving suboptimality.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.15",
+      "kind": "Example",
+      "printed_pages": [
+        15,
+        16
+      ],
+      "pdf_pages_1based": [
+        27,
+        28
+      ],
+      "source_anchor": "Example 2.15",
+      "source_excerpt": "Example 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,xt⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function robust to outliers,\n16Online S",
+      "source_excerpt_sha256": "46376e978d33fff495f4fe0f4a1c16e4a18627efc93cd786aaa4364370362305",
+      "mathematical_statement": "Linear prediction <z_t,x>, V=R^d, residual e=<z_t,x>-y_t: ell_t(x)=e^2/2 if |e|<=delta, and delta*(|e|-delta/2) otherwise. Gradient is e*z_t if |e|<=delta, and delta*sign(e)*z_t otherwise. Bounded ||z_t||_2 gives bounded gradients; constant horizon-dependent eta proportional to1/sqrt(T) makes average OGD loss approach that of every fixed linear predictor.",
+      "dependencies": [
+        "Theorem 2.13",
+        "Algorithm 2.1",
+        "unnumbered:fixed-unbounded-domain-residual"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Source calls delta a threshold without explicit sign. Qualify nonnegative threshold, including delta=0, rather than adding bounded V. Derived bound for delta>=0 and ||z_t||<=R is ||g_t||<=delta R.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Definition 2.16",
+      "kind": "Definition",
+      "printed_pages": [
+        16
+      ],
+      "pdf_pages_1based": [
+        28
+      ],
+      "source_anchor": "Definition 2.16",
+      "source_excerpt": "Definition 2.16A functionf:R d →[−∞,+∞]isclosediff{x:f(x)≤α}is closed\nfor everyα∈R.\nNote that in any Euclidean space (and more generally in any Hausdorff space) a function\nis closed iff it is lower semicontinuous (Bauschke and Combettes, 2017, Lemma 1.24).\nExample 2.17The indicator function of a setV ⊂R d is closed iffVis closed.\nDefinition 2.18If a functionfis nowhere−∞and finite somewhere, thenfis called\nproper.\nIn this book, we are mainly inte",
+      "source_excerpt_sha256": "ce5d2e08d1885725b4f37f278d3d9e10949e303bb406c4a2e3d36a9766107d98",
+      "mathematical_statement": "f:R^d -> [-infinity,+infinity] is closed iff {x:f(x)<=alpha} is closed for every real alpha.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.17",
+      "kind": "Example",
+      "printed_pages": [
+        16
+      ],
+      "pdf_pages_1based": [
+        28
+      ],
+      "source_anchor": "Example 2.17",
+      "source_excerpt": "Example 2.17The indicator function of a setV ⊂R d is closed iffVis closed.\nDefinition 2.18If a functionfis nowhere−∞and finite somewhere, thenfis called\nproper.\nIn this book, we are mainly interested in convex proper functions, which better conform\nto our intuition of what a convex function looks like.\nExample 2.19The indicator function of a setV ⊂R d is proper iffVis non-empty.\nLet’s now define formally what a subgradient is.\nDefinition 2.20For ",
+      "source_excerpt_sha256": "ff1cf4a01d26b58e1cea9c752fc25c9812dc5fd69fd8504fd221b6dbbfe3f500",
+      "mathematical_statement": "Indicator iota_V is closed iff V is closed.",
+      "dependencies": [
+        "Definition 2.16",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Definition 2.18",
+      "kind": "Definition",
+      "printed_pages": [
+        16
+      ],
+      "pdf_pages_1based": [
+        28
+      ],
+      "source_anchor": "Definition 2.18",
+      "source_excerpt": "Definition 2.18If a functionfis nowhere−∞and finite somewhere, thenfis called\nproper.\nIn this book, we are mainly interested in convex proper functions, which better conform\nto our intuition of what a convex function looks like.\nExample 2.19The indicator function of a setV ⊂R d is proper iffVis non-empty.\nLet’s now define formally what a subgradient is.\nDefinition 2.20For a proper functionf:R d →(−∞,+∞], we define asubgradientof\nfinx∈R d as a vec",
+      "source_excerpt_sha256": "74c2058201d3be38f0ace56c67a227b1c185e84b91c1d49f9cdb10260145b029",
+      "mathematical_statement": "A function is proper iff nowhere -infinity and finite somewhere.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.19",
+      "kind": "Example",
+      "printed_pages": [
+        16
+      ],
+      "pdf_pages_1based": [
+        28
+      ],
+      "source_anchor": "Example 2.19",
+      "source_excerpt": "Example 2.19The indicator function of a setV ⊂R d is proper iffVis non-empty.\nLet’s now define formally what a subgradient is.\nDefinition 2.20For a proper functionf:R d →(−∞,+∞], we define asubgradientof\nfinx∈R d as a vectorg∈R d that satisfies\nf(y)≥f(x) +⟨g,y−x⟩,∀y∈R d .",
+      "source_excerpt_sha256": "28eb5c5a2c38ba7ece83a33311b5a68eff5c5b8d7374caa38eaf903b6847014e",
+      "mathematical_statement": "Indicator iota_V is proper iff V is nonempty.",
+      "dependencies": [
+        "Definition 2.18",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Definition 2.20",
+      "kind": "Definition",
+      "printed_pages": [
+        16,
+        17
+      ],
+      "pdf_pages_1based": [
+        28,
+        29
+      ],
+      "source_anchor": "Definition 2.20",
+      "source_excerpt": "Definition 2.20For a proper functionf:R d →(−∞,+∞], we define asubgradientof\nfinx∈R d as a vectorg∈R d that satisfies\nf(y)≥f(x) +⟨g,y−x⟩,∀y∈R d .\n2.2 Online Subgradient Descent17\nBasically, a subgradient offinxis any vectorgthat allows us to construct a linear\nlower bound tof. Note that the subgradient might not be unique, so we denote thesetof\nsubgradients offinxby∂f(x), called thesubdifferential offatx. A functionfis\nsubdifferentiableatxif∂f(x)",
+      "source_excerpt_sha256": "78bdeddc92ed7f2de8178a0e5aad2b0f24bde7b441ff45974f2b632717087a49",
+      "mathematical_statement": "For proper f:R^d -> (-infinity,+infinity], g in R^d is a subgradient at x iff f(y)>=f(x)+<g,y-x> for every y in R^d. Its set is partial f(x); f is subdifferentiable at x iff this set is nonempty.",
+      "dependencies": [
+        "Definition 2.18"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Global support; convexity not required by definition.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.21",
+      "kind": "Theorem",
+      "printed_pages": [
+        17
+      ],
+      "pdf_pages_1based": [
+        29
+      ],
+      "source_anchor": "Theorem 2.21",
+      "source_excerpt": "Theorem 2.21Letf:R d →RandV ⊆R d be a convex set. If∂f(x)̸=∅for allx∈ V,\nthen the restriction offtoVis convex.\nProofFor anyx 1,x2 ∈ Vand for anyλ∈[0,1], considery=λx 1 + (1−λ)x 2 ∈ V\nandg∈∂f(y). Then, we have\nf(x1)≥f(y) +⟨g,x 1 −y⟩=f(y) + (1−λ)⟨g,x 1 −x 2⟩,\nf(x2)≥f(y) +⟨g,x 2 −y⟩=f(y) +λ⟨g,x 2 −x 1⟩.\nMultiplying the first inequality byλand the second one by1−λand adding them together,\nwe have\nλf(x1) + (1−λ)f(x 2)≥f(y) =f(λx 1 + (1−λ)x 2),\nthat im",
+      "source_excerpt_sha256": "43c055e4bd7b53791d0a02f8477314264bd157943f7d283c143a34f85d3ecab2",
+      "mathematical_statement": "For f:R^d->R and convex V subset R^d, if partial f(x) is nonempty for every x in V, then f restricted to V is convex.",
+      "dependencies": [
+        "Definition 2.20",
+        "Theorem 2.4"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Real-valued f; no prior convexity or closedness of f.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.22",
+      "kind": "Theorem",
+      "printed_pages": [
+        17
+      ],
+      "pdf_pages_1based": [
+        29
+      ],
+      "source_anchor": "Theorem 2.22",
+      "source_excerpt": "Theorem 2.22(Rockafellar, 1970, Theorem 25.1)If the functionf:R d →[−∞,+∞]\nis convex and finite inx, it is differentiable inxiff the subdifferential consists of a single\nelement, that turns out to be∇f(x).\nWe can also calculate subgradients of the sum of functions.\nTheorem 2.23Letf 1, . . . , fm be proper functions onRd, andF=f 1 +···+f m. Then,\n∂F(x)⊇∂f 1(x) +···+∂f m(x),∀x. Note that if one of the sets∂f i(x)is empty, the\nright-hand side is emp",
+      "source_excerpt_sha256": "dc9bb88eb6077a4a45e8f855a4c7f3470944b8e2baff1517707a16b77999eb85",
+      "mathematical_statement": "For convex f:R^d -> [-infinity,+infinity] finite at x, f is differentiable at x iff partial f(x) is a singleton, consisting of gradient f(x).",
+      "dependencies": [
+        "Definition 2.20",
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Literal source does not separately state interior-domain or global properness premise. Any qualification needs review. Rockafellar Theorem25.1.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.23",
+      "kind": "Theorem",
+      "printed_pages": [
+        17,
+        18
+      ],
+      "pdf_pages_1based": [
+        29,
+        30
+      ],
+      "source_anchor": "Theorem 2.23",
+      "source_excerpt": "Theorem 2.23Letf 1, . . . , fm be proper functions onRd, andF=f 1 +···+f m. Then,\n∂F(x)⊇∂f 1(x) +···+∂f m(x),∀x. Note that if one of the sets∂f i(x)is empty, the\nright-hand side is empty and the inclusion is vacuous. Moreover, iff 1, . . . , fm are also\nconvex, closed, anddomf m ∩ Tm−1\ni=1 int domfi ̸=∅, then actually∂F(x) =∂f 1(x) +\n···+∂f m(x),∀x.\nProofFor anyz, when the right-hand side is non-empty, chooseg i ∈∂f i(z)fori=\n1, . . . , m. From t",
+      "source_excerpt_sha256": "260fa7dabebe6b560a54243753910f7375b0f501118a4cf16dc2ea998606cd41",
+      "mathematical_statement": "For proper f_1,...,f_m on R^d and F=sum_i f_i, partial F(x) contains the Minkowski sum of partial f_i(x), for every x; empty constituent makes inclusion vacuous. If also each f_i is convex and closed and dom f_m intersects intersection_{i=1}^{m-1} interior(dom f_i) nontrivially, equality holds for every x.",
+      "dependencies": [
+        "Definition 2.20",
+        "Definition 2.16",
+        "Definition 2.18"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Both branches; ordinary interior on first m-1 domains and full last domain, not relative-interior replacement.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.24",
+      "kind": "Example",
+      "printed_pages": [
+        18
+      ],
+      "pdf_pages_1based": [
+        30
+      ],
+      "source_anchor": "Example 2.24",
+      "source_excerpt": "Example 2.24Letf(x) =|x|. Then, the subdifferential set∂f(x)is\n∂f(x) =\n\n\n\n{1}, x >0,\n[−1,1], x= 0,\n{−1}, x <0.\nExample 2.25Let’s calculate the subgradient of the indicator function for a non-empty\nconvex setV ⊂Rd. By definition,g∈∂ι V(x)if\nιV(y)≥ι V(x) +⟨g,y−x⟩,∀y∈R d .\nThis condition implies thatx∈ Vand0≥ ⟨g,y−x⟩for ally∈ V(because fory/∈ V\nthe inequality is always verified). The set of allgthat satisfy the above inequality is called\nthenor",
+      "source_excerpt_sha256": "422a3066ffcfcb5f57b48832c3f9fded83c3fc762ac04a60043721be7a139299",
+      "mathematical_statement": "For f(x)=|x|, partial f(x)={1} at x>0, [-1,1] at x=0, {-1} at x<0.",
+      "dependencies": [
+        "Definition 2.20"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.25",
+      "kind": "Example",
+      "printed_pages": [
+        18
+      ],
+      "pdf_pages_1based": [
+        30
+      ],
+      "source_anchor": "Example 2.25",
+      "source_excerpt": "Example 2.25Let’s calculate the subgradient of the indicator function for a non-empty\nconvex setV ⊂Rd. By definition,g∈∂ι V(x)if\nιV(y)≥ι V(x) +⟨g,y−x⟩,∀y∈R d .\nThis condition implies thatx∈ Vand0≥ ⟨g,y−x⟩for ally∈ V(because fory/∈ V\nthe inequality is always verified). The set of allgthat satisfy the above inequality is called\nthenormal cone toVatxand it is denoted byN V(x). Note that the normal cone for any\nx∈intVis{0}(Hint: takey=x+ϵg). For exam",
+      "source_excerpt_sha256": "1ba41d5050f644cf867b4cafa791f59a1c1dbf6f10ceee20909178334538b917",
+      "mathematical_statement": "For nonempty convex V, g in partial iota_V(x) iff x in V and <g,y-x><=0 for all y in V; this is normal cone N_V(x). At x in interior(V), N_V(x)={0}. For unit Euclidean ball V and ||x||_2=1, N_V(x)={alpha*x:alpha>=0}.",
+      "dependencies": [
+        "Definition 2.20",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "All three branches required; no closedness added to general identification.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.26",
+      "kind": "Theorem",
+      "printed_pages": [
+        18
+      ],
+      "pdf_pages_1based": [
+        30
+      ],
+      "source_anchor": "Theorem 2.26",
+      "source_excerpt": "Theorem 2.26(Bauschke and Combettes, 2017, Theorem 18.5)Let(f i)i∈I be a finite set\nof proper convex functions fromRd to(−∞,+∞]. Supposex∈ T\ni∈I domf i and eachf i\nis continuous atx. SetF= max i∈I fi and letA(x) ={i∈I|f i(x) =F(x)}be the set\nof the active functions. Then, denoting byconvtheconvex hull, we have\n∂F(x) = conv\n[\ni∈A(x)\n∂fi(x).\nExample 2.27(Subgradients of the Hinge loss)Consider the hinge lossℓ(x) = max(1−\n⟨z,x⟩,0)forz∈R d. The subdi",
+      "source_excerpt_sha256": "c08e0bb046b82bcce92ed2f5470796e799b2982403f1d17a8bfce62e8ade54fb",
+      "mathematical_statement": "Finite family (f_i)_(i in I) of proper convex functions R^d->(-infinity,+infinity]; x in every dom f_i and every f_i continuous at x. For F=max_i f_i, active set A(x)={i:f_i(x)=F(x)}, partial F(x)=conv(union_{i in A(x)} partial f_i(x)).",
+      "dependencies": [
+        "Definition 2.20",
+        "Definition 2.18",
+        "unnumbered:pointwise-supremum"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Finite maximum implicitly needs nonempty I, not separately printed. Equality required. Bauschke-Combettes Theorem18.5.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.27",
+      "kind": "Example",
+      "printed_pages": [
+        18
+      ],
+      "pdf_pages_1based": [
+        30
+      ],
+      "source_anchor": "Example 2.27",
+      "source_excerpt": "Example 2.27(Subgradients of the Hinge loss)Consider the hinge lossℓ(x) = max(1−\n⟨z,x⟩,0)forz∈R d. The subdifferential set is\n∂ℓ(x) =\n\n\n\n{0},1− ⟨z,x⟩<0\n{−αz:α∈[0,1]},1− ⟨z,x⟩= 0\n{−z},otherwise\n.\nFinally, we can show a result on the subgradient of affine transformations.\nTheorem 2.28Letf:R m →(−∞,+∞]be proper. Defineh(x) =f(Ax+b), where\nA∈R m×d andb∈R m. Then, we haveA ⊤∂f(Ax+b)⊆∂h(x).\nProofFor anyg∈∂f(Ax+b), we want to show thatA ⊤gis a subg",
+      "source_excerpt_sha256": "07a963a7cdfc6181a8bfbbeb4086c4482070cb2fd8773791b87d83df9f169008",
+      "mathematical_statement": "For z in R^d, ell(x)=max(1-<z,x>,0): partial ell(x)={0} when1-<z,x><0; {-alpha*z:alpha in [0,1]} at equality; {-z} otherwise.",
+      "dependencies": [
+        "Theorem 2.26",
+        "Example 2.5",
+        "Theorem 2.22"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Closed seam interval; zero normal retained.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.28",
+      "kind": "Theorem",
+      "printed_pages": [
+        18
+      ],
+      "pdf_pages_1based": [
+        30
+      ],
+      "source_anchor": "Theorem 2.28",
+      "source_excerpt": "Theorem 2.28Letf:R m →(−∞,+∞]be proper. Defineh(x) =f(Ax+b), where\nA∈R m×d andb∈R m. Then, we haveA ⊤∂f(Ax+b)⊆∂h(x).\nProofFor anyg∈∂f(Ax+b), we want to show thatA ⊤gis a subgradient ofhinx.\nFrom the definition of subgradient, for ally∈R d we have\nh(y) =f(Ay+b)≥f(Ax+b) +⟨g,Ay+b−(Ax+b)⟩\n=h(x) +⟨A ⊤g,y−x⟩,\nthat implies our stated result.",
+      "source_excerpt_sha256": "dca7773714cb639abacb01a326011ba8a2384c5534ab8bee9dc065fd9e07170c",
+      "mathematical_statement": "For proper f:R^m->(-infinity,+infinity], A in R^(m by d), b in R^m, h(x)=f(Ax+b), one has A^T partial f(Ax+b) subset partial h(x) for all x.",
+      "dependencies": [
+        "Definition 2.20"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Inclusion only; no convexity/closedness premise. h may be identically +infinity if affine image misses domain; define support convention explicitly.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Definition 2.29",
+      "kind": "Definition",
+      "printed_pages": [
+        19
+      ],
+      "pdf_pages_1based": [
+        31
+      ],
+      "source_anchor": "Definition 2.29",
+      "source_excerpt": "Definition 2.29Letf:R d →(−∞,+∞]. We say thatfisL-Lipschitzover a set\nV ⊆domfwith respect to a norm∥ · ∥if|f(x)−f(y)| ≤L∥x−y∥,∀x,y∈ V.\nTheorem 2.30Letf:R d →(−∞,+∞]be convex and proper. Then,fisL-Lipschitz in\nint domfwith respect to the L 2 norm iff for allx∈int domfandg∈∂f(x)we have\n∥g∥2 ≤L.\nProofFirst, we assumefto beL-Lipschitz, then|f(x)−f(y)| ≤L∥x−y∥ 2,∀x,y∈\nint domf. Letg∈∂f(x). If∥g∥ 2 = 0, then the theorem is true. So, we can safely assum",
+      "source_excerpt_sha256": "d0ea8cfa779028c74f32b569ddbfea7d2580b566ce4618aa9f0b781db96fbebb",
+      "mathematical_statement": "f:R^d->(-infinity,+infinity] is L-Lipschitz on V subset dom f in norm ||.|| iff |f(x)-f(y)|<=L||x-y|| for every x,y in V.",
+      "dependencies": [
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Nonnegative L conventional but not separately printed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Theorem 2.30",
+      "kind": "Theorem",
+      "printed_pages": [
+        19
+      ],
+      "pdf_pages_1based": [
+        31
+      ],
+      "source_anchor": "Theorem 2.30",
+      "source_excerpt": "Theorem 2.30Letf:R d →(−∞,+∞]be convex and proper. Then,fisL-Lipschitz in\nint domfwith respect to the L 2 norm iff for allx∈int domfandg∈∂f(x)we have\n∥g∥2 ≤L.\nProofFirst, we assumefto beL-Lipschitz, then|f(x)−f(y)| ≤L∥x−y∥ 2,∀x,y∈\nint domf. Letg∈∂f(x). If∥g∥ 2 = 0, then the theorem is true. So, we can safely assume\nit to be different from 0. Forϵ >0small enoughy=x+ϵ g\n∥g∥2\n∈int domf, then\nLϵ=L∥x−y∥ 2 ≥ |f(y)−f(x)| ≥f(y)−f(x)≥ ⟨g,y−x⟩=ϵ∥g∥ 2,\nthat",
+      "source_excerpt_sha256": "58139eb174df31baa096a8a6c17b9e7dea312f17550ab4d60a93a3105f01736e",
+      "mathematical_statement": "For convex proper f:R^d->(-infinity,+infinity], L-Lipschitzness on interior(dom f) in Euclidean norm is equivalent to ||g||_2<=L for every x in interior(dom f) and every g in partial f(x).",
+      "dependencies": [
+        "Definition 2.29",
+        "Definition 2.20",
+        "unnumbered:interior-subgradient-existence"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Both directions, every subgradient, interior-domain and empty-interior cases retained.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Lemma 2.31",
+      "kind": "Lemma",
+      "printed_pages": [
+        19
+      ],
+      "pdf_pages_1based": [
+        31
+      ],
+      "source_anchor": "Lemma 2.31",
+      "source_excerpt": "Lemma 2.31LetV ⊆R d be a non-empty closed convex set,ℓ t :R d →(−∞,+∞]a\nfunction subdifferentiable onV, andη t >0. Setg t ∈∂ℓ t(xt)andx t+1 = ΠV(xt −η tgt).\nThen,∀u∈ V, we have\nηt(ℓt(xt)−ℓ t(u))≤η t⟨gt,xt −u⟩ ≤1\n2∥xt −u∥ 2\n2 − 1\n2∥xt+1 −u∥ 2\n2 + η2\nt\n2 ∥gt∥2\n2 .",
+      "source_excerpt_sha256": "9087cace3ded9f1d47f0591618f83a4a8ee246f8353991b75e0c9c4e54274011",
+      "mathematical_statement": "For nonempty closed convex V, ell_t:R^d->(-infinity,+infinity] subdifferentiable on V, eta_t>0, g_t in partial ell_t(x_t), x_(t+1)=Pi_V(x_t-eta_t*g_t), every u in V satisfies eta_t*(ell_t(x_t)-ell_t(u)) <= eta_t*<g_t,x_t-u> <= (||x_t-u||_2^2-||x_(t+1)-u||_2^2)/2 + eta_t^2*||g_t||_2^2/2.",
+      "dependencies": [
+        "Definition 2.20",
+        "Proposition 2.11",
+        "Algorithm 2.2"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "No extra convexity premise printed; properness through source subgradient convention, feasibility through algorithm context.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Algorithm 2.2",
+      "kind": "Algorithm",
+      "printed_pages": [
+        20
+      ],
+      "pdf_pages_1based": [
+        32
+      ],
+      "source_anchor": "Algorithm 2.2",
+      "source_excerpt": "Algorithm 2.2Projected Online Subgradient Descent (OSD)\nRequire:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η1, . . . , ηT >0\n1:fort= 1toTdo\n2:Outputx t ∈ V\n3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable onV\n4:Setg t ∈∂ℓ t(xt)\n5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2\n6:end for\nSo, we can state theOnline Subgradient Descent (OSD)algorithm in Algorithm 2.2,\nwhere the only difference from Algorithm 2.1 is line 4.\nExample 2.32Consider",
+      "source_excerpt_sha256": "ada9d563f4e62577414ad86c39814adad1a9ae2f1a5df158ec34c43b2b61b763",
+      "mathematical_statement": "Input nonempty closed convex V subset R^d, x_1 in V, positive eta_1,...,eta_T. For t=1,...,T output x_t, pay ell_t(x_t) with ell_t subdifferentiable on V, choose g_t in partial ell_t(x_t), update x_(t+1)=Pi_V(x_t-eta_t*g_t)=argmin_{y in V}||x_t-eta_t*g_t-y||_2.",
+      "dependencies": [
+        "Definition 2.20",
+        "Proposition 2.11",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Actual legal selected feedback and causal output order required.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Example 2.32",
+      "kind": "Example",
+      "printed_pages": [
+        20
+      ],
+      "pdf_pages_1based": [
+        32
+      ],
+      "source_anchor": "Example 2.32",
+      "source_excerpt": "Example 2.32Consider the guessing game of the first chapter again, but now change the\nloss function to the absolute loss of the difference:ℓ t(x) =|x−y t|. Now we will need to\nuse OSD, because the functions are non-differentiable. We can easily see that\n∂ℓt(x) =\n\n\n\n{1}, x > y t\n[−1,1], x=y t\n{−1}, x < yt .\nAgain, running OSD with the optimal learning rate on this problem will give us immediately\na regret ofO(\n√\nT)asT→ ∞, without having to de",
+      "source_excerpt_sha256": "015991ac786c7c0c771398fd50d0cb6e86eb89dd191d6625a627814ecaa1c7ce",
+      "mathematical_statement": "Guessing with ell_t(x)=|x-y_t|: partial ell_t(x)={1} if x>y_t, [-1,1] if x=y_t, {-1} if x<y_t. OSD with optimal learning rate gives O(sqrt(T)) regret as T grows.",
+      "dependencies": [
+        "Example 2.24",
+        "Algorithm 2.2",
+        "unnumbered:actual-OSD-performance-transfer",
+        "unnumbered:diameter-gradient-coarse-tuning",
+        "Chapter1:guessing-game"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Inherited [0,1] setting yields D=L=1, eta=1/sqrt(T), bound sqrt(T) as deduction; all seam choices legal.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:game-regret",
+      "kind": "Definition/protocol",
+      "printed_pages": [
+        8
+      ],
+      "pdf_pages_1based": [
+        20
+      ],
+      "source_anchor": "To summarize",
+      "source_excerpt": "To summarize what we said in the first chapter, let’s define online learning as the following\ngeneral game:\n•Fort= 1, . . . , T\n–Outputx t ∈ V ⊆Rd\n–Pay the lossℓ t(xt), whereℓ t :V →R\n–Receive some feedback onℓ t\n•End for\nThe aim of this game is to minimize the regret with respect to any competitoru∈ V:\nRegretT (u) :=\nTX\nt=1\nℓt(xt)−\nTX\nt=1\nℓt(u).\nWe also said that the way the lossesℓ t are decided is adversarial. Now, without making any\nadditiona",
+      "source_excerpt_sha256": "3c8398dfb645899e24cb2a6ea0579a30d3506ff82698322fc9de3155ab701653",
+      "mathematical_statement": "For t=1,...,T output x_t in V subset R^d, pay ell_t(x_t) for ell_t:V->R, receive feedback; losses adversarial. Regret_T(u)=sum_t ell_t(x_t)-sum_t ell_t(u) for every fixed u in V. OCO restricts losses to convex functions.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "No minimizer or stochastic assumption; output before feedback.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:extended-domain-indicator",
+      "kind": "Definition",
+      "printed_pages": [
+        9
+      ],
+      "pdf_pages_1based": [
+        21
+      ],
+      "source_anchor": "We will make use",
+      "source_excerpt": "We will make use ofextended-real-valued functions, that is, functions that take values\ninR∪ {−∞,+∞}. Forfan extended-real-valued function onR d, itsdomainis the set\ndomf={x∈R d :f(x)<+∞}.\nExtended-real-valued functions allow us to easily consider constrained sets and are a stan-\ndard notation in Convex Optimization (see, e.g., Boyd and Vandenberghe, 2004). For exam-\nple, if I want the predictions of the algorithmxt and the competitoruto be in a s",
+      "source_excerpt_sha256": "19e0be447e06c37cdc55ec38f75e3194c654f688878adb4408d26eff5e43acac",
+      "mathematical_statement": "Extended-real values allow both infinities. dom f={x:f(x)<+infinity}. Indicator iota_V is0 on V and +infinity otherwise; adding it enforces feasible finite-loss decisions and comparators.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Domain includes minus-infinity values for unrestricted f; respect properness/no-minus-infinity when adding indicators.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:epigraph-domain-indicator-closure",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        10
+      ],
+      "pdf_pages_1based": [
+        22
+      ],
+      "source_anchor": "Note that the definition implies",
+      "source_excerpt": "Note that the definition implies\nthat the domain of a convex function is convex. TheιV(x)is convex iffVis convex, so each\nconvex set is associated with a convex function. Also, observe that iff:R d →(−∞,+∞]\nis convex,f+ι V :R d →(−∞,+∞], whereVis convex, is also convex.\nThe definition above gives rise to the following characterization for convex functions that\ndo not assume the value−∞.\nTheorem 2.4(Rockafellar, 1970, Theorem 4.1)Letf:R d →(−∞,+∞]",
+      "source_excerpt_sha256": "eb22704a40d4584d0448dfdd276b00e84f06bccc01f48b2b91f30bfe215e4842",
+      "mathematical_statement": "Convex f has convex dom f. Indicator iota_V is convex iff V is convex. Convex f:R^d->(-infinity,+infinity] plus iota_V for convex V is convex.",
+      "dependencies": [
+        "Definition 2.3",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:nonnegative-combination",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        10,
+        11
+      ],
+      "pdf_pages_1based": [
+        22,
+        23
+      ],
+      "source_anchor": "Iffandgare convex",
+      "source_excerpt": "Iffandgare convex, then their linear combination with non-negative weights is also\nconvex.\n•The composition with an affine transformation preserves the convexity.\n•Iff:R d →Randg:R→Rare convex functions andgis non-decreasing, then\nh(x) =g(f(x))is convex.\n•The pointwise supremum of convex functions is convex.\n2.1 Online Learning with Convex Differentiable Losses11\nThe proofs are left as exercises.\nA very important property ofdifferentiableconvex f",
+      "source_excerpt_sha256": "11d79be28e7bff51ecde331d01fcfca6e27c104d8b5304289060450960f8eba9",
+      "mathematical_statement": "Nonnegative linear combinations of convex functions are convex.",
+      "dependencies": [
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": true,
+      "boundary_notes": "proof left as exercise; mandatory. Extended-real arithmetic/domain conventions need explicit qualification.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:affine-composition",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        10,
+        11
+      ],
+      "pdf_pages_1based": [
+        22,
+        23
+      ],
+      "source_anchor": "The composition with an affine",
+      "source_excerpt": "The composition with an affine transformation preserves the convexity.\n•Iff:R d →Randg:R→Rare convex functions andgis non-decreasing, then\nh(x) =g(f(x))is convex.\n•The pointwise supremum of convex functions is convex.\n2.1 Online Learning with Convex Differentiable Losses11\nThe proofs are left as exercises.\nA very important property ofdifferentiableconvex functions is that we can construct a\nlinear lower bound to the function.\nTheorem 2.7(Rockafel",
+      "source_excerpt_sha256": "db4409c657083bcfd7c7b3cbf13e60927b4aa2c97a3d2373ceb183ea0c558822",
+      "mathematical_statement": "Composition with an affine transformation preserves convexity.",
+      "dependencies": [
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": true,
+      "boundary_notes": "proof left as exercise; mandatory.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:monotone-convex-composition",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        10,
+        11
+      ],
+      "pdf_pages_1based": [
+        22,
+        23
+      ],
+      "source_anchor": "Iff:R",
+      "source_excerpt": "Iff:R d →Randg:R→Rare convex functions andgis non-decreasing, then\nh(x) =g(f(x))is convex.\n•The pointwise supremum of convex functions is convex.\n2.1 Online Learning with Convex Differentiable Losses11\nThe proofs are left as exercises.\nA very important property ofdifferentiableconvex functions is that we can construct a\nlinear lower bound to the function.\nTheorem 2.7(Rockafellar, 1970, Theorem 25.1 and Corollary 25.1.1)Supposef:R d →\n(−∞,+∞]is a ",
+      "source_excerpt_sha256": "9426ed755d158b2c6254936829de7bc4be4a2196780f40ea96a88e1ad91ea53c",
+      "mathematical_statement": "For convex f:R^d->R and convex nondecreasing g:R->R, g composed with f is convex.",
+      "dependencies": [
+        "Theorem 2.4"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": true,
+      "boundary_notes": "proof left as exercise; mandatory, explicitly real-valued.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:pointwise-supremum",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        10,
+        11
+      ],
+      "pdf_pages_1based": [
+        22,
+        23
+      ],
+      "source_anchor": "The pointwise supremum",
+      "source_excerpt": "The pointwise supremum of convex functions is convex.\n2.1 Online Learning with Convex Differentiable Losses11\nThe proofs are left as exercises.\nA very important property ofdifferentiableconvex functions is that we can construct a\nlinear lower bound to the function.\nTheorem 2.7(Rockafellar, 1970, Theorem 25.1 and Corollary 25.1.1)Supposef:R d →\n(−∞,+∞]is a convex function and letx∈int domf. Iffis differentiable atxthen\nf(y)≥f(x) +⟨∇f(x),y−x⟩,∀y∈R ",
+      "source_excerpt_sha256": "f2c909345ae824c8780f230a0f8dc6b700930989903abecffcf986cd084f9de4",
+      "mathematical_statement": "Pointwise supremum of convex functions is convex.",
+      "dependencies": [
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": true,
+      "boundary_notes": "proof left as exercise; mandatory. Source sentence leaves family indexing/empty-family conventions implicit.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:interior-first-order-optimality",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        11
+      ],
+      "pdf_pages_1based": [
+        23
+      ],
+      "source_anchor": "Moreover, if",
+      "source_excerpt": "Moreover, ifx ⋆ ∈intV, by choosingϵsmall enough such thaty=\nx⋆ −ϵ∇f(x ⋆)∈ V, we obtain thatx⋆ is a minimum iff∇f(x ⋆) =0.\nAnother critical property of convex functions is Jensen’s inequality.\nTheorem 2.9(Jensen’s inequality)Letf:R d →(−∞,+∞]be a measurable convex\nfunction andxbe anR d-valued random element on some probability space such thatE[x]\nexists andx∈domfwith probability 1. Then, we have\nE[f(x)]≥f(E[x]).\nWe can now see our first OCO algori",
+      "source_excerpt_sha256": "71777f8e75bf8e4b072da4cc76fcb1346c1828aef8541244e10b99d8e4fe223b",
+      "mathematical_statement": "Under Theorem2.8 assumptions and x_star in interior(V), x_star is a minimum iff gradient f(x_star)=0.",
+      "dependencies": [
+        "Theorem 2.8"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:strict-past-FTL",
+      "kind": "Algorithm definition",
+      "printed_pages": [
+        11,
+        12
+      ],
+      "pdf_pages_1based": [
+        23,
+        24
+      ],
+      "source_anchor": "In formulas",
+      "source_excerpt": "In formulas,\nxt = argmin\nx∈V\nt−1X\ni=1\nℓi(x),\n12Online Subgradient Descent\nAlgorithm 2.1Projected Online Gradient Descent (OGD)\nRequire:Non-empty closed convex setV ⊆R d,x 1 ∈ V,η1, . . . , ηT >0\n1:fort= 1toTdo\n2:Outputx t ∈ V\n3:Pay the lossℓ t(xt), for a convexℓ t, differentiable on an open set containingV\n4:Setg t =∇ℓ t(xt)\n5:x t+1 = ΠV(xt −η tgt) = argminy∈V ∥xt −η tgt −y∥ 2\n6:end for\nand, in the first round, we can play any admissible point. O",
+      "source_excerpt_sha256": "b864ab57508a04cba74fe336c5cf7e1533db53bf98b6a195da96f3fd9b5d059c",
+      "mathematical_statement": "FTL chooses x_t from argmin_{x in V}sum_{i=1}^{t-1}ell_i(x); first point arbitrary admissible.",
+      "dependencies": [
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Argmin can be empty or tied. Printed rule does not supply universal attainment, executability, or regret guarantee.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:weighted-distance-identity",
+      "kind": "Proof dependency",
+      "printed_pages": [
+        14
+      ],
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "have",
+      "source_excerpt": "have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n\u0012∥xt −u∥ 2\n2\n2ηt\n− ∥xt+1 −u∥ 2\n2\n2ηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2\n= ∥x1 −u∥ 2\n2\n2η1\n− ∥xT+1 −u∥ 2\n2\n2ηT\n+\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013 ∥xt+1 −u∥ 2\n2\n2 +\nTX\nt=1\nηt∥gt∥2\n2\n2\n≤ D2\n2η1\n+ D2\n2\nT−1X\nt=1\n\u0012 1\nηt+1\n− 1\nηt\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2η1\n+D 2\n\u0012 1\n2ηT\n− 1\n2η1\n\u0013\n+\nTX\nt=1\nηt∥gt∥2\n2\n2 − ∥xT+1 −u∥ 2\n2\n2ηT\n= D2\n2ηT\n+\nTX\nt=1\nηt\n2 ∥gt∥2\n2 − 1\n2ηT\n∥xT+1 −u∥ 2\n2 .\nIn the same way, whenη t is constant, ",
+      "source_excerpt_sha256": "68b124b09e247333ca11a7dec51cd4bfe7e352b3c54e4a75a9588a467394d781",
+      "mathematical_statement": "Sum_t[||x_t-u||^2/(2 eta_t)-||x_(t+1)-u||^2/(2 eta_t)] = ||x_1-u||^2/(2 eta_1)-||x_(T+1)-u||^2/(2 eta_T)+(1/2)sum_{t=1}^{T-1}(1/eta_(t+1)-1/eta_t)||x_(t+1)-u||^2.",
+      "dependencies": [
+        "Lemma 2.12"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Visual check: factor1/2 already printed outside parentheses in distance fraction; no source typo claim. Proof dependency, not additional numbered result.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:fixed-unbounded-domain-residual",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        14
+      ],
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "In the case of constant",
+      "source_excerpt": "In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in\nthe regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.\n•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced\nproofs require it, so it is good to be aware of it.\n•If we want to use time-varying learning rates, we need to control the terms∥x t −u∥2\n2. To\ndo it, we assume a bounded domainV. How",
+      "source_excerpt_sha256": "acf31834dcfd9e8d4ab919e7642c8728ee2785ca46dc4afb5f7cb5231856a801",
+      "mathematical_statement": "The constant-step Theorem2.13 bound holds even for D=infinity and depends on initial comparator distance. Both terminal residual terms are nonpositive and can be discarded; advanced uses keep them.",
+      "dependencies": [
+        "Theorem 2.13"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Bounded-domain-only treatment would omit source scope.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:step-size-algebraic-minimization",
+      "kind": "Unnumbered main bound",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "have to consider the expression",
+      "source_excerpt": "have to consider the expression\n∥u−x 1∥2\n2\n2η + η\n2\nTX\nt=1\n∥gt∥2\n2\nand minimize with respect toη. It is easy to see that the optimalηis ∥u−x1∥2√PT\nt=1 ∥gt∥2\n2\n, that would\ngive the regret bound\n∥u−x 1∥2\nvuut\nTX\nt=1\n∥gt∥2\n2 .\nHowever, we have a problem: in order to use this stepsize, we should know all the future gra-\ndients (that depend onηitself!), and the distance between the optimal solution and the initial\npoint. This is clearly impossible: r",
+      "source_excerpt_sha256": "497b143183c71ba285bf3991893af8fe05c15066a33786ebd856e9d73eb217ad",
+      "mathematical_statement": "For a=||u-x_1|| and S=sum||g_t||^2, source minimizes a^2/(2 eta)+eta S/2 and displays eta=a/sqrt(S), bound a sqrt(S). This unavailable oracle choice depends on future gradients (which themselves depend on eta) and unknown competitor distance.",
+      "dependencies": [
+        "Theorem 2.13"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Positive a,S yield attained optimum over eta>0. Zero cases require separate infimum/attainment handling; source leaves positivity implicit. Hindsight minimization is not a causal algorithm.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:diameter-gradient-coarse-tuning",
+      "kind": "Unnumbered main bound",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "For the moment",
+      "source_excerpt": "For the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also prove that the this regret\nupper bound",
+      "source_excerpt_sha256": "561d6117fa5573c468a580353269f854725f8243d95fbffc1226d728e5396807",
+      "mathematical_statement": "If ||g_t||<=L and bounded diameter gives ||u-x_1||<=D, constant eta=D/(L sqrt(T)) minimizes D^2/(2 eta)+eta L^2 T/2 and gives Regret_T(u)<=D L sqrt(T), Eq2.1.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:step-size-algebraic-minimization"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Positive horizon and nonzero D,L implicit in admissible positive step; zero cases need qualification. Distinct from decreasing-step standalone exercises.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:absolute-hinge-introduction",
+      "kind": "Unnumbered example",
+      "printed_pages": [
+        16
+      ],
+      "pdf_pages_1based": [
+        28
+      ],
+      "source_anchor": "What happens when",
+      "source_excerpt": "What happens when the losses are\nconvex but not differentiable? For example,ℓt(x) =|x−10|. Note that this situation is more\ncommon than one would think. For example, the hinge loss,ℓt(x) = max(1−yt⟨zt,x⟩,0),\nis not differentiable. It turns out that we can just use OGD, substitutingsubgradientsfor the\ngradients. For this, we need some more convex analysis.\n2.2.1 Convex Analysis Bits: Subgradients\nFirst, we need a couple of technical definitions.\nD",
+      "source_excerpt_sha256": "9ba42e26978b9ecb88ddb3622e5bf6305df84b27fdb7584701939dfd4a33a06e",
+      "mathematical_statement": "Convex nondifferentiable loss examples |x-10| and max(1-y_t<z_t,x>,0) motivate subgradients.",
+      "dependencies": [
+        "Example 2.24",
+        "Example 2.27"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Generic hinge nondifferentiability sentence has zero-normal exception: y_t*z_t=0 gives constant differentiable loss.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:closed-iff-lsc",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        16
+      ],
+      "pdf_pages_1based": [
+        28
+      ],
+      "source_anchor": "Note that in any Euclidean",
+      "source_excerpt": "Note that in any Euclidean space (and more generally in any Hausdorff space) a function\nis closed iff it is lower semicontinuous (Bauschke and Combettes, 2017, Lemma 1.24).\nExample 2.17The indicator function of a setV ⊂R d is closed iffVis closed.\nDefinition 2.18If a functionfis nowhere−∞and finite somewhere, thenfis called\nproper.\nIn this book, we are mainly interested in convex proper functions, which better conform\nto our intuition of what a c",
+      "source_excerpt_sha256": "74d4dfc22c7c562eb90efe308aa262c8aa2c8e922c54b996f8dd22efef94b910",
+      "mathematical_statement": "Closed function iff lower semicontinuous in Euclidean space; source also states general Hausdorff-space version.",
+      "dependencies": [
+        "Definition 2.16"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Retain broader source branch for scope review. Bauschke-Combettes Lemma1.24.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:subdifferential-domain",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        17
+      ],
+      "pdf_pages_1based": [
+        29
+      ],
+      "source_anchor": "Observe that if",
+      "source_excerpt": "Observe that iffis proper and convex, then∂f(x)is empty forx/∈domf, because\nthe inequality cannot be satisfied whenf(x) = +∞. Also, the domain of∂f, denoted by\ndom∂f, is the set of allx∈R d such that∂f(x)is non-empty; it is a subset ofdomf.\nA proper convex functionfis always 1 subdifferentiable onint domf(Rockafellar, 1970,\nTheorem 23.4).\nNote that we did not assume the functionfto be convex in the definition of a subgradient.\nHowever, the follow",
+      "source_excerpt_sha256": "8fa6b22c82fac34f49adf55bb56e453dba8aa1aeaccba55c29c48848c1d21b31",
+      "mathematical_statement": "Proper convex f has empty partial f(x) outside dom f. Define dom(partial f)={x:partial f(x) nonempty}; it is a subset of dom f.",
+      "dependencies": [
+        "Definition 2.20",
+        "Definition 2.18",
+        "unnumbered:extended-domain-indicator"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:interior-subgradient-existence",
+      "kind": "Unnumbered result",
+      "printed_pages": [
+        17
+      ],
+      "pdf_pages_1based": [
+        29
+      ],
+      "source_anchor": "A proper convex function",
+      "source_excerpt": "A proper convex functionfis always 1 subdifferentiable onint domf(Rockafellar, 1970,\nTheorem 23.4).\nNote that we did not assume the functionfto be convex in the definition of a subgradient.\nHowever, the following theorem tells us that if we have subgradients everywhere, then the\nfunction must be convex.\nTheorem 2.21Letf:R d →RandV ⊆R d be a convex set. If∂f(x)̸=∅for allx∈ V,\nthen the restriction offtoVis convex.\nProofFor anyx 1,x2 ∈ Vand for anyλ",
+      "source_excerpt_sha256": "3194a3752e607297ffdd899d8772dd13a98e195c1bd5f2728e22b0f90a55facd",
+      "mathematical_statement": "Every proper convex function has a nonempty subdifferential throughout interior(dom f).",
+      "dependencies": [
+        "Definition 2.20",
+        "Definition 2.18",
+        "Definition 2.3"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Rockafellar Theorem23.4; not merely converse Theorem2.21.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:relative-interior-footnote",
+      "kind": "Mathematical footnote",
+      "printed_pages": [
+        17
+      ],
+      "pdf_pages_1based": [
+        29
+      ],
+      "source_anchor": "The stronger version",
+      "source_excerpt": "The stronger version of this theorem uses therelative interiorof the domain off, however, we never need to\nuse it, so we will keep it simple.",
+      "source_excerpt_sha256": "f4921f24cf744acfa2598e6f03132e210e33e65fba7b5706c2cdf2835f3af6e6",
+      "mathematical_statement": "A stronger existence theorem uses relative interior(dom f); source says this book never needs it.",
+      "dependencies": [
+        "unnumbered:interior-subgradient-existence"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Preserved mathematical source/dependency note. Independent scope review must decide strengthened-variant obligation; do not silently omit or count as numbered theorem.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:uncountable-nondifferentiability",
+      "kind": "Unnumbered example",
+      "printed_pages": [
+        19
+      ],
+      "pdf_pages_1based": [
+        31
+      ],
+      "source_anchor": "Finally, let’s dispel",
+      "source_excerpt": "Finally, let’s dispel the common misconception that a convex function must be differen-\ntiable on its domain except possibly at countably many points. For example, consider the\nconvex functionf:R 2 →Rdefined asf(x) =|x 1|that is not differentiable on the line\nsegment betweenv= (0,0)andw= (0,1).\n2.2.2 Analysis with Subgradients\nAs I promised you, with the proper mathematical tools, analyzing online algorithms becomes\neasy. Indeed, switching from g",
+      "source_excerpt_sha256": "7fae7128145f97051b190a49fec114afcb0284e0e59f1eea73914b79db22e57e",
+      "mathematical_statement": "Convex f:R^2->R, f(x)=|x_1|, is nondifferentiable along the whole segment [(0,0),(0,1)], refuting countable-only nondifferentiability.",
+      "dependencies": [
+        "Example 2.24",
+        "unnumbered:affine-composition"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Ambient differentiability and full uncountable family; scalar isolated kink insufficient.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:actual-OSD-performance-transfer",
+      "kind": "Unnumbered main bound",
+      "printed_pages": [
+        19,
+        20
+      ],
+      "pdf_pages_1based": [
+        31,
+        32
+      ],
+      "source_anchor": "our analysis of",
+      "source_excerpt": "our analysis of\nOGD with differentiable losses holds as is when using subgradients instead of gradients. The\nreason is that the only property of the gradients that we used in the proof of Theorem 2.13\nwas that\nℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩,\nwhereg t =∇ℓ t(xt). However, the exact same property holds wheng t ∈∂ℓ t(xt). Hence,\nthe regret bounds we proved hold as well, just replacing differentiability with subdifferen-\ntiability and gradients with subgra",
+      "source_excerpt_sha256": "3b48c3366ecb20fedda377a8af5eaeb96ba8b39d84a3684e02877173433a45dd",
+      "mathematical_statement": "Replacing differentiability by subdifferentiability and gradients by legal chosen subgradients preserves the OGD analysis and both sharp Theorem2.13 bounds for actual OSD. Variable decreasing steps: Regret_T(u)<=D^2/(2*eta_T)+sum_{t=1}^T eta_t*||g_t||_2^2/2-||x_(T+1)-u||_2^2/(2*eta_T). Fixed steps: Regret_T(u)<=||u-x_1||_2^2/(2*eta)+(eta/2)*sum_{t=1}^T||g_t||_2^2-||x_(T+1)-u||_2^2/(2*eta).",
+      "dependencies": [
+        "Theorem 2.13",
+        "Lemma 2.31",
+        "Algorithm 2.2"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Need causal producer, feasibility, lawful feedback and accumulated guarantee; conditional one-step algebra alone insufficient.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:unit-exponents",
+      "kind": "Mathematical consistency example",
+      "printed_pages": [
+        20,
+        21
+      ],
+      "pdf_pages_1based": [
+        32,
+        33
+      ],
+      "source_anchor": "Let’s assign a symbolic unit",
+      "source_excerpt": "Let’s assign a symbolic unit to each quantity we are dealing with. For example, let’s denote\nthe units of our predictionsxby[x]and the units of the lossℓby[ℓ]. We can now check\neach formula by following a few simple rules. First, we have to make sure that each term\nhas the same units. Another rule to keep in mind is that transcendental functions are only\ndefined on unitless quantities. So, for example, we can take logarithms and exponentials of\nr",
+      "source_excerpt_sha256": "ca1df93e8a354c82ac47cfc9e96a8674153b673ed9735a0920d690a1c530ba6d",
+      "mathematical_statement": "[g]=[ell]/[x]; OSD requires [eta]=[x]^2/[ell]; both fixed-regret terms have units [ell]. Transcendental arguments dimensionless, probabilities dimensionless, probability densities reciprocal-variable units.",
+      "dependencies": [
+        "Algorithm 2.2",
+        "Theorem 2.13"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Dimensional algebra recorded separately from rhetoric about applications.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:coordinate-rescaling",
+      "kind": "Unnumbered example",
+      "printed_pages": [
+        21,
+        22
+      ],
+      "pdf_pages_1based": [
+        33,
+        34
+      ],
+      "source_anchor": "Let me stress",
+      "source_excerpt": "Let me stress that having a formula with wrong units is not only a theoretical issue, but\na very practical one. Indeed, constants with hidden units in any algorithm can be prob-\nlematic. Let’s show it with an example. For example, suppose our variablex t represents a\nlocation in meters, and we use a learning rate schedule such asη= 1/\n√\nT. Now, suppose\nwe change our unit of measurement forx t from meters to kilometers. Our new variable is\nx′\nt =x",
+      "source_excerpt_sha256": "07e630635db44f1adc6286646848c114ebf44aa40c2778b5aecba201ca40a5ad",
+      "mathematical_statement": "For x_prime=x/1000, g_prime=1000*g. Keeping eta=1/sqrt(T) gives x_next=x-10^6*g/sqrt(T) after conversion back. Trajectory invariance requires eta_prime=eta/10^6.",
+      "dependencies": [
+        "Algorithm 2.2",
+        "unnumbered:unit-exponents"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Exact one-million factor retained.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:convex-to-linear-reduction",
+      "kind": "Unnumbered main bound",
+      "printed_pages": [
+        22
+      ],
+      "pdf_pages_1based": [
+        34
+      ],
+      "source_anchor": "2.3 Linear Regret",
+      "source_excerpt": "2.3 Linear Regret: From Convex Losses to Linear Losses\nLet’s take a deeper look at this step:\nℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩,∀u∈ V.\nSumming over time, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n⟨gt,xt −u⟩,∀u∈ V.\nNow, define the linear (and convex) losses ˜ℓt(x) :=⟨g t,x⟩, so we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n(˜ℓt(xt)− ˜ℓt(u)),∀u∈ V.\nThis is more powerful than it seems: we upper-bounded the regret with respect to the convex\nlossesℓ t with a regret wit",
+      "source_excerpt_sha256": "f8ef282d613a9ee2ddff583a40121976d5986a68549a7f7bc1f489c5d4f85d61",
+      "mathematical_statement": "For actual decisions and legal g_t in partial ell_t(x_t), for every u in V, sum_t(ell_t(x_t)-ell_t(u))<=sum_t<g_t,x_t-u>=sum_t(tilde ell_t(x_t)-tilde ell_t(u)), tilde ell_t(x)=<g_t,x>. Feeding these vectors to an arbitrary-linear-loss online algorithm yields OCO guarantee. OLO minimizes linear regret for arbitrary vector sequences.",
+      "dependencies": [
+        "Definition 2.20",
+        "Example 2.5",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Same actual iterates/feedback order required; reduction not always optimal, Example2.14.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "unnumbered:minimizer-free-regret",
+      "kind": "Definition/limitation",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "the less general definition",
+      "source_excerpt": "the less general definition of regret (derived from the setting of\nlearning with experts (Section 6.8)) as\nTX\nt=1\nℓt(xt)−min\nu∈V\nTX\nt=1\nℓt(u)\nthat requires the existence of a minimizer of the sum of the losses, and (ii) the fact that OSD\nwith time-varying learning rates has a vacuous regret upper bound on unbounded domains.\nHowever, we now know that both issues can easily be fixed: (i) by defining the regret with\nrespect to arbitrary competitors,",
+      "source_excerpt_sha256": "59a787ee14148e4198650a1459f77c66e10d9d2b547fab16a3802818e582411b",
+      "mathematical_statement": "Alternative sum_t ell_t(x_t)-min_{u in V}sum_t ell_t(u) requires minimizer attainment; comparator-relative regret avoids it. Fixed-step bounds can handle unbounded domains; variable-step diameter bound is vacuous at infinite diameter.",
+      "dependencies": [
+        "unnumbered:game-regret",
+        "Theorem 2.13"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Mathematical History Bits assertions retained; historical attributions/speculation not proof obligations.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "forward:prescient-lookahead",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        14
+      ],
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "these terms become non-positive",
+      "source_excerpt": "these terms become non-positive if we were allowed to observeℓ t before producingx t,\nsee Section 15.5.1.\n•In the case of constantη, the bound holds even whenD=∞. Moreover, the first term in\nthe regret depends on ourinitial condition, that is, how farx 1 is from the competitoru.\n•The last term in both bounds is non-positive, so it is usually discarded. Yet, some advanced\nproofs require it, so it is good to be aware of it.\n•If we want to use time-",
+      "source_excerpt_sha256": "76eda1d8d1c97ff83f9937489bf8921f564a53627124d77755c51e991bb53c81",
+      "mathematical_statement": "Observing ell_t before output can make stability/gradient-square terms nonpositive; Section15.5.1.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "15.5.1"
+    },
+    {
+      "source_id": "forward:unbounded-variable-OGD-failure",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        14
+      ],
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "OGD can fail",
+      "source_excerpt": "OGD can fail in unbounded domains with time-varying learning rates.\nThat said, in the stochastic setting, you can still use a time-varying learning rate in SGD\nwith an unbounded domain, as we will see in Chapter 3.\n•Another important observation is that the regret bound helps us choose the learning rates\nηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a\nregret analysis is not justified at all.\nAs we said, t",
+      "source_excerpt_sha256": "78ab6cf65d91bc910e501e4229ed120df39590be9a0cf3ec23b888b22c6ed4ab",
+      "mathematical_statement": "OGD can fail on unbounded domains with varying steps; Section5.2.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "5.2"
+    },
+    {
+      "source_id": "forward:unbounded-SGD",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        14
+      ],
+      "pdf_pages_1based": [
+        26
+      ],
+      "source_anchor": "in the stochastic setting",
+      "source_excerpt": "in the stochastic setting, you can still use a time-varying learning rate in SGD\nwith an unbounded domain, as we will see in Chapter 3.\n•Another important observation is that the regret bound helps us choose the learning rates\nηt. Indeed, it is the only guideline we have. Any other choice that is not justified by a\nregret analysis is not justified at all.\nAs we said, the presence of untuned parameters like the learning rates makes no sense in\nonl",
+      "source_excerpt_sha256": "6add4309b975f2cd9a336b1003776ca4fc252fcf767c5fb0b361ad3d4f8dd861",
+      "mathematical_statement": "Stochastic SGD may use varying steps on unbounded domains; Chapter3.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "3"
+    },
+    {
+      "source_id": "forward:oracle-rate-impossibility",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "this kind of rate is completely impossible",
+      "source_excerpt": "this kind of rate is completely impossible because it is ruled out by\na lower bound we will show in Chapter 5. Yet, we will see that it is indeed possible to achieve\nvery similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bound",
+      "source_excerpt_sha256": "5413d9df9421ffe645cc8ff8e256193064f478c82496e10dd31c4ded0ccc60c0",
+      "mathematical_statement": "General oracle-distance-times-energy rate ruled out by a Chapter5 lower bound.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "5"
+    },
+    {
+      "source_id": "forward:adaptive-oracle-like",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "very similar rates using",
+      "source_excerpt": "very similar rates usingadaptive(Section 4.2) andparameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret",
+      "source_excerpt_sha256": "cd7a307f3dd90a96a36c32e74286cb329be085aabe9eb355f8c4d682bc937e17",
+      "mathematical_statement": "Adaptive algorithms achieve similar rates under their actual guarantees; Section4.2.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "4.2"
+    },
+    {
+      "source_id": "forward:parameter-free",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "parameter-freealgorithms",
+      "source_excerpt": "parameter-freealgorithms (Chapter 13).\nFor the moment, we can observe that we might be happy to minimize a loose upper bound.\nIn particular, assume that the norm of the gradients is bounded byL, that is∥g t∥2 ≤L.\nAlso, assuming a bounded diameter, we can upper bound∥u−x 1∥2 byD. Hence, we have\nη⋆ = argmin\nη\nD2\n2η + ηL2T\n2 = D\nL\n√\nT\n,\nthat gives a regret bound of\nDL\n√\nT .(2.1)\nSo, indeed, the regret is sublinear in time. In Chapter 5, we will also",
+      "source_excerpt_sha256": "514c5c3a4ed54486e2c1245c124bcf097e705ee546fccfcac8082e132a9bb6f2",
+      "mathematical_statement": "Parameter-free algorithms achieve related rates; Chapter13.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "13"
+    },
+    {
+      "source_id": "forward:minimax-DLsqrtT",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "upper bound is optimal",
+      "source_excerpt": "upper bound is optimal up to constant multiplicative factors.\nExample 2.14Consider the guessing game of the first chapter; we can easily solve it with\nOGD. Indeed, we just need to calculate the gradients, prove that they are bounded, and find\na way to calculate the projection of a real number in[0,1]. So,ℓ ′\nt(x) = 2(x−y t), that is\nbounded forx, yt ∈[0,1]. The projection on[0,1]is justΠ [0,1](x) = min(max(x,0),1).\nWith the optimal learning rate,",
+      "source_excerpt_sha256": "3d8b595ad8aaa05c0f1168ac8501d43bf01d94b293ec4721444c8021563823b2",
+      "mathematical_statement": "DL sqrt(T) upper bound optimal up to constant factors; Chapter5.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "5"
+    },
+    {
+      "source_id": "forward:square-OGD-improvement",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        15
+      ],
+      "pdf_pages_1based": [
+        27
+      ],
+      "source_anchor": "make it optimal in Chapter 4",
+      "source_excerpt": "make it optimal in Chapter 4.\nExample 2.15Let’s consider an example of the OCO setting. Consider the problem of\npredicting at daytthe opening price of a stock based on a linear combination of the opening\nprices of the pastddays, represented by a vectorz t ∈R d. So, our prediction at timetwill\nbe⟨z t,xt⟩and the feasible set isV=R d. Once we make our prediction, we receive the\ntrue opening pricey t, and we pay theHuber loss, a convex loss function ",
+      "source_excerpt_sha256": "183adbaabb9fc5e5ee8cc69a89e844d6f8c95665edc6e96b0f5757cc8fc71c26",
+      "mathematical_statement": "Chapter4 improves OGD tuning for square guessing to optimal rate.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "4"
+    },
+    {
+      "source_id": "forward:FTRL-unbounded",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "using different algorithms",
+      "source_excerpt": "using different algorithms, for example Follow-\nthe-Regularized-Leader (FTRL) which we will see in Chapter 7. Indeed, even in offline\noptimization, the existence of a minimizer is not required to guarantee that the suboptimality\ngap goes to zero, as we will see in Example 3.2. So, it is probably time for the community\nto stop using the crutch of bounded domains just to avoid technical difficulties.\n2.5 Exercises\nProblem 2.1Prove that PT\nt=1\n1√\nt ",
+      "source_excerpt_sha256": "e8b47f7a98181b1b0d4a52f55261905d003d5dbe073d41180acf445848aee1bf",
+      "mathematical_statement": "FTRL and other algorithms can address unbounded-domain varying-step issues; Chapter7.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "7"
+    },
+    {
+      "source_id": "forward:offline-no-minimizer",
+      "kind": "Forward mathematical claim",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "the existence of a minimizer is not required",
+      "source_excerpt": "the existence of a minimizer is not required to guarantee that the suboptimality\ngap goes to zero, as we will see in Example 3.2. So, it is probably time for the community\nto stop using the crutch of bounded domains just to avoid technical difficulties.\n2.5 Exercises\nProblem 2.1Prove that PT\nt=1\n1√\nt ≤2\n√\nT−1.\nProblem 2.2Using the inequality in the previous exercise, prove that the learning rate\nηt = D\nL\n√\nt gives rise to a regret only a constant",
+      "source_excerpt_sha256": "e42c374714b80db5e536c54b0a72ba5f7158e7215dcbfd82f51ee2cfb78ee25e",
+      "mathematical_statement": "Offline suboptimality gap can tend to zero without minimizer attainment; source points to Example3.2.",
+      "dependencies": [
+        "Theorem 2.13",
+        "unnumbered:game-regret"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": true,
+      "standalone_exercise": false,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Required ownership/reconciliation edge. Exact later theorem and qualifying hypotheses not enumerated from later chapters in this Chapter2-only task; no discharge claimed.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed",
+      "owner_source_location": "Example3.2"
+    },
+    {
+      "source_id": "Problem 2.1",
+      "kind": "Standalone exercise",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "Problem 2.1",
+      "source_excerpt": "Problem 2.1Prove that PT\nt=1\n1√\nt ≤2\n√\nT−1.\nProblem 2.2Using the inequality in the previous exercise, prove that the learning rate\nηt = D\nL\n√\nt gives rise to a regret only a constant multiplicative factor worse than the one in\n(2.1).\nProblem 2.3Calculate the subdifferential set of theϵ-insensitive loss:f(x) = max(|x−\ny| −ϵ,0). It is a loss used in regression problems where we do not want to penalize predic-\ntionsxwithin±ϵof the correct valuey.\nPr",
+      "source_excerpt_sha256": "bedb7463e1984710cce6c47ffe09d0bb77b7c51289deee4e3ebb6350306cdd22",
+      "mathematical_statement": "Prove sum_{t=1}^T1/sqrt(t)<=2 sqrt(T)-1.",
+      "dependencies": [],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": false,
+      "standalone_exercise": true,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Separate exercise inventory, not default main-text obligation.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Problem 2.2",
+      "kind": "Standalone exercise",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "Problem 2.2",
+      "source_excerpt": "Problem 2.2Using the inequality in the previous exercise, prove that the learning rate\nηt = D\nL\n√\nt gives rise to a regret only a constant multiplicative factor worse than the one in\n(2.1).\nProblem 2.3Calculate the subdifferential set of theϵ-insensitive loss:f(x) = max(|x−\ny| −ϵ,0). It is a loss used in regression problems where we do not want to penalize predic-\ntionsxwithin±ϵof the correct valuey.\nProblem 2.4Using the definition of subgradient",
+      "source_excerpt_sha256": "9409ed07356cf637e2156c6c53c3c8d4577c0b33ade869f1965122ac79257092",
+      "mathematical_statement": "Using Problem2.1, prove eta_t=D/(L sqrt(t)) gives regret within a constant factor of Eq2.1.",
+      "dependencies": [
+        "Problem 2.1",
+        "Theorem 2.13"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": false,
+      "standalone_exercise": true,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Separate exercise inventory, not default main-text obligation.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Problem 2.3",
+      "kind": "Standalone exercise",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "Problem 2.3",
+      "source_excerpt": "Problem 2.3Calculate the subdifferential set of theϵ-insensitive loss:f(x) = max(|x−\ny| −ϵ,0). It is a loss used in regression problems where we do not want to penalize predic-\ntionsxwithin±ϵof the correct valuey.\nProblem 2.4Using the definition of subgradient, find the subdifferential set off(x) =\n∥x∥2,x∈R d.\nProblem 2.5Consider Projected Online Subgradient Descent for the Example 2.10 on the\nfailure of Follow-the-Leader: can we use it on that p",
+      "source_excerpt_sha256": "0bab378d68c50a06f4dd75b1b673f95a2938d6f2e9ab932244aaef0b02010463",
+      "mathematical_statement": "Calculate subdifferential of epsilon-insensitive f(x)=max(|x-y|-epsilon,0).",
+      "dependencies": [
+        "Definition 2.20",
+        "Theorem 2.26",
+        "Example 2.24"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": false,
+      "standalone_exercise": true,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Separate exercise inventory, not default main-text obligation.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Problem 2.4",
+      "kind": "Standalone exercise",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "Problem 2.4",
+      "source_excerpt": "Problem 2.4Using the definition of subgradient, find the subdifferential set off(x) =\n∥x∥2,x∈R d.\nProblem 2.5Consider Projected Online Subgradient Descent for the Example 2.10 on the\nfailure of Follow-the-Leader: can we use it on that problem? Would it guarantee sublinear\nregret? How would the behaviour of the algorithm differ from FTL?",
+      "source_excerpt_sha256": "df6ba7fd11ae107c3bb2504f3fe49771b0f82f5871230a569f225995739336ab",
+      "mathematical_statement": "Calculate subdifferential of f(x)=||x||_2 on R^d from definition.",
+      "dependencies": [
+        "Definition 2.20"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": false,
+      "standalone_exercise": true,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Separate exercise inventory, not default main-text obligation.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    },
+    {
+      "source_id": "Problem 2.5",
+      "kind": "Standalone exercise",
+      "printed_pages": [
+        23
+      ],
+      "pdf_pages_1based": [
+        35
+      ],
+      "source_anchor": "Problem 2.5",
+      "source_excerpt": "Problem 2.5Consider Projected Online Subgradient Descent for the Example 2.10 on the\nfailure of Follow-the-Leader: can we use it on that problem? Would it guarantee sublinear\nregret? How would the behaviour of the algorithm differ from FTL?",
+      "source_excerpt_sha256": "57ab7bf1d53f29abb74227d907cef906046ff27ece7525781784da6688f3db44",
+      "mathematical_statement": "Analyze OSD applicability, sublinear regret, and behavior versus FTL on Example2.10.",
+      "dependencies": [
+        "Algorithm 2.2",
+        "Example 2.10"
+      ],
+      "dependency_relation": "source/mathematical dependency, not verified Lean proof-term graph",
+      "required_main_text": false,
+      "standalone_exercise": true,
+      "proof_left_as_exercise": false,
+      "boundary_notes": "Separate exercise inventory, not default main-text obligation.",
+      "source_audit_status": "candidate; independent review pending",
+      "implementation_acceptance": "not assessed"
+    }
+  ],
+  "ledger_reconciliation": {
+    "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/qualified-source-reconciliation-draft-v4.json",
+    "sha256": "7ef4eae2a9a26720445e4399ed23e24146b5f478c4b051b875ff7674995bfdb2",
+    "stage": "qualified local-content reconciliation candidate; not chapter acceptance",
+    "source_container_acceptance": false,
+    "chapter_complete": false,
+    "historical_container_count": 65,
+    "independent_mandatory_obligation_total": null,
+    "forward_rows": [
+      {
+        "source_id": "additional:prescient-lookahead-nonpositive-stability",
+        "owner_chapter": 15,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "exact separately delivered candidate bound; chapter-source reconciliation pending"
+      },
+      {
+        "source_id": "forward:chapter5-unbounded-variable-OGD-failure",
+        "owner_chapter": 5,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "exact separately delivered candidate bound; chapter-source reconciliation pending"
+      },
+      {
+        "source_id": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+        "owner_chapter": 5,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "pending"
+      },
+      {
+        "source_id": "forward:chapter5-DLsqrtT-minimax-optimality",
+        "owner_chapter": 5,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "pending"
+      },
+      {
+        "source_id": "forward:chapter3-unbounded-SGD",
+        "owner_chapter": 3,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "pending"
+      },
+      {
+        "source_id": "forward:chapter4-adaptive-oracle-like-rates",
+        "owner_chapter": 4,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "pending"
+      },
+      {
+        "source_id": "forward:chapter4-square-OGD-improvement",
+        "owner_chapter": 4,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "pending"
+      },
+      {
+        "source_id": "forward:chapter13-parameter-free-oracle-like-rates",
+        "owner_chapter": 13,
+        "mathematical_dependency_status": "required/open",
+        "exact_future_theorem_enumeration": "pending"
+      }
+    ],
+    "boundary": "Ledger claims only; no current BODY/FINAL receipt or Lean proof audit. Overlapping source containers are not an acceptance denominator."
+  },
+  "remaining_beyond_adaptive_package": [
+    "Reconcile every mandatory local numbered/unnumbered source branch with exact current declarations and BODY/FINAL evidence. This inventory does not label already implemented mathematics missing.",
+    "Beyond adaptive forward work: Chapter5 oracle-distance-energy impossibility and DLsqrt(T) minimax lower bounds, Chapter3 unbounded varying-step SGD, Chapter4 square-loss OGD improvement, and Chapter13 parameter-free guarantees.",
+    "Prescient/lookahead Section15.5.1 and Chapter5 unbounded-variable-step OGD have ledger candidate packages but still require source-container reconciliation according to the consulted ledger.",
+    "Printed23 FTRL/unbounded-domain and offline-no-minimizer claims need explicit reconciliation with Chapter7/Chapter3 ownership; navigation alone does not discharge them.",
+    "Keep definitions, full example branches, exercise-deferred main claims, extended-real/causal/degenerate cases. Independent mandatory proof denominator remains unknown."
+  ],
+  "review_issues": [
+    "No chapter freeze/completion. All numbered navigation entries and two algorithms checked; row counts include overlapping dependencies and are not proof counts.",
+    "Norm convexity and four closure bullets remain mandatory despite proofs left as exercises. Standalone Problems2.1-2.5 remain separate.",
+    "Both sharp Theorem2.13 branches, terminal residuals, unbounded fixed-step validity and actual OSD transfer must survive reconciliation.",
+    "Visual PDF26 confirms printed factor1/2 in weighted-distance identity; no missing-half correction justified.",
+    "Zero-distance/energy/D/L cases in learning-rate displays require explicit admissibility and min/infimum review.",
+    "Huber threshold sign, hinge zero-normal exception, finite-max family nonemptiness, Lipschitz L convention need explicit source qualification.",
+    "History Bits printed23 includes FTRL/unbounded-domain and offline-no-minimizer mathematics; do not exclude by section heading.",
+    "Source literally points no-minimizer claim to Example3.2; later-chapter correctness of that pointer is outside this task and not repaired here.",
+    "Hausdorff generality and relative-interior footnote retained for independent branch-scope adjudication.",
+    "Adaptive Eq4.4/Theorem4.14 are Chapter4 forward material, not new numbered Chapter2 results. Their completion does not discharge all other required claims.",
+    "No compiler, source-to-Lean equivalence, acceptance receipt, merge, main/live update or publication verified."
+  ],
+  "memory_use": "Historical memory lookup for orientation only; source assertions freshly read from frozen PDF, ledger claims from cited current file.",
+  "report_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/chapter2-source-inventory-20261011-v1.md",
+  "report_sha256": "896e9052a0367adffde95f91545ac6d3d005d2a9a9d320416ba16dfb8c60f1d8"
+}

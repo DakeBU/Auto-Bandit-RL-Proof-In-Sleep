@@ -1,0 +1,7 @@
+theorem canonical_theorem4_14 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)
+    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :
+    regret V (Real.sqrt 2 / 2) D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤
+      D * Real.sqrt (2 * energy V (Real.sqrt 2 / 2) D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T) := by

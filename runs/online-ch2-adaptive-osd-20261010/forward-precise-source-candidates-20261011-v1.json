@@ -1,0 +1,1395 @@
+{
+  "schema_version": 1,
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": null,
+  "task_scope": "precise still-required Chapter2 forward contracts and proof dependencies only; no Chapter3+ proof advancement",
+  "source": {
+    "path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256_before": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "sha256_after": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "unchanged": true
+  },
+  "status": "source candidates for independent review; not accepted/frozen/complete",
+  "targets": [
+    {
+      "id": "SGD-varying",
+      "ledger_container": "forward:chapter3-unbounded-SGD",
+      "source": {
+        "pdf_pages_1based": [
+          36,
+          37
+        ],
+        "printed_pages": [
+          24,
+          25
+        ],
+        "marker": "Theorem 3.1",
+        "excerpt": "Theorem 3.1LetVbe a non-empty closed convex set ofR d,F(x) =E[f(x,ξ)]where\nthe expectation is with respect toξdrawn from a distributionρover some vector spaceD,\nandf:R d × D →(−∞,+∞]is convex and subdifferentiable in the first argument on\nV. DrawTsamplesξ 1, . . . ,ξT i.i.d. fromρand construct the sequence of lossesℓ t(x) =\nαtf(x,ξ t), whereα t >0are deterministic. Run any Online Convex Optimization (OCO)\nalgorithm over the lossesℓ t onV, to construct the sequence of predictionsx 1, . . . ,xT . The\nalgorithm may be randomized, but its internal ",
+        "excerpt_sha256": "390b4c125a8e28d2cbae7b170d76386a460c9844829ed73ac9e9c19c840161c6"
+      },
+      "statements": [
+        "Theorem3.1: V nonempty closed convex in R^d; F(x)=E_rho[f(x,xi)], f:R^d x D->(-infinity,+infinity] convex and subdifferentiable in x on V. Draw T iid samples, deterministic alpha_t>0, ell_t(x)=alpha_t f(x,xi_t). Any causal OCO algorithm, whose internal randomness is independent of samples, gives E[F(sum alpha_t x_t/sum alpha_t)]<=F(u)+E[Regret_T(u)]/sum alpha_t for every u in V.",
+        "Example3.2 context: finite N>=1 training pairs z_i in R^d, y_i in {-1,1}, R=max_i||z_i||_2, uniform iid training-point sampling, F(x)=N^(-1)sum max(1-y_i<z_i,x>,0), V=R^d, x_1=0. It explicitly assumes argmin F nonempty and, for eta=1/(R sqrt(T)), gives E[F(T^(-1)sum x_t)]-F(x_star)<=R(||x_star||_2^2+1)/(2 sqrt(T)), every minimizer x_star.",
+        "Example3.3: same setting, weighted losses ell_t(x)=max(1-y_t<z_t,x>,0)/(R sqrt(t)), constant OSD eta=1. Thus update is SGD with effective unweighted step1/(R sqrt(t)). For every minimizer x_star, E[F((sum x_t/sqrt(t))/(sum1/sqrt(t)))]-F(x_star) <= (||x_star||^2+sum1/t)/(2 sum1/(R sqrt(t))) <= R(||x_star||^2+1+ln T)/(4 sqrt(T+1)-4)."
+      ],
+      "dependencies": [
+        "C2 fixed OSD bound",
+        "Jensen2.9",
+        "conditional expectation/independence",
+        "hinge2.27",
+        "harmonic and inverse-square-root sums"
+      ],
+      "reuse_keys": [
+        "jensen",
+        "expectation",
+        "hinge",
+        "policy-fixed"
+      ],
+      "review_issues": [
+        "This is stochastic iid weighted averaging on an unbounded domain, not adversarial varying-step OGD. Require T>=1,N>=1,R>0 for printed denominators; R=0 needs separate branch.",
+        "Theorem3.1 leaves measurability/integrability details implicit. Exact conditional-expectation contract and independent algorithm randomness must be frozen; do not replace with supplied expected-regret assumptions alone."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "no-minimizer",
+      "ledger_container": "extra-history:offline-no-minimizer",
+      "source": {
+        "pdf_pages_1based": [
+          38
+        ],
+        "printed_pages": [
+          26
+        ],
+        "marker": "Example 3.5",
+        "excerpt": "Example 3.5Consider a problem of binary classification, with inputsz i ∈R d and outputs\nyi ∈ {−1,1}. The loss function is the logistic loss:f(x,(z, y)) = ln(1+exp(−y⟨z,x⟩)).\nSuppose that you want to minimize the training loss over a training set ofNsamples,\n{(zi, yi)}N\ni=1. Also, assume the maximum L 2 norm of the samples isR. That is, we want\nto minimize\nmin\nx\n \nF(x) := 1\nN\nNX\ni=1\nln(1 + exp(−yi⟨zi,x⟩))\n!\n.\nSo, run the reduction described in Theorem 3.1 forTiterations using OSD. In each iteration,\nconstructℓ t(x) = ln(1 + exp(−y t⟨zt,x⟩))by sa",
+        "excerpt_sha256": "4c1612f6c86f88fbe0d3cfa51a8f872b86f4ad393a59f46364a80657331a215d"
+      },
+      "statements": [
+        "Chapter2 printed23/PDF35 literally points to Example3.2, but Example3.2 assumes argmin F nonempty. Proposed corrected target is Example3.5, printed26/PDF38; change is not accepted here.",
+        "Example3.5: finite training pairs z_i in R^d,y_i in {-1,1}, ||z_i||<=R, F(x)=N^(-1)sum ln(1+exp(-y_i<z_i,x>)). Uniform iid sample each round, OSD on R^d, x_1=0, eta=1/(R sqrt(T)): E[F(T^(-1)sum x_t)] <= R/(2 sqrt(T))+min_{u in R^d}(F(u)+R||u||^2/(2 sqrt(T))).",
+        "For linearly separable data, inf F=0 and F has no finite minimizer; the comparator/regularized bound remains meaningful. The Chapter2 suboptimality-to-infimum convergence claim requires a derived epsilon-comparator limit argument; no extra finite-T convergence constant is printed."
+      ],
+      "dependencies": [
+        "SGD-varying:Theorem3.1",
+        "logistic convexity and gradient bound",
+        "C2 fixed OSD bound",
+        "regularized minimizer attainment",
+        "epsilon-comparator limit"
+      ],
+      "reuse_keys": [
+        "jensen",
+        "expectation",
+        "policy-fixed"
+      ],
+      "review_issues": [
+        "Literal wrong pointer versus proposed correction must receive independent review. No silent substitution.",
+        "R>0,N>=1,T>=1 denominator conditions; preserve no assumption argmin F nonempty. Logistic-specific terminal not found."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "square-improvement",
+      "ledger_container": "forward:chapter4-square-OGD-improvement",
+      "source": {
+        "pdf_pages_1based": [
+          49,
+          50
+        ],
+        "printed_pages": [
+          37,
+          38
+        ],
+        "marker": "Theorem 4.7",
+        "excerpt": "Theorem 4.7LetVbe a non-empty closed convex set inR d. Assume that the functions\nℓt :R d →(−∞,+∞]areµ t-strongly convex with respect to∥ · ∥2 and subdifferentiable\nonV, whereµ t >0. Use OSD in Algorithm 2.2 with stepsizes equal toη t = 1Pt\ni=1 µi\n. Then,\nfor anyu∈ V, we have the following regret guarantee\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤ 1\n2\nTX\nt=1\n∥gt∥2\n2Pt\ni=1 µi\n.\nProofFrom the assumption ofµ t-strong convexity of the functionsℓ t, we have that\nℓt(xt)−ℓ t(u)≤ ⟨gt,xt −u⟩ −µt\n2 ∥xt −u∥ 2\n2 .\nFrom the fact thatη t = 1Pt\ni=1 µi\n, we have\n1\n2η1\n− µ1\n2 = 0",
+        "excerpt_sha256": "a87a1552d3ececf25a0d02abbc8b71c2fb16ef4902f6c3a7f9fdb7ef279c803c"
+      },
+      "statements": [
+        "Theorem4.7: V nonempty closed convex in R^d; ell_t:R^d->(-infinity,+infinity] mu_t-strongly convex in Euclidean norm and subdifferentiable on V, mu_t>0. Algorithm2.2 with eta_t=1/(sum_{i=1}^t mu_i) gives Regret_T(u)<=1/2 sum_{t=1}^T ||g_t||_2^2/(sum_{i=1}^t mu_i) for every u in V.",
+        "Corollary4.8: same setting, mu_t=mu>0 and each loss L-Lipschitz on an open set containing V, gives Regret_T(u)<=L^2/(2mu)*(1+ln T).",
+        "Example4.11: square guessing on [0,1], ell_t(x)=(x-y_t)^2, y_t in [0,1], curvature2 and derivative2(x-y_t); eta_t=1/(2t) gives Regret_T(u)<=1+ln T for every u in [0,1], T>=1."
+      ],
+      "dependencies": [
+        "strong-convexity4.1-4.2",
+        "Lemma2.31",
+        "actual Algorithm2.2",
+        "harmonic upper bound",
+        "square curvature2 and gradient<=2"
+      ],
+      "reuse_keys": [
+        "square",
+        "mean",
+        "policy-step"
+      ],
+      "review_issues": [
+        "Bind Example4.11 directly through Theorem4.7 and on-domain gradient bound. Square losses are not2-Lipschitz on any open neighborhood of [0,1] when labels hit endpoints, so plugging L=2 directly into Corollary4.8 changes its premise.",
+        "Existing mean-predictor theorem has4+4 ln T, not the printed1+ln T. Need actual eta_t=1/(2t) trajectory identity and sharp guarantee; name reuse alone insufficient."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "minimax",
+      "ledger_container": "forward:chapter5-DLsqrtT-minimax-optimality",
+      "source": {
+        "pdf_pages_1based": [
+          62,
+          63
+        ],
+        "printed_pages": [
+          50,
+          51
+        ],
+        "marker": "Theorem 5.1",
+        "excerpt": "Theorem 5.1LetV ⊂R d be any non-empty bounded closed convex subset. LetD=\nmaxv,w∈V ∥v−w∥ 2 >0be the diameter ofV. LetAbe any deterministic algorithm for\nOnline Linear Optimization (OLO) onV. LetTbe any positive integer. Then, there exists a\nsequence of vectorsg1, . . . ,gT with∥g t∥2 ≤Landu∈ Vsuch that the regret of algorithm\n50\n5.1 Lower Bound for Bounded Online Linear Optimization51\nAsatisfies\nRegretT (u) =\nTX\nt=1\n⟨gt,xt⟩ −\nTX\nt=1\n⟨gt,u⟩ ≥\n√\n2LD\n√\nT\n4 .\nProofLet’s denote byRegret T := maxu∈V RegretT (u). Letv,w∈ Vsuch that∥v−\nw∥2 =D. Letz= v−",
+        "excerpt_sha256": "c5f02ca2241db39e55fd49e0f4b567fcf453c83599091b2ad945b1e5f60257e1"
+      },
+      "statements": [
+        "Theorem5.1: for any nonempty bounded closed convex V subset R^d with diameter D=max_{v,w in V}||v-w||_2>0, any deterministic causal OLO algorithm on V, and every integer T>=1, there exist g_1,...,g_T with ||g_t||_2<=L and u in V such that sum_t<g_t,x_t-u> >= sqrt(2)*L*D*sqrt(T)/4.",
+        "No symmetry of V is required (Remark5.2). Remark5.3 extends to randomized algorithms with expected regret over internal randomness; this is a separate quantifier branch, not a pathwise randomized conclusion."
+      ],
+      "dependencies": [
+        "A.14-p1",
+        "finite-horizon causal Rademacher independence",
+        "diameter attainment",
+        "finite probabilistic method"
+      ],
+      "reuse_keys": [],
+      "review_issues": [
+        "L nonnegative/positive is implicit in norm bound and construction; freeze convention. Preserve exists sequence and comparator after arbitrary algorithm, every positive horizon.",
+        "No dedicated Theorem5.1 terminal found in scoped library/contracts search; unrelated bandit lower bounds do not establish this source statement."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "oracle-impossibility",
+      "ledger_container": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+      "source": {
+        "pdf_pages_1based": [
+          68,
+          69,
+          70
+        ],
+        "printed_pages": [
+          56,
+          57,
+          58
+        ],
+        "marker": "Theorem 5.8",
+        "excerpt": "Theorem 5.8LetT∈Nbe even and letAbe any OLO algorithm that guarantees regret\nat mostϵ T >0against the null competitor on any sequence ofTlinear andL-Lipschitz\nlossesℓ t :R→Rfort= 1, . . . , T. LetU >0be such that1≤W(\n√\neTUL\n8ϵT\n)≤\n√\nT\n2 . Then,\n5.3 Lower Bound for Unconstrained Online Linear Optimization57\nfor this algorithm, there exists a sequence ofg t with|g t| ≤Land a competitoru∈Rwith\n|u|=U, such that\nTX\nt=1\ngt(xt −u)≥R T (U) :=UL\n√\nT\n\n\nvuut2W\n √\nT UL\n5ϵT\n!\n−1\n\n −2UL+ϵ T ,\nwhereW:R ≥0 →R ≥0 is the Lambert function (see Appendix A.2.1)",
+        "excerpt_sha256": "6f23970da65bd64c51d1d814b1ead1feb3b8bca9a76be15a4dbf5fd49b4faa0c"
+      },
+      "statements": [
+        "Theorem5.8: even T and a one-dimensional OLO algorithm guaranteeing Regret_T(0)<=epsilon_T>0 for every T-sequence of linear L-Lipschitz losses. Let U>0 with1<=W(sqrt(e*T)*U*L/(8 epsilon_T))<=sqrt(T)/2. Then there exist |g_t|<=L and |u|=U such that Regret_T(u)>=R_T(U):=U L sqrt(T)*(sqrt(2 W(sqrt(T)*U*L/(5 epsilon_T)))-1)-2UL+epsilon_T.",
+        "If0<K1<=epsilon_T<=K2<infinity for all T, the source further states lim_{T->infinity} R_T(U)/(U L sqrt(T ln T))=1. For applicability use sufficiently large even horizons satisfying the displayed regime.",
+        "Bridge to Chapter2: a universal regret bound C||u-x_1||sqrt(sum||g||^2) would give zero budget at u=x_1 and O(U L sqrt(T)) elsewhere. Translating x_1 to0 and relaxing the origin guarantee to any fixed positive epsilon allows Theorem5.8 to contradict the claimed rate at sufficiently large even T. This bridge is a required derived contract, not a numbered theorem with epsilon=0."
+      ],
+      "dependencies": [
+        "Theorem5.5",
+        "Theorem5.7",
+        "Lambert-definition-A.1",
+        "A.4",
+        "A.17",
+        "KL-quartic",
+        "translation and asymptotic contradiction"
+      ],
+      "reuse_keys": [],
+      "review_issues": [
+        "Theorem5.8 is not a zero-budget theorem; epsilon_T is strictly positive. No blanket impossibility without its online/adversary/comparator quantifiers.",
+        "Theorem5.7 uses all-prefix nondecreasing budgets while5.8 states a fixed-horizon guarantee. A prefix guarantee can be obtained by zero-padding later losses; freeze that bridge rather than assuming it.",
+        "The displayed lower bound has sqrt(2 W(...)) minus1 outside the square root, and denominator5 epsilon_T inside W. Visually checked."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "unbounded-failure",
+      "ledger_container": "forward:chapter5-unbounded-variable-OGD-failure",
+      "source": {
+        "pdf_pages_1based": [
+          64
+        ],
+        "printed_pages": [
+          52
+        ],
+        "marker": "Theorem 5.4",
+        "excerpt": "Theorem 5.4Letα∈(0,1),ϕ: (0,1)→(0,1−ln 2)defined asϕ(α) := 1\n2−α +\n(1/2)1−α−1\n1−α , andT≥ 2\n(1−α)ϕ(α) . For unprojected OSD with stepsizesηt =t −α andx 1 =0,\nthere exists a sequence ofTconvex and 1-Lipschitz losses such that\nRegretT (0)≥ 1\n2ϕ(α)T2−α .\nAlso, we have thatlim α→1 ϕ(α) = 1−ln 2≥0.3.\nProofWe assumed= 1. Ford≥2, we simply embed the one-dimensional loss vectors\ninto the first coordinate ofR d. Note that the condition onTimpliesT≥2. Consider the\nsequence\n(ℓ1(x), . . . , ℓT (x)) = (−x, . . . ,−x| {z }\n⌈T/2⌉\n, x, . . . , x| {z }\n⌊T/2⌋\n).",
+        "excerpt_sha256": "5b00f49a4ff7b86812ad3e9b51b1a2a62ea24edc401f85487a729faea8b19759"
+      },
+      "statements": [
+        "For alpha in(0,1), phi(alpha)=1/(2-alpha)+((1/2)^(1-alpha)-1)/(1-alpha), phi maps into(0,1-ln2). For integer T>=2/((1-alpha)phi(alpha)), unprojected OSD with eta_t=t^(-alpha), x_1=0 has a sequence of T convex1-Lipschitz losses with Regret_T(0)>=phi(alpha)*T^(2-alpha)/2.",
+        "lim_{alpha->1 from below}phi(alpha)=1-ln2>=0.3. Witness: first ceil(T/2) losses -x, remaining floor(T/2) losses+x, embedded into first coordinate for higher dimensions."
+      ],
+      "dependencies": [
+        "explicit causal power-step trajectory",
+        "finite-sum/integral bounds",
+        "phi positivity and limit"
+      ],
+      "reuse_keys": [
+        "unbounded"
+      ],
+      "review_issues": [
+        "Existing same-project terminal is a reuse candidate, not fresh BODY/FINAL acceptance. Nontrivial ambient dimension is necessary for stated positive lower bound."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "adaptive",
+      "ledger_container": "forward:chapter4-adaptive-oracle-like-rates",
+      "source": {
+        "pdf_pages_1based": [
+          51,
+          52
+        ],
+        "printed_pages": [
+          39,
+          40
+        ],
+        "marker": "4.2.1 Adaptive Learning Rates",
+        "excerpt": "4.2.1 Adaptive Learning Rates for Online Subgradient Descent\nConsider the minimization of the regret with linear losses:\nRegretT (u) =\nTX\nt=1\n⟨gt,xt⟩ −\nTX\nt=1\n⟨gt,u⟩.\nUsing OSD, in Chapter 2, we said that the regret for bounded domains can be upper bounded\nby\nTX\nt=1\n⟨gt,xt⟩ −\nTX\nt=1\n⟨gt,u⟩ ≤D2\n2ηT\n+ 1\n2\nTX\nt=1\nηt∥gt∥2\n2 .\nWith a fixed learning rateη t =η, the learning rate that minimizes this upper bound on the\nregret is\nη⋆ = DqPT\nt=1 ∥gt∥2\n2\n.\nUnfortunately, as we said, this learning rate cannot be used because it assumes knowledge\nof the futu",
+        "excerpt_sha256": "243c7bd327218547ff55f77d5d1560dcd0504b3c16fc0170ee3a538cf3f256e3"
+      },
+      "statements": [
+        "Eq4.3: eta_t=D/sqrt(sum_{i<=t}||g_i||^2), skip zero-feedback rounds. Eq4.4 gives Regret_T(u)<=(3/2)D sqrt(sum||g_t||^2).",
+        "Theorem4.14: nonempty closed convex V with all pairwise distances<=D, convex extended-real losses subdifferentiable on V, x_1 in V. Use eta_t=sqrt(2)D/(2 sqrt(sum_{i<=t}||g_i||^2)), skip updates when g_t=0. For every u in V, regret<=D sqrt(2 sum||g_t||^2)=sqrt(2) min_{eta>0}(D^2/(2eta)+(eta/2)sum||g_t||^2)."
+      ],
+      "dependencies": [
+        "C2 actual OSD transfer",
+        "Lemma4.13",
+        "inverse-root limiting specialization",
+        "weighted potential",
+        "positive benchmark and degenerate infimum split"
+      ],
+      "reuse_keys": [
+        "adaptive"
+      ],
+      "review_issues": [
+        "The min identity has unattained degenerate cases when exactly one of D and energy is zero. Existing infimum candidate must retain source-repair review, not silently relabel min.",
+        "This is the current adaptive package ownership edge; do not duplicate its proof or count it as a new Chapter2 theorem."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "FTRL-unbounded",
+      "ledger_container": "extra-history:chapter7-FTRL-unbounded",
+      "source": {
+        "pdf_pages_1based": [
+          111,
+          114
+        ],
+        "printed_pages": [
+          99,
+          102
+        ],
+        "marker": "Algorithm 7.1",
+        "excerpt": "Algorithm 7.1Follow-the-Regularized-Leader (FTRL)\nRequire:A sequence of regularizersψ 1, . . . , ψT :X →R, closed non-empty setV ⊆\nX ⊆Rd\n1:fort= 1toTdo\n2:Outputx t ∈argmin x∈V ψt(x) + Pt−1\ni=1 ℓi(x)\n3:Receiveℓ t :R d →(−∞,+∞]and pay the lossℓ t(xt)\n4:end for\nInFollow-the-Regularized-Leader (FTRL), in each round we output the minimizer of\nthe regularized cumulative past losses, see Algorithm 7.1. It should be clear that FTRL is not\nan algorithm, but a family of algorithms, in the same way that Online Mirror Descent (OMD)\nis a family of algorithm",
+        "excerpt_sha256": "3e811011cbc445b98f2c65e0c5a6e396cfb11ae5e88e4f318d9e4fea3b7b7b92"
+      },
+      "statements": [
+        "Algorithm7.1: closed nonempty V subset X subset R^d; regularizers psi_t:X->R; output x_t in argmin_{x in V}(psi_t(x)+sum_{i<t}ell_i(x)) before receiving ell_t. This is strict-past cumulative loss, not OSD recursion.",
+        "Corollary7.6: V nonempty closed convex, psi:V->R closed and mu-strongly convex in norm||.||, psi_t=(psi-min_V psi)/eta_(t-1), psi_(T+1)=psi_T, each ell_t subdifferentiable on V. For all u in V and all g_t in partial ell_t(x_t): regret <= (psi(u)-min_V psi)/eta_(T-1)+sum eta_(t-1)||g_t||_*^2/(2mu)+sum_{t=1}^{T-1}(1/eta_(t-1)-1/eta_t)(psi(x_(t+1))-min_V psi).",
+        "If losses are L-Lipschitz on an open set containing V, choose eta_(t-1)=alpha sqrt(mu)/(L sqrt(t)), alpha>0; then regret <= ((psi(u)-min_V psi)/alpha+alpha)*L sqrt(T)/sqrt(mu). Domain need not be bounded; rates chosen before current loss.",
+        "Concrete Euclidean unbounded specialization (also printed216/PDF228): psi_t(x)=L sqrt(t)||x||_2^2/(2alpha), V=R^d gives regret<=L sqrt(T)(||u||^2/(2alpha)+alpha)."
+      ],
+      "dependencies": [
+        "Lemma7.1",
+        "Lemma7.5",
+        "Theorem6.9",
+        "Lemma4.2",
+        "Theorem6.27",
+        "sum-rule2.23",
+        "dual Cauchy-Schwarz",
+        "inverse-root sum"
+      ],
+      "reuse_keys": [
+        "ftl-selector"
+      ],
+      "review_issues": [
+        "Existing generic FTL selector is not FTRL regularization/existence/stability. Need proper/closed/subdifferentiable sum and attainment conditions reconciled from Lemma7.5; Corollary7.6 compact statement does not spell all of them out.",
+        "Positive eta,mu,L and alpha conventions explicit in candidate; monotonicity is guaranteed by displayed schedule for the simplified bound. Do not silently drop the correction sum for arbitrary schedules."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "parameter-free",
+      "ledger_container": "forward:chapter13-parameter-free-oracle-like-rates",
+      "source": {
+        "pdf_pages_1based": [
+          225,
+          226,
+          227,
+          228
+        ],
+        "printed_pages": [
+          213,
+          214,
+          215,
+          216
+        ],
+        "marker": "Algorithm 13.2",
+        "excerpt": "Algorithm 13.2Krichevsky–Trofimov (KT) OCO Algorithm\nRequire:ϵ >0,L >0\n1:fort= 1toTdo\n2:Predictx t =−\nPt−1\ni=1 gi\ntL\n\u0010\nϵ− Pt−1\ni=1\ngi\nL xi\n\u0011\n∈R\n3:Pay the lossℓ t(xt), whereℓ t is subdifferentiable onR\n4:Setg t ∈∂ℓ t(xt)where|g t| ≤L\n5:end for\n13.2.1 KT as a One-Dimensional Online Convex Optimization Algorithm\nHere, we want to use the considerations in the above section to use KT as a parameter-\nfree 1-d OCO algorithm. First, let’s see what such an algorithm looks like. KT betsx t =\nβt Wealtht−1, starting withϵmoney. Now, setc t =−g t/Lwhereg t ",
+        "excerpt_sha256": "06a0a2823a345cbad22b75900c17e8b7da4b69423f04a09065d6707a0ef22f7c"
+      },
+      "statements": [
+        "Algorithm13.2: epsilon>0,L>0; predict x_t=-(sum_{i<t}g_i)/(tL)*(epsilon-sum_{i<t}(g_i/L)x_i), receive subdifferentiable loss on R and choose |g_t|<=L in its subdifferential. Unnumbered printed214/PDF226 guarantee: for every u in R, regret<=|u|L sqrt(2T ln(1+e|u|T/epsilon))+epsilon L.",
+        "Definition13.7: parameter-free means optimal dependence on T and all feasible comparators up to polylogarithmic factors; knowledge of Lipschitz constant is allowed. This is not literal no input parameters, since epsilon,L remain.",
+        "For arbitrary-dimensional Euclidean comparator dependence, Eq13.2: use Algorithm12.3 with KT scalar learner and OSD direction learner on Euclidean unit ball, x_1=0, eta_t=sqrt(2)/(2L sqrt(t)). For every u in R^d, regret<=L||u||_2*(sqrt(ln(1+e||u||_2*T/epsilon))+1)*sqrt(2T)+L epsilon.",
+        "Theorem13.9 is a separate coordinatewise variant: Algorithm13.3 with epsilon>0,L_infinity>0 and ||g_t||_infinity<=L_infinity yields regret<=L_infinity sum_i |u_i|sqrt(2T ln(1+e|u_i|T/epsilon))+d epsilon L_infinity <=||u||_1 L_infinity sqrt(2T ln(1+e||u||_infinity*T/epsilon))+d epsilon L_infinity.",
+        "Printed216 also states an Lp variant,1<p<=2,1/p+1/q=1: regret<=L_q*(||u||_p sqrt(ln(1+e||u||_p*T/epsilon))+||u||_p/sqrt(p-1))*sqrt(2T)+L_q epsilon, with OMD direction rate sqrt(p-1)/(L_q sqrt(2t))."
+      ],
+      "dependencies": [
+        "KT13.4",
+        "duality13.5",
+        "conjugate13.6",
+        "magnitude-direction12.16",
+        "C2 linearization",
+        "Euclidean directional learner sharp bound",
+        "A.1",
+        "A.6-upper",
+        "A.8-10",
+        "A.11-12",
+        "A.13",
+        "entropy6.33"
+      ],
+      "reuse_keys": [],
+      "review_issues": [
+        "Minimal proposed Chapter2 Euclidean edge is scalar KT plus magnitude/direction Eq13.2. Coordinatewise and Lp variants are recorded, not automatically claimed necessary for this narrower edge; later whole-Chapter13 obligations remain untouched.",
+        "Exact directional learner constant in Eq13.2 needs its own audit; cannot infer it merely by substituting diameter2 into the generic C2 bound.",
+        "Primitive gamma/Lambert infrastructure and these source-specific terminals were not located in the scoped shared-library search."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    },
+    {
+      "id": "lookahead",
+      "ledger_container": "additional:prescient-lookahead-nonpositive-stability",
+      "source": {
+        "pdf_pages_1based": [
+          277,
+          278
+        ],
+        "printed_pages": [
+          265,
+          266
+        ],
+        "marker": "Algorithm 15.8",
+        "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+        "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+      },
+      "statements": [
+        "Algorithm15.8: nonempty closed convex V subset X, strictly convex psi:X->R differentiable on int X, x_0 in int X, positive eta_t. Receive whole loss ell_t with V subset dom ell_t before choosing x_t in argmin_{x in V}(ell_t(x)+B_psi(x;x_(t-1))/eta_t), then pay ell_t(x_t).",
+        "Theorem15.30: additionally psi closed, iterates x_t in int X, losses subdifferentiable on V, nonincreasing steps. For every u in V: regret<=max_{0<=t<=T-1}B_psi(u;x_t)/eta_T-sum_{t=1}^T B_psi(x_t;x_(t-1))/eta_t. Constant eta: regret<=B_psi(u;x_0)/eta-sum B_psi(x_t;x_(t-1))/eta. The constant-step proof is explicitly left as an exercise and remains mandatory.",
+        "Euclidean psi(x)=||x||^2/2 specializes the negative stability term to -sum||x_t-x_(t-1)||^2/(2eta_t), with no positive gradient-square term. The total bound need not be nonpositive because the initial comparator potential is positive.",
+        "Section15.5.1 also has Algorithm15.9 BTRL: after seeing ell_t choose x_t in argmin(psi_t+sum_{i<=t}ell_i). Theorem15.31 (printed266-267/PDF278-279) assumes these sums proper, closed and lambda_t-strongly convex; regret<=psi_T(u)-psi_1(x_1)-sum_{t=1}^T lambda_t||x_t-x_(t+1)||^2/2+sum_{t=1}^{T-1}(psi_t(x_(t+1))-psi_(t+1)(x_(t+1))). This is an alternate section route, not the same algorithm as15.8."
+      ],
+      "dependencies": [
+        "Bregman6.4",
+        "three-point6.7",
+        "extended proximal optimality",
+        "sum-rule2.23",
+        "nonnegative Bregman",
+        "weighted potential",
+        "alternate BTRL:7.47"
+      ],
+      "reuse_keys": [
+        "prescient"
+      ],
+      "review_issues": [
+        "Source proof invokes differentiable Theorem2.8 while ell_t is merely subdifferentiable; the existing extended proximal source package is a candidate repair/qualification route requiring its receipts.",
+        "Whole-function current lookahead must be explicit; this cannot be branded an ordinary causal output-before-current-loss algorithm.",
+        "15.31 terminal x_(T+1) and its hypotheses need separate source audit if alternative BTRL route is adopted. No automatic requirement to prove entire15.5.1 to satisfy narrower negative-stability edge."
+      ],
+      "status": "precise source candidate; neither frozen nor accepted; no proof advancement"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "strong-convexity4.1-4.2",
+      "source": {
+        "pdf_pages_1based": [
+          46,
+          47
+        ],
+        "printed_pages": [
+          34,
+          35
+        ],
+        "marker": "Definition 4.1",
+        "excerpt": "Definition 4.1Letλ≥0. A proper functionf:R d →(−∞,+∞]isλ-strongly convex\nwith respect to∥ · ∥over a convex setV ⊆domfif\nf(αx+ (1−α)y)≤αf(x) + (1−α)f(y)− 1\n2λα(1−α)∥x−y∥ 2,\nfor allx,y∈ Vand allα∈(0,1).\nWe will also say thatfisstrongly convex inV, if there existsλ >0and a norm such\nthat the above holds.\nFrom the definition, it is clear that if a function isλ-strongly convex, it is alsoλ ′-strongly\nconvex for any0≤λ ′ < λ. Moreover, convex functions are0-strongly convex.\nWe can also obtain an equivalent characterization in terms of subgradients.\nL",
+        "excerpt_sha256": "9e6c9ff890263f773cfbd347de13be275897129998f2899ab6b89abc0fc10cda"
+      },
+      "required_statement_or_specialization": "Proper f, lambda>=0, convex V subset dom f: f(a x+(1-a)y)<=a f(x)+(1-a)f(y)-lambda*a*(1-a)||x-y||^2/2. For convex V subset dom partial f, equivalent to f(x)>=f(y)+<g,x-y>+lambda||x-y||^2/2 for all x,y in V and g in partial f(y).",
+      "dependencies": [],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Theorem5.5",
+      "source": {
+        "pdf_pages_1based": [
+          66,
+          67
+        ],
+        "printed_pages": [
+          54,
+          55
+        ],
+        "marker": "Theorem 5.5",
+        "excerpt": "Theorem 5.5LetT≥1be even and0< q≤ T\n2 integer. Then, for any online coin-betting\nalgorithm that guarantees non-negative wealth on any sequence ofTcoins in{−L, L}and\nstarts with initial wealthϵ, there exists a sequence of coins such that| PT\nt=1 ct| ≥2qLand\nthe wealth of the algorithm is upper bounded by\n3ϵ\n2\n\u0012 2q√\nT\n+ 1\n\u0013\nexp\n\u0012\nT·KL Bern\n\u00121\n2 + q\nT ; 1\n2\n\u0013\u0013\n≤ 3ϵ\n2\n\u0012 2q√\nT\n+ 1\n\u0013\nexp\n\u0012\n2q2\nT + 3.1 q4\nT3\n\u0013\n,\nwhereKL Bern(p;q)denotes the Kullback–Leibler (KL) divergence between two Bernoulli\ndistributions with parameterspandq:\nKLBern(p;q) :=pln\n\u0012p\n",
+        "excerpt_sha256": "9d7a0cfaa39829ff87b0ffc8cbfad9580417630465ed8e6f9b500632f742f6ba"
+      },
+      "required_statement_or_specialization": "Even T>=1, integer0<q<=T/2, L>0; any causal coin bettor starting epsilon and maintaining nonnegative wealth on all {+-L}^T sequences has a sequence with |sum c_t|>=2qL and wealth<=(3epsilon/2)(2q/sqrt(T)+1)exp(T KL_Bern(1/2+q/T;1/2)) <=same prefactor*exp(2q^2/T+3.1q^4/T^3).",
+      "dependencies": [
+        "A.17",
+        "KL-quartic"
+      ],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Theorem5.7",
+      "source": {
+        "pdf_pages_1based": [
+          68
+        ],
+        "printed_pages": [
+          56
+        ],
+        "marker": "Theorem 5.7",
+        "excerpt": "Theorem 5.7Letϵ t be a non-negative non-decreasing sequence andAan OLO algorithm\nthat guaranteesRegret t(0)≤ϵ t for any sequence ofg 1, . . . ,gt ∈R d with∥g i∥2 ≤L.\nThen, for anyT≥0there existsβ t such thatxt =β t(ϵT −Pt−1\ni=1⟨gi,xi⟩)and∥β t∥2 ≤ 1\nL\nfort= 1, . . . , T.\nProofDefiner t =− Pt\ni=1⟨gi,xi⟩as the “reward” of the algorithm. So, we have\nRegrett(u) =\ntX\ni=1\n⟨gi,xi⟩ −\ntX\ni=1\n⟨gi,u⟩=−r t +\n* tX\ni=1\ngi,u\n+\n.\nSince we assumed thatRegret t(0)≤ϵ t, we always haver t ≥ −ϵt. Using this, we claim\nthatL∥x t∥2 ≤r t−1 +ϵ t for allt= 1, . . . , T. T",
+        "excerpt_sha256": "8d5d0450d7616a2722e8135cd1ba25a0e9ffa815b7b349761b4b7200a01bb391"
+      },
+      "required_statement_or_specialization": "Nonnegative nondecreasing epsilon_t, OLO algorithm with Regret_t(0)<=epsilon_t for every bounded-gradient prefix. For every T>=0 there are beta_t with x_t=beta_t(epsilon_T-sum_{i<t}<g_i,x_i>) and ||beta_t||<=1/L, t=1..T.",
+      "dependencies": [
+        "causal adversary"
+      ],
+      "scope_note": "L>0 implicit; zero wealth needs zero bet branch.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "KL-quartic",
+      "source": {
+        "pdf_pages_1based": [
+          67
+        ],
+        "printed_pages": [
+          55
+        ],
+        "marker": "For the second upper bound",
+        "excerpt": "For the second upper bound, it is enough to use the elementary inequality\nKLBern\n\u00121\n2 +x; 1\n2\n\u0013\n≤2x 2 + 3.1x4,|x| ≤ 1\n2 .\nRemark 5.6It is also possible to upper bound the l.h.s. of the inequality in the above\ntheorem by a quantity that depends on the wealth of the best constant betting fraction.\nFor the expression of the optimal wealth on thec1, . . . , cT , consider the wealth of a strat-\negy that bets a constant signed fraction of moneyβ. Starting with initial moneyϵ, afterT\nrounds the wealth isϵ QT\nt=1(1+βc t). By taking the derivative of th",
+        "excerpt_sha256": "3bac36914b24f575cf9c44dabb01d27a5b3cac7e09ab91ef2dfb9fcdcfeb6189"
+      },
+      "required_statement_or_specialization": "KL_Bern(1/2+x;1/2)<=2x^2+3.1x^4 for |x|<=1/2. Endpoint0 log0 convention retained.",
+      "dependencies": [],
+      "scope_note": "Unnumbered main proof inequality, required for5.5 and5.8 constants.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Lambert-definition-A.1",
+      "source": {
+        "pdf_pages_1based": [
+          303
+        ],
+        "printed_pages": [
+          291
+        ],
+        "marker": "The Lambert function",
+        "excerpt": "The Lambert functionW:R ≥0 →R ≥0 is defined by the equality\nx=W(x) exp (W(x)),forx≥0.(A.1)\nHence, from the definition we have thatexp(W(x)/2) =\nq\nx\nW(x) forx >0.\nWe have the following property of the Lambert function, stated without proof.\nTheorem A.4The Lambert function satisfieslim x→+∞\nW(x)\nlnx = 1\nTheorem A.5(Hoorfar and Hassani, 2008, Theorem 2.3)\nW(x)≤ln x+C\n1 + ln(C),∀x≥0,∀C > 1\ne.\n291",
+        "excerpt_sha256": "8a6b63f1fae24f6a1e54c5400cc4c78fdc2e95a19803f2ef9e1feea56d2390cf"
+      },
+      "required_statement_or_specialization": "W:[0,infinity)->[0,infinity], x=W(x)exp(W(x)); for x>0 exp(W(x)/2)=sqrt(x/W(x)).",
+      "dependencies": [],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.4",
+      "source": {
+        "pdf_pages_1based": [
+          303
+        ],
+        "printed_pages": [
+          291
+        ],
+        "marker": "Theorem A.4",
+        "excerpt": "Theorem A.4The Lambert function satisfieslim x→+∞\nW(x)\nlnx = 1\nTheorem A.5(Hoorfar and Hassani, 2008, Theorem 2.3)\nW(x)≤ln x+C\n1 + ln(C),∀x≥0,∀C > 1\ne.\n291",
+        "excerpt_sha256": "e59e58f31602b5092e9666bf523b34d276c9edc6f5e9d619a32d2ed1f6d0223b"
+      },
+      "required_statement_or_specialization": "lim_{x->infinity}W(x)/ln x=1.",
+      "dependencies": [
+        "Lambert-definition-A.1"
+      ],
+      "scope_note": "Stated without proof in source; required for5.8 asymptotic, not dispensable.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.6-upper",
+      "source": {
+        "pdf_pages_1based": [
+          304
+        ],
+        "printed_pages": [
+          292
+        ],
+        "marker": "Theorem A.6",
+        "excerpt": "Theorem A.6(Orabona and P ´al, 2016, Lemma 17)The Lambert functionW(x)satisfies\n0.6321 ln(x+ 1)≤W(x)≤ln(x+ 1),∀x≥0.\nProofThe inequalities are satisfied forx= 0, hence in the following we assumex >0.\nWe first prove the lower bound. From (A.1) we have\nW(x) = ln\n\u0012 x\nW(x)\n\u0013\n.(A.2)\nFrom this equality, using the elementary inequalityln(u)≤ 1\nae ua for anya >0, we get\nW(x)≤ 1\na e\n\u0012 x\nW(x)\n\u0013a\n,∀a >0,\nthat is\nW(x)≤\n\u0012 1\na e\n\u0013 1\n1+a\nx\na\n1+a ,∀a >0.(A.3)\nUsing (A.3) in (A.2), we have\nW(x)≥ln\n\n x\n\u0000 1\na e\n\u0001 1\n1+a\nx\na\n1+a\n\n = 1\n1 +a ln (a e x),∀a >0.\nCons",
+        "excerpt_sha256": "45c4c9fd386678b9596b4f27cf5f80275ca1824b34aab3f854ba56e60f73bd26"
+      },
+      "required_statement_or_specialization": "For all x>=0,0.6321 ln(1+x)<=W(x)<=ln(1+x). Only upper inequality is needed by Lemma13.6; source labels it Theorem A.6 although13.6 calls it Lemma A.6.",
+      "dependencies": [
+        "Lambert-definition-A.1",
+        "A.5"
+      ],
+      "scope_note": "Full lower constant not required by selected KT upper-bound route; remains a later appendix obligation.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.5",
+      "source": {
+        "pdf_pages_1based": [
+          303
+        ],
+        "printed_pages": [
+          291
+        ],
+        "marker": "Theorem A.5",
+        "excerpt": "Theorem A.5(Hoorfar and Hassani, 2008, Theorem 2.3)\nW(x)≤ln x+C\n1 + ln(C),∀x≥0,∀C > 1\ne.\n291",
+        "excerpt_sha256": "85da1886f59368da5672b141500a96c56e693f6e388e499c6dcb42654ddee9d7"
+      },
+      "required_statement_or_specialization": "W(x)<=ln((x+C)/(1+ln C)) for x>=0 and C>1/e; C=1 yields A.6 upper bound.",
+      "dependencies": [
+        "Lambert-definition-A.1"
+      ],
+      "scope_note": "Fraction is inside logarithm; rendering/extraction must be checked if this exact route is formalized.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.14-p1",
+      "source": {
+        "pdf_pages_1based": [
+          308
+        ],
+        "printed_pages": [
+          296
+        ],
+        "marker": "Theorem A.14",
+        "excerpt": "Theorem A.14(Khintchine’s inequality)Let{ϵ n}N\nn=1 be i.i.d. Rademacher random vari-\nables, i.e.,\nP{ϵn = 1}=P{ϵ n =−1}= 1\n2,∀n= 1, . . . , N .\nLet0< p <∞and letx 1, . . . , xN ∈C. Then, we have\nAp\n NX\nn=1\n|xn|2\n!1/2\n≤\n \nE\n\f\f\f\f\f\nNX\nn=1\nϵnxn\n\f\f\f\f\f\np!1/p\n≤B p\n NX\nn=1\n|xn|2\n!1/2\n,\nwhere\nAp =\n\n\n\n21/2−1/p 0< p≤p 0,\n21/2(Γ((p+ 1)/2)/ √π)1/p p0 < p <2\n1 2≤p <∞\nBp =\n(\n1 0< p≤2\n21/2(Γ((p+ 1)/2)/ √π)1/p 2< p <∞,\nwherep 0 ≈1.847andΓis the gamma function.\nThe constants in the above theorem are due to Haagerup (1981).\nA.3.2 Lower Bound for the Tail of t",
+        "excerpt_sha256": "2da346759130cd1fd55692c14d2f9acbf00640f6aad1c3107505c87bd4c2c274"
+      },
+      "required_statement_or_specialization": "Required specialization: iid Rademacher epsilon_1,...,epsilon_N, real coefficients a_i, E|sum epsilon_i a_i| >= (1/sqrt(2))*sqrt(sum a_i^2). For all a_i=1: E|sum epsilon_i|>=sqrt(N/2).",
+      "dependencies": [],
+      "scope_note": "Full printed theorem is complex-coefficient p in(0,infinity) Khintchine with A_p/B_p; p=1 lower half is exact sufficient dependency for5.1, not whole appendix completion.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.15",
+      "source": {
+        "pdf_pages_1based": [
+          308,
+          309
+        ],
+        "printed_pages": [
+          296,
+          297
+        ],
+        "marker": "Lemma A.15",
+        "excerpt": "Lemma A.15Letn≥1andn/2≤k≤nbe integers. Define\nϕ(k, n) :=1\n2\nq\n4k2 −4kn+ (n+ 2) 2 −k−n/2−1.\nThen, Pn\ni=k\n\u0000n\ni\n\u0001\n≥\n\u0000n\nk\n\u0001 k\n2k+ϕ(k,n) . Moreover,ϕ(k, n)is non-increasing in the first argument.\nA.3 Probabilistic Inequalities297\nProofFirst of all, observe thatϕ(k, n)is non-increasing in the first argument. Indeed, the\nfirst derivative is\n2k−np\n4k2 −4kn+ (n+ 2) 2 −1 = 2k−n−\np\n4k2 −4kn+ (n+ 2) 2\np\n4k2 −4kn+ (n+ 2) 2\n≤ 2k−n−\n√\n4k2 −4kn+n 2\np\n4k2 −4kn+ (n+ 2) 2 = 0.\nWe will prove the statement by backward induction. The base case is easy: Pn\ni=n\n\u0000n\ni\n\u0001",
+        "excerpt_sha256": "f7507553b46ed6ef2e830ab9c2b7dc01ca0273947a7cf6aebb3c2c27064d45a4"
+      },
+      "required_statement_or_specialization": "Integers n>=1,n/2<=k<=n; phi(k,n)=sqrt(4k^2-4kn+(n+2)^2)/2-k-n/2-1. Sum_{i=k}^n binom(n,i)>=binom(n,k)*k/(2k+phi(k,n)); phi nonincreasing in k.",
+      "dependencies": [],
+      "scope_note": "Needed by binomial-tail lemma; exact radical visually inspected.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.17",
+      "source": {
+        "pdf_pages_1based": [
+          309,
+          310
+        ],
+        "printed_pages": [
+          297,
+          298
+        ],
+        "marker": "Lemma A.17",
+        "excerpt": "Lemma A.17(Bound on Binomial Tail)Letn≥1be an even integer and0≤q≤\n298Appendix\nn/2−1integer. Then,X n ∼B(n, 1\n2 )satisfies\nP\nn\nXn ≥ n\n2 +q\no\n≥ 1\n3\n1\n2q+ √n\ns\nnn/2 +q\nn/2−q exp\n\u0012\n−n·KL Bern\n\u00121\n2 + q\nn; 1\n2\n\u0013\u0013\n≥ 1\n3\n1\n2q√n + 1 exp\n\u0012\n−n·KL Bern\n\u00121\n2 + q\nn; 1\n2\n\u0013\u0013\n.\nNote that the second lower bound also holds inq=n/2.\nProofBy definition, we have\nP\nn\nXn ≥ n\n2 +q\no\n= 2−n\nnX\ni=n/2+q\n \nn\ni\n!\n.\nFrom Lemma A.15, we have\nnX\ni=n/2+q\n \nn\ni\n!\n≥\n \nn\nn/2 +q\n!\nn/2 +q\nn+ 2q+ϕ(n/2 +q, n) ≥\n \nn\nn/2 +q\n!\nn/2 +q\n2q+ √n .\nWe bound the binomial coefficient\n\u0000n\nk\n\u0001\nusin",
+        "excerpt_sha256": "fff5a75a857258bdf97aa08a4dc87f5000e9a6de4c7252badd77be99e9944a32"
+      },
+      "required_statement_or_specialization": "Even integer n>=1 and integer0<=q<=n/2-1, X~Binomial(n,1/2): P(X>=n/2+q)>=(1/[3(2q+sqrt(n))])*sqrt(n*(n/2+q)/(n/2-q))*exp(-n KL_Bern(1/2+q/n;1/2)) >= exp(-n KL_Bern(...))/(3(2q/sqrt(n)+1)). Second bound also holds q=n/2.",
+      "dependencies": [
+        "A.15",
+        "Robbins-factorial"
+      ],
+      "scope_note": "Endpoint separate;0 log0=0.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Robbins-factorial",
+      "source": {
+        "pdf_pages_1based": [
+          310
+        ],
+        "printed_pages": [
+          298
+        ],
+        "marker": "Stirling’s formula",
+        "excerpt": "Stirling’s formula for factorials. In particular,\nwe use the explicit upper and lower bounds due to Robbins (1955) valid for anyn≥1,\n√\n2πn\n\u0010n\ne\n\u0011n\n< n!< e1/12√\n2πn\n\u0010n\ne\n\u0011n\n.\nHence, for any1≤k≤n−1, we have\n \nn\nk\n!\n= n!\nk!(n−k)!\n>\n√\n2πn nne−n\n√\n2πk kke−ke1/12 ·\np\n2π(n−k) (n−k) n−ke−(n−k)e1/12\n= 1\ne1/6\n√\n2π\n\u0012 n\nn−k\n\u0013n−k \u0010n\nk\n\u0011k r n\nk(n−k)\n= 1\ne1/6\n√\n2π 2n exp\n\u0012\n−n·KL Bern\n\u0012k\nn; 1\n2\n\u0013\u0013r n\nk(n−k) ,\nwhere in the equality we used the definition ofKL Bern(p;q). Hence, we have\n \nn\nn/2 +q\n!\n≥ 2n\ne1/6\n√\n2π exp\n\u0012\n−nKL Bern\n\u00121\n2 + q\nn; 1\n2\n\u0013\u0013r n\n(n/2 +q)(n/",
+        "excerpt_sha256": "12647c0f6cdb851eafe8531c9bab4396e496b347045233d2fccf850da91d978f"
+      },
+      "required_statement_or_specialization": "For integer n>=1: sqrt(2 pi n)(n/e)^n<n!<exp(1/12)sqrt(2 pi n)(n/e)^n.",
+      "dependencies": [
+        "factorial and exponential"
+      ],
+      "scope_note": "External attribution Robbins1955; exact displayed weakening is needed, not outside paper lookup.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Lemma7.1",
+      "source": {
+        "pdf_pages_1based": [
+          112
+        ],
+        "printed_pages": [
+          100
+        ],
+        "marker": "Lemma 7.1",
+        "excerpt": "Lemma 7.1Letψ 1, . . . , ψT+1 :X →Rbe a sequence of regularization functions and\nV ⊆ X ⊆Rd a closed and non-empty set. Denote byF t(x) =ψ t(x) + Pt−1\ni=1 ℓi(x),\nwhereℓ t :R d →(−∞,+∞]for allt. Assume thatargmin x∈V Ft(x)is not empty and set\nxt ∈argmin x∈V Ft(x). Then, for allu∈ X, we have\nTX\nt=1\n(ℓt(xt)−ℓ t(u)) =ψ T+1 (u)−min\nx∈V\nψ1(x) +\nTX\nt=1\n[Ft(xt)−F t+1(xt+1) +ℓ t(xt)]\n+F T+1 (xT+1 )−F T+1 (u).\nIn addition, the choice ofψ T+1 does not change the iteratesx 1, . . . ,xT of the algorithm.\nProofGiven that the termsℓ t(xt)appear on both sides o",
+        "excerpt_sha256": "cc45ee4a232be44135ed806987eb85feec6fed494f77dd318bacf5a7f83734fc"
+      },
+      "required_statement_or_specialization": "Regularizers psi_1..psi_(T+1):X->R; closed nonempty V subset X; F_t=psi_t+sum_{i<t}ell_i, each argmin_V F_t nonempty, x_t chosen in it. For every u in X, regret=psi_(T+1)(u)-min_V psi_1+sum_t[F_t(x_t)-F_(t+1)(x_(t+1))+ell_t(x_t)]+F_(T+1)(x_(T+1))-F_(T+1)(u). psi_(T+1) does not affect first T iterates.",
+      "dependencies": [],
+      "scope_note": "Extended-real finite/arithmetic conditions require reconciliation; do not erase sharp identity.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Lemma7.5",
+      "source": {
+        "pdf_pages_1based": [
+          113,
+          114
+        ],
+        "printed_pages": [
+          101,
+          102
+        ],
+        "marker": "Lemma 7.5",
+        "excerpt": "Lemma 7.5With the notation in Algorithm 7.1, denote byF t(x) =ψ t(x) +Pt−1\ni=1 ℓi(x).\nAssume thatV ⊆ Xis non-empty, closed, and convex. IfF t is closed, subdifferentiable,\nand strongly convex inV, thenx t exists and is unique. In addition, assume∂ℓ t(xt)to be\nnon-empty andF t +ℓ t to be closed, subdifferentiable, andλ t-strongly convex with respect\nto∥ · ∥inV. Then, we have\nFt(xt)−F t+1(xt+1) +ℓ t(xt)\n≤ ⟨gt,xt −x t+1⟩ −λt\n2 ∥xt −x t+1∥2 +ψ t(xt+1)−ψ t+1(xt+1)\n≤ ∥gt∥2\n⋆\n2λt\n+ψ t(xt+1)−ψ t+1(xt+1),∀g t ∈∂ℓ t(xt).\nProofThe existence and uniqueness",
+        "excerpt_sha256": "8634f446d9873c3c4b79dee2f537903a2c82d7c3bdc31a84f9687515a1ca85c3"
+      },
+      "required_statement_or_specialization": "For nonempty closed convex V, F_t closed/subdifferentiable/strongly convex gives unique x_t. If partial ell_t(x_t) nonempty and F_t+ell_t closed/subdifferentiable/lambda_t-strongly convex, stability<=<g_t,x_t-x_(t+1)>-lambda_t||x_t-x_(t+1)||^2/2+psi_t(x_(t+1))-psi_(t+1)(x_(t+1))<=||g_t||_*^2/(2lambda_t)+same regularizer difference, every g_t in partial ell_t(x_t).",
+      "dependencies": [
+        "Theorem6.9",
+        "strong-convexity4.1-4.2",
+        "Theorem6.27",
+        "C2 sum-rule2.23"
+      ],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Theorem6.9",
+      "source": {
+        "pdf_pages_1based": [
+          78
+        ],
+        "printed_pages": [
+          66
+        ],
+        "marker": "Theorem 6.9",
+        "excerpt": "Theorem 6.9Letλ >0andf:R d →(−∞,+∞]proper, closed, andλ-strongly convex\nwith respect to∥·∥on its domain. Assumedom∂f̸=∅. Then,fhas exactly one minimizer.\nProofLety∈dom∂fandg∈∂f(y). From Lemma 4.2, for anyx∈R d, we have\nf(x)≥f(y) +⟨g,x−y⟩+ λ\n2 ∥x−y∥ 2\n≥f(y)− ∥g∥⋆∥x∥ − ⟨g,y⟩+λ\n2 (∥x∥ − ∥y∥)2\n=f(y)− ∥g∥⋆∥x∥ − ⟨g,y⟩+λ\n2 (∥x∥2 +∥y∥ 2 −2∥x∥∥y∥),\nwhere in the second inequality we used the reverse triangle inequality and the definition of\ndual norms. From the above, we have thatlim∥x∥→∞ f(x) = +∞. In turn, this implies that\nthe level sets offare bounde",
+        "excerpt_sha256": "4f1f105611f218746222467059ebc85bb0bba3711424688dc739832d5d64ce5a"
+      },
+      "required_statement_or_specialization": "lambda>0; proper closed lambda-strongly convex f:R^d->(-infinity,+infinity] on its domain with dom partial f nonempty has exactly one minimizer.",
+      "dependencies": [
+        "strong-convexity4.1-4.2",
+        "A.3"
+      ],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.3",
+      "source": {
+        "pdf_pages_1based": [
+          303
+        ],
+        "printed_pages": [
+          291
+        ],
+        "marker": "Theorem A.3",
+        "excerpt": "Theorem A.3(Weierstrass theorem for extended-real-valued functions (Bauschke et al.,\n2003, Theorem 1.29))LetXbe a Hausdorff space, letf:X →[−∞,+∞]be lower\nsemicontinuous, and letVbe a compact subset ofX. SupposeV ∩domf̸=∅. Then,f\nachieves its infimum overV.\nA.2 Inequalities for Transcendental Functions\nA.2.1 The Lambert Function\nThe Lambert functionW:R ≥0 →R ≥0 is defined by the equality\nx=W(x) exp (W(x)),forx≥0.(A.1)\nHence, from the definition we have thatexp(W(x)/2) =\nq\nx\nW(x) forx >0.\nWe have the following property of the Lambert function, s",
+        "excerpt_sha256": "92f00a665ee2707c5e27cb20f0c3a1b8d6576255aae0e38f172e40fa0d4d11de"
+      },
+      "required_statement_or_specialization": "Hausdorff X, lower-semicontinuous f:X->[-infinity,+infinity], compact V with V intersect dom f nonempty: f attains infimum over V.",
+      "dependencies": [],
+      "scope_note": "For selected Euclidean FTRL route finite-dimensional compact sublevel specialization sufficient; full Hausdorff theorem not inferred.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Theorem6.27",
+      "source": {
+        "pdf_pages_1based": [
+          86
+        ],
+        "printed_pages": [
+          74
+        ],
+        "marker": "Theorem 6.27",
+        "excerpt": "Theorem 6.27Letf:R d →(−∞,+∞]be proper. Thenx ⋆ ∈argmin x∈Rd f(x)iff\n0∈∂f(x ⋆).\nProofWe have that\nx⋆ ∈argmin\nx∈Rd\nf(x)⇔ ∀y∈R d, f(y)≥f(x ⋆) =f(x ⋆) +⟨0,y−x ⋆⟩\n⇔0∈∂f(x ⋆).\n6.4.2 The “Mirror” Interpretation\nHere, we explain the “mirror” interpretation of OMD, using the following theorem.\nTheorem 6.28LetB ψ be the Bregman divergence with respect toψ:X →R, whereψ\nisλ >0strongly convex and closed. LetV ⊆ Xbe a non-empty closed convex set and\nxt ∈ V. Define\nxt+1 = argmin\nx∈V\n⟨gt,x⟩+ 1\nηt\nBψ(x;xt),\nand assumeψto be differentiable inx t andx t+1. Then,",
+        "excerpt_sha256": "f885747f922d721632d3ab18340424bf46efee7f5805d3d059399964e203437d"
+      },
+      "required_statement_or_specialization": "Proper f:R^d->(-infinity,+infinity]: x_star is a global minimizer iff0 in partial f(x_star).",
+      "dependencies": [],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "KT13.4",
+      "source": {
+        "pdf_pages_1based": [
+          222,
+          223
+        ],
+        "printed_pages": [
+          210,
+          211
+        ],
+        "marker": "Theorem 13.4",
+        "excerpt": "Theorem 13.4Letc t ∈[−1,1]fort= 1, . . . , T. Then, the KT bettor in Algorithm 13.1\nguarantees\nWealthT ≥\nϵ2T Γ\n\u0010\nT+1+PT\nt=1 ct\n2\n\u0011\nΓ\n\u0010\nT+1−PT\nt=1 ct\n2\n\u0011\nπΓ(T+ 1) ≥ϵexp\n \n(PT\nt=1 ct)2\n2T − lnT\n2 −1\n!\n,\nwhereΓis the gamma function (see Appendix A.2.2).\nProofLett≥0, and letF t : [−t, t]→Rbe defined byF t(x) =ϵ\n2tΓ(\nt+1+x\n2 )Γ(\nt+1−x\n2 )\nπΓ(t+1) .\nFirst, we want to prove that\nFt(x+c)≤\n\u0010\n1 +c x\nt\n\u0011\nFt−1(x),∀t≥1,∀c∈[−1,1],∀x∈[−(t−1), t−1].(13.1)\nThis is equivalent to showing thatϕ t(c, x)≤lnF t−1(x)for allc∈[−1,1]andx∈\n[−(t−1), t−1], whereϕ t(c, x) :",
+        "excerpt_sha256": "0b9de0f44f2dbf8583cc65ba2335e5184d261d1ce178f660d33660f5f72bfbed"
+      },
+      "required_statement_or_specialization": "For arbitrary c_t in[-1,1], initial epsilon>0, KT beta_t=sum_{i<t}c_i/t and wealth update W_t=W_(t-1)(1+beta_t c_t) satisfy W_T>=epsilon*2^T*Gamma((T+1+sum c)/2)*Gamma((T+1-sum c)/2)/(pi Gamma(T+1))>=epsilon exp((sum c)^2/(2T)-(ln T)/2-1).",
+      "dependencies": [
+        "A.8-10",
+        "A.11-12",
+        "A.13",
+        "entropy6.33"
+      ],
+      "scope_note": "T>=1 for displayed exponent. Gamma recurrence at c=+-1 is referred to standalone Problem13.1 but is a mandatory proof dependency when using this main theorem; not excluded as an exercise.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "duality13.5",
+      "source": {
+        "pdf_pages_1based": [
+          223,
+          224
+        ],
+        "printed_pages": [
+          211,
+          212
+        ],
+        "marker": "Theorem 13.5",
+        "excerpt": "Theorem 13.5(Regret-Reward Duality)Letϕ:R d →(−∞,+∞]be a proper closed\nconvex function and letϕ ⋆ :R d →(−∞,+∞]be its Fenchel conjugate. Consider two\n212Parameter-free Online Linear Optimization\nsequencesx 1,x2, . . . ,xT ∈R d andg 1, . . . ,gT ∈R d. Then,\n−\nTX\nt=1\n⟨gt,xt⟩ ≥ϕ\n \n−\nTX\nt=1\ngt\n!\n⇔\nTX\nt=1\n⟨gt,xt −u⟩ ≤ϕ⋆(u),∀u∈R d .\nProofLet’s prove the left-to-right implication. For anyu∈R d, we have\nTX\nt=1\n⟨gt,xt −u⟩ ≤ −\nTX\nt=1\n⟨gt,u⟩ −ϕ\n \n−\nTX\nt=1\ngt\n!\n≤sup\nθ∈Rd\n⟨θ,u⟩ −ϕ(θ) =ϕ⋆ (u).\nFor the other implication, we have\n−\nTX\nt=1\n⟨gt,xt⟩= sup\nu∈Rd\n−\nT",
+        "excerpt_sha256": "545eb94b7fd87d01f7809d4d7869272fdd99b9f2c89da10410e99ec41bf9081f"
+      },
+      "required_statement_or_specialization": "Proper closed convex phi:R^d->(-infinity,+infinity], arbitrary finite x_t,g_t: -sum<g_t,x_t>>=phi(-sum g_t) iff for every u in R^d sum<g_t,x_t-u><=phi_star(u).",
+      "dependencies": [
+        "Fenchel6.12-6.13"
+      ],
+      "scope_note": "Convex conjugate and biconjugacy, not merely scalar algebra.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "conjugate13.6",
+      "source": {
+        "pdf_pages_1based": [
+          225
+        ],
+        "printed_pages": [
+          213
+        ],
+        "marker": "Lemma 13.6",
+        "excerpt": "Lemma 13.6Definef(x) =βexp x2\n2α , forα, β >0,x∈R. Then\nf⋆(y) =|y|\ns\nαW\n\u0012αy2\nβ2\n\u0013\n−βexp\n\u00121\n2W\n\u0012αy2\nβ2\n\u0013\u0013\n≤ |y|\ns\nαW\n\u0012αy2\nβ2\n\u0013\n−β\n≤ |y|\ns\nαln\n\u0012\n1 + αy2\nβ2\n\u0013\n−β≤ |y|\ns\n2αln\n\u0012\n1 +\n√α|y|\nβ\n\u0013\n−β,\nwhereWis the Lambert function, i.e.,W:R ≥0 →R ≥0 satisfiesx=W(x) exp(W(x)).\nProofFrom the definition of the Fenchel conjugate, we have\nf⋆(y) = max\nx∈R\nx y−f(x) = max\nx\nx y−βexp x2\n2α,=x ⋆ y−βexp (x⋆)2\n2α ,\nwherex ⋆ = argmax x x y−f(x). We now use the fact thatx ⋆ satisfiesy=f ′(x⋆), to\nhavex ⋆ = sign(y)\nq\nαW( αy2\nβ2 ), whereW(·)is the Lambert function. Usin",
+        "excerpt_sha256": "61167f6b6089c09b72d536d38f0843bc5221a9f61f12e55e827bdf40069ab4d8"
+      },
+      "required_statement_or_specialization": "alpha,beta>0, f(x)=beta exp(x^2/(2alpha)); f_star(y)=|y|sqrt(alpha W(alpha y^2/beta^2))-beta exp(W(alpha y^2/beta^2)/2) <=|y|sqrt(alpha W(...))-beta <=|y|sqrt(alpha ln(1+alpha y^2/beta^2))-beta <=|y|sqrt(2alpha ln(1+sqrt(alpha)|y|/beta))-beta.",
+      "dependencies": [
+        "Lambert-definition-A.1",
+        "A.6-upper",
+        "Fenchel6.12-6.13"
+      ],
+      "scope_note": "At y=0 exact value -beta retained. AppendixA.7 duplicates related conjugate formula and has division-by-zero representation at zero; not needed as additional dependency for this route.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "magnitude-direction12.16",
+      "source": {
+        "pdf_pages_1based": [
+          215,
+          216
+        ],
+        "printed_pages": [
+          203,
+          204
+        ],
+        "marker": "Theorem 12.16",
+        "excerpt": "Theorem 12.16Denote byRegret AB\nT (u)the linear regret of algorithmA B for anyuin\nthe unit ball with respect to a norm∥ · ∥, andRegretA1d\nT (u)the linear regret of algorithm\nA1d for any competitoru∈R. Then, for anyu∈R d \\ {0}, Algorithm 12.3 guarantees\nRegretT (u) =\nTX\nt=1\n(ℓt(xt)−ℓ t(u))≤\nTX\nt=1\n⟨gt,xt −u⟩\n= RegretA1d\nT (∥u∥) +∥u∥Regret AB\nT\n\u0012 u\n∥u∥\n\u0013\n,\n204Black-Box Reductions\nandRegret T (0)≤Regret A1d\nT (0). Further, we have|st| ≤ ∥gt∥⋆ for allt.\nProofFirst, observe that|s t| ≤ ∥gt∥⋆∥˜xt∥ ≤ ∥gt∥⋆ since∥ ˜xt∥ ≤1for allt. Now,\nassumingu̸=0comp",
+        "excerpt_sha256": "aaff7fc1865ad330e042dbf2820212214454e54d9f933c282daf6c416ae6a9c6"
+      },
+      "required_statement_or_specialization": "Algorithm12.3 receives z_t from scalar learner and v_t in unit ball from direction learner, plays x_t=z_t v_t, selects g_t, sends scalar loss s_t z with s_t=<g_t,v_t> and vector loss<g_t,v>. For u!=0: regret_OCO(u)<=linear_regret(u)=Regret_scalar(||u||)+||u||Regret_ball(u/||u||). At u=0 regret<=Regret_scalar(0); |s_t|<=||g_t||_*.",
+      "dependencies": [
+        "C2 global support",
+        "dual norm inequality"
+      ],
+      "scope_note": "The zero comparator is a distinct branch, no division by zero.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Fenchel6.12-6.13",
+      "source": {
+        "pdf_pages_1based": [
+          80,
+          81
+        ],
+        "printed_pages": [
+          68,
+          69
+        ],
+        "marker": "Definition 6.12",
+        "excerpt": "Definition 6.12For a functionf:R d →[−∞,∞], we define theFenchel conjugate\nf⋆ :R d →[−∞,∞]as\nf⋆(θ) = sup\nx∈Rd\n⟨θ,x⟩ −f(x).\n6.4 Online Mirror Descent69\nx\ny\n−f⋆(gx)\nx\nf(x)\nx\ny\nFigure 6.4A geometric interpretation of the Fenchel conjugate.\nFrom the definition we immediately obtain theFenchel–Young’s inequalityfor proper\nfunctions:\n⟨θ,x⟩ ≤f(x) +f⋆(θ),∀x,θ∈R d .\nMoreover,f ⋆ is always convex and closed, regardless of the convexity off(Bauschke and\nCombettes, 2017, Proposition 13.13).\nWe have the following useful properties for the Fenchel conjugate.",
+        "excerpt_sha256": "61586432fcbb9a80b8e9cc3c5847f795208c9c23c2775b63dd5cfa38e11c2238"
+      },
+      "required_statement_or_specialization": "f_star(theta)=sup_x(<theta,x>-f(x)); Fenchel-Young for proper f; for closed proper convex f, f_star is closed proper convex and f_star_star=f.",
+      "dependencies": [
+        "C2 closed/proper/convex"
+      ],
+      "scope_note": "Use exact proper specialization required by13.5; not all statements of Chapter6 advanced.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "entropy6.33",
+      "source": {
+        "pdf_pages_1based": [
+          92
+        ],
+        "printed_pages": [
+          80
+        ],
+        "marker": "Lemma 6.33",
+        "excerpt": "Lemma 6.33Letc 1, . . . , cd ∈R >0. Then, the negative weighted entropy functionψ(x) =Pd\ni=1 cixi lnx i is 1-strongly convex with respect to the L 1 norm defined over the setK=\n{x∈R d :x i >0, Pd\ni=1 xi/ci = 1}.\nProofLetϕ(u) = (u−1) lnu− 2(u−1)2\nu+1 foru >0. Observe thatϕ ′′(u)>0for\nu >0so the function is convex. Moreover,ϕ(1) =ϕ ′(1) = 0. So, we haveϕ(u)≥\nϕ(1) +ϕ ′(1)(u−1) = 0for allu >0.\nUsing this inequality, we have\n⟨∇ψ(x)− ∇ψ(y),x−y⟩\n=\ndX\ni=1\nci(xi −y i) ln xi\nyi\n=\ndX\ni=1\nciyi\n\u0012xi\nyi\n−1\n\u0013\nln xi\nyi\n≥\ndX\ni=1\nci\n2(xi −y i)2\nxi +y i\n=\ndX\ni=1\nx",
+        "excerpt_sha256": "9c9f787f3b7fd2d96b21b497c44e71a75a81ba8ea918b30ea1647b65d9251064"
+      },
+      "required_statement_or_specialization": "c_i>0, psi(x)=sum c_i x_i ln x_i is1-strongly convex in L1 on {x_i>0,sum x_i/c_i=1}. c_i=1 yields KL(p;q)>=||p-q||_1^2/2 via Eq6.4; endpoint extension separately supplies Bernoulli quadratic lower bound.",
+      "dependencies": [
+        "strong-convexity4.1-4.2",
+        "Jensen2.9"
+      ],
+      "scope_note": "Needed for exponent in13.4; alternate direct Bernoulli inequality could replace only with proved equivalent dependency.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.8-10",
+      "source": {
+        "pdf_pages_1based": [
+          306
+        ],
+        "printed_pages": [
+          294
+        ],
+        "marker": "Definition A.8",
+        "excerpt": "Definition A.8Forℜ(x)>0, thegamma functionis defined as\nΓ(x) :=\nZ ∞\n0\ntx−1e−t dt .\nDefinition A.9Thedigamma functionis defined as\nψ(x) := d\ndx ln Γ(x) = Γ′(x)\nΓ(x) ,∀x >0.\nProposition A.10For the gamma and digamma functions, we have the following proper-\nties:\n(a) The gamma function is log-convex onR >0, i.e.,ln Γis convex.\n(b) Wendel’s double inequality (Wendel, 1948)\n\u0012 x\nx+s\n\u00131−s\n≤ Γ(x+s)\nxsΓ(x) ≤1,∀0< s <1,∀x >0.\n(c)Γ(x)≥\n\u0010\nx−1/2\ne\n\u0011x−1/2 √\n2e, x≥1(Batir, 2008, Theorem 1.5).\n(d) The digamma function is strictly increasing and strictly concav",
+        "excerpt_sha256": "5b4ba7922d15d2e7186647b39423a05b1d047e4675869a3e009277fb80154ea6"
+      },
+      "required_statement_or_specialization": "Gamma(z)=integral_0^infinity t^(z-1)e^(-t)dt for Re z>0; digamma psi=(ln Gamma)prime. Required A.10 properties: log-convexity; (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma(x))<=1 for0<s<1,x>0; Gamma(x)>=((x-1/2)/e)^(x-1/2)sqrt(2e) for x>=1; digamma increasing/concave, ln x-1/x<=psi(x)<=ln x-1/(2x); psi_prime(x)=sum_{k>=0}(x+k)^(-2).",
+      "dependencies": [],
+      "scope_note": "Gamma recurrence and Gamma(1/2)=sqrt(pi) also used in KT proof; no blanket assertion all primitive API missing.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.11-12",
+      "source": {
+        "pdf_pages_1based": [
+          306,
+          307
+        ],
+        "printed_pages": [
+          294,
+          295
+        ],
+        "marker": "Lemma A.11",
+        "excerpt": "Lemma A.11LetT≥1andd≥2be integers. Then, we have\nΓ(T+d/2)\nΓ(T+ 1/2) ≤(T+d/2−1/2) (d−1)/2 .\nProofFrom the definition of the digamma functionψ, we have\nln Γ(T+d/2−1/2)\nΓ(T+ 1/2) =\nZ T+d/2−1/2\nT+1/2\nψ(t) dt≤\nZ T+d/2−1/2\nT+1/2\nψ(T+d/2−1/2) dt\n= d−2\n2 ψ(T+d/2−1/2)≤ d−2\n2 ln (T+d/2−1/2),\nwhere we used the fact that the digamma is increasing (Proposition A.10(d)) and the upper\nboundψ(x)<ln(x)(Proposition A.10(e)). Then, from Proposition A.10(b), we use the\nfact thatΓ(T+d/2)≤\np\nT+d/2−1/2 Γ(T+d/2−1/2). Hence, we have\nln Γ(T+d/2)\nΓ(T+ 1/2) ≤ d−1\n2 ln (T+",
+        "excerpt_sha256": "38541339604760560c314dc3bfc384225d166f478ebc8692ffbd9d59c067223c"
+      },
+      "required_statement_or_specialization": "Integers T>=1,d>=2: Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2). LemmaA.12: ln(sqrt(pi) Gamma(T+d/2)/(Gamma(d/2)Gamma(T+1/2))) <=(d-1)/2 ln(T/((d-1)/2)+1)+d/2-1+(1/2)ln(pi/2). For d=2, <=(ln T)/2+1.",
+      "dependencies": [
+        "A.8-10"
+      ],
+      "scope_note": "Only d=2 final ratio bound required by selected KT route; full general result remains outside proof advancement.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "A.13",
+      "source": {
+        "pdf_pages_1based": [
+          307,
+          308
+        ],
+        "printed_pages": [
+          295,
+          296
+        ],
+        "marker": "Lemma A.13",
+        "excerpt": "Lemma A.13LetT≥1and letn≥1be an integer. Definef:R n\n≥0 →Ras\nf(a1, . . . , an) =\nnY\ni=1\naai\ni\nΓ\n\u0000\nai + 1\n2\n\u0001,\nwhere0 0 = 1. Then,fis maximized over the setV={(a 1, . . . , an)∈R n\n≥0 : Pn\ni=1 ai =\nT}at the extreme points of the simplex, namely when one coordinate is equal toTand all\nthe others are equal to0.\nProofDefine\nh(x) :=xlnx−ln Γ\n\u0012\nx+ 1\n2\n\u0013\n,∀x >0.\nThen,lnf(a 1, . . . , an) = Pn\ni=1 h(ai). So, it is enough to prove thathis convex on(0,∞).\nWe have\nh′′(x) = 1\nx −ψ ′\n\u0012\nx+ 1\n2\n\u0013\n,\nwhereψis the digamma function.\nUsing Proposition A.10(f), we ",
+        "excerpt_sha256": "9d78f23c02bc76a5accdcd1ceaae3065f1feb1c14dad46bce73482f5ff48ff35"
+      },
+      "required_statement_or_specialization": "For real T>=1, integer n>=1, product_i a_i^(a_i)/Gamma(a_i+1/2), with0^0=1, is maximized on nonnegative simplex sum a_i=T at extreme points (one coordinate T, rest0).",
+      "dependencies": [
+        "A.8-10",
+        "Jensen2.9"
+      ],
+      "scope_note": "n=2 specialization required by13.4; proof uses trigamma series and convex midpoint-integral bound.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "Bregman6.4",
+      "source": {
+        "pdf_pages_1based": [
+          75
+        ],
+        "printed_pages": [
+          63
+        ],
+        "marker": "Definition 6.4",
+        "excerpt": "Definition 6.4Letψ:X →Rbe strictly convex and differentiable onintX ̸=∅,\nwhereXis the domain ofψ. TheBregman divergencewith respect toψis denoted by\nBψ :X ×intX →Rdefined as\nBψ(x;y) :=ψ(x)−ψ(y)− ⟨∇ψ(y),x−y⟩.",
+        "excerpt_sha256": "14e499236f01b3f4ea94ea8b9071c9236cad11f749476a45eddbea02a02f2d25"
+      },
+      "required_statement_or_specialization": "Strictly convex psi:X->R differentiable on nonempty int X; B_psi(x;y)=psi(x)-psi(y)-<gradient psi(y),x-y>, x in X,y in int X.",
+      "dependencies": [
+        "C2 first-order support"
+      ],
+      "scope_note": "Nonnegative under stated convexity; second slot interior matters.",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    },
+    {
+      "id": "three-point6.7",
+      "source": {
+        "pdf_pages_1based": [
+          76
+        ],
+        "printed_pages": [
+          64
+        ],
+        "marker": "Lemma 6.7",
+        "excerpt": "Lemma 6.7(Chen and Teboulle, 1993)LetB ψ be the Bregman divergence with respect to\nψ:X →R. Then, for any three pointsx,y∈intXandz∈ X, the following identity\nholds\nBψ(z;x) +B ψ(x;y)−B ψ(z;y) =⟨∇ψ(y)− ∇ψ(x),z−x⟩.",
+        "excerpt_sha256": "9b3afe81bb0ff32f56906896d77e95070476201eb493c815e83b0c67e66bbb85"
+      },
+      "required_statement_or_specialization": "For x,y in int X,z in X: B(z;x)+B(x;y)-B(z;y)=<gradient psi(y)-gradient psi(x),z-x>.",
+      "dependencies": [
+        "Bregman6.4"
+      ],
+      "scope_note": "",
+      "status": "required dependency candidate, not accepted from presence/compilation"
+    }
+  ],
+  "existing_eight_container_join": [
+    {
+      "ledger_id": "additional:prescient-lookahead-nonpositive-stability",
+      "candidate_id": "lookahead",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "exact separately delivered candidate bound; chapter-source reconciliation pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter5-unbounded-variable-OGD-failure",
+      "candidate_id": "unbounded-failure",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "exact separately delivered candidate bound; chapter-source reconciliation pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+      "candidate_id": "oracle-impossibility",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter5-DLsqrtT-minimax-optimality",
+      "candidate_id": "minimax",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter3-unbounded-SGD",
+      "candidate_id": "SGD-varying",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter4-adaptive-oracle-like-rates",
+      "candidate_id": "adaptive",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter4-square-OGD-improvement",
+      "candidate_id": "square-improvement",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    },
+    {
+      "ledger_id": "forward:chapter13-parameter-free-oracle-like-rates",
+      "candidate_id": "parameter-free",
+      "ledger_status": "required/open",
+      "ledger_enumeration": "pending",
+      "fresh_effect": "later source enumerated in candidate; no ledger status changed"
+    }
+  ],
+  "extra_history_claim_ids": [
+    "FTRL-unbounded",
+    "no-minimizer"
+  ],
+  "reuse_candidates": {
+    "jensen": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineJensen.lean",
+      "sha256": "cca057991a262fa6bb2a9259bd59aa3468e6a970cc7cc53a508f7a647b327eda",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineConvex.theorem_2_9",
+          "line": 44,
+          "header_or_definition_excerpt": "theorem theorem_2_9 (μ : Measure Ω) [IsProbabilityMeasure μ]\n    (f : E → EReal) (hbot : ∀ x, f x ≠ ⊥) (hf : IsConvexExtended f)\n    (hfm : Measurable f) (X : Ω → E) (hXm : Measurable X) (hX : Integrable X μ)\n    (hdom : ∀ᵐ ω ∂μ, X ω ∈ effectiveDomain f) :\n    f (∫ ω, X ω ∂μ) ≤ signedExpectation μ (fun ω => f (X ω)) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "expectation": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineExpectation.lean",
+      "sha256": "9642870c76c5001b002671e447bd6f29bc1e3d0c132f784783ce90d5944f8c31",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineConvex.signedExpectation",
+          "line": 34,
+          "header_or_definition_excerpt": "def signedExpectation (μ : Measure Ω) (f : Ω → EReal) : EReal :=\n  (positiveIntegral μ f : EReal) - (negativeIntegral μ f : EReal)\n\ntheorem positiveIntegral_coe (μ : Measure Ω) (f : Ω → ℝ) :\n    positiveIntegral μ (fun ω => (f ω : EReal)) = ∫⁻ ω, ENNReal.ofReal (f ω) ∂μ ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineConvex.signedExpectation_coe_integrable",
+          "line": 58,
+          "header_or_definition_excerpt": "theorem signedExpectation_coe_integrable (μ : Measure Ω) (f : Ω → ℝ) (hf : Integrable f μ) :\n    signedExpectation μ (fun ω => (f ω : EReal)) = ((∫ ω, f ω ∂μ : ℝ) : EReal) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "hinge": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineHinge.lean",
+      "sha256": "d3c7ec649a5d231bd30d472ce70bfed20ecdf7069cba30cb630297f99ce16871",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineConvex.example_2_27",
+          "line": 182,
+          "header_or_definition_excerpt": "theorem example_2_27 [FiniteDimensional ℝ E] (z x : E) :\n    SourceSubdifferential (sourceHinge z) x =\n      if 1 - inner ℝ z x < 0 then {0}\n      else if 1 - inner ℝ z x = 0 then\n        {g | ∃ α ∈ Icc (0 : ℝ) 1, g = -(α • z)}\n      else {-z} ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "policy-fixed": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientPolicy.lean",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineSubgradientPolicy.regret_fixed",
+          "line": 171,
+          "header_or_definition_excerpt": "theorem regret_fixed (V : Domain (E := E)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E))\n    (hx₁ : x₁ ∈ V.carrier) (T : ℕ)\n    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))\n    (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) :\n    regret V (fun _ => η) loss x₁ p u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) +\n      η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) -\n      ‖output V (fun _ => η) loss x₁ p T - u‖ ^ 2 / (2 * η) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineSubgradientPolicy.regret_fixed_coarse",
+          "line": 198,
+          "header_or_definition_excerpt": "theorem regret_fixed_coarse (V : Domain (E := E)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E))\n    (hx₁ : x₁ ∈ V.carrier) (T : ℕ)\n    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))\n    (hlegal : LegalFeedback V (fun _ => η) loss x₁ p T) (u : E) (hu : u ∈ V.carrier) :\n    regret V (fun _ => η) loss x₁ p u T ≤ ‖x₁ - u‖ ^ 2 / (2 * η) +\n      η / 2 * (∑ t ∈ range T, ‖selected V (fun _ => η) loss x₁ p t‖ ^ 2) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "policy-step": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientPolicy.lean",
+      "sha256": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineSubgradientPolicy.one_step_chain",
+          "line": 135,
+          "header_or_definition_excerpt": "theorem one_step_chain (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal)\n    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) (hη : 0 < η t)\n    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))\n    (hg : selected V η loss x₁ p t ∈ SourceSubdifferential (loss t) (output V η loss x₁ p t))\n    (u : E) (hu : u ∈ V.carrier) :\n    η t * ((loss t (output V η loss x₁ p t)).toReal - (loss t u).toReal) ≤\n      η t * inner ℝ (selected V η loss x₁ p t) (output V η loss x₁ p t - u) ∧\n    η t * inner ℝ (selected V η loss x₁ p t) (output V η loss x₁ p t - u) ≤\n      ‖output V η loss x₁ p t - u‖ ^ 2 / 2 -\n      ‖output V η loss x₁ p (t + 1) - u‖ ^ 2 / 2 +\n      (η t) ^ 2 / 2 * ‖selected V η loss x₁ p t‖ ^ 2 ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineSubgradientPolicy.output_prefix",
+          "line": 108,
+          "header_or_definition_excerpt": "theorem output_prefix (V : Domain (E := E)) (η η' : ℕ → ℝ)\n    (loss loss' : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)\n    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :\n    output V η loss x₁ p t = output V η' loss' x₁ p t ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "square": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGuessingOGD.lean",
+      "sha256": "12792af1571fde0fe37796686b044f0df0990ca3d808a89431804605d0ee8d00",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineGradientDescent.project_unitInterval",
+          "line": 26,
+          "header_or_definition_excerpt": "theorem project_unitInterval (z : ℝ) :\n    project unitInterval z = min (max z 0) 1 ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineGradientDescent.gradient_square",
+          "line": 57,
+          "header_or_definition_excerpt": "theorem gradient_square (y x : ℝ) :\n    gradient (fun x : ℝ => (x-y)^2) x = 2 * (x-y) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineGradientDescent.gradient_square_bound",
+          "line": 61,
+          "header_or_definition_excerpt": "theorem gradient_square_bound (y x : ℝ) (hy : y ∈ Icc (0 : ℝ) 1)\n    (hx : x ∈ Icc (0 : ℝ) 1) : ‖gradient (fun x : ℝ => (x-y)^2) x‖ ≤ 2 ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineGradientDescent.square_step_clamp",
+          "line": 66,
+          "header_or_definition_excerpt": "theorem square_step_clamp (η y x : ℝ) :\n    step unitInterval η (fun x : ℝ => (x-y)^2) x =\n      min (max (x - 2 * η * (x-y)) 0) 1 ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineGradientDescent.example_2_14",
+          "line": 74,
+          "header_or_definition_excerpt": "theorem example_2_14 (y : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (0 : ℝ) 1)\n    (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) :\n    ∀ u ∈ Icc (0 : ℝ) 1,\n      regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T ≤\n        2 * Real.sqrt T ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "mean": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineLearningFTL.lean",
+      "sha256": "8c3574c657f08e0c5291f0689105f9459e92187502f092f4d36d848e52ab4219",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineLearning.theorem_1_3",
+          "line": 81,
+          "header_or_definition_excerpt": "theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) -\n      (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n        4 + 4 * Real.log T ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+          "line": 106,
+          "header_or_definition_excerpt": "theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) -\n      (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n        (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "ftl-selector": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineFTLSelector.lean",
+      "sha256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineFTLSelector.select",
+          "line": 16,
+          "header_or_definition_excerpt": "def select (V : Set X) (past : Fin n → X → ℝ) : Option X ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineFTLSelector.predict",
+          "line": 20,
+          "header_or_definition_excerpt": "def predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\ntheorem select_some_spec (V : Set X) (past : Fin n → X → ℝ) (p : X) (h : select V past = some p) :\n    p ∈ V ∧ IsMinOn (cumulative past) V p ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineFTLSelector.predict_prefix",
+          "line": 120,
+          "header_or_definition_excerpt": "theorem predict_prefix (V : Set X) (initial : V) (loss loss' : ℕ → X → ℝ) (t : ℕ) (h : ∀ s < t, EqOn (loss s) (loss' s) V) :\n    predict V initial loss t = predict V initial loss' t ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "unbounded": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineUnboundedOSD.lean",
+      "sha256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+          "line": 516,
+          "header_or_definition_excerpt": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+          "line": 92,
+          "header_or_definition_excerpt": "theorem phi_limit :\n    Tendsto phi (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2 ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "adaptive": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineAdaptiveOSD.lean",
+      "sha256": "197f1f6460168daafe23f4a8017f2c11b54566e0f7749da77bd031d4ab7babef",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+          "line": 320,
+          "header_or_definition_excerpt": "theorem source_eq4_4 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)\n    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)\n    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))\n    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))\n    (hlegal : LegalFeedback V 1 D loss x₁ p T)\n    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :\n    regret V 1 D loss x₁ p u T ≤\n      (3 / 2 : ℝ) * D * Real.sqrt (energy V 1 D loss x₁ p T) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineAdaptiveOSD.source_theorem4_14",
+          "line": 335,
+          "header_or_definition_excerpt": "theorem source_theorem4_14 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)\n    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)\n    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))\n    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))\n    (hlegal : LegalFeedback V (Real.sqrt 2 / 2) D loss x₁ p T)\n    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :\n    regret V (Real.sqrt 2 / 2) D loss x₁ p u T ≤\n      D * Real.sqrt (2 * energy V (Real.sqrt 2 / 2) D loss x₁ p T) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineAdaptiveOSD.canonical_theorem4_14",
+          "line": 369,
+          "header_or_definition_excerpt": "theorem canonical_theorem4_14 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)\n    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)\n    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))\n    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))\n    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :\n    regret V (Real.sqrt 2 / 2) D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤\n      D * Real.sqrt (2 * energy V (Real.sqrt 2 / 2) D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T) ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    },
+    "prescient": {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "declarations": [
+        {
+          "name": "BanditRL.OnlineConvex.source_fixed_regret",
+          "line": 130,
+          "header_or_definition_excerpt": "theorem source_fixed_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal)\n    (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0)\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + ((η⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        },
+        {
+          "name": "BanditRL.OnlineConvex.source_variable_regret",
+          "line": 160,
+          "header_or_definition_excerpt": "theorem source_variable_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hη : ∀ t < T, 0 < η t)\n    (hinit : x 0 = x0) (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t ",
+          "header_status": "retrieval excerpt; scoped full file remains authoritative"
+        }
+      ],
+      "reuse_status": "retrieval-ready candidate; no compilation/receipt/semantic acceptance asserted"
+    }
+  },
+  "contract_locators": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-reconciliation-v1/qualified-source-reconciliation-draft-v4.json",
+      "sha256": "7ef4eae2a9a26720445e4399ed23e24146b5f478c4b051b875ff7674995bfdb2",
+      "use": "candidate contract locator, not a fresh acceptance audit"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-prescient-source-v1/stabilized-v1.json",
+      "sha256": "9e5c37bcc0aaec47395d80c336396858d3e68e546bf088dcc1b751b045a9f00d",
+      "use": "candidate contract locator, not a fresh acceptance audit"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-unbounded-osd-v1/stabilized-v1.json",
+      "sha256": "c33f9f2459d5f4a880d2acbf84691074628122e9c769fc58ce4156b5b826d4d3",
+      "use": "candidate contract locator, not a fresh acceptance audit"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-adaptive-osd-v1/specialization-stabilized-v1.json",
+      "sha256": "4cbdcdcb0f73ce77c2174f70635448cf984c384a2e51d644d9a7698f22e0665a",
+      "use": "candidate contract locator, not a fresh acceptance audit"
+    }
+  ],
+  "search_boundary": {
+    "paths": [
+      "BanditRLProof/**/*.lean",
+      "docs/contracts/**/*source*.json",
+      "docs/contracts/**/*targets*.json",
+      "docs/contracts/**/*headers*.json"
+    ],
+    "query": "source theorem names for3.1,3.3,3.5,4.7,4.8,4.11,5.1,5.8,7.6,13.9,A.14,A.17 plus Lambert/Khintchine/coin-betting/online-to-batch terms",
+    "newly_compiled": false,
+    "missing_endpoints": [
+      "3.1/3.3/3.5",
+      "4.7/4.11 sharp actual run",
+      "5.1",
+      "5.5/5.7/5.8",
+      "7.1/7.5/7.6 FTRL chain",
+      "13.4/13.5/13.6/13.9/13.2 displayed bound",
+      "12.16 magnitude-direction",
+      "source-specific A.14/A.17/Lambert dependency package"
+    ]
+  },
+  "visual_pages": [
+    37,
+    38,
+    63,
+    68,
+    69,
+    114,
+    225,
+    228,
+    308,
+    310
+  ],
+  "page_text_sha256": {
+    "36": "858cca35812b3d046817d8dceb13336e5faf6520669c6b9ff84456dc4350388a",
+    "37": "c76a9ed2211fb5a4ab09a67f102a32fe767107c70d78b924da68aff72535ba59",
+    "38": "e54caacceac4c0e9cea866773a9728000089bee993c3dbaa335afb3b3e2c9a8a",
+    "49": "712103c7ae4d312801c4d88db8629cba1985613baccdc0916da728f25aae1aa5",
+    "50": "b9a2fa1602c53e04fe9015d869b457904fe96d24d2b24bb3e17828ee6ef45039",
+    "62": "784374426b6fae1ae292f456cd414a331ede6d094e3e4fc5f98cf4188e414c37",
+    "63": "d0f0a88224ae28a89d0bfd94031ce182f4cbe8e553175cb163c4f6e07003ca5f",
+    "68": "1b2f6755d021adc95645856c0ea10e9dae5e37d45db33d7bff30390628da145a",
+    "69": "d43ec26fbe3259d5670f5104402c99b04635fe0d92dc5ce6fba6220d7c5b24f1",
+    "70": "cf2c1a17ff750eb23b5e4e34e67e572057c6e5423edbcc5df888509c8d44c82c",
+    "64": "568acb32b00f566076c44fbc6b02269de9539e5677601080484f32cdf358d1f1",
+    "51": "c9cbb1fb0550d08e8fa485df98f4222c5e5764ea75be6c320fe416a7bf802b26",
+    "52": "5edfcec0fb2f7a1d50009d176bff3c27e49f0427ccb1e4e98605aaee303f2946",
+    "111": "309d35345c6ec618a54fba824ec369cb42cb8f20764c285cc26815c91940c49c",
+    "114": "55f193e885a2c5cf0086e3b35bd4f004760a8758044e57f8e591c7008f2ed2ab",
+    "225": "fd80486902a74c59db7e2589754312e785f60729bc951bb791b1ee1deabffbec",
+    "226": "8ff19cb4845899b0e03aff6a5aa4cdf27296f5c23f0590a0e12d9cc6ed1b1c86",
+    "227": "0d088da168b07e6fd20c8cbca27f002be802abd0b1c3a78efc2960f161624049",
+    "228": "7b3abcf517c83560bdde8e7ce06f0921f12b6d1f8589e54f484c94578900f67c",
+    "277": "010505d7e51600c47d5e1395c188e3a773c6ac359cb842a6e2ec927ddecb4bd2",
+    "278": "db4ffd9599284629d769cde07fee8c8d869cc4d9449b229c75807a28c912b695",
+    "46": "128cf57adf157c418c77d50c01d963dac7f5acff7b52604c0d652de3cfd314f3",
+    "47": "22c5f1ced5b8f89590a896899fe52a92f971f68cd0460d45592507b666812a11",
+    "66": "6adbc7b33b96beb6e515e449903b3a9e4fed1339add9024492d80063b16f3d21",
+    "67": "78d5dee8464ba226faed725b6017e7769b520324973c5b07d3b4544d042974d2",
+    "303": "b3c9e2f8e46d12cbb40c3f828b04c088e2cadadb72223f46006bdd51ee0f6a8c",
+    "304": "457bac50a4f9a3c5479e529e9e0436304d12b14455dbba39eb9e2e93566074c0",
+    "308": "d5c0ee8221d656994553f602ec2219329805ffc567aacf2de2181914715ba32f",
+    "309": "0879b1de19cc4082c111f9a276ea002c64c307fa34986f2745567cb70c3d4742",
+    "310": "c6ae8a00ae732f78830c2226e7932bc41b43c2a58b2d26e5793c2fd51170b4cd",
+    "112": "5983e9b62e80380c1a1737699af8d51de26c1f234361a1344aaf35876215055e",
+    "113": "785527c3b7c02fd65f1a0c5318e8c3dc3fc83cd08829111a376906cc7f945e9c",
+    "78": "6e7f7af0336efa1d8e02cbd8251daf6dc55742622eae7e31d2df6d8066793be9",
+    "86": "586c1b158175aa8b0ff8cbd9deb83b4a5eca53c8602820ea5a8049dd312d00bc",
+    "222": "a8de018f8b16d3213f17d9ecacd67f0040f873279e87e93af12dcc683e09d140",
+    "223": "38f4f09e2f0c1e4e403e19e19ebae80cf5d85142d7a6436e6102af52f810c536",
+    "224": "30ffed7ade0d23cf62367bf76f6e6d7aaa2b9a5c309b496303749e75341c3a83",
+    "215": "3ead38e90432a19bf0d6e6f1c9309740eb9c25d001e8b438dee245e3a174d45e",
+    "216": "84dd8fafe57df087cb03cf0905e76bb0034362f3f5b23514cd4ae575a18d461f",
+    "80": "a56ea2c6196261581a9be65c447c84f46b16ca92fd845d5b9c029d31cc3d6c8e",
+    "81": "d9b43cb90c2648c75134de767e7dec1d4ab256692908861fc6a6a198a88ba9ce",
+    "92": "d0c851419a31c663478399dba74fcdd6515007da8dcc4eb92b1878530f6af16c",
+    "306": "d516dcb8afebd77e52287ff1b4fb74d626730cc801079b07a810f0c930a4fe63",
+    "307": "c98b564636ef34d43c30fd3f486861edb9762702881f76148d5a002e2e7ab6fe",
+    "75": "ae4dbed223f5ecd6eebcd11501d905af6ccaa96a9a0a232e8a6f0f33570eceda",
+    "76": "d338998f41271e52e5fb340bea751e87432100f43a13d7c51a04f672a96a1ef1"
+  },
+  "review_issues": [
+    "All8 existing required/open ledger containers mapped;2 additional History Bits claims receive candidates. These10 ownership rows are not independent theorem/proof counts.",
+    "No-minimizer pointer repair: Chapter2 points Example3.2 (attainment assumed); proposed target Example3.5 (logistic, unattained infimum). Independent repair review required.",
+    "Square Example4.11 should bind directly through Theorem4.7 and gradient bound2, avoiding false open-neighborhood2-Lipschitz assertion.",
+    "Oracle impossibility needs positive-budget5.8 plus translation, zero-padding and asymptotic contradiction; cannot simply set epsilon=0.",
+    "Theorem3.1 probability/expectation well-definedness, Corollary7.6 attainment/closedness, and Eq13.2 direction constant remain contract-review obligations.",
+    "Theorem15.30 constant-step proof-left-as-exercise is mandatory. Its negative stability term does not imply total regret always nonpositive.",
+    "Appendix dependencies are explicit required specializations, not whole-appendix completion. No difficult result removed by relegating it to dependencies.",
+    "All missing labels mean no matching source endpoint found in scoped shared-library/current-contract name/content search, not a proof that no equivalent theorem exists anywhere in mathlib.",
+    "Shared library and candidate contract presence are not fresh source/BODY/FINAL acceptance. No compiler, proof edit, build, commit, canonical metadata change, or chapter freeze performed."
+  ],
+  "chapter_complete": false,
+  "independent_proof_total": null,
+  "canonical_metadata_modified": false,
+  "compiler_run": false,
+  "report_path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/forward-precise-source-candidates-20261011-v1.md",
+  "report_sha256": "4d98705c5419e37a0bf1dd1d6391c4cd5f67601ebd5fd32462b340abd4063902"
+}

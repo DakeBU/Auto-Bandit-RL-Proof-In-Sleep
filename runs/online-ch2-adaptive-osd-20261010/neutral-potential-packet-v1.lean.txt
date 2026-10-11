@@ -1,0 +1,9 @@
+import Mathlib
+open Finset
+
+theorem certificate (A W : ℕ → ℝ) (B : ℝ) (n : ℕ) (hT : 0 < n)
+    (hw : ∀ t < n, 0 ≤ W t)
+    (hM : ∀ t, t + 1 < n → W t ≤ W (t + 1))
+    (hB : ∀ t < n, A t ≤ B) :
+    (∑ t ∈ range n, (A t - A (t + 1)) * W t) ≤
+      B * W (n - 1) - A n * W (n - 1) := by

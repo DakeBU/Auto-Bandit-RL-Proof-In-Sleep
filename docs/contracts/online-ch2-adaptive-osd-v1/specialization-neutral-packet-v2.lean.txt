@@ -1,0 +1,98 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineAdaptivePotential
+import BanditRLProof.OnlineAdaptiveEnergy
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+open scoped InnerProductSpace
+namespace NeutralDynamics
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+abbrev SupportPolicy := BanditRL.OnlineSubgradientPolicy.SupportPolicy (E := E)
+local instance : DecidableEq E := Classical.decEq E
+
+def A (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → (Fin (t + 1) → E) × ℝ := by
+  classical
+  exact Nat.rec (motive := fun t => (Fin (t + 1) → E) × ℝ) ((fun _ => x₁), 0)
+    (fun t s =>
+      let g := p t (fun i => loss i.val) s.1 (loss t)
+      let S := s.2 + ‖g‖ ^ 2
+      (Fin.snoc s.1 (if g = 0 then s.1 (Fin.last t) else
+        BanditRL.OnlineGradientDescent.project V
+          (s.1 (Fin.last t) - (α * D / Real.sqrt S) • g)), S))
+
+def H (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : Fin (t + 1) → E :=
+  (A V α D loss x₁ p t).1
+
+def Q (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : ℝ :=
+  (A V α D loss x₁ p t).2
+
+def X (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  H V α D loss x₁ p t (Fin.last t)
+
+def G (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (H V α D loss x₁ p t) (loss t)
+
+def R (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : ℝ :=
+  α * D / Real.sqrt (Q V α D loss x₁ p t + ‖G V α D loss x₁ p t‖ ^ 2)
+
+def L (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, G V α D loss x₁ p t ∈
+    SourceSubdifferential (loss t) (X V α D loss x₁ p t)
+
+def F (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (X V α D loss x₁ p t)).toReal - (loss t u).toReal)
+
+theorem certificate_1 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)
+    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)
+    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hlegal : L V 1 D loss x₁ p T)
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :
+    F V 1 D loss x₁ p u T ≤
+      (3 / 2 : ℝ) * D * Real.sqrt (Q V 1 D loss x₁ p T)
+
+theorem certificate_2 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)
+    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :
+    F V 1 D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤
+      (3 / 2 : ℝ) * D * Real.sqrt (Q V 1 D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T)
+
+theorem certificate_3 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)
+    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier)
+    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hlegal : L V (Real.sqrt 2 / 2) D loss x₁ p T)
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :
+    F V (Real.sqrt 2 / 2) D loss x₁ p u T ≤
+      D * Real.sqrt (2 * Q V (Real.sqrt 2 / 2) D loss x₁ p T)
+
+theorem certificate_4 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D)
+    (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier)
+    (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t))
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) :
+    F V (Real.sqrt 2 / 2) D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤
+      D * Real.sqrt (2 * Q V (Real.sqrt 2 / 2) D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T)
+
+end NeutralDynamics
+
+/- Exact imported predicate expansion, provided as notation context only.
+It defines the already used BanditRL.OnlineConvex predicates, not new assumptions:
+def realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}
+
+def IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)
+The ambient epigraph heights are real and cast to EReal as shown. Both EReal
+infinities are allowed by this convexity predicate itself. Separate properness
+and global-support premises in the certificates retain their own force.
+-/

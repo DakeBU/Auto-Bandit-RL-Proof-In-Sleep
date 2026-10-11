@@ -1,0 +1,5 @@
+theorem regret_zero_diameter (V : Domain (E := E)) (α : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ (0 : ℝ))
+    (u : E) (hu : u ∈ V.carrier) :
+    regret V α 0 loss x₁ p u T = 0 ∧ ‖output V α 0 loss x₁ p T - u‖ = 0 := by

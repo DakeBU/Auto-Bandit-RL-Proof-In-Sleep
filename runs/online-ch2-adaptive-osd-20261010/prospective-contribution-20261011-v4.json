@@ -1,0 +1,203 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CH2-ADAPTIVE-OSD-20261010",
+  "route": "online-learning/chapter-2/required-adaptive-rate-dependency",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10 (2026-06-21), SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.13 adaptive weighted-potential extension, Eq.(4.4), Theorem4.14 and separate minimum/infimum repair.",
+    "url": "https://arxiv.org/pdf/1912.13213v10"
+  },
+  "target": "Actual causal adaptive OSD parameterized regret, source-specialized guarantees and separately explicit benchmark infimum/attainment. Current superseding candidate frontier: the actual causal adaptive OSD recursion, explicit zero-feedback skip, signed weighted-potential estimate, general-alpha terminal-residual regret bound, Eq.(4.4), and Theorem4.14 regret plus separately disclosed infimum/attainment benchmark are locally compiled candidates. Earlier cards and contracts retain their historical open-state wording. Current distinct production/source and canary BODY reviews are accepted-with-explicit-delta; exact integration review, combined root/Tests/full harness, contributor and site/registry checks remain required. This does not close any of the eight Chapter2 required forward containers or certify all six future mathematical claims. Chapter2 remains partial, accepted=false and mandatory proof total=null; Chapters3-16 remain unenumerated/null. Whole Chapters1-16 Goal ACTIVE. No merge, deployment, live-site or retirement claim.",
+  "affected_files": [
+    "BanditRLProof/OnlineAdaptivePotential.lean",
+    "BanditRLProof/OnlineAdaptiveOSD.lean",
+    "BanditRLProof/OnlineAdaptiveBenchmark.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineAdaptivePotential.weighted_potential_sum",
+    "BanditRL.OnlineAdaptiveOSD.Domain",
+    "BanditRL.OnlineAdaptiveOSD.SupportPolicy",
+    "BanditRL.OnlineAdaptiveOSD.state",
+    "BanditRL.OnlineAdaptiveOSD.history",
+    "BanditRL.OnlineAdaptiveOSD.energy",
+    "BanditRL.OnlineAdaptiveOSD.output",
+    "BanditRL.OnlineAdaptiveOSD.selected",
+    "BanditRL.OnlineAdaptiveOSD.eta",
+    "BanditRL.OnlineAdaptiveOSD.LegalFeedback",
+    "BanditRL.OnlineAdaptiveOSD.regret",
+    "BanditRL.OnlineAdaptiveOSD.state_succ",
+    "BanditRL.OnlineAdaptiveOSD.state_prefix",
+    "BanditRL.OnlineAdaptiveOSD.energy_succ",
+    "BanditRL.OnlineAdaptiveOSD.output_succ",
+    "BanditRL.OnlineAdaptiveOSD.energy_eq_sum",
+    "BanditRL.OnlineAdaptiveOSD.history_mem",
+    "BanditRL.OnlineAdaptiveOSD.eta_eq_energy",
+    "BanditRL.OnlineAdaptiveOSD.output_mem",
+    "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
+    "BanditRL.OnlineAdaptiveOSD.trajectory_finite_loss",
+    "BanditRL.OnlineAdaptiveOSD.oracle_feedback",
+    "BanditRL.OnlineAdaptiveOSD.canonical_feedback",
+    "BanditRL.OnlineAdaptiveOSD.energy_step_mono",
+    "BanditRL.OnlineAdaptiveOSD.energy_pos_of_selected_ne_zero",
+    "BanditRL.OnlineAdaptiveOSD.eta_pos_of_selected_ne_zero",
+    "BanditRL.OnlineAdaptiveOSD.zero_feedback_step",
+    "BanditRL.OnlineAdaptiveOSD.regret_zero_diameter",
+    "BanditRL.OnlineAdaptiveOSD.one_step_chain",
+    "BanditRL.OnlineAdaptiveOSD.one_step",
+    "BanditRL.OnlineAdaptiveOSD.regret_bound",
+    "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+    "BanditRL.OnlineAdaptiveOSD.source_theorem4_14",
+    "BanditRL.OnlineAdaptiveOSD.canonical_eq4_4",
+    "BanditRL.OnlineAdaptiveOSD.canonical_theorem4_14",
+    "BanditRL.OnlineAdaptiveBenchmark.benchmark_isGLB",
+    "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value",
+    "BanditRL.OnlineAdaptiveBenchmark.benchmark_attained_iff",
+    "BanditRL.OnlineAdaptiveBenchmark.benchmark_positive_minimum",
+    "BanditRL.OnlineAdaptiveBenchmark.source_theorem4_14_infimum"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Frozen bounded native API/retrieval evidence in runs/online-ch2-adaptive-osd-20261010; shared projection/policy, potential, adaptive energy and optimal-step declarations inspected."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value",
+      "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveOSD.energy_eq_sum",
+      "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
+      "BanditRL.OnlineAdaptiveOSD.energy_step_mono",
+      "BanditRL.OnlineAdaptiveOSD.one_step",
+      "BanditRL.OnlineAdaptiveOSD.output_mem",
+      "BanditRL.OnlineAdaptiveOSD.regret_bound",
+      "BanditRL.OnlineAdaptiveOSD.regret_zero_diameter",
+      "BanditRL.OnlineAdaptiveOSD.source_theorem4_14",
+      "BanditRL.OnlineAdaptivePotential.weighted_potential_sum"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineAdaptivePotential.weighted_potential_sum",
+      "BanditRL.OnlineAdaptiveOSD.Domain",
+      "BanditRL.OnlineAdaptiveOSD.SupportPolicy",
+      "BanditRL.OnlineAdaptiveOSD.state",
+      "BanditRL.OnlineAdaptiveOSD.history",
+      "BanditRL.OnlineAdaptiveOSD.energy",
+      "BanditRL.OnlineAdaptiveOSD.output",
+      "BanditRL.OnlineAdaptiveOSD.selected",
+      "BanditRL.OnlineAdaptiveOSD.eta",
+      "BanditRL.OnlineAdaptiveOSD.LegalFeedback",
+      "BanditRL.OnlineAdaptiveOSD.regret",
+      "BanditRL.OnlineAdaptiveOSD.state_succ",
+      "BanditRL.OnlineAdaptiveOSD.state_prefix",
+      "BanditRL.OnlineAdaptiveOSD.energy_succ",
+      "BanditRL.OnlineAdaptiveOSD.output_succ",
+      "BanditRL.OnlineAdaptiveOSD.energy_eq_sum",
+      "BanditRL.OnlineAdaptiveOSD.history_mem",
+      "BanditRL.OnlineAdaptiveOSD.eta_eq_energy",
+      "BanditRL.OnlineAdaptiveOSD.output_mem",
+      "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
+      "BanditRL.OnlineAdaptiveOSD.trajectory_finite_loss",
+      "BanditRL.OnlineAdaptiveOSD.oracle_feedback",
+      "BanditRL.OnlineAdaptiveOSD.canonical_feedback",
+      "BanditRL.OnlineAdaptiveOSD.energy_step_mono",
+      "BanditRL.OnlineAdaptiveOSD.energy_pos_of_selected_ne_zero",
+      "BanditRL.OnlineAdaptiveOSD.eta_pos_of_selected_ne_zero",
+      "BanditRL.OnlineAdaptiveOSD.zero_feedback_step",
+      "BanditRL.OnlineAdaptiveOSD.regret_zero_diameter",
+      "BanditRL.OnlineAdaptiveOSD.one_step_chain",
+      "BanditRL.OnlineAdaptiveOSD.one_step",
+      "BanditRL.OnlineAdaptiveOSD.regret_bound",
+      "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+      "BanditRL.OnlineAdaptiveOSD.source_theorem4_14",
+      "BanditRL.OnlineAdaptiveOSD.canonical_eq4_4",
+      "BanditRL.OnlineAdaptiveOSD.canonical_theorem4_14",
+      "BanditRL.OnlineAdaptiveBenchmark.benchmark_isGLB",
+      "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value",
+      "BanditRL.OnlineAdaptiveBenchmark.benchmark_attained_iff",
+      "BanditRL.OnlineAdaptiveBenchmark.benchmark_positive_minimum",
+      "BanditRL.OnlineAdaptiveBenchmark.source_theorem4_14_infimum"
+    ],
+    "known_consumers": [
+      "AdaptiveProbe.performance_canary",
+      "AdaptiveProbe.zero_energy_canary",
+      "AdaptiveProbe.zero_diameter_canary",
+      "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+      "BanditRL.OnlineAdaptiveBenchmark.source_theorem4_14_infimum"
+    ],
+    "planned_consumers": [
+      "Chapter2 required adaptive forward container after remaining source-container audit."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One actual causal recurrence supplies selected supports/energy/output to the same-run guarantees. Existing projection/policy/energy/optimal-step substrate reused; no separate book project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "Historical production definitions/proofs: /root; current algorithm canary BODY repair/completion: /root/adaptive_formalizer.",
+    "blind_decoder": "Historical production source-blind reconstruction: /root/osd_blind; fresh seven-canary restricted-input reconstruction only: /root/adaptive_decoder.",
+    "source_reviewer": "Historical staged source/BODY actors retained in original receipts; current fresh three-production-module source/BODY and seven-canary BODY reviewer: /root/adaptive_reviewer.",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The same actual recursive state supplies played point, selected support and inclusive energy. Source time1..T maps to Lean0..T-1; terminal source x_(T+1) is Lean outputT. The loss is proper extended-real and subdifferentiable on a nonempty closed convex finite-dimensional real inner-product domain; legal feedback is required only at actual played points. Fixed SupportPolicy receives time, the entire strict-past loss functions, the played-point history through the current point, and the current loss; it is not reselected for different futures. OracleLaw is a separate stronger sufficient interface. No executable/measurable policy or universal off-path support law is asserted. Empty horizon, zero energy and D=0 are retained; zero selected feedback explicitly skips the projection update. Separate source-display repair, not a change to the original PDF or regret inequality: for B(eta)=D^2/(2eta)+eta*S/2 on eta>0, the infimum is D*sqrt(S) for every D,S>=0. It is attained exactly when both D,S are positive or both are zero. When both are positive the unique minimizer is D/sqrt(S); when both are zero every positive eta minimizes; when exactly one vanishes the infimum0 is unattained. Theorem4.14 displayed minimum must therefore be read as infimum in the one-zero regimes. S is the energy realized by the single adaptive run, frozen during this scalar comparison; no optimal rerun or clairvoyant learner is asserted. Historical staged reviews retained; current independent production/source and canary BODY reviews are accepted-with-explicit-delta. Exact integration and combined/publication gates remain pending; no runtime model attestation. Current distinct fresh production/source and complete canary BODY reviews accepted-with-explicit-delta; exact receipts: [{\"path\":\"E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/fresh-canary-blind-decoder-20261011-v1.json\",\"sha256\":\"b10910608deca54acb2f5f932fe6100feff924ff8b054bcc38872df68e6d712c\"},{\"path\":\"E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/fresh-canary-BODY-review-20261011-v1.json\",\"sha256\":\"605bc66a6cd0a0c4237acf55397c567810f52c8e160dd37744d3925c43f33ab4\"},{\"path\":\"E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/fresh-production-source-review-20261011-v1.json\",\"sha256\":\"728ce3ad8b326f53ee584a61e0125135a81fee4e6b45f2f837b8e12a3d4385be\"}]. This semantic status does not assert combined gates, native/package acceptance or chapter closure. Fresh canary decoder did not decode the production package; historical production reconstructions remain their own evidence. Current production source reviewer inspected actual source and all three production modules independently. Role scopes are not interchangeable."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Composing projection, weighted potential and energy estimates establishes actual theorem dependencies; no cross-setting equivalence or certified functor is proved.",
+    "focus_targets": [
+      "BanditRL.OnlineAdaptiveOSD.regret_bound",
+      "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+      "BanditRL.OnlineAdaptiveBenchmark.source_theorem4_14_infimum"
+    ],
+    "visual_review": "Pending exact new cards/teaching highlights/folded source/proof and generated shared registry audit; all prior registry objects must remain unchanged. Three new cards/highlights are not three complete chapter source containers.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: append3modules,3source cards/highlights and bounded current frontier suffix; every existing card/object retained.",
+    "banditrlwiki": "no-change-with-reason: no Bandit-specific policy or setting closure.",
+    "results_ledger": "no-change-with-reason: no chapter/global milestone accepted.",
+    "roadmap": "updated: Chapter2 stays partial/null, all8forward containers open and6future claims unenumerated; old boundaries historical, current candidate appended.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "Current superseding candidate frontier: the actual causal adaptive OSD recursion, explicit zero-feedback skip, signed weighted-potential estimate, general-alpha terminal-residual regret bound, Eq.(4.4), and Theorem4.14 regret plus separately disclosed infimum/attainment benchmark are locally compiled candidates. Earlier cards and contracts retain their historical open-state wording. Current distinct production/source and canary BODY reviews are accepted-with-explicit-delta; exact integration review, combined root/Tests/full harness, contributor and site/registry checks remain required. This does not close any of the eight Chapter2 required forward containers or certify all six future mathematical claims. Chapter2 remains partial, accepted=false and mandatory proof total=null; Chapters3-16 remain unenumerated/null. Whole Chapters1-16 Goal ACTIVE. No merge, deployment, live-site or retirement claim.",
+  "verification": {
+    "focused_checks": [
+      "Seven complete actual-run canaries focused compiled; seven full public statements/standard axiom audits/fences/safe-verifies passed; ten selected lexical VALUE branch parent occurrences verified by V4 exporter. Exact manifest 0b0556835272c166ad6a2455a8978eb20aa6934286d369c23833fae4d1e7c6bf. Original V1/V2 exporter failures and V3 diagnostic retained. Syntactic branch occurrence is not a closed independent subproof or necessity certificate."
+    ],
+    "bandit_check": "pending combined root/Tests/full harness and contributor contract against exact base 0283616c8439b09fc49d5e35373ff74aa11371cc",
+    "site_build": "pending after successful current combined Lean gate",
+    "site_check": "pending old registry preservation/current source links/rendered pixels",
+    "independent_review": "Fresh distinct current production/source and seven complete canary BODY reviews accepted-with-explicit-delta. Exact6file integration proposal, combined root/Tests/full harness/site, native/package and delivery remain pending. [{\"path\":\"E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/fresh-canary-BODY-review-20261011-v1.json\",\"sha256\":\"605bc66a6cd0a0c4237acf55397c567810f52c8e160dd37744d3925c43f33ab4\"},{\"path\":\"E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/fresh-production-source-review-20261011-v1.json\",\"sha256\":\"728ce3ad8b326f53ee584a61e0125135a81fee4e6b45f2f837b8e12a3d4385be\"}] New v4 reader proposal makes the quantitative one-step and cumulative-energy proof visible with explicit selected supporting Mathlib facts; exact publication proposal review pending.",
+    "owned_test_files": [
+      "Tests/OnlineAdaptivePotentialCanary.lean",
+      "Tests/OnlineAdaptiveOSDCanary.lean"
+    ],
+    "owned_test_root_files": [
+      "Tests.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Codex for Ji Cheng",
+    "role": "Formalizer with distinct reused staged automated decoder and source reviewer"
+  }
+}

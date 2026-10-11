@@ -1,0 +1,40 @@
+{
+  "expected_direct_VALUE_parents": {
+    "energy_succ": [
+      "BanditRL.OnlineAdaptiveOSD.state_succ"
+    ],
+    "output_succ": [
+      "BanditRL.OnlineAdaptiveOSD.state_succ"
+    ],
+    "energy_eq_sum": [
+      "BanditRL.OnlineAdaptiveOSD.energy_succ"
+    ],
+    "history_mem": [
+      "BanditRL.OnlineAdaptiveOSD.state_succ",
+      "BanditRL.OnlineGradientDescent.project_spec"
+    ],
+    "output_mem": [
+      "BanditRL.OnlineAdaptiveOSD.history_mem"
+    ],
+    "energy_nonneg": [
+      "BanditRL.OnlineAdaptiveOSD.energy_eq_sum"
+    ],
+    "eta_eq_energy": [
+      "BanditRL.OnlineAdaptiveOSD.energy_succ"
+    ],
+    "trajectory_finite_loss": [
+      "BanditRL.OnlineAdaptiveOSD.output_mem",
+      "BanditRL.OnlineSubgradientDescent.finite_loss"
+    ],
+    "oracle_feedback": [
+      "BanditRL.OnlineAdaptiveOSD.output_mem"
+    ],
+    "canonical_feedback": [
+      "BanditRL.OnlineAdaptiveOSD.oracle_feedback",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal"
+    ]
+  },
+  "actual_VALUE_sha256": "e72602ab42475da3410faf80cfe2b4f2fdc9462312ce17cc1060afbe2fb44afc",
+  "all_expected_found": true,
+  "boundary": "Selected explicit direct compiled dependencies only, not necessity/full graph."
+}

@@ -1,0 +1,4 @@
+theorem state_prefix (V : Domain (E := E)) (α D : ℝ) (loss loss' : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hloss : ∀ s < t, loss s = loss' s) :
+    state V α D loss x₁ p t = state V α D loss' x₁ p t := by

@@ -1,0 +1,104 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineAdaptivePotential
+import BanditRLProof.OnlineAdaptiveEnergy
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+open scoped InnerProductSpace
+namespace NeutralDynamics
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+abbrev SupportPolicy := BanditRL.OnlineSubgradientPolicy.SupportPolicy (E := E)
+local instance : DecidableEq E := Classical.decEq E
+
+def A (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → (Fin (t + 1) → E) × ℝ := by
+  classical
+  exact Nat.rec (motive := fun t => (Fin (t + 1) → E) × ℝ) ((fun _ => x₁), 0)
+    (fun t s =>
+      let g := p t (fun i => loss i.val) s.1 (loss t)
+      let S := s.2 + ‖g‖ ^ 2
+      (Fin.snoc s.1 (if g = 0 then s.1 (Fin.last t) else
+        BanditRL.OnlineGradientDescent.project V
+          (s.1 (Fin.last t) - (α * D / Real.sqrt S) • g)), S))
+
+def H (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : Fin (t + 1) → E :=
+  (A V α D loss x₁ p t).1
+
+def Q (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : ℝ :=
+  (A V α D loss x₁ p t).2
+
+def X (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  H V α D loss x₁ p t (Fin.last t)
+
+def G (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (H V α D loss x₁ p t) (loss t)
+
+def R (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : ℝ :=
+  α * D / Real.sqrt (Q V α D loss x₁ p t + ‖G V α D loss x₁ p t‖ ^ 2)
+
+def L (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, G V α D loss x₁ p t ∈
+    SourceSubdifferential (loss t) (X V α D loss x₁ p t)
+
+def F (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (X V α D loss x₁ p t)).toReal - (loss t u).toReal)
+
+theorem certificate_1 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    Q V α D loss x₁ p (t + 1) =
+      Q V α D loss x₁ p t + ‖G V α D loss x₁ p t‖ ^ 2
+
+theorem certificate_2 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    X V α D loss x₁ p (t + 1) =
+      if G V α D loss x₁ p t = 0 then X V α D loss x₁ p t else
+        BanditRL.OnlineGradientDescent.project V
+          (X V α D loss x₁ p t - R V α D loss x₁ p t • G V α D loss x₁ p t)
+
+theorem certificate_3 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) :
+    Q V α D loss x₁ p T = ∑ t ∈ range T, ‖G V α D loss x₁ p t‖ ^ 2
+
+theorem certificate_4 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (i : Fin (t + 1)) :
+    H V α D loss x₁ p t i ∈ V.carrier
+
+theorem certificate_5 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) :
+    X V α D loss x₁ p t ∈ V.carrier
+
+theorem certificate_6 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) :
+    0 ≤ Q V α D loss x₁ p T
+
+theorem certificate_7 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    R V α D loss x₁ p t = α * D / Real.sqrt (Q V α D loss x₁ p (t + 1))
+
+theorem certificate_8 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (u : E) (hu : u ∈ V.carrier) :
+    loss t (X V α D loss x₁ p t) = ((loss t (X V α D loss x₁ p t)).toReal : EReal) ∧
+    loss t u = ((loss t u).toReal : EReal)
+
+theorem certificate_9 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p)
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+    L V α D loss x₁ p T
+
+theorem certificate_10 (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+    L V α D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T
+
+end NeutralDynamics

@@ -1,0 +1,10 @@
+from common import *
+s=(RUN/'ExportAlgorithmCanaryValuesV1.lean').read_text(encoding='utf8')
+s=s.replace('  | .mdata _ body => peel body','  | .mdata _ body => peel body\n  | .lam _ _ body _ => peel body')
+s=s.replace('  else if index == 0 then return p','  else if (p.getAppFn.isConstOf ``And.casesOn || p.getAppFn.isConstOf ``And.rec) then\n    conjunct p.getAppArgs.back! index\n  else if index == 0 then return p')
+s=s.replace('Branch occurrence is not necessity','Local lambda binders and And eliminator continuations are traversed syntactically to reach branch values; no type-correct closed subproof is claimed. Branch occurrence is not necessity')
+write(RUN/'ExportAlgorithmCanaryValuesV2.lean',s)
+write(RUN/'algorithm-canary-exporter-repair-v2.json',dict(classification='Evidence extractor cannot descend conjunction elimination introduced by obtain trace; traverse lambda bodies and And eliminator continuation, retaining lexical branch VALUE constants',original=rows([RUN/'ExportAlgorithmCanaryValuesV1.lean',RUN/'algorithm-canary-value-export-v1.json']),production_unchanged=sha(ROOT/'Tests/OnlineAdaptiveOSDCanary.lean'),boundary='Syntactic branch occurrence only, not necessity or a closed independent proof'))
+code,out=capture('algorithm-canary-value-export-v2','lake','env','lean','--run',RUN/'ExportAlgorithmCanaryValuesV2.lean',RUN/'algorithm-canary-values-native-v2.json',required=False)
+print(out,flush=True)
+sys.exit(code)

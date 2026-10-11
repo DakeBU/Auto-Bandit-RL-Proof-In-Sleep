@@ -1,0 +1,113 @@
+import BanditRLProof.OnlineOptimalStep
+import BanditRLProof.OnlineAdaptiveOSD
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex BanditRL.OnlineAdaptiveOSD
+namespace BanditRL.OnlineAdaptiveBenchmark
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+
+theorem benchmark_isGLB (D S : ℝ) (hD : 0 ≤ D) (hS : 0 ≤ S) :
+    IsGLB {b : ℝ | ∃ η : ℝ, 0 < η ∧ b = BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η} (D * Real.sqrt S) := by
+  refine ⟨?_, ?_⟩
+  · rintro b ⟨η, hη, rfl⟩
+    simpa only [Real.sqrt_sq hD] using
+      BanditRL.OnlineOptimalStep.lower_bound (D ^ 2) S η (sq_nonneg D) hS hη
+  · intro b hb
+    by_contra hle
+    have hgt : D * Real.sqrt S < b := lt_of_not_ge hle
+    by_cases hDz : D = 0
+    · subst D
+      have hbpos : 0 < b := by simpa using hgt
+      by_cases hSz : S = 0
+      · subst S
+        have hlow := hb (show BanditRL.OnlineOptimalStep.upperBound (0 ^ 2) 0 1 ∈
+            {b : ℝ | ∃ η : ℝ, 0 < η ∧ b = BanditRL.OnlineOptimalStep.upperBound (0 ^ 2) 0 η} from
+          ⟨1, by norm_num, rfl⟩)
+        have hzero : b ≤ 0 := by simpa [BanditRL.OnlineOptimalStep.upperBound] using hlow
+        exact (not_lt_of_ge hzero) hbpos
+      · have hSpos : 0 < S := lt_of_le_of_ne hS (Ne.symm hSz)
+        have hlow := hb (show BanditRL.OnlineOptimalStep.upperBound (0 ^ 2) S (b / S) ∈
+            {b : ℝ | ∃ η : ℝ, 0 < η ∧ b = BanditRL.OnlineOptimalStep.upperBound (0 ^ 2) S η} from
+          ⟨b / S, div_pos hbpos hSpos, rfl⟩)
+        have hv : BanditRL.OnlineOptimalStep.upperBound (0 ^ 2) S (b / S) = b / 2 := by
+          simp [BanditRL.OnlineOptimalStep.upperBound, div_mul_cancel₀ _ (ne_of_gt hSpos)]
+        rw [hv] at hlow
+        linarith
+    · have hDpos : 0 < D := lt_of_le_of_ne hD (Ne.symm hDz)
+      by_cases hSz : S = 0
+      · subst S
+        have hbpos : 0 < b := by simpa using hgt
+        have hlow := hb (show BanditRL.OnlineOptimalStep.upperBound (D ^ 2) 0 (D ^ 2 / b) ∈
+            {b : ℝ | ∃ η : ℝ, 0 < η ∧ b = BanditRL.OnlineOptimalStep.upperBound (D ^ 2) 0 η} from
+          ⟨D ^ 2 / b, div_pos (sq_pos_of_pos hDpos) hbpos, rfl⟩)
+        have hv : BanditRL.OnlineOptimalStep.upperBound (D ^ 2) 0 (D ^ 2 / b) = b / 2 := by
+          dsimp [BanditRL.OnlineOptimalStep.upperBound]
+          field_simp [ne_of_gt hDpos, ne_of_gt hbpos]
+          ring
+        rw [hv] at hlow
+        linarith
+      · have hSpos : 0 < S := lt_of_le_of_ne hS (Ne.symm hSz)
+        have hlow := hb (show BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S (D / Real.sqrt S) ∈
+            {b : ℝ | ∃ η : ℝ, 0 < η ∧ b = BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η} from
+          ⟨D / Real.sqrt S, div_pos hDpos (Real.sqrt_pos.mpr hSpos), rfl⟩)
+        rw [(BanditRL.OnlineOptimalStep.distance_energy_argmin D S hDpos hSpos).2.1] at hlow
+        exact (not_lt_of_ge hlow) hgt
+
+theorem source_benchmark_value (D S : ℝ) (hD : 0 ≤ D) (hS : 0 ≤ S) :
+    D * Real.sqrt (2 * S) = Real.sqrt 2 * sInf
+      {b : ℝ | ∃ η : ℝ, 0 < η ∧ b = BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η} := by
+  have hglb := benchmark_isGLB D S hD hS
+  have hne : {b : ℝ | ∃ η : ℝ, 0 < η ∧
+      b = BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η}.Nonempty :=
+    ⟨BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S 1, 1, by norm_num, rfl⟩
+  rw [hglb.csInf_eq hne, Real.sqrt_mul (by norm_num : 0 ≤ (2 : ℝ))]
+  ring
+
+theorem benchmark_attained_iff (D S : ℝ) (hD : 0 ≤ D) (hS : 0 ≤ S) :
+    (∃ η : ℝ, 0 < η ∧ BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η = D * Real.sqrt S) ↔
+      (0 < D ∧ 0 < S) ∨ (D = 0 ∧ S = 0) := by
+  constructor
+  · rintro ⟨η, hη, hval⟩
+    by_cases hDz : D = 0
+    · by_cases hSz : S = 0
+      · exact Or.inr ⟨hDz, hSz⟩
+      · exfalso
+        subst D
+        have hSpos : 0 < S := lt_of_le_of_ne hS (Ne.symm hSz)
+        have hv : BanditRL.OnlineOptimalStep.upperBound 0 S η = 0 := by simpa using hval
+        have hdec := BanditRL.OnlineOptimalStep.zero_distance_decreases S η hSpos hη
+        have hlow := BanditRL.OnlineOptimalStep.lower_bound 0 S (η / 2) (by norm_num) hS hdec.1
+        simp only [Real.sqrt_zero, zero_mul] at hlow
+        rw [hv] at hdec
+        exact (not_lt_of_ge hlow) hdec.2
+    · have hDpos : 0 < D := lt_of_le_of_ne hD (Ne.symm hDz)
+      by_cases hSz : S = 0
+      · exfalso
+        subst S
+        simp only [Real.sqrt_zero, mul_zero] at hval
+        have hdec := BanditRL.OnlineOptimalStep.zero_energy_decreases (D ^ 2) η (sq_pos_of_pos hDpos) hη
+        have hlow := BanditRL.OnlineOptimalStep.lower_bound (D ^ 2) 0 (2 * η) (sq_nonneg D) (by norm_num) hdec.1
+        simp only [Real.sqrt_zero, mul_zero] at hlow
+        rw [hval] at hdec
+        exact (not_lt_of_ge hlow) hdec.2
+      · exact Or.inl ⟨hDpos, lt_of_le_of_ne hS (Ne.symm hSz)⟩
+  · rintro (⟨hDpos, hSpos⟩ | ⟨rfl, rfl⟩)
+    · exact ⟨D / Real.sqrt S, div_pos hDpos (Real.sqrt_pos.mpr hSpos),
+        (BanditRL.OnlineOptimalStep.distance_energy_argmin D S hDpos hSpos).2.1⟩
+    · exact ⟨1, by norm_num, by norm_num [BanditRL.OnlineOptimalStep.upperBound]⟩
+
+theorem benchmark_positive_minimum (D S : ℝ) (hD : 0 < D) (hS : 0 < S) :
+    0 < D / Real.sqrt S ∧
+    BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S (D / Real.sqrt S) = D * Real.sqrt S ∧
+    ∀ η : ℝ, 0 < η →
+      D * Real.sqrt S ≤ BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η ∧
+      (BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η = D * Real.sqrt S ↔
+        η = D / Real.sqrt S) := by
+  have hs := BanditRL.OnlineOptimalStep.distance_energy_argmin D S hD hS
+  refine ⟨div_pos hD (Real.sqrt_pos.mpr hS), hs.2.1, ?_⟩
+  intro η hη
+  constructor
+  · simpa only [hs.2.1] using hs.2.2 η hη
+  · simpa only [hs.1, hs.2.1] using
+      BanditRL.OnlineOptimalStep.optimal_unique (D ^ 2) S η (sq_pos_of_pos hD) hS hη
+end BanditRL.OnlineAdaptiveBenchmark

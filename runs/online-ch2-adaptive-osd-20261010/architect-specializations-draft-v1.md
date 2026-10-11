@@ -1,0 +1,1 @@
+Four finite draft endpoints share actual parent and canonical_feedback, no new learner. Freeze complete statements; obtain neutral and anti-anchored review before BODY append. Actual parent dependency review remains pending.

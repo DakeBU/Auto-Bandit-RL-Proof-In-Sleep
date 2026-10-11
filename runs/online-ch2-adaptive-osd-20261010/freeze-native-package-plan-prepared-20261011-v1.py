@@ -1,0 +1,19 @@
+from native_package_guard_prepared_20261011_v1 import *
+parser=argparse.ArgumentParser();parser.add_argument('--request',type=Path,required=True);a=parser.parse_args()
+q=load(a.request);verified=validate_request(q);tag=q['tag']
+plan_path=RUN/('native-package-plan-'+tag+'.json');inputs_path=RUN/('native-package-FINAL-inputs-'+tag+'.json')
+assert not plan_path.exists() and not inputs_path.exists()
+mutable=DOCS+LOGS
+originals=[dict(path=p.as_posix(),sha256=sha(p),RAW_base64=base64.b64encode(p.read_bytes()).decode('ascii')) for p in mutable]
+assert len(originals)==7
+# Capture source/metadata fingerprints WITHOUT changing them. Imported helpers are immutable support.
+helper_names=['native_package_guard_prepared_20261011_v1.py','freeze-native-package-plan-prepared-20261011-v1.py','execute-native-package-prepared-20261011-v1.py','prepare-postnative-transition-prepared-20261011-v1.py']
+helpers=rows([RUN/name for name in helper_names]);support=rows([RUN/'common.py',RUN/'native-scoped.py',RUN/'delivery_guard_20261011_v3.py',RUN/'delivery-preparation-config-20261011-v1.json',ROOT/'tools/bandit.py',ROOT/'tools/abrl_lifecycle.py'])
+extra=[bound(row) for row in q['additional_exact_inputs']]
+all_inputs=[Path(r['path']) for r in verified['gate_rows']+verified['source_binding']+helpers+support]+mutable+[a.request]+extra
+write(inputs_path,dict(rows=rows(all_inputs),scope='Actual pre-native FINAL inputs; seven mutable originals retained; source/manifest/readers/coverage immutable; no FINAL verdict inferred'))
+suffix='\n\n## Bounded adaptive OSD package accepted locally\n\nDistinct FINAL `{FINAL_SHA}`; verified clean local site candidate `{SITE_HEAD}`. Exactly30 frozen production proof contracts were reviewed for this bounded package; native counter30->0 is not a source-obligation or chapter denominator.8definitions+2aliases,9complete canaries and3reader cards remain separately classified. Actual gate/reader/registry/pixel evidence and source deltas live in the new package accepted contract. The existing contribution manifest remains the frozen reviewed candidate snapshot, not silently rewritten as current gate evidence. '+BOUNDARY+'\n'
+p=dict(scope='bounded-package-native-plan',request=rows([a.request])[0],counts=COUNTS,source_binding=verified['source_binding'],site_head=verified['site_head'],proof_contracts=verified['proof_contracts'],mutable_originals=originals,document_paths=[x.as_posix() for x in DOCS],document_suffix_template=suffix,new_accepted_contract=(CONTRACT/('package-accepted-'+tag+'.json')).as_posix(),helpers=helpers,support=support,final_inputs=inputs_path.as_posix(),final_inputs_sha256=sha(inputs_path),manifest_mutation=False,mathematical_source_mutation=False,coverage_mutation=False,tag=tag,boundary=BOUNDARY)
+write(plan_path,p)
+write(RUN/('native-package-FINAL-packet-'+tag+'.md'),'Review all exact inputs, actual authoritative harnessv2/root/Tests,39standard-axiom declarations,9complete canaries, source/BODY reviews, site/registry and ALL original images. Personally view original pixels. Assess the exact native plan/helpers: only4own-doc appends,1trial append,2events and exact lifecycle state change; new OWN acceptedcontract/evidence only; no source/manifest/reader/coverage changes. Counter30->0 refers only to the30named frozen production proof contracts. Return a distinct FINAL verdict with blocking_repairs, input_manifest path/hash, approved_native_plan_sha256, approved_native_helper_hashes, original_pixels_personally_reviewed and counter_unit exactly "30 frozen production proof contracts; source/chapter denominator unknown". Approving this plan does not execute native acceptance. Postnative review and S3 exact state exemption remain separate. '+BOUNDARY)
+print(plan_path.as_posix())

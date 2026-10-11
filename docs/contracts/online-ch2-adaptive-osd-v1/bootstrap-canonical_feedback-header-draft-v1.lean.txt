@@ -1,0 +1,4 @@
+theorem canonical_feedback (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+    LegalFeedback V α D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T := by

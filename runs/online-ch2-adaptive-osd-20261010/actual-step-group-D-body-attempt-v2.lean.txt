@@ -1,0 +1,251 @@
+import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineAdaptivePotential
+import BanditRLProof.OnlineAdaptiveEnergy
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex
+open scoped InnerProductSpace
+namespace BanditRL.OnlineAdaptiveOSD
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+abbrev Domain := BanditRL.OnlineGradientDescent.Domain E
+abbrev SupportPolicy := BanditRL.OnlineSubgradientPolicy.SupportPolicy (E := E)
+local instance : DecidableEq E := Classical.decEq E
+
+def state (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) : (t : ℕ) → (Fin (t + 1) → E) × ℝ := by
+  classical
+  exact Nat.rec (motive := fun t => (Fin (t + 1) → E) × ℝ) ((fun _ => x₁), 0)
+    (fun t s =>
+      let g := p t (fun i => loss i.val) s.1 (loss t)
+      let S := s.2 + ‖g‖ ^ 2
+      (Fin.snoc s.1 (if g = 0 then s.1 (Fin.last t) else
+        BanditRL.OnlineGradientDescent.project V
+          (s.1 (Fin.last t) - (α * D / Real.sqrt S) • g)), S))
+
+def history (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : Fin (t + 1) → E :=
+  (state V α D loss x₁ p t).1
+
+def energy (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : ℝ :=
+  (state V α D loss x₁ p t).2
+
+def output (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  history V α D loss x₁ p t (Fin.last t)
+
+def selected (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : E :=
+  p t (fun i => loss i.val) (history V α D loss x₁ p t) (loss t)
+
+def eta (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) : ℝ :=
+  α * D / Real.sqrt (energy V α D loss x₁ p t + ‖selected V α D loss x₁ p t‖ ^ 2)
+
+def LegalFeedback (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) : Prop :=
+  ∀ t < T, selected V α D loss x₁ p t ∈
+    SourceSubdifferential (loss t) (output V α D loss x₁ p t)
+
+def regret (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (u : E) (T : ℕ) : ℝ :=
+  ∑ t ∈ range T, ((loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal)
+
+theorem state_succ (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    state V α D loss x₁ p (t + 1) =
+      (Fin.snoc (history V α D loss x₁ p t)
+        (if selected V α D loss x₁ p t = 0 then output V α D loss x₁ p t else
+          BanditRL.OnlineGradientDescent.project V
+            (output V α D loss x₁ p t - eta V α D loss x₁ p t • selected V α D loss x₁ p t)),
+       energy V α D loss x₁ p t + ‖selected V α D loss x₁ p t‖ ^ 2) := by
+  rfl
+
+theorem state_prefix (V : Domain (E := E)) (α D : ℝ) (loss loss' : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hloss : ∀ s < t, loss s = loss' s) :
+    state V α D loss x₁ p t = state V α D loss' x₁ p t := by
+  induction t with
+  | zero => rfl
+  | succ t ih =>
+    have hs := ih (fun s hs => hloss s (Nat.lt_succ_of_lt hs))
+    have hpast : (fun i : Fin t => loss i.val) = fun i : Fin t => loss' i.val := by
+      funext i
+      exact hloss i.val (Nat.lt_succ_of_lt i.isLt)
+    rw [state_succ, state_succ]
+    simp only [history, output, selected, eta, energy, hs, hpast,
+      hloss t (Nat.lt_succ_self t)]
+
+theorem energy_succ (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    energy V α D loss x₁ p (t + 1) =
+      energy V α D loss x₁ p t + ‖selected V α D loss x₁ p t‖ ^ 2 := by
+  change (state V α D loss x₁ p (t + 1)).2 = _
+  rw [state_succ]
+
+theorem output_succ (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    output V α D loss x₁ p (t + 1) =
+      if selected V α D loss x₁ p t = 0 then output V α D loss x₁ p t else
+        BanditRL.OnlineGradientDescent.project V
+          (output V α D loss x₁ p t - eta V α D loss x₁ p t • selected V α D loss x₁ p t) := by
+  simp only [output, history, state_succ, Fin.snoc_last]
+
+theorem energy_eq_sum (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) :
+    energy V α D loss x₁ p T = ∑ t ∈ range T, ‖selected V α D loss x₁ p t‖ ^ 2 := by
+  induction T with
+  | zero => simp [energy, state]
+  | succ T ih => rw [energy_succ, sum_range_succ, ih]
+
+theorem history_mem (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) (i : Fin (t + 1)) :
+    history V α D loss x₁ p t i ∈ V.carrier := by
+  induction t with
+  | zero => simpa only [history, state] using hx₁
+  | succ t ih =>
+    change (state V α D loss x₁ p (t + 1)).1 i ∈ V.carrier
+    rw [state_succ]
+    refine Fin.lastCases ?_ (fun j => ?_) i
+    · simp only [Fin.snoc_last]
+      split_ifs with hg
+      · exact ih (Fin.last t)
+      · exact (BanditRL.OnlineGradientDescent.project_spec V _).1
+    · simpa only [Fin.snoc_castSucc] using ih j
+
+theorem eta_eq_energy (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    eta V α D loss x₁ p t = α * D / Real.sqrt (energy V α D loss x₁ p (t + 1)) := by
+  unfold eta
+  rw [energy_succ]
+
+theorem output_mem (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ) :
+    output V α D loss x₁ p t ∈ V.carrier := by
+  exact history_mem V α D loss x₁ p hx₁ t (Fin.last t)
+
+theorem energy_nonneg (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (T : ℕ) :
+    0 ≤ energy V α D loss x₁ p T := by
+  rw [energy_eq_sum]
+  exact sum_nonneg (fun _ _ => sq_nonneg _)
+
+theorem trajectory_finite_loss (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (t : ℕ)
+    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (u : E) (hu : u ∈ V.carrier) :
+    loss t (output V α D loss x₁ p t) = ((loss t (output V α D loss x₁ p t)).toReal : EReal) ∧
+    loss t u = ((loss t u).toReal : EReal) := by
+  exact ⟨BanditRL.OnlineSubgradientDescent.finite_loss V (loss t) hloss _
+      (output_mem V α D loss x₁ p hx₁ t),
+    BanditRL.OnlineSubgradientDescent.finite_loss V (loss t) hloss u hu⟩
+
+theorem oracle_feedback (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hp : BanditRL.OnlineSubgradientPolicy.OracleLaw V p)
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+    LegalFeedback V α D loss x₁ p T := by
+  intro t ht
+  exact hp t (fun i => loss i.val) (history V α D loss x₁ p t) (loss t)
+    (hloss t ht) (output_mem V α D loss x₁ p hx₁ t)
+
+theorem canonical_feedback (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) :
+    LegalFeedback V α D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T := by
+  exact oracle_feedback V α D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy
+    hx₁ T (BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal V) hloss
+
+
+theorem energy_step_mono (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ) :
+    energy V α D loss x₁ p t ≤ energy V α D loss x₁ p (t + 1) := by
+  rw [energy_succ]
+  linarith [sq_nonneg ‖selected V α D loss x₁ p t‖]
+
+theorem energy_pos_of_selected_ne_zero (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hg : selected V α D loss x₁ p t ≠ 0) :
+    0 < energy V α D loss x₁ p (t + 1) := by
+  rw [energy_succ]
+  exact add_pos_of_nonneg_of_pos (energy_nonneg V α D loss x₁ p t)
+    (sq_pos_of_pos (norm_pos_iff.mpr hg))
+
+theorem eta_pos_of_selected_ne_zero (V : Domain (E := E)) (α D : ℝ) (hα : 0 < α) (hD : 0 < D)
+    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hg : selected V α D loss x₁ p t ≠ 0) :
+    0 < eta V α D loss x₁ p t := by
+  rw [eta_eq_energy]
+  exact div_pos (mul_pos hα hD)
+    (Real.sqrt_pos.mpr (energy_pos_of_selected_ne_zero V α D loss x₁ p t hg))
+
+theorem zero_feedback_step (V : Domain (E := E)) (α D : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hg : selected V α D loss x₁ p t ∈ SourceSubdifferential (loss t) (output V α D loss x₁ p t))
+    (hz : selected V α D loss x₁ p t = 0) (u : E) (hu : u ∈ V.carrier) :
+    output V α D loss x₁ p (t + 1) = output V α D loss x₁ p t ∧
+    (loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal ≤ 0 := by
+  refine ⟨?_, ?_⟩
+  · rw [output_succ, if_pos hz]
+  · have hs := (BanditRL.OnlineSubgradientDescent.lemma_2_31 V (loss t) hloss
+        1 (by norm_num) (output V α D loss x₁ p t) u hu (selected V α D loss x₁ p t) hg).1
+    simpa only [hz, inner_zero_left, one_mul] using hs
+
+theorem regret_zero_diameter (V : Domain (E := E)) (α : ℝ) (loss : ℕ → E → EReal)
+    (x₁ : E) (p : SupportPolicy (E := E)) (hx₁ : x₁ ∈ V.carrier) (T : ℕ)
+    (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ (0 : ℝ))
+    (u : E) (hu : u ∈ V.carrier) :
+    regret V α 0 loss x₁ p u T = 0 ∧ ‖output V α 0 loss x₁ p T - u‖ = 0 := by
+  have heq : ∀ t, output V α 0 loss x₁ p t = u := by
+    intro t
+    apply sub_eq_zero.mp
+    apply norm_eq_zero.mp
+    exact le_antisymm (hdiam _ (output_mem V α 0 loss x₁ p hx₁ t) u hu) (norm_nonneg _)
+  constructor
+  · simp only [regret, heq, sub_self, sum_const_zero]
+  · rw [heq T, sub_self, norm_zero]
+
+theorem one_step_chain (V : Domain (E := E)) (α D : ℝ) (hα : 0 < α) (hD : 0 < D)
+    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hg : selected V α D loss x₁ p t ∈ SourceSubdifferential (loss t) (output V α D loss x₁ p t))
+    (hnz : selected V α D loss x₁ p t ≠ 0) (u : E) (hu : u ∈ V.carrier) :
+    eta V α D loss x₁ p t * ((loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal) ≤
+      eta V α D loss x₁ p t * inner ℝ (selected V α D loss x₁ p t) (output V α D loss x₁ p t - u) ∧
+    eta V α D loss x₁ p t * inner ℝ (selected V α D loss x₁ p t) (output V α D loss x₁ p t - u) ≤
+      ‖output V α D loss x₁ p t - u‖ ^ 2 / 2 -
+      ‖output V α D loss x₁ p (t + 1) - u‖ ^ 2 / 2 +
+      (eta V α D loss x₁ p t) ^ 2 / 2 * ‖selected V α D loss x₁ p t‖ ^ 2 := by
+  have hη := eta_pos_of_selected_ne_zero V α D hα hD loss x₁ p t hnz
+  simpa only [output_succ, if_neg hnz] using
+    BanditRL.OnlineSubgradientDescent.lemma_2_31 V (loss t) hloss
+      (eta V α D loss x₁ p t) hη (output V α D loss x₁ p t) u hu
+      (selected V α D loss x₁ p t) hg
+
+theorem one_step (V : Domain (E := E)) (α D : ℝ) (hα : 0 < α) (hD : 0 < D)
+    (loss : ℕ → E → EReal) (x₁ : E) (p : SupportPolicy (E := E)) (t : ℕ)
+    (hloss : BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t))
+    (hg : selected V α D loss x₁ p t ∈ SourceSubdifferential (loss t) (output V α D loss x₁ p t)) (u : E) (hu : u ∈ V.carrier) :
+    (loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal ≤
+      (‖output V α D loss x₁ p t - u‖ ^ 2 - ‖output V α D loss x₁ p (t + 1) - u‖ ^ 2) *
+        Real.sqrt (energy V α D loss x₁ p (t + 1)) / (2 * α * D) +
+      α * D / 2 * (‖selected V α D loss x₁ p t‖ ^ 2 / Real.sqrt (energy V α D loss x₁ p (t + 1))) := by
+  by_cases hz : selected V α D loss x₁ p t = 0
+  · obtain ⟨hskip, hgap⟩ := zero_feedback_step V α D loss x₁ p t hloss hg hz u hu
+    simpa [hskip, hz] using hgap
+  · have hη := eta_pos_of_selected_ne_zero V α D hα hD loss x₁ p t hz
+    have hs := one_step_chain V α D hα hD loss x₁ p t hloss hg hz u hu
+    have hroot : 0 < Real.sqrt (energy V α D loss x₁ p (t + 1)) :=
+      Real.sqrt_pos.mpr (energy_pos_of_selected_ne_zero V α D loss x₁ p t hz)
+    apply le_of_mul_le_mul_left (a := eta V α D loss x₁ p t) _ hη
+    calc
+      eta V α D loss x₁ p t *
+          ((loss t (output V α D loss x₁ p t)).toReal - (loss t u).toReal) ≤
+          ‖output V α D loss x₁ p t - u‖ ^ 2 / 2 -
+          ‖output V α D loss x₁ p (t + 1) - u‖ ^ 2 / 2 +
+          (eta V α D loss x₁ p t) ^ 2 / 2 * ‖selected V α D loss x₁ p t‖ ^ 2 := hs.1.trans hs.2
+      _ = _ := by
+        simp only [eta_eq_energy]
+        field_simp [ne_of_gt hα, ne_of_gt hD, ne_of_gt hroot]
+end BanditRL.OnlineAdaptiveOSD

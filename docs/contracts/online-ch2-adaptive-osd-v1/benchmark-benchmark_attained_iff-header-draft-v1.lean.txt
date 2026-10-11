@@ -1,0 +1,3 @@
+theorem benchmark_attained_iff (D S : ℝ) (hD : 0 ≤ D) (hS : 0 ≤ S) :
+    (∃ η : ℝ, 0 < η ∧ BanditRL.OnlineOptimalStep.upperBound (D ^ 2) S η = D * Real.sqrt S) ↔
+      (0 < D ∧ 0 < S) ∨ (D = 0 ∧ S = 0) := by

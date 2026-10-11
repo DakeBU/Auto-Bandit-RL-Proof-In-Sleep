@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "declaration": "canonical_eq4_4",
+  "file": "BanditRLProof/OnlineAdaptiveOSD.lean",
+  "statement": "theorem canonical_eq4_4 (V : Domain (E := E)) (D : ℝ) (hD : 0 ≤ D) (loss : ℕ → E → EReal) (x₁ : E) (hx₁ : x₁ ∈ V.carrier) (T : ℕ) (hconvex : ∀ t < T, IsConvexExtended (loss t)) (hloss : ∀ t < T, BanditRL.OnlineSubgradientDescent.SubdifferentiableOn V (loss t)) (hdiam : ∀ x ∈ V.carrier, ∀ y ∈ V.carrier, ‖x - y‖ ≤ D) (u : E) (hu : u ∈ V.carrier) : regret V 1 D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy u T ≤ (3 / 2 : ℝ) * D * Real.sqrt (energy V 1 D loss x₁ BanditRL.OnlineSubgradientPolicy.canonicalPolicy T)",
+  "statement_hash": "c774639aa3a9fbf2251bdf3967ca2e23b23949698b434c4dafd773079f09092b",
+  "source_assumptions": [
+    "(hconvex : ∀ t < T, IsConvexExtended (loss t))"
+  ],
+  "created_at": "2026-10-10T02:30:07+00:00"
+}

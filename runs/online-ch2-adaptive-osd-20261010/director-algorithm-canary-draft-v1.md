@@ -1,0 +1,1 @@
+Exercise the actual same-run trajectory and named performance parents, including active projection, leading/stalled zero energy, nonzero terminal residual and D0 with nonzero selected support. No new learner or theorem count inflation.

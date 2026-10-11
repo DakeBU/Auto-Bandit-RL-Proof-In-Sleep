@@ -1,0 +1,58 @@
+import BanditRLProof.OnlineAdaptiveBenchmark
+import BanditRLProof.OnlineGuessingOGD
+import BanditRLProof.OnlineHinge
+
+noncomputable section
+open Set Finset BanditRL.OnlineConvex BanditRL.OnlineAdaptiveOSD
+namespace AdaptiveProbe
+abbrev V := BanditRL.OnlineGradientDescent.unitInterval
+
+def W : Domain (E := ℝ) where
+  carrier := {0}
+  nonempty := ⟨0, rfl⟩
+  closed := isClosed_singleton
+  convex := convex_singleton 0
+
+def feedback (t : ℕ) : ℝ := if t = 1 then 3 else if t = 3 then -4 else 0
+def loss (t : ℕ) (x : ℝ) : EReal := ((feedback t * x : ℝ) : EReal)
+def policy : SupportPolicy (E := ℝ) := fun t _ _ _ => feedback t
+def futureLoss (t : ℕ) (x : ℝ) : EReal := if t < 2 then loss t x else (7 : EReal)
+def zeroLoss (_ : ℕ) (_ : ℝ) : EReal := 0
+def zeroPolicy : SupportPolicy (E := ℝ) := fun _ _ _ _ => 0
+abbrev x (α : ℝ) (t : ℕ) := output V α 1 loss (1 / 2) policy t
+abbrev q (α : ℝ) (t : ℕ) := energy V α 1 loss (1 / 2) policy t
+abbrev r (α : ℝ) (t : ℕ) := eta V α 1 loss (1 / 2) policy t
+
+theorem loss_regular (U : Domain (E := ℝ)) (t : ℕ) :
+    IsConvexExtended (loss t) ∧
+    BanditRL.OnlineSubgradientDescent.SubdifferentiableOn U (loss t) ∧
+    ∀ z : ℝ, feedback t ∈ SourceSubdifferential (loss t) z := by
+  have hf : loss t = fun y : ℝ => ((inner ℝ (feedback t) y + 0 : ℝ) : EReal) := by
+    funext y
+    change ((feedback t * y : ℝ) : EReal) = ((y * feedback t + 0 : ℝ) : EReal)
+    congr 1
+    ring
+  rw [hf]
+  refine ⟨affine_convex (feedback t) 0, ⟨affine_proper (feedback t) 0, ?_⟩, ?_⟩
+  · intro z hz
+    rw [affine_subdifferential]
+    exact ⟨feedback t, rfl⟩
+  · intro z
+    rw [affine_subdifferential]
+    rfl
+
+theorem feedback_energy :
+    (∀ α : ℝ, ∀ t : ℕ, selected V α 1 loss (1 / 2) policy t = feedback t) ∧
+    (∀ α : ℝ, ∀ T : ℕ, T ≤ 4 →
+      q α T = if T ≤ 1 then 0 else if T ≤ 3 then 9 else 25) := by
+  have hg : ∀ α : ℝ, ∀ t : ℕ,
+      selected V α 1 loss (1 / 2) policy t = feedback t := by
+    intro α t
+    rfl
+  refine ⟨hg, ?_⟩
+  intro α T hT
+  unfold q
+  rw [energy_eq_sum]
+  simp_rw [hg]
+  interval_cases T <;> norm_num [feedback, sum_range_succ, Real.norm_eq_abs]
+end AdaptiveProbe
