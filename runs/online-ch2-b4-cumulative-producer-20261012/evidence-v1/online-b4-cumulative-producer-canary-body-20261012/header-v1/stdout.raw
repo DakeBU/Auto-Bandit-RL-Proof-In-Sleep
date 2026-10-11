@@ -1,0 +1,36 @@
+(twoObjective 0).toReal + doubleSupport (1 - 0) + 1 / 2 * ‖1 - 0‖ ^ 2 ≤ (twoObjective 1).toReal ∧
+  (SourceProper twoObjective ∧
+      effectiveDomain twoObjective = feasible ∧
+        (∀ x ∈ feasible, twoObjective x = ↑(quadraticRegularizer x + ∑ i ∈ Finset.range 2, (twoLoss i x).toReal)) ∧
+          ∀ x ∈ feasible,
+            ∀ y ∈ feasible,
+              ∀ (a : ℝ),
+                0 < a →
+                  a < 1 →
+                    twoObjective (a • x + (1 - a) • y) ≤
+                      ↑a * twoObjective x + ↑(1 - a) * twoObjective y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) ∧
+    (∀ z ∈ feasible, twoObjective 0 + ↑(doubleSupport (z - 0)) ≤ twoObjective z) ∧
+      (twoObjective 0).toReal + doubleSupport (1 - 0) + 1 / 2 * ‖1 - 0‖ ^ 2 = 5 / 2 ∧
+        (twoObjective 1).toReal = 5 / 2 ∧
+          twoLoss 0 1 = ↑(-1) ∧
+            twoLoss 1 1 = ↑3 ∧
+              twoLoss 0 2 = ⊤ ∧ twoLoss 1 2 = ⊤ ∧ twoObjective 2 = ⊤ ∧ ¬IsMinOn twoObjective feasible 0 : Prop
+(emptyObjective 0).toReal + unitSupport (1 - 0) + 0 / 2 * ‖1 - 0‖ ^ 2 ≤ (emptyObjective 1).toReal ∧
+  (SourceProper emptyObjective ∧
+      effectiveDomain emptyObjective = feasible ∧
+        (∀ x ∈ feasible, emptyObjective x = ↑(linearRegularizer x + ∑ i ∈ Finset.range 0, (emptyLoss i x).toReal)) ∧
+          ∀ x ∈ feasible,
+            ∀ y ∈ feasible,
+              ∀ (a : ℝ),
+                0 < a →
+                  a < 1 →
+                    emptyObjective (a • x + (1 - a) • y) ≤
+                      ↑a * emptyObjective x + ↑(1 - a) * emptyObjective y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) ∧
+    (∀ z ∈ feasible, emptyObjective 0 + ↑(unitSupport (z - 0)) ≤ emptyObjective z) ∧
+      (emptyObjective 0).toReal + unitSupport (1 - 0) + 0 / 2 * ‖1 - 0‖ ^ 2 = 1 ∧
+        (emptyObjective 1).toReal = 1 ∧
+          emptyObjective 2 = ⊤ ∧
+            emptyLoss 0 0 = ⊥ ∧
+              (¬SourceProper fun x =>
+                    ↑(linearRegularizer x) + ∑ i ∈ Finset.range 1, emptyLoss i x + extendedIndicator feasible x) ∧
+                ¬IsMinOn emptyObjective feasible 0 : Prop

@@ -1,0 +1,63 @@
+import BanditRLProof.OnlineCumulativeStrongConvex
+import BanditRLProof.OnlineStrongConvexSupport
+
+noncomputable section
+open Set Finset
+namespace BanditRL.Tests.OnlineCumulativeStrongConvexCanary
+open BanditRL.OnlineConvex
+
+abbrev feasible : Set ℝ := Set.Icc (-1 : ℝ) 1
+abbrev quadraticRegularizer (x : ℝ) : ℝ := x ^ 2 / 2
+noncomputable def twoLoss (i : ℕ) (x : ℝ) : EReal :=
+  ((if i = 0 then -x else 3 * x : ℝ) : EReal) + extendedIndicator feasible x
+noncomputable def twoObjective (x : ℝ) : EReal :=
+  (quadraticRegularizer x : EReal) + ∑ i ∈ range 2, twoLoss i x +
+    extendedIndicator feasible x
+abbrev doubleSupport : ℝ →L[ℝ] ℝ := (2 : ℝ) • ContinuousLinearMap.id ℝ ℝ
+abbrev linearRegularizer (x : ℝ) : ℝ := x
+abbrev emptyLoss (_ : ℕ) (_ : ℝ) : EReal := ⊥
+noncomputable def emptyObjective (x : ℝ) : EReal :=
+  (linearRegularizer x : EReal) + ∑ i ∈ range 0, emptyLoss i x +
+    extendedIndicator feasible x
+abbrev unitSupport : ℝ →L[ℝ] ℝ := ContinuousLinearMap.id ℝ ℝ
+
+theorem twoLoss_actual_producer_tight_support :
+    (twoObjective 0).toReal + doubleSupport ((1 : ℝ) - 0) +
+      (1 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 ≤ (twoObjective 1).toReal ∧
+    (SourceProper twoObjective ∧ effectiveDomain twoObjective = feasible ∧
+      (∀ x ∈ feasible, twoObjective x =
+        ((quadraticRegularizer x + ∑ i ∈ range 2, (twoLoss i x).toReal : ℝ) : EReal)) ∧
+      (∀ x ∈ feasible, ∀ y ∈ feasible, ∀ a : ℝ, 0 < a → a < 1 →
+        twoObjective (a • x + (1 - a) • y) ≤
+          (a : EReal) * twoObjective x + ((1 - a : ℝ) : EReal) * twoObjective y -
+            (((1 / 2 : ℝ) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))) ∧
+    (∀ z ∈ feasible,
+      twoObjective 0 + (doubleSupport (z - 0) : EReal) ≤ twoObjective z) ∧
+    (twoObjective 0).toReal + doubleSupport ((1 : ℝ) - 0) +
+      (1 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 = (5 / 2 : ℝ) ∧
+    (twoObjective 1).toReal = (5 / 2 : ℝ) ∧
+    twoLoss 0 1 = ((-1 : ℝ) : EReal) ∧ twoLoss 1 1 = ((3 : ℝ) : EReal) ∧
+    twoLoss 0 2 = ⊤ ∧ twoLoss 1 2 = ⊤ ∧ twoObjective 2 = ⊤ ∧
+    ¬ IsMinOn twoObjective feasible 0
+
+theorem emptyPrefix_zeroCurvature_actual_producer :
+    (emptyObjective 0).toReal + unitSupport ((1 : ℝ) - 0) +
+      (0 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 ≤ (emptyObjective 1).toReal ∧
+    (SourceProper emptyObjective ∧ effectiveDomain emptyObjective = feasible ∧
+      (∀ x ∈ feasible, emptyObjective x =
+        ((linearRegularizer x + ∑ i ∈ range 0, (emptyLoss i x).toReal : ℝ) : EReal)) ∧
+      (∀ x ∈ feasible, ∀ y ∈ feasible, ∀ a : ℝ, 0 < a → a < 1 →
+        emptyObjective (a • x + (1 - a) • y) ≤
+          (a : EReal) * emptyObjective x + ((1 - a : ℝ) : EReal) * emptyObjective y -
+            (((0 / 2 : ℝ) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))) ∧
+    (∀ z ∈ feasible,
+      emptyObjective 0 + (unitSupport (z - 0) : EReal) ≤ emptyObjective z) ∧
+    (emptyObjective 0).toReal + unitSupport ((1 : ℝ) - 0) +
+      (0 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 = 1 ∧
+    (emptyObjective 1).toReal = 1 ∧ emptyObjective 2 = ⊤ ∧ emptyLoss 0 0 = ⊥ ∧
+    ¬ SourceProper (fun x : ℝ =>
+      (linearRegularizer x : EReal) + ∑ i ∈ range 1, emptyLoss i x +
+        extendedIndicator feasible x) ∧
+    ¬ IsMinOn emptyObjective feasible 0
+
+end BanditRL.Tests.OnlineCumulativeStrongConvexCanary

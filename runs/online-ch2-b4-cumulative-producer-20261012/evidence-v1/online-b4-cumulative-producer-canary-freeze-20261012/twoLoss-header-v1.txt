@@ -1,0 +1,18 @@
+theorem twoLoss_actual_producer_tight_support :
+    (twoObjective 0).toReal + doubleSupport ((1 : ℝ) - 0) +
+      (1 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 ≤ (twoObjective 1).toReal ∧
+    (SourceProper twoObjective ∧ effectiveDomain twoObjective = feasible ∧
+      (∀ x ∈ feasible, twoObjective x =
+        ((quadraticRegularizer x + ∑ i ∈ range 2, (twoLoss i x).toReal : ℝ) : EReal)) ∧
+      (∀ x ∈ feasible, ∀ y ∈ feasible, ∀ a : ℝ, 0 < a → a < 1 →
+        twoObjective (a • x + (1 - a) • y) ≤
+          (a : EReal) * twoObjective x + ((1 - a : ℝ) : EReal) * twoObjective y -
+            (((1 / 2 : ℝ) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))) ∧
+    (∀ z ∈ feasible,
+      twoObjective 0 + (doubleSupport (z - 0) : EReal) ≤ twoObjective z) ∧
+    (twoObjective 0).toReal + doubleSupport ((1 : ℝ) - 0) +
+      (1 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 = (5 / 2 : ℝ) ∧
+    (twoObjective 1).toReal = (5 / 2 : ℝ) ∧
+    twoLoss 0 1 = ((-1 : ℝ) : EReal) ∧ twoLoss 1 1 = ((3 : ℝ) : EReal) ∧
+    twoLoss 0 2 = ⊤ ∧ twoLoss 1 2 = ⊤ ∧ twoObjective 2 = ⊤ ∧
+    ¬ IsMinOn twoObjective feasible 0

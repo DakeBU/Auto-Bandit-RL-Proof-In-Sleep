@@ -1,0 +1,19 @@
+theorem emptyPrefix_zeroCurvature_actual_producer :
+    (emptyObjective 0).toReal + unitSupport ((1 : ℝ) - 0) +
+      (0 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 ≤ (emptyObjective 1).toReal ∧
+    (SourceProper emptyObjective ∧ effectiveDomain emptyObjective = feasible ∧
+      (∀ x ∈ feasible, emptyObjective x =
+        ((linearRegularizer x + ∑ i ∈ range 0, (emptyLoss i x).toReal : ℝ) : EReal)) ∧
+      (∀ x ∈ feasible, ∀ y ∈ feasible, ∀ a : ℝ, 0 < a → a < 1 →
+        emptyObjective (a • x + (1 - a) • y) ≤
+          (a : EReal) * emptyObjective x + ((1 - a : ℝ) : EReal) * emptyObjective y -
+            (((0 / 2 : ℝ) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))) ∧
+    (∀ z ∈ feasible,
+      emptyObjective 0 + (unitSupport (z - 0) : EReal) ≤ emptyObjective z) ∧
+    (emptyObjective 0).toReal + unitSupport ((1 : ℝ) - 0) +
+      (0 / 2 : ℝ) * ‖(1 : ℝ) - 0‖ ^ 2 = 1 ∧
+    (emptyObjective 1).toReal = 1 ∧ emptyObjective 2 = ⊤ ∧ emptyLoss 0 0 = ⊥ ∧
+    ¬ SourceProper (fun x : ℝ =>
+      (linearRegularizer x : EReal) + ∑ i ∈ range 1, emptyLoss i x +
+        extendedIndicator feasible x) ∧
+    ¬ IsMinOn emptyObjective feasible 0

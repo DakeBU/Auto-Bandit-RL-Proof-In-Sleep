@@ -1,0 +1,26 @@
+import BanditRLProof.OnlinePrescientBregmanSource
+import Mathlib.Analysis.Convex.Strong
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+noncomputable section
+open Set Finset
+namespace BanditRL.OnlineConvex
+
+#check ∀ {E : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (V : Set E) (hV : V.Nonempty)
+    (psi : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ)
+    (hlam : 0 ≤ lam) (hpsi : StrongConvexOn V lam psi)
+    (hbot : ∀ i < n, ∀ x, loss i x ≠ ⊥)
+    (hdom : ∀ i < n, V ⊆ effectiveDomain (loss i))
+    (hloss : ∀ i < n, ConvexOn ℝ V (fun x => (loss i x).toReal)),
+    let F : E → EReal := fun x =>
+      (psi x : EReal) + ∑ i ∈ range n, loss i x + extendedIndicator V x
+    SourceProper F ∧ effectiveDomain F = V ∧
+      (∀ x ∈ V, F x = ((psi x + ∑ i ∈ range n, (loss i x).toReal : ℝ) : EReal)) ∧
+      (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →
+        F (a • x + (1 - a) • y) ≤
+          (a : EReal) * F x + ((1 - a : ℝ) : EReal) * F y -
+            (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))
+
+end BanditRL.OnlineConvex

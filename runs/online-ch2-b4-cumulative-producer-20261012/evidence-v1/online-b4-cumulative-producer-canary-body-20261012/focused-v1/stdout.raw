@@ -1,0 +1,128 @@
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v1.lean:72:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  twoLoss i (a • x + b • y)
+in the target expression
+  (fun z => (twoLoss i z).toReal) (a • x + b • y) ≤
+    a • (fun z => (twoLoss i z).toReal) x + b • (fun z => (twoLoss i z).toReal) y
+
+h0 : 0 ∈ feasible
+h1 : 1 ∈ feasible
+hm1 : -1 ∈ feasible
+hv : ∀ (i : ℕ), ∀ z ∈ feasible, twoLoss i z = ↑(if i = 0 then -z else 3 * z)
+hpsi : StrongConvexOn feasible 1 quadraticRegularizer
+hbot : ∀ i < 2, ∀ (z : ℝ), twoLoss i z ≠ ⊥
+hdom : ∀ i < 2, feasible ⊆ effectiveDomain (twoLoss i)
+i : ℕ
+hi : i < 2
+x : ℝ
+hx : x ∈ feasible
+y : ℝ
+hy : y ∈ feasible
+a b : ℝ
+ha : 0 ≤ a
+hb : 0 ≤ b
+hab : a + b = 1
+hz : a • x + b • y ∈ Set.Icc (-1) 1
+⊢ (fun z => (twoLoss i z).toReal) (a • x + b • y) ≤
+    a • (fun z => (twoLoss i z).toReal) x + b • (fun z => (twoLoss i z).toReal) y
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v1.lean:100:29: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  effectiveDomain fun x => ↑(quadraticRegularizer x) + ∑ i ∈ Finset.range 2, twoLoss i x + extendedIndicator feasible x
+in the target expression
+  feasible ⊆ effectiveDomain twoObjective
+
+h0 : 0 ∈ feasible
+h1 : 1 ∈ feasible
+hm1 : -1 ∈ feasible
+hv : ∀ (i : ℕ), ∀ z ∈ feasible, twoLoss i z = ↑(if i = 0 then -z else 3 * z)
+hpsi : StrongConvexOn feasible 1 quadraticRegularizer
+hbot : ∀ i < 2, ∀ (z : ℝ), twoLoss i z ≠ ⊥
+hdom : ∀ i < 2, feasible ⊆ effectiveDomain (twoLoss i)
+hloss : ∀ i < 2, ConvexOn ℝ feasible fun z => (twoLoss i z).toReal
+package :
+  have F := fun x => ↑(quadraticRegularizer x) + ∑ i ∈ Finset.range 2, twoLoss i x + extendedIndicator feasible x;
+  SourceProper F ∧
+    effectiveDomain F = feasible ∧
+      (∀ x ∈ feasible, F x = ↑(quadraticRegularizer x + ∑ i ∈ Finset.range 2, (twoLoss i x).toReal)) ∧
+        ∀ x ∈ feasible,
+          ∀ y ∈ feasible,
+            ∀ (a : ℝ),
+              0 < a → a < 1 → F (a • x + (1 - a) • y) ≤ ↑a * F x + ↑(1 - a) * F y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hvalue : ∀ z ∈ feasible, twoObjective z = ↑(z ^ 2 / 2 + 2 * z)
+hs : ∀ z ∈ feasible, twoObjective 0 + ↑(doubleSupport (z - 0)) ≤ twoObjective z
+⊢ feasible ⊆ effectiveDomain twoObjective
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v1.lean:113:2: error: unsolved goals
+case refine_7
+h0 : 0 ∈ feasible
+h1 : 1 ∈ feasible
+hm1 : -1 ∈ feasible
+hv : ∀ (i : ℕ), ∀ z ∈ feasible, twoLoss i z = ↑(if i = 0 then -z else 3 * z)
+hpsi : StrongConvexOn feasible 1 quadraticRegularizer
+hbot : ∀ i < 2, ∀ (z : ℝ), twoLoss i z ≠ ⊥
+hdom : ∀ i < 2, feasible ⊆ effectiveDomain (twoLoss i)
+hloss : ∀ i < 2, ConvexOn ℝ feasible fun z => (twoLoss i z).toReal
+package :
+  have F := fun x => ↑(quadraticRegularizer x) + ∑ i ∈ Finset.range 2, twoLoss i x + extendedIndicator feasible x;
+  SourceProper F ∧
+    effectiveDomain F = feasible ∧
+      (∀ x ∈ feasible, F x = ↑(quadraticRegularizer x + ∑ i ∈ Finset.range 2, (twoLoss i x).toReal)) ∧
+        ∀ x ∈ feasible,
+          ∀ y ∈ feasible,
+            ∀ (a : ℝ),
+              0 < a → a < 1 → F (a • x + (1 - a) • y) ≤ ↑a * F x + ↑(1 - a) * F y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hvalue : ∀ z ∈ feasible, twoObjective z = ↑(z ^ 2 / 2 + 2 * z)
+hs : ∀ z ∈ feasible, twoObjective 0 + ↑(doubleSupport (z - 0)) ≤ twoObjective z
+hg : (twoObjective 0).toReal + doubleSupport (1 - 0) + 1 / 2 * ‖1 - 0‖ ^ 2 ≤ (twoObjective 1).toReal
+⊢ ↑2 + 2 * ⊤ + ⊤ = ⊤
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v1.lean:160:4: error: Type mismatch: After simplification, term
+  package.right.right.left z hz
+ has type
+  ↑z + extendedIndicator feasible z = ↑z
+but is expected to have type
+  emptyObjective z = ↑z
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v1.lean:167:29: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  effectiveDomain fun x => ↑(linearRegularizer x) + ∑ i ∈ Finset.range 0, emptyLoss i x + extendedIndicator feasible x
+in the target expression
+  feasible ⊆ effectiveDomain emptyObjective
+
+h0 : 0 ∈ feasible
+h1 : 1 ∈ feasible
+hm1 : -1 ∈ feasible
+hpsi : StrongConvexOn feasible 0 linearRegularizer
+hbot : ∀ i < 0, ∀ (z : ℝ), emptyLoss i z ≠ ⊥
+hdom : ∀ i < 0, feasible ⊆ effectiveDomain (emptyLoss i)
+hloss : ∀ i < 0, ConvexOn ℝ feasible fun z => (emptyLoss i z).toReal
+package :
+  have F := fun x => ↑(linearRegularizer x) + ∑ i ∈ Finset.range 0, emptyLoss i x + extendedIndicator feasible x;
+  SourceProper F ∧
+    effectiveDomain F = feasible ∧
+      (∀ x ∈ feasible, F x = ↑(linearRegularizer x + ∑ i ∈ Finset.range 0, (emptyLoss i x).toReal)) ∧
+        ∀ x ∈ feasible,
+          ∀ y ∈ feasible,
+            ∀ (a : ℝ),
+              0 < a → a < 1 → F (a • x + (1 - a) • y) ≤ ↑a * F x + ↑(1 - a) * F y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hvalue : ∀ z ∈ feasible, emptyObjective z = ↑z
+hs : ∀ z ∈ feasible, emptyObjective 0 + ↑(unitSupport (z - 0)) ≤ emptyObjective z
+⊢ feasible ⊆ effectiveDomain emptyObjective
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-canary-body-20261012\candidate-v1.lean:178:2: error: unsolved goals
+case refine_5
+h0 : 0 ∈ feasible
+h1 : 1 ∈ feasible
+hm1 : -1 ∈ feasible
+hpsi : StrongConvexOn feasible 0 linearRegularizer
+hbot : ∀ i < 0, ∀ (z : ℝ), emptyLoss i z ≠ ⊥
+hdom : ∀ i < 0, feasible ⊆ effectiveDomain (emptyLoss i)
+hloss : ∀ i < 0, ConvexOn ℝ feasible fun z => (emptyLoss i z).toReal
+package :
+  have F := fun x => ↑(linearRegularizer x) + ∑ i ∈ Finset.range 0, emptyLoss i x + extendedIndicator feasible x;
+  SourceProper F ∧
+    effectiveDomain F = feasible ∧
+      (∀ x ∈ feasible, F x = ↑(linearRegularizer x + ∑ i ∈ Finset.range 0, (emptyLoss i x).toReal)) ∧
+        ∀ x ∈ feasible,
+          ∀ y ∈ feasible,
+            ∀ (a : ℝ),
+              0 < a → a < 1 → F (a • x + (1 - a) • y) ≤ ↑a * F x + ↑(1 - a) * F y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hvalue : ∀ z ∈ feasible, emptyObjective z = ↑z
+hs : ∀ z ∈ feasible, emptyObjective 0 + ↑(unitSupport (z - 0)) ≤ emptyObjective z
+hg : (emptyObjective 0).toReal + unitSupport (1 - 0) + 0 / 2 * ‖1 - 0‖ ^ 2 ≤ (emptyObjective 1).toReal
+hm : IsMinOn emptyObjective feasible 0
+h : 1 ≤ 0
+⊢ False

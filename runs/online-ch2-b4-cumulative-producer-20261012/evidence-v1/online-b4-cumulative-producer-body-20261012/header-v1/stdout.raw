@@ -1,0 +1,37 @@
+∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (V : Set E),
+  V.Nonempty →
+    ∀ (psi : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ),
+      0 ≤ lam →
+        StrongConvexOn V lam psi →
+          (∀ i < n, ∀ (x : E), loss i x ≠ ⊥) →
+            (∀ i < n, V ⊆ effectiveDomain (loss i)) →
+              (∀ i < n, ConvexOn ℝ V fun x => (loss i x).toReal) →
+                let F := fun x => ↑(psi x) + ∑ i ∈ Finset.range n, loss i x + extendedIndicator V x;
+                SourceProper F ∧
+                  effectiveDomain F = V ∧
+                    (∀ x ∈ V, F x = ↑(psi x + ∑ i ∈ Finset.range n, (loss i x).toReal)) ∧
+                      ∀ x ∈ V,
+                        ∀ y ∈ V,
+                          ∀ (a : ℝ),
+                            0 < a →
+                              a < 1 →
+                                F (a • x + (1 - a) • y) ≤
+                                  ↑a * F x + ↑(1 - a) * F y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2) : Prop
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\HeaderElaboration-v1.lean:11:17: warning: unused variable `hV`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\HeaderElaboration-v1.lean:13:5: warning: unused variable `hlam`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\HeaderElaboration-v1.lean:13:22: warning: unused variable `hpsi`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\HeaderElaboration-v1.lean:14:5: warning: unused variable `hbot`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\HeaderElaboration-v1.lean:15:5: warning: unused variable `hdom`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-cumulative-producer-body-20261012\HeaderElaboration-v1.lean:16:5: warning: unused variable `hloss`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`

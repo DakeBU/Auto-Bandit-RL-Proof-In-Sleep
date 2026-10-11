@@ -1,0 +1,97 @@
+{
+  "status": "REVIEWABLE_CANONICAL_CONTRACT_PROPOSAL_ONLY_NOT_APPLIED",
+  "source": {
+    "version": "Orabona arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": "Definition4.1 printed34/PDF46; Algorithm7.1 printed99/PDF111; Lemma7.5 printed101/PDF113; Corollary7.6 printed102/PDF114; Algorithm15.9/Theorem15.31 printed266/PDF278; downstream Theorem7.47 printed129-130/PDF141-142",
+    "downstream_open": [
+      "Lemma7.5",
+      "Theorem7.47",
+      "Theorem15.31"
+    ]
+  },
+  "public_declaration": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+  "module": "BanditRLProof/OnlineCumulativeStrongConvex.lean",
+  "header": {
+    "bytes": 1186,
+    "sha256": "42189737dd7e6fc527186c17faa33ffc2306e18e931a1da4258819ecc37b6d68",
+    "target": "docs/contracts/online-ch2-b4-cumulative-producer-v1/neutral-frozen-header-v1.txt"
+  },
+  "body_raw_sha256": "3dc5acad32e68f814463be52e5baa886c9c4fa7efb9991e9544304523a4aa8fa",
+  "exact_statement": "import BanditRLProof.OnlinePrescientBregmanSource\nimport Mathlib.Analysis.Convex.Strong\nimport Mathlib.Algebra.BigOperators.Group.Finset.Basic\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineConvex\n\ntheorem cumulative_regularizer_source_strongConvex {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (V : Set E) (hV : V.Nonempty)\n    (psi : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ)\n    (hlam : 0 ≤ lam) (hpsi : StrongConvexOn V lam psi)\n    (hbot : ∀ i < n, ∀ x, loss i x ≠ ⊥)\n    (hdom : ∀ i < n, V ⊆ effectiveDomain (loss i))\n    (hloss : ∀ i < n, ConvexOn ℝ V (fun x => (loss i x).toReal)) :\n    let F : E → EReal := fun x =>\n      (psi x : EReal) + ∑ i ∈ range n, loss i x + extendedIndicator V x\n    SourceProper F ∧ effectiveDomain F = V ∧\n      (∀ x ∈ V, F x = ((psi x + ∑ i ∈ range n, (loss i x).toReal : ℝ) : EReal)) ∧\n      (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n        F (a • x + (1 - a) • y) ≤\n          (a : EReal) * F x + ((1 - a : ℝ) : EReal) * F y -\n            (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n\nend BanditRL.OnlineConvex\n",
+  "binder_ledger": [
+    {
+      "binder": "E / norm / scalar instances",
+      "expanded": "Chosen real normed space; arbitrary norm, no inner product or finite-dimensional assumption. This is an algebraic extension of finite-dimensional source; no topology/attainment claim.",
+      "classification": "TYPING"
+    },
+    {
+      "binder": "V,hV",
+      "expanded": "Source nonempty feasible set; convexity obtained from hpsi. Closedness deliberately absent from this closure-only leaf.",
+      "classification": "STANDING"
+    },
+    {
+      "binder": "psi",
+      "expanded": "Real-valued current regularizer, as Algorithm7.1. Values outside V are arbitrary extensions of a source psi:V→R; only restriction used.",
+      "classification": "SOURCE"
+    },
+    {
+      "binder": "loss,n",
+      "expanded": "Actual extended-real loss prefix, zero-based range n. Loss may be +infinite outside V; original values preserved in F.",
+      "classification": "STANDING"
+    },
+    {
+      "binder": "lam,hlam",
+      "expanded": "Nonnegative coefficient of regularizer curvature, source Def4.1; no division by lam, so zero allowed.",
+      "classification": "SOURCE"
+    },
+    {
+      "binder": "hpsi",
+      "expanded": "Curvature of regularizer, not assumed curvature of produced cumulative F. Stronger componentwise specialization than Lemma7.5 total-objective assumption.",
+      "classification": "SOURCE"
+    },
+    {
+      "binder": "hbot",
+      "expanded": "Source loss codomain excludes negative infinity; mandatory for ordinary EReal addition without mixed infinities.",
+      "classification": "SOURCE"
+    },
+    {
+      "binder": "hdom",
+      "expanded": "Included losses are below top on V. This alone permits bottom; finiteness follows only jointly with hbot. Algorithm15.9 already prints its common-domain condition.",
+      "classification": "SOURCE"
+    },
+    {
+      "binder": "hloss",
+      "expanded": "Convexity only of finite restriction of each loss to V; do not replace it silently by subdifferentiability or claim automatic global convexity.",
+      "classification": "SOURCE"
+    }
+  ],
+  "definition_audit": {
+    "F": "Literal ordinary EReal sum plus indicator; no fallback or characterized default.",
+    "SourceProper": "No bottom anywhere and a finite real value somewhere.",
+    "effectiveDomain": "Literal below-top domain; requires separate no-bottom for finiteness.",
+    "StrongConvexOn": "Convex V plus regularizer strong interpolation in the original norm."
+  },
+  "source_delta": "This is a derived sufficient-condition producer, not the full numbered source theorem. Regularizer-supplied curvature and convex component losses are stronger than assuming curvature of the total objective in Lemma7.5/7.47/15.31. Algorithm15.9 already prints a common-domain condition; common finiteness is a restriction relative to broader extended-real Algorithm7.1 branches, not a newly discovered omission there. Algorithm7.1 has psi:X to R with V subset X, while Corollary7.6 uses psi:V to R; arbitrary real extension outside V has no effect after the indicator. The below-top domain condition alone admits bottom; separate global no-bottom makes the included losses finite on V and prevents mixed-infinity addition. Zero n and zero lambda are allowed. No minimizer, support, finite-dimensionality, strict curvature, closedness or attainment is assumed or produced.",
+  "source_proof_spine": "Derived sufficient OR-route: componentwise curvature closure feeds source cumulative objective hypotheses; source attainment/stability and terminal repairs remain SOURCE_GAP.",
+  "implementation_proof_spine": "For each included loss, combine below-top on V with no-bottom to identify its value with the coercion of its real part. Induct over the finite sum to exclude bottom globally and compute the sum on V. The indicator then gives the real finite identity on V and top outside, hence dom(F)=V. Apply the existing sourceProper_of_domain to this actual F, its derived no-bottom property and nonempty V. Finally sum each loss-convexity inequality and add the strongly convex regularizer inequality; rewrite the finite identities and retain precisely (lambda/2)a(1-a)||x-y||^2 in the original E norm. The source proof graph is the sufficient regularizer-curvature branch feeding cumulative parents; attainment and stability nodes are excluded as still open. The implementation uses componentwise finite sums and the shared properness parent, not a supplied-support wrapper.",
+  "statement_fingerprint": {
+    "raw_frozen_header_sha256": "42189737dd7e6fc527186c17faa33ffc2306e18e931a1da4258819ecc37b6d68",
+    "canonical_alpha_normalized_TYPE_sha256": null,
+    "canonical_alpha_normalized_VALUE_sha256": null,
+    "status": "PENDING genuine canonical imports and independent normalized comparison"
+  },
+  "canary_context": {
+    "canonical_sha256": "a5e284ebb80d8174cce0e78f154f2b0c50c47f69ad87a74372bd2538066901cd",
+    "bytes": 3496,
+    "candidate_import_change_only": true,
+    "expected_providers": [
+      "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+      "BanditRL.OnlineConvex.stronglyConvex_support_growth"
+    ],
+    "consumer_semantics": "Two closed experimental consumer tests use the producer package as their second conjunct and project that same package into canonical stronglyConvex_support_growth as their first-conjunct provider. For V=[-1,1], n=2, psi(x)=x^2/2 and losses -x and 3x on V/top outside, F(x)=x^2/2+2x on V. At p=0, supplied functional g(z)=2z and q=1, the quadratic support bound is the tight 5/2<=5/2. For n=0, lambda=0 and psi(x)=x, an unused bottom-valued loss family is harmless and the bound is 1<=1. Including one such bottom loss instead makes the objective improper even though that loss remains below top. Both canaries prove all component premises internally and show p=0 is not a minimizer; neither fabricates an algorithmic trajectory or regret bound. They use the existing continuous-dual support parent directly, without a vector-adapter dependency."
+  },
+  "truth_boundary": "Experimental core and both actual-consumer canaries compiled and passed separate source/BODY review. This cumulative canonical packet is proposed only: installation, genuine canonical TYPE/VALUE and axiom audits, combined gates, publication review and reader Exposition Seal remain pending. General cumulative-objective production beyond this sufficient componentwise branch, full Lemma4.2 iff/converse and printed equality correction, all-point support existence, closedness/attainment, stability, full Lemma7.5 and corrected Theorems7.47/15.31 remain OPEN. Chapter2 and Chapters1-16 remain incomplete; seven open forward containers, six future claims, null mandatory denominator and accepted=false are unchanged. No merge or live acceptance is claimed.",
+  "plain_statement": "Let E be a real normed space with its original arbitrary norm, V a nonempty set, n a natural number and lambda>=0. Let psi:E to R be lambda-strongly convex on V. For every i<n, assume loss_i:E to EReal is never bottom anywhere, is below top on V, and its real restriction is convex on V. Define F(x)=psi(x)+sum_{i<n} loss_i(x)+I_V(x), using ordinary extended-real addition and I_V=0 on V/top outside. Then F is proper, dom(F)=V, F equals the real sum on V, and F satisfies the exact lambda/2 strong interpolation inequality on V. Convexity of V follows from the regularizer hypothesis. The theorem assumes no property of the resulting F.",
+  "binder_classification_scope": "SOURCE labels describe the explicitly reviewed sufficient derived statement, not an assertion of equality with the broader numbered source theorem; source_delta is mandatory."
+}
