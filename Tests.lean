@@ -127,3 +127,7 @@ import Tests.OnlineRelativeSubgradientCanary
 import Tests.OnlineSubgradientBasicCanary
 import Tests.OnlineSubgradientDifferentiabilityCanary
 import Tests.OnlineSubgradientInteriorCanary
+import Tests.OnlineNormalConeCanary
+import Tests.OnlineSubgradientAbsoluteCanary
+import Tests.OnlineSubgradientMaxCanary
+import Tests.OnlineSubgradientSumCanary

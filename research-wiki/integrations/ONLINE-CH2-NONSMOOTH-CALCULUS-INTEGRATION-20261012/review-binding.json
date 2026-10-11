@@ -1,0 +1,670 @@
+{
+  "schema_version": 1,
+  "scope": "ONLINE-CH2-NONSMOOTH-CALCULUS-INTEGRATION-20261012",
+  "baseline": "4144587751c4843b096241b6250f95f155d0cddb",
+  "frozen_source_tip": "8045070bf1ee53c83778d04eb168f8ad6f728b59",
+  "publication_source": "8375aa0353a4230ec23c0ccbb8f337a16246c134",
+  "original_prs": [
+    140,
+    141,
+    142,
+    143,
+    170,
+    171,
+    172,
+    173
+  ],
+  "production_declarations": [
+    "BanditRL.OnlineConvex.SourceSubgradientSum",
+    "BanditRL.OnlineConvex.upperAdd_eq_add_of_ne_bot",
+    "BanditRL.OnlineConvex.ereal_finset_sum_ne_bot",
+    "BanditRL.OnlineConvex.convex_finset_sum",
+    "BanditRL.OnlineConvex.finite_sum_point",
+    "BanditRL.OnlineConvex.sum_finite_implies_components_finite",
+    "BanditRL.OnlineConvex.interior_domain_sum",
+    "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+    "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+    "BanditRL.OnlineConvex.theorem_2_23_equality",
+    "BanditRL.OnlineConvex.abs_subgradient_zero",
+    "BanditRL.OnlineConvex.abs_subgradient_positive",
+    "BanditRL.OnlineConvex.abs_subgradient_negative",
+    "BanditRL.OnlineConvex.example_2_24",
+    "BanditRL.OnlineConvex.SourceNormalCone",
+    "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+    "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+    "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+    "BanditRL.OnlineConvex.SourceFiniteMax",
+    "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+    "BanditRL.OnlineConvex.active_subgradient_support_max",
+    "BanditRL.OnlineConvex.finiteMax_attained",
+    "BanditRL.OnlineConvex.finiteMax_point_finite",
+    "BanditRL.OnlineConvex.subgradient_iff_real_support",
+    "BanditRL.OnlineConvex.convex_sourceSubdifferential",
+    "BanditRL.OnlineConvex.continuousAt_mem_domain_interior",
+    "BanditRL.OnlineConvex.finiteMax_ne_bot",
+    "BanditRL.OnlineConvex.convexHull_active_support_max",
+    "BanditRL.OnlineConvex.isClosed_sourceSubdifferential",
+    "BanditRL.OnlineConvex.isCompact_sourceSubdifferential",
+    "BanditRL.OnlineConvex.isCompact_convexJoin",
+    "BanditRL.OnlineConvex.isCompact_convexHull_finite_convex_union",
+    "BanditRL.OnlineConvex.isCompact_active_subgradient_hull",
+    "BanditRL.OnlineConvex.continuousAt_finite_toReal",
+    "BanditRL.OnlineConvex.max_support_displacement_compare",
+    "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+    "BanditRL.OnlineConvex.theorem_2_26"
+  ],
+  "production_theorems": 33,
+  "production_definitions": 4,
+  "definition_classifications": {
+    "SourceSubgradientSum": "Literal witness-defined finite Minkowski sum over generalized inner-product carriers; empty-index {0} is explicit extension.",
+    "SourceNormalCone": "Explicit feasible-normal interpretation; x-in-V guard assigns empty off-set normals beyond the locally specified source context.",
+    "SourceFiniteMax": "Literal pointwise finite maximum with explicit nonempty-index convention, arbitrary carrier and EReal values.",
+    "SourceActiveSubgradientUnion": "Literal union of global supports over attaining indices, on generalized inner-product carriers and explicit finite nonempty indexing."
+  },
+  "canary_theorems": 46,
+  "canary_definitions": 7,
+  "new_reader_count": 4,
+  "new_highlight_count": 19,
+  "verdict": "accepted-with-explicit-delta",
+  "candidate_bindings": [
+    {
+      "path": "BanditRLProof/OnlineSubgradientSum.lean",
+      "sha256_raw": "2897619714b27a000527331e5dff0b079514789163ca5a293a6046b42a414e0e",
+      "sha256_git_lf": "2897619714b27a000527331e5dff0b079514789163ca5a293a6046b42a414e0e"
+    },
+    {
+      "path": "BanditRLProof/OnlineSubgradientAbsolute.lean",
+      "sha256_raw": "0e48bac3de8bfbc695a24cb08990753b03df3be45b4a575dbfe45f59f4c6e8a1",
+      "sha256_git_lf": "0e48bac3de8bfbc695a24cb08990753b03df3be45b4a575dbfe45f59f4c6e8a1"
+    },
+    {
+      "path": "BanditRLProof/OnlineNormalCone.lean",
+      "sha256_raw": "c66a17c9d7c348eb13dbf6779eeca4d5fe0b484f72cb81f11b65bb83bc6261db",
+      "sha256_git_lf": "c66a17c9d7c348eb13dbf6779eeca4d5fe0b484f72cb81f11b65bb83bc6261db"
+    },
+    {
+      "path": "BanditRLProof/OnlineSubgradientMax.lean",
+      "sha256_raw": "0b2ed0d81c33b5f3e4828410849de6fe81a81a042304e43e2a861f44f8789dfd",
+      "sha256_git_lf": "0b2ed0d81c33b5f3e4828410849de6fe81a81a042304e43e2a861f44f8789dfd"
+    },
+    {
+      "path": "Tests/OnlineNormalConeCanary.lean",
+      "sha256_raw": "b893dad6e8128fe674acb19fd7774de036e953dee8d446d1cd214d20476a2790",
+      "sha256_git_lf": "b893dad6e8128fe674acb19fd7774de036e953dee8d446d1cd214d20476a2790"
+    },
+    {
+      "path": "Tests/OnlineSubgradientAbsoluteCanary.lean",
+      "sha256_raw": "5234ba8106382687d2b56396f205c257648d89daa8177a696c91ff404bea3b46",
+      "sha256_git_lf": "5234ba8106382687d2b56396f205c257648d89daa8177a696c91ff404bea3b46"
+    },
+    {
+      "path": "Tests/OnlineSubgradientMaxCanary.lean",
+      "sha256_raw": "39eb5e0937ebdb7d60776f8a8bfe3feeafb76d0e1232aeaabbb92bc2f45f1421",
+      "sha256_git_lf": "39eb5e0937ebdb7d60776f8a8bfe3feeafb76d0e1232aeaabbb92bc2f45f1421"
+    },
+    {
+      "path": "Tests/OnlineSubgradientSumCanary.lean",
+      "sha256_raw": "a0c773f08fd5c597bb12a92f71e33f0438e8211bf998c8cd5d370ce263c2d234",
+      "sha256_git_lf": "a0c773f08fd5c597bb12a92f71e33f0438e8211bf998c8cd5d370ce263c2d234"
+    },
+    {
+      "path": "BanditRLProof.lean",
+      "sha256_raw": "3839dfb6e556f3da23bdf3ac774ce972d54891551d086a824b935842d8298ec2",
+      "sha256_git_lf": "3839dfb6e556f3da23bdf3ac774ce972d54891551d086a824b935842d8298ec2"
+    },
+    {
+      "path": "Tests.lean",
+      "sha256_raw": "aeffd39c31d729f67f0420d49310dc6d0969b183cf1955d72f1139a3bcbc32c8",
+      "sha256_git_lf": "aeffd39c31d729f67f0420d49310dc6d0969b183cf1955d72f1139a3bcbc32c8"
+    },
+    {
+      "path": "tools/test_book_registry.py",
+      "sha256_raw": "677046c256d5ff543d1f79ba3738dbd2fd601cf063892002f920861e6e3d773b",
+      "sha256_git_lf": "677046c256d5ff543d1f79ba3738dbd2fd601cf063892002f920861e6e3d773b"
+    },
+    {
+      "path": "website/content/books.json",
+      "sha256_raw": "60080ffb8867df7224e95ed884545f59975d653e3fc5187ad981f53376e42887",
+      "sha256_git_lf": "60080ffb8867df7224e95ed884545f59975d653e3fc5187ad981f53376e42887"
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256_raw": "9131e32d6cb4c570fe12c55f641713993e90ffb626b000b24bb85647cebe939a",
+      "sha256_git_lf": "9131e32d6cb4c570fe12c55f641713993e90ffb626b000b24bb85647cebe939a"
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256_raw": "9c87b8cfad60a68023acc9bc8998a6faeda644b2e00bc5c92580a866ec6042c5",
+      "sha256_git_lf": "9c87b8cfad60a68023acc9bc8998a6faeda644b2e00bc5c92580a866ec6042c5"
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256_raw": "daf187549b5ced0fa9688b6007fa09f0795affe65d3b65a45c00200275ec7ede",
+      "sha256_git_lf": "daf187549b5ced0fa9688b6007fa09f0795affe65d3b65a45c00200275ec7ede"
+    }
+  ],
+  "private_maintenance_evidence": [
+    {
+      "name": "batch5-port-receipt-v1.json",
+      "sha256": "97da30ba9784d1d32c75aab2fdd30e905ddce0236b4501131fc330df548f33d1"
+    },
+    {
+      "name": "batch5-preflight-v1.json",
+      "sha256": "88709b29eef353b95eec6344aad4474375d16b1de3811e7e5a6d3c77bd4c1751"
+    },
+    {
+      "name": "batch5-preflight-discovery-repair.json",
+      "sha256": "2b79723addbcbb57e40a4f0ca29473da622fc0caf37b06404cde526021032a73"
+    },
+    {
+      "name": "batch5-statement-text-seal-v1.json",
+      "sha256": "9e063f43f3239fa1caf5772a947d93b0084ac84e9a41aaa0002ab57ada1f8004"
+    },
+    {
+      "name": "batch5-elaboration-receipt-v1.json",
+      "sha256": "775e9c8e80679a7377fc60fe69d161336edc4b200766c55945a889560ba663c9"
+    },
+    {
+      "name": "batch5-neutral-packet-receipt-v1.json",
+      "sha256": "3cdef4a1b4a57bdac5513221e29a0038dab1a46be52ffd5d3fb6ba88cfae990a"
+    },
+    {
+      "name": "batch5-source-only/source-topology-v1.md",
+      "sha256": "6a26b0dbe4fe59e3c5fbf7870cc00f34911c2f53221001d3b0e0d1e1d60cc347"
+    },
+    {
+      "name": "batch5-independent-review/phase1-receipt-v1.json",
+      "sha256": "009b5ff5604d2a0b6d8ef74846c66a3fc5c00258e3b5cdee0cad26064381b619"
+    },
+    {
+      "name": "batch5-blind-decoder/reconstruction-v1.md",
+      "sha256": "bef5381cbee5f67054cdb72f3f0a1eb45bf7e0fbfb8ad4a76c34ebdc11b80a01"
+    },
+    {
+      "name": "batch5-blind-decoder/receipt-v1.json",
+      "sha256": "bfa535766af53d55c8dccbdadae112ae4725951ac673d13de9242eadfbf125a9"
+    },
+    {
+      "name": "batch5-independent-review/stage2-source-binder-body-reader-review-v1.md",
+      "sha256": "2f9037cb8a940e00a7d77984a2405ef164066cd4337209ffb5686de3b42b5492"
+    },
+    {
+      "name": "batch5-independent-review/stage2-source-binder-body-reader-review-v1.receipt.json",
+      "sha256": "4b414f682815538c50e384aade012f69c54a293d0a246175603b80af08f29619"
+    },
+    {
+      "name": "batch5-publication-repair-v2.json",
+      "sha256": "10bc013de092e2a9657fae8e6de28a80ee74ace94ec989619325dc0cf74f5adf"
+    },
+    {
+      "name": "batch5-review-inputs-v2.json",
+      "sha256": "57377d571aa54cb051dc1e78535a1caa77642bbda5070b21f5e9afcabcfc372d"
+    },
+    {
+      "name": "batch5-mathematical-byte-preservation-v1.json",
+      "sha256": "30936db1fd6996cc7d6be50fd3fb8bf3f46d689ce8a722584ae3420fe8b7f7a4"
+    },
+    {
+      "name": "batch5-gate-1-receipt.json",
+      "sha256": "55b8a8cc90ed9da92e24688e4f3e803457eff81f49ad0d24da468be95d874664"
+    },
+    {
+      "name": "batch5-publication-gate-2-receipt.json",
+      "sha256": "d836d857c0f8eb26fdc2000cdb8a2c5264437c10b645d366e51c09b9ef522571"
+    },
+    {
+      "name": "batch5-selected-graph-binding-v3.json",
+      "sha256": "9c7d7091ee83c576f764e39ede4b961bda151132b0c3803ff2bb27f734818a10"
+    },
+    {
+      "name": "batch5-selected-graph-receipt-v4.json",
+      "sha256": "178c8fa85ecd150cd240ec118bf56becbca0ed6ef36530af48d41356aede4908"
+    },
+    {
+      "name": "batch5-graph-runtime-failure-and-recovery-plan.json",
+      "sha256": "3b35ddaa6ee3b8b8b161787581b2e36c516d8be589ced57b7338ed9022286e1c"
+    },
+    {
+      "name": "batch5-graph-source-line-repair-v4.json",
+      "sha256": "cbb2eeaa3eabeb6e8e9e72b6837564a11465ea16051611893186973aa41bf02f"
+    },
+    {
+      "name": "batch5-render-check-v1.json",
+      "sha256": "959bf1e60895955043e0255e2e8c24d68834b45d6914c2e56e362dcf1d1d8ae1"
+    },
+    {
+      "name": "batch5-visual-review-v1.json",
+      "sha256": "324ce524aa804b346a20ffcf7874aa76b8db6912395626c651d00426daa678b8"
+    },
+    {
+      "name": "batch5-independent-review/stage2-successor-delta-review-v2.receipt.json",
+      "sha256": "dce6c2aeb1778bed26f3676943c5e73679ee1cc6fbbb98968dbe188c603dad6b"
+    },
+    {
+      "name": "batch5-independent-review/original-scope-supersession-review-v1.receipt.json",
+      "sha256": "f78e0819e1e02232a27c65b49625e62ec445b18a4cdbd181feaf31a3b7ad05e9"
+    }
+  ],
+  "compiled_graph": {
+    "at": "2026-10-11T19:27:46.220472+00:00",
+    "graph": "batch5-selected-compiled-graph-v4.json",
+    "sha256": "b022221743e19465ed2b8ff86ce6effd1c71b5f781e14dfc79c56182a201c9bd",
+    "counts": {
+      "project_nodes": 90,
+      "module_imports": 3309,
+      "external_boundary_nodes": 1202,
+      "edges": 8851
+    },
+    "selectedProductionDeclarations": 37,
+    "selectedCanaryDeclarations": 53,
+    "canaryDeclarationsWithDirectProductionValueUse": 23,
+    "directCanaryProductionValueEdges": [
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.example_2_24",
+        "source": "AbsoluteAllPointsProbe.source_three_branches_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "source": "AbsoluteZeroProbe.zero_boundary_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "source": "AbsoluteZeroProbe.zero_is_not_a_singleton",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "source": "MaximumExtendedProbe.singleton_extended_domain_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumExtendedProbe.singleton_extended_domain_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceNormalCone",
+        "source": "MaximumExtendedProbe.singleton_extended_domain_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "source": "MaximumExtendedProbe.singleton_extended_domain_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+        "source": "MaximumExtendedProbe.singleton_extended_domain_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_26",
+        "source": "MaximumExtendedProbe.singleton_extended_domain_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumExtendedProbe.singleton_max",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.finiteMax_attained",
+        "source": "MaximumExtendedProbe.singleton_max",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "source": "MaximumProbe.full_tie_hull_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.full_tie_hull_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_26",
+        "source": "MaximumProbe.full_tie_hull_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.full_tie_interval_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "source": "MaximumProbe.inactive_union_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.inactive_union_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.maximum_two",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.maximum_zero",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "source": "MaximumProbe.mixture_and_rejection_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.mixture_and_rejection_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "source": "MaximumProbe.strict_active_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.strict_active_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_26",
+        "source": "MaximumProbe.strict_active_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+        "source": "MaximumProbe.tie_active_union",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceFiniteMax",
+        "source": "MaximumProbe.tie_active_union",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceNormalCone",
+        "source": "NormalGeometryProbe.interval_interior_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "source": "NormalGeometryProbe.interval_interior_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.normalCone_interior_eq_zero",
+        "source": "NormalGeometryProbe.interval_interior_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceNormalCone",
+        "source": "NormalGeometryProbe.two_dimensional_unit_boundary_canary",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.normalCone_unitBall_boundary",
+        "source": "NormalGeometryProbe.two_dimensional_unit_boundary_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceNormalCone",
+        "source": "NormalIndicatorProbe.interval_boundary_and_outside_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "source": "NormalIndicatorProbe.interval_boundary_and_outside_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceNormalCone",
+        "source": "NormalIndicatorProbe.thin_singleton_all_normals_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.indicator_subdifferential_eq_normalCone",
+        "source": "NormalIndicatorProbe.thin_singleton_all_normals_canary",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "source": "SumEqualityProbe.actual_three_component_decomposition",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_23_equality",
+        "source": "SumEqualityProbe.actual_three_component_decomposition",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "source": "SumEqualityProbe.outside_domain_both_empty",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_23_equality",
+        "source": "SumEqualityProbe.outside_domain_both_empty",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "source": "SumEqualityProbe.singleton_family_empty_interior",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_23_equality",
+        "source": "SumEqualityProbe.singleton_family_empty_interior",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "source": "SumRuleProbe.empty_family_zero_support",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "source": "SumRuleProbe.empty_family_zero_support",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "source": "SumRuleProbe.nonconvex_vacuous_inclusion",
+        "kind": "type",
+        "also_in_value": true
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.SourceSubgradientSum",
+        "source": "SumRuleProbe.quadratic_plus_constraint_support",
+        "kind": "value",
+        "also_in_value": false
+      },
+      {
+        "target_scope": "project",
+        "target": "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+        "source": "SumRuleProbe.quadratic_plus_constraint_support",
+        "kind": "value",
+        "also_in_value": false
+      }
+    ],
+    "productionAxiomAudit": {
+      "declarations": 37,
+      "log": "batch5-kernel-axioms-v1.log",
+      "allowed": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "boundary": "Probe predates leading-comment clarification; exact mathematical bytes preserved by batch5-mathematical-byte-preservation-v1.json. Full current-source combined gate1 passed."
+    },
+    "scope": "Selected direct type/value constant occurrences only. Boundary nodes include existing library and Mathlib definitions and are metadata-only. Expression-object metrics null. Module-import metadata reflects actually loaded full environment from canary imports, not selected graph coverage. No source-proof, whole-project dependency, novelty or dead-code certificate.",
+    "sourceCoordinateAudit": {
+      "compilerLinesUsedWithoutOffset": true,
+      "directEdgesIdenticalToV3": true,
+      "selectedNameAtStartLineVerified": 81,
+      "docCommentRanges": [
+        {
+          "name": "BanditRL.OnlineConvex.SourceActiveSubgradientUnion",
+          "rangeStartIncludesDocComment": 36,
+          "declarationLine": 37
+        },
+        {
+          "name": "BanditRL.OnlineConvex.SourceFiniteMax",
+          "rangeStartIncludesDocComment": 30,
+          "declarationLine": 31
+        },
+        {
+          "name": "BanditRL.OnlineConvex.SourceNormalCone",
+          "rangeStartIncludesDocComment": 27,
+          "declarationLine": 28
+        },
+        {
+          "name": "BanditRL.OnlineConvex.SourceSubgradientSum",
+          "rangeStartIncludesDocComment": 32,
+          "declarationLine": 33
+        },
+        {
+          "name": "BanditRL.OnlineConvex.binary_subgradient_decomposition",
+          "rangeStartIncludesDocComment": 114,
+          "declarationLine": 115
+        },
+        {
+          "name": "BanditRL.OnlineConvex.max_subgradient_direction_witness",
+          "rangeStartIncludesDocComment": 267,
+          "declarationLine": 268
+        },
+        {
+          "name": "BanditRL.OnlineConvex.theorem_2_23_equality",
+          "rangeStartIncludesDocComment": 268,
+          "declarationLine": 269
+        },
+        {
+          "name": "BanditRL.OnlineConvex.theorem_2_23_inclusion",
+          "rangeStartIncludesDocComment": 252,
+          "declarationLine": 253
+        },
+        {
+          "name": "BanditRL.OnlineConvex.theorem_2_26",
+          "rangeStartIncludesDocComment": 360,
+          "declarationLine": 361
+        }
+      ],
+      "all90RangesVerified": true,
+      "repair": "batch5-graph-source-line-repair-v4.json",
+      "verificationNote": "Initial direct-name-at-start assertion rejected9ranges that legitimately begin with a one-line doc comment. They are verified at the following line inside the compiler range; no further graph transformation."
+    }
+  },
+  "local_gate": {
+    "combined_library_jobs": 9066,
+    "combined_tests_jobs": 9196,
+    "harness_tests": 458,
+    "platform_skips": 7,
+    "render_cases": 8
+  },
+  "independent_roles": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root integration formalizer and reader author",
+    "blind_decoder": "/root/batch5_blind_decoder; neutral compiler types and literal definitions only",
+    "source_reviewer": "/root/batch5_source_reviewer; source-only topology first, then anti-anchored binder/body/reader audit",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "G2.23.PROPER: the generic support predicate extends the printed proper-function carrier because proper summands need not have a proper sum. G2.23.INDEX: empty-index inclusion extends positive-family notation, while equality uses Fin(n+1). G2.25.OFFSET: feasible normals explicitly require x in V and are empty outside V, an off-set convention not separately fixed by the inspected source. G2.26.EMPTY and G2.26.CONTINUITY: the library specifies a nonempty finite index and ambient EReal continuity. These are explicit interpretation boundaries, not repaired source definitions. Finite-dimensional real inner-product carriers generalize source Euclidean instances. Helpers are not additional printed source results."
+  },
+  "review_actor_type": "Distinct automated actors, not external human review",
+  "boundary": "Thirty-three retained theorems and four definitions, newly integrated into main scope but not new mathematics. G2.23.PROPER: the generic support predicate extends the printed proper-function carrier because proper summands need not have a proper sum. G2.23.INDEX: empty-index inclusion extends positive-family notation, while equality uses Fin(n+1). G2.25.OFFSET: feasible normals explicitly require x in V and are empty outside V, an off-set convention not separately fixed by the inspected source. G2.26.EMPTY and G2.26.CONTINUITY: the library specifies a nonempty finite index and ambient EReal continuity. These are explicit interpretation boundaries, not repaired source definitions. No Chapter2/book completion, PURIFIED, full Exposition Seal, merge, deployment or original PR closure inferred from local acceptance."
+}

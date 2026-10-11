@@ -615,6 +615,98 @@
       "open_gaps": [
         "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete."
       ]
+    },
+    {
+      "slug": "online-subgradient-sum",
+      "title": "Subgradients of finite sums",
+      "short_title": "Sum rule",
+      "status": "compiled",
+      "summary": "Add arbitrary proper component supports; construct exact decomposition under all closedness premises and the mixed qualification.",
+      "audience": "Readers of Orabona Theorem 2.23.",
+      "completion_definition": "Nine theorems and one witness-set definition. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Separate the arbitrary-proper inclusion from the qualified convex equality.",
+        "Construct genuine component supports from epigraph separation.",
+        "Preserve the last-domain boundary and singleton empty-interior cases."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientSum.lean"
+      ],
+      "open_gaps": [
+        "The inclusion keeps only individual properness and allows an empty finite index family, an explicit extension of the printed positive-family notation. The shared global-support predicate is defined for all EReal functions; the printed definition only covers proper functions. Proper components need not have a proper sum (G2.23.PROPER). Equality keeps every properness, convexity and closedness premise, a positive Fin(n+1) family, and one point in the last domain and every other ambient domain interior. This point is independent of the query. Singleton indexing makes the earlier-interior condition vacuous (G2.23.INDEX). The source proves inclusion locally and cites Bauschke and Combettes (2017), Corollary 16.50 for equality. The separation and induction proof below is a library proof, not a reconstruction of that external text. The finite-dimensional real inner-product carrier generalizes the Euclidean presentation."
+      ]
+    },
+    {
+      "slug": "online-subgradient-absolute",
+      "title": "Absolute-value subdifferential",
+      "short_title": "Absolute value",
+      "status": "compiled",
+      "summary": "Characterize every global real support slope; retain the full closed zero interval.",
+      "audience": "Readers of Orabona Example2.24.",
+      "completion_definition": "Four scalar theorems. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Prove necessity and global sufficiency in every sign case.",
+        "Keep both zero-interval endpoints and fractional slopes.",
+        "Use the actual shared supporting inequality, without assuming a chosen subgradient."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientAbsolute.lean"
+      ],
+      "open_gaps": [
+        "The source states the three exact scalar cases without a derivation. The direct inequalities below supply a library proof; G2.24.POS, G2.24.ZERO and G2.24.NEG record the missing local source derivations. Four real-scalar theorems have no abstract-space, finite-dimensionality, convexity or differentiability premises. The absolute-value function is finite and proper everywhere, so the wider shared support definition causes no improper-function ambiguity here."
+      ]
+    },
+    {
+      "slug": "online-normal-cone",
+      "title": "Indicator supports and normal cones",
+      "short_title": "Normal cones",
+      "status": "compiled",
+      "summary": "Characterize full feasible normals, ambient interior zero and the entire nonnegative unit-ball boundary ray.",
+      "audience": "Readers of Orabona Example2.25.",
+      "completion_definition": "Three theorems and one feasible-normal definition. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Keep queried feasibility in the cone definition and prove the full indicator equality.",
+        "Derive zero interior normals from an actual feasible neighborhood.",
+        "Construct the full boundary ray using normalization and Cauchy equality, including the zero vector."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineNormalCone.lean"
+      ],
+      "open_gaps": [
+        "The library chooses feasible normals: x belongs to V and every feasible displacement has nonpositive inner product. This explicitly makes the cone empty outside V; the inspected source names the cone after an x-in-V reduction and does not independently specify its off-set convention (G2.25.OFFSET). Indicator equality and interior equality retain nonempty convex V in a finite-dimensional real inner-product space; no closedness of V is added. The unit-ball result retains norm x=1 and the entire nonnegative ray, including zero. The definition itself needs no finite dimension, convexity or nonemptiness. The reverse indicator bridge is compressed in the source, the interior proof is only a hint, and the ball equality has no local proof (G2.25.EQUIV, G2.25.INTERIOR, G2.25.BALL). The proofs below complete these library arguments without claiming the source supplied them."
+      ]
+    },
+    {
+      "slug": "online-subgradient-max",
+      "title": "Subdifferential of a finite maximum",
+      "short_title": "Finite maximum",
+      "status": "compiled",
+      "summary": "Exact ordinary convex hull of all active global supports, with a constructed reverse direction.",
+      "audience": "Readers of Orabona Theorem2.26.",
+      "completion_definition": "Seventeen theorems and two definitions. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Define the actual finite pointwise maximum and keep all tied active functions.",
+        "Prove ordinary active-hull compactness from the exact source continuity assumptions.",
+        "Construct near-point supports and use their limits to prove every max support belongs to the ordinary hull."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineSubgradientMax.lean"
+      ],
+      "open_gaps": [
+        "The library explicitly uses a finite nonempty index set because the source leaves the empty-maximum convention unspecified (G2.26.EMPTY). Every component is proper and convex, the query lies in every effective domain, and every component, including inactive ones, is continuous there. Continuity is interpreted in the ambient topology with EReal carrying its standard topology; the inspected source does not expand this convention (G2.26.CONTINUITY). The conclusion uses ordinary convex hull without closure. No component closedness, global finiteness, relative-domain continuity or supplied decomposition is assumed. Finite-dimensional real inner-product spaces generalize the Euclidean carrier. The source cites Bauschke and Combettes (2017), Theorem 18.5 and gives no local proof. The compactness and separation argument below is the library proof, not an independently checked reconstruction of that external result."
+      ]
     }
   ]
 }
