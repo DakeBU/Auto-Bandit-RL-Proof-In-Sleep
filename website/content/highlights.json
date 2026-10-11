@@ -8487,6 +8487,24 @@
         "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
         "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "title": "Why changing step sizes leaves an interior correction",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 20.5,
+      "source_match": "closest-source",
+      "plain": "Changes of reciprocal step sizes leave an interior correction when squared-distance differences telescope. The exact initial and terminal potentials remain. For every positive horizon and positive played step sizes, the displayed equality holds exactly.",
+      "math": "\\begin{aligned}\\sum_{t=1}^{T}\\frac{\\|x_t-u\\|_2^2-\\|x_{t+1}-u\\|_2^2}{2\\eta_t}&=\\frac{\\|x_1-u\\|_2^2}{2\\eta_1}-\\frac{\\|x_{T+1}-u\\|_2^2}{2\\eta_T}\\\\&\\quad+\\frac12\\sum_{t=1}^{T-1}\\left(\\frac1{\\eta_{t+1}}-\\frac1{\\eta_t}\\right)\\|x_{t+1}-u\\|_2^2.\\end{aligned}",
+      "intuition": "With constant weights, adjacent potentials cancel completely; changing weights leaves their successive differences.",
+      "why": "Expose the source algebra without weakening it to a diameter inequality or dropping the terminal residual.",
+      "position": "Orabona v10, printed14/PDF26, Theorem2.13 proof second display equality. Locally compiled and independently source/BODY-reviewed exact identity with explicit algebraic generalization. Combined package gates remain pending. Chapter2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Whole Chapters1-16 Goal ACTIVE; unmerged and unpublished.",
+      "proof_idea": "Write a_t for the squared distance and w_t for 1/(2 eta_t). Expand each difference a_t w_t-a_(t+1)w_t. The initial a_1w_1 occurs once positively and the terminal a_(T+1)w_T once negatively. Each interior a_(t+1) occurs with coefficient w_(t+1)-w_t. Collect these coefficients and substitute reciprocal steps, retaining the factor1/2. The printed full equality includes the same gradient-energy sum sum eta_t||g_t||^2/2 on each side; add that common sum back to this extracted identity to recover the full display, or cancel it to isolate this identity. T=1 has no interior sum.",
+      "lean_notes": "Source Euclidean squared distances specialize an explicitly more general NormedAddCommGroup identity. The underlying real-sequence lemma allows signed/zero potentials and weights, no monotonicity and no terminal bound. The distance theorem retains T>0 and eta_t>0 at every played index. Lean index0 is source round1, x(T) is source x_(T+1), eta(T-1) is source eta_T. No loss regularity, feedback legality, feasible-set diameter or algorithm recursion is asserted by this algebraic equality. No missing-half source correction is proposed. The distance proof actually reuses BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq. The scalar companion VALUE contains Finset.sum_range_by_parts and Finset.sum_range_sub'. These are selected actual compiled VALUE occurrences, not necessity claims or a complete transitive graph. Exact folded statements and full proof source links expose both declarations through the shared catalog. Existing OGD/OSD production theorems remain prospective reuse overlays only; their accepted bodies are unchanged.",
+      "dependencies": [
+        "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq"
+      ]
     }
   ]
 }

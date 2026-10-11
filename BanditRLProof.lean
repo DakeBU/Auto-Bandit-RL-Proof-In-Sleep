@@ -790,3 +790,4 @@ import BanditRLProof.OnlineAdaptiveEnergy
 import BanditRLProof.OnlineAdaptivePotential
 import BanditRLProof.OnlineAdaptiveOSD
 import BanditRLProof.OnlineAdaptiveBenchmark
+import BanditRLProof.OnlineWeightedPotential

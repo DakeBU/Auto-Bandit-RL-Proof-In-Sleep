@@ -1,0 +1,236 @@
+{
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "verdict": "approve-5canary-contracts",
+  "blocking_repairs": [],
+  "approved_contract_proposal_sha256": "16238f73e25909363d8431d8a4a6e7dcc8d284378b3ab0b1e317fe7ee16a59b8",
+  "approved_full_headers_context_sha256": "7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97",
+  "approved_imported_definitions_context_sha256": "74289a20fe09dbe101e69ffa7ba093fa8c77fdfef079c8259f67440a7f1af155",
+  "approved_imported_definitions_binding_sha256": "8200e6b7f998e4a6b1db7a8f1440d5150bd879895a97bc308bacb5a7ff350e01",
+  "production_source_sha256": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+  "production_frozen_header_sha256": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f",
+  "source_review_sha256": "75d3625875f656bd75c143af1ceb9b905c749745e014b9f502215d03d8c9bd70",
+  "blind_reconstruction": {
+    "actor": "/root/weighted_identity_blind",
+    "sha256": "42518039f03b82cc94c98083542d80c371a4818b31339e4005f7f8a15b5f478f",
+    "fresh_source_blind_role": "Parent assignment; read-only reconstruction from two authorized text inputs; distinct from source reviewer/formalizer",
+    "all_seven_slots_match": true
+  },
+  "frozen_definitions": [
+    {
+      "name": "V",
+      "kind": "abbrev",
+      "sha256": "86e0458b19d95a10601eb1cb189edc023399042f308be21e404aae68421ea88b"
+    },
+    {
+      "name": "signedA",
+      "kind": "def",
+      "sha256": "cdf949352e746e80653655067be0938ee0a6a712924d30007449d853621cfc79"
+    },
+    {
+      "name": "signedW",
+      "kind": "def",
+      "sha256": "0ef854908ef9463ca86eccfe80a359148d4e773be90ca4c793cb7d6ae8b98b5e"
+    },
+    {
+      "name": "eta",
+      "kind": "def",
+      "sha256": "935707a36ce90d4223400108b3310d7706e9e2dd915c111d06edfb4d2dbabc79"
+    },
+    {
+      "name": "feedback",
+      "kind": "def",
+      "sha256": "7913ec29bef74c7a3c4ce6de373cc0b9c9cbded98fda2c7014ffbc725c83fe8c"
+    },
+    {
+      "name": "realLoss",
+      "kind": "def",
+      "sha256": "8908e3446d83d2b51b7365e5c139a0f797129ecb60584e9e8982cfbc22701d75"
+    },
+    {
+      "name": "extendedLoss",
+      "kind": "def",
+      "sha256": "ac2fff6c8e352a63e835c184672e9b3bff5d9f22264b29d977bd396a9f88c69f"
+    },
+    {
+      "name": "policy",
+      "kind": "def",
+      "sha256": "8d6e13454ae419383232d07844f3fad9ad41505a9d7128989ca4d0f90b60e3f0"
+    },
+    {
+      "name": "ogd",
+      "kind": "abbrev",
+      "sha256": "12b713b3a88b7574e605e2afa9c450ce000ad7315e943c56685d40ba7cbd64a2"
+    },
+    {
+      "name": "osd",
+      "kind": "abbrev",
+      "sha256": "9ccf8b1e795a0686a23f721233b7fa0e6759de5dce43a6e9f9858b4a7be2a7cc"
+    }
+  ],
+  "frozen_headers": [
+    {
+      "name": "signed_weights_complete",
+      "sha256": "f0b33ee913449829c42ff1c0ac303ec1506ed82ce128b3aac3c31343442e0d72"
+    },
+    {
+      "name": "one_step_free_terminal_complete",
+      "sha256": "e151f194aaa9734969b44f44126ae394f6cf591a808e30fb16b55b5eca697bd4"
+    },
+    {
+      "name": "constant_zero_weights_complete",
+      "sha256": "ff817e1bcd77faf4e2714ff0b6e35758d4f158c9aaa3b5c432c678b1490b1092"
+    },
+    {
+      "name": "ogd_three_step_complete",
+      "sha256": "45543f4c44cdd923435becaf86e0ad4a46cd161771680ac9663df9f57dc272d9"
+    },
+    {
+      "name": "osd_three_step_complete",
+      "sha256": "7504b50a7a75446b689a3ffd08c7b544da0bd5c6f3f22d6c6949ec11a2b087b9"
+    }
+  ],
+  "imported_definition_audit": {
+    "count": 17,
+    "every_excerpt_found_verbatim_in_current_original_module": true,
+    "all_module_RAW_hashes_and_definition_text_hashes_match": true
+  },
+  "seven_slot_review": {
+    "objects_spaces": "Three scalar algebra canaries plus two actual real-line algorithms on existing fullSpace Domain; real linear and finite EReal affine losses. Ten exact local definitions preserved.",
+    "quantifiers_order": "Signed and actual-run canaries are closed conjunctions; one-step universally quantifies arbitrary a,w; constant-zero universally quantifies a,c,T with hT>0. No hidden recurrence, output trace, regularity or legality premise.",
+    "assumptions_regularity": "Algorithm regularity, gradient identification, extended proper support and LegalFeedback are required conclusions. Full-space projection is identity and linear gradient is g; existing definitions establish actual algorithm meaning, not substitute trajectories.",
+    "conclusions": "All five full conjunctions required. Algorithm canaries include all three step/feedback values, positivity and failure of nonincreasing schedule, all four outputs, full identity and each endpoint/interior/total value.",
+    "constants_indexing": "Source1-based rounds map to indices0..2 with output3 terminal; no eta3 used. Comparator2; denominator2 and correction1/2 unchanged. Signed total-13/terminal-4; algorithm total-1/2, initial2, terminal-1/2, interior-2.",
+    "probability_feedback": "Deterministic. SupportPolicy type takes strict-past full losses, points through current point and current loss; actual output_t constructed before current update. Fixed policy ignores history/current loss and returns g_t; legality proved along generated path. No claim of history sensitivity or stronger oracle restriction.",
+    "boundaries": "T0 excluded; one-step arbitrary terminal; constant c may be negative or zero; generic signed potentials unrestricted. Nonmonotone positive eta[1,2,1] intentionally rules out hidden monotonicity premises. These are identity specializations, not regret bounds."
+  },
+  "independent_exact_arithmetic": {
+    "method": "fractions.Fraction recurrence and scalar sums, no Lean compiler",
+    "trajectory": [
+      "0",
+      "-1",
+      "3",
+      "1"
+    ],
+    "squared_distances": [
+      "4",
+      "9",
+      "1",
+      "1"
+    ],
+    "weighted_decreases": [
+      "-5/2",
+      "2",
+      "0"
+    ],
+    "total": "-1/2",
+    "initial": "2",
+    "signed_terminal": "-1/2",
+    "interior": "-2",
+    "signed_canary": "0+(-8)+(-5)=-13; initial0, terminal-4, interior-9",
+    "support_identity": "g*x+g*(y-x)=g*y globally, so finite affine loss support holds with equality; convexity/differentiability are mathematical facts still requiring Lean BODYs."
+  },
+  "source_boundary": "Pinned PDF26/printed14 personally viewed in prior leaf source review this session; factor1/2/negative terminal retained. Three algebra tests exercise explicitly labelled generic strengthening; actual OGD/OSD tests specialize existing algorithms. No performance guarantee inferred.",
+  "proof_acceptance_requirements": "Five complete BODYs, public applications, exact headers/definitions, native fences and axiom checks remain required. Eventual proof-value use of intended parent in each identity branch must be checked separately; headers alone cannot establish dependency. Any extra public helper theorem or changed contract/context needs separate freeze/review.",
+  "allowed_Test_file_after_parent_authorization": "Tests/OnlineWeightedPotentialCanary.lean",
+  "compiler_run": false,
+  "BODY_accepted": false,
+  "Tests_root_package_native_accepted": false,
+  "chapter_accepted": false,
+  "goal_status": "ACTIVE",
+  "input_raw_hashes_before_after": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/canary-frozen-contracts-v1.txt",
+      "before": "7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97",
+      "after": "7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/canary-contract-proposal-v1.json",
+      "before": "16238f73e25909363d8431d8a4a6e7dcc8d284378b3ab0b1e317fe7ee16a59b8",
+      "after": "16238f73e25909363d8431d8a4a6e7dcc8d284378b3ab0b1e317fe7ee16a59b8"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/canary-neutral-imported-definitions-v1.txt",
+      "before": "74289a20fe09dbe101e69ffa7ba093fa8c77fdfef079c8259f67440a7f1af155",
+      "after": "74289a20fe09dbe101e69ffa7ba093fa8c77fdfef079c8259f67440a7f1af155"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/canary-imported-definitions-binding-v1.json",
+      "before": "8200e6b7f998e4a6b1db7a8f1440d5150bd879895a97bc308bacb5a7ff350e01",
+      "after": "8200e6b7f998e4a6b1db7a8f1440d5150bd879895a97bc308bacb5a7ff350e01"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/fresh-canary-blind-reconstruction-v1.json",
+      "before": "42518039f03b82cc94c98083542d80c371a4818b31339e4005f7f8a15b5f478f",
+      "after": "42518039f03b82cc94c98083542d80c371a4818b31339e4005f7f8a15b5f478f"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/source-contract.txt",
+      "before": "2f4981495ca64cfda8383fb33f081e08bba39e5cb84b93a30a53e96ba0962ce4",
+      "after": "2f4981495ca64cfda8383fb33f081e08bba39e5cb84b93a30a53e96ba0962ce4"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/source-PDF026.png",
+      "before": "ef1ab958be7f42196e6b1364d0d18d153b0994d1a83a411d25ed3ea6ed683e4e",
+      "after": "ef1ab958be7f42196e6b1364d0d18d153b0994d1a83a411d25ed3ea6ed683e4e"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/fresh-leaf-contract-source-review-v1.json",
+      "before": "75d3625875f656bd75c143af1ceb9b905c749745e014b9f502215d03d8c9bd70",
+      "after": "75d3625875f656bd75c143af1ceb9b905c749745e014b9f502215d03d8c9bd70"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-weighted-identity-prospectus-20261011/fresh-core-BODY-review-v1.json",
+      "before": "ec9f6ed5f0cf4a7ee82c02354ff7f439a9eafc9baed1982b3be40394c979733b",
+      "after": "ec9f6ed5f0cf4a7ee82c02354ff7f439a9eafc9baed1982b3be40394c979733b"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineWeightedPotential.lean",
+      "before": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+      "after": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineHuber.lean",
+      "before": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce",
+      "after": "6aa70d9db582884dae95c325445d0d96e963e918bf85a26db2ce67a5159cd1ce"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientDescent.lean",
+      "before": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c",
+      "after": "6ba8586e1691babc2db3e0c0fcddb69b4236e16f9f192c464b4c04262e854f1c"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientPolicy.lean",
+      "before": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662",
+      "after": "ac8fbfb3eee3c92ebb79b44f33beec33b500105bb7e54df5176c14e886c2c662"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescent.lean",
+      "before": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871",
+      "after": "9300cb2735da9f125e404f78b86509df47fe65a5f4d89abc469e071bdffdb871"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentVariable.lean",
+      "before": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0",
+      "after": "9fd385b55d76ff0fe5e1988d553007fb46f59f6864e5534ec867a7c820ecbea0"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineSubgradientBasic.lean",
+      "before": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+      "after": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineGradientDescentSource.lean",
+      "before": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7",
+      "after": "627df452453bbdfa2ecf4ddac8b5b85bfd750c74f1db5b81a26e6e20ca2eeec7"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineClosedProper.lean",
+      "before": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+      "after": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7"
+    }
+  ],
+  "canonical_RUN_Git_mutation": false
+}

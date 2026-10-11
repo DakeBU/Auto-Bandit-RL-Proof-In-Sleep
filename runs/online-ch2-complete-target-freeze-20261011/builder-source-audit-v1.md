@@ -1,0 +1,25 @@
+# Chapter 2 inventory source audit — proposal only
+
+All literal v10 Chapter 2 pages PDF20–35 (printed8–23) were independently inspected as rendered pixels and layout text. The pinned PDF hash is unchanged. I also inspected PDF37–38 to adjudicate the Chapter2 pointer. This is an inventory and source-assumption review, not a review of my OSD BODY, source-to-Lean equivalence, or chapter acceptance.
+
+The 73-row inventory and 73-row reconciliation join exactly. All32 numbered navigation entries and both algorithm boxes are present. No numbered main result is missing. The row count overlaps definitions, proof dependencies and forward claims and is not a theorem denominator. Five standalone Problems remain separately inventoried; the norm-convexity example and four closure bullets whose proofs are left as exercises remain mandatory main text.
+
+The accompanying freeze proposal retains every original row, all10 later-source candidate containers, all28 dependency contracts, all8 required/open forward containers, and all6 pending future claims. It adds an explicit child contract for the printed sublinear-regret-to-average-performance implication. Twenty-one repairs/splits clarify scope and assumptions without deleting mathematics. Exact-formalized labels in the earlier reconciliation remain proposed classifications, not accepted evidence.
+
+## Findings requiring explicit freeze decisions
+
+- Retain the Hausdorff closed-if-and-only-if-lower-semicontinuous branch, not merely its Euclidean specialization. Retain the relative-interior existence footnote as a mathematical side branch; “never need to use it” is a dependency remark, not automatic exclusion from the book's mathematical scope. Its ordinary-interior parent and Theorem2.23's different intersection condition stay separate.
+- PDF26 visibly prints the factor1/2 in the weighted-distance identity. The exact summation-by-parts equality and its terminal residual must survive; the located inequality producer is not, by name alone, an equality certificate. No missing-half source correction is justified.
+- Hindsight learning-rate minimization needs positive versus zero coefficient cases, infimum versus attainment, and explicit eta>0. Future realized gradients depend on the run and cannot be frozen into a causal oracle assumption. Eq2.1 needs positive-denominator and degenerate branches.
+- Definition closure includes the full extended-real epigraph/domain conventions, projection existence/uniqueness, legal selection/causality, finite-family nonemptiness, and ambient differentiability semantics. Preserve literal Theorem2.22 assumptions instead of silently adding an interior premise. Preserve both sharp regret branches and arbitrary legal OSD subgradients.
+- Split dimensional exponent calculations, transcendental normalization conventions, dimensionless probability, and density/reference-coordinate units. Existing exponent declarations do not establish every claim in those paragraphs. Retain the exact10^6 rescaling example and actual trajectory invariance.
+- History Bits contains real mathematics: min-form requires attainment; arbitrary comparator regret does not; infinite-diameter varying-step bound is vacuous; FTRL can address the unbounded setting; offline suboptimality can approach an unattained infimum. Attribution and rhetoric remain context, but these claims remain targets.
+- The source literally says Example3.2. PDF37 confirms that example assumes nonempty argmin. PDF38 Example3.5 explicitly discusses separable logistic data with no finite optimum and gives a regularized comparator bound. Thus3.5 is a well-supported proposed pointer correction, pending distinct approval; retain both the literal3.2 locator and correction record. The expected infimum-convergence conclusion still needs strict separability/positive denominators, regularized attainment and an epsilon-comparator limit argument.
+
+The later-source10/28 candidate packet was read for ownership and dependency scope, not freshly certified theorem-by-theorem against all later pages. No forward container is closed or replaced. Existing OSD source/BODY review receipts remain external prior evidence; I make no new acceptance claim for that package.
+
+## Next action
+
+Obtain a distinct external review of this exact proposal and the21 repair items before the next proof. Resolve typed dimensional conventions and explicit scope of the two stronger side branches. Then bind every retained mathematical branch to exact producer/BODY/FINAL evidence; do not infer closure from declaration names or imported modules. Chapter2 remains partial, denominator null, all8 required containers open,6 future claims pending, and Goal active.
+
+All outputs are create-only UTF-8 LF in ignored tmp/online-ch2-source-audit-20261011. No RUN, contract, canonical source, root, reader, contribution manifest, index, build, commit or native state was changed. Historical memory was consulted only for workflow orientation; mathematical conclusions above were checked from the pinned source.

@@ -1,0 +1,112 @@
+{
+  "status": "FINAL PROPOSED contract/context; independent leaf source review and parent authorization pending",
+  "actor": "/root/adaptive_formalizer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "source": {
+    "arxiv": "1912.13213v10",
+    "pdf_page": 26,
+    "printed_page": 14,
+    "anchor": "Theorem 2.13 proof, unnumbered second display equality",
+    "pdf_path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pixel_review": "Full page inspected; factor1/2 and terminal x_(T+1) confirmed",
+    "contract_sha256": "2f4981495ca64cfda8383fb33f081e08bba39e5cb84b93a30a53e96ba0962ce4"
+  },
+  "source_contract": {
+    "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/source-contract.txt",
+    "raw_sha256": "2f4981495ca64cfda8383fb33f081e08bba39e5cb84b93a30a53e96ba0962ce4"
+  },
+  "source_pixels": {
+    "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/source-PDF026.png",
+    "raw_sha256": "ef1ab958be7f42196e6b1364d0d18d153b0994d1a83a411d25ed3ea6ed683e4e"
+  },
+  "neutral_packet": {
+    "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/neutral-frozen-headers-v1.txt",
+    "raw_sha256": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f"
+  },
+  "theorem_headers_mathematically_unchanged_from": {
+    "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/proposed-exact-headers-v2.txt",
+    "raw_sha256": "35da99ac903402054543401762c58f55fefaa6081e55f1e6d9169e633e9fa134"
+  },
+  "imports": [
+    "Mathlib.Algebra.BigOperators.Module",
+    "Mathlib.Tactic"
+  ],
+  "module_context": [
+    "noncomputable section",
+    "open Finset",
+    "namespace BanditRL.OnlineWeightedPotential"
+  ],
+  "context_basis": "Pinned existing OnlineAdaptivePotential uses these imports and context. No elaboration or build performed in this preparation. Neutral text is headers without BODY, not a complete compilable module.",
+  "seven_semantic_slots": {
+    "1_objects_spaces": {
+      "generic": "Real-valued potential and weight sequences indexed by Nat.",
+      "distance": "Arbitrary trajectory x:Nat->E and comparator u:E in a NormedAddCommGroup. Source Euclidean space is a specialization; normed-group generality is an explicit algebraic strengthening."
+    },
+    "2_quantifiers_order": "Universally quantified a,w,T and hT>0; distance universally quantified E/instance,x,u,eta,T with hT>0 and forall t<T eta(t)>0. No existential trajectory or optimizer and no algorithm choice is hidden.",
+    "3_assumptions_regularity": "Generic: only positive natural horizon. Distance: normed additive commutative group, positive horizon and each played step positive. No monotonicity, bound, diameter, differentiability, convexity, feasibility or update law is needed for the algebraic identity. Positive eta is retained to express the source contract even if bare totalized-field algebra can be stronger.",
+    "4_conclusion_metric": "Exact finite weighted difference sum equals initial weighted potential minus terminal weighted potential plus internal changes of weights times the next potential. Source specialization uses squared norm distances and reciprocal steps, retaining the terminal x(T) term.",
+    "5_constants_normalization": "Source factor1/2 retained in denominators and interior sum. Lean index0=source round1; Lean x(T)=source x_(T+1); last played step eta(T-1)=source eta_T. Interior indices range(T-1). No asymptotic notation, hidden constants or terminal dropping.",
+    "6_probability_feedback": "Deterministic pathwise identity, no probability/filtration/stopping time. Generic arbitrary trajectory does not itself prove an algorithm guarantee. Actual OGD and legal policy OSD specialization will be established by complete canaries and existing trajectory interfaces, separately from the algebra.",
+    "7_boundary_exclusions": "T=0 excluded in these exact headers. Optional zero-horizon extension is not a source obligation and is not included. Source adapter excludes nonpositive played eta. Generic weights and potentials may be signed or zero, terminal unconstrained. Unbounded domains allowed. No regret bound or diameter premise is inferred from identity alone."
+  },
+  "inventory": {
+    "path": "tmp/online-ch2-effective-target-freeze-20261011/effective-target-freeze-proposal-v3.2.json",
+    "raw_sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "status": "independently approved for inventory freeze only; no proof authorization",
+    "review": {
+      "path": "tmp/online-ch2-effective-target-freeze-20261011/fresh-independent-target-freeze-review-v2.json",
+      "raw_sha256": "7d9fcc7b4d71963cd85c43d96cf3cb2f54272fcdedc4a4372e8e7dbbf6fdc1d8"
+    }
+  },
+  "reuse": {
+    "decision": "adapt_existing",
+    "commands": {
+      "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/required-retrieval-commands-v1.json",
+      "raw_sha256": "3b5a89c0b2640935c17ba1318fee979a872b4d8723bc10c6084a775d9ef9f9de"
+    },
+    "all_seven_read_only_command_exits": 0,
+    "previous_raw_search_and_pins": {
+      "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/reuse-search-v1.json",
+      "raw_sha256": "a5524caef667f0555939870446d0fd3128dde456d1a657092e2ce8e5a82dac69"
+    },
+    "mathlib_card": "MLIB-FINSET-SUMS",
+    "source_card": "Orabona v10 Theorem2.13 proof unnumbered weighted-distance equality PDF26/printed14",
+    "proof_weapon": null,
+    "status": "project-local adapter of pinned imported Mathlib identity; no new compile claim",
+    "core": "Finset.sum_range_by_parts with successive-difference telescoping Finset.sum_range_sub'",
+    "LML": "card-only, no pinned package/configured checkout found, no import/port claim",
+    "reference_index_not_run": "Would write index; read-only scope instead uses existing cards/index. Required search-memory and list-lean-decls (including --statement), list-mathlib/list-papers/list-weapons executed and captured."
+  },
+  "proof_route": "Apply Finset.sum_range_by_parts to w and successive differences; collapse partial differences with Finset.sum_range_sub'; collect coefficients to source normal form. Substitute a=norm-distance squared and w=1/(2 eta), normalize rational factors. Preserve all endpoints.",
+  "prospectus": {
+    "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/prospectus-v2.json",
+    "raw_sha256": "8be941f85ba0d0eb2e49e13ea9a25a27242523b628fe96ca48a901df47af0aaa"
+  },
+  "complete_canary_plan": {
+    "path": "tmp/online-ch2-weighted-identity-prospectus-20261011/canary-plan-v1.json",
+    "raw_sha256": "ebef1dce386a0e2fc673feea77e87769b52b27bda9a9e2a36bf020df91c1e645"
+  },
+  "canary_boundary": "Plan only, no proof/compilation; signed/zero weights, unconstrained terminal, constant weights and actual three-step OGD/legal-policy OSD with retained residual. No new algorithm wrappers planned.",
+  "review_roles": {
+    "formalizer": "/root/adaptive_formalizer",
+    "blind_decoder": "distinct fresh actor assigned by parent; reconstruct final neutral packet anew because context finalized",
+    "source_reviewer": "distinct from formalizer and blind decoder; compare seven slots/source versus reconstruction",
+    "status": "planned for final neutral packet"
+  },
+  "authorization": {
+    "BODY_authorized": false,
+    "Lean_files_created": false,
+    "compiler_run": false,
+    "canonical_or_RUN_or_Git_mutation": false,
+    "required_next": [
+      "Fresh reconstruction of final neutral packet",
+      "Independent leaf source review including explicit generalization delta",
+      "Parent grants proof work after preceding gates"
+    ]
+  },
+  "supersedes": "leaf-contract-proposal-v1.json: inventory approval arrived after v1 sealing; exact neutral headers unchanged",
+  "current_branch_per_parent": "codex/research-online-ch2-target-freeze"
+}

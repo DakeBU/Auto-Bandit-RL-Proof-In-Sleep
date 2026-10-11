@@ -1,0 +1,108 @@
+{
+  "schema_version": "2.0",
+  "id": "ONLINE-CH2-WEIGHTED-IDENTITY-20261011",
+  "route": "online-learning/chapter-2/weighted-distance-identity",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv1912.13213v10 SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem2.13 proof unnumbered second display equality; PDF26/printed14",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=26"
+  },
+  "target": "Expose exact weighted-distance source equality with initial, interior and terminal terms. Locally compiled and independently source/BODY-reviewed exact identity with explicit algebraic generalization. Combined package gates remain pending. Chapter2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Whole Chapters1-16 Goal ACTIVE; unmerged and unpublished.",
+  "affected_files": [
+    "BanditRLProof/OnlineWeightedPotential.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+    "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Frozen reuse-search and exact source contract in weighted identity RUN; current draft does not rerun retrieval."
+    ],
+    "reused_declarations": [
+      "Finset.sum_range_by_parts",
+      "Finset.sum_range_sub'"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+    ],
+    "planned_consumers": [
+      "OGD/OSD production reuse only as prospective overlays; no existing BODY edits."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One shared source-normal-form identity and distance specialization; no separate project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/adaptive_formalizer",
+    "blind_decoder": "/root/weighted_identity_blind",
+    "source_reviewer": "/root/adaptive_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Source Euclidean squared distances specialize an explicitly more general NormedAddCommGroup identity. The underlying real-sequence lemma allows signed/zero potentials and weights, no monotonicity and no terminal bound. The distance theorem retains T>0 and eta_t>0 at every played index. Lean index0 is source round1, x(T) is source x_(T+1), eta(T-1) is source eta_T. No loss regularity, feedback legality, feasible-set diameter or algorithm recursion is asserted by this algebraic equality. No missing-half source correction is proposed."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Ordinary summation-by-parts reuse, no new proved setting transport.",
+    "focus_targets": [
+      "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+    ],
+    "visual_review": "Pending exact candidate integration/registry/rendered-site review.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: Added one adjacent exact-identity source card and lesson; source container and chapter completion unchanged.",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting result.",
+    "results_ledger": "no-change-with-reason: no chapter/global milestone.",
+    "roadmap": "no-change-with-reason: keep existing route registry; C2partial8+6open and GoalACTIVE.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "Locally compiled and independently source/BODY-reviewed exact identity with explicit algebraic generalization. Combined package gates remain pending. Chapter2 remains partial, accepted=false and complete proof denominator=null; all eight forward containers and six future claims remain open. Whole Chapters1-16 Goal ACTIVE; unmerged and unpublished. Native prospective adapter unexecuted; later transport of prior phases retrospective.",
+  "verification": {
+    "focused_checks": [
+      "Production focused compile, public probe, two exact fences and standard axiom sets verified by runs/online-ch2-weighted-identity-20261011/fresh-core-BODY-review-v1.json SHA256 ec9f6ed5f0cf4a7ee82c02354ff7f439a9eafc9baed1982b3be40394c979733b. Core RAW 63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a.",
+      "Owned Test file Tests/OnlineWeightedPotentialCanary.lean RAW 4a82683376bd02572706bedf5d58a55b619c68d9e30c373a0c6f192eea77f867 and Test root Tests.lean. Five complete Test theorems and ten support definitions; source packet SHA256 7b949b3458841999a7d515209519851280d31afe8ec4e3366f3c2ffa07d65e97. Actual focused/public probe/selected VALUE export exit0, five fences and standard axiom sets verified by runs/online-ch2-weighted-identity-20261011/fresh-canary-BODY-review-v1.json SHA256 f0988dbb4c4a341ea7448f3db389c40c2149222806ae9b94a6dfd4c77dbb972d.",
+      "Actual Test-layer consumers: WeightedIdentityProbe.signed_weights_complete, WeightedIdentityProbe.one_step_free_terminal_complete, WeightedIdentityProbe.constant_zero_weights_complete, WeightedIdentityProbe.ogd_three_step_complete, WeightedIdentityProbe.osd_three_step_complete. These are implementation counts, never source completion counts.",
+      "Production actual VALUE export runs/online-ch2-weighted-identity-20261011/production-type-value-constants-v1.json SHA256 633819ff15a7affe15a030a6d7a76b809c2c1bf02a36e0e4e12de8d36bf9653f; scalar actual by-parts/telescoping occurrences and distance actual scalar companion occurrence checked. Occurrence not necessity or complete graph.",
+      "Two exact file-specific LF rules only; prior attributes bytes preserved."
+    ],
+    "bandit_check": "Pending current shared root/Tests/full harness gates.",
+    "site_build": "Pending authorized build after fresh gates.",
+    "site_check": "Pending exact old registry-object preservation and formula/folded-header/full-proof links.",
+    "independent_review": "Production runs/online-ch2-weighted-identity-20261011/fresh-core-BODY-review-v1.json SHA256 ec9f6ed5f0cf4a7ee82c02354ff7f439a9eafc9baed1982b3be40394c979733b; canary runs/online-ch2-weighted-identity-20261011/fresh-canary-BODY-review-v1.json SHA256 f0988dbb4c4a341ea7448f3db389c40c2149222806ae9b94a6dfd4c77dbb972d. Exact integration/final package review and combined gates still pending; future actual gate receipts remain separately recorded, never inferred from this candidate manifest."
+  },
+  "contributor": {
+    "name": "ABRL agent-assisted weighted identity package",
+    "role": "Source-reviewed formalization candidate; authorship unchanged"
+  }
+}

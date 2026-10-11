@@ -1,0 +1,161 @@
+{
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "verdict": "accepted-candidate-core-only",
+  "blocking_repairs": [],
+  "approved_source_raw_sha256": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+  "frozen_headers_raw_sha256": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f",
+  "leaf_source_review_sha256": "75d3625875f656bd75c143af1ceb9b905c749745e014b9f502215d03d8c9bd70",
+  "leaf_freeze_receipt_sha256": "367889a0e3fdbe15d6e5638fa6847eebabf3db9d98b0623502860f5a32c24a4f",
+  "scope": "Two exact core BODYs only; no canary contract/BODY, combined root/Tests/harness, publication or native acceptance",
+  "mathematical_review": {
+    "weighted_difference_sum_eq": "Apply imported summation by parts to w and consecutive differences of a. Telescoping gives partial sums a0-a(i+1); distribute correction, telescope weight increments to w(T-1)-w0, collect coefficients. Initial a0*w0, signed terminal -aT*w(T-1) and every interior term retained. Arbitrary real signed/zero a,w; no desired identity premise.",
+    "distance_potential_sum_eq": "Apply first theorem to squared norm distances and weights1/(2eta). Total real inverse rewriting and ring normalization yield factor1/2 in reciprocal differences. No norm-specific inequality, trajectory law or regret premise introduced; explicit normed-group generalization remains.",
+    "frozen_headers": "Both actual theorem headers independently compared exact with neutral text; only two declarations; no postulate, sorry or additional theorem.",
+    "unused_source_hypotheses": "hT in scalar BODY and h_eta in distance BODY intentionally unused and still present. hT is passed to first theorem in adapter. No weakening, linter suppression or requirement removal."
+  },
+  "proof_dependencies": {
+    "weighted_difference_sum_eq": [
+      "Finset.sum_range_by_parts",
+      "Finset.sum_range_sub'",
+      "Finset.sum_range_sub",
+      "Finset.sum_mul",
+      "Finset.sum_sub_distrib",
+      "Finset.sum_congr",
+      "ring normalization"
+    ],
+    "distance_potential_sum_eq": [
+      "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "Finset.mul_sum",
+      "Finset.sum_congr",
+      "div_eq_mul_inv",
+      "mul_inv_rev",
+      "ring normalization"
+    ]
+  },
+  "dependency_evidence_boundary": "Selected applied constants verified by reading source, imported Mathlib statement and compiled #print output. Not a complete transitive graph, dependency necessity or counterfactual indispensability claim.",
+  "verification": {
+    "focused_compile_actual_exit": 0,
+    "public_probe_actual_exit": 0,
+    "two_fences_safe_verify_pass": true,
+    "axioms": {
+      "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq": "propext, Classical.choice, Quot.sound",
+      "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq": "propext, Classical.choice, Quot.sound"
+    },
+    "axiom_set": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "custom_or_sorry_axioms": false,
+    "source_equals_compiled_snapshot": true,
+    "stdout_stderr_hashes_match": true,
+    "reviewer_compiler_rerun": false,
+    "three_header_tooling_failures_preserved": true
+  },
+  "timestamp_provenance": {
+    "raw_receipt_sha256": "4bd9126a219253ab71a530060fc255e2ceaf81f9cd9929fca541388380958566",
+    "raw_start": "2026-10-11T04:04:35.063887+00:00",
+    "raw_end": "2026-10-11T04:04:47.759456+00:00",
+    "parent_prior_display": "12:04:35.063887+08:00 to12:04:47.759456+08:00",
+    "resolution": "Parent reproduced PowerShell ConvertFrom-Json DateTime plus Select/ConvertTo-Json localization; same instants, not receipt mutation. Reviewer read raw Python JSON and hashes. Earlier parent mutation suspicion withdrawn; no invented historical RAW hash or recompilation."
+  },
+  "input_raw_hashes_before_after": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/BanditRLProof/OnlineWeightedPotential.lean",
+      "before": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+      "after": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-focused-v1-source.lean.txt",
+      "before": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+      "after": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-focused-v1.json",
+      "before": "4bd9126a219253ab71a530060fc255e2ceaf81f9cd9929fca541388380958566",
+      "after": "4bd9126a219253ab71a530060fc255e2ceaf81f9cd9929fca541388380958566"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-focused-v1-stdout.txt",
+      "before": "4fe1d737bc55c1c67563f7a7c3577ce4a47c7ac8cd81a387553172a920bcb8cf",
+      "after": "4fe1d737bc55c1c67563f7a7c3577ce4a47c7ac8cd81a387553172a920bcb8cf"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-focused-v1-stderr.txt",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-header-fences-safe-verify-v1.json",
+      "before": "5e4728e56c4420090455529cd6571b64f0ce43c29786b06662a0956a85119de3",
+      "after": "5e4728e56c4420090455529cd6571b64f0ce43c29786b06662a0956a85119de3"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-public-probe-v1.json",
+      "before": "a1b309cc2178193e9a6cfe58e28b67c9048f1bce9772a27f16b614037013e086",
+      "after": "a1b309cc2178193e9a6cfe58e28b67c9048f1bce9772a27f16b614037013e086"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/ProductionPublicProbeV1.lean",
+      "before": "7bf309d78c27b25f52c10493be7460f7e2e15e85be328d6d03119cf98ecf7c87",
+      "after": "7bf309d78c27b25f52c10493be7460f7e2e15e85be328d6d03119cf98ecf7c87"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-public-probe-v1-stdout.txt",
+      "before": "d1dd82cc187cba94dbe6424622eaa216f1bbbeafd610dc15b19cb53f513e1157",
+      "after": "d1dd82cc187cba94dbe6424622eaa216f1bbbeafd610dc15b19cb53f513e1157"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-public-probe-v1-stderr.txt",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-compiled-candidate-summary-v1.json",
+      "before": "1f75935a135185e4a9debaecc2a8f0974f904532759cd63a032ed9d1db81288f",
+      "after": "1f75935a135185e4a9debaecc2a8f0974f904532759cd63a032ed9d1db81288f"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/production-focused-v1-timing-provenance-note-v1.json",
+      "before": "68842981a1f1a485ccbd8c1ae788e6d4e8e568f5c4d5269993c75246f16c774d",
+      "after": "68842981a1f1a485ccbd8c1ae788e6d4e8e568f5c4d5269993c75246f16c774d"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-weighted-identity-v1/leaf-freeze-receipt-v1.json",
+      "before": "367889a0e3fdbe15d6e5638fa6847eebabf3db9d98b0623502860f5a32c24a4f",
+      "after": "367889a0e3fdbe15d6e5638fa6847eebabf3db9d98b0623502860f5a32c24a4f"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/docs/contracts/online-ch2-weighted-identity-v1/neutral-frozen-headers-v1.txt",
+      "before": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f",
+      "after": "55ae3f02b56be38afad93917f2f4ee080b48e2a332f331d1e83f17d4ef07408f"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Module.lean",
+      "before": "7915167fbdf0a0a3fc1ebb3e12f1b349ce37c41d5626d3702c4b302f9f6fbc61",
+      "after": "7915167fbdf0a0a3fc1ebb3e12f1b349ce37c41d5626d3702c4b302f9f6fbc61"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/header-tooling-failure-v1.json",
+      "before": "b49d80ec0a230d17d0ad67b832d1fd09bbd0509c4710377b30b9d97beb1bfa8e",
+      "after": "b49d80ec0a230d17d0ad67b832d1fd09bbd0509c4710377b30b9d97beb1bfa8e"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/header-tooling-failure-v2.json",
+      "before": "465ae59af6b10dd9ad7d59804ea7690a35f08dda54a87e1fafa436207d6ee9a3",
+      "after": "465ae59af6b10dd9ad7d59804ea7690a35f08dda54a87e1fafa436207d6ee9a3"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-weighted-identity-20261011/header-tooling-failure-v3.json",
+      "before": "1f8d29c002a225bdd9ef4019ec513f018b50b01b87daa23dd1d1a1df01dd6b3f",
+      "after": "1f8d29c002a225bdd9ef4019ec513f018b50b01b87daa23dd1d1a1df01dd6b3f"
+    }
+  ],
+  "source_unchanged": true,
+  "chapter_accepted": false,
+  "goal_status": "ACTIVE",
+  "canonical_RUN_Git_mutation": false
+}
