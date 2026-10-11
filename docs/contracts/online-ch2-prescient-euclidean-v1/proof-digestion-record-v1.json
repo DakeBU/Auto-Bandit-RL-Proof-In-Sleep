@@ -1,0 +1,417 @@
+{
+  "utc": "2026-10-11T07:10:59.110869+00:00",
+  "task": "ONLINE-CH2-PRESCIENT-EUCLIDEAN-20261011",
+  "statement_seal": {
+    "source_version": "arXiv1912.13213v10",
+    "PDF_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "signature_context_sha256": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a",
+    "statement_fingerprints": [
+      {
+        "declaration": "quadratic_geometry",
+        "hash": "8978b045cdcd1f94ea75d0ab201e4fd29a731c3f9f04b1cbe8dbdc03f16fb38c"
+      },
+      {
+        "declaration": "euclidean_variable_regret",
+        "hash": "37e429836cbaa1fcf1ade62990d9967b0acfa60188009b7737ed2dcf94878b16"
+      },
+      {
+        "declaration": "euclidean_fixed_regret",
+        "hash": "764b100bc1346eaea8ee843a85e8e0ad37634e7a5588b27224aef70e1d74c464"
+      }
+    ],
+    "atomic_binder_audit": [
+      {
+        "declaration": "BanditRL.OnlineBregman.quadratic_geometry",
+        "binders": [
+          {
+            "binder": "E : Type*",
+            "classification": "TYPING",
+            "meaning": "Ambient type."
+          },
+          {
+            "binder": "[NormedAddCommGroup E]",
+            "classification": "STANDING",
+            "meaning": "Normed additive group structure."
+          },
+          {
+            "binder": "[InnerProductSpace ℝ E]",
+            "classification": "STANDING",
+            "meaning": "Real inner-product structure."
+          },
+          {
+            "binder": "[CompleteSpace E]",
+            "classification": "STANDING",
+            "meaning": "Completeness for actual gradient API; Hilbert generalization."
+          },
+          {
+            "binder": "x : E",
+            "classification": "TYPING",
+            "meaning": "Arbitrary first divergence argument."
+          },
+          {
+            "binder": "y : E",
+            "classification": "TYPING",
+            "meaning": "Arbitrary derivative point and divergence base."
+          }
+        ],
+        "conclusion_atoms": [
+          "actual HasGradientAt psi y y",
+          "ordered divergence half-square identity"
+        ]
+      },
+      {
+        "declaration": "BanditRL.OnlinePrescientBregman.euclidean_variable_regret",
+        "binders": [
+          {
+            "binder": "E : Type*",
+            "classification": "TYPING",
+            "meaning": "Ambient type."
+          },
+          {
+            "binder": "[NormedAddCommGroup E]",
+            "classification": "STANDING",
+            "meaning": "Normed additive group structure."
+          },
+          {
+            "binder": "[InnerProductSpace ℝ E]",
+            "classification": "STANDING",
+            "meaning": "Real inner-product structure."
+          },
+          {
+            "binder": "[FiniteDimensional ℝ E]",
+            "classification": "STANDING",
+            "meaning": "Finite-dimensional source Euclidean setting."
+          },
+          {
+            "binder": "V : Set E",
+            "classification": "TYPING",
+            "meaning": "Feasible set."
+          },
+          {
+            "binder": "hV : Convex ℝ V",
+            "classification": "SOURCE",
+            "meaning": "Convexity of V."
+          },
+          {
+            "binder": "hVn : V.Nonempty",
+            "classification": "SOURCE",
+            "meaning": "Nonempty V."
+          },
+          {
+            "binder": "hVc : IsClosed V",
+            "classification": "SOURCE",
+            "meaning": "Closed V."
+          },
+          {
+            "binder": "η : ℕ → ℝ",
+            "classification": "TYPING",
+            "meaning": "Step schedule."
+          },
+          {
+            "binder": "loss : ℕ → E → EReal",
+            "classification": "TYPING",
+            "meaning": "Time-indexed extended-real losses."
+          },
+          {
+            "binder": "x0 : E",
+            "classification": "TYPING",
+            "meaning": "Initial point; need not be feasible."
+          },
+          {
+            "binder": "x : ℕ → E",
+            "classification": "TYPING",
+            "meaning": "Supplied sequence to identify with the canonical run."
+          },
+          {
+            "binder": "T : ℕ",
+            "classification": "TYPING",
+            "meaning": "Finite horizon; fixed endpoint permits zero."
+          },
+          {
+            "binder": "hT : 0 < T",
+            "classification": "SOURCE",
+            "meaning": "Nonempty horizon for previous-state maximum."
+          },
+          {
+            "binder": "hη : ∀ t < T, 0 < η t",
+            "classification": "SOURCE",
+            "meaning": "Positive played steps."
+          },
+          {
+            "binder": "hinit : x 0 = x0",
+            "classification": "SOURCE",
+            "meaning": "Initialization agreement."
+          },
+          {
+            "binder": "hmono : ∀ t, t+1<T → η(t+1)≤η t",
+            "classification": "SOURCE",
+            "meaning": "Nonincrease between consecutive played steps."
+          },
+          {
+            "binder": "hbot : ∀ t<T, ∀ z, loss t z ≠ ⊥",
+            "classification": "SOURCE",
+            "meaning": "Global no-bottom source codomain at each played round."
+          },
+          {
+            "binder": "hdom : ∀ t<T, V ⊆ effectiveDomain(loss t)",
+            "classification": "SOURCE",
+            "meaning": "Finite on V, together with hbot."
+          },
+          {
+            "binder": "hs : ∀ t<T, ∀ z∈V, (SourceSubdifferential (loss t) z).Nonempty",
+            "classification": "SOURCE",
+            "meaning": "Ambient global supporting vectors at every feasible point."
+          },
+          {
+            "binder": "hmin : ∀ t<T, x(t+1)∈V ∧ IsMinOn actual_quadratic_objective V (x(t+1))",
+            "classification": "SOURCE",
+            "meaning": "Actual feasible attained update; one conjunction binder in the frozen header, with membership and minimum audited separately below."
+          },
+          {
+            "binder": "u : E",
+            "classification": "TYPING",
+            "meaning": "Universally quantified comparator parameter, not a single fixed numerical fixture."
+          },
+          {
+            "binder": "hu : u∈V",
+            "classification": "SOURCE",
+            "meaning": "Feasibility of the arbitrary comparator."
+          }
+        ],
+        "hmin_conjunct_audit": [
+          "x(t+1)∈V",
+          "IsMinOn of the actual same-round quadratic penalized objective at x(t+1)"
+        ],
+        "conclusion_atoms": [
+          "all t<=T canonical Option iterate=some x(t)",
+          "signed variable regret inequality for universally quantified u with hu"
+        ]
+      },
+      {
+        "declaration": "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret",
+        "binders": [
+          {
+            "binder": "E : Type*",
+            "classification": "TYPING",
+            "meaning": "Ambient type."
+          },
+          {
+            "binder": "[NormedAddCommGroup E]",
+            "classification": "STANDING",
+            "meaning": "Normed additive group structure."
+          },
+          {
+            "binder": "[InnerProductSpace ℝ E]",
+            "classification": "STANDING",
+            "meaning": "Real inner-product structure."
+          },
+          {
+            "binder": "[FiniteDimensional ℝ E]",
+            "classification": "STANDING",
+            "meaning": "Finite-dimensional source Euclidean setting."
+          },
+          {
+            "binder": "V : Set E",
+            "classification": "TYPING",
+            "meaning": "Feasible set."
+          },
+          {
+            "binder": "hV : Convex ℝ V",
+            "classification": "SOURCE",
+            "meaning": "Convexity of V."
+          },
+          {
+            "binder": "hVn : V.Nonempty",
+            "classification": "SOURCE",
+            "meaning": "Nonempty V."
+          },
+          {
+            "binder": "hVc : IsClosed V",
+            "classification": "SOURCE",
+            "meaning": "Closed V."
+          },
+          {
+            "binder": "η : ℝ",
+            "classification": "TYPING",
+            "meaning": "Constant step."
+          },
+          {
+            "binder": "hη : 0 < η",
+            "classification": "SOURCE",
+            "meaning": "Positive constant step."
+          },
+          {
+            "binder": "loss : ℕ → E → EReal",
+            "classification": "TYPING",
+            "meaning": "Time-indexed extended-real losses."
+          },
+          {
+            "binder": "x0 : E",
+            "classification": "TYPING",
+            "meaning": "Initial point; need not be feasible."
+          },
+          {
+            "binder": "x : ℕ → E",
+            "classification": "TYPING",
+            "meaning": "Supplied sequence to identify with the canonical run."
+          },
+          {
+            "binder": "T : ℕ",
+            "classification": "TYPING",
+            "meaning": "Finite horizon; fixed endpoint permits zero."
+          },
+          {
+            "binder": "hinit : x 0 = x0",
+            "classification": "SOURCE",
+            "meaning": "Initialization agreement."
+          },
+          {
+            "binder": "hbot : ∀ t<T, ∀ z, loss t z ≠ ⊥",
+            "classification": "SOURCE",
+            "meaning": "Global no-bottom source codomain at each played round."
+          },
+          {
+            "binder": "hdom : ∀ t<T, V ⊆ effectiveDomain(loss t)",
+            "classification": "SOURCE",
+            "meaning": "Finite on V, together with hbot."
+          },
+          {
+            "binder": "hs : ∀ t<T, ∀ z∈V, (SourceSubdifferential (loss t) z).Nonempty",
+            "classification": "SOURCE",
+            "meaning": "Ambient global supporting vectors at every feasible point."
+          },
+          {
+            "binder": "hmin : ∀ t<T, x(t+1)∈V ∧ IsMinOn actual_quadratic_objective V (x(t+1))",
+            "classification": "SOURCE",
+            "meaning": "Actual feasible attained update; one conjunction binder in the frozen header, with membership and minimum audited separately below."
+          },
+          {
+            "binder": "u : E",
+            "classification": "TYPING",
+            "meaning": "Universally quantified comparator parameter, not a single fixed numerical fixture."
+          },
+          {
+            "binder": "hu : u∈V",
+            "classification": "SOURCE",
+            "meaning": "Feasibility of the arbitrary comparator."
+          }
+        ],
+        "hmin_conjunct_audit": [
+          "x(t+1)∈V",
+          "IsMinOn of the actual same-round quadratic penalized objective at x(t+1)"
+        ],
+        "conclusion_atoms": [
+          "all t<=T canonical Option iterate=some x(t)",
+          "signed fixed regret inequality for universally quantified u with hu"
+        ]
+      }
+    ],
+    "project_owned_expansions": "Frozen imported/additional definition contexts expand divergence, iterate, SourceSubdifferential/effectiveDomain and EReal support/finiteness conventions; public hmin is the actual attained algorithm update, not a desired bound.",
+    "definitions_added": 0,
+    "EXCESS_binders": []
+  },
+  "source_proof_coverage": {
+    "graph": "runs/online-ch2-prescient-euclidean-20261011/source-topology-proposal-v2/topology.json",
+    "independent_review": "runs/online-ch2-prescient-euclidean-20261011/fresh-source-topology-review-v2.json",
+    "scope": "PDF26,277,278;22 original source/specialization nodes plus1actual-run obligation;5 reasoned exclusions retained. No Chapter15-wide coverage claim.",
+    "source_gaps": [
+      {
+        "id": "SRC-OPTIMALITY",
+        "status": "Author constrained optimality/same-global-support existence justification remains unresolved; citation is not checked proof. No assertion of mathematical falsity."
+      },
+      {
+        "id": "SRC-FIX-EXERCISE",
+        "status": "Printed proof omitted as exercise; mandatory endpoint implemented via accepted source_fixed_regret and this fixed quadratic specialization. Source omission is retained in source graph, not dropped from proof obligations."
+      }
+    ],
+    "alternative_routes": "Printed optimality route remains author-claimed/unresolved. Implemented proximal/segment comparison route is sufficient for the same endpoint; no false AND of alternatives or claim both routes verified.",
+    "actual_run_obligation": "Supplied attained updates + strict convexity identify the existing partial selector; iterate_eq_of_source_updates proves the SAME run. No unconditional existence or x0-in-V premise added."
+  },
+  "protocol_adoption_chronology": {
+    "legacy_statement_blind_source_HEADER_freeze": "Preceded production proof construction; freeze commitbeb4b84d.",
+    "source_topology": "Source-only extractor worked after legacy proof construction started but without implementation exposure. Distinct source-onlyV2review sealed before its reviewer inspected production BODY.",
+    "currentmain_protocol": "Merged subsequently at8e3ffcc3 fromfea256b1. No retroactive claim of a preproof SOURCE_TOPOLOGY_REVIEWED gate. Independent compatibility/common-blind-spot audit recorded separately.",
+    "canary": "Completeheaders/source-blind+source reviews frozen atdc20b115 and actualcleanprecontext captured before any TestBODY."
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Mathlib actual norm-squared derivative and norm expansion",
+      "Existing prescient divergence/partial selector/unique attained-update recursion",
+      "Accepted general variable/fixed source EReal regret endpoints"
+    ],
+    "bookkeeping": [
+      "Exact inverse-step/quadratic-penalty objective rewrite",
+      "Half-square substitution into same source endpoint",
+      "Fixed finite-sum scalar normalization"
+    ],
+    "new_reusable": [
+      "BanditRL.OnlineBregman.quadratic_geometry; both new endpoint declarations are actual consumers"
+    ],
+    "new_topology": "Two same-Option-run quadratic specializations of existing general endpoints; no independent scientific-novelty claim."
+  },
+  "graph_views": {
+    "source": "Author topology and explicit gaps/exclusions in source-only graph.",
+    "Lean": {
+      "BanditRL.OnlineBregman.quadratic_geometry": [
+        "hasStrictFDerivAt_norm_sq",
+        "HasGradientAt.fderiv_apply",
+        "norm_sub_sq_real"
+      ],
+      "BanditRL.OnlinePrescientBregman.euclidean_variable_regret": [
+        "BanditRL.OnlineBregman.quadratic_geometry",
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+        "BanditRL.OnlinePrescientBregman.source_variable_regret"
+      ],
+      "BanditRL.OnlinePrescientBregman.euclidean_fixed_regret": [
+        "BanditRL.OnlineBregman.quadratic_geometry",
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+        "BanditRL.OnlinePrescientBregman.source_fixed_regret"
+      ]
+    },
+    "Lean_boundary": "Selected actual compiled VALUE constants only; not necessity, fulltransitive closure or import-edge inference.",
+    "compressed_spine": "Quadratic geometry -> exact objective/selector identification -> reuse corresponding general cumulative bound. This is a candidate conceptual compression with lossless source/Lean drill-down.",
+    "Functor": "Reviewed conceptual Bregman-to-Euclidean specialization; no separately proved categorical functor or transfer from ordinary OGD feedback to whole-loss prescient access.",
+    "Overview": "One coherent source card and3declaration-bound reader highlights in sharedonline-ogd chapter; same project/library/pins."
+  },
+  "purification": {
+    "status": "pending",
+    "reason": "Unmerged candidate. No claim MERGED impliesPURIFIED. PublicAPI limited to3frozen meaningful declarations, all with real consumers; no new helper definitions. Broad Tactic import and local repeated regularity haves remain explicit future minimization/canonicalization review points.",
+    "dead_code_audit": "No new public helper/definition;3coretheorems consumed by2endpoints/2completecanaries.",
+    "duplicate_semantics": "No duplicate general selector or cumulative telescope; existing declarations reused.",
+    "reader_default_view": "Natural-language signed bounds adjacent to contracts; source proof/code/dependency drill-down retained. Final rendered review and Exposition Seal evidence recorded separately."
+  },
+  "native_fence_boundary": "Three pure make_statement_fence/safe_verify checks and exact full header/context reconstruction; native source_assumptions arrays are empty, so they are not independent atomic premise audits. Explicit binder/source/BODY and full TYPE evidence supply that audit. No native whole-loop claim.",
+  "evidence": [
+    {
+      "path": "docs/contracts/online-ch2-prescient-euclidean-v1/leaf-freeze-receipt-v1.json",
+      "sha256": "5700ff43e6e80e383d74475ae53b59389ed04cbcf63ed9723ad228ab93153712"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/source-topology-proposal-v2/topology.json",
+      "sha256": "f317dce023cae552746ad8ef38163e646d3b77712feffc73468ceac41efee448"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/fresh-source-topology-review-v2.json",
+      "sha256": "c97719bbe8264c8d953b311d78355a1ee2d337381a5eb7c3ba1859cf26bb9fe0"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/fresh-production-body-review-v1.json",
+      "sha256": "8b3cc4fea0b8a6988908cc7370ab67907815f1d04637f75f01241c19e052d8f4"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/fresh-canary-body-review-v1.json",
+      "sha256": "e1feb92bf0e9606e579a6eec4f0247623757b8e062cf0c4e2bde85ac9045f257"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/integration-proposal/proposal-v2.json",
+      "sha256": "2e8cbc6a7e24f0f8fe6e7547ee26b43037a918e609b8cf617f5fc66852af4561"
+    },
+    {
+      "path": "runs/online-ch2-prescient-euclidean-20261011/fresh-integration-proposal-review-v1.json",
+      "sha256": "752767eb4b8ad738d3c7e7011a4d869a678376b5d612df875b2292a6d6bc98df"
+    }
+  ],
+  "remaining_boundary": "7requiredChapter2containers+6futureclaimsOPEN; B1-B7 and necessaryB4repairs retained; Chapter2partial acceptedfalse denominatornull; GoalACTIVE. No sourcecontainerclosure/main/liveupdate."
+}

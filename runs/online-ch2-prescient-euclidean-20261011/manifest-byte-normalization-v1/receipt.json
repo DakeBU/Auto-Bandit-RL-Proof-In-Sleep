@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-11T07:06:43.500354+00:00",
+  "original_observation": {
+    "tool_chunk": "f14a3b",
+    "actual_exit": 1,
+    "diagnostic": "AssertionError: MANIFEST.md",
+    "original_full_raw_not_saved": true
+  },
+  "authoritative_captured_rerun": {
+    "argv": [
+      "python",
+      "-X",
+      "utf8",
+      "-c",
+      "from pathlib import Path; import subprocess; assert Path('MANIFEST.md').read_bytes()==subprocess.check_output(['git','show',':MANIFEST.md']), 'MANIFEST.md RAW differs from staged LF blob'"
+    ],
+    "actual_exit": 1,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "6aa137a0decb19d1bd2a502c2cbb414eb49363ea1f27bc75479b4caf4f159b80"
+  },
+  "pre_RAW_sha256": "5515f2800132a23830d92bace395942e1546d1446870a956c5e3c0513b2007f0",
+  "staged_and_post_RAW_sha256": "88745d354bbc89880245ca3c5be78a79f383412d27712064024d0a5ade4cf414",
+  "CRLF_count_before": 15550,
+  "correction": "Product MANIFEST.md only: exact CRLF-to-LF conversion and scoped eol=lf attribute. All textual content and the approved appended paragraph unchanged; exact before/after full bytes retained. No source/header/metadata changes. Prior integration receipt remains historical pre-normalization evidence.",
+  "failure_class": "IMPLEMENTATION_FAILED",
+  "salvage": "All original bytes retained; no mathematical route or fragment discarded."
+}

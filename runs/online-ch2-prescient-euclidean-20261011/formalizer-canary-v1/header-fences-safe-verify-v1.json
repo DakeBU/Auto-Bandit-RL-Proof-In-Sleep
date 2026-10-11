@@ -1,0 +1,48 @@
+{
+  "source_sha256": "dbc2a2f7660e70517a6f50826944976aa9cbbba17e37f88b8bac9fbef97e0122",
+  "frozen_header_sha256": "06b896bedf5883f7aea542035a8c8f99de48c79bc9d9972ca57a82226fc0e6df",
+  "exact_full_context_and_headers_equal_after_BODY_erasure": true,
+  "production_source_sha256_unchanged": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+  "native_lifecycle_sha256": "7615541e66a372e939ea2d18684ce78a8f3d8f1202894840ef7fdfdc703c4310",
+  "scope": "Direct pure native functions on own two canaries only; no global MANIFEST mutation or whole-loop acceptance",
+  "rows": [
+    {
+      "fence": {
+        "schema_version": 1,
+        "declaration": "variable_quadratic_actual_run",
+        "file": "Tests/OnlinePrescientEuclideanCanary.lean",
+        "statement": "theorem variable_quadratic_actual_run : let V : Set ℝ := Icc 0 2 let loss : ℕ → ℝ → EReal := fun _ z => if z ∈ V then ((z ^ 2 / 2 : ℝ) : EReal) else ⊤ let η : ℕ → ℝ := fun t => if t = 0 then 1 else 1 / 2 let x : ℕ → ℝ := fun t => if t = 0 then 2 else if t = 1 then 1 else 2 / 3 Convex ℝ V ∧ V.Nonempty ∧ IsClosed V ∧ (∀ t, SourceProper (loss t) ∧ IsConvexExtended (loss t) ∧ effectiveDomain (loss t) = V) ∧ (∀ t, ∀ z ∈ V, z ∈ SourceSubdifferential (loss t) z) ∧ loss 0 3 = ⊤ ∧ (loss 0 0).toReal + (loss 0 2).toReal ≠ 2 * (loss 0 1).toReal ∧ (∀ t, 0 < η t) ∧ (∀ t, η (t + 1) ≤ η t) ∧ η 0 = 1 ∧ η 1 = 1 / 2 ∧ x 0 = 2 ∧ x 1 = 1 ∧ x 2 = 2 / 3 ∧ (∀ t < 2, x (t + 1) ∈ V ∧ IsMinOn (fun z => loss t z + ((‖z - x t‖ ^ 2 / (2 * η t) : ℝ) : EReal)) V (x (t + 1))) ∧ (∀ t ≤ 2, iterate V (fun z : ℝ => ‖z‖ ^ 2 / 2) η loss 2 t = some (x t)) ∧ (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t 0).toReal)) = 13 / 18 ∧ (∑ t ∈ range 2, ((loss t (x t)).toReal - (loss t 0).toReal)) = 5 / 2 ∧ ‖x 1 - x 0‖ ^ 2 / (2 * η 0) = 1 / 2 ∧ ‖x 2 - x 1‖ ^ 2 / (2 * η 1) = 1 / 9 ∧ (∑ t ∈ range 2, ‖x (t + 1) - x t‖ ^ 2 / (2 * η t)) = 11 / 18 ∧ (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ ((range 2).sup' (nonempty_range_iff.mpr (by decide : (2 : ℕ) ≠ 0)) (fun t => ‖u - x t‖ ^ 2 / 2)) / η 1 - ∑ t ∈ range 2, ‖x (t + 1) - x t‖ ^ 2 / (2 * η t)) ∧ (13 / 18 : ℝ) ≤ 61 / 18",
+        "statement_hash": "b9fda01edcd3f6ae53f9366585301f1f1588f3daf27d72f3855c7f8a7ce038db",
+        "source_assumptions": [],
+        "created_at": "2026-10-11T07:01:11+00:00"
+      },
+      "safe_verify": {
+        "ok": true,
+        "declaration": "variable_quadratic_actual_run",
+        "expected_statement_hash": "b9fda01edcd3f6ae53f9366585301f1f1588f3daf27d72f3855c7f8a7ce038db",
+        "actual_statement_hash": "b9fda01edcd3f6ae53f9366585301f1f1588f3daf27d72f3855c7f8a7ce038db",
+        "source_assumptions_preserved": true,
+        "findings": []
+      }
+    },
+    {
+      "fence": {
+        "schema_version": 1,
+        "declaration": "fixed_quadratic_actual_run",
+        "file": "Tests/OnlinePrescientEuclideanCanary.lean",
+        "statement": "theorem fixed_quadratic_actual_run : let V : Set ℝ := Icc 0 2 let loss : ℕ → ℝ → EReal := fun _ z => if z ∈ V then ((z ^ 2 / 2 : ℝ) : EReal) else ⊤ let η : ℕ → ℝ := fun _ => 1 let x : ℕ → ℝ := fun t => if t = 0 then 2 else if t = 1 then 1 else 1 / 2 Convex ℝ V ∧ V.Nonempty ∧ IsClosed V ∧ (∀ t, SourceProper (loss t) ∧ IsConvexExtended (loss t) ∧ effectiveDomain (loss t) = V) ∧ (∀ t, ∀ z ∈ V, z ∈ SourceSubdifferential (loss t) z) ∧ loss 0 3 = ⊤ ∧ (loss 0 0).toReal + (loss 0 2).toReal ≠ 2 * (loss 0 1).toReal ∧ (∀ t, 0 < η t) ∧ (∀ t, η (t + 1) ≤ η t) ∧ η 0 = 1 ∧ η 1 = 1 ∧ x 0 = 2 ∧ x 1 = 1 ∧ x 2 = 1 / 2 ∧ (∀ t < 2, x (t + 1) ∈ V ∧ IsMinOn (fun z => loss t z + ((‖z - x t‖ ^ 2 / (2 * η t) : ℝ) : EReal)) V (x (t + 1))) ∧ (∀ t ≤ 2, iterate V (fun z : ℝ => ‖z‖ ^ 2 / 2) η loss 2 t = some (x t)) ∧ (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t 0).toReal)) = 5 / 8 ∧ (∑ t ∈ range 2, ((loss t (x t)).toReal - (loss t 0).toReal)) = 5 / 2 ∧ ‖x 1 - x 0‖ ^ 2 / (2 * η 0) = 1 / 2 ∧ ‖x 2 - x 1‖ ^ 2 / (2 * η 1) = 1 / 8 ∧ (∑ t ∈ range 2, ‖x (t + 1) - x t‖ ^ 2 / (2 * η t)) = 5 / 8 ∧ (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤ ‖u - (2 : ℝ)‖ ^ 2 / (2 * 1) - (∑ t ∈ range 2, ‖x (t + 1) - x t‖ ^ 2) / (2 * 1)) ∧ (5 / 8 : ℝ) ≤ 11 / 8",
+        "statement_hash": "95ce8c0d1d6b7a37f0a309bedbfb23357db18004ec96a10bbe0cebc38a5bde20",
+        "source_assumptions": [],
+        "created_at": "2026-10-11T07:01:11+00:00"
+      },
+      "safe_verify": {
+        "ok": true,
+        "declaration": "fixed_quadratic_actual_run",
+        "expected_statement_hash": "95ce8c0d1d6b7a37f0a309bedbfb23357db18004ec96a10bbe0cebc38a5bde20",
+        "actual_statement_hash": "95ce8c0d1d6b7a37f0a309bedbfb23357db18004ec96a10bbe0cebc38a5bde20",
+        "source_assumptions_preserved": true,
+        "findings": []
+      }
+    }
+  ]
+}

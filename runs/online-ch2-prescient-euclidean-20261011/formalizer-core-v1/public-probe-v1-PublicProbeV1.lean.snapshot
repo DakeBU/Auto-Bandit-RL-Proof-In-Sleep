@@ -1,0 +1,11 @@
+import BanditRLProof.OnlinePrescientEuclidean
+set_option pp.universes true
+#check BanditRL.OnlineBregman.quadratic_geometry
+#print BanditRL.OnlineBregman.quadratic_geometry
+#print axioms BanditRL.OnlineBregman.quadratic_geometry
+#check BanditRL.OnlinePrescientBregman.euclidean_variable_regret
+#print BanditRL.OnlinePrescientBregman.euclidean_variable_regret
+#print axioms BanditRL.OnlinePrescientBregman.euclidean_variable_regret
+#check BanditRL.OnlinePrescientBregman.euclidean_fixed_regret
+#print BanditRL.OnlinePrescientBregman.euclidean_fixed_regret
+#print axioms BanditRL.OnlinePrescientBregman.euclidean_fixed_regret

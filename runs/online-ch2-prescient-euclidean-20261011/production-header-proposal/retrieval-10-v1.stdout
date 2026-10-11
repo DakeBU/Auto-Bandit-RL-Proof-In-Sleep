@@ -1,0 +1,37 @@
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Strong.lean:74:lemma UniformConvexOn.strictConvexOn (hf : UniformConvexOn s φ f) (hφ : ∀ r, r ≠ 0 → 0 < φ r) :
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Strong.lean:142:nonrec lemma StrongConvexOn.strictConvexOn (hf : StrongConvexOn s m f) (hm : 0 < m) :
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Strong.lean:143:    StrictConvexOn ℝ s f := hf.strictConvexOn fun r hr ↦ by positivity
+.lake/packages/mathlib/Mathlib/Analysis/Convex/Strong.lean:168:lemma strongConvexOn_iff_convex :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:140:theorem contDiff_norm_sq : ContDiff ℝ n fun x : E => ‖x‖ ^ 2 := by
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:142:  exact (inner_self_eq_norm_sq _).symm
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:144:theorem ContDiff.norm_sq (hf : ContDiff ℝ n f) : ContDiff ℝ n fun x => ‖f x‖ ^ 2 :=
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:145:  (contDiff_norm_sq 𝕜).comp hf
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:147:theorem ContDiffWithinAt.norm_sq (hf : ContDiffWithinAt ℝ n f s x) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:149:  (contDiff_norm_sq 𝕜).contDiffAt.comp_contDiffWithinAt x hf
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:151:nonrec theorem ContDiffAt.norm_sq (hf : ContDiffAt ℝ n f x) : ContDiffAt ℝ n (‖f ·‖ ^ 2) x :=
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:152:  hf.norm_sq 𝕜
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:156:  simpa only [id, sqrt_sq, norm_nonneg] using (contDiffAt_id.norm_sq 𝕜).sqrt this
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:175:theorem ContDiffOn.norm_sq (hf : ContDiffOn ℝ n f s) : ContDiffOn ℝ n (fun y => ‖f y‖ ^ 2) s :=
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:176:  fun x hx => (hf x hx).norm_sq 𝕜
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:197:theorem hasStrictFDerivAt_norm_sq (x : F) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:205:theorem fderiv_norm_sq_apply (x : F) : fderiv ℝ (fun (x : F) ↦ ‖x‖ ^ 2) x = 2 • innerSL ℝ x :=
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:206:  (hasStrictFDerivAt_norm_sq x).hasFDerivAt.fderiv
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:208:theorem fderiv_norm_sq : fderiv ℝ (fun (x : F) ↦ ‖x‖ ^ 2) = 2 • (innerSL ℝ (E := F)) := by
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:211:theorem HasFDerivAt.norm_sq {f : G → F} {f' : G →L[ℝ] F} (hf : HasFDerivAt f f' x) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:213:  (hasStrictFDerivAt_norm_sq _).hasFDerivAt.comp x hf
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:215:theorem HasDerivAt.norm_sq {f : ℝ → F} {f' : F} {x : ℝ} (hf : HasDerivAt f f' x) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:217:  simpa using hf.hasFDerivAt.norm_sq.hasDerivAt
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:219:theorem HasFDerivWithinAt.norm_sq {f : G → F} {f' : G →L[ℝ] F} (hf : HasFDerivWithinAt f f' s x) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:221:  (hasStrictFDerivAt_norm_sq _).hasFDerivAt.comp_hasFDerivWithinAt x hf
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:223:theorem HasDerivWithinAt.norm_sq {f : ℝ → F} {f' : F} {s : Set ℝ} {x : ℝ}
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:226:  simpa using hf.hasFDerivWithinAt.norm_sq.hasDerivWithinAt
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:233:theorem DifferentiableAt.norm_sq (hf : DifferentiableAt ℝ f x) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:235:  ((contDiffAt_id.norm_sq 𝕜).differentiableAt one_ne_zero).comp x hf
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:245:theorem Differentiable.norm_sq (hf : Differentiable ℝ f) : Differentiable ℝ fun y => ‖f y‖ ^ 2 :=
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:246:  fun x => (hf x).norm_sq 𝕜
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:255:theorem DifferentiableWithinAt.norm_sq (hf : DifferentiableWithinAt ℝ f s x) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:257:  ((contDiffAt_id.norm_sq 𝕜).differentiableAt one_ne_zero).comp_differentiableWithinAt x hf
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:269:theorem DifferentiableOn.norm_sq (hf : DifferentiableOn ℝ f s) :
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:270:    DifferentiableOn ℝ (fun y => ‖f y‖ ^ 2) s := fun x hx => (hf x hx).norm_sq 𝕜
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:356:  exact (contDiff_const.add <| contDiff_norm_sq ℝ).sqrt fun x => (h x).ne'
+.lake/packages/mathlib/Mathlib/Analysis/InnerProductSpace/Calculus.lean:367:  exact contDiffAt_const.sub (contDiff_norm_sq ℝ).contDiffAt

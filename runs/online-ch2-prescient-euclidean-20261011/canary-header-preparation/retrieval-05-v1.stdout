@@ -1,0 +1,7 @@
+5:theorem square_support (x : ℝ) : (2*x) ∈ SourceSubdifferential (fun y : ℝ => ((y^2 : ℝ) : EReal)) x := by
+10:theorem square_convex : ConvexOn ℝ univ (fun x : ℝ => x^2) :=
+11:  theorem_2_21 _ _ convex_univ (fun x hx => ⟨2*x, square_support x⟩)
+12:theorem interval_outside_no_support (g : ℝ) :
+22:#print axioms BanditRL.OnlineConvex.theorem_2_21
+23:#print axioms square_support
+24:#print axioms square_convex

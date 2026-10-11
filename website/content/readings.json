@@ -1957,6 +1957,28 @@
             "label": "Bounded actual OGD source reconciliation accepted-local",
             "boundary": "The actual OGD package is accepted-local; docs/contracts/online-ch2-unbounded-ogd-v1/source-target-reconciliation-accepted-v1.json reconciles only the unbounded-variable-OGD-failure container. Seven required Chapter 2 forward containers and all six future mathematical claims remain open. B1-B7 and all other hard targets are preserved. Chapter 2 remains partial, accepted=false and complete proof denominator=null; Chapters 1-16 Goal ACTIVE. Main and live publication are unchanged; no merge, deployment or native whole-loop acceptance is claimed."
           }
+        },
+        {
+          "label": "Prescient Euclidean updates: quadratic geometry and both Theorem15.30 bounds",
+          "pages": "printed14,265–266 / PDF26,277–278",
+          "pdf_page": 277,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=277",
+          "math": "\\begin{gathered}\\psi(z)=\\frac12\\|z\\|^2,\\qquad\\nabla\\psi(y)=y,\\qquad B_\\psi(x;y)=\\frac12\\|x-y\\|^2.\\\\R_T(u)\\le\\frac{\\max_{0\\le s<T}\\frac12\\|u-x_s\\|^2}{\\eta_{T-1}}-\\sum_{t=0}^{T-1}\\frac{\\|x_{t+1}-x_t\\|^2}{2\\eta_t}.\\\\R_T(u)\\le\\frac{\\|u-x_0\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t=0}^{T-1}\\|x_{t+1}-x_t\\|^2.\\end{gathered}",
+          "plain": "Knowing the current loss before output removes the positive gradient-energy term and retains negative squared movement. The initial comparator potential can still make the total bound positive. Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction.",
+          "fallback": "Quadratic Bregman divergence is half squared distance. Variable steps use the maximum previous-state potential divided by the last used step; fixed steps use initial potential. Both subtract exact half-weighted squared movements.",
+          "relationship": "Chapter2 PDF26 points to Algorithm15.8 and Theorem15.30 on PDF277–278. Both branches are mandatory, including the fixed proof left as an exercise on PDF278. Specialize X=univ and psi=norm²/2; interior, derivative, strict-convexity and closedness facts are derived rather than added as user premises. The author’s constrained optimality/global-support step on PDF277 retains an unresolved source-proof justification. The alternative proximal-comparison route does not certify or erase that claim. Compiled local prescient Euclidean specialization; package validation and source-target reconciliation are recorded separately. Chapter2 remains partial and the Chapters1–16 Goal active. This is unmerged and unpublished.",
+          "contract": {
+            "model": "Receive the entire current loss before choosing the new point and pay that loss at the new point. Lean loss t and eta t are source round t+1: center x(t), output/paid point x(t+1). This differs from ordinary OGD, which scores loss t at x(t). The conclusion identifies the SAME partial Option iterate at every prefix; it is conditional on attained updates and does not assert universal existence.",
+            "assumptions": "Finite-dimensional real inner-product E with NormedAddCommGroup E, InnerProductSpace ℝ E and FiniteDimensional ℝ E. V is closed, nonempty and convex. Played EReal losses have no bottom anywhere, are finite on V, and have ambient global supports at every point of V. Each supplied x(t+1) actually attains the squared-distance-penalized minimum on V; initialization x(0)=x0 is fixed. x0 need not belong to V. There is no affine, smooth-loss, globally finite-loss, bounded-gradient or bounded-domain restriction.",
+            "parameters": "Variable: T>0, every used step positive, adjacent played steps nonincreasing, max indices0..T-1, last eta(T-1). Fixed: eta>0 and any T including0.",
+            "regret": "R_T(u)=sum_{t<T}((loss t (x(t+1))).toReal-(loss t u).toReal), for every u in V; scoring is finite on V.",
+            "guarantee": "Each endpoint concludes canonical Option-run equality AND its full signed bound. The shared geometry theorem computes the actual derivative and exact ordered divergence; on complete real Hilbert space it is an explicit generalization of source Euclidean geometry."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled prescient Euclidean specialization",
+            "boundary": "Compiled local prescient Euclidean specialization; package validation and source-target reconciliation are recorded separately. Chapter2 remains partial and the Chapters1–16 Goal active. This is unmerged and unpublished."
+          }
         }
       ],
       "worked_example": {

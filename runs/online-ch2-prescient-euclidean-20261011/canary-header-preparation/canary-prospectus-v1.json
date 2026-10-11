@@ -1,0 +1,100 @@
+{
+  "status": "proposed contracts only; production freeze/preproof context and BODY authorization absent; no candidate compilation",
+  "actor": "/root/adaptive_formalizer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "created_utc": "2026-10-11T06:18:31.541360+00:00",
+  "source": {
+    "pdf": "arXiv1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pages_pdf": [
+      26,
+      277,
+      278
+    ],
+    "anchor": "Algorithm15.8; BOTH Theorem15.30 bounds; C2 prescient negative movement-square branch",
+    "production_approved_header_path": "tmp/online-ch2-prescient-euclidean-proposal-20261011/neutral-complete-headers-v1.txt",
+    "production_header_sha256": "1d6cda54b46476323dccaeae6fc3b33e8d1494bb655b99045ea2cde569b8e20a",
+    "scope_adjudication_path": "tmp/online-ch2-prescient-closure-readiness-20261011/source-scope-adjudication-v1.json",
+    "scope_adjudication_sha256": "1056a4051c15e2e95b1d0b50302d14211661da078436e170e7162885c1d2a0de"
+  },
+  "number_of_public_canaries": 2,
+  "new_public_helpers": 0,
+  "new_named_definitions": 0,
+  "let_bound_fixtures": "Each complete theorem self-contains V, EReal loss, steps, trajectory; no hidden fixture definitions or supplied run premises.",
+  "cases": [
+    {
+      "case": "variable",
+      "states": [
+        "2",
+        "1",
+        "2/3"
+      ],
+      "steps": [
+        "1",
+        "1/2"
+      ],
+      "post_update_regret_at_0": "13/18",
+      "pre_update_regret_at_0": "5/2",
+      "movement_terms": [
+        "1/2",
+        "1/9"
+      ],
+      "movement_sum": "11/18",
+      "bound_at_0": "61/18",
+      "checked_R_le_B": true,
+      "method": "exact Python Fraction arithmetic; illustration certificate, not Lean proof"
+    },
+    {
+      "case": "fixed",
+      "states": [
+        "2",
+        "1",
+        "1/2"
+      ],
+      "steps": [
+        "1",
+        "1"
+      ],
+      "post_update_regret_at_0": "5/8",
+      "pre_update_regret_at_0": "5/2",
+      "movement_terms": [
+        "1/2",
+        "1/8"
+      ],
+      "movement_sum": "5/8",
+      "bound_at_0": "11/8",
+      "checked_R_le_B": true,
+      "method": "exact Python Fraction arithmetic; illustration certificate, not Lean proof"
+    }
+  ],
+  "nonaffine_generality": "Quadratic z^2/2 on closed interval[0,2], top outside; source no-bottom/domain/proper/global-support/convexity explicitly concluded. f(0)+f(2)!=2f(1) witnesses nonaffinity inside V. f(3)=top checks genuine extended-real boundary.",
+  "actual_producer_requirement": "Construct exact quadratic minimizers by completed-square residual; derive run conjunct and all-u bound by a single actual application of respective euclidean_variable_regret or euclidean_fixed_regret. Use returned .1 and .2; do not leave core application unused or prove displayed full bound solely numerically. Numeric final comparison obtained from all-u bound at u=0.",
+  "reuse_plan": {
+    "classification": "adapt accepted APIs",
+    "support": "Tests.OnlineSubgradientBasicCanary SubgradientProbe.square_support; scale its real support inequality by1/2 locally and extend top outside. No new public support wrapper.",
+    "convex": "SourceSubdifferential global supports plus finitePart_convex_of_subdifferentiable; convexExtended_iff_toReal with exact interval domain. Or existing square_convex restricted/scaled; choose single direct route after freeze.",
+    "proper": "sourceProper_of_domain after interval nonempty/no-bottom/domain.",
+    "producer": "Existing partial iterate, new prospective Euclidean endpoint; hmin actual attained finite minimizers supplied by constructive local algebra, never assumed as theorem premise.",
+    "arithmetic": "Mathlib norm_num/nlinarith on rational two-round formulas; no duplicated cumulative-regret analysis."
+  },
+  "import_boundary": "OnlinePrescientEuclidean is prospective and not yet produced/frozen; no elaboration claim. Tests.OnlineSubgradientBasicCanary already imports shared root; retain shared-project topology, do not fabricate a separate project.",
+  "minimality": "Two canaries exercise genuinely different variable-last-step/max and fixed-initial-energy endpoints; each includes terminal movement. No third zero-horizon canary proposed because it adds little beyond these two algorithm consumers.",
+  "semantic_boundaries": [
+    "No unconditional all-loss attainment claim",
+    "No Option-none recovery claim",
+    "Post-update prescient scoring explicitly differs from pre-update sum5/2",
+    "No B4 terminal repair or container closure",
+    "No whole-loop, combined gate, publication or accepted-canary claim"
+  ],
+  "review_plan": "Fresh neutral blind reconstruction plus distinct source/header approval before freeze or BODY. Bind exact prospective production headers without edits.",
+  "neutral_files": [
+    "neutral-complete-canary-headers-v1.txt",
+    "neutral-imported-definitions-v1.txt",
+    "neutral-standard-definitions-v1.txt",
+    "neutral-additional-definitions-v1.txt"
+  ],
+  "context_usage": "Imported definition excerpts are read-context, not modules to redeclare alongside imports. The source-neutral packet includes no prospectus/source/acceptance notes.",
+  "exploratory_tooling": "Initial shell rg path globs were rejected by Windows (exit1); corrected explicit directories with -g; no file edits from exploratory searches."
+}

@@ -1,0 +1,29 @@
+import Mathlib.Analysis.Calculus.Gradient.Basic
+import Mathlib.Order.Filter.Extr
+
+noncomputable section
+open ComplexConjugate Topology InnerProductSpace Function Set
+
+section
+variable {𝕜 F : Type*} [RCLike 𝕜]
+variable [NormedAddCommGroup F] [InnerProductSpace 𝕜 F] [CompleteSpace F]
+
+def HasGradientAtFilter (f : F → 𝕜) (f' x : F) (L : Filter F) :=
+  HasFDerivAtFilter f (toDual 𝕜 F f') (L ×ˢ pure x)
+
+def HasGradientAt (f : F → 𝕜) (f' x : F) :=
+  HasGradientAtFilter f f' x (𝓝 x)
+end
+
+section
+universe u v
+variable {α : Type u} {β : Type v} [Preorder β]
+open Set Filter
+variable (f : α → β) (s : Set α) (l : Filter α) (a : α)
+
+def IsMinFilter : Prop :=
+  ∀ᶠ x in l, f a ≤ f x
+
+def IsMinOn :=
+  IsMinFilter f (𝓟 s) a
+end

@@ -1,0 +1,16 @@
+import BanditRLProof.OnlineConvexExtended
+import BanditRLProof.OnlineClosedProper
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+def realEpigraph (f : E → EReal) : Set (E × ℝ) := {p | f p.1 ≤ (p.2 : EReal)}
+
+def IsConvexExtended (f : E → EReal) : Prop := Convex ℝ (realEpigraph f)
+
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+end BanditRL.OnlineConvex

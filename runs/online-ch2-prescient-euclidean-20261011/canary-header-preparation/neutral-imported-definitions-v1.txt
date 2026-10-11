@@ -1,0 +1,41 @@
+import BanditRLProof.OnlinePrescientBregmanSource
+import Mathlib.Analysis.InnerProductSpace.Calculus
+import Mathlib.Analysis.Convex.Strong
+
+noncomputable section
+open Set Finset
+
+namespace BanditRL.OnlineConvex
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+def effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+
+def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=
+  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}
+
+end BanditRL.OnlineConvex
+
+namespace BanditRL.OnlineBregman
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+def divergence (ψ : E → ℝ) (x y : E) : ℝ :=
+  ψ x - ψ y - fderiv ℝ ψ y (x - y)
+
+end BanditRL.OnlineBregman
+
+namespace BanditRL.OnlinePrescientBregman
+open BanditRL.OnlineBregman
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+
+def advance (V : Set E) (ψ : E → ℝ) (η : ℝ) (f : E → EReal) (x : E) : Option E := by
+  classical
+  exact if h : ∃ p, p ∈ V ∧
+      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p
+    then some (Classical.choose h) else none
+
+def iterate (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)
+    (loss : ℕ → E → EReal) (x0 : E) : ℕ → Option E
+  | 0 => some x0
+  | t + 1 => (iterate V ψ η loss x0 t).bind (advance V ψ (η t) (loss t))
+
+end BanditRL.OnlinePrescientBregman

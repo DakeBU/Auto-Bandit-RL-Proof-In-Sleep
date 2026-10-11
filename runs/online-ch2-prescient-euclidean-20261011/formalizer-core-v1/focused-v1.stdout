@@ -1,0 +1,63 @@
+⚠ [2390/2436] Replayed BanditRLProof.OnlineBregmanProximal
+warning: BanditRLProof/OnlineBregmanProximal.lean:64:5: unused variable `hdx`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3292/3310] Replayed BanditRLProof.OnlineConvexExtended
+warning: BanditRLProof/OnlineConvexExtended.lean:57:0: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.effectiveDomain_indicator`:
+  [AddCommGroup E]
+  [Module ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [AddCommGroup E] [Module ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: BanditRLProof/OnlineConvexExtended.lean:77:0: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.realEpigraph_toReal`:
+  [AddCommGroup E]
+  [Module ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [AddCommGroup E] [Module ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3293/3310] Replayed BanditRLProof.OnlineConvexFirstOrder
+warning: BanditRLProof/OnlineConvexFirstOrder.lean:26:0: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.finitePart_eventually`:
+  [InnerProductSpace ℝ E]
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [InnerProductSpace ℝ E] [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [3294/3310] Replayed BanditRLProof.OnlineConvexOptimality
+warning: BanditRLProof/OnlineConvexOptimality.lean:42:0: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.minOn_finitePart_iff`:
+  [NormedAddCommGroup E]
+  [InnerProductSpace ℝ E]
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: BanditRLProof/OnlineConvexOptimality.lean:60:51: unused variable `hV`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: BanditRLProof/OnlineConvexOptimality.lean:61:5: unused variable `hne`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [3295/3310] Replayed BanditRLProof.OnlineClosedProper
+warning: BanditRLProof/OnlineClosedProper.lean:79:0: automatically included section variable(s) unused in theorem `BanditRL.OnlineConvex.sourceProper_indicator_iff`:
+  [TopologicalSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [TopologicalSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✖ [3310/3310] Building BanditRLProof.OnlinePrescientEuclidean (10s)
+trace: .> LEAN_PATH=E:\ABRL\research\.lake\packages\Cli\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\batteries\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\Qq\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\aesop\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\proofwidgets\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\importGraph\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\LeanSearchClient\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\plausible\.lake\build\lib\lean;E:\ABRL\research\.lake\packages\mathlib\.lake\build\lib\lean;E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean c:\Users\admin\.elan\toolchains\leanprover--lean4---v4.29.1\bin\lean.exe E:\ABRL\worktrees\research-online-book\BanditRLProof\OnlinePrescientEuclidean.lean -o E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlinePrescientEuclidean.olean -i E:\ABRL\worktrees\research-online-book\.lake\build\lib\lean\BanditRLProof\OnlinePrescientEuclidean.ilean -c E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlinePrescientEuclidean.c --setup E:\ABRL\worktrees\research-online-book\.lake\build\ir\BanditRLProof\OnlinePrescientEuclidean.setup.json --json
+error: BanditRLProof/OnlinePrescientEuclidean.lean:22:6: `simp` made no progress
+error: BanditRLProof/OnlinePrescientEuclidean.lean:157:2: Type mismatch: After simplification, term
+  hb
+ has type
+  ∑ t ∈ Finset.range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal) ≤
+    η⁻¹ * (‖u - x0‖ ^ 2 * 2⁻¹) - η⁻¹ * ∑ x_1 ∈ Finset.range T, ‖x (x_1 + 1) - x x_1‖ ^ 2 * 2⁻¹
+but is expected to have type
+  ∑ t ∈ Finset.range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal) ≤
+    η⁻¹ * (‖u - x0‖ ^ 2 * 2⁻¹) - η⁻¹ * (2⁻¹ * ∑ t ∈ Finset.range T, ‖x (t + 1) - x t‖ ^ 2)
+error: Lean exited with code 1
+Some required targets logged failures:
+- BanditRLProof.OnlinePrescientEuclidean

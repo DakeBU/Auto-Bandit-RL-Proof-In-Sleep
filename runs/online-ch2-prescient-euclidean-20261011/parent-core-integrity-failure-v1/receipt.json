@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-11T06:51:53.155703+00:00",
+  "argv": [
+    "python",
+    "-X",
+    "utf8",
+    "-c",
+    "from pathlib import Path; import json,hashlib; p=Path('runs/online-ch2-prescient-euclidean-20261011/formalizer-core-v1/manifest-v1.json'); m=json.loads(p.read_bytes()); actual=hashlib.sha256(p.read_bytes()).hexdigest(); assert m['manifest-v1.json']==actual, 'manifest self hash mismatch: listed='+m['manifest-v1.json']+' actual='+actual"
+  ],
+  "cwd": "E:\\ABRL\\worktrees\\research-online-book",
+  "actual_exit": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "9b68cecb204eb3dfc740961af4ec8454ebc4d5befdbca56cbe0b3a5baaf3f73b",
+  "original_observation": {
+    "tool_chunk": "fc7f7b",
+    "actual_exit": 1,
+    "diagnostic": "AssertionError: manifest-v1.json",
+    "original_full_raw_not_saved": true
+  },
+  "boundary": "Authoritative captured rerun of same integrity mismatch, not original fullraw. IMPLEMENTATION_FAILED packaging issue; source unchanged; v1 retained; successor manifest repair requested. No mathematical route retired."
+}

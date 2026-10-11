@@ -1,0 +1,57 @@
+{
+  "utc": "2026-10-11T07:26:40.974616+00:00",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "verdict": "repair-before-execution-approval",
+  "inputs": [
+    {
+      "path": "tmp/online-ch2-prescient-euclidean-structural-20261011/check-prescient-structure-v3.py",
+      "sha256": "5b3040e480afbc7119c359bbde06bf7c7664bd8053b0e1293969f9a1e1d3fb23"
+    },
+    {
+      "path": "tmp/online-ch2-prescient-euclidean-structural-20261011/input-spec-prepared-v1.json",
+      "sha256": "4531d771d23cc19884aa728abbce5b6da3a48e9691c4032d90d8f78eb7cd9154"
+    },
+    {
+      "path": "tmp/online-ch2-prescient-euclidean-reader-qa-20261011/capture-prescient-euclidean-reader-v3.cjs",
+      "sha256": "5c4d4e055d3b2cd25d2a378ea10bddb669064f845a09bfd02816bbb3059f05ee"
+    },
+    {
+      "path": "tmp/online-ch2-prescient-euclidean-reader-qa-20261011/prepared-capture-proposal-v2.json",
+      "sha256": "d437253f0cfd353c6e8bb7778406381aee209ab859c715e1a31142222b1747ce"
+    }
+  ],
+  "blocking_repairs": [
+    {
+      "id": "Q1",
+      "helper": "structural v3",
+      "finding": "Existing RAW rows are byte-checked, but current full source path set is not freshly enumerated. Clean HEAD alone cannot detect incomplete captured selection.",
+      "repair": "SHA-pin and reuse the reviewed recorder inventory selector with the captured run/owned-source inputs. Compare complete current path set and RAW hashes with post-source-inputs, retaining all five governance RAW/ZIP checks."
+    },
+    {
+      "id": "Q2",
+      "helper": "reader v3",
+      "finding": "A localhost URL and local registry location do not establish that HTTP content served came from that exact site directory. Current checks can accept a stale or modified page with matching checked text/source links.",
+      "repair": "Compare original HTTP response bytes for chapter and each unique module page to exact local generated HTML files; also bind registry response/local bytes or explicit local registry hash and site HEAD to the reviewed structural/site receipt. Record these joins before DOM mutation/screenshots."
+    }
+  ],
+  "positive_checks": [
+    "Old registry preservation is nonvacuous: exact11101 unique old nodes,11104 new, all complete objects equal and exact three full-name IDs.",
+    "Three old content documents reconstructed after deleting only new card/module/three lessons; 21 old cards retained.",
+    "Exact accepted core/Test hashes and three/two theorem counts plus BODY verdict joins.",
+    "Five governance files required in RAW and ZIP, each archive byte and path set checked.",
+    "Separate source topology and actual VALUE objects; unresolved author optimality and actual-run obligation retained. Geometry external Mathlib names checked independently even with empty project dependency links.",
+    "Input spec ready=false and empty rendered-view checks correctly prevent execution. Successor reviewed execution spec must supply exact real reader-note markers, not invented graph pages.",
+    "Isolated create-only Edge profile/output namespace; actual source lines and folded states; eight bounded panel screenshots and horizontal/vertical clipping checks; browser errors retained.",
+    "Dependency text without links is honestly reported; no fake anchor success.",
+    "No runtime gate/render success asserted; human original-pixel inspection still mandatory."
+  ],
+  "limitations": [
+    "Prepared spec normalization/manifest pins may require honest successor bindings after current normalization and one-field site repair; never rewrite old spec.",
+    "Source/actual VALUE reader notes are bounded rendered representations, not independent interactive graph pages.",
+    "Panel screenshots at1440px with adaptive height are desktop evidence only, not mobile/live/whole-site QA.",
+    "Original independent source/body and sourcegap decisions remain unchanged; 7+6 and B4 open."
+  ],
+  "execution_performed": false,
+  "canonical_writes": false
+}

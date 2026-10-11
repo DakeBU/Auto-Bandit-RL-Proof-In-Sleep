@@ -1,0 +1,73 @@
+15.6 History Bits267
+allu∈ V, Algorithm 15.9 satisfies
+TX
+t=1
+ℓt(xt)−
+TX
+t=1
+ℓt(u)
+≤ψ T (u)−ψ 1(x1)−
+TX
+t=1
+λt
+2 ∥xt −x t+1∥2 +
+T−1X
+t=1
+(ψt(xt+1)−ψ t+1(xt+1)).
+Remark 15.32In the Be-The-Leader algorithm, if all theψ t ≡0, then the theorem states
+that the regret is non-positive.
+Notably, the non-negative gradient terms are missing in the bound of BTRL, but we still
+have the negative ones associated with the change inx t.
+Using, for example, BTRL for theX-player and Optimistic FTRL for theY-player, we
+have
+TX
+t=1
+f(x t,y)−
+TX
+t=1
+f(x,y t)≤ψ X (x) +ψ Y(y) + ∥gY,1∥2
+Y,⋆
+λY
++
+TX
+t=2
+2L2
+X Y
+λY
+− λX
+4
+
+∥xt −x t−1∥2
+X +
+2L2
+YY
+λY
+− λY
+4
+
+∥yt −y t−1∥2
+Y
+
+.
+15.6 History Bits
+Theorem 15.3 is Rockafellar (1970, Lemma 36.2). The proof of Theorem 15.12 is from Liu
+and Orabona (2022) and, in turn, is based on the one in Abernethy and Wang (2017): Liu and
+Orabona (2022) stressed the dependence of the regret on a competitor that can be useful for
+refined bounds. Different variants of this theorem are known in the game theory community
+as “Folk Theorems”, because such a result was widely known among game theorists in the
+1950s, even though no one had published it.
+The celebrated minimax theorem for zero-sum two-person games was first discovered by
+John von Neumann in the 1920s (Neumann, 1928; Neumann and Morgenstern, 1944). The
+version stated here is a simplification of the generalization due to Sion (1958). The proof
+here is from Abernethy and Wang (2017). A similar proof is in Cesa-Bianchi and Lugosi
+(2006) based on a discretization of the space that in turn is based on the one in Freund and
+Schapire (1996, 1999b).
+Algorithms 15.2 and 15.3 are a generalization of the algorithm for boosting in Freund and
+Schapire (1996, 1999b). Algorithm 15.2 was also used in Abernethy and Wang (2017) to
+recover variants of the Frank–Wolfe algorithm (Frank and Wolfe, 1956).
+It is not clear who invented alternation: it was a known trick used in implementations of
+CFR for the computer poker competition from 2010 or so 1. Note that in CFR, the method
+of choice is Regret Matching (Hart and Mas-Colell, 2000). However, Kroer (2020) em-
+pirically shows that alternation improves even OGD for solving bilinear games. Tammelin
+et al. (2015) explicitly include this trick in their implementation of an improved version of
+1 Christian Kroer, 2021, personal communication.

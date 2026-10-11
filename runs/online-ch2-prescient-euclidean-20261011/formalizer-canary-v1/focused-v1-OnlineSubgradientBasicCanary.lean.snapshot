@@ -1,0 +1,25 @@
+import BanditRLProof
+
+namespace SubgradientProbe
+open BanditRL.OnlineConvex Set
+theorem square_support (x : ℝ) : (2*x) ∈ SourceSubdifferential (fun y : ℝ => ((y^2 : ℝ) : EReal)) x := by
+  intro y
+  simp only [← EReal.coe_add, EReal.coe_le_coe_iff]
+  change x^2 + (y-x)*(2*x) ≤ y^2
+  nlinarith [sq_nonneg (y-x)]
+theorem square_convex : ConvexOn ℝ univ (fun x : ℝ => x^2) :=
+  theorem_2_21 _ _ convex_univ (fun x hx => ⟨2*x, square_support x⟩)
+theorem interval_outside_no_support (g : ℝ) :
+    g ∉ SourceSubdifferential (extendedIndicator (Icc (0 : ℝ) 1)) 2 := by
+  intro hg
+  have hp : SourceProper (extendedIndicator (Icc (0 : ℝ) 1)) :=
+    (sourceProper_indicator_iff _).mpr ⟨0, by norm_num⟩
+  have h := subgradient_point_finite _ hp 2 g hg
+  rw [effectiveDomain_indicator] at h
+  norm_num at h
+#print axioms interval_outside_no_support
+#print axioms BanditRL.OnlineConvex.subgradient_point_finite
+#print axioms BanditRL.OnlineConvex.theorem_2_21
+#print axioms square_support
+#print axioms square_convex
+end SubgradientProbe

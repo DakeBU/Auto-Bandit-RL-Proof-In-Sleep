@@ -1,0 +1,27 @@
+{
+  "verdict": "accepted-prepared-gate-recorder",
+  "blocking_repairs": [],
+  "reviewer": "/root/adaptive_reviewer",
+  "requested_model_effort": "GPT-6 Astra / medium; runtime not attested",
+  "approved_helper_sha256": "d7d10142361f940c51712e7dd174dfae51ad768f65f87f26decd87d91faf58fc",
+  "helper_path": "tmp/online-ch2-prescient-euclidean-gates-20261011/capture-gate-v1.py",
+  "baseline_helper_sha256": "71f8e2fdb4494682a8358346ec253f699cb9d652d779b91e2feb26e344faf8af",
+  "new_active_governance_inputs": [
+    "docs/proof-digestion-protocol.md",
+    "docs/evidence-routed-memory-protocol.md",
+    "docs/openai-math-assimilation-protocol.md",
+    "research-wiki/openai-math-2026-intake.json",
+    "runs/process_memory.json"
+  ],
+  "findings": [
+    "Only descriptive labels/scope strings and governance inclusion predicates changed. Main execution AST identical after normalizing two descriptive strings; actual argv, clean-state checks, raw capture, exit codes, pre/post inventories and integrity logic unchanged.",
+    "runs/process_memory.json exact exception occurs before historical runs exclusion, so curated current process memory is selected in RAW and ZIP; other historical runs remain excluded.",
+    "Four additional governance protocol/intake paths are in exact selected ZIP set and RAW extra set. Pure selector predicate checks passed; full recorder was not executed."
+  ],
+  "limitations": [
+    "Use only after main merge and committed clean candidate; added governance paths must exist and be tracked. Inventory starts from git ls-files and enumerates designated source trees; extra inclusion filters alone do not assert existence of absent/untracked governance files. Verify all five appear in actual pre/post manifest and ZIP before accepting a run.",
+    "Selected ZIP is not whole repository archive; omitted historical archives remain bound by clean committed HEAD.",
+    "Prepared helper approval is not gate execution or output acceptance. Actual source HEAD, argv, integrity, streams and full path sets must be reviewed after execution."
+  ],
+  "utc": "2026-10-11T07:02:28.253550+00:00"
+}

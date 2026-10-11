@@ -1,0 +1,5 @@
+Two proposed complete public canaries use the genuinely nonaffine extended-real quadratic loss z²/2 on [0,2], with top outside. No theorem hypotheses supply a trajectory or minimizer. Both derive the source domain/support/convexity conditions and exact squared-objective minimizers.
+
+Variable steps1,1/2 give actual states2,1,2/3, post-update regret13/18, negative movement penalties1/2 and1/9, bound61/18 at comparator0. Fixed steps1,1 give states2,1,1/2, regret5/8, movement penalties1/2 and1/8, bound11/8. Both separately show pre-update sum5/2, preventing scoring-index confusion. Both state the full all-feasible-comparator bound, not only a numeric inequality.
+
+Each BODY must later use the corresponding prospective Euclidean endpoint to produce the actual Option run and full bound, then specialize at0. Accepted square-support and existing convex/domain APIs supply local premises. No new public helper chain or lower-level regret reproof. Production headers remain byte-identical. These are uncompiled proposals requiring independent blind/source review and freeze before BODY.

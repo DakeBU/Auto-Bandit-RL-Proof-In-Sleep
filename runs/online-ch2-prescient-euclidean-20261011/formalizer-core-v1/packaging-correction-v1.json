@@ -1,0 +1,19 @@
+{
+  "kind": "packaging-integrity correction; no mathematical or statement change",
+  "created_utc": "2026-10-11T06:51:46.103039+00:00",
+  "original_manifest": "manifest-v1.json",
+  "original_manifest_actual_sha256": "90571fa039902ed66c7b9ffebb019f8aeab123b124f71baa244ea8248486d70a",
+  "defect": {
+    "entry": "manifest-v1.json",
+    "incorrect_recorded_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cause": "Original code opened manifest-v1.json before enumerating directory files, so it hashed its own still-empty file. Self-reference is invalid; the false entry is preserved in v1."
+  },
+  "parent_verification_failure": {
+    "actual_exit": 1,
+    "tool_chunk": "fc7f7b",
+    "provenance": "Parent report; original full raw stream is unavailable here and is not reconstructed."
+  },
+  "repair": "Create manifest-v2.json from a fully materialized hash map before opening output; exclude every manifest file. Include this immutable correction receipt and all other current ordinary evidence artifacts. No v1 or candidate bytes changed.",
+  "source_sha256_unchanged": "9b755a12d540c1039b068e4b97af90ac483a58fd1a8b40af9c806264f95d42b8",
+  "mathematical_status": "focused compiled candidate remains unchanged; independent review separate"
+}

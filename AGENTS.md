@@ -17,10 +17,12 @@ Every collaborator and every Codex/ChatGPT/Claude agent acting for a collaborato
 2. `CONTRIBUTING.md`
 3. `docs/contributor-codex-contract.md`
 4. `docs/theorem-publication-protocol.md`
-5. `.agents/skills/bandit-substantive-advance/SKILL.md`
-6. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
-7. the relevant domain skill under `.agents/skills/`
-8. the exact route/source files being changed.
+5. `docs/proof-digestion-protocol.md`
+6. `docs/evidence-routed-memory-protocol.md`
+7. `.agents/skills/bandit-substantive-advance/SKILL.md`
+8. `.agents/skills/bandit-semantic-roundtrip/SKILL.md`
+9. the relevant domain skill under `.agents/skills/`
+10. the exact route/source files being changed.
 
 Repository-local instructions override copied prompts from chat.
 
@@ -58,7 +60,7 @@ If a lower-level lemma has at least two real consumers, prefer one canonical sha
 
 ## Source and reader publication contract
 
-Every new or changed source-facing production declaration follows `docs/theorem-publication-protocol.md`.
+Every new or changed source-facing production declaration follows `docs/theorem-publication-protocol.md`, `docs/proof-digestion-protocol.md`, and `docs/evidence-routed-memory-protocol.md`. The exact source-facing signature is sealed before proof search; every binder is expanded/classified; proof ingredients remain dependency edges rather than new public hypotheses; source proof topology is reconstructed independently of implementation Lean; and a merged proof is not reader-facing complete until purification removes dead/duplicate/wrapper-only residue and exposes the compressed Bandit/RL spine. Failed routes are typed before they influence scheduling, verified fragments are salvaged before deletion, process memory is evidence-bound, scheduler defaults remain matched-experiment gated, and parallel proof directions require a common-blind-spot review.
 
 The reader-facing page must keep the following adjacent and in mathematical order:
 
@@ -178,3 +180,19 @@ Repeated failure is information. Stop blind tactic search when the same route fa
 ## Minimal Codex bootstrap
 
 Use `.agents/prompts/collaborator-contribution.md`. Its role is only to point Codex to the current repository contract; it is not a second copy of these rules.
+
+
+## OpenAI Math upstream assimilation
+
+Before using `openai/math`, read `docs/openai-math-assimilation-protocol.md`
+and `research-wiki/openai-math-2026-intake.json`. The intake is commit pinned;
+a floating upstream `main` is never source evidence.
+
+The current audited snapshot has no direct bandit or reinforcement-learning Lean
+cluster. Therefore prophet/secretary results are adjacent online-selection
+routes, while Boolean/Gaussian information and memory lower-bound developments
+are candidate technical substrates. They do not count toward a bandit/RL route
+until an explicit ABRL experiment/feedback-model adapter or reduction is locally
+proved. Keyword matches such as edit-distance “regret” are not semantic matches.
+All promoted items still require the normal source round trip, hypothesis audit,
+local Lean evidence, and Lean/Overview/Functor graph classification.

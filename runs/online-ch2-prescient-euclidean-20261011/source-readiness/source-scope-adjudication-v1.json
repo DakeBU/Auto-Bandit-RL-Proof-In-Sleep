@@ -1,0 +1,315 @@
+{
+  "verdict": "quadratic-same-run-specialization-required",
+  "scope": "Independent next-source-scope adjudication only; no frozen header/BODY authorization or closure",
+  "actor": "/root/adaptive_reviewer",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": false,
+  "input_readiness_sha256": "dbc29a4da2ea3c0d77b4fe1f50e385edb5a1cd8cc50cabee41cbc0d313a1ca46",
+  "exact_relevant_frozen_targets": [
+    {
+      "target_id": "forward:prescient-lookahead",
+      "source_id": "forward:prescient-lookahead",
+      "scope_tag": "mainrequired",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "Observing ell_t before output can make stability/gradient-square terms nonpositive; Section15.5.1.",
+      "branch": "source contract",
+      "status": "precise proposed target; external approval and proof pending",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          26
+        ],
+        "source_anchor": "these terms become non-positive",
+        "source_excerpt_sha256": "76eda1d8d1c97ff83f9937489bf8921f564a53627124d77755c51e991bb53c81"
+      },
+      "decisions_applied": [],
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "repair:7.47-terminal",
+      "source_id": "forward:prescient-lookahead",
+      "scope_tag": "necessarydependency",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "For G_t=psi_t+sum_(i<=t)ell_i,arbitrary feasible z=x_(T+1) and finite displayed values, R_T(u)=psi_T(u)-psi1(x1)+sum_(t<=T)(G_t(x_t)-G_t(x_(t+1)))+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1)))+G_T(z)-G_T(u). Mandatory labelled correction: retain real-round Algorithm7.8/hypotheses; define ghost psi_(T+1)=psi_T,h_(T+1)=0 and z in argmin G_T, proving attainment and all support/finiteness conditions. Then terminal gap<=0 yields printed sharp bound and Young bound. Repeating final hint instead requires adding h_(T+1)(u)-h_(T+1)(z), not cancelling it. The repeated-hint quadratic completion is refuted; no statement of equivalence to literal original is accepted.",
+      "branch": "terminal statement correction",
+      "status": "mandatory source-repair contract open",
+      "implementation_acceptance": false,
+      "semantic_decisions_pending": [
+        "B4"
+      ],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "repair:15.31-terminal",
+      "source_id": "forward:prescient-lookahead",
+      "scope_tag": "necessarydependency",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "For BTRL with T>=1,proper closed lambda_t-strongly convex cumulative G_t,lambda_t>0,finite feasible played/comparator values and actual minimizers x_t, define ghost x_(T+1)=x_T. Prove R_T(u)<=psi_T(u)-psi1(x1)-sum_(t<T)lambda_t||x_t-x_(t+1)||^2/2+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1))). Optional stronger endpoint is-lambda_T||u-x_T||^2/2. Original Algorithm15.9 defines no x_(T+1); repeating last loss gives checked0<=-1/36 and is not accepted.",
+      "branch": "terminal statement correction",
+      "status": "mandatory source-repair contract open",
+      "implementation_acceptance": false,
+      "semantic_decisions_pending": [
+        "B4"
+      ],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "later:lookahead/branch-01",
+      "source_id": "additional:prescient-lookahead-nonpositive-stability",
+      "scope_tag": "mainrequired",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "Algorithm15.8: nonempty closed convex V subset X, strictly convex psi:X->R differentiable on int X, x_0 in int X, positive eta_t. Receive whole loss ell_t with V subset dom ell_t before choosing x_t in argmin_{x in V}(ell_t(x)+B_psi(x;x_(t-1))/eta_t), then pay ell_t(x_t).",
+      "branch": "later-source branch",
+      "status": "retained later target; independent approval/proof pending",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          277,
+          278
+        ],
+        "printed_pages": [
+          265,
+          266
+        ],
+        "marker": "Algorithm 15.8",
+        "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+        "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+      },
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "later:lookahead/branch-02",
+      "source_id": "additional:prescient-lookahead-nonpositive-stability",
+      "scope_tag": "mainrequired",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "Theorem15.30: additionally psi closed, iterates x_t in int X, losses subdifferentiable on V, nonincreasing steps. For every u in V: regret<=max_{0<=t<=T-1}B_psi(u;x_t)/eta_T-sum_{t=1}^T B_psi(x_t;x_(t-1))/eta_t. Constant eta: regret<=B_psi(u;x_0)/eta-sum B_psi(x_t;x_(t-1))/eta. The constant-step proof is explicitly left as an exercise and remains mandatory.",
+      "branch": "later-source branch",
+      "status": "retained later target; independent approval/proof pending",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          277,
+          278
+        ],
+        "printed_pages": [
+          265,
+          266
+        ],
+        "marker": "Algorithm 15.8",
+        "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+        "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+      },
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "later:lookahead/branch-03",
+      "source_id": "additional:prescient-lookahead-nonpositive-stability",
+      "scope_tag": "mainrequired",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "Euclidean psi(x)=||x||^2/2 specializes the negative stability term to -sum||x_t-x_(t-1)||^2/(2eta_t), with no positive gradient-square term. The total bound need not be nonpositive because the initial comparator potential is positive.",
+      "branch": "later-source branch",
+      "status": "retained later target; independent approval/proof pending",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          277,
+          278
+        ],
+        "printed_pages": [
+          265,
+          266
+        ],
+        "marker": "Algorithm 15.8",
+        "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+        "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+      },
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "later:lookahead/branch-04",
+      "source_id": "additional:prescient-lookahead-nonpositive-stability",
+      "scope_tag": "optionalroute",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "The original BTRL15.31 contract is retained verbatim in archival_sources. Effective guarantee is repair:15.31-terminal with repair:7.47-terminal prerequisite; no unrepaired endpoint inequality is asserted.",
+      "branch": "later-source branch",
+      "status": "alternate route optional for C2 implication; already-inventoried theorem and its repair remain required/open",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          277,
+          278
+        ],
+        "printed_pages": [
+          265,
+          266
+        ],
+        "marker": "Algorithm 15.8",
+        "excerpt": "Algorithm 15.8Prescient Online Mirror Descent\nRequire:Non-empty closed convexV ⊂ X ⊆R d,ψ:X →Rstrictly convex and\ndifferentiable onintX,x 0 ∈intX,η 1, . . . , ηT >0\n1:fort= 1toTdo\n2:Receiveℓ t :R d →(−∞,+∞], whereV ⊆domℓ t\n3:x t ∈argmin x∈V ℓt(x) + 1\nηt\nBψ(x;xt−1)\n4:Pay the lossℓ t(xt)\n5:end for\n15.5.1 Prescient Online Mirror Descent and Be-The-Regularized-Leader\nThe results in the previous section are interesting from a game-theoretic point of view, be-\ncause they show that two players can converge to an equilibrium without any “communica-\ntio",
+        "excerpt_sha256": "fd74bb527b82b529cefe9258768e11c463cbaf9d8a38435b750da4836eca0cb0"
+      },
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation",
+      "scope": {
+        "primary_chapter2_euclidean_implication": "optionalroute",
+        "book_goal_required": true,
+        "required_in_owning_chapter": 15,
+        "scope_basis": "Retained source mathematics or mandatory source repair in the owning chapter; optional only as a route for the primary Chapter2 Euclidean implication. Existing source/repair distinction unchanged."
+      }
+    }
+  ],
+  "conclusion": "Frozen later:lookahead/branch-03 asks for general quadratic same-run specialization, including variable steps, not merely an affine fixed-step example. Existing accepted generic Bregman source_fixed_regret/source_variable_regret already cover the literal Theorem15.30 and its mandatory fixed-step exercise conditionally on valid source updates. Existing OnlinePrescientLinear is a useful affine fixed-step instance but does not reconcile the generic nonlinear/subdifferentiable quadratic branch.",
+  "minimal_required_math": [
+    {
+      "endpoint": "Shared quadratic Bregman identity",
+      "statement": "For psi(z)=||z||^2/2 in the existing shared divergence definition, B_psi(a;b)=||a-b||^2/2. Use existing Mathlib derivative/quadratic results; no duplicate divergence or per-Book algorithm.",
+      "role": "Reusable algebra/derivative bridge, no regret result by itself."
+    },
+    {
+      "endpoint": "Actual prescient quadratic variable-step regret",
+      "statement": "For arbitrary source-compatible extended-real loss sequence, positive played nonincreasing eta, natural T>0, any u in nonempty closed convex V, and a valid run of the existing Option iterate with quadratic regularizer: sum_{t<T}(loss_t(x_(t+1))-loss_t(u)) <= max_{t<T}||u-x_t||^2/(2 eta_(T-1)) - sum_{t<T}||x_(t+1)-x_t||^2/(2 eta_t).",
+      "role": "Same actual shared producer as source15.30; no affine restriction or assumed desired bound."
+    },
+    {
+      "endpoint": "Constant-step quadratic specialization",
+      "statement": "Under corresponding fixed eta>0 conditions, regret <= ||u-x0||^2/(2eta) - sum_{t<T}||x_(t+1)-x_t||^2/(2eta). T=0 may remain supported as in existing fixed source theorem.",
+      "role": "Retain mandatory fixed-step source branch; derive from already accepted fixed Bregman endpoint and identity, not reprove telescoping. May be bundled with variable endpoint; no forced public helper chain."
+    }
+  ],
+  "source_hypotheses_and_information": [
+    "Source losses exclude minus infinity globally and are finite on V (V subset effectiveDomain); retain nonempty support/subdifferentiability on V. Do not replace by globally finite differentiable losses or affine losses.",
+    "Preserve source nonempty closed convex V and valid minimizer/run assumptions. Existing SourceProper can be derived from no-bottom/domain/nonempty rather than silently strengthened.",
+    "Quadratic all-space ambient X=univ discharges interior/differentiability geometrically; explicitly label this specialization. For arbitrary X, retain source interior points and closedness/extension hypotheses instead of dropping them.",
+    "Prediction is x_(t+1) after observing whole current loss t, unlike causal OGD pre-update scoring. Initial state Lean0 is sourcex0; loss0 is sourceell1.",
+    "Use existing Option advance/iterate. Either conditional successful-run hseq or source hmin updates with proved uniqueness/iterate bridge is legitimate. No universal attainment or invented total selector; failure semantics remain none/absorbing.",
+    "Negative movement-square stability is not negative ordinary-gradient-square for arbitrary constrained/nonsmooth losses. The total upper bound need not be nonpositive because comparator potential remains."
+  ],
+  "reuse": [
+    "OnlineBregman.divergence and existing derivative APIs",
+    "OnlinePrescientBregman.iterate_eq_of_source_updates",
+    "OnlinePrescientBregman.source_variable_regret and source_fixed_regret (or actual-run variants with explicit source-hypothesis transport)",
+    "Existing Option selector success/failure specifications"
+  ],
+  "source_pixels_personally_reviewed": [
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-prescient-closure-readiness-20261011\\source-review-277.png",
+      "sha256": "339f31ebcbcdd5d32faf6b4265b1fa24f136d16bb6196ccf57550e653996be76",
+      "pdf_page": 277
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-prescient-closure-readiness-20261011\\source-review-278.png",
+      "sha256": "5389304af84a00a8f26aebb27fa3f0532193b40f87f0bd7f121a18a41865d613",
+      "pdf_page": 278
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-ch2-prescient-closure-readiness-20261011\\source-review-279.png",
+      "sha256": "e0505deba7e5b566def310bc40c8b4f155f8af3dd339fc33fd00c6ea567b8dbe",
+      "pdf_page": 279
+    }
+  ],
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source_page26": "Personally inspected in earlier source-route reviews; current PDF hash pinned.",
+  "accepted_module_joins_verified": [
+    {
+      "module": "BanditRLProof/OnlinePrescientLinear.lean",
+      "FINAL_review": "runs/online-ch2-prescient-20261009/FINAL-review-v1.json",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "delivery_review": "runs/online-ch2-prescient-20261009/actual-delivery-review-v1.json",
+      "delivery_verdict": "accepted",
+      "accepted_raw_sha256": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc",
+      "current_raw_sha256": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc",
+      "git_HEAD_blob_sha256": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc",
+      "exact_raw_join": true,
+      "exact_git_join": true
+    },
+    {
+      "module": "BanditRLProof/OnlinePrescientBregman.lean",
+      "FINAL_review": "runs/online-ch2-prescient-causal-20261009/FINAL-review-v1.json",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "delivery_review": "runs/online-ch2-prescient-causal-20261009/actual-delivery-review-v1.json",
+      "delivery_verdict": "accepted",
+      "accepted_raw_sha256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "current_raw_sha256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "git_HEAD_blob_sha256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "exact_raw_join": true,
+      "exact_git_join": true
+    },
+    {
+      "module": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+      "FINAL_review": "runs/online-ch2-prescient-cumulative-20261009/FINAL-review-v1.json",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "delivery_review": "runs/online-ch2-prescient-cumulative-20261009/actual-delivery-review-v1.json",
+      "delivery_verdict": "accepted",
+      "accepted_raw_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+      "current_raw_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+      "git_HEAD_blob_sha256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+      "exact_raw_join": true,
+      "exact_git_join": true
+    },
+    {
+      "module": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "FINAL_review": "runs/online-ch2-prescient-source-20261010/FINAL-review-v1.json",
+      "FINAL_verdict": "accepted-with-explicit-delta",
+      "delivery_review": "runs/online-ch2-prescient-source-20261010/actual-delivery-review-v1.json",
+      "delivery_verdict": "accepted",
+      "accepted_raw_sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "current_raw_sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "git_HEAD_blob_sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "exact_raw_join": true,
+      "exact_git_join": true
+    }
+  ],
+  "B4_boundary": "repair:7.47-terminal and repair:15.31-terminal remain mandatory/open for owning Chapter15/global Goal. They are not prerequisites for this quadratic mirror-descent leaf; completion of branch03 does not close every lookahead target/container. Preserve explicit optional-C2-route versus owning-chapter-required scope.",
+  "next_gate": "Formalizer prepares exact neutral header/imported-definition packet, fresh distinct blind decoding, independent source-contract approval before any proof. This adjudication does not freeze a header.",
+  "current_counts_unchanged": {
+    "forward_containers": 8,
+    "future_claims": 6,
+    "chapter_partial": true,
+    "denominator": null,
+    "Goal": "ACTIVE"
+  },
+  "input_raw_hashes_verified": {
+    "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "runs/online-ch2-prescient-20261009/FINAL-review-v1.json": "aea107ead82743ae4c4948d64cbd9ba5b299dde77b2b1eeb1689cb0cabf8a0cf",
+    "runs/online-ch2-prescient-20261009/actual-delivery-review-v1.json": "3a990b8e99bc748484e7cce0dae96b3eb7de4e3607968cfe7f9067a17f301579",
+    "BanditRLProof/OnlinePrescientLinear.lean": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc",
+    "runs/online-ch2-prescient-causal-20261009/FINAL-review-v1.json": "45a146d80dd47330f7f2c74e13f3a4ade0ccfc0fb3c0c7acbc46a82e6255f3f4",
+    "runs/online-ch2-prescient-causal-20261009/actual-delivery-review-v1.json": "6ec068dfcecf67fd9c8940e36e19db928510938b1da95fc4c4e22c0082852609",
+    "BanditRLProof/OnlinePrescientBregman.lean": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+    "runs/online-ch2-prescient-cumulative-20261009/FINAL-review-v1.json": "01fcf3e5580e1afee0f5a26acc60393f429855458db35d02f888b99111fdc1bb",
+    "runs/online-ch2-prescient-cumulative-20261009/actual-delivery-review-v1.json": "ae622824ac2ba49d90af62c065844c12c29a53a09689091243335e21ea6891fa",
+    "BanditRLProof/OnlinePrescientBregmanRegret.lean": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+    "runs/online-ch2-prescient-source-20261010/FINAL-review-v1.json": "651f566002add20400c62aacb5e6b84760358c127e3281f684e790643a53d00f",
+    "runs/online-ch2-prescient-source-20261010/actual-delivery-review-v1.json": "7d4b498c7bc28689427c342bcb4bdeeb86c433ce74baf0ad760651a863804d95",
+    "BanditRLProof/OnlinePrescientBregmanSource.lean": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+    "BanditRLProof/OnlineBregmanProximal.lean": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+    "BanditRLProof/OnlineBregmanExtended.lean": "adf36bd3172a96308872323af3128fc94733c005ca9c025a050620804f7ed80b",
+    "runs/online-ch2-prescient-source-20261010/six-BODY-review-v1.md": "be28bab8d9552cb88570346aee6b6a56c333842df382070ca6ee68ac1b40d717"
+  },
+  "created_utc": "2026-10-11T05:36:37.352239+00:00"
+}

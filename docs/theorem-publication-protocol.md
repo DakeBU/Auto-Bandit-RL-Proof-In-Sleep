@@ -4,6 +4,36 @@ Applies to every new or changed source-facing production declaration and every t
 
 The purpose is to author mathematics once and project it consistently into the reader, route/progress views, and graphs.
 
+## Pre-proof Statement Seal and source-topology gate
+
+Every new or materially changed source-facing theorem/definition also follows
+`docs/proof-digestion-protocol.md` before proof search. Seal the exact final Lean
+signature first. Recursively expand project-owned assumption bundles and classify
+each logical input as `SOURCE`, `STANDING`, `TYPING`, `RULED`, or `EXCESS`; any
+`EXCESS` binder rejects the source Anchor. A concentration bound, confidence
+event, Bellman identity, occupancy relation, stopping argument, coverage lemma,
+or change-of-measure inequality needed by the proof is a dependency edge to be
+proved/reused and applied inside the proof, not an extra public premise.
+
+Definitions are audited as literal, characterized, or quotient/representative.
+A characterized object cannot be implemented with a fallback/default branch;
+where uniqueness is part of the source semantics, prove the true source-level
+well-definedness theorem before classical choice and land the full
+characterization theorem with the definition.
+
+Independently reconstruct the **Source Proof Graph** from the cited source. Every
+in-scope theorem, definition, reused display, citation, and substantive proof
+paragraph is `NODE` or `EXCLUDED(reason)`; omitted bridges remain `SOURCE_GAP`
+nodes and alternative sufficient proofs are explicit OR-routes. This view asks
+"how did the source prove it?"; the Lean graph asks "what does the checked
+implementation actually depend on?". They must not be conflated.
+
+After proof sealing/publication, run purification: remove dead, duplicate and
+wrapper-only proof residue, minimize/canonicalize imports and shared APIs,
+compress bookkeeping into reviewed conceptual moves, preserve lossless drill-
+down evidence, and update the Compressed Bandit/RL Spine. `MERGED` therefore
+does not imply `PURIFIED`.
+
 ## Bounded publication packet
 
 Start from one theorem-sized target. Do not load the entire repository into an agent context.
