@@ -707,6 +707,75 @@
       "open_gaps": [
         "The library explicitly uses a finite nonempty index set because the source leaves the empty-maximum convention unspecified (G2.26.EMPTY). Every component is proper and convex, the query lies in every effective domain, and every component, including inactive ones, is continuous there. Continuity is interpreted in the ambient topology with EReal carrying its standard topology; the inspected source does not expand this convention (G2.26.CONTINUITY). The conclusion uses ordinary convex hull without closure. No component closedness, global finiteness, relative-domain continuity or supplied decomposition is assumed. Finite-dimensional real inner-product spaces generalize the Euclidean carrier. The source cites Bauschke and Combettes (2017), Theorem 18.5 and gives no local proof. The compactness and separation argument below is the library proof, not an independently checked reconstruction of that external result."
       ]
+    },
+    {
+      "slug": "online-hinge",
+      "title": "Hinge-loss subdifferential",
+      "short_title": "Hinge loss",
+      "status": "compiled",
+      "summary": "The complete hinge subdifferential: zero, negative slope and the entire boundary segment.",
+      "audience": "Readers of Orabona Example2.27.",
+      "completion_definition": "Thirteen theorems and two definitions. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Derive the unique global support of an affine function.",
+        "Instantiate the maximum rule with actual proper convex continuous functions.",
+        "Keep the full closed boundary segment and the zero-vector case."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineHinge.lean"
+      ],
+      "open_gaps": [
+        "Example 2.27 states the full three-case equality without a proof (GAP.EXAMPLE-PROOF). The derivation here is the library proof: establish both affine supports and the maximum-rule hypotheses, classify the active components, and take their ordinary convex hull. The main equality and hull theorem use a finite-dimensional real inner-product space; the other helpers and both definitions retain the real inner-product structure without finite dimension. The hinge and both components are finite everywhere, so the shared support predicate agrees with the proper-function source context here. No nonzero z or positive-dimension premise is imposed. A coordinate-isometry adapter is not separately certified."
+      ]
+    },
+    {
+      "slug": "online-affine-subgradient",
+      "title": "Affine transport of subgradients",
+      "short_title": "Affine chain rule",
+      "status": "compiled",
+      "summary": "Transport actual global supports through an affine map and its adjoint; properness alone, inclusion only.",
+      "audience": "Readers of Orabona Theorem2.28.",
+      "completion_definition": "One affine-transport theorem. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Translate the all-point support inequality through Ay+b.",
+        "Use the actual inner-product adjoint of A.",
+        "Distinguish inclusion from equality and keep the proper nonconvex case."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineAffineSubgradient.lean"
+      ],
+      "open_gaps": [
+        "Theorem 2.28 assumes only proper f and states inclusion, with no convexity, rank condition or composite-properness premise. Both Lean spaces are finite-dimensional real inner-product spaces and A is a continuous linear map with its actual adjoint; no matrix-coordinate adapter is separately certified. The earlier printed subgradient definition is scoped to proper functions, but the affine composite can be identically top (GAP.AFFINE-PROPER). The library explicitly extends the raw global-support inequality to every EReal function. For an all-top composite its generic support is the entire space and the source support image is empty. This is a disclosed definition extension, not a convention established by the printed definition. Properness of f remains in the statement even though the transport algebra does not use it. No converse is claimed."
+      ]
+    },
+    {
+      "slug": "online-lipschitz",
+      "title": "Lipschitz constants and subgradient norms",
+      "short_title": "Lipschitz bounds",
+      "status": "compiled",
+      "summary": "The full interior-domain equivalence, with every global support, finite values and an explicit nonnegative constant.",
+      "audience": "Readers of Orabona Definition2.29 and Theorem2.30.",
+      "completion_definition": "One theorem and one finite-value Lipschitz definition. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_blockers": [
+        "Later source obligations, Chapter 2 and the whole book remain incomplete."
+      ],
+      "learning_goals": [
+        "Keep finite function values before taking real differences.",
+        "Derive bounds for every interior global support from actual Lipschitz inequalities.",
+        "Construct supports from proper convexity to prove the converse."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineLipschitzSubgradient.lean"
+      ],
+      "open_gaps": [
+        "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted."
+      ]
     }
   ]
 }
