@@ -1,0 +1,70 @@
+{
+  "schema": "neutral-header-blind-decoder-v1",
+  "actor": "/root/b4_finite_identity_blind",
+  "role_scope": "Decode only the supplied theorem header using standard Lean Finset/range/Nat/Real semantics. No source-faithfulness judgment, proof BODY, compilation, or source search.",
+  "requested_model": "GPT-6 Astra",
+  "requested_reasoning_effort": "medium",
+  "runtime_attestation": "The model and effort requested in the assignment cannot be independently attested from this run; no runtime metadata was queried.",
+  "context_exposure": "Generic inherited system/developer instructions, skill catalog, workspace instructions, environment metadata, and the supplied memory-summary context were already present. I did not open memory files or use historical mathematical reviews. The task assignment exposed the file path, expected digest, role, output paths, and decoding checklist. This is not a claim of completely zero-background review.",
+  "unique_file_read_exposure": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt",
+      "operation": "One ReadAllBytes call; SHA256 computed over those raw bytes; UTF8 text displayed from those same bytes.",
+      "raw_sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+      "expected_sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67",
+      "digest_matches": true
+    }
+  ],
+  "other_files_read": [],
+  "decoded_meaning": {
+    "declaration": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+    "quantifiers_and_types": [
+      "For every universe-polymorphic type E, every psi and loss : Nat -> E -> Real, every x : Nat -> E, every u and z : E, and every T : Nat with hT : 0 < T, the displayed real equality holds.",
+      "E is an implicit theorem parameter; psi, loss, x, u, z, T, and hT are explicit binders. Supplying x, u, or z entails that E is inhabited for any actual instance, but no Inhabited E typeclass is required.",
+      "There is no order, topology, vector-space structure, finiteness, or decidable equality assumption on E. The conditional tests equality of natural numbers, not equality on E."
+    ],
+    "let_definitions": [
+      "y : Nat -> E is local to the proposition: y(t) = z when t = T and y(t) = x(t) otherwise. It replaces exactly the coordinate T, including when z happens to equal x(T); it does not replace all coordinates after T.",
+      "G : Nat -> E -> Real is local to the proposition: G(t,v) = psi(t,v) + sum_{i=0}^{t} loss(i,v). The upper loss index is inclusive because range (t+1) contains 0,...,t.",
+      "These lets define y and G; they neither universally quantify over independent y/G nor impose hypotheses to be supplied by the caller."
+    ],
+    "indices_and_equality": [
+      "The left side is sum_{t=0}^{T-1} [loss(t,y(t)) - loss(t,u)]. Since T > 0 and every such t is strictly less than T, this equals sum_{t=0}^{T-1} [loss(t,x(t)) - loss(t,u)].",
+      "The initial potential terms are psi(T-1,u) - psi(0,y(0)); positivity gives y(0)=x(0).",
+      "The first right-side sum has T terms: G(t,y(t)) - G(t,y(t+1)) for t=0,...,T-1. Each term uses the same potential time t on both evaluations, with consecutive trajectory positions. The final term is G(T-1,x(T-1)) - G(T-1,z).",
+      "The second right-side sum has T-1 terms: psi(t,y(t+1)) - psi(t+1,y(t+1)) for t=0,...,T-2. It changes potential time at the same trajectory point. Every point in this sum is x(t+1), including its final point x(T-1); z never occurs in this sum.",
+      "The explicit final correction is +G(T-1,z)-G(T-1,u). It uses time T-1, not T, and therefore includes losses 0,...,T-1 with no loss(T,.) contribution.",
+      "The exact expression is an equality in Real. The two finite sums and both endpoint corrections appear with the signs displayed; it is not an inequality or an asymptotic estimate."
+    ],
+    "equivalent_expansion": "sum_{t=0}^{T-1}(loss(t,x(t))-loss(t,u)) = psi(T-1,u)-psi(0,x(0)) + sum_{t=0}^{T-2}(G(t,x(t))-G(t,x(t+1))) + G(T-1,x(T-1))-G(T-1,z) + sum_{t=0}^{T-2}(psi(t,x(t+1))-psi(t+1,x(t+1))) + G(T-1,z)-G(T-1,u). Empty index intervals mean zero sums.",
+    "arbitrary_endpoint_splice": [
+      "z is unrestricted and independent of x(T). It need not be a minimizer or an algorithmic iterate, and no relation to u is assumed.",
+      "The occurrence -G(T-1,z) in the last first-sum term cancels the explicit +G(T-1,z). Consequently the entire equality is independent of the choice of z, as its left side already is.",
+      "x(T) and all later x coordinates are unused by the proposition after unfolding the lets under hT. This header alone establishes no property of a trajectory update or optimization step."
+    ],
+    "positivity_and_degenerate_cases": [
+      "Nat subtraction is truncated: T-1 means the predecessor with 0-1=0. hT makes T-1 the intended last included time and gives y(0)=x(0).",
+      "T=1 is allowed. The temporal-psi sum is empty, and the right side is psi(0,u)-psi(0,x(0))+G(0,x(0))-G(0,z)+G(0,z)-G(0,u), which simplifies to loss(0,x(0))-loss(0,u).",
+      "T=0 is excluded for a substantive reason. If hT were removed, both sums and the left side would be empty, y(0)=z, and the right side would simplify to loss(0,z)-loss(0,u), which need not be zero. For example, with E=Real, z=1, u=0, psi identically zero, and loss(t,v)=v, this proposed zero-horizon equality would read 0=1.",
+      "The choices z=x(T), z=u, or z=x(T-1) are allowed. z=u makes the explicit final correction zero; z=x(T-1) makes the final first-sum term zero. Neither choice is required.",
+      "Constant trajectories, singleton E, identically zero psi, identically zero loss, repeated points, and arbitrary negative real losses/potentials are allowed. There are no divisions, limit operations, or strict convexity exceptions.",
+      "An empty E yields no actual supplied u/z/x instance; it is not a missing mathematical side condition."
+    ],
+    "absent_assumptions": [
+      "No minimizer, argmin, FTRL/FTL rule, recurrence for x, optimality, or zero initial potential assumption.",
+      "No convexity, continuity, differentiability, measurability, integrability, boundedness, monotonicity, nonnegativity, or probabilistic assumptions.",
+      "No uniqueness or relationship among u, z, and x(t); no comparison of z with x(T).",
+      "No numerical prefactor, learning rate, hidden additive constant, or big-O term occurs. The relevant shifts are exactly t+1 and T-1."
+    ]
+  },
+  "warnings": [
+    "No unresolved type/index ambiguity was found under standard Lean semantics. This is a semantic reading, not a kernel check.",
+    "The most likely reading errors are treating G(t,.) as containing only losses before t, extending the temporal-psi sum to t=T-1, using G(T,.) at the endpoint, or forgetting that the splice affects exactly index T.",
+    "hT cannot simply be omitted for a universal zero-horizon version. The excluded T=0 case fails for unrestricted loss/u/z.",
+    "The arbitrary endpoint contributes cancelling terms; its presence alone supplies no optimization guarantee.",
+    "Source-faithfulness and whether the imported environment actually compiles this statement were deliberately not assessed.",
+    "The output directory was designated ignored by the assignment. Git ignore status was not independently inspected, because that would exceed the one-input-file read scope."
+  ],
+  "operations_not_performed": ["No memory-file reads", "No source/PDF/proposal/history reads beyond the designated neutral header", "No searches", "No BODY construction", "No Lean compilation", "No Git inspection", "No external messaging"],
+  "output_policy": "Create-only output files; UTF8 without BOM; LF newlines; only the designated temporary output directory is mutated."
+}

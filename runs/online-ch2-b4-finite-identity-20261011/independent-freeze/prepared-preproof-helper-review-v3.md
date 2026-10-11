@@ -1,0 +1,3 @@
+Accepted prepared capture helper v3 only (1dbe6223...). P1/P2 repaired: actual on-disk active Lean and owned evidence paths re-enumerated, exact ZIP checked, core/Test absence and Mathlib tracked cleanliness/pinned HEAD repeated after capture. Nonempty unique seal inputs and six minimum paths enforced; header/contract hashes hard-pinned; executing/canonical helper bytes equal. AST confirms Windows backslash replacement handles one character correctly.
+
+Versions1/2 retained unexecuted. Contract approval unchanged. Only after exact parent seal/commit and clean branch may helper run without Python optimization; subsequent independent context review and explicit parent BODY authorization remain required. No capture or BODY executed by reviewer.

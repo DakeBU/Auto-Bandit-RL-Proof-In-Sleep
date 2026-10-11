@@ -1,0 +1,18 @@
+from pathlib import Path
+import hashlib,json,datetime,subprocess
+p=Path('tmp/online-ch2-b4-finite-identity-formalizer-20261011')
+s=(p/'prepare-v2.py').read_text(encoding='utf-8').split('probe=')[0]
+exec(s)
+files=['lean-toolchain','lakefile.lean','lake-manifest.json','tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt']
+def snapshot():
+    return dict(UTC=datetime.datetime.now(datetime.timezone.utc).isoformat(),HEAD=subprocess.check_output(['git','rev-parse','HEAD'],cwd=str(root)).decode().strip(),branch=subprocess.check_output(['git','branch','--show-current'],cwd=str(root)).decode().strip(),status=subprocess.check_output(['git','status','--short'],cwd=str(root)).decode(),sha256={f:hashlib.sha256((root/f).read_bytes()).hexdigest() for f in files},mathlib_commit=subprocess.check_output(['git','-C','.lake/packages/mathlib','rev-parse','HEAD'],cwd=str(root)).decode().strip())
+before=snapshot()
+put('context-before-v2.json',json.dumps(before,indent=2)+'\n')
+run('header-original-context-elaboration-v2',['lake','env','lean','tmp/online-ch2-b4-finite-identity-formalizer-20261011/HeaderOriginalContextProbe.lean'])
+after=snapshot()
+put('context-after-v2.json',json.dumps(after,indent=2)+'\n')
+run('retrieval-telescope-names-v2',['rg','-n','sum_range_sub|sum_range_succ','.lake/packages/mathlib/Mathlib/Algebra/BigOperators/Group/Finset'])
+put('preparation-report-v1.json',json.dumps(dict(status='HEADER ELABORATED ONLY; NO BODY AUTHORIZATION',original_header_sha256='92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67',header_repair_required=False,original_imports=['Mathlib.Algebra.BigOperators.Module','Mathlib.Tactic'],minimum_tested_advisory_imports=['Mathlib.Algebra.BigOperators.Group.Finset.Basic','Mathlib.Data.Real.Basic'],minimal_imports_status='advisory only; not an approved header change',context_stable=before['HEAD']==after['HEAD'] and before['sha256']==after['sha256'],signature_fence=['Freeze original full-header bytes unchanged, including imports/noncomputable section/open/namespace and all binders/lets/equality.','After authorization, production file may add theorem proof only after exact final conclusion; compare extracted header plus original end namespace against exact frozen original bytes.','Separately inspect compiled declaration TYPE for exactly universe E; psi/loss; x; u/z; T; hT. Reject added variables, local instances, project-owned Props or helper assumptions.','Snapshot Lean toolchain, lakefile, lake-manifest, Mathlib commit, active Lean tree and clean git context before explicit BODY authorization.','Any header, scope, or import change requires successor proposal and independent review; smallest-context result alone grants no change.'],probe_limits=['Prop definition elaboration is not a proof of the identity.','hT unused warning is expected in Prop construction; positive horizon binder retained.','No production/root/Tests/contracts/RUN changes, no theorem BODY or proof search, no full gate.','First run Lean exit 0 preserved; Python console printing then failed gbk Unicode encoding, subsequent runner uses ASCII summaries.','Original/minimal v1 probe launch HEAD was not captured atomically; v2 captures before/after context and repeats original-header elaboration.'],awaiting=['parent contract freeze','independent clean preproof context approval','explicit BODY authorization']),indent=2)+'\n')
+manifest={f.name:hashlib.sha256(f.read_bytes()).hexdigest() for f in out.iterdir() if f.is_file()}
+put('manifest-v1.json',json.dumps(manifest,indent=2)+'\n')
+print('report',hashlib.sha256((out/'preparation-report-v1.json').read_bytes()).hexdigest())

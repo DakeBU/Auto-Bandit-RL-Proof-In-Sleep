@@ -1,0 +1,1 @@
+Helper v1 requires P1 full active Lean filesystem enumeration and P2 repeated final core/Test absence plus Mathlib HEAD/clean checks. Main Git cleanliness cannot substitute for ignored source enumeration. Existing exact ZIP and re-selection checks are useful but bounded. Accepted contract-freeze review remains unchanged; no capture executed and no BODY authorized.

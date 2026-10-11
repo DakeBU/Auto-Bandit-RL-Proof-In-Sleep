@@ -1,0 +1,3 @@
+Accepted source-only topology v2 with explicit correction boundaries; no blocking repairs. T1-T4 resolved: substantive source steps explicitly disposed, corrected endpoints have distinct declared nodes, source/leaf terminal indices are mapped, and invalid cancellation is separated from legitimate virtual repetition. All17old IDs and4exclusion objects retained,12nodes added;29claim hashes and all unverified edge endpoints checked.
+
+The unchanged finite-real identity header and fresh blind reconstruction remain bound. Four previously personally viewed original source pixels and PDF bytes rehashed. Full EReal/analytic/attainment/producer/7.47/15.31 obligations remain mandatory OPEN. No freeze, BODY, compiler, chapter or Goal acceptance.
