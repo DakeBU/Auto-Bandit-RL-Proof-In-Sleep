@@ -1,0 +1,593 @@
+diff --git a/README.md b/README.md
+index a564de6f..2ff75bdb 100644
+--- a/README.md
++++ b/README.md
+@@ -13,6 +13,29 @@
+ [Lean declarations](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/declarations/) ·
+ [How to contribute](CONTRIBUTING.md)
+ 
++**BanditRLlib is human-understanding infrastructure for sequential learning:**
++learn why a guarantee holds, follow its Lean evidence, and see where its
++assumptions break. In response to Terence Tao's [*Math 2.0* report (October 2026,
++pp. 22, 25–26)](https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf),
++we organize our contribution around his examples:
++
++- **Foundations (2, 3):** a living, source-linked BanditRLwiki and a reusable,
++  high-quality Lean library.
++- **Human value (1, 8):** clearer proofs and interactive teaching, with compressed
++  proof spines and graph drill-down to exact mathematics.
++- **Research agenda (4, 5, 6, 7, 9):** cross-pollinate proof methods; use semantic
++  review to support controlled proof-tool ablations; explore verified theorem
++  neighborhoods; provide appropriately licensed Lean/explanation pairs for
++  specialized models; and expose model-assumption failures.
++
++[Our nine directions: current foundations and next contributions](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/math-2-0/)
++· [Public claims and evidence protocol](docs/math-2-0-positioning.md).
++Together with [Samplinglib](https://dakebu.github.io/Automization-Sampling-Optimisation-Geometry-Lib/)
++and [QuantumComputinglib](https://dakebu.github.io/Quantum-Computing-Block-Encoding/),
++we connect sampling mechanisms, quantum interfaces and sequential-learning
++guarantees. This is our response to Tao's examples, not an endorsement or a claim
++that every research direction is already realized.
++
+ This repository has two connected contributions:
+ 
+ 1. **ABRL**, a target-faithful adaptive harness that organizes a mathematical target, retrieval evidence, proof obligations, Lean construction, compiler diagnostics, reviewer feedback, and deterministic acceptance gates; its hierarchical default can now be compared with a bounded master–worker experiment.
+diff --git a/docs/math-2-0-positioning.md b/docs/math-2-0-positioning.md
+new file mode 100644
+index 00000000..888558d2
+--- /dev/null
++++ b/docs/math-2-0-positioning.md
+@@ -0,0 +1,63 @@
++# BanditRLlib: human understanding in Math 2.0
++
++BanditRLlib connects sequential-learning mathematics, source-aligned explanations
++and Lean evidence. Its central purpose is to help readers understand why a
++guarantee holds, reuse its proof ideas, and see where its assumptions stop applying.
++ABRL is the proof/review harness; BanditRLlib is the maintained mathematical library
++and reader interface.
++
++This position responds to Terence Tao's [*Math 2.0* report, October 2026](https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf),
++especially pp. 21–22 and 25–26. The nine directions on the
++[public positioning page](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/math-2-0/)
++are our organization of his examples, not an official nine-goal program or an
++endorsement of these libraries.
++
++## Priority and library roles
++
++1. **Foundations (2, 3):** a living, source-linked knowledge network and a
++   high-quality reusable Lean library.
++2. **Human value (1, 8):** clearer explanations and interactive teaching, using
++   compressed proof spines and conceptual maps with drill-down to exact evidence.
++3. **Research agenda (4, 5, 6, 7, 9):** cross-pollination of proof methods,
++   controlled ablation, verified theorem neighborhoods, inspectable material for
++   specialized models, and analysis of mathematical/model boundaries.
++
++Samplinglib contributes sampling and analytic mechanisms; QuantumComputinglib
++contributes quantum semantics and oracle interfaces; BanditRLlib contributes
++feedback models, sequential decisions and regret/sample-complexity guarantees.
++Cross-library links express a research agenda until compatible imports or compiled
++adapters prove the transport. The three libraries share a purpose, not a claim of
++identical maturity or interchangeable foundations.
++
++## Public claims and evidence
++
++The canonical positioning data lives in `website/content/math_2_0.json`. Every
++direction keeps **current foundation** separate from **next contribution**, with
++links to existing evidence. Update the data before revising public copy.
++
++- Say “explains”, “organizes” or “supports” when describing an existing interface;
++  say “aims”, “planned” or “next” for unfinished mathematical/research outcomes.
++- Keep local Lean compilation, source-fidelity review, route completion and
++  conceptual transport independent. A graph view is not a source-fidelity audit.
++- An ablation freezes the conclusion and source assumptions, classifies proof
++  ingredients, removes a theory/input, and checks a replacement proof route.
++  Encoder–denoiser review helps preserve meaning but is not an ablation by itself.
++- A theorem-neighborhood experiment changes a hypothesis contract explicitly and
++  records a new proof, a checked counterexample, or an unresolved target. Failure
++  of proof search alone is not a negative mathematical result.
++- A compressed graph and natural-language/Lean pair are proposed research and
++  model resources. Do not claim a trained model, a validated data set, faithful
++  internal chain-of-thought access, or guaranteed interpretability/safety without
++  corresponding evidence. Tao's slides do not make a white-box chain-of-thought
++  requirement.
++- Use only our own or appropriately licensed source/proof/exposition pairs for
++  model work. External-reference libraries are not automatically training data;
++  preserve their attribution and use restrictions, including ATLAS v1's CC BY-NC
++  rider where applicable to cross-library references.
++- Proof structure may reveal reusable mechanisms and help assess contributions;
++  graph size or compression is not an automatic novelty or scientific-value score.
++- Formal proofs and counterexamples examine the specified mathematical model.
++  Whether a real environment satisfies the model requires external evidence.
++
++This communication protocol supplements the theorem-publication and
++proof-digestion protocols; it does not change theorem acceptance gates.
+diff --git a/research-wiki/contribution-contracts/MATH-2-0-POSITIONING-20261011.json b/research-wiki/contribution-contracts/MATH-2-0-POSITIONING-20261011.json
+new file mode 100644
+index 00000000..0d11dad3
+--- /dev/null
++++ b/research-wiki/contribution-contracts/MATH-2-0-POSITIONING-20261011.json
+@@ -0,0 +1,111 @@
++{
++  "schema_version": "3.0",
++  "id": "MATH-2-0-POSITIONING-20261011",
++  "route": "public-positioning-and-reader-entry",
++  "frontier_cell": "publication-only",
++  "source_facing": false,
++  "source": {
++    "kind": "internal-design",
++    "title": "BanditRLlib response to Terence Tao's Math 2.0 examples",
++    "version": "2026-10-11",
++    "anchor": "Math 2.0 slides pp. 22, 25–26; existing BanditRLlib public surfaces",
++    "url": "https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf"
++  },
++  "target": "Expose the library's foundations, human value and research agenda through a short homepage entry and an evidence-linked nine-direction page; no mathematical or theorem-status change.",
++  "affected_files": [
++    "website/content/math_2_0.json",
++    "website/scripts/build_site.py",
++    "website/static/site.css"
++  ],
++  "declarations": [],
++  "reuse_plan": {
++    "classification": "reuse",
++    "decision": "reuse_existing",
++    "searched_existing": ["README.md", "website/scripts/build_site.py", "website/README.md", "docs/proof-digestion-protocol.md", "docs/theorem-publication-protocol.md", "docs/quantum-bandit-cross-library-protocol.md", "research-wiki/proof-graph/benchmark_report.json"],
++    "reused_declarations": [],
++    "new_shared_declarations": [],
++    "known_consumers": ["homepage readers", "public positioning page readers"],
++    "planned_consumers": [],
++    "no_duplicate_wrapper": true,
++    "decision_reason": "Reuse existing books, source/assumption atlas, Lean Graph, Functor Hypergraph, proof laboratory and contribution workflow as evidence. Add no theorem, adapter, graph edge or completion claim."
++  },
++  "reader_contract": {
++    "source_anchor_visible": true,
++    "natural_language_formula_proof": false,
++    "hidden_assumptions_visible": false,
++    "source_vs_lean_delta_visible": false,
++    "lean_folded": false,
++    "dependencies_visible": true,
++    "remaining_boundary_visible": true
++  },
++  "semantic_roundtrip": {
++    "required": false,
++    "status": "not-required",
++    "formalizer": "Codex publication editor",
++    "blind_decoder": "not-applicable",
++    "source_reviewer": "not-applicable",
++    "verdict": "not-applicable: no new or changed mathematical statement",
++    "remaining_semantic_delta": "No theorem/source formalization delta. Tao's examples are explicitly presented as examples, with no endorsement, white-box reasoning requirement or fixed nine-goal attribution."
++  },
++  "graph_contribution": {
++    "lean_graph": "no-change-with-reason",
++    "overview_graph": "no-change-with-reason",
++    "functor_hypergraph": "none-found-with-reason",
++    "functor_reason": "Only link to existing formal and conceptual views; do not add a conceptual bridge or alter mathematical graph semantics.",
++    "focus_targets": ["index.html#overview", "index.html#math-2-0", "math-2-0/index.html"],
++    "visual_review": "Parent agent independently reviewed homepage and Math 2.0 page on desktop and at 390×844: readable hero, title and actions; all nine direction IDs present; document content width 375 equals viewport width 375, with no horizontal overflow. Canonical Samplinglib link and licensed model-resource wording corrected from desktop review.",
++    "edge_semantics": "formal-solid; overlays-dashed"
++  },
++  "learning_contract": {
++    "control_plane_math_authority": false,
++    "process_memory_checked": true,
++    "process_memory_ids": ["ABRL-PM-MATCHED-HARNESS-EVIDENCE", "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS", "ABRL-NK-WINDOWS-PATH-LENGTH"],
++    "failure_class": "ENV_BLOCKED",
++    "salvage": {
++      "required": true,
++      "status": "completed",
++      "reason": "The full gate stopped at mathlib cloning (git exit 128) before project Lean compilation; no proof work changed and no mathematical fragments were lost. Preserve all source and complete the standard-library site preview checks.",
++      "promoted_fragments": [],
++      "discarded_fragments": []
++    },
++    "parallelism": {
++      "decision": "serial",
++      "direction_fingerprints": [],
++      "expected_information_gain": "One bounded publication edit; other agents own independent sister-library files.",
++      "shared_verified_context_digest": "not-applicable: no parallel proof routes"
++    },
++    "cross_route_blind_spot_audit": {
++      "required": false,
++      "status": "not-applicable",
++      "evidence": "No competing mathematical proof routes.",
++      "canonical_route": "not-applicable",
++      "selection_reason": "Publication-only change."
++    },
++    "reader_backpressure": {
++      "purification_status": "not-applicable",
++      "exposition_seal_status": "not-applicable",
++      "reader_debt_delta": 0,
++      "exposition_evidence": "New mission page distinguishes existing foundations from next contributions; no source theorem is newly labelled PURIFIED.",
++      "source_expansion_nodes": [],
++      "lean_expansion_nodes": [],
++      "assumptions_preserved": true,
++      "boundary_preserved": true
++    }
++  },
++  "progress_updates": {
++    "teaching_route": "no-change-with-reason: improve entry to existing books; theorem and chapter scope unchanged",
++    "banditrlwiki": "no-change-with-reason: link existing assumption and source atlas; no case or status change",
++    "results_ledger": "no-change-with-reason: publication-only; no result completion delta",
++    "roadmap": "no-change-with-reason: conceptual mission does not modify formalization frontier",
++    "website_surfaces": ["index.html", "math-2-0/index.html", "Start navigation"]
++  },
++  "truth_boundary": "Existing reader interfaces support the mission; ablation results, automatic theorem neighborhoods, new principles, model training and real-world safety validation remain research agenda items. Full local Lean gate did not run beyond dependency acquisition, so only an explicitly unverified preview was built. README.md and docs/math-2-0-positioning.md accompany this bounded publication change but are outside the checker's protected-production affected_files set.",
++  "verification": {
++    "focused_checks": ["python -m py_compile website/scripts/build_site.py: passed", "python tools/check_process_memory.py check: passed", "validate_contract for this manifest: passed", "Focused generated homepage, Math 2.0 and community link/anchor/metadata checks; nine direction IDs and MathJax presence; README presentation checks: passed"],
++    "bandit_check": "python tools/bandit.py check: ENV_BLOCKED at mathlib clone, external git exit 128; project Lean compilation not reached",
++    "site_build": "python website/scripts/build_site.py: passed without --lean-verified; GITHUB_SHA pinned to downloaded upstream f07aa9a2a5df241087ffab1c3579d1b59d8bf6f6 for preview source links",
++    "site_check": "python website/scripts/check_site.py --allow-unverified: passed; 881 HTML pages, 802 modules, 10491 indexed declarations; internal links/anchors, README links, MathJax and publication workflow valid",
++    "independent_review": "Parent agent desktop and 390×844 mobile browser QA passed on homepage and Math 2.0 page, including no horizontal overflow and nine direction IDs. Canonical Samplinglib link and own/appropriately licensed model-resource wording corrected from review. No mathematical semantic audit required for this publication-only delta."
++  },
++  "contributor": {"name": "Dake Bu with Codex assistance", "role": "Public positioning and reader navigation"}
++}
+diff --git a/website/content/math_2_0.json b/website/content/math_2_0.json
+new file mode 100644
+index 00000000..73022887
+--- /dev/null
++++ b/website/content/math_2_0.json
+@@ -0,0 +1,104 @@
++{
++  "title": "BanditRLlib in Math 2.0",
++  "mission": "Understand why a learning guarantee holds—and where it breaks.",
++  "source": {
++    "title": "Math 2.0",
++    "author": "Terence Tao",
++    "date": "October 2026",
++    "url": "https://teorth.github.io/tao-web/slides/math-2-0-caltech-2026.pdf",
++    "pages": "22, 25–26"
++  },
++  "groups": [
++    {"id": "foundations", "title": "Foundations: a living network and a reusable formal library", "directions": [2, 3]},
++    {"id": "understanding", "title": "Human value: clearer proofs and better teaching", "directions": [1, 8]},
++    {"id": "research", "title": "Research agenda: learn from the structure of proofs", "directions": [4, 5, 6, 7, 9]}
++  ],
++  "directions": [
++    {
++      "number": 1,
++      "title": "Open exposition problems",
++      "page": 22,
++      "role": "Explain the mechanisms behind regret and sample-complexity bounds, beyond a finished proof.",
++      "foundation": "Source-aligned teaching routes pair mathematical explanations with exact Lean. The proof-digestion protocol preserves assumptions and a path back to the full proof.",
++      "next": "Turn opaque adaptivity, stopping and change-of-measure arguments into reviewed conceptual steps, using compressed proof spines and the Functor Hypergraph.",
++      "evidence": [{"title": "Reading routes", "path": "learning/index.html"}, {"title": "Proof digestion protocol", "source": "docs/proof-digestion-protocol.md"}]
++    },
++    {
++      "number": 2,
++      "title": "Living knowledge networks",
++      "page": 22,
++      "role": "Connect papers by their feedback model, assumptions, bound and reusable proof mechanism.",
++      "foundation": "BanditRLwiki, the setting/technique atlas and named frontier leaves organize primary sources with separate literature and local formalization status.",
++      "next": "Keep new papers and corrected statements attached to stable source and graph nodes, so the field map can evolve without losing provenance.",
++      "evidence": [{"title": "Bound & Source Atlas", "path": "banditrlwiki/index.html"}, {"title": "Technique Map", "path": "banditrlwiki/technique-map/index.html"}]
++    },
++    {
++      "number": 3,
++      "title": "High-quality formal libraries",
++      "page": 22,
++      "role": "Build a reusable Lean foundation for sequential learning.",
++      "foundation": "BanditRLlib contains Lean developments for bandits, probability, stopping, information bounds and finite-horizon RL. Exact declarations and route-specific proof boundaries are searchable.",
++      "next": "Prioritize canonical shared primitives and narrow adapters between settings; keep compilation, source fidelity and route completion distinct.",
++      "evidence": [{"title": "Lean declarations", "path": "declarations/index.html"}, {"title": "Implementation Map", "path": "implementation-map/index.html"}]
++    },
++    {
++      "number": 4,
++      "title": "New principles, methods and insights",
++      "page": 22,
++      "role": "Use proof graphs to discover which ideas transfer across learning problems.",
++      "foundation": "The Lean Graph exposes formal structure; the Functor Hypergraph records candidate mechanisms across feedback, state, objective and oracle changes.",
++      "next": "Cross-pollinate confidence, information and Bellman/occupancy routes across BanditRLlib, Samplinglib and QuantumComputinglib; prove the smallest useful transport. A conceptual match alone is not a new theorem or novelty verdict.",
++      "evidence": [{"title": "Lean Graph", "path": "lean-graph/index.html"}, {"title": "Functor Hypergraph", "path": "functor-hypergraph/index.html"}]
++    },
++    {
++      "number": 5,
++      "title": "Ablation studies",
++      "page": 25,
++      "role": "Ask whether the same learning guarantee survives without a particular proof tool.",
++      "foundation": "The source/Lean graph distinction, ingredient audits and source-blind encoder–denoiser review help identify what a proof really assumes and uses. The Proof Graph Laboratory provides experimental dependency analysis.",
++      "next": "Freeze one theorem contract, remove a proof theory or input, and test an alternative route. Round-trip review supports this experiment; it does not itself establish an ablation result.",
++      "evidence": [{"title": "Proof Graph Laboratory", "path": "proof-graph-laboratory/index.html"}, {"title": "Semantic round trip", "source": ".agents/skills/bandit-semantic-roundtrip/SKILL.md"}]
++    },
++    {
++      "number": 6,
++      "title": "The neighborhood of a theorem",
++      "page": 25,
++      "role": "Explore what remains true when feedback, stationarity, reward tails or horizon assumptions change.",
++      "foundation": "The assumption-indexed atlas, theorem contracts and explicit frontier gaps distinguish compatible guarantees from superficially similar rates.",
++      "next": "Generate nearby contracts from the graph, then separately verify weakened conclusions or checked counterexamples. Dropping a hypothesis creates a new target, not an inherited proof.",
++      "evidence": [{"title": "Bandit Taxonomy", "path": "banditrlwiki/setting-atlas/index.html"}, {"title": "Formalization frontier", "path": "banditrlwiki/frontier/index.html"}]
++    },
++    {
++      "number": 7,
++      "title": "Interpretable, safe, open math models",
++      "page": 25,
++      "role": "Supply inspectable mathematical tasks, concise Lean and aligned natural-language explanations for specialized models.",
++      "foundation": "ABRL uses our own or appropriately licensed versioned lemma packets, explicit targets, compiler feedback and reviewer evidence. Those source contracts and typed failures can support future training and evaluation where their licenses permit.",
++      "next": "Curate licensed, versioned proof/explanation pairs and failure cases, with held-out source-fidelity evaluation. No trained model, validated training corpus or faithful access to a model’s internal reasoning is claimed here.",
++      "evidence": [{"title": "ABRL workflow", "path": "workflow/index.html"}, {"title": "Contribution packets", "path": "community/index.html#machine-contract"}]
++    },
++    {
++      "number": 8,
++      "title": "Interactive texts and presentations",
++      "page": 26,
++      "role": "Make sequential-learning theory navigable for students and useful to researchers.",
++      "foundation": "Book views, worked examples, source-to-Lean bridges, folded exact statements and a progressively expandable graph offer several routes through the same mathematics.",
++      "next": "Lead with the motivating question and a short proof spine; use graph drill-down and alternative verified routes to deepen understanding without overwhelming the first reading.",
++      "evidence": [{"title": "Books", "path": "books/index.html"}, {"title": "Explore the graph", "path": "lean-graph/index.html"}]
++    },
++    {
++      "number": 9,
++      "title": "Real-world model failure and misalignment",
++      "page": 26,
++      "role": "Expose the gap between a formal learning guarantee and the assumptions of its deployment.",
++      "foundation": "The source and assumption ledgers make feedback access, adaptivity, probability mode and remaining mathematical boundaries visible.",
++      "next": "Use formal model violations and checked counterexamples to study misleading guarantee claims, then pair them with external evidence about the deployed environment. Lean correctness alone cannot validate that environment or certify deployment safety.",
++      "evidence": [{"title": "Assumption-indexed atlas", "path": "banditrlwiki/index.html"}, {"title": "Publication protocol", "source": "docs/theorem-publication-protocol.md"}]
++    }
++  ],
++  "sisters": [
++    {"name": "Samplinglib", "role": "Sampling, probability and analytic proof mechanisms", "url": "https://dakebu.github.io/Automization-Sampling-Optimisation-Geometry-Lib/"},
++    {"name": "QuantumComputinglib", "role": "Quantum algorithms, operators and explicit oracle interfaces", "url": "https://dakebu.github.io/Quantum-Computing-Block-Encoding/"},
++    {"name": "BanditRLlib", "role": "Sequential decisions, feedback models and learning guarantees", "url": "https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/"}
++  ]
++}
+diff --git a/website/scripts/build_site.py b/website/scripts/build_site.py
+index 665c5e44..117bf0a7 100644
+--- a/website/scripts/build_site.py
++++ b/website/scripts/build_site.py
+@@ -71,7 +71,7 @@ PAPER_TITLE = (
+ PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
+ PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
+ PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
+-ASSET_VERSION = "20260919-taxonomy-techniques"
++ASSET_VERSION = "20261011-math-2-0"
+ CATALOG_PAGE_SIZE = 20
+ MILESTONE_PAGE_SIZE = 12
+ MODULE_PAGE_SIZE = 30
+@@ -798,6 +798,7 @@ def layout(
+     root = page_root(page_path)
+     start_items = [
+         ("overview", "Overview", "index.html"),
++        ("math-2-0", "Math 2.0 mission", "math-2-0/index.html"),
+         ("installation", "Installation", "installation/index.html"),
+     ]
+     library_items = [
+@@ -901,7 +902,7 @@ def layout(
+     breadcrumb = render_book_breadcrumb(page_path)
+     sidebar_groups = "".join(
+         [
+-            nav_group("start", "Start", start_nav, current in {"overview", "installation"}),
++            nav_group("start", "Start", start_nav, current in {"overview", "math-2-0", "installation"}),
+             nav_group("books", "Books", books_nav, bandit_active or other_book_active or current in {"books", "reinforcement-learning", "online-learning", "conformal-prediction"}),
+             nav_group(
+                 "research",
+@@ -974,15 +975,15 @@ def layout(
+     canonical_url = public_page_url(page_path)
+     social_title = f"{title} · BanditRLlib"
+     social_description = (
+-        "Verified bandit and reinforcement-learning theory in Lean, with "
+-        "source-mapped teaching chapters, exact declarations, and explicit proof boundaries."
++        "Understand sequential-learning proofs through source-linked explanations, "
++        "Lean evidence and navigable proof graphs. Human-understanding infrastructure for Math 2.0."
+     )
+     return f"""<!doctype html>
+ <html lang="en" data-theme="blueprint">
+ <head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+-  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
++  <meta name="description" content="{html.escape(social_description, quote=True)}">
+   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
+   <meta property="og:type" content="website">
+   <meta property="og:site_name" content="BanditRLlib">
+@@ -2304,16 +2305,16 @@ def build_index(
+     )
+     body = f"""
+ <section class="hero" id="overview">
+-  <p class="eyebrow">Verified bandit and reinforcement-learning theory in Lean</p>
++  <p class="eyebrow">Sequential learning · human understanding · Lean</p>
+   <h1>BanditRLlib</h1>
+-  <p class="lede">Learn bandit and reinforcement-learning theory beside its compiled Lean interfaces, search exact declarations, and contribute one reviewable lemma at a time.</p>
++  <p class="hero-purpose">Understand why a learning guarantee holds—and where it breaks.</p>
++  <p class="lede">Read the proof ideas, follow their Lean evidence, and explore how they connect across bandits, reinforcement learning and online learning.</p>
+   <div class="hero-actions">
+     <a class="button primary" href="{href_from(page_path, 'books/index.html')}">Explore the Books</a>
+     <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
+     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
+   </div>
+-  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
+-  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental workspace</a></p>
++  <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'math-2-0/index.html')}">Our Math 2.0 mission</a></p>
+ </section>
+ 
+ <section id="three-roles" class="audience-paths" aria-labelledby="three-roles-title">
+@@ -2326,6 +2327,13 @@ def build_index(
+   </div>
+ </section>
+ 
++<aside class="math-mission-strip" id="math-2-0" aria-labelledby="math-mission-title">
++  <p class="eyebrow">Our response to Terence Tao’s Math 2.0</p>
++  <h2 id="math-mission-title">A living network → understandable mathematics → new ideas.</h2>
++  <p>Source-linked research maps and a reusable Lean library are the foundations. Clear explanations and interactive teaching are the human value. Proof-method transfer, ablation and verified theorem neighborhoods are the research agenda.</p>
++  <a href="{href_from(page_path, 'math-2-0/index.html')}">Explore all nine directions, with current evidence and next steps →</a>
++</aside>
++
+ <section id="books">
+   <p class="eyebrow">Books · shared Lean foundations</p>
+   <h2>Choose a book. Follow the same mathematics.</h2>
+@@ -2364,6 +2372,7 @@ def build_index(
+     <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Adaptive Harness</h3><p>A fixed mathematical target enters an evidence-aware scheduler. The hierarchical route remains the default; bounded master–worker trials use the same hashed route packet, and only separate reviewer verdicts can enter the comparison.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
+     <article class="info-card system-card"><span class="level-label">User-facing library</span><h3>BanditRLlib</h3><p>Compiled Lean declarations → searchable reusable library → textbook-aligned learning → LaTeX↔Lean formalization → community lemma intake.</p><a href="{href_from(page_path, 'declarations/index.html')}">Browse BanditRLlib →</a></article>
+   </div>
++  <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
+   {render_diagram(page_path, 'system-architecture.mmd', 'A research target enters ABRL and returns as reusable, reviewer-gated BanditRLlib mathematics')}
+ </section>
+ 
+@@ -2469,6 +2478,7 @@ python3 tools/bandit.py check</code></pre></article>
+     toc = [
+         ("overview", "Overview"),
+         ("three-roles", "Three ways to use BanditRLlib"),
++        ("math-2-0", "Math 2.0 mission"),
+         ("books", "Books"),
+         ("primary-textbook", "Primary textbook"),
+         ("textbook-spine", "Part IV spine"),
+@@ -2492,6 +2502,61 @@ python3 tools/bandit.py check</code></pre></article>
+     )
+ 
+ 
++def build_math_2_0(output: Path, verified: bool, generated_at: str) -> None:
++    """Publish the maintained mission without changing mathematical status."""
++    page_path = "math-2-0/index.html"
++    content = load_json(CONTENT_DIR / "math_2_0.json")
++    source = content["source"]
++    directions = {item["number"]: item for item in content["directions"]}
++    sections: list[str] = []
++    for group in content["groups"]:
++        cards: list[str] = []
++        for number in group["directions"]:
++            item = directions[number]
++            links: list[str] = []
++            for evidence in item["evidence"]:
++                target = source_url(evidence["source"]) if "source" in evidence else href_from(page_path, evidence["path"])
++                links.append(f'<a href="{html.escape(target, quote=True)}">{html.escape(evidence["title"])}</a>')
++            cards.append(f"""
++<article class="math-direction" id="direction-{number}">
++  <p class="eyebrow">{number:02d} · Tao’s example · p. {item['page']}</p>
++  <h3>{html.escape(item['title'])}</h3>
++  <p class="math-direction-role">{html.escape(item['role'])}</p>
++  <dl>
++    <div><dt>Current foundation</dt><dd>{html.escape(item['foundation'])}</dd></div>
++    <div><dt>Next contribution</dt><dd>{html.escape(item['next'])}</dd></div>
++  </dl>
++  <p class="math-evidence-links">{' · '.join(links)}</p>
++</article>""")
++        sections.append(f'<section id="{group["id"]}"><h2>{html.escape(group["title"])}</h2><div class="math-direction-grid">{"".join(cards)}</div></section>')
++    sisters = "".join(
++        f'<article class="info-card"><h3><a href="{html.escape(item["url"], quote=True)}">{html.escape(item["name"])}</a></h3><p>{html.escape(item["role"])}</p></article>'
++        for item in content["sisters"]
++    )
++    body = f"""
++<section class="hero" id="mission">
++  <p class="eyebrow">Human-understanding infrastructure for Math 2.0</p>
++  <h1 class="page-title">{html.escape(content['title'])}</h1>
++  <p class="hero-purpose">{html.escape(content['mission'])}</p>
++  <p class="lede">A living knowledge network and a reusable Lean library support clearer explanations, interactive teaching and the search for transferable proof ideas.</p>
++  <p>Terence Tao’s <a href="{html.escape(source['url'], quote=True)}"><cite>{html.escape(source['title'])}</cite>, {html.escape(source['date'])}</a> argues that AI should strengthen human understanding throughout mathematics. Below is our response to nine examples on pp. {html.escape(source['pages'])}, organized by foundations, human value and research agenda.</p>
++  <p class="mission-boundary">These are examples in Tao’s talk, not an official nine-goal program or an endorsement. “Current foundation” links to existing work; “Next contribution” names work still to do.</p>
++</section>
++{''.join(sections)}
++<section id="three-libraries">
++  <h2>Three libraries, one shared purpose</h2>
++  <p>Connect explanations, source evidence and formal proof structure across domains. Each library owns its mathematical foundations; cross-library research links become theorem edges only through checked imports or explicit adapters.</p>
++  <div class="math-sister-grid">{sisters}</div>
++</section>
++<section id="participate">
++  <h2>Contribute a clearer proof or a reusable mathematical step</h2>
++  <p>Start with one sourced claim, one exposition problem or one explicit assumption boundary. The <a href="{href_from(page_path, 'community/index.html')}">contribution guide</a> connects it to the library; our <a href="{source_url('docs/math-2-0-positioning.md')}">public claims and evidence protocol</a> keeps present capabilities and research ambitions distinct.</p>
++</section>
++"""
++    toc = [("mission", "Our mission")] + [(group["id"], group["title"].split(":")[0]) for group in content["groups"]] + [("three-libraries", "Three libraries"), ("participate", "Contribute")]
++    write_page(output, page_path, layout(page_path, content["title"], body, toc, "math-2-0", verified, generated_at))
++
++
+ def build_implementation_map(
+     output: Path,
+     modules: list[dict[str, Any]],
+@@ -5921,6 +5986,7 @@ def main() -> int:
+     (output / ".nojekyll").write_text("", encoding="utf-8")
+ 
+     build_books(output, args.lean_verified, generated_at)
++    build_math_2_0(output, args.lean_verified, generated_at)
+     build_index(
+         output,
+         modules,
+diff --git a/website/static/site.css b/website/static/site.css
+index d24e72ce..41f9456f 100644
+--- a/website/static/site.css
++++ b/website/static/site.css
+@@ -673,6 +673,88 @@ h3 {
+   flex-wrap: wrap;
+ }
+ 
++.hero-purpose {
++  max-width: 30ch;
++  margin: 1rem 0 0;
++  color: var(--ink);
++  font-family: var(--serif);
++  font-size: clamp(1.45rem, 2.8vw, 2.25rem);
++  line-height: 1.25;
++  text-wrap: balance;
++}
++
++.math-mission-strip {
++  margin: 1.8rem 0 2.4rem;
++  padding: clamp(1.2rem, 3vw, 1.9rem);
++  border: 1px solid var(--line);
++  border-left: 4px solid var(--accent);
++  border-radius: var(--radius);
++  background: var(--surface);
++}
++
++.math-mission-strip h2 {
++  margin: 0.5rem 0 0.8rem;
++  max-width: 36ch;
++  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
++}
++
++.math-mission-strip p:not(.eyebrow),
++.mission-boundary {
++  max-width: 76ch;
++  color: var(--muted);
++}
++
++.math-direction-grid,
++.math-sister-grid {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
++  gap: 1.1rem;
++}
++
++.math-direction {
++  padding: 1.4rem;
++  border: 1px solid var(--line);
++  border-radius: var(--radius);
++  background: var(--surface);
++  scroll-margin-top: 5rem;
++}
++
++.math-direction h3 {
++  margin: 0 0 0.8rem;
++  font-size: 1.4rem;
++}
++
++.math-direction-role {
++  color: var(--ink);
++  font-weight: 650;
++}
++
++.math-direction dl {
++  margin: 1rem 0;
++}
++
++.math-direction dl > div + div {
++  margin-top: 1rem;
++  padding-top: 1rem;
++  border-top: 1px solid var(--line);
++}
++
++.math-direction dt {
++  margin-bottom: 0.35rem;
++  color: var(--accent-strong);
++  font-size: 0.85rem;
++  font-weight: 700;
++}
++
++.math-direction dd {
++  margin: 0;
++  color: var(--muted);
++}
++
++.math-evidence-links {
++  font-size: 0.9rem;
++}
++
+ .button {
+   display: inline-flex;
+   align-items: center;

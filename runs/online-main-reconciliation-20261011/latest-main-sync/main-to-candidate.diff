@@ -1,0 +1,217 @@
+diff --git a/website/scripts/build_site.py b/website/scripts/build_site.py
+index c51d32c6..117bf0a7 100644
+--- a/website/scripts/build_site.py
++++ b/website/scripts/build_site.py
+@@ -77,6 +77,12 @@ MILESTONE_PAGE_SIZE = 12
+ MODULE_PAGE_SIZE = 30
+ TEACHING_PREVIEW_COUNT = 4
+ PSEUDOCODE_CHAPTERS = {
++    "online-osd",
++    "online-guessing-osd",
++    "online-osd-policy",
++    "online-linearization",
++    "online-optimal-step",
++    "online-unit-scaling",
+     "etc",
+     "ucb",
+     "oful",
+@@ -410,7 +416,65 @@ def markdown_prose_summary(text: str, limit: int = 620) -> str:
+     return heading_fallback[:limit].rstrip()
+ 
+ 
+-def scan_module(path: Path) -> dict[str, Any]:
++def load_declaration_boundaries() -> list[dict[str, Any]]:
++    """Load optional reviewed source ranges; never replace source with supplied text."""
++    path = CONTENT_DIR / "declaration-boundaries.json"
++    if not path.exists():
++        return []
++    payload = json.loads(path.read_text(encoding="utf-8"))
++    if payload.get("schema_version") != 1 or not isinstance(payload.get("entries"), list):
++        raise ValueError("Invalid declaration-boundaries schema")
++    entries = payload["entries"]
++    seen: set[str] = set()
++    for entry in entries:
++        if not isinstance(entry, dict):
++            raise ValueError("Invalid declaration boundary entry")
++        name = entry.get("full_name")
++        file = entry.get("file")
++        start, end = entry.get("start_line"), entry.get("end_line")
++        if (not isinstance(name, str) or not name or name in seen
++                or not isinstance(file, str) or Path(file).is_absolute()
++                or "\\" in file or ".." in file.split("/")
++                or not file.endswith(".lean")
++                or type(start) is not int or type(end) is not int
++                or start < 1 or end < start
++                or not isinstance(entry.get("reason"), str) or not entry["reason"].strip()):
++            raise ValueError("Invalid or duplicate declaration boundary")
++        for key in ("file_sha256", "block_LF_sha256"):
++            if not isinstance(entry.get(key), str) or not re.fullmatch(r"[0-9a-f]{64}", entry[key]):
++                raise ValueError("Invalid declaration boundary hash")
++        seen.add(name)
++    return entries
++
++
++def apply_declaration_boundaries(
++    path: Path, lines: list[str], visible_lines: list[str],
++    declarations: list[dict[str, Any]], boundaries: list[dict[str, Any]],
++) -> None:
++    """Fail closed on stale or incomplete ranges, preserving all unlisted statements."""
++    for entry in boundaries:
++        if entry["file"] != rel_source(path):
++            continue
++        matches = [(i, d) for i, d in enumerate(declarations)
++                   if d["full_name"] == entry["full_name"]]
++        if len(matches) != 1:
++            raise ValueError("Unresolved declaration boundary: " + entry["full_name"])
++        index, declaration = matches[0]
++        start, end = entry["start_line"], entry["end_line"]
++        next_line = declarations[index + 1]["line"] if index + 1 < len(declarations) else len(lines) + 1
++        if (declaration["private"] or declaration["kind"] != "def"
++                or declaration["line"] != start or end >= next_line or end > len(lines)
++                or hashlib.sha256(path.read_bytes()).hexdigest() != entry["file_sha256"]):
++            raise ValueError("Stale or invalid declaration boundary: " + entry["full_name"])
++        block = "\n".join(lines[start - 1:end])
++        if hashlib.sha256(block.encode("utf-8")).hexdigest() != entry["block_LF_sha256"]:
++            raise ValueError("Stale declaration boundary block: " + entry["full_name"])
++        if any(line.strip() for line in visible_lines[end:next_line - 1]):
++            raise ValueError("Declaration boundary skips source code: " + entry["full_name"])
++        declaration["statement"] = compact_statement(lines[start - 1:end], 0)
++
++
++def scan_module(path: Path, boundaries: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+     text = path.read_text(encoding="utf-8")
+     lines = text.splitlines()
+     imports = [
+@@ -505,6 +569,11 @@ def scan_module(path: Path) -> dict[str, Any]:
+         body = "\n".join(visible_lines[start:stop])
+         declaration["placeholder"] = bool(PLACEHOLDER_RE.search(body))
+ 
++    apply_declaration_boundaries(
++        path, lines, visible_lines, declarations,
++        load_declaration_boundaries() if boundaries is None else boundaries,
++    )
++
+     docstring = module_docstring(text)
+     return {
+         "name": module_name(path),
+@@ -523,7 +592,13 @@ def scan_lean_tree() -> list[dict[str, Any]]:
+     aggregator = ROOT / "BanditRLProof.lean"
+     if aggregator.exists():
+         paths.insert(0, aggregator)
+-    return [scan_module(path) for path in paths]
++    boundaries = load_declaration_boundaries()
++    modules = [scan_module(path, boundaries) for path in paths]
++    resolved = {(d["file"], d["full_name"]) for m in modules for d in m["declarations"]}
++    for entry in boundaries:
++        if (entry["file"], entry["full_name"]) not in resolved:
++            raise ValueError("Unresolved declaration boundary: " + entry["full_name"])
++    return modules
+ 
+ 
+ def assign_chapters(modules: list[dict[str, Any]], chapters: list[dict[str, Any]]) -> None:
+@@ -1096,7 +1171,8 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
+         body = f'''<section class="hero" id="book"><p class="eyebrow">{'Source-mapped reading view' if book['status'] == 'source-mapped' else 'Planned reading map'}</p><h1 class="page-title">{html.escape(book['title'])}</h1><p class="lede">{html.escape(book['summary'])}</p>{source_html}</section>'''
+         toc = [("book", book["title"])]
+         if book["id"] == "bandit":
+-            body += f'''<section id="teaching-routes"><h2>Teaching routes · 01–10</h2><p>These ten curated routes keep their original numbering. They are not the textbook's chapter numbers and do not cover the entire book.</p>{render_book_map(page_path, teaching_chapters_for_book("bandit"), compact=True)}<p><a href="{href_from(page_path, 'learning/index.html#path')}">Choose a mathematical reading path</a></p></section>
++            book_chapters = teaching_chapters_for_book("bandit")
++            body += f'''<section id="teaching-routes"><h2>Teaching routes · 01–{len(book_chapters):02d}</h2><p>These curated routes keep their original numbering. They are not the textbook's chapter numbers and do not cover the entire book.</p>{render_book_map(page_path, book_chapters, compact=True)}<p><a href="{href_from(page_path, 'learning/index.html#path')}">Choose a mathematical reading path</a></p></section>
+ <section id="source-chapters"><h2>Source chapters · Part IV, 13–17</h2><p>Required main-text contracts have prior merged compilation evidence; optional notes and exercises are not all complete. This build's verification banner states the local gate status.</p><div class="callout warning">Chapter 17 retains explicit source corrections: Claim 17.6 uses <code>T_i ≤ n/2</code>; Theorem 17.4 uses <code>0 &lt; δ ≤ 1/32</code>, <code>c = 1/160</code> and <code>C = 64</code>.</div>{render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)}</section>
+ <section id="extended-chapters"><h2>Beyond the core textbook</h2><p>This section used to mix a small set of “Extended Chapters” with BanditRLwiki. It is now only a navigation layer: classification, techniques, literature bounds and open problems have different truth contracts and live on separate pages.</p>
+ <div class="card-grid">
+@@ -1109,11 +1185,16 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
+             toc += [("teaching-routes", "Teaching routes"), ("source-chapters", "Source chapters"), ("extended-chapters", "Beyond core textbook")]
+         else:
+             refs = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in book["chapter_refs"])
++            mapping_note = (
++                "Source-scoped packages are identified on their chapter pages. Their exact completion boundaries do not cover the rest of this book; older shared reading links retain their original sources."
++                if book["status"] == "source-mapped" else
++                "These links reuse established pages with their original sources and exact Lean boundaries. They do not certify a chapter of the new book."
++            )
+             mapping_title = "Remaining source mapping" if book["status"] == "source-mapped" else "Planned source mapping"
+             mapping_text = ("The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits; neither this chapter nor the whole book is complete."
+                             if book["status"] == "source-mapped" else
+                             "Next: freeze source versions, chapter contracts, assumptions and theorem locators; retrieve existing declarations and prove only the missing interfaces. Chapter numbers, page coverage and completion totals will appear after that audit.")
+-            body += f'''<section id="existing-reading"><h2>Existing shared reading</h2><p>These links reuse established pages with their original sources and exact Lean boundaries. They do not certify a chapter of the new book.</p>{'<ol class="shared-route">' + refs + '</ol>' if refs else '<p>No chapter references registered yet.</p>'}</section>
++            body += f'''<section id="existing-reading"><h2>Existing shared reading</h2><p>{mapping_note}</p>{'<ol class="shared-route">' + refs + '</ol>' if refs else '<p>No chapter references registered yet.</p>'}</section>
+ <section id="planned-mapping"><h2>{mapping_title}</h2><p>{mapping_text}</p></section>'''
+             toc += [("existing-reading", "Shared reading"), ("planned-mapping", mapping_title)]
+         body += f'''<section id="shared-graph"><h2>One underlying Lean graph</h2><p>All references resolve to canonical declarations in the global index. Reading views do not create additional Lean modules.</p><p><a href="{href_from(page_path, 'lean-graph/index.html')}">Explore the graph</a> · <a href="{href_from(page_path, 'books/registry.json')}">Download the shared reference registry</a></p></section>'''
+@@ -1786,7 +1867,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
+ <section id="source-guide" class="source-guide">
+   <p class="eyebrow">Textbook crosswalk</p>
+   <h2>Read the mathematics before the Lean interface</h2>
+-  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Visible page labels use the numbered pages of its free online edition; source buttons use the PDF viewer's physical page index, which includes front matter and can therefore be larger. Companion papers cover algorithm-specific results.</p>
++  <p class="section-intro">This reading follows <em>{html.escape(reading["primary"]["title"])}</em>. Teaching routes group mathematical dependencies across the shared library. Visible page labels use the cited source's numbered pages; source buttons use the PDF viewer's physical page index, including front matter. Companion papers cover algorithm-specific results.</p>
+   <div class="source-grid source-grid-{len(standard_companions) + 1}">{sources}</div>
+   {advanced_sources_html}
+   {notation_html}
+@@ -1806,7 +1887,7 @@ def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dic
+     algorithm = reading["algorithm"]
+     theorem_count = int(bool(reading.get("source_theorem"))) + len(reading.get("source_theorems", []))
+     example_note = (
+-        " Includes a three-step worked example."
++        " Includes a worked example."
+         if reading.get("worked_example")
+         else ""
+     )
+@@ -4903,8 +4984,17 @@ def build_lean_graph(
+             module_core_ids,
+         )
+ 
+-    search_shards = sorted(set(node_shards.values()))
++    # Frequent shards get shorter numeric indices. The schema, every node ID,
++    # and its decoded shard path stay unchanged; only the lookup-table order
++    # changes. This preserves the eager-index size gate as the library grows.
++    shard_frequencies = Counter(node["shard"] for node in nodes.values())
++    search_shards = sorted(shard_frequencies, key=lambda shard: (-shard_frequencies[shard], shard))
+     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
++    # Intern repeated kind/status strings; every ID, decoded field and shard stays intact.
++    search_kinds = sorted({node["kind"] for node in nodes.values()})
++    search_statuses = sorted({node["status"] for node in nodes.values()})
++    search_kind_ids = {kind: index for index, kind in enumerate(search_kinds)}
++    search_status_ids = {status: index for index, status in enumerate(search_statuses)}
+     search_entries: list[list[Any]] = []
+     for node in nodes.values():
+         # The browser derives declaration/module labels from the ID. Omit the
+@@ -4913,8 +5003,8 @@ def build_lean_graph(
+         search_entries.append(
+             [
+                 node["id"],
+-                node["kind"],
+-                node["status"],
++                search_kind_ids[node["kind"]],
++                search_status_ids[node["status"]],
+                 search_shard_ids[node["shard"]],
+             ] + ([] if derived_label else [node["label"], node["subtitle"]])
+         )
+@@ -4923,9 +5013,11 @@ def build_lean_graph(
+         search_index_path,
+         json.dumps(
+             {
+-                "schema_version": 2,
++                "schema_version": 3,
+                 "generated_at": generated_at,
+                 "shards": search_shards,
++                "kinds": search_kinds,
++                "statuses": search_statuses,
+                 "entries": search_entries,
+             },
+             ensure_ascii=False,
+diff --git a/website/static/site.css b/website/static/site.css
+index 3c09d9fd..41f9456f 100644
+--- a/website/static/site.css
++++ b/website/static/site.css
+@@ -2851,10 +2851,12 @@ tbody tr:hover {
+ 
+ .source-theorem-route-list {
+   display: grid;
++  grid-template-columns: minmax(0, 1fr);
+   gap: 0.65rem;
+ }
+ 
+ .source-theorem-disclosure {
++  min-width: 0;
+   border: 1px solid var(--line);
+   border-radius: var(--radius);
+   background: var(--surface);
