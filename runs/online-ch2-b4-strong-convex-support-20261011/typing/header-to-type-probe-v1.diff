@@ -1,0 +1,22 @@
+--- statement-candidate-v1.txt
++++ SupportHeaderType-v1.lean
+@@ -5,7 +5,7 @@
+ open Set
+ namespace BanditRL.OnlineConvex
+ 
+-theorem stronglyConvex_support_growth {E : Type*}
++def stronglyConvex_support_growth_headerType {E : Type*}
+     [NormedAddCommGroup E] [NormedSpace ℝ E]
+     (f : E → EReal) (V : Set E) (lam : ℝ)
+     (hf : SourceProper f) (hV : Convex ℝ V)
+@@ -16,7 +16,9 @@
+           (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))
+     (p : E) (hp : p ∈ V) (g : E →L[ℝ] ℝ)
+     (hsupport : ∀ z ∈ V, f p + (g (z - p) : EReal) ≤ f z)
+-    (q : E) (hq : q ∈ V) :
++    (q : E) (hq : q ∈ V) Prop :=
+     (f p).toReal + g (q - p) + (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal
+ 
++#check @stronglyConvex_support_growth_headerType
++
+ end BanditRL.OnlineConvex

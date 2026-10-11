@@ -1,0 +1,349 @@
+{
+  "scope": "Diagnosis metadata only; original header unchanged byte-for-byte",
+  "previous": {
+    "path": "tmp/online-ch2-b4-next-after-growth-planning-20261011/next-dependency-diagnosis-v1.json",
+    "sha256": "ec22be67dde76fb1c9cc12c8688594d264190020f39ce13210990f0c7a7d41b8",
+    "bytes": 23992
+  },
+  "successor": {
+    "path": "tmp/online-ch2-b4-next-after-growth-planning-20261011/next-dependency-diagnosis-v2.json",
+    "sha256": "b3e01074c4a5330b3808fccb0fabc3d9bc026463123127a28b5a3536b9f29969",
+    "bytes": 27183
+  },
+  "changes": [
+    {
+      "path": "/binder_ledger",
+      "operation": "replace",
+      "old": [
+        {
+          "binder": "E / normed group / real normed space",
+          "classification": "TYPING_GENERALIZATION",
+          "source": "Definition4.1 source finite R^d with arbitrary chosen norm; generalized normed-space carrier, no inner-product norm imposed"
+        },
+        {
+          "binder": "f,V,lam",
+          "classification": "TYPING",
+          "source": "Source extended-real objective, literal feasible convex set and nonnegative modulus"
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "source": "Definition4.1 proper f; recursively global no-bottom and finite witness"
+        },
+        {
+          "binder": "hV,hdom,hlam,hstrong",
+          "classification": "SOURCE",
+          "source": "Definition4.1 exact interior interpolation, V subset dom f, half coefficient unchanged"
+        },
+        {
+          "binder": "p,hp,q,hq",
+          "classification": "SOURCE",
+          "source": "Lemma4.2 evaluation and support points belong to V"
+        },
+        {
+          "binder": "g : E ->L[R] R",
+          "classification": "TYPING_GENERALIZATION",
+          "source": "Source dot-product support functional represented in continuous dual, retaining arbitrary chosen norm; finite-dimensional linear functionals continuous. Existing vector SourceSubdifferential adapter is a separate interface obligation, not yet proved."
+        },
+        {
+          "binder": "hsupport",
+          "classification": "SOURCE_PREMISE_WITH_EXPLICIT_LOCAL_GENERALIZATION",
+          "source": "Lemma4.2 selected subgradient support, weakened to literal V-only inequality; global support of f+indicator(V) implies exactly this on V. No quadratic growth assumed. Does not assert or produce support existence. Independent review must approve this generalized forward-only boundary."
+        }
+      ],
+      "new": [
+        {
+          "binder": "E / normed group / real normed space",
+          "classification": "TYPING_GENERALIZATION",
+          "source": "Definition4.1 source finite R^d with arbitrary chosen norm; generalized normed-space carrier, no inner-product norm imposed"
+        },
+        {
+          "binder": "f,V,lam",
+          "classification": "TYPING",
+          "source": "Source extended-real objective, literal feasible convex set and nonnegative modulus"
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "source": "Definition4.1 proper f; recursively global no-bottom and finite witness"
+        },
+        {
+          "binder": "hV,hdom,hlam,hstrong",
+          "classification": "SOURCE",
+          "source": "Definition4.1 exact interior interpolation, V subset dom f, half coefficient unchanged"
+        },
+        {
+          "binder": "p,hp,q,hq",
+          "classification": "SOURCE",
+          "source": "Lemma4.2 evaluation and support points belong to V"
+        },
+        {
+          "binder": "g : E ->L[R] R",
+          "classification": "TYPING_GENERALIZATION",
+          "source": "Source finite-dimensional coordinate dot-product support is proposed as a continuous real dual functional on an arbitrary normed-space carrier. Continuity is stronger than the algebraic requirement of this inequality. Existing InnerProductSpace adapters use their instance norm; finite-dimensional representation and transport to the source chosen arbitrary norm remain unproved interface obligations."
+        },
+        {
+          "binder": "hsupport",
+          "classification": "SOURCE_PREMISE_WITH_EXPLICIT_LOCAL_GENERALIZATION",
+          "source": "Printed Lemma4.2 assumes V subset dom(partial f) and states an iff. This candidate deliberately retains only its generalized forward implication at the selected p: arbitrary supplied support (possibly nonzero), restricted to literal V. It drops support existence at all other V points. No support existence, nonzero condition or quadratic growth is assumed or produced. Restriction from global support of f+indicator(V) is a future explicit adapter obligation."
+        }
+      ]
+    },
+    {
+      "path": "/interface_obligations",
+      "operation": "add",
+      "new": [
+        "Prove actual global vector SourceSubdifferential support restricts to the literal feasible V and represent it as a continuous linear functional.",
+        "For an arbitrary source chosen norm, prove finite-dimensional coordinate-functional continuity and transport the support pairing and norm estimates without identifying that norm with an InnerProductSpace instance norm.",
+        "For f+indicator(V), prove indicator-zero arithmetic at p,z in V; any converse extension outside V requires properness and EReal arithmetic and is not established here.",
+        "Existing theorem_2_23_inclusion supplies vector support only under actual proper-component hypotheses; its continuous-functional consumer is not connected yet."
+      ]
+    },
+    {
+      "path": "/mathematical_dependency_readiness",
+      "operation": "replace",
+      "old": "No unsupplied analytic result is needed to state this leaf: SourceProper/effectiveDomain and the existing growth theorem are available. Source-facing representation is proposed, not approved. Current growth itself remains bounded conditional evidence until its active acceptance gates finish.",
+      "new": "SourceProper/effectiveDomain and the existing minimum-growth theorem are available for the proposed affine-tilt route. The supplied-support forward statement is mathematically suitable according to the bound independent review, but remains unelaborated, unfrozen and unproved. Vector-to-continuous-dual and arbitrary-norm transport adapters are not completed. Current growth acceptance gates are separately pending; parent reports native metadata repair without mathematical changes."
+    },
+    {
+      "path": "/metadata_revision",
+      "operation": "add",
+      "new": {
+        "revision": 2,
+        "previous": {
+          "path": "tmp/online-ch2-b4-next-after-growth-planning-20261011/next-dependency-diagnosis-v1.json",
+          "sha256": "ec22be67dde76fb1c9cc12c8688594d264190020f39ce13210990f0c7a7d41b8",
+          "bytes": 23992
+        },
+        "source_review": {
+          "path": "tmp/online-ch2-b4-next-after-growth-source-review-20261011/next-dependency-source-review-v1.json",
+          "sha256": "e0d14efc1fb749ed01daefc674e31001fe51c9ec1ed5ad27b230c5a522a64ab2",
+          "bytes": 12033
+        },
+        "current_context": {
+          "head": "cbfb3fd15d2c5e3cbd1063e5d4d595ea2f91b4c5",
+          "status": ""
+        },
+        "historical_source_snapshot_fields_preserved": true,
+        "scope": "Metadata-only repair. No Lean, build, BODY, freeze, blind launch or tracked edit."
+      }
+    },
+    {
+      "path": "/not_yet_ready_for_BODY",
+      "operation": "replace",
+      "old": [
+        "Independent source review of continuous-dual/local-support representation and forward-only delta",
+        "Exact header elaboration and neutral blind reconstruction",
+        "Explicit freeze and later BODY authorization; no build or proof attempt in this task"
+      ],
+      "new": [
+        "Independent source review found the forward proposal mathematically suitable subject to metadata repair; this V2 repair and exact-header reconstruction remain to be reviewed, and no freeze or BODY approval follows.",
+        "Exact header elaboration and neutral blind reconstruction",
+        "Explicit freeze and later BODY authorization; no build or proof attempt in this task"
+      ]
+    },
+    {
+      "path": "/real_consumers",
+      "operation": "replace",
+      "old": [
+        {
+          "consumer": "Actual optimistic-FTRL cumulative objective Gt",
+          "mapping": "f=Gt; p=xt; q=x_(t+1) or corrected ghost; g=difference-loss support as linear functional",
+          "required_producers": [
+            "Proper/finite objective on literal V",
+            "Actual hinted minimum and constrained zero support",
+            "Actual difference-loss support and proper sum inclusion",
+            "Valid comparator/next point, indexing and corrected terminal"
+          ]
+        },
+        {
+          "consumer": "Theorem6.9 attainment",
+          "mapping": "Global finite-domain support at a source witness yields quadratic-affine lower bound",
+          "required_producers": [
+            "Qualified support witness",
+            "Proper closed objective, positive lam, finite-dimensional compactness",
+            "Existence/uniqueness proof not supplied by current growth"
+          ]
+        }
+      ],
+      "new": [
+        {
+          "consumer": "Actual optimistic-FTRL cumulative objective Gt",
+          "mapping": "f=Gt; p=xt; q=x_(t+1) or corrected ghost; g=difference-loss support as linear functional",
+          "required_producers": [
+            "Proper/finite objective on literal V",
+            "Actual hinted minimum and constrained zero support",
+            "Actual difference-loss support and proper sum inclusion",
+            "Vector support to continuous-dual representation, including explicit finite-dimensional chosen-norm transport where needed; no current adapter completion claimed",
+            "Valid comparator/next point, indexing and corrected terminal"
+          ]
+        },
+        {
+          "consumer": "Theorem6.9 attainment",
+          "mapping": "Global finite-domain support at a source witness yields quadratic-affine lower bound",
+          "required_producers": [
+            "Qualified support witness",
+            "Proper closed objective, positive lam, finite-dimensional compactness",
+            "Existence/uniqueness proof not supplied by current growth"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/recommended_next_leaf",
+      "operation": "replace",
+      "old": "Lemma4.2 forward quadratic lower bound for an existing nonzero support on literal V, represented by a continuous real linear functional",
+      "new": "Lemma4.2 generalized forward quadratic lower bound for arbitrary supplied support (possibly nonzero) on literal V, represented by a continuous real linear functional"
+    },
+    {
+      "path": "/reuse_audit",
+      "operation": "replace",
+      "old": [
+        {
+          "declaration": "stronglyConvex_minimum_growth",
+          "classification": "reuse_existing",
+          "reason": "Zero-support quadratic growth primitive, proposed affine-tilt proof genuinely extends to nonzero support rather than wrapping a renamed minimizer assumption"
+        },
+        {
+          "declaration": "SourceSubdifferential / subgradient_point_finite",
+          "classification": "adapt_existing",
+          "reason": "Current definition is vector inner-product support; preserve its source semantics and prove functional/local-V adapter later; do not silently impose Euclidean norm"
+        },
+        {
+          "declaration": "theorem_2_23_inclusion",
+          "classification": "reuse_existing",
+          "reason": "Already proved actual support inclusion for proper components; equality CQ is not needed for inclusion"
+        },
+        {
+          "declaration": "finite_sum_point / ereal_finset_sum_ne_bot / sourceProper_of_domain / effectiveDomain_add_indicator",
+          "classification": "reuse_existing",
+          "reason": "Cumulative finite/domain/properness bookkeeping already has real substrates; do not invent duplicate convenience wrappers"
+        },
+        {
+          "declaration": "Mathlib StrongConvexOn",
+          "classification": "no_direct_match_in_bounded_search",
+          "reason": "Real-valued uniform interpolation substrate, no located selected-support quadratic lower bound in Strong.lean; bounded search is not exhaustive absence proof"
+        }
+      ],
+      "new": [
+        {
+          "declaration": "stronglyConvex_minimum_growth",
+          "classification": "reuse_existing",
+          "reason": "Existing minimum-growth primitive can potentially be applied to an internally justified affine tilt, extending to arbitrary supplied support (possibly nonzero). The candidate has no assumed minimum binder; internal tilted properness, interpolation and minimum remain proof obligations."
+        },
+        {
+          "declaration": "SourceSubdifferential / subgradient_point_finite",
+          "classification": "adapt_existing",
+          "reason": "Current SourceSubdifferential is global vector inner-product support. A local-V restriction and continuous-functional representation bridge are not yet produced. Its InnerProductSpace instance fixes a norm; representation/transport for an unrelated source chosen norm must be justified separately."
+        },
+        {
+          "declaration": "theorem_2_23_inclusion",
+          "classification": "reuse_existing",
+          "reason": "Already proved actual support inclusion for proper components; equality CQ is not needed for inclusion"
+        },
+        {
+          "declaration": "finite_sum_point / ereal_finset_sum_ne_bot / sourceProper_of_domain / effectiveDomain_add_indicator",
+          "classification": "reuse_existing",
+          "reason": "Cumulative finite/domain/properness bookkeeping already has real substrates; do not invent duplicate convenience wrappers"
+        },
+        {
+          "declaration": "Mathlib StrongConvexOn",
+          "classification": "no_direct_match_in_bounded_search",
+          "reason": "Real-valued uniform interpolation substrate, no located selected-support quadratic lower bound in Strong.lean; bounded search is not exhaustive absence proof"
+        }
+      ]
+    },
+    {
+      "path": "/source_anchors",
+      "operation": "replace",
+      "old": [
+        {
+          "anchor": "Definition4.1 and Lemma4.2 forward",
+          "PDF": "46-47",
+          "printed": "34-35",
+          "use": "Strong inequality plus selected support implies quadratic affine lower bound; converse equality typo/support-domain qualification untouched"
+        },
+        {
+          "anchor": "Lemma7.5",
+          "PDF": "113-114",
+          "printed": "101-102",
+          "use": "Actual Ft+loss+indicator(V) stability uses Lemma4.2 with actual loss support; no zero-support substitution"
+        },
+        {
+          "anchor": "Theorem7.47",
+          "PDF": "141-142",
+          "printed": "129-130",
+          "use": "Actual inclusive Gt=Ft+loss; difference-loss support from hinted minimum and sum inclusion; corrected terminal retained"
+        },
+        {
+          "anchor": "Theorem6.9",
+          "PDF": "78",
+          "printed": "66",
+          "use": "Strong support lower bound is upstream of coercivity/compact sublevel/attainment, all still OPEN"
+        },
+        {
+          "anchor": "Algorithm15.9/Theorem15.31",
+          "PDF": "278-279",
+          "printed": "266-267",
+          "use": "Source assumes proper closed strong cumulative objectives; does not demand new componentwise strong-sum theorem"
+        }
+      ],
+      "new": [
+        {
+          "anchor": "Definition4.1 and Lemma4.2 forward",
+          "PDF": "46-47",
+          "printed": "34-35",
+          "use": "Generalized forward-only quadratic affine lower bound at a supplied support at p; printed Lemma4.2 is an iff with V subset dom(partial f). Existence of supports at other V points, converse and its equality typo are outside this leaf."
+        },
+        {
+          "anchor": "Lemma7.5",
+          "PDF": "113-114",
+          "printed": "101-102",
+          "use": "Actual Ft+loss+indicator(V) stability uses Lemma4.2 with actual loss support; no zero-support substitution"
+        },
+        {
+          "anchor": "Theorem7.47",
+          "PDF": "141-142",
+          "printed": "129-130",
+          "use": "Actual inclusive Gt=Ft+loss; difference-loss support from hinted minimum and sum inclusion; corrected terminal retained"
+        },
+        {
+          "anchor": "Theorem6.9",
+          "PDF": "78",
+          "printed": "66",
+          "use": "Strong support lower bound is upstream of coercivity/compact sublevel/attainment, all still OPEN"
+        },
+        {
+          "anchor": "Algorithm15.9/Theorem15.31",
+          "PDF": "278-279",
+          "printed": "266-267",
+          "use": "Source assumes proper closed strong cumulative objectives; does not demand new componentwise strong-sum theorem"
+        }
+      ]
+    },
+    {
+      "path": "/source_delta",
+      "operation": "add",
+      "new": [
+        "Printed Lemma4.2 is an iff and assumes V subset dom(partial f). This is intentionally a generalized forward-only statement with V subset dom f and supplied support at p on literal V; it drops support existence at other V points. The full iff and converse support-domain qualification stay OPEN.",
+        "Finite-dimensional coordinate dot-product support is generalized to the continuous dual of an arbitrary real normed space. Continuity is stronger than algebraic necessity. Existing vector support, local-V restriction, finite-dimensional functional representation and chosen-norm transport remain explicit unfinished interfaces.",
+        "Affine tilt plus existing minimum growth is only a proposed alternative proof route. The source segment/alpha-to-zero route and literal BTRL15.31 -> FTRL7.47 topology are retained distinctly."
+      ]
+    }
+  ],
+  "unchanged_header": {
+    "path": "tmp/online-ch2-b4-next-after-growth-planning-20261011/statement-candidate-v1.txt",
+    "sha256": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57",
+    "bytes": 892
+  },
+  "unchanged_fields": [
+    "pdf",
+    "inputs",
+    "frozen_inventory",
+    "retained_rows",
+    "source_topology",
+    "chapter_state",
+    "actions",
+    "proof_route_design_only"
+  ]
+}

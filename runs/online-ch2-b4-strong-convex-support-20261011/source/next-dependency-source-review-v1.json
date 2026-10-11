@@ -1,0 +1,224 @@
+{
+  "verdict": "MATHEMATICALLY_SUITABLE_FORWARD_DEPENDENCY_PROPOSAL_WITH_METADATA_REPAIR",
+  "proposal_sha256": "ec22be67dde76fb1c9cc12c8688594d264190020f39ce13210990f0c7a7d41b8",
+  "statement_sha256": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57",
+  "head": "cf1a424f2312e7c5b730717cf0a96d65837894bd",
+  "git_status": "",
+  "scope": "Independent source/interface diagnosis only; no elaboration, proof, freeze, production mutation, or next-leaf acceptance.",
+  "necessary_mathematical_assumptions": [
+    "SourceProper globally excludes bottom and supplies a finite witness; effectiveDomain alone only excludes top.",
+    "Literal V convex and contained in effectiveDomain; lambda nonnegative; exact interior interpolation with lambda/2.",
+    "p and q belong to literal V; selected real continuous linear functional globally defined; its affine support inequality holds at every z in V.",
+    "No support existence, minimizer existence, nonzero g, closedness, completeness, finite dimension, or positive modulus is asserted."
+  ],
+  "source_delta": [
+    "Lemma4.2 literally assumes V subset dom(partial f), not merely dom f. Its forward direction at a selected support needs only support at p; the candidate explicitly drops support existence at all other V points and localizes support to V. This is a valid generalized forward implication, not the full printed iff.",
+    "Finite-dimensional coordinate dot-product support becomes an element of the continuous real dual on an arbitrary real normed space. Continuity is stronger than algebraic necessity for this inequality, but appropriate for future dual-norm estimates; it must remain an explicit interface generalization.",
+    "Source proof uses the segment and alpha-to-zero limit. Affine tilt plus existing minimum-growth is an alternative mathematical dependency route, not the literal proof topology."
+  ],
+  "repairs": [
+    {
+      "severity": "metadata",
+      "field": "recommended_next_leaf and nonzero-support descriptions",
+      "required": "Replace existing nonzero support by arbitrary supplied support (possibly nonzero). Do not add g != 0 to the header. The actual header correctly also covers zero."
+    }
+  ],
+  "mathematical_assessment": {
+    "coefficient": "lambda/2 exact, displacement q-p and support g(q-p) correctly oriented",
+    "lambda_zero": "Allowed and reduces to the finite endpoint support inequality.",
+    "finite_casts": "hf plus hdom at hp/hq excludes both infinities before toReal. Any tilted proof must independently show tilted no-bottom and a finite global witness, preserve finite V and strong interpolation, and derive the minimum from support internally. No quadratic conclusion is smuggled into hsupport.",
+    "closed_weights": "Only interior weights required by Def4.1; there is no required EReal zero-times-infinity endpoint evaluation.",
+    "minimum": "Candidate has no hmin. Internally producing a minimum of the affine tilt from supplied support would be substantive reuse, rather than a renamed-minimum wrapper."
+  },
+  "existing_interface_assessment": {
+    "SourceSubdifferential": "Existing global vector/inner-product predicate; restricting its inequality to V and representing inner(g,.) as a continuous functional is a worthwhile bridge. It is not yet produced by this candidate.",
+    "arbitrary_norm": "A direct adapter within the existing InnerProductSpace uses that instance norm. To instantiate an unrelated chosen norm from the source, explicitly transport the finite-dimensional coordinate functional to that normed carrier; do not silently identify arbitrary norm with the inner-product norm.",
+    "indicator": "For f+indicator(V), global support restricts on V by indicator=0 at p and z. Conversely an extension outside V needs explicit proper/indicator arithmetic; do not claim it proved here.",
+    "sum": "Actual theorem_2_23_inclusion takes proper components and needs no equality qualification. Its vector support output still needs the functional representation bridge.",
+    "reuse": "Use existing finiteness/sum/properness and inclusion producers where applicable; no duplicated support definition or fake consumer is warranted."
+  },
+  "source_dependency_topology": {
+    "literal": "BTRL15.31 uses optimistic FTRL7.47; 7.47 uses Lem7.1 telescope and Lem4.2 plus constrained optimum6.27 and sum inclusion2.23; Lem7.5 displays the same support step.",
+    "forward_leaf": "This selected-support lower bound advances the Lem4.2 node needed for B4 stability; it does not by itself produce actual Ft/Gt or a loss/difference-loss support.",
+    "remaining_AND": [
+      "Constrained proper finite cumulative objective and actual support from the algorithm minimum and loss/difference-loss support",
+      "Qualified attained minimizers/Thm6.9 existence: positive modulus, closedness, support witness, finite-dimensional compactness",
+      "Dual norm/Young scalar bound and full indexing/telescope",
+      "7.47 zero final hint and ghost argmin GT with terminal gap; repeated final hint residual is not canceled",
+      "15.31 ghost x_(T+1)=x_T and t<T negative movement repair"
+    ],
+    "converse": "Printed converse proof final equality must be inequality; support at interpolated points requires source V subset dom(partial f). Neither converse nor Thm4.3 is covered."
+  },
+  "boundaries": {
+    "chapter2": "partial",
+    "containers": 7,
+    "future_claims": 6,
+    "complete_proof_denominator": null,
+    "B1_B7": "open",
+    "full_B4": "open",
+    "chapter4_closure": false,
+    "Goal": "active",
+    "next_leaf_frozen": false,
+    "next_leaf_accepted": false
+  },
+  "input_checks": [
+    {
+      "path": "BanditRLProof\\OnlineStrongConvexMinimum.lean",
+      "sha256": "55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlineSubgradientBasic.lean",
+      "sha256": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlineSubgradientSum.lean",
+      "sha256": "580655a26e335d9db13c6ebb8f3c0d9ecf36ee07edc9d4c33c7d98194eae2b3c",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlineConvexSums.lean",
+      "sha256": "0abd620cb419fec2899146a3f201401aaa410d01409a33c81836b54dcfd932ca",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlineConstraintFiniteLoss.lean",
+      "sha256": "aeb108d1df6c436b4d703599b06519055c16a444624be19fdb1779f7cd0ab73e",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlinePrescientBregmanSource.lean",
+      "sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlineConvexOptimality.lean",
+      "sha256": "69739ea8ffc0d3f4775ab979de2a95266ca6e0b6fb0e7af375658660910e3e86",
+      "matches": true
+    },
+    {
+      "path": "BanditRLProof\\OnlineCumulativePotential.lean",
+      "sha256": "61c811c0b1f941ec22ac41f64e555a0e4d4d8dc32b8145ea53808dbdc0fc17da",
+      "matches": true
+    },
+    {
+      "path": ".lake\\packages\\mathlib\\Mathlib\\Analysis\\Convex\\Strong.lean",
+      "sha256": "6ff478d50f5adf0d215c8745530645f1d2c041308752df5c0cc47f302f6f2b42",
+      "matches": true
+    },
+    {
+      "path": "docs\\contracts\\online-ch2-b4-strong-convex-growth-v1\\source-contract-proposal-v2.json",
+      "sha256": "aae24add096d1a78e6d1be0c75a5f9141703d196eb2a264f70ea51e74dc5e767",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-header-20261011\\topology-proposal-v2.json",
+      "sha256": "9b60dfbf2628a57e4411d9816849e88f802c305e78d7f58f581c1734bc649e1d",
+      "matches": true
+    },
+    {
+      "path": "docs\\contracts\\online-ch2-complete-target-freeze-v1\\effective-targets-frozen-v3.2.json",
+      "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-46.txt",
+      "sha256": "a9c52f344a15493f6640fcdae5aff7d3323e131d7790e49db50932e349ab97fa",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-47.txt",
+      "sha256": "ee7b448c956a870c50446e54322131262c447ef72b7bafc3c0e3709532238462",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-78.txt",
+      "sha256": "0cc29e9fefa8b42921b352dfa56c11d0d545d7c93f3be94d7810ea99dbc2533e",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-113.txt",
+      "sha256": "e2a72f65fde4e44abf402d0c3815f1cd53e52d88e060559e1a200497abbbc042",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-114.txt",
+      "sha256": "54333b6adb465521c1640fd9c68289db2cb6cdcef1bc13cf734d8add1a6d0b5d",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-141.txt",
+      "sha256": "dbfea1769d570c4e57bb3f93f7fd9b865233f495c47c69b9335e3d3478e7df4e",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-142.txt",
+      "sha256": "486e8c3434bbe9d668b6ba86d6970ba3014213de0be6d8db657d6a7d86ff94ce",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-278.txt",
+      "sha256": "82a0457980da5af1fa4c75acbfa84a982e417197e29dad73508d5800ccc928af",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-279.txt",
+      "sha256": "66de52632c2434bc03952a74e84510dda7b68077d0d60e8257763403dae7bc35",
+      "matches": true
+    },
+    {
+      "path": "E:\\ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+      "matches": true
+    },
+    {
+      "path": "tmp\\online-ch2-b4-next-after-growth-planning-20261011\\statement-candidate-v1.txt",
+      "sha256": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57",
+      "matches": true
+    },
+    {
+      "path": "docs\\contracts\\online-ch2-complete-target-freeze-v1\\effective-targets-frozen-v3.2.json",
+      "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+      "matches": true
+    }
+  ],
+  "source_pixels": [
+    {
+      "pdf_page_1based": 46,
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-46.png",
+      "sha256": "d9dc9e21baa9e27c75f749463aaef6da62b3035612a66d06a3868e05e7bfaf49",
+      "personally_viewed": true
+    },
+    {
+      "pdf_page_1based": 47,
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-47.png",
+      "sha256": "cc7368fa92bc2d244bbe08a02d0479592815beb1b8264d5bba4cc4b5331bd5ef",
+      "personally_viewed": true
+    },
+    {
+      "pdf_page_1based": 113,
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-113.png",
+      "sha256": "573e510f257b66a42862f4f9a7102045a049494bd13cb1fb1067aceaa63e6982",
+      "personally_viewed": true
+    },
+    {
+      "pdf_page_1based": 114,
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-114.png",
+      "sha256": "4b00be5cb1beefe34cc11caa22291fad712973295bbb1df52a1d98a7151cdee0",
+      "personally_viewed": true
+    },
+    {
+      "pdf_page_1based": 141,
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-141.png",
+      "sha256": "1f6273bf74d48eb07bf97d37139805620e301b49a95f5b99251f9cd4e056ac56",
+      "personally_viewed": true
+    },
+    {
+      "pdf_page_1based": 142,
+      "path": "tmp\\online-ch2-b4-next-strong-convex-source-review-20261011\\page-142.png",
+      "sha256": "6ec12d121ab39ff671bb2474c9de87802b4dacdbe8170ba18ff5d6bf08ce1888",
+      "personally_viewed": true
+    }
+  ]
+}

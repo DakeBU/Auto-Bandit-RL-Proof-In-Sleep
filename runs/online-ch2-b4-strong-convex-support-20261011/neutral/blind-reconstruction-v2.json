@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "actor": "/root/b4_finite_identity_blind",
+  "role": "Neutral-header semantic reconstruction with supplied imported definitions; no proof or source acceptance",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": "Not independently attested.",
+  "input_exposure": {
+    "new_read_this_followup": {"path": "E:/ABRL/worktrees/research-online-book/tmp/online-b4-support-neutral-20261011/imported-definitions-v1.txt", "raw_sha256": "d387956be74876b77456c22f6fe444810681515bd0e6ec3111a83716271cae45", "expected_digest_matches": true, "operation": "One ReadAllBytes; same raw bytes used for SHA256 and UTF8 display."},
+    "previous_header_read_retained_in_context": {"path": "E:/ABRL/worktrees/research-online-book/tmp/online-b4-support-neutral-20261011/header-v1.txt", "raw_sha256": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57", "not_reread": true},
+    "earlier_other_candidate_read": {"path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt", "raw_sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67", "scope": "Finite cumulative-potential regret identity header only, with prior semantic analysis."},
+    "inherited_context": "Generic system/developer instructions, skill catalog, ABRL workspace instructions, environment metadata, supplied memory-summary context, assignments, and my earlier semantic analyses remain visible. General mathematical familiarity with convexity and supports also informs decoding. This is not zero-background review or a claim of never having encountered the book.",
+    "not_read": "No source book, proposal, theorem proof BODY, production module BODY, other review report, memory file, or Git state was read. Only the supplied two definition bodies and typing context were newly exposed. Their asserted production provenance was not independently audited."
+  },
+  "definitions_now_decoded": {
+    "SourceProper": "For every x in E, f(x) is not bottom, and there exists x in E and a real r such that f(x)=coerce(r). Its typing context includes TopologicalSpace E, but the displayed predicate imposes no continuity or semicontinuity requirement.",
+    "effectiveDomain": "The literal set {x | f(x) < top}. Its typing context is an additive commutative group with a real module. The set definition itself excludes positive infinity but does not by itself exclude negative infinity."
+  },
+  "resolved_finiteness": {
+    "literal_V": "For every v in the original V, hdom gives f(v)<top, hence f(v) is not positive infinity; the first conjunct of hf gives f(v) is not negative infinity. Thus f(v) is a finite real value. This holds on literal V with no replacement, intersection, closure, or shrinking of the domain.",
+    "properness_witness": "The finite witness supplied by the second conjunct of hf may lie outside V. Finiteness on V uses the global no-bottom clause together with hdom, not an assumption that this witness belongs to V. hp and hq separately guarantee that V is nonempty in an actual instance.",
+    "endpoints": "hp and hq therefore make f(p) and f(q) finite. These are the only toReal expressions in the actual conclusion. At these endpoints, toReal denotes their actual real values, not the fallback zero used for infinities.",
+    "other_points": "Every z quantified in hsupport is in V and therefore also has finite f(z). Every convex combination of x,y in V appearing in hstrong belongs to V by hV and is finite as well. This is a semantic consequence of the hypotheses; the header does not prescribe any proof strategy or demand intermediate toReal calls.",
+    "global_limit": "f may still equal positive infinity outside V. SourceProper excludes negative infinity globally but does not make f finite everywhere."
+  },
+  "complete_statement": "For an arbitrary real normed vector space E, an EReal-valued f, a convex set V contained in {x | f(x)<top}, and real lam>=0, suppose f is globally never bottom and has at least one finite value, and satisfies f(a*x+(1-a)*y)<=a*f(x)+(1-a)*f(y)-coerce((lam/2)*a*(1-a)*norm(x-y)^2) for all x,y in V and real 0<a<1. Given any p in V and continuous real-linear functional g with f(p)+coerce(g(z-p))<=f(z) for every z in V, every q in V satisfies toReal(f(p))+g(q-p)+(lam/2)*norm(q-p)^2<=toReal(f(q)). All f values on V are finite under these actual definitions.",
+  "quantifiers_and_constants": [
+    "E is implicit and universe-polymorphic; NormedAddCommGroup E and NormedSpace Real E are typeclass binders. The named ordinary binders are explicit. No completeness or finite-dimensionality assumption is present.",
+    "hstrong quantifies independently over x in V, y in V, and real a with 0<a<1. The correction has exactly coefficient (lam/2)*a*(1-a), with squared norm of x-y, and is subtracted in EReal.",
+    "p and q are universally quantified members of V. g is supplied before q and satisfies a single universal support condition on every z in V; it is not a g chosen separately for each z or q.",
+    "The real conclusion adds exactly (lam/2)*norm(q-p)^2. The linear term is g(q-p), with that sign. lam=0 is allowed."
+  ],
+  "support_interpretation": "Define F(v)=(f(v)).toReal for v in V. Because f is finite on V and g takes real values, hsupport is exactly F(p)+g(z-p)<=F(z) for every z in V. The conclusion is F(q)>=F(p)+g(q-p)+(lam/2)*norm(q-p)^2. The support is restricted to V; no support statement outside V is assumed or concluded.",
+  "vacuity_and_scope": [
+    "No infinity-based vacuity remains at p, q, or any z in V; the actual imported definitions exclude both infinities there.",
+    "Empty V admits no hp/hq instance. A point without any admissible supporting g yields no instance of this conditional theorem. Support existence is not asserted.",
+    "q=p gives a reflexive inequality using g(0)=0. Singleton V yields no nontrivial growth content. lam=0 yields the real support inequality; the a interval is nonempty.",
+    "The theorem strengthens a given support and does not produce one. It does not assert attainment, existence or uniqueness of a minimizer, any algorithm, regret, convergence, or performance guarantee.",
+    "A separately supplied g=0 support instance gives quadratic growth from p on V, but no such instance is supplied by this header."
+  ],
+  "remaining_obligations": [
+    "No proof BODY has been seen; no kernel verification or acceptance of a proof follows from semantic reconstruction.",
+    "No source book has been inspected for this candidate; source-faithfulness, intended theorem scope, and source attribution remain unassessed.",
+    "The imported-definition text resolves the earlier definition/finite-value boundary semantically; its correspondence to a particular production commit was not independently checked under the restricted read scope.",
+    "Existence of a supporting functional in any application remains a separate mathematical obligation; the theorem assumes it."
+  ],
+  "v1_disposition": "Preserved without modification. V2 resolves V1's imported-definition finiteness boundary and retains the other scope limits.",
+  "operations": "No tracked edits, Lean/build, Git inspection, clean-state requirement, freeze or Goal changes. Only create-only V2 outputs in the assignment-designated ignored directory. Ignore status was not independently inspected.",
+  "encoding": "UTF8 without BOM; LF newlines"
+}

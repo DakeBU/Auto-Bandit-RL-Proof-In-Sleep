@@ -1,0 +1,10 @@
+namespace BanditRL.OnlineConvex
+
+variable {E : Type*} [TopologicalSpace E]
+def SourceProper (f : E → EReal) : Prop :=
+  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)
+
+variable {F : Type*} [AddCommGroup F] [Module ℝ F]
+def effectiveDomain (f : F → EReal) : Set F := {x | f x < ⊤}
+
+end BanditRL.OnlineConvex

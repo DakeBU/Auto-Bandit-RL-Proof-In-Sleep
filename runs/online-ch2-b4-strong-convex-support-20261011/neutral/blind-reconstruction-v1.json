@@ -1,0 +1,63 @@
+{
+  "actor": "/root/b4_finite_identity_blind",
+  "role": "Independent neutral-header semantic reconstruction for the new support-growth candidate; not source review or proof acceptance",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": "Not independently attested; no runtime metadata inspected.",
+  "raw_input": {
+    "path": "E:/ABRL/worktrees/research-online-book/tmp/online-b4-support-neutral-20261011/header-v1.txt",
+    "sha256": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57",
+    "expected_sha256_matches": true,
+    "read_operation": "One raw ReadAllBytes; the same bytes supplied SHA256 and UTF8 display."
+  },
+  "read_exposure": {
+    "this_task_unique_file_reads": ["E:/ABRL/worktrees/research-online-book/tmp/online-b4-support-neutral-20261011/header-v1.txt"],
+    "previous_task_file_exposure": [{"path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-b4-finite-identity-proposal-20261011/neutral-proposed-header-v1.txt", "sha256": "92e0dcfac53595e35b68bfd8083c09640d06da809355ab02ec4eb4b007b0bd67", "content": "A finite cumulative-potential regret identity header, including imports and all statement binders; no source book or proof BODY was opened in that task."}],
+    "inherited_context": "Generic system/developer instructions, skill catalog, ABRL workspace instructions, environment metadata, supplied memory-summary context, this assignment, and my prior finite-identity analysis/output remain visible. I have general mathematical familiarity with strong convexity and supporting affine functionals. I do not claim zero background or never having encountered the book. No additional book-specific source knowledge was consulted or used for this candidate.",
+    "not_read": "No source book, proposal, author BODY, production module BODY, imported module, other review report, or memory file was opened for this task."
+  },
+  "imports_seen_but_not_opened": ["BanditRLProof.OnlineStrongConvexMinimum", "Mathlib.Analysis.Normed.Operator.Basic"],
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+  "exact_natural_reconstruction": "For every real normed vector space E, function f:E->EReal, subset V of E, and real lam, assume SourceProper(f), convexity of V, V subset effectiveDomain(f), lam>=0, and the displayed strong convexity inequality on V for every real a strictly between 0 and 1. For every p in V and continuous real-linear functional g on E satisfying f(p)+g(z-p)<=f(z) in EReal for every z in V, and for every q in V, the real inequality toReal(f(p))+g(q-p)+(lam/2)*norm(q-p)^2<=toReal(f(q)) is asserted.",
+  "binders_and_hypotheses": [
+    "E : Type* is implicit and universe-polymorphic. NormedAddCommGroup E and NormedSpace Real E are typeclass binders, making E a real normed vector space; completeness and finite dimension are not assumed.",
+    "f : E -> EReal is extended-real-valued; V : Set E is arbitrary subject to the listed hypotheses; lam : Real satisfies hlam : 0 <= lam.",
+    "hf : SourceProper f is a named imported predicate. Its definition is absent from the allowed text and is not independently known from this read.",
+    "hV : Convex Real V means every real convex combination of points of V lies in V. No openness, closedness, boundedness, compactness, or interior assumption appears.",
+    "hdom : V subset effectiveDomain f requires every member of V to lie in a named imported set. Its definition is absent from the allowed text; the precise finiteness guarantee cannot be verified from the name alone.",
+    "hstrong universally quantifies x:E with x in V, y:E with y in V, and a:Real with 0<a and a<1. It asserts f(a*x+(1-a)*y) <= a*f(x)+(1-a)*f(y)-coerce((lam/2)*a*(1-a)*norm(x-y)^2), interpreted in EReal with scalar multiplication in the argument and real-to-EReal coercions in the value expression.",
+    "p:E and hp:p in V specify the base point; g:E ->L[Real] Real is an already supplied continuous real-linear functional, not an arbitrary nonlinear map or a vector gradient.",
+    "hsupport universally quantifies z:E with z in V and assumes f(p)+coerce(g(z-p))<=f(z) in EReal. This is support on V only, with no assertion for points outside V.",
+    "q:E and hq:q in V specify an arbitrary comparison point. All named ordinary binders after E are explicit; no existential conclusion occurs."
+  ],
+  "finiteness_and_conversion": {
+    "known_from_standard_semantics": "EReal includes positive and negative infinity. EReal.toReal maps finite real coercions to their underlying real values and maps either infinity to zero. Consequently toReal is not generally an order-preserving inverse on arbitrary EReal inputs.",
+    "header_only_limit": "SourceProper and effectiveDomain are custom imported identifiers whose definitions are not displayed. This header alone does not establish exactly which endpoints they exclude, or the existential clause in SourceProper. I therefore do not claim that finite values on V have been independently verified.",
+    "conditional_usual_interpretation": "If SourceProper excludes negative infinity everywhere and effectiveDomain excludes positive infinity, or if effectiveDomain itself denotes finite-valued points, hdom makes f finite on V. Under that intended but unverified expansion, the assertion is the usual quadratic improvement of a given affine support: f(q)>=f(p)+g(q-p)+(lam/2)*norm(q-p)^2, now wholly real-valued on V.",
+    "remaining_definition_obligation": "An authorized definition-aware review must unfold the two imported predicates and confirm finiteness at p, q, and the intermediate convex combinations before treating toReal values as the original finite f values. Convexity supplies membership of those combinations in V. This is an unresolved inspection obligation, not a claim that the actual definitions or theorem are defective."
+  },
+  "constants_and_orientation": [
+    "The strong-convexity correction is exactly (lam/2)*a*(1-a)*norm(x-y)^2 and is subtracted on the right of an upper bound for f at the convex combination.",
+    "The conclusion adds exactly (lam/2)*norm(q-p)^2 to the given affine support. There is no extra factor of 2, no asymptotic constant, and no dependence on a in the conclusion.",
+    "The support and conclusion both use g(q-p), not g(p-q). Although norm(q-p)=norm(p-q), the linear term's sign matters.",
+    "a is quantified only over the open unit interval, not its endpoints; lam may equal zero. All displayed numeric operations before coercion are real, except the outer hstrong and hsupport inequalities and arithmetic in EReal."
+  ],
+  "claim_boundaries": [
+    "Given support is strengthened; existence of any supporting functional is not asserted. The theorem cannot alone produce a g at a chosen point.",
+    "No minimizer, attained infimum, uniqueness of minimizer, optimizer existence, coercivity conclusion, or global bound outside V is stated.",
+    "If an admissible instance has g=0, the conclusion conditionally gives quadratic growth from p on V, but the header does not establish that such a support exists at any p.",
+    "There is no algorithm, iterate, regret, convergence rate, sample complexity, or performance guarantee in the conclusion.",
+    "No proof BODY is present; neither proof acceptance, kernel validation, nor source-faithfulness is inferred."
+  ],
+  "vacuity_and_degenerate_cases": [
+    "hp and hq rule out empty V in an actual supplied instance; if V is empty, there are no admissible p/q binders and the theorem application is vacuous.",
+    "If no g satisfies hsupport at p, the conditional theorem gives no instance there. Existence of support is a substantive outside obligation.",
+    "At q=p, linearity gives g(0)=0 and the norm term vanishes; the conclusion is reflexive even without interpreting f(p) as finite.",
+    "For singleton V, every admissible q equals p and the conclusion has no nontrivial growth content. lam=0 is permitted and yields the unstrengthened real support inequality when finiteness is justified.",
+    "The open interval for a is nonempty (for example a=1/2), so its quantifier is not vacuous for lack of interpolation coefficients.",
+    "Infinity-related vacuity cannot be ruled out merely from the names SourceProper/effectiveDomain. Under standard finiteness definitions it is excluded on V; the allowed text does not independently certify that expansion."
+  ],
+  "status": "Header reconstructed with one explicit unresolved imported-definition boundary; no proof/source acceptance.",
+  "operations": "No Lean, build, Git inspection, tracked write, freeze-state change, Goal-state change, or external messaging. Only create-only outputs in the assignment-designated ignored tmp directory. Ignore status not independently checked under the restricted read scope.",
+  "encoding": "UTF8 without BOM; LF newlines"
+}
