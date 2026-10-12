@@ -726,3 +726,5 @@ import BanditRLProof.OnlineSubgradientMax
 import BanditRLProof.OnlineHinge
 import BanditRLProof.OnlineAffineSubgradient
 import BanditRLProof.OnlineLipschitzSubgradient
+import BanditRLProof.OnlineConvexNondifferentiability
+import BanditRLProof.OnlineConvexUncountability

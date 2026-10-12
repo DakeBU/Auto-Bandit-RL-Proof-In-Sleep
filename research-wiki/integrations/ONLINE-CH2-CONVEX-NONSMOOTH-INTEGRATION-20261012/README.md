@@ -1,0 +1,17 @@
+# A convex function with an uncountable nonsmooth locus
+
+This bounded candidate integrates original PR177 and PR178: the fixed real-plane function `f(x)=|x₁|`, its global convexity, ambient nondifferentiability along the closed segment from (0,0) to (0,1), and the fact that its nonsmooth locus is not at most countable. Five production theorems, one literal definition and nine canary theorems reuse the original mathematical bytes in the existing BanditRLProof project.
+
+The source is Orabona, *Online Learning: A Modern Introduction Using Convex Optimization*, arXiv:1912.13213v10, the unnumbered paragraph after Theorem 2.30 and before Section 2.2.2, printed19 / PDF31. Its SHA256 is `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17`. The source states the example without giving its convexity, derivative or cardinality proofs. Those three omitted derivations remain explicit source gaps; the library supplies the arguments.
+
+The proof first pulls back convexity of real absolute value by the first-coordinate linear projection. If the plane function were differentiable at a point with first coordinate zero, composition with a smooth horizontal curve would make scalar absolute value differentiable at zero. Every point of the named closed segment has that first coordinate. Finally, the injective map t ↦ (0,t) embeds [0,1] into the segment, whose inclusion in the nonsmooth locus transfers noncountability. The whole-axis sufficient condition is a labeled strengthening, not an exact-locus theorem.
+
+Ambient differentiation is essential: the vertical restriction is constant and differentiable. The canaries check endpoints, a nonzero midpoint, an axis point outside the segment, two off-axis points, the vertical restriction, finite endpoint and scalar controls, an uncountable intersection, and arbitrary countable exception sets. Five tests consume production theorems, two use only the definition, and two are independent controls.
+
+The original two terminal highlights and their source content now have a dedicated [reader](../../../website/content/readings.json), keyed `online-convex-nonsmooth`. Already accepted `online-lipschitz` records remain unchanged. Historical contracts, rejected attempts and all 1,000 original file-delta rows remain recoverable from verified original commits; they are not represented as fresh mainline validation.
+
+Source-only extraction, source-first review, neutral reconstruction and independent source/body/publication review are distinct roles. The selected compiler graph has 15 project nodes, 409 boundary nodes and 1,818 direct edges; source proof topology and teaching links remain separate. All selected kernel checks use only standard axioms. Combined local Lean root, Tests, harness and website gates passed, and desktop/mobile reader images were inspected. Exact [input and evidence hashes](review-binding.json) bind these claims.
+
+The shared proof-flow subtitle now gives reading order without falsely asserting that every step is a dependency of the next. This template-only correction applies to all readers; existing mathematical records are unchanged.
+
+This is neither Chapter 2/book completion nor full purification or an Exposition Seal. Exact-head remote CI, merge, main/Pages/live acceptance, old PR closure and guarded branch retirement are separate later gates. The source and original contribution provenance remain frozen at stack `8045070bf1ee53c83778d04eb168f8ad6f728b59`, with this bounded publication scope ending at PR178 `2ee95f4c340266847ae577a8e018f5bbf55451b9`.

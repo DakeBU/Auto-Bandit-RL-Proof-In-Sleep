@@ -3403,6 +3403,43 @@
         "BanditRL.OnlineConvex.subgradient_norm_le_lipschitz_ball",
         "BanditRL.OnlineConvex.subgradient_exists_of_domain_interior"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+      "title": "Ambient nondifferentiability along the closed segment",
+      "chapter": "online-convex-nonsmooth",
+      "featured": false,
+      "teaching_order": 0,
+      "plain": "The fixed globally convex function has no ambient derivative at every point of the closed vertical segment.",
+      "math": "\\(f(x)=|x_1|\\text{ is convex on }\\mathbb R^2,\\qquad S\\subseteq N_f\\)",
+      "intuition": "A constant vertical restriction still has a horizontal kink.",
+      "why": "Global convexity and ambient nondifferentiability throughout S.",
+      "position": "Orabona v10, unnumbered paragraph after Theorem 2.30, printed 19 / PDF 31.",
+      "proof_idea": "The first-coordinate projection is linear. Convexity of the real norm and ConvexOn.comp_linearMap give global convexity of f; no local convexity assumption is added. At x₁=0, the differentiable curve c(t)=x+t(1,0) passes through x. If f had an ambient derivative at x, the chain rule would make f∘c differentiable at zero. But f(c(t))=|t|, contradicting not_differentiableAt_abs_zero. A member of the closed segment has nonnegative convex-combination weights adding to one. Its first coordinate is zero, so the preceding ambient obstruction applies, including at both endpoints.",
+      "lean_notes": "The fixed function f(x)=|x₁| is real-valued on all of the real Euclidean plane. Lean uses EuclideanSpace ℝ (Fin 2), with source x₁ represented by index 0. DifferentiableAt means the ambient real Fréchet derivative. The segment joins (0,0) to (0,1) and includes both endpoints. Countable means at most countable. Convexity, derivative failure and uncountability are conclusions proved by the library, not supplied premises. Orabona states the convex example and its failure of differentiability along the segment without a proof. The three missing derivations—convexity, ambient nondifferentiability and the uncountability bridge—are supplied here by the library, not attributed to a printed argument. The helper proving failure on the entire vertical axis is explicitly stronger than the stated segment example. This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.coordinate_absolute_convex",
+        "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.convex_uncountable_nondifferentiability",
+      "title": "Uncountably many ambient nonsmooth points",
+      "chapter": "online-convex-nonsmooth",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The same function has uncountably many ambient nondifferentiability points, refuting a countable-exception interpretation of convex differentiability.",
+      "math": "\\(f(x)=|x_1|\\text{ is convex},\\qquad\\neg\\operatorname{Countable}(N_f)\\)",
+      "intuition": "The segment contains a copy of a nondegenerate real interval.",
+      "why": "The segment and therefore the same-function nonsmooth locus are not at most countable.",
+      "position": "Orabona v10, unnumbered paragraph after Theorem 2.30, printed 19 / PDF 31.",
+      "proof_idea": "The map φ(t)=(0,t) is injective by the second coordinate and sends [0,1] into S using weights (1−t,t). Countability of S would imply countability of its injective preimage and hence of [0,1], contradicting Cardinal.Real.Icc_countable_iff. Since S⊆N_f, Set.Countable.mono then rules out countability of N_f.",
+      "lean_notes": "The fixed function f(x)=|x₁| is real-valued on all of the real Euclidean plane. Lean uses EuclideanSpace ℝ (Fin 2), with source x₁ represented by index 0. DifferentiableAt means the ambient real Fréchet derivative. The segment joins (0,0) to (0,1) and includes both endpoints. Countable means at most countable. Convexity, derivative failure and uncountability are conclusions proved by the library, not supplied premises. Orabona states the convex example and its failure of differentiability along the segment without a proof. The three missing derivations—convexity, ambient nondifferentiability and the uncountability bridge—are supplied here by the library, not attributed to a printed argument. The helper proving failure on the entire vertical axis is explicitly stronger than the stated segment example. This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.coordinate_segment_not_countable",
+        "BanditRL.OnlineConvex.coordinate_absolute_convex",
+        "BanditRL.OnlineConvex.convex_nondifferentiable_segment"
+      ]
     }
   ]
 }

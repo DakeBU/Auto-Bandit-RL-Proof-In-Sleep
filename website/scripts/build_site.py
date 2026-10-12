@@ -1791,7 +1791,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   {advanced_sources_html}
   {notation_html}
   <div class="algorithm-panel" id="algorithm">
-    <div><span class="panel-kicker">{html.escape(algorithm['kind'])} · ordered flow</span><h3>{html.escape(algorithm['title'])}</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
+    <div><span class="panel-kicker">{html.escape(algorithm['kind'])} · ordered flow</span><h3>{html.escape(algorithm['title'])}</h3><p class="algorithm-intro">Read top to bottom to follow the argument or procedure.</p></div>
     <ol class="algorithm-flow">{steps}</ol>
     {pseudocode_html}
   </div>
