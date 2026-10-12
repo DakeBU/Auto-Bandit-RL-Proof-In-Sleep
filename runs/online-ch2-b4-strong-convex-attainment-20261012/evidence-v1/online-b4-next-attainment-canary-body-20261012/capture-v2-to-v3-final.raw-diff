@@ -1,0 +1,59 @@
+--- V2
++++ V3-final
+@@ -42,8 +42,19 @@
+  reviewed=pins['imported_probe']
+  assert reviewed==release['recipe']['ImportedAudit-construction-v1.lean'],'Reviewed probe authority differs'
+  assert bind(src)==reviewed and mi['probe']==reviewed,'Unreviewed import probe'
++def sealed_family_index(sealed):
++ index={};parent_keys={}
++ for k,row in sealed.items():
++  path=Path(row['path']);parent=str(path.parent)
++  if parent not in parent_keys:parent_keys[parent]=real(path.parent)
++  parent_key=parent_keys[parent];name=path.name
++  # Every literal dot prefix exactly matches startswith(stem+'.'), including private companions.
++  for i,c in enumerate(name):
++   if c=='.':index.setdefault((parent_key,name[:i]),{})[k]=row
++ return index
++
+ def companion_membership(pins,stage,own=None):
+- cl=json.loads((P/'closure-manifest-v1.json').read_text());sealed={real(x['path']):x for x in cl['inputs']}
++ cl=json.loads((P/'closure-manifest-v3.json').read_text());sealed={real(x['path']):x for x in cl['inputs']}
+  assert len(sealed)==len(cl['inputs']),'Duplicate closure paths'
+  origins=list(cl['origins'])
+  roots=([str(P)] if stage=='import' else [])+pins['scratch_parent_roots']+pins['ordered_search_roots']
+@@ -53,6 +64,7 @@
+   for row in own:sealed[real(row['path'])]=row
+   origins.append({'module':'StrongConvexAttainmentCanaries','olean':str(P/'StrongConvexAttainmentCanaries.olean')})
+  assert len(origins)==len({x['module'] for x in origins}),'Duplicate expected modules'
++ family_index=sealed_family_index(sealed)
+  observed=[]
+  for row in origins:
+   op=Path(row['olean']).resolve();relative=Path(*row['module'].split('.')).with_suffix('.olean')
+@@ -60,7 +72,8 @@
+   assert len(hits)==1 and hits[0]==op,'Missing/shadowed/wrong effective module origin: '+row['module']
+   stem=op.name[:-6];bases=[op.parent]
+   if '.lake/build/lib/lean' in op.as_posix():bases.append(Path(op.parent.as_posix().replace('/lib/lean','/ir')))
+-  expected={k:v for k,v in sealed.items() if Path(v['path']).name.startswith(stem+'.') and real(Path(v['path']).parent) in set(map(real,bases))}
++  base_keys=set(map(real,bases));expected={}
++  for parent_key in base_keys:expected.update(family_index.get((parent_key,stem),{}))
+   current=family_paths(op);assert set(map(real,current))==set(expected),'Module companion membership drift: '+row['module']
+   current_rows=[bind(p) for p in current]
+   assert all(expected[real(x['path'])]==x for x in current_rows),'Module companion hash drift'
+@@ -94,7 +107,7 @@
+ 
+ ap=argparse.ArgumentParser();ap.add_argument('stage',choices=['header','body','import']);ap.add_argument('source');ap.add_argument('attempt');ap.add_argument('--pins-sha256',required=True)
+ for k in ['header-receipt','header-receipt-sha256','import-manifest','import-manifest-sha256']:ap.add_argument('--'+k)
+-a=ap.parse_args();pinfile=P/'capture-pins-v2.json';assert sha(pinfile)==a.pins_sha256;pins=json.loads(pinfile.read_text());src=safe(a.source);assert src.suffix=='.lean';out=safe(a.attempt);out.mkdir(exist_ok=False)
++a=ap.parse_args();pinfile=P/'capture-pins-v3.json';assert sha(pinfile)==a.pins_sha256;pins=json.loads(pinfile.read_text());src=safe(a.source);assert src.suffix=='.lean';out=safe(a.attempt);out.mkdir(exist_ok=False)
+ record=dict(stage=a.stage,status='INCOMPLETE',actual_exit=None,integrity_pass=False);code=1
+ try:
+  own_expected=None
+@@ -106,7 +119,7 @@
+  frozen=Path(pins['frozen_header']['path']).read_bytes();suffix=b'\n\nend BanditRL.OnlineConvex\n'
+  if a.stage=='header':assert bind(src)==pins['header_probe']
+  if a.stage in ['header','body','import']:
+-  cm=P/'closure-manifest-v1.json';assert sha(cm)==pins['closure_manifest_sha256'];paths.append(cm)
++  cm=P/'closure-manifest-v3.json';assert sha(cm)==pins['closure_manifest_sha256'];paths.append(cm)
+   for row in json.loads(cm.read_text())['inputs']:
+    pp=Path(row['path']);assert bind(pp)==row;paths.append(pp)
+  if a.stage=='body':

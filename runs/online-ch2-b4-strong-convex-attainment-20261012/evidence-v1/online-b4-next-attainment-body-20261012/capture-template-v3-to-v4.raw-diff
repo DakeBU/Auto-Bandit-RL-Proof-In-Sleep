@@ -1,0 +1,44 @@
+--- capture-template-v3.py
++++ capture-template-v4.py
+@@ -39,9 +39,23 @@
+  assert actual <= sealed,'Unsealed current source-library companion'
+  return sorted(actual)
+ 
++def check_prior(rec,stage,source,argv,pins,pinfile,before):
++ assert rec['stage']==stage and rec['actual_exit']==0 and rec['integrity_pass'] is True
++ assert rec['pre_git']==rec['post_git']==before
++ assert rec['argv']==argv and Path(rec['cwd']).resolve()==R
++ expected_env={'LEAN_NUM_THREADS':'2','LEAN_PATH':os.pathsep.join(pins['scratch_parent_roots']+pins['ordered_search_roots'])}
++ assert rec['env_overrides']==expected_env
++ assert rec['before_RAW']==rec['after_RAW']
++ rows=rec['before_RAW'];mapping={os.path.normcase(str(Path(x['path']).resolve())):x for x in rows}
++ assert len(rows)==len(mapping)
++ for row in [bind(pinfile),bind(source),pins['compiler'],pins['release'],pins['capture'],pins['header_probe']]:
++  assert mapping[os.path.normcase(str(Path(row['path']).resolve()))]==row
++ assert rec['runtime_before']==rec['runtime_after']==runtime_snapshot(pins)
++ for kind in ['stdout','stderr']:assert bind(Path(rec[kind]['path']))==rec[kind]
++
+ ap=argparse.ArgumentParser();ap.add_argument('stage',choices=['header','body','import']);ap.add_argument('source');ap.add_argument('attempt');ap.add_argument('--pins-sha256',required=True)
+ for k in ['header-receipt','header-receipt-sha256','import-manifest','import-manifest-sha256']:ap.add_argument('--'+k)
+-a=ap.parse_args();pinfile=P/'capture-pins-v3.json';assert sha(pinfile)==a.pins_sha256;pins=json.loads(pinfile.read_text());src=safe(a.source);assert src.suffix=='.lean';out=safe(a.attempt);out.mkdir(exist_ok=False)
++a=ap.parse_args();pinfile=P/'capture-pins-v4.json';assert sha(pinfile)==a.pins_sha256;pins=json.loads(pinfile.read_text());src=safe(a.source);assert src.suffix=='.lean';out=safe(a.attempt);out.mkdir(exist_ok=False)
+ record=dict(stage=a.stage,status='INCOMPLETE',actual_exit=None,integrity_pass=False);code=1
+ try:
+  paths=[pinfile,src];rows=[pins[k] for k in ['python','compiler','operative_search_pins','release','frozen_header','canonical_header','header_probe','freeze','capture']]+pins['parents']+pins['project']
+@@ -56,14 +70,14 @@
+   for row in json.loads(cm.read_text())['inputs']:
+    pp=Path(row['path']);assert bind(pp)==row;paths.append(pp)
+  if a.stage=='body':
+-  hp=(P/a.header_receipt).resolve();assert hp.is_relative_to(P) and not Path(a.header_receipt).is_absolute();assert sha(hp)==a.header_receipt_sha256;hr=json.loads(hp.read_text());assert hr['stage']=='header' and hr['actual_exit']==0 and hr['integrity_pass'];paths.append(hp)
++  hp=(P/a.header_receipt).resolve();assert hp.is_relative_to(P) and not Path(a.header_receipt).is_absolute();assert sha(hp)==a.header_receipt_sha256;hr=json.loads(hp.read_text());check_prior(hr,'header',Path(pins['header_probe']['path']),[pins['compiler']['path'],pins['header_probe']['path']],pins,pinfile,before);paths.append(hp)
+   assert src.read_bytes().split(b' := by\n',1)[0]+b'\n'==frozen
+  if a.stage=='import':
+   mp=(P/a.import_manifest).resolve();assert mp.parent==P and not Path(a.import_manifest).is_absolute();assert sha(mp)==a.import_manifest_sha256;mi=json.loads(mp.read_text());paths.append(mp);assert mi['probe']==bind(src)
+   for row in mi['inputs']:
+    p=Path(row['path']);assert bind(p)==row;paths.append(p)
+   cp=Path(mi['candidate']['path']);op=Path(mi['olean']['path']);assert cp.parent==P and op.parent==P and op.name=='StrongConvexAttainmentCandidate.olean';assert bind(cp)==mi['candidate'] and bind(op)==mi['olean'];paths += [cp,op]
+-  rp=Path(mi['receipt']['path']);assert bind(rp)==mi['receipt'];br=json.loads(rp.read_text());assert br['actual_exit']==0 and br['integrity_pass'] and br['output_olean']==mi['olean'];paths.append(rp)
++  rp=Path(mi['receipt']['path']);assert bind(rp)==mi['receipt'];br=json.loads(rp.read_text());check_prior(br,'body',cp,[pins['compiler']['path'],'-o',str(op),str(cp)],pins,pinfile,before);assert br['output_olean']==mi['olean'];paths.append(rp)
+  env={k:v for k,v in os.environ.items() if not k.upper().startswith('LEAN_')};env['LEAN_NUM_THREADS']='2';env['LEAN_PATH']=os.pathsep.join(([str(P)] if a.stage=='import' else [])+pins['scratch_parent_roots']+pins['ordered_search_roots'])
+  runtime_before=runtime_snapshot(pins);membership_before=companion_membership(pins)
+  argv=[pins['compiler']['path']];target=None

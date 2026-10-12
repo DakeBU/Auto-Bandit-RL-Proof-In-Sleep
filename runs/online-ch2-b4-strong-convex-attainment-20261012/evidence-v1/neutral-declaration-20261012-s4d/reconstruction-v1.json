@@ -1,0 +1,22 @@
+{
+ "schema":"blind-closed-header-reconstruction-v1",
+ "name":"zero_curvature_affine_has_no_minimum",
+ "inputs":[{"file":"declaration-v1.txt","sha256":"a1eedbc4618df9b0b1328b1668cb0ea45aafbc29ab7a3710acfb7d1eb6f99886"},{"file":"definition-context-v1.txt","sha256":"910e6e40db16c31ac9a4660ee5e83b575aaf8c74f5e2ffbc583497def61b2191"}],
+ "external_binders":[],"external_premises":[],"closed":true,"conjunct_count":5,"association":"right",
+ "ambient":{"E":"EuclideanSpace ℝ (Fin 1)","point":"point t has sole coordinate t","norm":"Euclidean norm, absolute sole coordinate","inner_product":"product of sole coordinates","unused_context_definitions":["coordinates identity algebraic linear equivalence","quadratic halfline-restricted function"]},
+ "definitions":{"affine":"x ↦ (x 0 : EReal)","effectiveDomain":"{x | affine x < top}; all E for this function","SourceProper":"(∀ x:E, affine x ≠ bottom) ∧ ∃ x:E, ∃ r:ℝ, affine x=(r:EReal)","SourceClosed":"∀ r:ℝ, IsClosed {x:E | affine x ≤ (r:EReal)}","SourceSubdifferential":"{g:E | ∀ y:E, affine p + ((inner ℝ g (y-p):ℝ):EReal) ≤ affine y}"},
+ "conjuncts_in_order":[
+  "SourceProper affine",
+  "SourceClosed affine",
+  "∀ x ∈ effectiveDomain affine, ∀ y ∈ effectiveDomain affine, ∀ a : ℝ, 0 < a → a < 1 → affine (a • x + (1 - a) • y) ≤ (a : EReal) * affine x + ((1 - a : ℝ) : EReal) * affine y - ((((0 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)",
+  "point 1 ∈ SourceSubdifferential affine (point 0)",
+  "¬ (∃ p : E, ∀ q : E, affine p ≤ affine q)"
+ ],
+ "quantifier_scopes":{"proper":"global no-bottom clause and separate existential finite witness","closed":"every real level r","curvature":"x, membership; y, membership; real a; 0<a; a<1; EReal inequality","support":"∀ z:E at fixed basepoint point 0 and vector point 1","final":"negation scopes over ∃ p:E with ∀ q:E comparison"},
+ "specializations":{"finite_witness":"point 0 with real value 0","sublevel":"{x | x 0 ≤ r}","curvature":"zero correction; affine equality","support":"embedded(z 0) ≤ embedded(z 0)","no_minimum":"any candidate p is improved by point(p 0 - 1)"},
+ "edge_cases":{"finite_values":"all points finite; neither infinity occurs as a value","bottom":"unbounded below does not mean a bottom-valued point exists","domain":"all E; no extra membership in final existential","curvature":"zero, not positive","weights":"only 0<a<1 explicitly quantified","division":"0/2, never division by a zero curvature denominator","toReal":"absent","operator_norm":"absent","feasible_restriction":"none; all E compared"},
+ "premises_vs_conclusions":"all five clauses are conclusions of a fixed closed example",
+ "not_claimed":["strictly positive curvature","attained minimum of any value","general nonattainment for every zero-curvature function","provider usage","algorithmic result"],
+ "ambiguities":["enclosing namespace absent; no material conjunction or quantifier ambiguity"],
+ "limits":["statement interpretation only","no Lean execution","no proof or source acceptance","header cannot establish provider use"]
+}

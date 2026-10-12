@@ -1,0 +1,17 @@
+--- ImportedAudit-construction-v1.lean
++++ ImportedAudit-construction-v2.lean
+@@ -33,12 +33,12 @@
+     let args := e.getAppArgs
+     if e.getAppFn.isConstOf parent && args.size == 12 then
+       unless args[0]!.isConstOf `BanditRL.Tests.OnlineStrongConvexAttainmentCanary.E do throw "Wrong actual ambient"
+-      unless args[3]!.natLit? == some 1 do throw "Wrong dimension"
++      unless args[3]!.rawNatLit? == some 1 do throw "Wrong dimension"
+       unless args[4]!.isConstOf `BanditRL.Tests.OnlineStrongConvexAttainmentCanary.coordinates do throw "Wrong coordinates"
+       unless args[5]!.isConstOf `BanditRL.Tests.OnlineStrongConvexAttainmentCanary.quadratic do throw "Wrong objective"
+       let lam := args[6]!
+       unless lam.getAppFn.isConstOf `OfNat.ofNat && lam.getAppArgs.size == 3 &&
+-          lam.getAppArgs[0]!.isConstOf `Real && lam.getAppArgs[1]!.natLit? == some 1 do
++          lam.getAppArgs[0]!.isConstOf `Real && lam.getAppArgs[1]!.rawNatLit? == some 1 do
+         throw "Wrong positive curvature numeral"
+       for (i,n) in (#[(7,`hproper),(8,`hclosed),(10,`hstrong),(11,`hsub)] : Array (Nat × Name)) do
+         unless bn ctx args[i]! == n do throw s!"Wrong internal premise{i}"

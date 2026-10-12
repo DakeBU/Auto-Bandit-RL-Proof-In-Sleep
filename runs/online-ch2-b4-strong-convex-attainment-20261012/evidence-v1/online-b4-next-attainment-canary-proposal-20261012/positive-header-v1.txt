@@ -1,0 +1,10 @@
+theorem halfline_quadratic_unique_attainment :
+    (∃! p : E, p ∈ effectiveDomain quadratic ∧ ∀ q : E, quadratic p ≤ quadratic q) ∧
+    (∀ p : E, (p ∈ effectiveDomain quadratic ∧ ∀ q : E, quadratic p ≤ quadratic q) ↔
+      p = point 2) ∧
+    point (-2) ∈ SourceSubdifferential quadratic (point 0) ∧
+    ¬ IsMinOn quadratic Set.univ (point 0) ∧
+    (∀ R : ℝ, ∃ x : E, x ∈ effectiveDomain quadratic ∧ R < ‖x‖) ∧
+    effectiveDomain quadratic = {x : E | 0 ≤ x 0} ∧
+    quadratic (point 2) = (0 : EReal) ∧
+    quadratic (point (-1)) = ⊤

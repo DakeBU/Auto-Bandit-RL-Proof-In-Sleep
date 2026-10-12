@@ -1,0 +1,51 @@
+66                                   Online Mirror Descent
+
+We will prove it by contradiction. So, assume that xt+1 ∈ bdry X . Set z ∈ int X ∩ V and
+define ϕ(λ) = ⟨ηt g t , (1 − λ)xt+1 + λz⟩ + Bψ ((1 − λ)xt+1 + λz; xt ) for λ ∈ (0, 1).
+From (6.5), we have that
+
+lim ϕ′ (λ) = lim (⟨ηt g t , z − xt+1 ⟩ + ⟨∇ψ(xt+1 + λ(z − xt+1 )) − ∇ψ(xt ), z − xt+1 ⟩)
+λ→0           λ→0
+
+           = −∞.
+Hence, there exists ϵ > 0 such that
+
+        ⟨ηt g t , xϵ ⟩ + Bψ (xϵ ; xt ) = ϕ(ϵ) < ϕ(0) = ⟨ηt g t , xt+1 ⟩ + Bψ (xt+1 ; xt ),
+where xϵ := (1 − ϵ)xt+1 + ϵz ∈ int X ∩ V . However, this contradicts the definition of
+xt+1 as an argmin, proving that xt+1 must be in int X .
+   When (6.5) holds, this theorem implies that the predictions of the algorithm always stay
+in the interior of X without the need for any projection. If in addition V = X , the update of
+the algorithm is the solution of an unconstrained problem because the feasible set is implicit
+in the Bregman divergence.
+   Now we have a well-defined algorithm, but does it guarantee a sublinear regret? We know
+that at least in one case, it recovers the OSD algorithm, which does work. So, from an intu-
+itive point of view, how well the algorithm works should depend on some characteristic of
+ψ . In particular, a sufficient property will be the strong convexity of ψ . The strong convexity
+also takes care of the existence of the argmin in the algorithm, thanks to the next theorem.
+
+Theorem 6.9 Let λ > 0 and f : Rd → (−∞, +∞] proper, closed, and λ-strongly convex
+with respect to ∥ · ∥ on its domain. Assume dom ∂f ̸= ∅. Then, f has exactly one minimizer.
+
+Proof   Let y ∈ dom ∂f and g ∈ ∂f (y). From Lemma 4.2, for any x ∈ Rd , we have
+                                        λ
+          f (x) ≥ f (y) + ⟨g, x − y⟩ +    ∥x − y∥2
+                                        2
+                                               λ
+                 ≥ f (y) − ∥g∥⋆ ∥x∥ − ⟨g, y⟩ + (∥x∥ − ∥y∥)2
+                                               2
+                                               λ
+                 = f (y) − ∥g∥⋆ ∥x∥ − ⟨g, y⟩ + (∥x∥2 + ∥y∥2 − 2∥x∥∥y∥),
+                                               2
+where in the second inequality we used the reverse triangle inequality and the definition of
+dual norms. From the above, we have that lim∥x∥→∞ f (x) = +∞. In turn, this implies that
+the level sets of f are bounded. From the assumption that f is closed, we get that the level
+sets are compact. Hence, for any y in dom f , the minimum of f is the same as the minimum
+of f over the set {x : f (x) ≤ f (y)}, that is, the minimum over a compact set, that exists
+by the Weierstrass theorem, Theorem A.3. The uniqueness is given by the fact that strongly
+convex functions are strictly convex.
+
+  To analyze OMD, we first prove a one-step relationship, similar to the ones we proved for
+Online Gradient Descent (OGD) and OSD. Note how in this lemma, we will use a lot of the
+concepts we introduced till now: strong convexity, dual norms, subgradients, etc. In a way,
+over the past sections, I slowly prepared you to be able to prove this lemma.
+

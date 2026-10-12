@@ -1,0 +1,68 @@
+{
+ "schema":"independent-blind-header-reconstruction-v1",
+ "name":"stronglyConvex_existsUnique_minimizer",
+ "namespace":"not supplied",
+ "inputs":[
+  {"file":"declaration-v1.txt","sha256":"543e702b86e738dbc5c1a47eba555d6e05f261f4ada1bc67a99edcdf0d0a76ad"},
+  {"file":"definition-context-v1.txt","sha256":"62e25fe95c839337217ce0e5de2d8c00e6999f2be5663cea57834e125dd3a4e3"}
+ ],
+ "binders_in_order":[
+  {"name":"E","kind":"implicit","type":"Type*"},
+  {"name":null,"kind":"instance","type":"NormedAddCommGroup E"},
+  {"name":null,"kind":"instance","type":"NormedSpace ℝ E"},
+  {"name":"d","kind":"explicit","type":"ℕ"},
+  {"name":"e","kind":"explicit","type":"E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d)"},
+  {"name":"f","kind":"explicit","type":"E → EReal"},
+  {"name":"lam","kind":"explicit","type":"ℝ"},
+  {"name":"hf","kind":"explicit_assumption","type":"SourceProper f"},
+  {"name":"hclosed","kind":"explicit_assumption","type":"SourceClosed f"},
+  {"name":"hlam","kind":"explicit_assumption","type":"0 < lam"},
+  {"name":"hstrong","kind":"explicit_assumption","type":"∀ x ∈ effectiveDomain f, ∀ y ∈ effectiveDomain f, ∀ a : ℝ, 0 < a → a < 1 → f (a • x + (1 - a) • y) ≤ (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y - (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)"},
+  {"name":"hsub","kind":"explicit_assumption","type":"{p : E | (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty}.Nonempty"}
+ ],
+ "definitions_and_expansions":{
+  "D":"{x : E | f x < top}",
+  "SourceProper":"(∀ x : E, f x ≠ bottom) ∧ ∃ x : E, ∃ r : ℝ, f x = (r : EReal)",
+  "SourceClosed":"∀ r : ℝ, IsClosed {x : E | f x ≤ (r : EReal)}",
+  "coordinate_function":"F(u)=f(e.symm u)",
+  "SourceSubdifferential":"g is a coordinate-space vector with ∀ u, F(e p) + (inner g (u-e p) embedded in EReal) ≤ F(u)",
+  "hsub":"∃ p : E, ∃ g : EuclideanSpace ℝ (Fin d), ∀ u : EuclideanSpace ℝ (Fin d), f p + ((inner g (u - e p) : ℝ) : EReal) ≤ f (e.symm u)"
+ },
+ "quantifier_scopes":{
+  "hstrong":"x:E, x∈D, y:E, y∈D, a:ℝ, 0<a, a<1, EReal inequality",
+  "hsub":"existential p, existential Euclidean support vector g, universal Euclidean comparator u",
+  "conclusion":"unique existential p:E, membership in D and universal comparator q:E"
+ },
+ "geometry":{
+  "e":"algebraic real linear equivalence; finite-dimensional coordinate identification",
+  "not_assumed":"isometry or equality of E norm with coordinate norm",
+  "hstrong_norm":"given ambient E norm",
+  "hsub_inner_product":"Euclidean coordinate-space real inner product",
+  "operator_norm":"absent",
+  "E_inner_product_structure":"not a supplied typeclass"
+ },
+ "literal_conclusion":"∃! p : E, p ∈ effectiveDomain f ∧ ∀ q : E, f p ≤ f q",
+ "expanded_uniqueness":"∃ p:E, (p∈D ∧ ∀ q:E, f p≤f q) ∧ ∀ p':E, (p'∈D ∧ ∀ q:E, f p'≤f q) → p'=p",
+ "conclusion_scope":"global minimization over all E, with a unique finite-valued minimizer",
+ "derived_not_extra_assumptions":[
+  "D nonempty by finite witness in SourceProper",
+  "values on D are finite because bottom excluded",
+  "D convex from strong inequality at interior weights and trivial endpoints",
+  "hsub witness p is finite-valued by its global support inequality evaluated at a finite point and SourceProper",
+  "every global minimizer is finite-valued, because a finite point exists and bottom excluded"
+ ],
+ "edge_cases":{
+  "d_zero":"allowed; coordinate space and hence E are zero-dimensional",
+  "empty_domain":"excluded by SourceProper",
+  "top":"allowed off D",
+  "bottom":"excluded everywhere",
+  "lam":"strictly positive; zero and negative excluded",
+  "division":"only by fixed real 2; no reciprocal of lam",
+  "hsub":"one support point; no explicit domain membership in its predicate; no requirement g=0",
+  "comparator":"q may have top value"
+ },
+ "absent_operations":["toReal","finite prefix sums","indicator","operator norm"],
+ "not_claimed":["minimizer formula","algorithm or convergence rate","location bound","finite values everywhere","metric preservation by e","proof use of hsub or a provider theorem"],
+ "ambiguities":["Enclosing namespace not supplied","Implementations of named source predicates not inspected; supplied semantic definitions used"],
+ "evidence_limits":["header only","no Lean execution","no proof/provider validation","no source acceptance"]
+}

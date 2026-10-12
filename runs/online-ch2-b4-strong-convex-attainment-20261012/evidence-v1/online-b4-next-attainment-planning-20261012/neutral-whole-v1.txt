@@ -1,0 +1,23 @@
+import BanditRLProof.OnlineStrongConvexSourceSubgradient
+import BanditRLProof.OnlineStrongConvexMinimum
+import Mathlib.Topology.Semicontinuity.Basic
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+
+theorem stronglyConvex_existsUnique_minimizer {E : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))
+    (f : E → EReal) (lam : ℝ)
+    (hf : SourceProper f) (hclosed : SourceClosed f)
+    (hlam : 0 < lam)
+    (hstrong : ∀ x ∈ effectiveDomain f, ∀ y ∈ effectiveDomain f,
+      ∀ a : ℝ, 0 < a → a < 1 →
+      f (a • x + (1 - a) • y) ≤
+        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -
+          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))
+    (hsub : {p : E |
+      (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty}.Nonempty) :
+    ∃! p : E, p ∈ effectiveDomain f ∧ ∀ q : E, f p ≤ f q

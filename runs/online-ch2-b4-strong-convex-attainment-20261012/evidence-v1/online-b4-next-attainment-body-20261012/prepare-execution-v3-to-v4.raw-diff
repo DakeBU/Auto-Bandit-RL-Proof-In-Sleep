@@ -1,0 +1,39 @@
+--- prepare-execution-v3.py
++++ prepare-execution-v4.py
+@@ -36,15 +36,16 @@
+  need(auth['prepare_recipe']==bind(__file__),'Release must pin this exact preparation')
+  need(sys.version_info[:3]==(3,12,14) and sha(sys.executable)=='31073dad142bc7f3374e3122aa668270052c9ad37d0aaab803ae73f184c3a43b','Exact Python required')
+  expected=dict(head=auth['expected_head'],branch=auth['expected_branch'],status='');need(state()==expected,'Wrong clean Git state')
+- baseline=D/'capture-pins-v2.json';historical=D/'capture-v2.py';template=P/'capture-template-v3.py'
+- for path,digest in [(baseline,'26d908ba565b26d36d13137380be87fe8dafe88a17acaad4c950c4e2056b22ca'),(historical,'c8bdd8c02e2c86e7c0f2db046b2a372c4c6b23f5f1ef62cf7408e883be98679d'),(template,'16969d4b4e0a78c4f1ffb21f8e567e3503a7b3a6ae29705c6fe542c5dc837264')]:need(sha(path)==digest,'Historical/template hash differs')
++ baseline=D/'capture-pins-v2.json';historical=D/'capture-v2.py';template=P/'capture-template-v4.py'
++ for path,digest in [(baseline,'26d908ba565b26d36d13137380be87fe8dafe88a17acaad4c950c4e2056b22ca'),(historical,'c8bdd8c02e2c86e7c0f2db046b2a372c4c6b23f5f1ef62cf7408e883be98679d'),(template,'d94c04745c21cde9eeff4bfbcdc0f1d7482f8f5f6d6b0cde96b794353b6ed2b5')]:need(sha(path)==digest,'Historical/template hash differs')
+  pins=read(baseline);cap=template.read_bytes();ast.parse(cap)
+  need(bind(sys.executable)==pins['python'],'Python binding differs')
+  # These bindings are supplied by the parent after independent actual-discovery review.
+  # Caller-supplied receipt hashes alone are not authority.
+  seal=auth['reviewed_actual_discovery'];need(seal['accepted'] is True,'Discovery not independently accepted')
+  paths={k:sealed(seal[k]) for k in ['review','recipe','receipt','manifest','potential_inventory','capture_authority']}
+- need(sha(paths['recipe'])=='a3dca4e9492260566bd1bdb6157f8fe333c7d08412b40116be33e5762eed4d7d','Reviewed discovery implementation differs')
++ need(sha(paths['recipe'])=='45874bf68f74aa95f07513b1183f34af7b2b5ac83b25ea76bb8d48af2f35ab56','Reviewed discovery implementation differs')
++ need(paths['recipe']==(R/'tmp/online-attainment-discovery-preparation-20261012/v2/discover-header-v2.py').resolve(),'Reviewed discovery path differs')
+  dr=read(paths['receipt']);cl=read(paths['manifest']);inv=read(paths['potential_inventory']);da=read(paths['capture_authority'])
+  need(dr['actual_exit']==0 and dr['integrity_pass'] is True,'Discovery did not pass')
+  need(dr['authority']==bind(paths['capture_authority']),'Capture authority mismatch')
+@@ -70,6 +71,7 @@
+  for x in observed:
+   choices=catalogue.get(x['module'],[]);need(len(choices)==1,'Missing/shadowed actual module')
+   row=choices[0];need(key(row['olean'])==key(x['olean']),'Resolved module differs')
++  need(isinstance(row['source'],str) and bool(row['source']),'Actual imported origin must have a nonnull source')
+   if key(row['root'])==key(A):need(row['module']=='WeierstrassExtendedCandidate','Unapproved scratch parent')
+   actual.append(row);required.update(map(key,[row['source'],*row['companions']]))
+  need(cl['origins']==actual,'Manifest origin list differs')
+@@ -88,7 +90,7 @@
+  header=header.replace(' :\n    ∃! p',',\n    ∃! p')+'\nend BanditRL.OnlineConvex\n'
+  need(state()==expected,'Git drift during preparation')
+  # No artifacts are written before the entire discovery boundary is authenticated.
+- names=['scratch-frozen-header-v3.txt','HeaderElaboration-v3.lean','closure-manifest-v1.json','capture-v3.py','capture-pins-v3.json']
++ names=['scratch-frozen-header-v4.txt','HeaderElaboration-v4.lean','closure-manifest-v1.json','capture-v4.py','capture-pins-v4.json']
+  need(all(not (P/n).exists() for n in names),'Exclusive preparation output already exists')
+  put(names[0],frozen);put(names[1],header.encode());put(names[2],enc(cl));put(names[3],cap)
+  pins.update(release=bind(release),freeze=bind(F/'Theorem6.9-local-header-freeze-v1.json'),frozen_header=bind(P/names[0]),canonical_header=bind(frozenpath),header_probe=bind(P/names[1]),capture=bind(P/names[3]),closure_manifest_sha256=sha(P/names[2]),scratch_parent_roots=[str(A)],reviewed_actual_discovery=seal,prepare_recipe=bind(__file__))

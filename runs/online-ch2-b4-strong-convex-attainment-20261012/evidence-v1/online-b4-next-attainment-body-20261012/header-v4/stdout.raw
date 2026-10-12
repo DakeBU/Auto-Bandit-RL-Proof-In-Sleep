@@ -1,0 +1,28 @@
+∀ {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))
+  (f : E → EReal) (lam : ℝ),
+  SourceProper f →
+    SourceClosed f →
+      0 < lam →
+        (∀ x ∈ effectiveDomain f,
+            ∀ y ∈ effectiveDomain f,
+              ∀ (a : ℝ),
+                0 < a →
+                  a < 1 →
+                    f (a • x + (1 - a) • y) ≤ ↑a * f x + ↑(1 - a) * f y - ↑(lam / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) →
+          {p | (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty}.Nonempty →
+            ∃! p, p ∈ effectiveDomain f ∧ ∀ (q : E), f p ≤ f q : Prop
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-body-20261012\HeaderElaboration-v4.lean:14:5: warning: unused variable `hf`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-body-20261012\HeaderElaboration-v4.lean:14:27: warning: unused variable `hclosed`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-body-20261012\HeaderElaboration-v4.lean:15:5: warning: unused variable `hlam`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-body-20261012\HeaderElaboration-v4.lean:16:5: warning: unused variable `hstrong`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-body-20261012\HeaderElaboration-v4.lean:21:5: warning: unused variable `hsub`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
