@@ -136,3 +136,4 @@ import Tests.OnlineHingeCanary
 import Tests.OnlineLipschitzSubgradientCanary
 import Tests.OnlineConvexNondifferentiabilityCanary
 import Tests.OnlineConvexUncountabilityCanary
+import Tests.OnlineSubgradientDescentCanary

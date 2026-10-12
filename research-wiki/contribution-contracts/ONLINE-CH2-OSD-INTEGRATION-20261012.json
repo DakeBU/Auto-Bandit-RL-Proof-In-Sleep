@@ -1,0 +1,275 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-OSD-INTEGRATION-20261012",
+  "route": "online-learning / projected online subgradient descent",
+  "frontier_cell": "online-osd",
+  "source_facing": true,
+  "source": {
+    "kind": "textbook",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Lemma 2.31 and Algorithm 2.2, printed19-20/PDF31-32; printed19 transfer of Theorem2.13 and equation2.1; printed21 coarse constant formula",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "target": "Integrate the canonical chosen-support projected recurrence, full one-step chain and actual-trajectory fixed, variable and tuned regret bounds from original PR147/179.",
+  "affected_files": [
+    "BanditRLProof/OnlineSubgradientDescent.lean",
+    "Tests/OnlineSubgradientDescentCanary.lean",
+    "BanditRLProof.lean",
+    "Tests.lean",
+    "website/content/readings.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/books.json",
+    "tools/test_book_registry.py",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py",
+    "research-wiki/integrations/ONLINE-CH2-OSD-INTEGRATION-20261012/source-map.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineSubgradientDescent.Domain",
+    "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+    "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+    "BanditRL.OnlineSubgradientDescent.step",
+    "BanditRL.OnlineSubgradientDescent.iterate",
+    "BanditRL.OnlineSubgradientDescent.regret",
+    "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+    "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+    "BanditRL.OnlineSubgradientDescent.finite_loss",
+    "BanditRL.OnlineSubgradientDescent.iterate_mem",
+    "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+    "BanditRL.OnlineSubgradientDescent.iterate_support",
+    "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+    "BanditRL.OnlineSubgradientDescent.one_step_chain",
+    "BanditRL.OnlineSubgradientDescent.one_step",
+    "BanditRL.OnlineSubgradientDescent.regret_fixed",
+    "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+    "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+    "BanditRL.OnlineSubgradientDescent.regret_variable",
+    "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+    "BanditRL.OnlineSubgradientDescent.regret_tuned"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Current main shared projection and variable-rate telescope",
+      "Original PR147/179 OSD production and complete canary bytes",
+      "Existing proper-loss global-subgradient and finiteness interfaces"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescent.project",
+      "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+      "BanditRL.OnlineConvex.SourceSubdifferential"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineSubgradientDescent.Domain",
+      "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+      "BanditRL.OnlineSubgradientDescent.step",
+      "BanditRL.OnlineSubgradientDescent.iterate",
+      "BanditRL.OnlineSubgradientDescent.regret",
+      "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "BanditRL.OnlineSubgradientDescent.iterate_mem",
+      "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "BanditRL.OnlineSubgradientDescent.iterate_support",
+      "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+      "BanditRL.OnlineSubgradientDescent.one_step_chain",
+      "BanditRL.OnlineSubgradientDescent.one_step",
+      "BanditRL.OnlineSubgradientDescent.regret_fixed",
+      "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+      "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+      "BanditRL.OnlineSubgradientDescent.regret_variable",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+      "BanditRL.OnlineSubgradientDescent.regret_tuned"
+    ],
+    "known_consumers": [
+      "Actual chosen support feeds one-step chain, fixed and variable telescopes and tuning",
+      "Nine direct production-theorem canary consumers; seven definition-only direct consumers; sixteen other selected canary declarations"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Preserve the exact original production and canary bytes while integrating shared roots and current publication metadata; no separate Lean project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "verdict": "accepted-with-explicit-delta",
+    "formalizer": "/root integration formalizer and publication author",
+    "blind_decoder": "/root/batch6_blind_decoder; source-blind exact neutral interfaces",
+    "source_reviewer": "/root/batch8_source_reviewer; independent source-first, topology, bodies and publication review",
+    "remaining_semantic_delta": "Proper extended-real losses and global support inequalities are retained without added global convexity or differentiability. The standalone lemma permits arbitrary ambient current x with an actual support; the algorithm starts feasibly. Lean uses zero-based rounds, includes T=0 for fixed bounds, and restricts tuning to positive D,G,T with actual selected-support norm bounds on the same tuned run. One fixed noncomputable choice from the current whole function and point. General admissible history-dependent support policies, executable/measurable oracle realizations, Example 2.32, Chapter 2/book completion, full purification and an Exposition Seal remain separate."
+  },
+  "graph_contribution": {
+    "focus_targets": [
+      "online-osd"
+    ],
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The source already specifies the gradient-to-subgradient transfer. This integration reuses projection and scalar telescoping without a new cross-setting transport certificate.",
+    "edge_semantics": "formal-solid; overlays-dashed",
+    "visual_review": "Desktop/mobile reader and notation images actually inspected; formulas rendered, Online Book navigation correct and exact Lean folded."
+  },
+  "progress_updates": {
+    "teaching_route": "updated: dedicated OSD reader, 15 theorem highlights and all 21 production declarations",
+    "banditrlwiki": "no-change-with-reason: no Bandit/RL/Extended Topics frontier result changes",
+    "results_ledger": "no-change-with-reason: no chapter/book milestone asserted",
+    "roadmap": "no-change-with-reason: roadmap/frontier endpoints unchanged; bounded Online teaching chapter added",
+    "website_surfaces": [
+      "Online Book and OSD chapter",
+      "Six source cards, five proof steps and actual-trajectory canary example",
+      "Canonical declaration registry and source map"
+    ],
+    "integration_evidence": "updated: research-wiki/integrations/ONLINE-CH2-OSD-INTEGRATION-20261012/README.md, source-map.json and review-binding.json"
+  },
+  "truth_boundary": "One fixed noncomputable choice from the current whole function and point. General admissible history-dependent support policies, executable/measurable oracle realizations, Example 2.32, Chapter 2/book completion, full purification and an Exposition Seal remain separate. Proper extended-real losses and global support inequalities are retained without added global convexity or differentiability. The standalone lemma permits arbitrary ambient current x with an actual support; the algorithm starts feasibly. Lean uses zero-based rounds, includes T=0 for fixed bounds, and restricts tuning to positive D,G,T with actual selected-support norm bounds on the same tuned run. Local acceptance does not itself establish exact-head remote CI, merge, main deployment, original PR closure or branch retirement.",
+  "verification": {
+    "focused_checks": [
+      "Production/canary import closure passed; all 21 production interfaces elaborated",
+      "53 selected declarations inspected with only standard axioms",
+      "Compiled selected graph: 53 project nodes,631 boundary nodes,4835 direct edges; exact source ranges inspected",
+      "Desktop/mobile page and notation rendering checked"
+    ],
+    "bandit_check": "Combined library root, Tests, graph exporter, strict placeholder scan and full Python harness passed on the bound inputs.",
+    "site_build": "Passed --lean-verified after combined Lean acceptance",
+    "site_check": "passed",
+    "independent_review": "Separate source extractor, neutral decoder and independent source/body/publication reviewer; complete original delta preservation and 36 publication groups reconciled."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original proof authors/provenance preserved by immutable original PR history"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Rejected source-topology v1 and publication v1 remain preserved. V2 topology separates conditional OGD templates from instantiated OSD branches, constant/variable coarsening and original/transferred tuning. Publication clarifies positive tuning horizon and labels the fixed empty-horizon Lean extension. The site rejected unindexed generated dependency names; only the reader-link projection filters those names, while the compiled graph stays complete. All original proof/canary bytes and historical deltas retained.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineSubgradientDescent.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-support-projection-two-telescopes-tuning"
+      ],
+      "expected_information_gain": "Distinct audit roles provide independent reconstruction; no competing proof routes launched.",
+      "shared_verified_context_digest": "Pinned Orabona cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Retained original chosen-support OSD proof",
+      "selection_reason": "No parallel proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Six attributed cards, five mathematical proof steps, original theorem-specific highlights and actual-trajectory examples independently reviewed; no full Exposition Seal.",
+      "source_expansion_nodes": [
+        "Lemma2.31",
+        "Algorithm2.2",
+        "Theorem2.13 fixed transfer",
+        "Theorem2.13 variable transfer",
+        "Equation2.1 transfer",
+        "Printed21 coarse bound"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.step",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem",
+        "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+        "BanditRL.OnlineSubgradientDescent.iterate_support",
+        "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+        "BanditRL.OnlineSubgradientDescent.one_step_chain",
+        "BanditRL.OnlineSubgradientDescent.one_step",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+        "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+        "BanditRL.OnlineSubgradientDescent.regret_variable",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "statement_seal": {
+    "version": 1,
+    "source_revision": "arXiv:1912.13213v10",
+    "sealed_statement_record_sha256": "9c4fecf8c274b96dcb5b208b8e73cf10fe887cc5f6a8252203fc65f30e1db5bc",
+    "actual_elaborated_types_sha256": "b86290346437a47b6c7ac1bc0975818d412dbc607891930ddc3b8925ffcea499",
+    "binder_audit": "All 21 expanded interfaces independently audited in seven semantic slots; no EXCESS hypothesis. Chosen-map, arbitrary-current, finite-diameter and positive-tuning deltas explicit.",
+    "definition_kind": {
+      "Domain": "shared nonempty closed convex domain alias",
+      "SubdifferentiableOn": "proper loss plus nonempty global subdifferential at each feasible point",
+      "currentSubgradient": "noncomputable current-whole-function/point selection, zero off nonempty supports",
+      "step": "actual shared nearest projection update",
+      "iterate": "recursive prescribed trajectory",
+      "regret": "real finite loss differences along that same trajectory"
+    }
+  },
+  "source_proof_coverage": {
+    "inventory_sha256": "2147774a027f41b1414c85f6099f440201bb8838d8215295ad224e7b81ed728c",
+    "independent_source_first_receipt_sha256": "213a431c9acb9b945e09a39c30b3b903d108b17a848407d1cea805a24761490a",
+    "source_gaps": "Projection existence, proper-support finiteness, selection validity and feasibility induction are explicit library bridges. Zero-parameter tuning and generic oracle realization are not supplied; no convexity premise is silently introduced.",
+    "exclusions": "Example2.32 and other chapter/book obligations remain separate.",
+    "alternative_routes": "Constant and variable telescopes are separate branches. Coarse fixed and tuning use the constant branch; the conditional source OGD template does not add gradient premises to OSD."
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Global support and proper-loss finiteness",
+      "Shared Euclidean nearest projection",
+      "Shared weighted-potential sum"
+    ],
+    "bookkeeping": [
+      "Source/Lean round indices",
+      "Finite EReal toReal conversion",
+      "Reciprocal-rate regrouping and sqrt arithmetic"
+    ],
+    "new_to_main_reusable": [
+      "Actual chosen-support projected recurrence and prefix theorem",
+      "Terminal-retaining fixed and variable regret",
+      "Same-run distance-sensitive and all-comparator tuning"
+    ],
+    "new_topology": "Source-authorized OGD-to-OSD transfer with explicit library bridges; no novel conceptual discovery claimed."
+  },
+  "purification": {
+    "status": "pending",
+    "dead_code_audit": "Selected compiler graph and genuine canary uses inspected; not a global irredundancy certificate.",
+    "duplicate_semantics_audit": "Original single implementation reuses canonical projection/support/telescope rather than creating a second project.",
+    "canonicalization": "All original production and complete canary bytes preserved.",
+    "compressed_spine_delta": "Finite values, support/projection chain, fixed telescope, variable telescope and tuning.",
+    "reader_default_view": "Mathematics first, exact Lean folded; full Exposition Seal remains pending."
+  }
+}

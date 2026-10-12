@@ -3440,6 +3440,330 @@
         "BanditRL.OnlineConvex.coordinate_absolute_convex",
         "BanditRL.OnlineConvex.convex_nondifferentiable_segment"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "title": "Full projected-support single-step chain",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 0,
+      "plain": "The loss linearization and projected potential bound both hold for a supplied actual global support.",
+      "math": "\\(\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\frac{\\|x-u\\|^2-\\|\\Pi_V(x-\\eta g)-u\\|^2}{2}+\\frac{\\eta^2}{2}\\|g\\|^2\\)",
+      "intuition": "The loss linearization and projected potential bound both hold for a supplied actual global support.",
+      "why": "This is the local source chain used by the actual algorithm.",
+      "position": "Orabona v10: Lemma 2.31, printed19/PDF31; explicit arbitrary-current standalone extension.",
+      "proof_idea": "Properness and supports prove both values finite. Apply the global support inequality at u, then projection contraction and the squared-norm identity; rearrange without dropping the terminal norm.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate. The supplied-support standalone variant allows arbitrary ambient x, beyond the source algorithm feasibility convention.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.proposition_2_11",
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+      "title": "Choose an actual current global support",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "At a feasible point, the canonical selection is an actual global subgradient.",
+      "math": "\\(x\\in V\\Longrightarrow G(f,x)\\in\\partial f(x)\\)",
+      "intuition": "At a feasible point, the canonical selection is an actual global subgradient.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Library choice-validity bridge for Algorithm 2.2, printed20/PDF32.",
+      "proof_idea": "Subdifferentiability makes the support set nonempty. Unfold the conditional selector and apply the specification of Classical.choose; its zero fallback is unused.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "title": "Feasible supported losses have actual finite values",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "A proper subdifferentiable loss equals the finite coercion of its real value on V.",
+      "math": "\\(x\\in V\\Longrightarrow f(x)=\\operatorname{coe}(\\operatorname{toReal}(f(x)))\\)",
+      "intuition": "A proper subdifferentiable loss equals the finite coercion of its real value on V.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Library finite-value bridge for Lemma 2.31/Algorithm 2.2.",
+      "proof_idea": "Obtain the selected support using currentSubgradient_mem. The existing proper-support finiteness theorem excludes positive infinity; properness excludes negative infinity, so EReal.coe_toReal applies.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_mem",
+      "title": "All recursive outputs are feasible",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Every iterate from a feasible initialization lies in V, regardless of the raw loss and rate data.",
+      "math": "\\(X_0\\in V\\Longrightarrow X_t\\in V\\quad(t\\in\\mathbb N)\\)",
+      "intuition": "Every iterate from a feasible initialization lies in V, regardless of the raw loss and rate data.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Library feasibility bridge for Algorithm 2.2, printed20/PDF32.",
+      "proof_idea": "Split on t. At zero use initial feasibility; at a successor use the membership part of the actual nearest-projection specification. No positive-rate or loss-regularity premise is used.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_prefix",
+      "title": "Strict-prefix agreement fixes the current output",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "Equal strict past loss functions and rates produce the same current point from the same initialization.",
+      "math": "\\(\\bigl[\\forall s<t,\\ \\eta_s=\\eta_s^\\prime\\ \\land f_s=f_s^\\prime\\bigr]\\Longrightarrow X_t=X_t^\\prime\\)",
+      "intuition": "Equal strict past loss functions and rates produce the same current point from the same initialization.",
+      "why": "The current action does not read the current or future loss function.",
+      "position": "Orabona v10: Library prefix-causality bridge for Algorithm 2.2.",
+      "proof_idea": "Induct on t. The successor uses equality of the current update inputs and the induction hypothesis for the shorter strict past. Equality is of full functions, not merely observed scalar losses.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.step"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_support",
+      "title": "Actual current support along the actual trajectory",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "The selected vector at each feasible iterate supports that round's loss globally.",
+      "math": "\\(g_t=G(f_t,X_t)\\in\\partial f_t(X_t)\\)",
+      "intuition": "The selected vector at each feasible iterate supports that round's loss globally.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Library current-support bridge for Algorithm 2.2.",
+      "proof_idea": "Apply currentSubgradient_mem at the actual iterate; iterate_mem supplies feasibility and the current loss premise supplies subdifferentiability.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.iterate_finite_loss",
+      "title": "Played and comparator losses are truly finite",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "The played loss and the fixed feasible comparator loss are both actual finite values.",
+      "math": "\\(f_t(X_t)=\\operatorname{coe}(\\operatorname{toReal}(f_t(X_t))),\\quad f_t(u)=\\operatorname{coe}(\\operatorname{toReal}(f_t(u)))\\)",
+      "intuition": "The played loss and the fixed feasible comparator loss are both actual finite values.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Library finite-regret bridge for the OSD performance transfer.",
+      "proof_idea": "Apply finite_loss twice, once using iterate_mem and once using comparator membership. This justifies both real conversions on the same current loss.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.finite_loss",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.one_step_chain",
+      "title": "Full chain for the selected support and next iterate",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "The actual chosen support and next iterate satisfy both sharp eta-scaled inequalities.",
+      "math": "\\(\\eta_t(f_t(X_t)-f_t(u))\\le\\eta_t\\langle g_t,X_t-u\\rangle\\le\\frac{\\|X_t-u\\|^2-\\|X_{t+1}-u\\|^2}{2}+\\frac{\\eta_t^2}{2}\\|g_t\\|^2\\)",
+      "intuition": "The actual chosen support and next iterate satisfy both sharp eta-scaled inequalities.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Lemma 2.31 specialized to Algorithm 2.2.",
+      "proof_idea": "Instantiate lemma_2_31 with the actual current iterate and canonical support. iterate_support supplies support membership; unfolding the recurrence identifies the projected endpoint.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.iterate_support",
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.one_step",
+      "title": "Positive-step normalized distance bound",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "With positive current rate, the loss gap is bounded by a distance decrement plus support energy.",
+      "math": "\\(f_t(X_t)-f_t(u)\\le\\frac{\\|X_t-u\\|^2-\\|X_{t+1}-u\\|^2}{2\\eta_t}+\\frac{\\eta_t}{2}\\|g_t\\|^2\\)",
+      "intuition": "With positive current rate, the loss gap is bounded by a distance decrement plus support energy.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Normalized one-step input to the printed19 performance transfer.",
+      "proof_idea": "Compose the two inequalities of one_step_chain and divide by the strictly positive current eta; field algebra gives the displayed normalization.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.one_step_chain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_fixed",
+      "title": "Fixed step with the terminal distance retained",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 9,
+      "plain": "Positive constant steps give the sharp initial-distance bound with the true terminal term.",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=0}^{T-1}\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta}\\)",
+      "intuition": "Positive constant steps give the sharp initial-distance bound with the true terminal term.",
+      "why": "The fixed-rate bound remains informative on unbounded feasible sets.",
+      "position": "Orabona v10: Printed19 transfer of Theorem 2.13 constant branch, printed13-14/PDF25-26; Lean also includes T=0.",
+      "proof_idea": "Induct over the finite horizon, add the actual one-step chain and cancel consecutive squared distances. Divide the final eta-scaled result by positive eta; no diameter bound is used.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate. No diameter premise is used; the Lean theorem includes T=0.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.one_step_chain",
+        "BanditRL.OnlineSubgradientDescent.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_fixed_coarse",
+      "title": "The printed constant-step bound after dropping the residual",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "Dropping the nonpositive terminal term gives the printed coarse constant-rate bound.",
+      "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=0}^{T-1}\\|g_t\\|^2\\)",
+      "intuition": "Dropping the nonpositive terminal term gives the printed coarse constant-rate bound.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Unnumbered constant-step OSD display, printed21/PDF33.",
+      "proof_idea": "Use regret_fixed and nonnegativity of the squared terminal distance divided by positive 2 eta. The variable-rate result is not a dependency.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate. No diameter premise is used; the Lean theorem includes T=0.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_variable_bound",
+      "title": "Decreasing steps with a uniform diameter upper bound",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 11,
+      "plain": "Positive nonincreasing rates and a pairwise bound D give the terminal-retaining variable-rate guarantee.",
+      "math": "\\(R_T(u)\\le\\frac{D^2}{2\\eta_{T-1}}+\\sum_{t=0}^{T-1}\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta_{T-1}},\\quad T>0\\)",
+      "intuition": "Positive nonincreasing rates and a pairwise bound D give the terminal-retaining variable-rate guarantee.",
+      "why": "Nonnegative reciprocal weights explain exactly where the diameter bound enters.",
+      "position": "Orabona v10: Printed19 transfer of Theorem 2.13 variable branch; finite upper-bound variant.",
+      "proof_idea": "Apply the shared weighted_potential_sum to actual squared iterate distances, bounded by the pairwise D premise and iterate_mem. Sum one_step over the played prefix and combine; the denominator uses the last played rate.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem",
+        "BanditRL.OnlineSubgradientDescent.one_step",
+        "BanditRL.OnlineSubgradientDescent.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_variable",
+      "title": "Decreasing steps with the actual bounded metric diameter",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 12,
+      "plain": "For bounded V, use its actual metric diameter in the variable-rate bound.",
+      "math": "\\(R_T(u)\\le\\frac{\\operatorname{diam}(V)^2}{2\\eta_{T-1}}+\\sum_{t=0}^{T-1}\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta_{T-1}},\\quad T>0\\)",
+      "intuition": "For bounded V, use its actual metric diameter in the variable-rate bound.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Printed19 transfer of Theorem 2.13 variable branch; bounded Metric.diam instance.",
+      "proof_idea": "Bound each feasible pair's distance by Metric.diam using the explicit boundedness hypothesis, then apply regret_variable_bound.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.regret_variable_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_tuned_distance",
+      "title": "Tune one trajectory using an initial distance upper bound",
+      "chapter": "online-osd",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "An initial-distance bound and selected-support bound yield DG sqrt(T) on the specified tuned run.",
+      "math": "\\(\\|x_1-u\\|\\le D,\\quad\\eta=\\frac{D}{G\\sqrt T}\\Longrightarrow R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "An initial-distance bound and selected-support bound yield DG sqrt(T) on the specified tuned run.",
+      "why": "This declaration supplies the stated mathematical step in the shared OSD proof.",
+      "position": "Orabona v10: Printed19 transfer of equation (2.1), printed15/PDF27; comparator-distance variant.",
+      "proof_idea": "Apply regret_fixed to the actual tuned trajectory. Bound its support-energy sum by T G squared and initial squared distance by D squared; discard the nonpositive terminal term and simplify with sqrt(T) squared equal to T. D,G,T are positive.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate. D,G,T must be positive; the norm premise is on the actual selected supports of this tuned run.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineSubgradientDescent.regret_tuned",
+      "title": "One horizon-tuned trajectory for every comparator",
+      "chapter": "online-osd",
+      "featured": true,
+      "teaching_order": 14,
+      "plain": "One horizon-dependent constant-rate trajectory satisfies the tuned bound for every feasible comparator.",
+      "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad\\forall u\\in V,\\ R_T(u)\\le DG\\sqrt T\\)",
+      "intuition": "One horizon-dependent constant-rate trajectory satisfies the tuned bound for every feasible comparator.",
+      "why": "The comparator is universally quantified after the run and its norm premise.",
+      "position": "Orabona v10: Printed19 transfer of equation (2.1), printed15/PDF27; all-comparator finite upper-bound variant.",
+      "proof_idea": "For arbitrary feasible u, the pairwise D bound controls the initial distance. Apply regret_tuned_distance with the same prescribed trajectory and the same selected-support norm premise.",
+      "lean_notes": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate. D,G,T must be positive; the norm premise is on the actual selected supports of this tuned run.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.Domain",
+        "BanditRL.OnlineSubgradientDescent.SubdifferentiableOn",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned_distance"
+      ]
     }
   ]
 }

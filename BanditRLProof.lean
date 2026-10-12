@@ -728,3 +728,4 @@ import BanditRLProof.OnlineAffineSubgradient
 import BanditRLProof.OnlineLipschitzSubgradient
 import BanditRLProof.OnlineConvexNondifferentiability
 import BanditRLProof.OnlineConvexUncountability
+import BanditRLProof.OnlineSubgradientDescent
