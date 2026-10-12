@@ -1,0 +1,117 @@
+import BanditRLProof.OnlineStrongConvexSourceSubgradient
+import BanditRLProof.OnlineStrongConvexMinimum
+import WeierstrassExtendedCandidate
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+
+noncomputable section
+open Set
+namespace BanditRL.OnlineConvex
+
+theorem stronglyConvex_existsUnique_minimizer {E : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))
+    (f : E → EReal) (lam : ℝ)
+    (hf : SourceProper f) (hclosed : SourceClosed f)
+    (hlam : 0 < lam)
+    (hstrong : ∀ x ∈ effectiveDomain f, ∀ y ∈ effectiveDomain f,
+      ∀ a : ℝ, 0 < a → a < 1 →
+      f (a • x + (1 - a) • y) ≤
+        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -
+          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))
+    (hsub : {p : E |
+      (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty}.Nonempty) :
+    ∃! p : E, p ∈ effectiveDomain f ∧ ∀ q : E, f p ≤ f q := by
+  letI : FiniteDimensional ℝ E := e.symm.finiteDimensional
+  let D : Set E := effectiveDomain f
+  have hfinite (x : E) (hx : x ∈ D) : ((f x).toReal : EReal) = f x :=
+    EReal.coe_toReal (ne_of_lt hx) (hf.1 x)
+  have hD : Convex ℝ D := by
+    intro x hx y hy a b ha hb hab
+    by_cases ha0 : a = 0
+    · have hb1 : b = 1 := by linarith
+      simpa only [ha0, hb1, zero_smul, one_smul, zero_add] using hy
+    by_cases hb0 : b = 0
+    · have ha1 : a = 1 := by linarith
+      simpa only [hb0, ha1, zero_smul, one_smul, add_zero] using hx
+    have ha' : 0 < a := lt_of_le_of_ne ha (Ne.symm ha0)
+    have hb' : 0 < b := lt_of_le_of_ne hb (Ne.symm hb0)
+    have ha1 : a < 1 := by linarith
+    have hba : b = 1 - a := by linarith
+    rw [hba]
+    change f (a • x + (1 - a) • y) < ⊤
+    have hs := hstrong x hx y hy a ha' ha1
+    rw [← hfinite x hx, ← hfinite y hy] at hs
+    apply lt_of_le_of_lt hs
+    simp only [← EReal.coe_mul, ← EReal.coe_add, ← EReal.coe_sub]
+    exact EReal.coe_lt_top _
+  have hfcoord : SourceProper (fun u => f (e.symm u)) := by
+    refine ⟨fun u => hf.1 (e.symm u), ?_⟩
+    obtain ⟨w, r, hr⟩ := hf.2
+    exact ⟨e w, r, by simpa only [LinearEquiv.symm_apply_apply] using hr⟩
+  obtain ⟨y, g, hg⟩ := hsub
+  have hy : y ∈ D := by
+    have hd := subgradient_point_finite (fun u => f (e.symm u)) hfcoord (e y) g hg
+    simpa only [D, effectiveDomain, mem_setOf_eq, LinearEquiv.symm_apply_apply] using hd
+  let L₀ : E →ₗ[ℝ] ℝ :=
+    (innerₗ (EuclideanSpace ℝ (Fin d)) g).comp e.toLinearMap
+  let L : E →L[ℝ] ℝ := L₀.toContinuousLinearMap
+  have hL (v : E) : L v = inner ℝ g (e v) := rfl
+  let S : Set E := {x | f x ≤ f y}
+  have hyS : y ∈ S := le_rfl
+  have hSD : S ⊆ D := by
+    intro x hx
+    exact lt_of_le_of_lt hx hy
+  have hbounded : S ⊆ Metric.closedBall y (2 * ‖L‖ / lam) := by
+    intro x hx
+    have hxD := hSD hx
+    have hupper : (f x).toReal ≤ (f y).toReal :=
+      EReal.toReal_le_toReal hx (hf.1 x) (ne_of_lt hy)
+    have hgrowth := stronglyConvex_sourceSubgradient_growth d e f D lam hf hD
+      (Subset.rfl) hlam.le hstrong y hy g hg x hxD
+    rw [← hL] at hgrowth
+    have hop : |L (x - y)| ≤ ‖L‖ * ‖x - y‖ := by
+      simpa only [Real.norm_eq_abs] using L.le_opNorm (x - y)
+    have hquad : (lam / 2) * ‖x - y‖ ^ 2 ≤ ‖L‖ * ‖x - y‖ := by
+      have hlow := (abs_le.mp hop).1
+      nlinarith
+    have hradius : ‖x - y‖ ≤ 2 * ‖L‖ / lam := by
+      by_cases hz : ‖x - y‖ = 0
+      · rw [hz]
+        exact div_nonneg (mul_nonneg (by norm_num) (norm_nonneg L)) hlam.le
+      have hr : 0 < ‖x - y‖ := lt_of_le_of_ne (norm_nonneg _) (Ne.symm hz)
+      apply (le_div_iff₀ hlam).2
+      by_contra hfail
+      have hpos : 0 < ((lam / 2) * ‖x - y‖ - ‖L‖) * ‖x - y‖ :=
+        mul_pos (by nlinarith) hr
+      nlinarith
+    simpa only [Metric.mem_closedBall, dist_eq_norm] using hradius
+  have hclosedS : IsClosed S := by
+    have hc := hclosed ((f y).toReal)
+    simpa only [S, hfinite y hy] using hc
+  have hcompact : IsCompact S :=
+    (isCompact_closedBall y (2 * ‖L‖ / lam)).of_isClosed_subset hclosedS hbounded
+  have hlsc : LowerSemicontinuous f :=
+    (sourceClosed_iff_lowerSemicontinuous f).1 hclosed
+  have hmeet : (S ∩ effectiveDomain f).Nonempty := ⟨y, hyS, hy⟩
+  obtain ⟨p, hpS, hpmin⟩ := source_weierstrass_extended f S hlsc hcompact hmeet
+  have hpD := hSD hpS
+  have hglobal : ∀ q : E, f p ≤ f q := by
+    intro q
+    by_cases hq : q ∈ S
+    · exact hpmin hq
+    · have hyq : f y < f q := lt_of_not_ge hq
+      exact (show f p ≤ f y from hpS).trans hyq.le
+  refine ⟨p, ⟨hpD, hglobal⟩, ?_⟩
+  intro q hq
+  have hminD : IsMinOn f D p := fun x hx => hglobal x
+  have hgrowth := stronglyConvex_minimum_growth f D lam hf hD (Subset.rfl)
+    hlam.le hstrong p hpD hminD q hq.1
+  have heq : f q = f p := le_antisymm (hq.2 p) (hglobal q)
+  have hreals := congrArg EReal.toReal heq
+  have hnorm : ‖q - p‖ = 0 := by
+    have hsquare : ‖q - p‖ ^ 2 = 0 := by
+      nlinarith [sq_nonneg ‖q - p‖]
+    nlinarith [norm_nonneg (q - p)]
+  exact sub_eq_zero.mp (norm_eq_zero.mp hnorm)
+
+end BanditRL.OnlineConvex

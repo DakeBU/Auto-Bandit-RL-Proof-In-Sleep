@@ -218,3 +218,4 @@ import Tests.OnlineStrongConvexSubgradientIffCanary
 import Tests.OnlineCumulativeOptimisticStabilityCanary
 import Tests.OnlineCumulativeOptimisticStabilityDualCanary
 import Tests.OnlineWeierstrassExtendedCanary
+import Tests.OnlineStrongConvexAttainmentCanary

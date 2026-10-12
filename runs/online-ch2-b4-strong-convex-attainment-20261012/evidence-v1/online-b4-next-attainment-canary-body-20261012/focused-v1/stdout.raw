@@ -1,0 +1,203 @@
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:27:17: warning: `EuclideanSpace.single_apply` has been deprecated: Use `PiLp.single_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι) (a : 𝕜) (j : ι),
+    (PiLp.single p i a).ofLp j = if j = i then a else 0
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] (i : ι) (a : 𝕜) (j : ι),
+    (EuclideanSpace.single i a).ofLp j = if j = i then a else 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.single_apply` to `PiLp.single_apply x`).
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:28:49: error: Type mismatch
+  PiLp.continuous_apply 0
+has type
+  ∀ (β : ?m.84 → Type ?u.2785.441) [inst : (i : ?m.84) → TopologicalSpace (β i)] (i : ?m.84),
+    Continuous fun f => f.ofLp i
+but is expected to have type
+  Continuous fun x => x.ofLp 0
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:70:22: warning: `EuclideanSpace.single_apply` has been deprecated: Use `PiLp.single_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι) (a : 𝕜) (j : ι),
+    (PiLp.single p i a).ofLp j = if j = i then a else 0
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] (i : ι) (a : 𝕜) (j : ι),
+    (EuclideanSpace.single i a).ofLp j = if j = i then a else 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.single_apply` to `PiLp.single_apply x`).
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:68:72: error: unsolved goals
+hpoint : ∀ (t : ℝ), (point t).ofLp 0 = t
+hcoord : Continuous fun x => x.ofLp 0
+hnorm : ∀ (x : E), ‖x‖ ^ 2 = x.ofLp 0 ^ 2
+hdomain : effectiveDomain quadratic = {x | 0 ≤ x.ofLp 0}
+hfin : ∀ (x : E), 0 ≤ x.ofLp 0 → quadratic x = ↑((x.ofLp 0 - 2) ^ 2 / 2)
+hproper : SourceProper quadratic
+hclosed : SourceClosed quadratic
+hstrong :
+  ∀ x ∈ effectiveDomain quadratic,
+    ∀ y ∈ effectiveDomain quadratic,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            quadratic (a • x + (1 - a) • y) ≤
+              ↑a * quadratic x + ↑(1 - a) * quadratic y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+y : E
+⊢ inner ℝ 2 (y.ofLp 0) = y.ofLp 0 * 2
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:74:52: error: unsolved goals
+hpoint : ∀ (t : ℝ), (point t).ofLp 0 = t
+hcoord : Continuous fun x => x.ofLp 0
+hnorm : ∀ (x : E), ‖x‖ ^ 2 = x.ofLp 0 ^ 2
+hdomain : effectiveDomain quadratic = {x | 0 ≤ x.ofLp 0}
+hfin : ∀ (x : E), 0 ≤ x.ofLp 0 → quadratic x = ↑((x.ofLp 0 - 2) ^ 2 / 2)
+hproper : SourceProper quadratic
+hclosed : SourceClosed quadratic
+hstrong :
+  ∀ x ∈ effectiveDomain quadratic,
+    ∀ y ∈ effectiveDomain quadratic,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            quadratic (a • x + (1 - a) • y) ≤
+              ↑a * quadratic x + ↑(1 - a) * quadratic y - ↑(1 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+hpair : ∀ (y : E), inner ℝ (point (-2)) (y - point 0) = -2 * y.ofLp 0
+y : E
+⊢ ↑2 = 2
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:81:6: error: mod_cast has type
+  (2 : (fun x => ℝ) 0) + -2 * y.ofLp 0 ≤ (y.ofLp 0 - 2) ^ 2 / 2
+but is expected to have type
+  (2 : EReal) + ↑(↑(Int.negSucc 1) * y.ofLp 0) ≤ ↑((y.ofLp 0 - 2) ^ 2 / 2)
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:102:8: error: mod_cast has type
+  ↑0 ≤ (q.ofLp 0 - 2) ^ 2 / 2
+but is expected to have type
+  0 ≤ (q.ofLp 0 - 2) ^ 2 / 2
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:113:44: error: mod_cast has type
+  (p.ofLp 0 - 2) ^ 2 / 2 ≤ 0
+but is expected to have type
+  (p.ofLp 0 - 2) ^ 2 / 2 ≤ ↑0
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:133:27: warning: `EuclideanSpace.norm_single` has been deprecated: Use `PiLp.norm_single` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) {ι : Type u_2} (β : ι → Type u_4) [hp : Fact (1 ≤ p)] [inst : Fintype ι]
+    [inst_1 : (i : ι) → SeminormedAddCommGroup (β i)] [inst_2 : DecidableEq ι] (i : ι) (b : β i),
+    ‖PiLp.single p i b‖ = ‖b‖
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] [inst_2 : Fintype ι] (i : ι) (a : 𝕜),
+    ‖EuclideanSpace.single i a‖ = ‖a‖
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.norm_single` to `PiLp.norm_single x`).
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:133:8: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:27:17: warning: This simp argument is unused:
+  EuclideanSpace.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [point,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:31:10: warning: This simp argument is unused:
+  Fin.sum_univ_one
+
+Hint: Omit it from the simp argument list.
+  simp ̵[̵F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵o̵n̵e̵]̵
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:69:35: warning: This simp argument is unused:
+  Fin.sum_univ_one
+
+Hint: Omit it from the simp argument list.
+  simp [point, PiLp.inner_apply, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵o̵n̵e̵,̵ ̵RCLike.inner_apply, PiLp.sub_apply, EuclideanSpace.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:69:53: warning: This simp argument is unused:
+  RCLike.inner_apply
+
+Hint: Omit it from the simp argument list.
+  simp [point, PiLp.inner_apply, Fin.sum_univ_one, R̵C̵L̵i̵k̵e̵.̵i̵n̵n̵e̵r̵_̵a̵p̵p̵l̵y̵,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵PiLp.sub_apply, EuclideanSpace.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:70:22: warning: This simp argument is unused:
+  EuclideanSpace.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [point, PiLp.inner_apply, Fin.sum_univ_one, RCLike.inner_apply, P̵i̵L̵p̵.̵s̵u̵b̵_̵a̵p̵p̵l̵y̵,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]̵P̲i̲L̲p̲.̲s̲u̲b̲_̲a̲p̲p̲l̲y̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:149:17: warning: `EuclideanSpace.single_apply` has been deprecated: Use `PiLp.single_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι) (a : 𝕜) (j : ι),
+    (PiLp.single p i a).ofLp j = if j = i then a else 0
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] (i : ι) (a : 𝕜) (j : ι),
+    (EuclideanSpace.single i a).ofLp j = if j = i then a else 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.single_apply` to `PiLp.single_apply x`).
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:150:49: error: Type mismatch
+  PiLp.continuous_apply 0
+has type
+  ∀ (β : ?m.158 → Type ?u.6457.441) [inst : (i : ?m.158) → TopologicalSpace (β i)] (i : ?m.158),
+    Continuous fun f => f.ofLp i
+but is expected to have type
+  Continuous fun x => x.ofLp 0
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:176:24: warning: `EuclideanSpace.single_apply` has been deprecated: Use `PiLp.single_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι) (a : 𝕜) (j : ι),
+    (PiLp.single p i a).ofLp j = if j = i then a else 0
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] (i : ι) (a : 𝕜) (j : ι),
+    (EuclideanSpace.single i a).ofLp j = if j = i then a else 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.single_apply` to `PiLp.single_apply x`).
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:174:58: error: unsolved goals
+hpoint : ∀ (t : ℝ), (point t).ofLp 0 = t
+hcoord : Continuous fun x => x.ofLp 0
+hproper : SourceProper affine
+hclosed : SourceClosed affine
+hstrong :
+  ∀ x ∈ effectiveDomain affine,
+    ∀ y ∈ effectiveDomain affine,
+      ∀ (a : ℝ),
+        0 < a →
+          a < 1 →
+            affine (a • x + (1 - a) • y) ≤ ↑a * affine x + ↑(1 - a) * affine y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)
+y : E
+⊢ inner ℝ 1 (y.ofLp 0) = y.ofLp 0
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:149:17: warning: This simp argument is unused:
+  EuclideanSpace.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [point,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:175:37: warning: This simp argument is unused:
+  Fin.sum_univ_one
+
+Hint: Omit it from the simp argument list.
+  simp [point, PiLp.inner_apply, F̵i̵n̵.̵s̵u̵m̵_̵u̵n̵i̵v̵_̵o̵n̵e̵,̵ ̵RCLike.inner_apply, PiLp.sub_apply,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲EuclideanSpace.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:175:55: warning: This simp argument is unused:
+  RCLike.inner_apply
+
+Hint: Omit it from the simp argument list.
+  simp [point, PiLp.inner_apply, Fin.sum_univ_one, R̵C̵L̵i̵k̵e̵.̵i̵n̵n̵e̵r̵_̵a̵p̵p̵l̵y̵,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵PiLp.sub_apply, EuclideanSpace.single_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+E:\ABRL\worktrees\research-online-book\tmp\online-b4-next-attainment-canary-body-20261012\scratch-candidate-v1.lean:176:24: warning: This simp argument is unused:
+  EuclideanSpace.single_apply
+
+Hint: Omit it from the simp argument list.
+  simp [point, PiLp.inner_apply, Fin.sum_univ_one, RCLike.inner_apply, P̵i̵L̵p̵.̵s̵u̵b̵_̵a̵p̵p̵l̵y̵,̵ ̵E̵u̵c̵l̵i̵d̵e̵a̵n̵S̵p̵a̵c̵e̵.̵s̵i̵n̵g̵l̵e̵_̵a̵p̵p̵l̵y̵]̵P̲i̲L̲p̲.̲s̲u̲b̲_̲a̲p̲p̲l̲y̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

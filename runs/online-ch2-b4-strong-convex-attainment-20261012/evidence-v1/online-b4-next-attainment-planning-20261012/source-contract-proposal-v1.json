@@ -1,0 +1,92 @@
+{
+  "status": "PROPOSAL_ONLY_NOT_FROZEN_NOT_ELABORATED_NO_BODY",
+  "head": "60691b2ee7a4e198180ee603d45d1ac7ae8d0f62",
+  "target": "dependency:Theorem6.9",
+  "source": {
+    "PDF": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "PDF_page": 78,
+    "printed_page": 66,
+    "anchor": "Theorem 6.9; Definition 4.1 strong convexity; Definition 2.20 global subdifferential; Appendix Theorem A.3 compact lower-semicontinuous attainment",
+    "inspection": "Exact PDF text extracted and page visually inspected; retained source-page78-v1.txt/png."
+  },
+  "seven_slots": {
+    "ambient": "Real finite-dimensional normed E, expressed by arbitrary algebraic coordinates e; original norm remains on E. d=0 admitted.",
+    "objects": "Extended-real f, positive real lam.",
+    "proper": "No bottom anywhere and actual real-valued witness, via SourceProper.",
+    "closed": "Every real sublevel is closed, via SourceClosed, equivalent to lower semicontinuity.",
+    "curvature": "Exact interpolation inequality on effectiveDomain f, every strict interior weight.",
+    "support": "Existence of one point with an actual GLOBAL source vector subgradient of f composed with e.symm; no supplied domain membership and no all-point support.",
+    "conclusion": "Exists exactly one finite point globally minimizing the original EReal f."
+  },
+  "binder_ledger": {
+    "E/instances": "No inner product on E; normed real vector space only.",
+    "d/e": "Finite-dimensional algebraic coordinate interface, not isometry or Euclidean-norm substitution.",
+    "f/lam": "No common finite feasible set and no real-valued restriction.",
+    "hf": "Source properness exactly excludes bottom and supplies a finite witness.",
+    "hclosed": "Closed real cuts; does not assert effectiveDomain is closed or f continuous.",
+    "hlam": "Strict positivity essential to attainment/uniqueness.",
+    "hstrong": "No separate convexity premise: convexity of effectiveDomain and strict convexity consequences must be derived.",
+    "hsub": "Set nonempty translates dom partial f nonempty under bijective coordinates; finite support base must be derived using subgradient_point_finite.",
+    "result": "Global EReal order comparison, not toReal comparison outside domain. Domain clause is derived from properness, so no added premise."
+  },
+  "semantic_delta": "Coordinate transport generalizes presentation from R^d to an algebraically equivalent finite-dimensional normed real space while preserving the chosen original norm and source vector pairing. Conclusion explicitly records finite domain membership of the unique minimum, a consequence under SourceProper. No assumptions strengthened.",
+  "proof_route": [
+    "Derive FiniteDimensional real E from e.symm.finiteDimensional. Derive Convex real D for D=effectiveDomain f from hstrong and finite endpoint arithmetic, with separate endpoint weights.",
+    "Unpack hsub as y,g. Transport SourceProper to f composed with e.symm. Invoke subgradient_point_finite to derive y in D; no separate hy hypothesis.",
+    "Invoke stronglyConvex_sourceSubgradient_growth with actual f,D,lam,y,g, source support and hdom=subset_rfl. The installed adapter genuinely calls stronglyConvex_support_growth and derives coordinate continuity internally.",
+    "Define internally L(v)=inner g(e v), derive continuity from finite dimension. For S={x | f x <= f y}, establish y in S and S subset D. Growth and opnorm imply (lam/2)*r^2 <= norm(L)*r for r=norm(x-y), hence r <= 2*norm(L)/lam, including r=0 and L=0.",
+    "Use SourceClosed real cut at (f y).toReal to close S; finite-dimensional properness makes its containing closed ball compact. S is nonempty compact. Use sourceClosed_iff_lowerSemicontinuous then LowerSemicontinuousOn.exists_isMinOn with EReal codomain.",
+    "Promote the attained sublevel minimum to global minimum: outside S, f y < f q, while f p <= f y. No infinity subtraction or toReal(top) step.",
+    "For any other global minimizer q, derive q finite from properness. Apply stronglyConvex_minimum_growth at actual p on D; equality of minimal values and lam>0 force norm(q-p)=0 and q=p."
+  ],
+  "reuse_audit": {
+    "existing_source_growth": "OnlineStrongConvexSourceSubgradient.lean: stronglyConvex_sourceSubgradient_growth; genuine provider for quadratic lower bound.",
+    "existing_minimum_growth": "OnlineStrongConvexMinimum.lean: stronglyConvex_minimum_growth; uniqueness only AFTER existence.",
+    "closed_bridge": "OnlineClosedProper.lean: sourceClosed_iff_lowerSemicontinuous, exact spelling and real-cut semantics inspected.",
+    "finite_point": "OnlineSubgradientBasic.lean: subgradient_point_finite; actual proper pullback and actual global source support.",
+    "attainment_API": "Mathlib/Topology/Semicontinuity/Basic.lean:77 LowerSemicontinuousOn.exists_isMinOn; only LinearOrder codomain, supports EReal.",
+    "compactness_API": "Mathlib/Analysis/Normed/Module/FiniteDimension.lean: FiniteDimensional.proper_real; isCompact_closedBall.",
+    "negative_search": "Online*.lean search for existsUnique.*min, exists.*minimizer, IsCompact.*effectiveDomain found no duplicate attainment theorem.",
+    "not_used": "All-point source iff and relative-interior support existence are not needed: this theorem retains the exact one-point support premise."
+  },
+  "failure_conditions": [
+    "Cannot derive convex D or transport SourceProper without adding assumptions: stop and review header, never add hdom/hmin.",
+    "Any use of coordinate Euclidean norm in place of original norm, assumed isometry, assumed compact domain, supplied coercivity, all-point support or supplied minimum rejects candidate.",
+    "Do not infer closed effectiveDomain from SourceClosed; compact set must be a finite real sublevel.",
+    "Do not silently replace lower semicontinuity by continuity or apply finite toReal identities at top/bottom.",
+    "If API elaboration requires changed imports or binders after freeze, request fresh reviewed context/header rather than silent edits."
+  ],
+  "public_canary_proposals_only": [
+    {
+      "function": "On real line, f(x)=(x-2)^2/2 for x>=0, top for x<0.",
+      "support": "At NONminimizer 0, actual global source covector -2.",
+      "consumer": "Target must produce unique global finite minimizer, then identify it as 2. Prove unbounded effective domain and top outside. No compact domain/minimum premise.",
+      "purpose": "Genuine compact sublevel attainment for extended objective on unbounded domain."
+    },
+    {
+      "function": "f(x)=x on real line, lam=0.",
+      "facts": "Proper, closed, zero-curvature convex, actual global support g=1, but no global minimizer.",
+      "purpose": "Discriminates strict positivity. No invalid call to the target at lam=0."
+    }
+  ],
+  "remaining_boundaries": "Theorem6.9 proposal only. Constrained cumulative properness/closedness/support transfer, actual prediction and ghost producers, full Lemma7.5/Theorem7.47/Theorem15.31 and positive terminal-gap obstruction remain open. C2 seven open forward/six future claims, null mandatory denominator and C1-16 goal unchanged. No new public wrappers.",
+  "inputs": {
+    "BanditRLProof/OnlineClosedProper.lean": "c66f00c33b45fb8a0e11583eeadf506e176c16166ce2af02f41f0674507cebe7",
+    "BanditRLProof/OnlineConvexExtended.lean": "bd30bb95a46ccdc3f6d25f808c175af5fee71d075c2b46ffcf6508f15f1ed66a",
+    "BanditRLProof/OnlineSubgradientBasic.lean": "af3d3f56e4a64cd8adbe47368caf5382e63b428f01da29a121c28c8014f352a5",
+    "BanditRLProof/OnlineStrongConvexSourceSubgradient.lean": "72ac5b8037aefbb68e8e213cd808bc4892d45f6b11d3dfe00639c839b4c734a9",
+    "BanditRLProof/OnlineStrongConvexMinimum.lean": "55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317",
+    ".lake/packages/mathlib/Mathlib/Topology/Semicontinuity/Basic.lean": "b9f72ca970c076ce6d466a3f0efd05306c4f9dc0df6e7eb52329e66414410065",
+    ".lake/packages/mathlib/Mathlib/Analysis/Normed/Module/FiniteDimension.lean": "924331d5d45705496da51396e437b8b2d99f0c8672436240bd42506368aa81f3",
+    "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1"
+  },
+  "normalization": "New proposal files UTF-8 LF, no normalization of any accepted source file.",
+  "execution": {
+    "Lean": false,
+    "BODY": false,
+    "tracked_mutation": false,
+    "header_freeze": false,
+    "source_acceptance": false
+  }
+}

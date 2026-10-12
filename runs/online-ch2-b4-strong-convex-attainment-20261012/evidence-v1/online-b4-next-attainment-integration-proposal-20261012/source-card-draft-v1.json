@@ -1,0 +1,51 @@
+{
+  "status": "PRESENTATION_DRAFT_ONLY_NOT_INSTALLED_OR_PUBLICATION_ACCEPTED",
+  "source": {
+    "version": "Orabona arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "printed_page": 66,
+    "pdf_page": 78,
+    "result": "Theorem 6.9",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=78"
+  },
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_existsUnique_minimizer",
+  "proposed_module": "BanditRLProof/OnlineStrongConvexAttainment.lean",
+  "plain": "Let E carry its original real norm and admit algebraic linear coordinates in R^d. Let f:E→[-infinity,+infinity] be proper and closed, and lambda>0. Suppose f satisfies lambda-strong convexity on its effective domain and the global subdifferential in the given coordinates is nonempty at some point. Then there is exactly one p in the effective domain such that f(p)<=f(q) for every q in E.",
+  "source_delta": "The source ambient R^d is represented by a real normed space with an algebraic linear equivalence to Euclidean coordinates. The original norm is used in every strong-convexity and growth inequality; the coordinate map need not preserve that norm. Properness excludes bottom globally and supplies a finite value. Closedness means closed real sublevel cuts. Strong interpolation is quantified on all finite-domain pairs with strictly interior weights. The one actual global coordinate subgradient witness is retained. Convexity of the domain and finite-dimensional proper-space compactness are derived. No minimizer, coercivity, compact domain or support at all points is an input.",
+  "math": "\\begin{gathered}f\\text{ proper and closed},\\quad\\lambda>0,\\quad\\operatorname{dom}\\partial(f\\circ e^{-1})\\ne\\varnothing,\\\\ f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert^2\\quad(x,y\\in\\operatorname{dom}f,\\ 0<a<1)\\\\\\Longrightarrow\\quad\\exists!p\\in\\operatorname{dom}f,\\ \\forall q\\in E,\\ f(p)\\le f(q).\\end{gathered}",
+  "proof_idea": "Choose an actual supported point y and covector g. Properness makes y finite. The source growth theorem and the continuous-dual norm of v↦<g,e(v)> bound the sublevel S={x:f(x)<=f(y)} inside the original-norm closed ball of radius 2||L||/lambda about y. Closedness and derived finite-dimensionality make S compact. Apply the actual Appendix A.3 producer to obtain p minimizing f on S, then compare every point outside S against f(y) to obtain global minimality. Finally the actual minimum-growth theorem and positive curvature force uniqueness.",
+  "proposed_local_dependencies": [
+    "BanditRL.OnlineConvex.source_weierstrass_extended",
+    "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+    "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+    "BanditRL.OnlineConvex.subgradient_point_finite",
+    "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous"
+  ],
+  "external_dependencies_for_visible_lean_notes": [
+    "LinearEquiv.finiteDimensional",
+    "LinearMap.toContinuousLinearMap",
+    "ContinuousLinearMap.le_opNorm",
+    "isCompact_closedBall"
+  ],
+  "dependency_graph_scope": "These proposed teaching edges must be checked against the actual installed declaration scanner before publication. They are not asserted to be an exact proof-term dependency graph. External Mathlib dependencies belong in visible Lean notes, outside local-catalog edges.",
+  "frozen_public_consumers": {
+    "positive": "BanditRL.Tests.OnlineStrongConvexAttainmentCanary.halfline_quadratic_unique_attainment",
+    "zero": "BanditRL.Tests.OnlineStrongConvexAttainmentCanary.zero_curvature_affine_has_no_minimum",
+    "semantics": "The positive frozen consumer is the lambda=1 quadratic (x-2)^2/2 on the unbounded closed halfline, top outside. It proves the actual theorem's premises internally, uses its returned unique-attainment result as the first conjunction, characterizes the minimizer as2 and exhibits a global support at the nonminimum0. The zero-curvature affine discriminator is proper/closed/0-strongly-convex with a global support, but has no minimum. These consumers remain uncompiled at draft creation; no consumer acceptance is inferred."
+  },
+  "evidence_at_draft_creation": {
+    "scratch_core_compiled": true,
+    "independent_source_BODY_accepted": true,
+    "core_SOURCE_verdict_sha256": "75110d68f69690472380d54e91ab79480cfb672da15bf7aeac65859e84dfd765",
+    "whole_TYPE_constants": 122,
+    "whole_VALUE_constants": 473,
+    "standard_axioms": ["propext", "Classical.choice", "Quot.sound"],
+    "canonical_TYPE_fingerprint": null,
+    "canonical_VALUE_fingerprint": null,
+    "canonical_installed": false,
+    "canary_compiled": false,
+    "canonical_gates": null,
+    "reader_seal": null
+  },
+  "truth_boundary": "Bounded scratch core acceptance only. Public canary proof, publication review, canonical installation and whole TYPE/VALUE/provider/origin/axiom verification, combined root/Tests/full harness and same-source site/reader gates remain pending. This necessary attainment dependency does not construct closedness or an actual supported feasible point for every cumulative objective. Full Lemma7.5, general extended-domain Theorem7.47, the corrected terminal ghost and Theorem15.31 remain open. Preserve every hard Chapter2 and Chapters1–16 target, the seven forward containers, six future claims, null mandatory denominator and accepted=false. No merge/main/live update or chapter/Goal completion is claimed."
+}

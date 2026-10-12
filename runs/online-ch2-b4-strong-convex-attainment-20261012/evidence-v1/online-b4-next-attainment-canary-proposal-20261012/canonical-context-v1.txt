@@ -1,0 +1,15 @@
+import BanditRLProof.OnlineStrongConvexAttainment
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexAttainmentCanary
+open BanditRL.OnlineConvex
+
+abbrev E := EuclideanSpace ℝ (Fin 1)
+def coordinates : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin 1) := LinearEquiv.refl ℝ E
+def point (t : ℝ) : E := EuclideanSpace.single 0 t
+
+def quadratic (x : E) : EReal :=
+  if 0 ≤ x 0 then (((x 0 - 2) ^ 2 / 2 : ℝ) : EReal) else ⊤
+def affine (x : E) : EReal := (x 0 : EReal)
+

@@ -1,0 +1,27 @@
+--- prepare-execution-v1.py
++++ prepare-execution-v2.py
+@@ -26,7 +26,7 @@
+  assert auth['Lean_resources_released'] is True and auth['attainment_canary_Lean_authorized'] is True
+  assert auth['core_SOURCE_accepted'] is True
+  assert bind(auth['core_source_review']['path'])==auth['core_source_review']
+- assert auth['recipe']=={n:bind(P/n) for n in ['prepare-execution-v1.py','capture-template-v1.py','ImportedAudit-construction-v1.lean','HeaderElaboration-v1.lean','scratch-frozen-whole-v1.txt']}
++ assert auth['recipe']=={n:bind(P/n) for n in ['prepare-execution-v2.py','capture-template-v2.py','ImportedAudit-construction-v1.lean','HeaderElaboration-v1.lean','scratch-frozen-whole-v1.txt']}
+  assert sys.version_info[:3]==(3,12,14) and sha(sys.executable)=='31073dad142bc7f3374e3122aa668270052c9ad37d0aaab803ae73f184c3a43b'
+  expected=dict(head=auth['expected_head'],branch=auth['expected_branch'],status='')
+  actual=dict(head=git('rev-parse','HEAD'),branch=git('branch','--show-current'),status=git('status','--porcelain','--untracked-files=all'));assert actual==expected
+@@ -57,9 +57,11 @@
+  assert sha(F/'canonical-frozen-whole-v1.txt')=='2ad7eaec6f4192869c3f6a823d5ba1db140ee0317e7985e2ff53b592f968c91e'
+  assert sha(F/'local-header-freeze-v1.json')=='7f807bf90399cb4cb1fdbc6d6bf21b05d509804414c4e3ad49026e5dbe0d8f51'
+  assert (P/'scratch-frozen-whole-v1.txt').read_bytes().replace(b'import StrongConvexAttainmentCandidate',b'import BanditRLProof.OnlineStrongConvexAttainment')==(F/'canonical-frozen-whole-v1.txt').read_bytes()
+- for n in ['closure-manifest-v1.json','capture-v1.py','capture-pins-v1.json']:assert not (P/n).exists()
+- put('closure-manifest-v1.json',enc(cl));put('capture-v1.py',(P/'capture-template-v1.py').read_bytes())
+- pins.update(release=bind(release),freeze=bind(F/'local-header-freeze-v1.json'),frozen_header=bind(P/'scratch-frozen-whole-v1.txt'),canonical_header=bind(F/'canonical-frozen-whole-v1.txt'),header_probe=bind(P/'HeaderElaboration-v1.lean'),capture=bind(P/'capture-v1.py'),closure_manifest_sha256=sha(P/'closure-manifest-v1.json'),scratch_parent_roots=[str(C)]+pins['scratch_parent_roots'])
++ for n in ['closure-manifest-v1.json','capture-v2.py','capture-pins-v2.json']:assert not (P/n).exists()
++ put('closure-manifest-v1.json',enc(cl));put('capture-v2.py',(P/'capture-template-v2.py').read_bytes())
++ pins.update(release=bind(release),freeze=bind(F/'local-header-freeze-v1.json'),frozen_header=bind(P/'scratch-frozen-whole-v1.txt'),canonical_header=bind(F/'canonical-frozen-whole-v1.txt'),header_probe=bind(P/'HeaderElaboration-v1.lean'),capture=bind(P/'capture-v2.py'),closure_manifest_sha256=sha(P/'closure-manifest-v1.json'),scratch_parent_roots=[str(C)]+pins['scratch_parent_roots'])
+  pins['parents'] += [bind(x) for x in additional]
+- put('capture-pins-v1.json',enc(pins));print(json.dumps(dict(status='PREPARED_NOT_EXECUTED',pins=bind(P/'capture-pins-v1.json'))))
++ pins['imported_probe']=auth['recipe']['ImportedAudit-construction-v1.lean']
++ assert pins['imported_probe']==bind(P/'ImportedAudit-construction-v1.lean')
++ put('capture-pins-v2.json',enc(pins));print(json.dumps(dict(status='PREPARED_NOT_EXECUTED',pins=bind(P/'capture-pins-v2.json'))))
+ if __name__=='__main__':main()

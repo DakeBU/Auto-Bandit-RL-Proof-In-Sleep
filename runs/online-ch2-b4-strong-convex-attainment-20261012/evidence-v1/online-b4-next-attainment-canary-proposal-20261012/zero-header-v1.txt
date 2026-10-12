@@ -1,0 +1,9 @@
+theorem zero_curvature_affine_has_no_minimum :
+    SourceProper affine ∧ SourceClosed affine ∧
+    (∀ x ∈ effectiveDomain affine, ∀ y ∈ effectiveDomain affine,
+      ∀ a : ℝ, 0 < a → a < 1 →
+      affine (a • x + (1 - a) • y) ≤
+        (a : EReal) * affine x + ((1 - a : ℝ) : EReal) * affine y -
+          ((((0 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ∧
+    point 1 ∈ SourceSubdifferential affine (point 0) ∧
+    ¬ (∃ p : E, ∀ q : E, affine p ≤ affine q)

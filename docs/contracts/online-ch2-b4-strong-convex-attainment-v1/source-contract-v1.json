@@ -1,0 +1,152 @@
+{
+  "status": "INCOMPLETE_PROSPECTIVE_PUBLICATION_DRAFT",
+  "ready": false,
+  "source": {
+    "version": "Orabona arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "printed_page": 66,
+    "pdf_page": 78,
+    "result": "Theorem 6.9",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=78"
+  },
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_existsUnique_minimizer",
+  "module": "BanditRLProof/OnlineStrongConvexAttainment.lean",
+  "core": {
+    "path": "tmp/online-b4-next-attainment-integration-proposal-20261012/OnlineStrongConvexAttainment-candidate-v1.lean",
+    "bytes": 5318,
+    "sha256": "f21ba9dcdb4f7e2cf25cfc1278378009e6eeca370ce055b7a98ea16ea04a888e"
+  },
+  "header": {
+    "path": "tmp/online-b4-next-attainment-header-freeze-20261012/Theorem6.9-frozen-context-and-header-v1.txt",
+    "bytes": 995,
+    "sha256": "58decad0d7dbd318b0c21949d2f699893df9059cb70dfd3fcee020a8ee12b1a5"
+  },
+  "scratch_core": {
+    "path": "tmp/online-b4-next-attainment-body-20261012/candidate-v3.lean",
+    "bytes": 5307,
+    "sha256": "36e66be387d70aa63d24294b2b92e5448492a7b6a277c013b5934c7c6592bdcb"
+  },
+  "core_SOURCE": {
+    "path": "tmp/online-b4-next-attainment-body-source-review-20261012/body-source-verdict-v1.json",
+    "bytes": 11679,
+    "sha256": "75110d68f69690472380d54e91ab79480cfb672da15bf7aeac65859e84dfd765"
+  },
+  "seven_slots": {
+    "ambient": "Real finite-dimensional normed E, expressed by arbitrary algebraic coordinates e; original norm remains on E. d=0 admitted.",
+    "objects": "Extended-real f, positive real lam.",
+    "proper": "No bottom anywhere and actual real-valued witness, via SourceProper.",
+    "closed": "Every real sublevel is closed, via SourceClosed, equivalent to lower semicontinuity.",
+    "curvature": "Exact interpolation inequality on effectiveDomain f, every strict interior weight.",
+    "support": "Existence of one point with an actual GLOBAL source vector subgradient of f composed with e.symm; no supplied domain membership and no all-point support.",
+    "conclusion": "Exists exactly one finite point globally minimizing the original EReal f."
+  },
+  "source_delta": "The source ambient R^d is represented by a real normed space with an algebraic linear equivalence to Euclidean coordinates. The original norm is used in every strong-convexity and growth inequality; the coordinate map need not preserve that norm. Properness excludes bottom globally and supplies a finite value. Closedness means closed real sublevel cuts. Strong interpolation is quantified on all finite-domain pairs with strictly interior weights. The one actual global coordinate subgradient witness is retained. Convexity of the domain and finite-dimensional proper-space compactness are derived. No minimizer, coercivity, compact domain or support at all points is an input.",
+  "proof_spine": "Choose an actual supported point y and covector g. Properness makes y finite. The source growth theorem and the continuous-dual norm of v↦<g,e(v)> bound the sublevel S={x:f(x)<=f(y)} inside the original-norm closed ball of radius 2||L||/lambda about y. Closedness and derived finite-dimensionality make S compact. Apply the actual Appendix A.3 producer to obtain p minimizing f on S, then compare every point outside S against f(y) to obtain global minimality. Finally the actual minimum-growth theorem and positive curvature force uniqueness.",
+  "local_teaching_dependencies": [
+    "BanditRL.OnlineConvex.source_weierstrass_extended",
+    "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+    "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+    "BanditRL.OnlineConvex.subgradient_point_finite",
+    "BanditRL.OnlineConvex.sourceClosed_iff_lowerSemicontinuous"
+  ],
+  "external_visible_dependencies": [
+    "LinearEquiv.finiteDimensional",
+    "LinearMap.toContinuousLinearMap",
+    "ContinuousLinearMap.le_opNorm",
+    "isCompact_closedBall"
+  ],
+  "planned_consumers": {
+    "positive": "BanditRL.Tests.OnlineStrongConvexAttainmentCanary.halfline_quadratic_unique_attainment",
+    "zero": "BanditRL.Tests.OnlineStrongConvexAttainmentCanary.zero_curvature_affine_has_no_minimum",
+    "semantics": "The positive scratch consumer is the lambda=1 quadratic (x-2)^2/2 on the unbounded closed halfline, top outside. It proves the actual theorem's premises internally, uses its returned unique-attainment result as the first conjunction, characterizes the minimizer as2 and exhibits a global support at the nonminimum0. The zero-curvature affine discriminator is proper/closed/0-strongly-convex with a global support, but has no minimum. Both scratch consumers compiled and passed independent SOURCE review; canonical identities and combined-project/reader acceptance remain pending."
+  },
+  "canary_source": {
+    "path": "tmp/online-b4-next-attainment-integration-proposal-20261012/OnlineStrongConvexAttainmentCanary-candidate-v2.lean",
+    "bytes": 8540,
+    "sha256": "2a8c5ad2c5bfc70017591ed5c74529aea8dfb0a446c6cc283963e0f1f246babf"
+  },
+  "canary_SOURCE": {
+    "path": "tmp/online-b4-next-attainment-canary-body-20261012/independent-canary-body-source-verdict-v3.json",
+    "bytes": 21419,
+    "sha256": "3260105a23e426e2c1c5e55a966078a670e1942a69846f9e035b6aee28f10d0b"
+  },
+  "canonical_reference": null,
+  "canonical_build": null,
+  "canonical_TYPE_VALUE": null,
+  "gates": null,
+  "reader": null,
+  "future_head": null,
+  "truth_boundary": "Bounded scratch core and both public canary proofs compiled and independently source-reviewed. Publication review, canonical installation and whole TYPE/VALUE/provider/origin/axiom verification, combined root/Tests/full harness and same-source site/reader gates remain pending. This necessary attainment dependency does not construct closedness or an actual supported feasible point for every cumulative objective. Full Lemma7.5, general extended-domain Theorem7.47, the corrected terminal ghost and Theorem15.31 remain open. Preserve every hard Chapter2 and Chapters1–16 target, the seven forward containers, six future claims, null mandatory denominator and accepted=false. No merge/main/live update or chapter/Goal completion is claimed.",
+  "canary_context": {
+    "path": "tmp/online-b4-next-attainment-canary-freeze-20261012/canonical-frozen-whole-v1.txt",
+    "bytes": 1654,
+    "sha256": "2ad7eaec6f4192869c3f6a823d5ba1db140ee0317e7985e2ff53b592f968c91e"
+  },
+  "canary_transport": {
+    "path": "tmp/online-b4-next-attainment-integration-proposal-20261012/canary-transport-report-v2.json",
+    "bytes": 1443,
+    "sha256": "ba4608d295535aa83ad22dbaec577245a181e1ad0d1fde518eac5d8bdb7712f8"
+  },
+  "canary_interim_SOURCE": {
+    "path": "tmp/online-b4-next-attainment-canary-body-20261012/independent-interim-body-api-verdict-v1.json",
+    "bytes": 4712,
+    "sha256": "3a951cf9850b4b0429d7ce00dfdc887811ccfed010140e4a85fb7ea7ddd3b1c8"
+  },
+  "canary_full_report": {
+    "path": "tmp/online-b4-next-attainment-canary-body-20261012/compiled-canary-report-v3.json",
+    "bytes": 15370,
+    "sha256": "e1e10c36f76e921238735d5a37aaad01f0e7905483312d1be90445a92f091c94"
+  },
+  "canary_imported_audit": {
+    "scope": "Historical scratch actual imported-v3; complete binding in accepted report and root return, not current canonical acceptance",
+    "report": {
+      "path": "tmp/online-b4-next-attainment-canary-body-20261012/compiled-canary-report-v3.json",
+      "bytes": 15370,
+      "sha256": "e1e10c36f76e921238735d5a37aaad01f0e7905483312d1be90445a92f091c94"
+    },
+    "root_return": {
+      "path": "tmp/online-support-resume-20261012/attainment-canary-v6-resource-return-v1.json",
+      "bytes": 2874,
+      "sha256": "679d787bf5e3c5793794764a9dd4028fd365bb58cca8e2330b09417cdbb16f96"
+    }
+  },
+  "canary_status": "Scratch core and both canaries compiled and independently source-reviewed; canonical and combined-project/reader acceptance pending.",
+  "scratch_evidence": {
+    "core_report": {
+      "path": "tmp/online-b4-next-attainment-body-20261012/compiled-core-report-v1.json",
+      "bytes": 42000,
+      "sha256": "3131ed9ef7bfbe355ae85708f6f80ea02e0c9ca1738a57701d3353d81f2253c1"
+    },
+    "core_SOURCE": {
+      "path": "tmp/online-b4-next-attainment-body-source-review-20261012/body-source-verdict-v1.json",
+      "bytes": 11679,
+      "sha256": "75110d68f69690472380d54e91ab79480cfb672da15bf7aeac65859e84dfd765"
+    },
+    "canary_report": {
+      "path": "tmp/online-b4-next-attainment-canary-body-20261012/compiled-canary-report-v3.json",
+      "bytes": 15370,
+      "sha256": "e1e10c36f76e921238735d5a37aaad01f0e7905483312d1be90445a92f091c94"
+    },
+    "canary_SOURCE": {
+      "path": "tmp/online-b4-next-attainment-canary-body-20261012/independent-canary-body-source-verdict-v3.json",
+      "bytes": 21419,
+      "sha256": "3260105a23e426e2c1c5e55a966078a670e1942a69846f9e035b6aee28f10d0b"
+    },
+    "canary_transport": {
+      "path": "tmp/online-b4-next-attainment-integration-proposal-20261012/canary-transport-report-v2.json",
+      "bytes": 1443,
+      "sha256": "ba4608d295535aa83ad22dbaec577245a181e1ad0d1fde518eac5d8bdb7712f8"
+    },
+    "resource_return": {
+      "path": "tmp/online-support-resume-20261012/attainment-canary-v6-resource-return-v1.json",
+      "bytes": 2874,
+      "sha256": "679d787bf5e3c5793794764a9dd4028fd365bb58cca8e2330b09417cdbb16f96"
+    }
+  },
+  "actual_A3_base": "59e8aad583de89cbf9a42ef581219e0f3c45aff9",
+  "A3_transition_review": {
+    "path": "tmp/online-weierstrass-install-preparation-20261012/independent-actual-transition-source-verdict-v1.json",
+    "bytes": 34561,
+    "sha256": "f88e153b32ca3a853095cbe7b1b4276dcb7158815b5402423abe868fb1ba5b2e"
+  }
+}

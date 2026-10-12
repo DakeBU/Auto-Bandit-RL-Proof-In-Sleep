@@ -1,0 +1,16 @@
+(∃! p, p ∈ effectiveDomain quadratic ∧ ∀ (q : E), quadratic p ≤ quadratic q) ∧
+  (∀ (p : E), (p ∈ effectiveDomain quadratic ∧ ∀ (q : E), quadratic p ≤ quadratic q) ↔ p = point 2) ∧
+    point (-2) ∈ SourceSubdifferential quadratic (point 0) ∧
+      ¬IsMinOn quadratic univ (point 0) ∧
+        (∀ (R : ℝ), ∃ x ∈ effectiveDomain quadratic, R < ‖x‖) ∧
+          effectiveDomain quadratic = {x | 0 ≤ x.ofLp 0} ∧ quadratic (point 2) = 0 ∧ quadratic (point (-1)) = ⊤ : Prop
+SourceProper affine ∧
+  SourceClosed affine ∧
+    (∀ x ∈ effectiveDomain affine,
+        ∀ y ∈ effectiveDomain affine,
+          ∀ (a : ℝ),
+            0 < a →
+              a < 1 →
+                affine (a • x + (1 - a) • y) ≤
+                  ↑a * affine x + ↑(1 - a) * affine y - ↑(0 / 2 * a * (1 - a) * ‖x - y‖ ^ 2)) ∧
+      point 1 ∈ SourceSubdifferential affine (point 0) ∧ ¬∃ p, ∀ (q : E), affine p ≤ affine q : Prop

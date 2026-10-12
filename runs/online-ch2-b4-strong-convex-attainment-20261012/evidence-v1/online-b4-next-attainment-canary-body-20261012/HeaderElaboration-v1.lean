@@ -1,0 +1,37 @@
+import StrongConvexAttainmentCandidate
+
+noncomputable section
+open Set
+namespace BanditRL.Tests.OnlineStrongConvexAttainmentCanary
+open BanditRL.OnlineConvex
+
+abbrev E := EuclideanSpace ℝ (Fin 1)
+def coordinates : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin 1) := LinearEquiv.refl ℝ E
+def point (t : ℝ) : E := EuclideanSpace.single 0 t
+
+def quadratic (x : E) : EReal :=
+  if 0 ≤ x 0 then (((x 0 - 2) ^ 2 / 2 : ℝ) : EReal) else ⊤
+def affine (x : E) : EReal := (x 0 : EReal)
+
+#check
+    (∃! p : E, p ∈ effectiveDomain quadratic ∧ ∀ q : E, quadratic p ≤ quadratic q) ∧
+    (∀ p : E, (p ∈ effectiveDomain quadratic ∧ ∀ q : E, quadratic p ≤ quadratic q) ↔
+      p = point 2) ∧
+    point (-2) ∈ SourceSubdifferential quadratic (point 0) ∧
+    ¬ IsMinOn quadratic Set.univ (point 0) ∧
+    (∀ R : ℝ, ∃ x : E, x ∈ effectiveDomain quadratic ∧ R < ‖x‖) ∧
+    effectiveDomain quadratic = {x : E | 0 ≤ x 0} ∧
+    quadratic (point 2) = (0 : EReal) ∧
+    quadratic (point (-1)) = ⊤
+
+#check
+    SourceProper affine ∧ SourceClosed affine ∧
+    (∀ x ∈ effectiveDomain affine, ∀ y ∈ effectiveDomain affine,
+      ∀ a : ℝ, 0 < a → a < 1 →
+      affine (a • x + (1 - a) • y) ≤
+        (a : EReal) * affine x + ((1 - a : ℝ) : EReal) * affine y -
+          ((((0 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ∧
+    point 1 ∈ SourceSubdifferential affine (point 0) ∧
+    ¬ (∃ p : E, ∀ q : E, affine p ≤ affine q)
+
+end BanditRL.Tests.OnlineStrongConvexAttainmentCanary

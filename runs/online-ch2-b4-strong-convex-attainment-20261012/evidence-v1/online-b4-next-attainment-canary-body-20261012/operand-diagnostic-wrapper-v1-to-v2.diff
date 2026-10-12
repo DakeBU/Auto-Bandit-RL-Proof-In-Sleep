@@ -1,0 +1,18 @@
+--- V1-rejected
++++ V2-proposed
+@@ -28,11 +28,13 @@
+  import re
+  env_helpers=dict(Path=Path,P=P,R=R,CACHE={},hashlib=hashlib,json=json,os=os,subprocess=subprocess,re=re,datetime=datetime)
+  exec(compile(ast.Module(body=nodes,type_ignores=[]),str(helper),'exec'),env_helpers)
+- bind=env_helpers['bind'];put=env_helpers['put'];state=env_helpers['state'];safe=env_helpers['safe'];runtime=env_helpers['runtime_snapshot'];membership=env_helpers['companion_membership']
++ raw_bind=env_helpers['bind']
++ def bind(value):return raw_bind(Path(value))  # Wrapper boundary only; inherited helper AST remains unchanged.
++ put=env_helpers['put'];state=env_helpers['state'];safe=env_helpers['safe'];runtime=env_helpers['runtime_snapshot'];membership=env_helpers['companion_membership']
+  release=Path(a.release).resolve();assert release.is_relative_to(R/'tmp') and raw_sha(release)==a.release_sha256
+  auth=read(release);assert auth['scope']=='STDOUT_OPERAND_DIAGNOSTIC_ONLY' and auth['Lean_resources_released'] is True and auth['diagnostic_Lean_authorized'] is True
+  assert auth['independent_tool_review_accepted'] is True and bind(auth['independent_tool_review']['path'])==auth['independent_tool_review']
+- recipe_names=['capture-operand-diagnostic-v1.py','ImportedOperandDiagnostic-construction-v1.lean','operand-diagnostic-construction-report-v1.json','capture-template-import-v4.py']
++ recipe_names=['capture-operand-diagnostic-v2.py','ImportedOperandDiagnostic-construction-v1.lean','operand-diagnostic-construction-report-v1.json','capture-template-import-v4.py']
+  assert auth['recipe']=={n:bind(P/n) for n in recipe_names}
+  report_path=P/'operand-diagnostic-construction-report-v1.json';assert raw_sha(report_path)=='c256f5b99887d96fff6f21bc1fa1ad8a81afcb609a900cca8a61eaafa6d7c22c'
+  report=read(report_path);src=Path(report['diagnostic']['path']);assert bind(src)==report['diagnostic'] and raw_sha(src)=='075cbf79313a0b3baf62dd7dc7dd0fbd11c9f6c2c298330b017dedb4de73b9c7'

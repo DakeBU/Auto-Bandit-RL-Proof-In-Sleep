@@ -1,0 +1,68 @@
+{
+  "status": "REPAIR_REQUIRED_DIAGNOSTIC_WRAPPER_PATH_INTERFACE",
+  "proposal": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\operand-diagnostic-wrapper-proposal-v1.json",
+    "bytes": 4410,
+    "sha256": "6e7c1fdcf2692b5d082cfe651923fa1677889b7746555ae89b8bb8b24eeb58f4"
+  },
+  "recipe": {
+    "capture-operand-diagnostic-v1.py": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\capture-operand-diagnostic-v1.py",
+      "bytes": 7920,
+      "sha256": "a472e577a4c5a1a862d90ac258df3580cb0a0d929518f61d37769c2df477ee73"
+    },
+    "ImportedOperandDiagnostic-construction-v1.lean": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\ImportedOperandDiagnostic-construction-v1.lean",
+      "bytes": 2217,
+      "sha256": "075cbf79313a0b3baf62dd7dc7dd0fbd11c9f6c2c298330b017dedb4de73b9c7"
+    },
+    "operand-diagnostic-construction-report-v1.json": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\operand-diagnostic-construction-report-v1.json",
+      "bytes": 3561,
+      "sha256": "c256f5b99887d96fff6f21bc1fa1ad8a81afcb609a900cca8a61eaafa6d7c22c"
+    },
+    "capture-template-import-v4.py": {
+      "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\capture-template-import-v4.py",
+      "bytes": 17050,
+      "sha256": "fccb520d6e04b3d9b8748153e4aa827ddfd949f4ad68106fc452cd2e7cdd11b5"
+    }
+  },
+  "release_template": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\operand-diagnostic-release-TEMPLATE-v1.json",
+    "bytes": 2329,
+    "sha256": "9e6f3140e8cfcf932f2357bfb909924314cbc927a6cd8d9d494e6ebfa9fc96ee"
+  },
+  "source_review": {
+    "path": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\independent-operand-diagnostic-source-verdict-v1.json",
+    "bytes": 2435,
+    "sha256": "ebd3a7e594d66adc939a2d4551b3b07e17fdd5666b0916d76ac72e2f3d428a7c"
+  },
+  "execution_authorized": false,
+  "blockers": [
+    {
+      "id": "B1",
+      "file": "E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\capture-operand-diagnostic-v1.py",
+      "lines": [
+        34,
+        39,
+        40,
+        56,
+        60
+      ],
+      "issue": "Extracted inherited bind requires pathlib.Path and starts with p=p.resolve(). Wrapper passes JSON string paths at independent-review, fixed-input, compiler-Expr, prior-BODY-receipt and failed-stdio authentication. Earliest valid authority reaches line34 and raises AttributeError before diagnostic/attempt receipt.",
+      "reproduction": "Executed only exact extracted sha/bind FunctionDefs against existing diagnostic source: Path argument succeeds with expected SHA075c; same path as JSON string raises AttributeError: str object has no attribute resolve. No entrypoint/Lean/inventory.",
+      "required_repair": "Preserve V1. Convert each wrapper argument explicitly to Path, or define a wrapper-local Path-coercing adapter around the unchanged inherited bind. Keep inherited guard AST/source hash intact. Add regression using actual extracted bind and JSON-string fixture, including representative authority/report/receipt paths."
+    }
+  ],
+  "otherwise_reviewed": "Exact18 named functions extracted only after hardpinned helper hash; no original CLI evaluation. Diagnostic-only status/no acceptance, failed-v2 fixed lineage, current full input maps, exact compiler argv/env, runtime19/import-effective origin/family guards, seven output paths absent pre/post and real exit/log persistence before postguards are present. These observations are not wrapper acceptance while B1 persists.",
+  "validation": {
+    "supplied_cases_rerun": 14,
+    "result": "All supplied tests pass but do not call actual extracted bind on JSON path strings. Independent binding regression exposes B1.",
+    "artifact_bindings": "All recipe/source-review/return/template/tests/result hashes authenticated."
+  },
+  "limits": [
+    "Accepted diagnostic Lean source ebd3 remains valid; no full canary acceptance.",
+    "No wrapper entrypoint, actual diagnostic, fullinventory or tracked mutation performed.",
+    "Fresh parent authority/resource ownership required after independent repair acceptance."
+  ]
+}

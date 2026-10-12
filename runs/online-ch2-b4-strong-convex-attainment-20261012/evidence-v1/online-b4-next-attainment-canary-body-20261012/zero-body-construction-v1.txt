@@ -1,0 +1,37 @@
+  have hpoint (t : ℝ) : (point t) 0 = t := by
+    simp [point, EuclideanSpace.single_apply]
+  have hcoord : Continuous (fun x : E => x 0) := PiLp.continuous_apply 0
+  have hproper : SourceProper affine := by
+    refine ⟨?_, point 0, 0, ?_⟩
+    · intro x
+      simp [affine]
+    · simp [affine, hpoint]
+  have hclosed : SourceClosed affine := by
+    intro r
+    have hcut : {x : E | affine x ≤ (r : EReal)} = {x : E | x 0 ≤ r} := by
+      ext x
+      simp [affine, EReal.coe_le_coe_iff]
+    rw [hcut]
+    exact isClosed_le hcoord continuous_const
+  have hstrong : ∀ x ∈ effectiveDomain affine, ∀ y ∈ effectiveDomain affine,
+      ∀ a : ℝ, 0 < a → a < 1 →
+      affine (a • x + (1 - a) • y) ≤
+        (a : EReal) * affine x + ((1 - a : ℝ) : EReal) * affine y -
+          ((((0 : ℝ) / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal) := by
+    intro x hx y hy a ha ha1
+    simp only [affine, PiLp.add_apply, PiLp.smul_apply, smul_eq_mul]
+    norm_num only [zero_div, zero_mul, EReal.coe_zero, sub_zero]
+    simp only [← EReal.coe_mul, ← EReal.coe_add, le_refl]
+  have hsupport : point 1 ∈ SourceSubdifferential affine (point 0) := by
+    intro y
+    have hpair : inner ℝ (point 1) (y - point 0) = y 0 := by
+      simp [point, PiLp.inner_apply, Fin.sum_univ_one, RCLike.inner_apply,
+        PiLp.sub_apply, EuclideanSpace.single_apply]
+    simp [affine, hpoint, hpair]
+  have hno_min : ¬ (∃ p : E, ∀ q : E, affine p ≤ affine q) := by
+    rintro ⟨p, hp⟩
+    have hbad := hp (point (p 0 - 1))
+    have hr : p 0 ≤ p 0 - 1 := by
+      simpa only [affine, hpoint, EReal.coe_le_coe_iff] using hbad
+    linarith
+  exact ⟨hproper, hclosed, hstrong, hsupport, hno_min⟩

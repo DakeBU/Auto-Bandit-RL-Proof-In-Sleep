@@ -803,3 +803,4 @@ import BanditRLProof.OnlineStrongConvexSubgradientIff
 import BanditRLProof.OnlineCumulativeOptimisticStability
 import BanditRLProof.OnlineCumulativeOptimisticStabilityDual
 import BanditRLProof.OnlineWeierstrassExtended
+import BanditRLProof.OnlineStrongConvexAttainment

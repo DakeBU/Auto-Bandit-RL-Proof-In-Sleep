@@ -1,0 +1,27 @@
+{
+ "schema":"blind-closed-header-reconstruction-v1",
+ "name":"halfline_quadratic_unique_attainment",
+ "inputs":[{"file":"declaration-v1.txt","sha256":"d786d31b4e8582ba4977060e5c662cc0a386703289b22122496e078d590dcf87"},{"file":"definition-context-v1.txt","sha256":"910e6e40db16c31ac9a4660ee5e83b575aaf8c74f5e2ffbc583497def61b2191"}],
+ "external_binders":[],"external_premises":[],"closed":true,"conjunct_count":8,"association":"right",
+ "ambient":{"E":"EuclideanSpace ℝ (Fin 1)","norm":"absolute value of sole coordinate","inner_product":"product of sole coordinates","point":"point t has coordinate t","coordinates":"identity algebraic real linear equivalence; unused in proposition"},
+ "definitions":{"quadratic":"embedded (x 0 - 2)^2/2 for x 0≥0; top otherwise","effectiveDomain":"{x | quadratic x < top}","SourceSubdifferential":"{g:E | ∀ y:E, quadratic p + (inner ℝ g (y-p) embedded in EReal) ≤ quadratic y}","IsMinOn":"∀ q∈V, quadratic p ≤ quadratic q; membership separate","affine":"embedded x 0; unused here"},
+ "conjuncts_in_order":[
+  "∃! p : E, p ∈ effectiveDomain quadratic ∧ ∀ q : E, quadratic p ≤ quadratic q",
+  "∀ p : E, (p ∈ effectiveDomain quadratic ∧ ∀ q : E, quadratic p ≤ quadratic q) ↔ p = point 2",
+  "point (-2) ∈ SourceSubdifferential quadratic (point 0)",
+  "¬ IsMinOn quadratic Set.univ (point 0)",
+  "∀ R : ℝ, ∃ x : E, x ∈ effectiveDomain quadratic ∧ R < ‖x‖",
+  "effectiveDomain quadratic = {x : E | 0 ≤ x 0}",
+  "quadratic (point 2) = (0 : EReal)",
+  "quadratic (point (-1)) = ⊤"
+ ],
+ "quantifier_scopes":{"first":"unique existential p with domain membership and universal q:E comparison","second":"independent universal p with both directions of minimizer characterization; inner universal q","third_expanded":"universal y:E support inequality at point 0 with vector point(-2)","fourth_expanded":"negation of universal q:E objective comparison at point 0","fifth":"∀ real R, ∃ x:E satisfying membership and R<norm x"},
+ "support_expansion":"∀ y:E, embedded(2-2*(y 0)) ≤ quadratic y",
+ "minimum":{"point":"point 2","value":"finite zero","unique":true,"comparison_domain":"all E"},
+ "edge_cases":{"domain_boundary":"zero included","negative_coordinates":"top values excluded from effective domain","bottom":"generic domain definition permits it, but this quadratic never takes bottom","unboundedness":"norm-unbounded domain with nevertheless unique attained minimum","support_basepoint":"point 0 is not a minimizer despite the supplied nonzero subgradient","threshold":"R any real, x may depend on R","toReal":"absent","operator_norm":"absent"},
+ "premises_vs_conclusions":"all eight clauses are assertions of a fixed closed example",
+ "not_explicitly_claimed":["SourceProper conjunct","SourceClosed conjunct","strong convexity conjunct","provider usage","general theorem for arbitrary functions"],
+ "derived_observations":["quadratic(point 0)=2","quadratic is nowhere bottom and has a finite point, so properness follows from supplied definition although not a displayed clause"],
+ "ambiguities":["enclosing namespace not supplied; no material conjunction or quantifier ambiguity"],
+ "limits":["statement interpretation only","no Lean execution","no proof validity or source acceptance","header cannot establish provider use"]
+}

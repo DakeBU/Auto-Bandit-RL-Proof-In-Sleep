@@ -1,0 +1,41 @@
+--- prepare-import-v5.py
++++ prepare-import-v6.py
+@@ -26,13 +26,13 @@
+     root_return=Path('E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-support-resume-20261012\\attainment-diagnostic-resource-return-v2.json')
+     assert bind(root_return)=={'path': 'E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-support-resume-20261012\\attainment-diagnostic-resource-return-v2.json', 'bytes': 1361, 'sha256': '45410becf6bfa163ab608e4621048d6fec439f6a992b9de043c7e17d7fd9e585'}
+     assert auth['prior_resource_return']==bind(root_return)
+-    names=['prepare-import-v5.py','capture-template-import-v5.py','ImportedAudit-construction-v3.lean','import-lineage-fixed-v5.json']
++    names=['prepare-import-v6.py','capture-template-import-v6.py','ImportedAudit-construction-v4.lean','import-lineage-fixed-v6.json']
+     assert auth['recipe']=={n:bind(P/n) for n in names}
+-    assert bind(P/'capture-template-import-v5.py')['sha256']=='b522e91eb9643883cc84e3d1fc35868f359ba18943297aa5d00b67c05b76e0a7'
+-    assert bind(P/'import-lineage-fixed-v5.json')['sha256']=='a20327201e29f8068f861548f411a6d3a076cc41277155f0cb100010f662b276'
++    assert bind(P/'capture-template-import-v6.py')['sha256']=='ea63d8c491a9084bdc2b0c9b443bbaaa5b65c8c2f3571ae5fe78fd5a521e7ef8'
++    assert bind(P/'import-lineage-fixed-v6.json')['sha256']=='4284c056d34a4942183e3a7ce57e90559308067a330862d3bb32a03df02ba276'
+     assert sys.version_info[:3]==(3,12,14) and bind(sys.executable)['sha256']=='31073dad142bc7f3374e3122aa668270052c9ad37d0aaab803ae73f184c3a43b'
+     assert dict(head=git('rev-parse','HEAD'),branch=git('branch','--show-current'),status=git('status','--porcelain','--untracked-files=all'))==dict(head=auth['expected_head'],branch=auth['expected_branch'],status='')
+-    history=json.loads((P/'import-lineage-fixed-v5.json').read_text());assert auth['history']==history
++    history=json.loads((P/'import-lineage-fixed-v6.json').read_text());assert auth['history']==history
+     for row in history.values():assert bind(row['path'])==row
+     oldpins=json.loads(Path(history['pins']['path']).read_text());pins=copy.deepcopy(oldpins)
+     hr=json.loads(Path(history['header']['path']).read_text());br=json.loads(Path(history['body']['path']).read_text())
+@@ -46,11 +46,14 @@
+     assert diagnostic_report['proposal']==history['probe_v3'] and diagnostic_report['prior_probe']==history['probe_v2']
+     assert diagnostic_report['receipt']==history['diagnostic_receipt'] and diagnostic_report['stdout']==history['diagnostic_stdout']
+     assert history['probe_v3']['sha256']=='ce11635e7fa59ac9b5e3068729c3662f7509be04093665243092daa4c927cdb4'
+-    names=['capture-import-v5.py','capture-pins-import-v5.json','import-input-manifest-v3.json']
++    repair=json.loads(Path(history['structural_repair_report']['path']).read_text())
++    assert repair['probe']==history['probe_v4'] and repair['prior_probe']==history['probe_v3'] and repair['source_verdict']==history['strict_probe_REPAIR']
++    assert history['probe_v4']['sha256']=='02966a712023d37ccfd4b8a36d5918c8ff8a29447dd67fba82a1c761e42155c1'
++    names=['capture-import-v6.py','capture-pins-import-v6.json','import-input-manifest-v4.json']
+     assert all(not (P/n).exists() for n in names)
+-    capture=(P/'capture-template-import-v5.py').read_bytes();put('capture-import-v5.py',capture)
+-    pins.update(release=bind(release),capture=bind(P/'capture-import-v5.py'),imported_probe=history['probe_v3'],history=history)
+-    mi=copy.deepcopy(prior_manifest);mi.update(probe=history['probe_v3'],inputs=[history['probe_v3']])
+-    put('import-input-manifest-v3.json',mi);put('capture-pins-import-v5.json',pins)
+-    print(json.dumps(dict(status='PREPARED_IMPORTED_ONLY_NOT_EXECUTED',pins=bind(P/'capture-pins-import-v5.json'),manifest=bind(P/'import-input-manifest-v3.json'))))
++    capture=(P/'capture-template-import-v6.py').read_bytes();put('capture-import-v6.py',capture)
++    pins.update(release=bind(release),capture=bind(P/'capture-import-v6.py'),imported_probe=history['probe_v4'],history=history)
++    mi=copy.deepcopy(prior_manifest);mi.update(probe=history['probe_v4'],inputs=[history['probe_v4']])
++    put('import-input-manifest-v4.json',mi);put('capture-pins-import-v6.json',pins)
++    print(json.dumps(dict(status='PREPARED_IMPORTED_ONLY_NOT_EXECUTED',pins=bind(P/'capture-pins-import-v6.json'),manifest=bind(P/'import-input-manifest-v4.json'))))
+ if __name__=='__main__':main()

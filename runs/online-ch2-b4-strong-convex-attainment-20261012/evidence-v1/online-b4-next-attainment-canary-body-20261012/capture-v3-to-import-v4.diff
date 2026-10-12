@@ -1,0 +1,81 @@
+--- V3-final
++++ import-only-V4
+@@ -40,7 +40,7 @@
+  assert rows==own_family(),'Own family membership/hash drift'
+ def check_probe(pins,release,src,mi):
+  reviewed=pins['imported_probe']
+- assert reviewed==release['recipe']['ImportedAudit-construction-v1.lean'],'Reviewed probe authority differs'
++ assert reviewed==release['recipe']['ImportedAudit-construction-v2.lean'],'Reviewed probe authority differs'
+  assert bind(src)==reviewed and mi['probe']==reviewed,'Unreviewed import probe'
+ def sealed_family_index(sealed):
+  index={};parent_keys={}
+@@ -105,9 +105,46 @@
+   assert parts[i].count(b' := by\n')>=1
+   assert parts[i].split(b' := by\n',1)[0]==expected.rstrip(b'\n')
+ 
+-ap=argparse.ArgumentParser();ap.add_argument('stage',choices=['header','body','import']);ap.add_argument('source');ap.add_argument('attempt');ap.add_argument('--pins-sha256',required=True)
++FIXED_LINEAGE={'path': 'E:\\ABRL\\worktrees\\research-online-book\\tmp\\online-b4-next-attainment-canary-body-20261012\\import-lineage-fixed-v4.json', 'bytes': 2619, 'sha256': '6ce6e874ab23bd21d17b32d21b365ee950bcde7080712350f063bee0aa303d36'}
++
++def authenticate_import_lineage(pins,release,before):
++ fixed=Path(__file__).resolve().parent/'import-lineage-fixed-v4.json'
++ assert bind(fixed)==FIXED_LINEAGE
++ history=json.loads(fixed.read_text());assert pins['history']==release['history']==history
++ for row in history.values():assert bind(Path(row['path']))==row
++ priorfile=Path(history['pins']['path']);prior=json.loads(priorfile.read_text())
++ expected=dict(prior);expected.update(release=pins['release'],capture=pins['capture'],imported_probe=history['probe_v2'],history=history)
++ assert pins==expected,'Unexpected inherited pin delta'
++ assert bind(Path(prior['release']['path']))==prior['release'] and bind(Path(prior['capture']['path']))==prior['capture']
++ assert prior['capture']==history['capture']
++ names=['prepare-import-v4.py','capture-template-import-v4.py','ImportedAudit-construction-v2.lean','import-lineage-fixed-v4.json']
++ assert release['recipe']=={n:bind(P/n) for n in names}
++ assert pins['capture']==bind(Path(__file__))
++ assert Path(__file__).read_bytes()==(P/'capture-template-import-v4.py').read_bytes()
++ assert release['scope']=='IMPORTED_ONLY_REUSE_EXACT_PASSED_V3_HEADER_BODY' and release['Lean_resources_released'] is True
++ hr=json.loads(Path(history['header']['path']).read_text());br=json.loads(Path(history['body']['path']).read_text())
++ cp=Path(history['candidate']['path']);op=P/'StrongConvexAttainmentCanaries.olean'
++ check_prior(hr,'header',Path(prior['header_probe']['path']),[prior['compiler']['path'],prior['header_probe']['path']],prior,priorfile,before)
++ check_prior(br,'body',cp,[prior['compiler']['path'],'-o',str(op),str(cp)],prior,priorfile,before)
++ assert datetime.datetime.fromisoformat(hr['end_utc'])<=datetime.datetime.fromisoformat(br['start_utc'])
++ assert hr['companion_membership_before']==hr['companion_membership_after']==br['companion_membership_before']==br['companion_membership_after']
++ exact_frozen_canary_headers(cp.read_bytes(),Path(prior['frozen_header']['path']).read_bytes())
++ allrows={}
++ for receipt in [hr,br]:
++  for row in receipt['before_RAW']:
++   k=real(row['path']);assert k not in allrows or allrows[k]==row,'Historical input disagreement'
++   assert bind(Path(row['path']))==row,'Historical input drift'
++   allrows[k]=row
++ for row in [history['header'],history['body'],prior['release'],prior['capture'],history['pins']]:
++  assert allrows[real(row['path'])]==row if row in [prior['release'],prior['capture'],history['pins']] else True
++ assert {real(x['path']):x for x in br['before_RAW']}[real(history['header']['path'])]==history['header']
++ paths=[fixed,*[Path(x['path']) for x in history.values()],*[Path(x['path']) for x in allrows.values()]]
++ for receipt in [hr,br]:paths += [Path(receipt[k]['path']) for k in ['stdout','stderr']]
++ return prior,priorfile,br,paths
++
++ap=argparse.ArgumentParser();ap.add_argument('stage',choices=['import']);ap.add_argument('source');ap.add_argument('attempt');ap.add_argument('--pins-sha256',required=True)
+ for k in ['header-receipt','header-receipt-sha256','import-manifest','import-manifest-sha256']:ap.add_argument('--'+k)
+-a=ap.parse_args();pinfile=P/'capture-pins-v3.json';assert sha(pinfile)==a.pins_sha256;pins=json.loads(pinfile.read_text());src=safe(a.source);assert src.suffix=='.lean';out=safe(a.attempt);out.mkdir(exist_ok=False)
++a=ap.parse_args();pinfile=P/'capture-pins-import-v4.json';assert sha(pinfile)==a.pins_sha256;pins=json.loads(pinfile.read_text());src=safe(a.source);assert src.suffix=='.lean';out=safe(a.attempt);out.mkdir(exist_ok=False)
+ record=dict(stage=a.stage,status='INCOMPLETE',actual_exit=None,integrity_pass=False);code=1
+ try:
+  own_expected=None
+@@ -116,6 +153,7 @@
+   p=Path(row['path']);assert bind(p)==row,'Pinned file drift: '+str(p);paths.append(p)
+  assert Path(sys.executable).resolve()==Path(pins['python']['path']).resolve()
+  release=json.loads(Path(pins['release']['path']).read_text());assert release['attainment_canary_Lean_authorized'] is True;before=state();assert before==dict(head=release['expected_head'],branch=release['expected_branch'],status='')
++ prior_pins,prior_pinfile,prior_body,lineage_paths=authenticate_import_lineage(pins,release,before);paths+=lineage_paths
+  frozen=Path(pins['frozen_header']['path']).read_bytes();suffix=b'\n\nend BanditRL.OnlineConvex\n'
+  if a.stage=='header':assert bind(src)==pins['header_probe']
+  if a.stage in ['header','body','import']:
+@@ -127,10 +165,11 @@
+   exact_frozen_canary_headers(src.read_bytes(),frozen)
+  if a.stage=='import':
+   mp=(P/a.import_manifest).resolve();assert mp.parent==P and not Path(a.import_manifest).is_absolute();assert sha(mp)==a.import_manifest_sha256;mi=json.loads(mp.read_text());paths.append(mp);check_probe(pins,release,src,mi)
++  oldmi=json.loads(Path(pins['history']['manifest']['path']).read_text());expected_mi=dict(oldmi);expected_mi.update(probe=pins['imported_probe'],inputs=[pins['imported_probe']]);assert mi==expected_mi,'Unexpected manifest delta'
+   for row in mi['inputs']:
+    p=Path(row['path']);assert bind(p)==row;paths.append(p)
+   cp=Path(mi['candidate']['path']);op=Path(mi['olean']['path']);assert cp.parent==P and op.parent==P and op.name=='StrongConvexAttainmentCanaries.olean';assert bind(cp)==mi['candidate'] and bind(op)==mi['olean'];paths += [cp,op]
+-  rp=Path(mi['receipt']['path']);assert bind(rp)==mi['receipt'];br=json.loads(rp.read_text());check_prior(br,'body',cp,[pins['compiler']['path'],'-o',str(op),str(cp)],pins,pinfile,before);assert br['output_olean']==mi['olean'];assert br['own_family_before']==[];assert mi['output_family']==br['output_family'];own_expected=mi['output_family'];validate_own_family(own_expected);paths += [Path(x['path']) for x in own_expected];paths.append(rp)
++  rp=Path(mi['receipt']['path']);assert bind(rp)==mi['receipt'];br=json.loads(rp.read_text());assert br==prior_body;check_prior(br,'body',cp,[pins['compiler']['path'],'-o',str(op),str(cp)],prior_pins,prior_pinfile,before);assert br['output_olean']==mi['olean'];assert br['own_family_before']==[];assert mi['output_family']==br['output_family'];own_expected=mi['output_family'];validate_own_family(own_expected);paths += [Path(x['path']) for x in own_expected];paths.append(rp)
+  env={k:v for k,v in os.environ.items() if not k.upper().startswith('LEAN_')};env['LEAN_NUM_THREADS']='2';env['LEAN_PATH']=os.pathsep.join(([str(P)] if a.stage=='import' else [])+pins['scratch_parent_roots']+pins['ordered_search_roots'])
+  runtime_before=runtime_snapshot(pins);membership_before=companion_membership(pins,a.stage,own_expected)
+  argv=[pins['compiler']['path']];target=None
