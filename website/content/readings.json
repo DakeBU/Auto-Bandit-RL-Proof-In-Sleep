@@ -4363,6 +4363,167 @@
         "takeaway": "Full interior equivalence requires actual finite values, all actual supports and the explicitly nonnegative constant convention.",
         "boundary": "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted. Later source obligations, Chapter 2 and the whole book remain incomplete."
       }
+    },
+    {
+      "slug": "online-convex-nonsmooth",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Unnumbered counterexample after Theorem 2.30, immediately before Section 2.2.2",
+        "pages": "printed 19 / PDF 31",
+        "pdf_page": 31,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Function and coordinate convention",
+          "meaning": "f(x₁,x₂)=|x₁| on ℝ². Source x₁ is Lean coordinate 0 and source x₂ is coordinate 1. All function values are actual real numbers."
+        },
+        {
+          "term": "Segment, nonsmooth locus and countability",
+          "meaning": "S={(0,t):0≤t≤1}; N_f={x∈ℝ²: f has no ambient real Fréchet derivative at x}. Both endpoints belong to S. Countable means finite or countably infinite. Showing two endpoints or a single nonsmooth point does not establish uncountability."
+        },
+        {
+          "term": "Ambient versus restricted differentiation",
+          "meaning": "The vertical restriction t↦f(0,t) is identically zero and differentiable. It does not detect horizontal perturbations in the plane."
+        }
+      ],
+      "algorithm": {
+        "title": "From a horizontal kink to an uncountable exceptional set",
+        "kind": "proof flow",
+        "steps": [
+          {
+            "title": "Pull back the convex absolute value",
+            "detail": "The first-coordinate projection is linear. Convexity of the real norm and ConvexOn.comp_linearMap give global convexity of f; no local convexity assumption is added."
+          },
+          {
+            "title": "Test a horizontal curve through the vertical axis",
+            "detail": "At x₁=0, the differentiable curve c(t)=x+t(1,0) passes through x. If f had an ambient derivative at x, the chain rule would make f∘c differentiable at zero. But f(c(t))=|t|, contradicting not_differentiableAt_abs_zero."
+          },
+          {
+            "title": "Place every segment point on that axis",
+            "detail": "A member of the closed segment has nonnegative convex-combination weights adding to one. Its first coordinate is zero, so the preceding ambient obstruction applies, including at both endpoints."
+          },
+          {
+            "title": "Transfer uncountability from a real interval",
+            "detail": "The map φ(t)=(0,t) is injective by the second coordinate and sends [0,1] into S using weights (1−t,t). Countability of S would imply countability of its injective preimage and hence of [0,1], contradicting Cardinal.Real.Icc_countable_iff. Since S⊆N_f, Set.Countable.mono then rules out countability of N_f."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+        "BanditRL.OnlineConvex.convex_uncountable_nondifferentiability"
+      ],
+      "source_theorems": [
+        {
+          "label": "Unnumbered convex counterexample: the whole segment",
+          "pages": "printed 19 / PDF 31, end of Section 2.2.1",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(f(x)=|x_1|\\text{ is convex on }\\mathbb R^2,\\qquad S\\subseteq N_f\\)",
+          "fallback": "The fixed globally convex function has no ambient derivative at every point of the closed vertical segment.",
+          "plain": "The fixed globally convex function has no ambient derivative at every point of the closed vertical segment.",
+          "relationship": "Orabona states the convex example and its failure of differentiability along the segment without a proof. The three missing derivations—convexity, ambient nondifferentiability and the uncountability bridge—are supplied here by the library, not attributed to a printed argument. The helper proving failure on the entire vertical axis is explicitly stronger than the stated segment example.",
+          "contract": {
+            "model": "Fixed real Euclidean plane with ordinary set cardinality.",
+            "assumptions": "The fixed function f(x)=|x₁| is real-valued on all of the real Euclidean plane. Lean uses EuclideanSpace ℝ (Fin 2), with source x₁ represented by index 0. DifferentiableAt means the ambient real Fréchet derivative. The segment joins (0,0) to (0,1) and includes both endpoints. Countable means at most countable. Convexity, derivative failure and uncountability are conclusions proved by the library, not supplied premises.",
+            "parameters": "All points of the fixed closed segment; the axis helper allows every real second coordinate.",
+            "regret": "No probability, online algorithm or regret statement.",
+            "guarantee": "Global convexity and ambient nondifferentiability throughout S."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded example declarations",
+            "boundary": "This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
+          }
+        },
+        {
+          "label": "Unnumbered counterexample: countability consequence",
+          "pages": "printed 19 / PDF 31, end of Section 2.2.1",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(f(x)=|x_1|\\text{ is convex},\\qquad\\neg\\operatorname{Countable}(N_f)\\)",
+          "fallback": "The same function has uncountably many ambient nondifferentiability points, refuting a countable-exception interpretation of convex differentiability.",
+          "plain": "The same function has uncountably many ambient nondifferentiability points, refuting a countable-exception interpretation of convex differentiability.",
+          "relationship": "Orabona states the convex example and its failure of differentiability along the segment without a proof. The three missing derivations—convexity, ambient nondifferentiability and the uncountability bridge—are supplied here by the library, not attributed to a printed argument. The helper proving failure on the entire vertical axis is explicitly stronger than the stated segment example.",
+          "contract": {
+            "model": "Fixed real Euclidean plane with ordinary set cardinality.",
+            "assumptions": "The fixed function f(x)=|x₁| is real-valued on all of the real Euclidean plane. Lean uses EuclideanSpace ℝ (Fin 2), with source x₁ represented by index 0. DifferentiableAt means the ambient real Fréchet derivative. The segment joins (0,0) to (0,1) and includes both endpoints. Countable means at most countable. Convexity, derivative failure and uncountability are conclusions proved by the library, not supplied premises.",
+            "parameters": "All points of the fixed closed segment; the axis helper allows every real second coordinate.",
+            "regret": "No probability, online algorithm or regret statement.",
+            "guarantee": "The segment and therefore the same-function nonsmooth locus are not at most countable."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded example declarations",
+            "boundary": "This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "A convex function can have an entire segment of kinks",
+        "summary": "Orabona states the convex example and its failure of differentiability along the segment without a proof. The three missing derivations—convexity, ambient nondifferentiability and the uncountability bridge—are supplied here by the library, not attributed to a printed argument. The helper proving failure on the entire vertical axis is explicitly stronger than the stated segment example.",
+        "steps": [
+          {
+            "title": "Pull back the convex absolute value",
+            "detail": "The first-coordinate projection is linear. Convexity of the real norm and ConvexOn.comp_linearMap give global convexity of f; no local convexity assumption is added.",
+            "math": "\\(|\\lambda x_1+(1-\\lambda)y_1|\\le\\lambda|x_1|+(1-\\lambda)|y_1|,\\quad0\\le\\lambda\\le1\\)",
+            "fallback": "Absolute value after a linear coordinate projection is convex."
+          },
+          {
+            "title": "Test a horizontal curve through the vertical axis",
+            "detail": "At x₁=0, the differentiable curve c(t)=x+t(1,0) passes through x. If f had an ambient derivative at x, the chain rule would make f∘c differentiable at zero. But f(c(t))=|t|, contradicting not_differentiableAt_abs_zero.",
+            "math": "\\(x_1=0\\ \\Longrightarrow\\ f(x+t(1,0))=|t|\\)",
+            "fallback": "Horizontal motion detects the kink even though vertical motion does not."
+          },
+          {
+            "title": "Place every segment point on that axis",
+            "detail": "A member of the closed segment has nonnegative convex-combination weights adding to one. Its first coordinate is zero, so the preceding ambient obstruction applies, including at both endpoints.",
+            "math": "\\(S=[(0,0),(0,1)]=\\{(0,t):0\\le t\\le1\\}\\subseteq N_f\\)",
+            "fallback": "Every point of the source segment belongs to the nonsmooth locus."
+          },
+          {
+            "title": "Transfer uncountability from a real interval",
+            "detail": "The map φ(t)=(0,t) is injective by the second coordinate and sends [0,1] into S using weights (1−t,t). Countability of S would imply countability of its injective preimage and hence of [0,1], contradicting Cardinal.Real.Icc_countable_iff. Since S⊆N_f, Set.Countable.mono then rules out countability of N_f.",
+            "math": "\\(\\neg\\operatorname{Countable}([0,1])\\ \\Longrightarrow\\ \\neg\\operatorname{Countable}(S)\\ \\Longrightarrow\\ \\neg\\operatorname{Countable}(N_f)\\)",
+            "fallback": "An uncountable subset makes the ambient nonsmooth locus uncountable."
+          }
+        ],
+        "boundary": "The fixed function f(x)=|x₁| is real-valued on all of the real Euclidean plane. Lean uses EuclideanSpace ℝ (Fin 2), with source x₁ represented by index 0. DifferentiableAt means the ambient real Fréchet derivative. The segment joins (0,0) to (0,1) and includes both endpoints. Countable means at most countable. Convexity, derivative failure and uncountability are conclusions proved by the library, not supplied premises. This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
+      },
+      "worked_example": {
+        "title": "Why direction and dimension matter",
+        "intro": "These library test examples check the interpretation of the source claim; they are not examples printed in the book. Nine canary theorems cover the following distinctions.",
+        "steps": [
+          {
+            "title": "Endpoints, midpoint and a point beyond the segment",
+            "detail": "The tests prove ambient failure at (0,0), (0,1) and the nonzero midpoint (0,1/2). They also prove (0,2) is outside S and still nonsmooth, exercising the stronger whole-axis helper.",
+            "math": "\\((0,\\tfrac12)\\in S,\\qquad(0,2)\\notin S\\)",
+            "fallback": "Closed endpoints are included; the axis helper extends farther."
+          },
+          {
+            "title": "A smooth vertical restriction does not imply an ambient derivative",
+            "detail": "For every real t, f(0,t)=0, so this scalar restriction is differentiable. Separately, both off-axis points (1,2) and (−1,2) are proved ambient differentiable.",
+            "math": "\\(f(0,t)=0,\\qquad f(1,2)=f(-1,2)=1\\)",
+            "fallback": "The tests distinguish directions and both signs of the first coordinate."
+          },
+          {
+            "title": "Finite and one-dimensional counterchecks",
+            "detail": "The two distinct endpoints form a countable set. The nonsmooth locus of scalar absolute value is also countable. Neither can substitute for the whole two-dimensional segment argument.",
+            "math": "\\(\\operatorname{Countable}(\\{(0,0),(0,1)\\})\\)",
+            "fallback": "Counting endpoints or reusing only the scalar kink misses the cardinality claim."
+          },
+          {
+            "title": "Every countable exception list misses a nonsmooth point",
+            "detail": "The tests prove S∩N_f is uncountable. Given any at-most-countable set A of plane points, the terminal theorem supplies a point outside A where the same f has no ambient derivative.",
+            "math": "\\(\\operatorname{Countable}(A)\\ \\Longrightarrow\\ \\exists x\\notin A,\\ x\\in N_f\\)",
+            "fallback": "No countable set can cover all ambient kinks of this fixed function."
+          }
+        ],
+        "takeaway": "A convex function may have uncountably many nonsmooth points even though its restriction along the displayed segment is constant.",
+        "boundary": "This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
+      }
     }
   ]
 }

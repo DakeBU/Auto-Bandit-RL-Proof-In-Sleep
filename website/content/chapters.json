@@ -776,6 +776,31 @@
       "open_gaps": [
         "Definition 2.29 uses finite values on V and an all-pairs bound for a chosen norm. The library predicate includes explicit finite real-value witnesses and needs only a normed additive commutative group; values outside V may be infinite. Theorem 2.30 uses proper convex f, ambient interior of its domain, every global support, and a finite-dimensional real inner-product space. Its norm is the Euclidean-compatible norm, not an arbitrary norm with an unqualified primal support bound. The Lean constant is NNReal, including zero. The inspected source does not explicitly state its sign or positive dimension (GAP.L-SIGN, GAP.DIMENSION); nonnegativity is an explicit library interpretation, not a verbatim printed premise. The retained dimension-zero negative-constant counterexample excludes the unrestricted-real-L extension. The reverse proof obtains both supports from proper convexity and interior membership; existence is a dependency, not an extra hypothesis. The library completes the final absolute-value combination omitted from the printed proof (GAP.ABS-COMBINE). Empty interior and zero dimension remain allowed; no boundary or relative-interior extension is asserted."
       ]
+    },
+    {
+      "slug": "online-convex-nonsmooth",
+      "title": "A convex function with uncountably many kinks",
+      "short_title": "Convex nonsmooth example",
+      "status": "compiled",
+      "summary": "The real-plane function |x₁| is convex and ambient nondifferentiable along an uncountable closed segment.",
+      "audience": "Readers of the unnumbered paragraph following Orabona Theorem 2.30.",
+      "completion_definition": "One fixed source example and its countability consequence: five theorems and one function definition. This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package.",
+      "completion_blockers": [
+        "This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
+      ],
+      "learning_goals": [
+        "Separate ambient differentiation from a differentiable restriction.",
+        "Use a horizontal curve to detect the absolute-value kink.",
+        "Transfer uncountability from [0,1] to the same-function nonsmooth locus."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineConvexNondifferentiability.lean",
+        "BanditRLProof/OnlineConvexUncountability.lean"
+      ],
+      "open_gaps": [
+        "Orabona states the convex example and its failure of differentiability along the segment without a proof. The three missing derivations—convexity, ambient nondifferentiability and the uncountability bridge—are supplied here by the library, not attributed to a printed argument. The helper proving failure on the entire vertical axis is explicitly stronger than the stated segment example.",
+        "This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
+      ]
     }
   ]
 }

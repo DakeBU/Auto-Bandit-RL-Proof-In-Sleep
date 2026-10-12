@@ -1,0 +1,224 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-CONVEX-NONSMOOTH-INTEGRATION-20261012",
+  "route": "online-learning / fixed real-plane convex nonsmooth counterexample",
+  "frontier_cell": "online-convex-nonsmooth",
+  "source_facing": true,
+  "source": {
+    "kind": "textbook",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Unnumbered paragraph after Theorem 2.30, printed 19 / PDF 31, immediately before Section 2.2.2",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "target": "Integrate the fixed f(x)=|x₁| example, its closed-segment ambient nondifferentiability and its uncountable exceptional-set consequence into the shared library.",
+  "affected_files": [
+    "BanditRLProof/OnlineConvexNondifferentiability.lean",
+    "BanditRLProof/OnlineConvexUncountability.lean",
+    "BanditRLProof.lean",
+    "website/scripts/build_site.py",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.coordinateAbsolute",
+    "BanditRL.OnlineConvex.coordinate_absolute_convex",
+    "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable",
+    "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+    "BanditRL.OnlineConvex.coordinate_segment_not_countable",
+    "BanditRL.OnlineConvex.convex_uncountable_nondifferentiability"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Canonical library has no duplicate coordinateAbsolute example before this batch",
+      "Frozen original PR177 and PR178 modules and canaries",
+      "Pinned Mathlib norm convexity, linear precomposition, scalar abs nondifferentiability and real interval cardinality"
+    ],
+    "reused_declarations": [
+      "convexOn_univ_norm",
+      "ConvexOn.comp_linearMap",
+      "not_differentiableAt_abs_zero",
+      "Cardinal.Real.Icc_countable_iff",
+      "Set.Countable.preimage",
+      "Set.Countable.mono"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.coordinateAbsolute",
+      "BanditRL.OnlineConvex.coordinate_absolute_convex",
+      "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable",
+      "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+      "BanditRL.OnlineConvex.coordinate_segment_not_countable",
+      "BanditRL.OnlineConvex.convex_uncountable_nondifferentiability"
+    ],
+    "known_consumers": [
+      "Segment anchor consumes convexity and the whole-axis obstruction",
+      "Cardinality anchor consumes convexity, segment obstruction and segment noncountability",
+      "Five canary theorems consume production theorems; two use only the production definition; two are independent controls"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the original statements and all proof bodies unchanged. Only leading comments and reader organization are refreshed; one existing Lean/Lake project and shared roots remain canonical."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "verdict": "accepted-with-explicit-delta",
+    "formalizer": "/root integration formalizer and reader author",
+    "blind_decoder": "/root/batch6_blind_decoder; neutral exact compiler interfaces and literal definition only",
+    "source_reviewer": "/root/batch5_source_reviewer; sealed source-first review followed by independent body and publication review",
+    "remaining_semantic_delta": "B7.GAP-CONVEX, B7.GAP-NONDIFF and B7.GAP-UNCOUNTABLE retain the absent source demonstrations. The library supplies convexity, a transverse chain-rule obstruction and the interval/cardinality bridge. The whole-axis sufficient condition is an explicit strengthening; no exact-locus, measure or exact continuum-cardinality result is claimed. Real finite ConvexOn and the source convex epigraph are standard equivalent representations; zero-based first-coordinate indexing is explicit."
+  },
+  "graph_contribution": {
+    "focus_targets": [
+      "online-convex-nonsmooth"
+    ],
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "This retained elementary counterexample composes existing convexity, differentiation and cardinality facts; no separate cross-setting transport certificate or conceptual discovery is supplied.",
+    "visual_review": "Desktop and mobile reader screenshots actually inspected, with rendered formulas, correct Online Book navigation and exact Lean disclosures folded.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one bounded reader and two source-terminal highlights; all six production declarations belong to the Online Book",
+    "banditrlwiki": "no-change-with-reason: no Bandit, RL or Extended Topics research endpoint changes",
+    "results_ledger": "no-change-with-reason: website/content/results.json unchanged; no full-chapter or book milestone asserted",
+    "roadmap": "no-change-with-reason: existing roadmap/frontier endpoints unchanged; one Online teaching chapter added",
+    "website_surfaces": [
+      "Online Book and chapter metadata",
+      "Dedicated convex nonsmooth reader",
+      "Canonical full declaration registry"
+    ],
+    "integration_evidence": "updated: research-wiki/integrations/ONLINE-CH2-CONVEX-NONSMOOTH-INTEGRATION-20261012/README.md and review-binding.json"
+  },
+  "truth_boundary": "Five retained production theorems and one definition are integrated candidates, not newly discovered mathematics. B7.GAP-CONVEX, B7.GAP-NONDIFF and B7.GAP-UNCOUNTABLE retain the absent source demonstrations. The library supplies convexity, a transverse chain-rule obstruction and the interval/cardinality bridge. The whole-axis sufficient condition is an explicit strengthening; no exact-locus, measure or exact continuum-cardinality result is claimed. Full purification, Exposition Seal, Chapter 2/book completion, exact remote CI, merge, main deployment and original PR closure remain separate states.",
+  "verification": {
+    "focused_checks": [
+      "Two production and two canary modules compiled; six exact production interfaces elaborated",
+      "All fifteen selected declarations use only propext/Classical.choice/Quot.sound",
+      "Selected compiled graph: fifteen project nodes and current source ranges; direct edges unchanged by comment refresh",
+      "Two desktop/mobile rendered reader cases passed and pixels inspected"
+    ],
+    "bandit_check": "Combined library root, Tests, graph exporter, strict placeholder scan and full Python harness passed on the bound candidate inputs.",
+    "site_build": "Passed --lean-verified after the combined gate",
+    "site_check": "passed",
+    "independent_review": "Distinct source extractor, blind decoder and source reviewer completed bounded source/body/publication assessment; whole-original-PR preservation independently reviewed."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original proof authors and historical roles retained by immutable original-PR provenance"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "All original contracts, runs and unsuccessful historical evidence remain recoverable. Initial keyword-only publication extraction was incomplete; complete keyed deltas recover both terminal additions. Current proof bytes and canaries are preserved. A six-ID compact teaching route exceeded the site schema limit; the successor uses the two actual source highlights after a second schema check, while retaining all helper mappings, dependencies and explanation. The failed website gates are retained. The final notation primer groups the four unchanged meanings into the three entries required by the checker. Final independent screenshot review then identified and corrected a false adjacent-dependency statement in the shared proof-flow subtitle; the rejected candidate remains recorded.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineConvexNondifferentiability.lean",
+        "BanditRLProof/OnlineConvexUncountability.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-coordinate-convexity-transverse-curve-interval-injection"
+      ],
+      "expected_information_gain": "Independent extraction, reconstruction and reviews satisfy role separation; no competing mathematical proof routes were launched.",
+      "shared_verified_context_digest": "Pinned Orabona cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Retained original proof bodies",
+      "selection_reason": "No parallel proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "One four-step mathematical proof bridge, two source cards and a four-part library worked example independently reviewed and visually checked. Full Exposition Seal is not claimed.",
+      "source_expansion_nodes": [
+        "B7.FUNCTION",
+        "B7.CONVEX",
+        "B7.NONDIFF-ON-SEGMENT",
+        "B7.CLAIM-REFUTATION"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.coordinateAbsolute",
+        "BanditRL.OnlineConvex.coordinate_absolute_convex",
+        "BanditRL.OnlineConvex.coordinate_absolute_not_differentiable",
+        "BanditRL.OnlineConvex.convex_nondifferentiable_segment",
+        "BanditRL.OnlineConvex.coordinate_segment_not_countable",
+        "BanditRL.OnlineConvex.convex_uncountable_nondifferentiability"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "statement_seal": {
+    "version": 1,
+    "source_revision": "arXiv:1912.13213v10",
+    "sealed_statement_record_sha256": "a4321546c18cee09ec55229619fd18d4638eb3a74e3ccf4d300979c87d3b5062",
+    "actual_elaborated_types_sha256": "ab7e65b82e102badfe623e3a4c1ddecb278df67f2cd38f0601b4ec98d2d9ccdf",
+    "binder_audit": "One literal real-plane definition and five theorems; no extra source-anchor premise. The axis helper has its explicit x₁=0 condition, discharged by segment membership; cardinality is proved internally.",
+    "definition_kind": {
+      "coordinateAbsolute": "Literal first-coordinate absolute value on the fixed real Euclidean plane."
+    }
+  },
+  "source_proof_coverage": {
+    "inventory_sha256": "d70228d7108d6fc7abdbc5bcdebebe8de2b72f03a52b5b0d2f35f05dbc5e9453",
+    "independent_source_first_receipt_sha256": "f8ef9b03997af384ae04507a507ebd42798a0719f945f4d4e13c5ac10d10d122",
+    "source_gaps": "B7.GAP-CONVEX, B7.GAP-NONDIFF and B7.GAP-UNCOUNTABLE retain the absent source demonstrations. The library supplies convexity, a transverse chain-rule obstruction and the interval/cardinality bridge. The whole-axis sufficient condition is an explicit strengthening; no exact-locus, measure or exact continuum-cardinality result is claimed.",
+    "exclusions": "Adjacent Theorem 2.30, OSD, Lemma 2.31 and other Chapter 2 obligations are independent targets.",
+    "alternative_routes": "No competing proof routes printed in the target; library-supplied proof topology is separate from source assertions."
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Mathlib real norm convexity and linear precomposition",
+      "Ambient chain rule and scalar abs obstruction",
+      "Real interval cardinality and countability monotonicity"
+    ],
+    "bookkeeping": [
+      "First/second coordinate identification",
+      "Closed segment convex weights",
+      "Injectivity by second-coordinate evaluation"
+    ],
+    "new_to_main_reusable": [
+      "Whole-axis ambient obstruction",
+      "Source segment anchor",
+      "Segment noncountability and same-function uncountable nonsmooth locus"
+    ],
+    "new_topology": "Retained source example and explicit library completion of three omitted arguments; no author-proof reconstruction claimed where none is printed."
+  },
+  "purification": {
+    "status": "pending",
+    "dead_code_audit": "All six production declarations have genuine selected consumers. The fifteen-node selected audit is not a global irredundancy certificate.",
+    "duplicate_semantics_audit": "No second library or duplicate coordinateAbsolute implementation; shared canonical roots and registry.",
+    "canonicalization": "Statements, proofs and canaries preserved from the original stack.",
+    "compressed_spine_delta": "Convexity, transverse obstruction, segment membership and uncountability form the four-step reader bridge.",
+    "reader_default_view": "Mathematics first and exact Lean folded; full Exposition Seal remains pending."
+  }
+}
