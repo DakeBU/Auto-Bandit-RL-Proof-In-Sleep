@@ -1,0 +1,41 @@
+{
+ "schema":"independent-blind-header-reconstruction-v1",
+ "name":"source_weierstrass_extended",
+ "namespace":"not supplied",
+ "inputs":[
+  {"file":"declaration-v1.txt","sha256":"d4c5943a651e2e72deef8d8380f933d98fe7ae06a9739b7586e31d4a08f2c0c6"},
+  {"file":"definition-context-v1.txt","sha256":"62e25fe95c839337217ce0e5de2d8c00e6999f2be5663cea57834e125dd3a4e3"}
+ ],
+ "binders_in_order":[
+  {"name":"X","kind":"implicit","type":"Type*"},
+  {"name":null,"kind":"instance","type":"TopologicalSpace X"},
+  {"name":null,"kind":"instance","type":"T2Space X"},
+  {"name":"f","kind":"explicit","type":"X → EReal"},
+  {"name":"V","kind":"explicit","type":"Set X"},
+  {"name":"hf","kind":"explicit_assumption","type":"LowerSemicontinuous f"},
+  {"name":"hV","kind":"explicit_assumption","type":"IsCompact V"},
+  {"name":"hdom","kind":"explicit_assumption","type":"(V ∩ effectiveDomain f).Nonempty"}
+ ],
+ "definitions_used":{
+  "effectiveDomain":"{x | f x < top}",
+  "IsMinOn":"∀ z, z ∈ V → f p ≤ f z; p membership separate",
+  "T2Space":"Hausdorff",
+  "LowerSemicontinuous":"global lower semicontinuity in given topology and EReal order topology",
+  "Nonempty":"existence of an element"
+ },
+ "expanded_domain_assumption":"∃ x : X, x ∈ V ∧ f x < ⊤",
+ "literal_conclusion":"∃ p ∈ V, IsMinOn f V p",
+ "expanded_conclusion":"∃ p : X, p ∈ V ∧ ∀ z : X, z ∈ V → f p ≤ f z",
+ "arithmetic":"EReal order only; no toReal, norm, sum or division",
+ "consequences":["V nonempty","minimum attained on V","minimizer value < top and thus minimizer in effectiveDomain"],
+ "edge_cases":{
+  "bottom":"allowed globally and as the attained minimum; domain witness may have bottom value",
+  "finite_witness":"not required: less than top need not be a finite embedded real",
+  "top":"permitted at some feasible points; identically top on V excluded by hdom",
+  "empty_V_or_X":"incompatible with hdom",
+  "outside_V":"not minimized over; values constrained by global lower semicontinuity only"
+ },
+ "not_claimed":["uniqueness","finite minimum","global minimization over X","properness","convexity","linear or normed structure","finite dimensionality","algorithm","quantitative bound"],
+ "ambiguities":["Enclosing namespace not provided","Internal implementation of lower semicontinuity not inspected; supplied semantic definition used"],
+ "evidence_limits":["header only","no Lean execution","no proof or provider-use finding","no source-acceptance claim"]
+}

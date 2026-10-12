@@ -1,0 +1,10 @@
+Definition-only neutral context. Do not consult imported modules or external files.
+effectiveDomain (f : E → EReal) : Set E := {x | f x < ⊤}
+extendedIndicator (V : Set E) (x : E) : EReal := if x ∈ V then 0 else ⊤
+IsMinOn f V p means ∀ z ∈ V, f p ≤ f z. Membership p ∈ V is separate.
+EReal.toReal maps finite embedded real values back to that real and maps infinities to zero. Finite sums and arithmetic in the declaration are ordinary EReal operations. A continuous linear map E →L[ℝ] ℝ is a continuous real-valued linear functional.
+The norm of a continuous linear functional is its operator norm for the given norm on E and the usual absolute-value norm on the reals.
+SourceProper f means (forall x, f x is not bottom) and there exist x and a real r with f x equal to r embedded in EReal.
+SourceClosed f means for every real r, the set {x | f x <= r embedded in EReal} is closed.
+For a real inner-product space, SourceSubdifferential f x is the set of vectors g such that forall y, f x + (inner g (y-x) embedded in EReal) <= f y. EuclideanSpace over Fin d is the finite real coordinate inner-product space.
+LowerSemicontinuous f is lower semicontinuity in the given topology and EReal order topology; T2Space is the Hausdorff condition. Set.Nonempty means existence of an element; ExistsUnique means exactly one element satisfies its predicate.

@@ -1,0 +1,76 @@
+{
+  "status": "PROPOSAL_ONLY",
+  "target": "dependency:A.3",
+  "source": {
+    "version": "Orabona v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "PDF_page": 303,
+    "printed_page": 291,
+    "attribution": "TheoremA.3; printed citation Bauschke et al.2003 Theorem1.29. Referenced external work not independently reverified."
+  },
+  "declaration": "BanditRL.OnlineConvex.source_weierstrass_extended",
+  "module": "BanditRLProof/OnlineWeierstrassExtended.lean",
+  "header": {
+    "path": "tmp/online-b4-next-attainment-header-freeze-20261012/A3-frozen-context-and-header-v1.txt",
+    "bytes": 382,
+    "sha256": "140528e4aa94cbbb9efc48ca0b4acfe54dfa0aa2e44f70c2117f878ced89579d"
+  },
+  "canonical_core": {
+    "path": "tmp/online-b4-next-weierstrass-integration-proposal-20261012/OnlineWeierstrassExtended-candidate-v1.lean",
+    "bytes": 600,
+    "sha256": "290bd822307ce7607330d9d505a48d5f1757f7ac8c7095733541b4086acffb05"
+  },
+  "canonical_canary": {
+    "path": "tmp/online-b4-next-weierstrass-integration-proposal-20261012/OnlineWeierstrassExtendedCanary-candidate-v1.lean",
+    "bytes": 1073,
+    "sha256": "d85e9c17412d9322bb462ad46a7aed06f327848c1bad7a88846ce157ac7d20ce"
+  },
+  "canary_context": {
+    "path": "tmp/online-b4-next-weierstrass-canary-freeze-20261012/canonical-frozen-whole-v2.txt",
+    "bytes": 599,
+    "sha256": "40b3bb4454b1854edeb5032d0ece90a686df50e33e5729649bb0b01a20e8027d"
+  },
+  "source_delta": "This is the exact necessary appendix dependency TheoremA.3 (printed291/PDF303), not the strong-convex attainment theorem6.9. Hausdorffness, global lower semicontinuity and the nonempty domain intersection are retained even though the reused Mathlib compact-attainment theorem has weaker hypotheses. The IsMinOn conclusion expresses attainment in extended order; the attained value need not be real and may equal bottom. It is not a uniqueness statement.",
+  "proof_spine": "Unpack the actual witness of V intersect dom f to obtain V.Nonempty. Restrict the supplied global lower semicontinuity to this same V, and pass f, V, the derived nonempty witness, compactness and restricted lower semicontinuity to LowerSemicontinuousOn.exists_isMinOn. The source T2 premise and stronger intersection premise remain in the public type. This is an explicit source-mapped use of Mathlib Weierstrass, not a newly invented compactness proof. The planned theorem6.9 consumer must separately construct its compact sublevel before invoking this source producer.",
+  "actual_consumer": "BanditRL.Tests.OnlineWeierstrassExtendedCanary.bottom_singleton_attains",
+  "consumer_semantics": "The closed six-conjunct consumer takes X=R, f(x)=bottom and V={0}. It proves global lower semicontinuity, compactness and an actual point in V intersect dom f internally, then uses source_weierstrass_extended as the genuine first-conjunction provider. It additionally states f(0)=bottom and not SourceProper f. Bottom is below top, so it belongs to the effective domain. This case rules out accidentally adding no-bottom/properness or promising a finite minimum. Its first attainment fact is not replaced by a direct singleton minimum shortcut.",
+  "evidence_scope": "Historical core captures seal a fixed source/lib+IR list and compiler/runtime files; they do not claim the later exact runtime-membership profile. Canary authoritative V2 captures separately check all19 portable Lean runtime members and hashes plus source/lib+IR companion membership before and after each child. OS loader/system DLLs are outside the portable seal. Its two implicit topology/T2 provider instances are exported and independently source-inspected, not separately asserted equal to independently elaborated expected-instance Exprs.",
+  "reviews": {
+    "header_source": {
+      "path": "tmp/online-b4-next-attainment-header-source-review-20261012/A3-header-source-verdict-v1.json",
+      "bytes": 6036,
+      "sha256": "b22604b403dc1395a5a5d0b52267da80d6d2051f392128c9209719b3782aa047"
+    },
+    "core_BODY": {
+      "path": "tmp/online-b4-next-weierstrass-body-source-review-20261012/body-source-verdict-v1.json",
+      "bytes": 5556,
+      "sha256": "7b2be78a48142dd8efbb69c5d01afc222c94fedf3ce592a3d55aa8f63a9122a0"
+    },
+    "canary_BODY": {
+      "path": "tmp/online-b4-next-weierstrass-canary-source-review-20261012/body-source-verdict-v1.json",
+      "bytes": 3502,
+      "sha256": "6cd6a2b3715721ff2e5c78f98413608acecb643463b10aff3eedbd81bb56cbef"
+    },
+    "canary_context_delta": {
+      "path": "tmp/online-b4-next-weierstrass-canary-source-review-20261012/context-delta-v2-source-verdict-v1.json",
+      "bytes": 1415,
+      "sha256": "3de77c3c9db2e5c5208b3cd11f37b701c4c01fe3748064219f4f2a99199fbbf1"
+    }
+  },
+  "binder_ledger": {
+    "ambient": "Arbitrary Hausdorff topological X; T2Space retained.",
+    "function": "f:X→EReal, bottom and top both allowed.",
+    "regularity": "Global LowerSemicontinuous f, not only restricted lsc.",
+    "feasible_set": "Arbitrary compact V, no convexity or norm.",
+    "domain": "V intersects effectiveDomain f={x | f x<top}. Bottom counts as in domain.",
+    "quantification": "All f,V meeting exact source premises; no supplied attained minimum.",
+    "conclusion": "A point p in V with IsMinOn f V p, equivalent to achieving infimum in extended order."
+  },
+  "statement_fingerprint": {
+    "raw_frozen_header_sha256": "140528e4aa94cbbb9efc48ca0b4acfe54dfa0aa2e44f70c2117f878ced89579d",
+    "canonical_TYPE": null,
+    "canonical_VALUE": null,
+    "status": "Pending actual canonical whole Expr identity; RAW equality is not alpha equality."
+  },
+  "truth_boundary": "Core and bottom-valued canary are independently accepted bounded scratch proofs. This canonical publication packet is proposed only: installation, genuine canonical whole TYPE/VALUE identity, module-origin/provider/standard-axiom checks, shared root/Tests/full harness, publication review and same-source reader Exposition Seal remain pending. A3 is a necessary appendix dependency; theorem6.9 is only a separately frozen, constructed and uncompiled proof candidate. No strong-convex global minimizer, full Lemma7.5 or corrected Theorems7.47/15.31 is accepted by this packet. Constrained objective properness/closedness/support and the positive terminal ghost gap remain separate obligations. Preserve seven open-forward containers, six future claims, null mandatory denominator, accepted=false and all Chapters1-16 hard targets. No main/merge/live acceptance claim."
+}

@@ -1,0 +1,29 @@
+{
+  "status": "SEPARATE_HEADER_PROPOSAL_ONLY_NO_BODY_OR_ELABORATION",
+  "target_id": "dependency:A.3",
+  "source_label": "Theorem A.3",
+  "source_PDF_page": 303,
+  "source_printed_page": 291,
+  "source_PDF_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "attribution": "Orabona v10 Theorem A.3; printed attribution Bauschke et al. (2003), Theorem 1.29. That cited work not independently inspected.",
+  "anchor_correction": "PDF291 is Chapter16 printed279; actual Appendix A.3 appears PDF303 printed291. Frozen target identifier is dependency:A.3, not dependency:TheoremA.3.",
+  "seven_slots": {
+    "ambient": "Arbitrary Hausdorff topological X; T2Space retained.",
+    "function": "f:X→EReal, bottom and top both allowed.",
+    "regularity": "Global LowerSemicontinuous f, not only restricted lsc.",
+    "feasible_set": "Arbitrary compact V, no convexity or norm.",
+    "domain": "V intersects effectiveDomain f={x | f x<top}. Bottom counts as in domain.",
+    "quantification": "All f,V meeting exact source premises; no supplied attained minimum.",
+    "conclusion": "A point p in V with IsMinOn f V p, equivalent to achieving infimum in extended order."
+  },
+  "proof_route": "Extract V.Nonempty from actual domain-intersection witness; use hf.lowerSemicontinuousOn and LowerSemicontinuousOn.exists_isMinOn. Preserve source hypotheses even where imported general theorem is stronger. No body authorized.",
+  "genuine_dependency_requirement": "Theorem6.9 must call this actual source A.3 producer on the constructed nonempty compact finite sublevel; direct mathlib attainment alone would omit required source proof-graph edge.",
+  "forbidden_changes": [
+    "No SourceProper or no-bottom premise.",
+    "No finite-dimensional, metric or continuity premise.",
+    "Do not drop T2Space, global lsc or domain intersection.",
+    "Do not conflate attained infimum with attained finite real value; bottom minimum permitted."
+  ],
+  "canary_proposal_only": "Constant bottom on nonempty compact singleton satisfies exact premises and attains bottom; distinguishes accidental no-bottom restriction.",
+  "readiness": "Distinct blind decoding and source review then parent freeze required. A.3 is an explicit frozen necessary dependency, not an unsolicited helper."
+}

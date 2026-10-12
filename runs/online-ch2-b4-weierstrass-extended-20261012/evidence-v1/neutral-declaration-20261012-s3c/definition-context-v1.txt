@@ -1,0 +1,10 @@
+Definitions for interpreting the declaration only. No proof or source supplied.
+EReal is the extended real order, with bottom negative infinity and top positive infinity.
+def objective (_ : ℝ) : EReal := ⊥
+def feasible : Set ℝ := {0}
+effectiveDomain f = {x | f x < ⊤}; bottom is included.
+IsMinOn f V p means ∀ q ∈ V, f p ≤ f q; membership p∈V is separate.
+SourceProper f means (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal).
+LowerSemicontinuous f means global lower semicontinuity in the given topology.
+IsCompact V means compactness of V. Nonempty means an element exists.
+The real numbers use their ordinary topology. Set intersection and singleton have their usual meanings.
