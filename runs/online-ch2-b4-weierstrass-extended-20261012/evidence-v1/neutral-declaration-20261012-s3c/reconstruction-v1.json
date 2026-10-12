@@ -1,0 +1,61 @@
+{
+  "schema":"blind-canary-header-reconstruction-v1",
+  "name":"bottom_singleton_attains",
+  "namespace":"not supplied",
+  "inputs":[
+    {"file":"declaration-v1.txt","sha256":"e0137f3c40f640254fcb7bbcac5ed7f9ca7fb64912683e4b8fa02cc698ae4f00"},
+    {"file":"definition-context-v1.txt","sha256":"f2d6064cf8f3156642a6ba558a6d557338029159fad2d6f3f3f43037b6e9ae94"}
+  ],
+  "external_binders":[],
+  "external_hypotheses":[],
+  "closed_statement":true,
+  "definitions":{
+    "ambient_space":"ℝ with ordinary topology",
+    "objective":"constant bottom : ℝ → EReal",
+    "feasible":"{0} : Set ℝ",
+    "bottom":"negative infinity",
+    "top":"positive infinity",
+    "effectiveDomain":"{x | objective x < top}; equals all ℝ for this function",
+    "IsMinOn":"∀ q : ℝ, q ∈ feasible → objective p ≤ objective q; membership p∈feasible separate",
+    "SourceProper":"(∀ x : ℝ, objective x ≠ bottom) ∧ ∃ x : ℝ, ∃ r : ℝ, objective x = (r : EReal)"
+  },
+  "conjunct_count":6,
+  "conjunction_association":"right-associated",
+  "conjuncts_in_order":[
+    "∃ p ∈ feasible, IsMinOn objective feasible p",
+    "LowerSemicontinuous objective",
+    "IsCompact feasible",
+    "(feasible ∩ effectiveDomain objective).Nonempty",
+    "objective 0 = ⊥",
+    "¬ SourceProper objective"
+  ],
+  "expanded_first_conjunct":"∃ p : ℝ, p ∈ {0} ∧ ∀ q : ℝ, q ∈ {0} → objective p ≤ objective q",
+  "expanded_fourth_conjunct":"∃ x : ℝ, x ∈ {0} ∧ objective x < top",
+  "expanded_sixth_conjunct":"¬ ((∀ x : ℝ, objective x ≠ bottom) ∧ ∃ x : ℝ, ∃ r : ℝ, objective x = (r : EReal))",
+  "quantifier_scopes":{
+    "p":"exists within first conjunct only",
+    "q":"universal comparator in expansion of IsMinOn within first conjunct",
+    "domain_witness":"existential within expansion of fourth conjunct",
+    "properness":"negation of entire conjunction; universal x and separate existential x,r are inside it"
+  },
+  "consequences":{
+    "attainment_witness":0,
+    "domain_intersection_witness":0,
+    "minimum_value":"bottom, negative infinity",
+    "properness":"explicitly negated",
+    "properness_components":"both individually fail by constant-bottom definition, beyond syntactic negation of their conjunction",
+    "finite_valued_point":"none",
+    "finite_minimum":"not asserted and impossible for this objective",
+    "uniqueness":"feasible minimizer unique by singleton, but no ExistsUnique conjunct"
+  },
+  "edge_cases":{
+    "bottom_in_domain":"included because bottom < top",
+    "minimum_membership":"separate explicit condition; IsMinOn alone holds at every real p for this constant objective",
+    "empty_set":"not applicable; fixed singleton is nonempty",
+    "real_vs_EReal":"comparisons of objective values are EReal; no toReal or finite-real reinterpretation",
+    "hypotheses_vs_conclusions":"all six facts are conclusions of a closed example"
+  },
+  "not_claimed":["properness","finite minimum","general compact-minimization theorem","algorithm","quantitative bound","provider theorem usage"],
+  "ambiguities":["Enclosing namespace absent; no material quantifier or conjunction ambiguity"],
+  "evidence_limits":["authorized header and definitions only","no Lean execution","no proof validity or compilation claim","no source acceptance or provider-use claim"]
+}

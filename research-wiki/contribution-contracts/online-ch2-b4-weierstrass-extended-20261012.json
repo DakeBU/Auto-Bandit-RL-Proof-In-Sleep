@@ -1,0 +1,154 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-B4-WEIERSTRASS-EXTENDED-20261012",
+  "route": "online-learning/chapter-2/b4-weierstrass-extended",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Appendix TheoremA.3 printed291/PDF303; frozen necessary dependency:A.3",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=303"
+  },
+  "target": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made. This is the exact necessary appendix dependency TheoremA.3 (printed291/PDF303), not the strong-convex attainment theorem6.9. Hausdorffness, global lower semicontinuity and the nonempty domain intersection are retained even though the reused Mathlib compact-attainment theorem has weaker hypotheses. The IsMinOn conclusion expresses attainment in extended order; the attained value need not be real and may equal bottom. It is not a uniqueness statement.",
+  "affected_files": [
+    "BanditRLProof/OnlineWeierstrassExtended.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "BanditRLProof.lean"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.source_weierstrass_extended"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "No installed ABRL sourceA3 declaration before this packet",
+      "Mathlib LowerSemicontinuousOn.exists_isMinOn supplies compact lower-semicontinuous attainment",
+      "OnlineConvexExtended effectiveDomain allows bottom"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.effectiveDomain"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRL.Tests.OnlineWeierstrassExtendedCanary.bottom_singleton_attains"
+    ],
+    "planned_consumers": [
+      "Theorem6.9 compact-sublevel attainment after actual compactness/domain witness construction"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Explicit frozen necessary sourceA3 mapping with exact retained source hypotheses and bottom-valued actual consumer. Reuses stronger Mathlib theorem; no duplicate local proof or invented mathematical novelty."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/dual_neutral_decoder_20261012",
+    "source_reviewer": "/root/support_tool_review_20261012",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "This is the exact necessary appendix dependency TheoremA.3 (printed291/PDF303), not the strong-convex attainment theorem6.9. Hausdorffness, global lower semicontinuity and the nonempty domain intersection are retained even though the reused Mathlib compact-attainment theorem has weaker hypotheses. The IsMinOn conclusion expresses attainment in extended order; the attained value need not be real and may equal bottom. It is not a uniqueness statement. Primary roles identify core HEADER review; later core BODY SOURCE is /root/support_source_review_successor_20261012. Canary BODY reviewer is identified by its pinned independent SOURCE/tool report; publication acceptance remains pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Source-mapped topological compact attainment, no categorical functor claim.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.source_weierstrass_extended"
+    ],
+    "visual_review": "Pending one-card publication review and same-source reader DOM/pixels.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one appendix A3 card/lesson/module owner, no existing-object changes, no new route/navigation or completion.",
+    "banditrlwiki": "no-change-with-reason: no new accepted algorithmic bound or setting",
+    "results_ledger": "no-change-with-reason: scratch proof only, canonical package acceptance pending",
+    "roadmap": "no-change-with-reason: B4, Chapter2 and Chapters1-16 OPEN/ACTIVE",
+    "website_surfaces": [
+      "website/content/books.json",
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "Core and bottom-valued canary are independently accepted bounded scratch proofs. This canonical publication packet is proposed only: installation, genuine canonical whole TYPE/VALUE identity, module-origin/provider/standard-axiom checks, shared root/Tests/full harness, publication review and same-source reader Exposition Seal remain pending. A3 is a necessary appendix dependency; theorem6.9 is only a separately frozen, constructed and uncompiled proof candidate. No strong-convex global minimizer, full Lemma7.5 or corrected Theorems7.47/15.31 is accepted by this packet. Constrained objective properness/closedness/support and the positive terminal ghost gap remain separate obligations. Preserve seven open-forward containers, six future claims, null mandatory denominator, accepted=false and all Chapters1-16 hard targets. No main/merge/live acceptance claim.",
+  "verification": {
+    "focused_checks": [
+      "Experimental A3 core candidateV2/header/import actual0; TYPE17/VALUE20, Mathlib provider9 operands and standard3axioms.",
+      "Experimental bottom canary corrected-contextV2/BODY/import actual0; TYPE29/VALUE72, first-conjunct A3 provider8 operands, standard3axioms.",
+      "Frozen exact core382B and corrected canonical canary599B retained; all failed attempts preserved.",
+      "Historical core captures seal a fixed source/lib+IR list and compiler/runtime files; they do not claim the later exact runtime-membership profile. Canary authoritative V2 captures separately check all19 portable Lean runtime members and hashes plus source/lib+IR companion membership before and after each child. OS loader/system DLLs are outside the portable seal. Its two implicit topology/T2 provider instances are exported and independently source-inspected, not separately asserted equal to independently elaborated expected-instance Exprs."
+    ],
+    "bandit_check": "Pending canonical shared root, Tests and tools/bandit.py check.",
+    "site_build": "Pending matching Lean evidence before build_site.py --lean-verified.",
+    "site_check": "Pending check_site.py and independent reader Exposition Seal.",
+    "independent_review": "Core7b2be78a and canary6cd6a2b3 accepted bounded scratch; publication review pending."
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Exact interface/proof formalizer; separate decoder and source/BODY reviewer named in evidence."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Retain core BODYv1 missing explicit V API argument, canary frozen-contextV1 noncomputable failure, and compact report wrapped-axiom check failure. Context-only correction independently reviewed/frozen; theorem premises unchanged.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "source-weierstrass-extended:290bd822307ce7607330d9d505a48d5f1757f7ac8c7095733541b4086acffb05"
+      ],
+      "expected_information_gain": "One proof route, distinct independent review roles.",
+      "shared_verified_context_digest": "140528e4aa94cbbb9efc48ca0b4acfe54dfa0aa2e44f70c2117f878ced89579d"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "Single construction route.",
+      "canonical_route": "Actual domain-intersection witness plus global lsc restriction feeds Mathlib compact attainment.",
+      "selection_reason": "Frozen necessary sourceA3 dependency explicitly preserves bottom and source hypotheses; future6.9 must construct compact sublevel."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 1,
+      "exposition_evidence": "Proposed exact-source single lesson; one pending bounded reader packet, not acceptance.",
+      "source_expansion_nodes": [
+        "APPENDIX-A3-EXTENDED-WEIERSTRASS",
+        "BOTTOM-ALLOWED",
+        "COMPACT-DOMAIN-INTERSECTION",
+        "OPEN-THEOREM6.9",
+        "OPEN-TERMINAL-ATTAINMENT"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.source_weierstrass_extended",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

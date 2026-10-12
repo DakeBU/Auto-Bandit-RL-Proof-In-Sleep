@@ -1,0 +1,75 @@
+              16.3 From Online Learning to Non-Convex Non-Smooth Optimization                    279
+                                         √
+projected OGD with learning rate η = D/(G K) and initial point equal to 0, we have
+      jK                                     jK                          jK
+      X                       ∥uj ∥22 η      X
+                                                          2   D2 η       X
+          ⟨−g t , mt − uj ⟩ ≤        +              ∥g t ∥2 ≤    +              ∥g t ∥22 .
+t=(j−1)K+1
+                               2η      2 t=(j−1)K+1
+                                                              2η   2 t=(j−1)K+1
+
+Since this inequality holds for every uj , we can use a hindsight choice depending on the
+gradients in cycle j . Moreover, taking expectation and using the definition of η , we have
+                                         
+                  jK
+                  X                             D2 η                  √
+         E              ⟨−g t , mt − uj ⟩ ≤       + KG2 = DG K .                     (16.11)
+              t=(j−1)K+1
+                                                2η     2
+
+  Now, we choose uj as
+                 PjK                    ′
+                        t=(j−1)K+1 ∇F (xt )
+           uj := D PjK                             (and uj = 0 if the numerator is 0) .
+                                        ′
+                        t=(j−1)K+1 ∇F (xt )
+                                               2
+
+  Our choice of uj guarantees ∥uj ∥2 ≤ D, and the second term of the r.h.s. of (16.10)
+becomes
+                                                                   
+                 jK                                 jK
+                 X                                  X
+          E            ⟨∇F (x′t ), uj ⟩ = DE            ∇F (x′t )  .
+                 t=(j−1)K+1                               t=(j−1)K+1
+                                                                                  2
+  Now, we upper bound the last term in (16.10). First, observe that
+               E[∥g t − ∇F (x′t )∥22 |Ft ] = E[∥g t ∥22 |Ft ] − ∥∇F (x′t )∥22 ≤ G2 ,
+and
+                   E[⟨g t − ∇F (x′t ), g n − ∇F (x′n )⟩|Ft ] = 0,      ∀n < t .
+Hence, we have
+                                                                                         
+           jK                                               jK
+           X                                                X
+    E               ⟨∇F (x′t ) − g t , uj ⟩ ≤ DE                 (g t − ∇F (x′t )) 
+           t=(j−1)K+1                                    t=(j−1)K+1
+                                                                                        2
+                                                  v 
+                                                  u                                         2
+                                                  u            jK
+                                                               X
+                                               ≤ DtE                   (g t − ∇F (x′t )) 
+                                                  u
+                                                           t=(j−1)K+1
+                                                                                            2
+                                                  v                                        
+                                                  u
+                                                  u           jK
+                                                              X
+                                               = DtE                  ∥g t − ∇F (x′t )∥22 
+                                                  u
+                                                          t=(j−1)K+1
+                                                     √
+                                               ≤ GD K,
+where we used the Cauchy–Schwarz inequality and Jensen’s inequality (Theorem 2.9).
+  Putting everything together, we have
+                                   
+                 jK
+                 X                         √
+                         ∇F (x′t )  ≤ 2DG K + E F (x(j−1)K ) − F (xjK ) .
+                                                                            
+     DE
+               t=(j−1)K+1
+                                      2
+

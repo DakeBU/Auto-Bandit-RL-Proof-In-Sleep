@@ -1,0 +1,14 @@
+import BanditRLProof.OnlineConvexExtended
+import Mathlib.Topology.Semicontinuity.Basic
+
+open Set
+namespace BanditRL.OnlineConvex
+
+#check ∀ {X : Type*}
+    [TopologicalSpace X] [T2Space X]
+    (f : X → EReal) (V : Set X)
+    (hf : LowerSemicontinuous f) (hV : IsCompact V)
+    (hdom : (V ∩ effectiveDomain f).Nonempty),
+    ∃ p ∈ V, IsMinOn f V p
+
+end BanditRL.OnlineConvex
