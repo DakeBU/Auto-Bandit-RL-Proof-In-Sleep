@@ -137,3 +137,7 @@ import Tests.OnlineLipschitzSubgradientCanary
 import Tests.OnlineConvexNondifferentiabilityCanary
 import Tests.OnlineConvexUncountabilityCanary
 import Tests.OnlineSubgradientDescentCanary
+import Tests.OnlineLearningChapterOneCanary
+import Tests.OnlineLearningFTLSharpCanary
+import Tests.OnlineLearningFoundationsCanary
+import Tests.OnlineLearningRegretDomainsCanary

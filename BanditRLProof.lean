@@ -729,3 +729,12 @@ import BanditRLProof.OnlineLipschitzSubgradient
 import BanditRLProof.OnlineConvexNondifferentiability
 import BanditRLProof.OnlineConvexUncountability
 import BanditRLProof.OnlineSubgradientDescent
+import BanditRLProof.OnlineLearningAsymptotic
+import BanditRLProof.OnlineLearningFTL
+import BanditRLProof.OnlineLearningFoundations
+import BanditRLProof.OnlineLearningHistory
+import BanditRLProof.OnlineLearningIID
+import BanditRLProof.OnlineLearningInformation
+import BanditRLProof.OnlineLearningMean
+import BanditRLProof.OnlineLearningRegret
+import BanditRLProof.OnlineLearningStochastic

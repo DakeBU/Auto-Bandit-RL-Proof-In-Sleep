@@ -3764,6 +3764,157 @@
         "BanditRL.OnlineSubgradientDescent.iterate",
         "BanditRL.OnlineSubgradientDescent.regret_tuned_distance"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.iid_meanPredict_excess",
+      "title": "Equation (1.1): the IID benchmark",
+      "chapter": "online-foundations",
+      "featured": true,
+      "teaching_order": 4,
+      "plain": "The expected excess is a sum of nonnegative squared estimation errors.",
+      "math": "\\(\\mathbb E\\sum_{t=1}^T(x_t-Y_t)^2-T\\sigma^2=\\sum_{t=1}^T\\mathbb E(x_t-\\mathbb EY_1)^2\\)",
+      "intuition": "The expected excess is a sum of nonnegative squared estimation errors.",
+      "why": "The actual learner produces this finite expected IID identity; it is a derived explanation of Eq(1.1), not another numbered theorem.",
+      "position": "Orabona v10 Chapter 1, printed page 1.",
+      "proof_idea": "Derive L2 and actual strict-past prediction independence. Integrate the finite sum; apply the independent square identity at each time. Identical laws replace the current mean/variance by those ofY0, and cancel T·Var(Y0). Each residual square integral is nonnegative.",
+      "lean_notes": "Assume a probability space, measurable Y_t, joint independence of the whole target family, and IdentDistrib(Y_t,Y_0) for every t. Every target lies in [0,1] at every sample point. This pointwise support is stronger than almost-sure support. The source motivates the population-variance benchmark. The displayed finite decomposition is a library derivation for this actual learner, not a second numbered source theorem or a stochastic convergence result. Identical laws identify the current means and variances. No expectation/minimum interchange is claimed. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.independent_prediction_square",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_independent",
+        "BanditRL.OnlineLearning.meanPredict_memLp"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.lemma_1_2",
+      "title": "Lemma 1.2: Be-the-Leader",
+      "chapter": "online-foundations",
+      "featured": true,
+      "teaching_order": 1,
+      "plain": "Prefix minimizers beat the final fixed leader in cumulative loss.",
+      "math": "\\(\\sum_{t=1}^T\\ell_t(x_t^*)\\le\\sum_{t=1}^T\\ell_t(x_T^*)\\)",
+      "intuition": "Prefix minimizers beat the final fixed leader in cumulative loss.",
+      "why": "Be-the-Leader is a proof tool comparing supplied current-prefix hindsight minimizers with the final leader. A causal learner and its performance require the separate FTL chain.",
+      "position": "Orabona v10 Chapter 1, printed page 4.",
+      "proof_idea": "Source loss ell_(t+1) is Lean loss t; source x*_n is leader n. Lean diagonal uses leader(t+1) over rangeT; the fixed comparison uses leaderT. T1 has identical sides. Existing induction cancels the final summand, applies the previous prefix inequality, then uses prefix argmin with the feasible next/final leader. For EVERY positive prefix n<=T, supplied leader n lies in V and minimizes the prefix sum against EVERY u in V. Both membership and prefix argmin are premises; minimizer existence is not constructed. For T>0 this data implies V inhabited; T0 is a vacuous empty-sum extension with no condition on leader0.",
+      "lean_notes": "Lemma 1.2 is retained with supplied feasible prefix minimizers on an arbitrary ambient type, explicitly generalizing the source Euclidean setting. Their existence is not proved for arbitrary losses. Zero horizon is an empty-sum extension. Both prefix feasibility and prefix argmin are supplied. The complete canaries include strict inequalities and counterexamples when either requirement is removed. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate. FoundationsProbe has seven validation theorems: prefix minimization, the instantiated comparison, strict values -2 < 0, zero and one horizons, and reversals after omitting optimality or feasibility. The latter uses an ambient loss extension at leaders outside V; it is not a valid V-only source game. These current-prefix hindsight leaders differ from the strict-past learner in the two-target example.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_noRegret",
+      "title": "Upper-sublinear comparator regret",
+      "chapter": "online-foundations",
+      "featured": true,
+      "teaching_order": 3,
+      "plain": "Every fixed comparator has an eventual normalized upper-epsilon bound.",
+      "math": "\\forall u\\in[0,1]\\;\\forall\\varepsilon>0\\;\\exists N\\;\\forall T\\ge N:\\ R_T(u)/T\\le\\varepsilon",
+      "intuition": "Every fixed comparator has vanishing normalized upper regret.",
+      "why": "The implemented upper interpretation is explicit beside the source ordinary-limit display.",
+      "position": "Orabona v10 Chapter 1, printed page 2.",
+      "proof_idea": "Use Theorem1.3 and empirical-mean minimality to upper-bound fixed-comparator regret. Normalize by positiveT and use the logarithm-over-T limit in the shared eventual-bound adapter.",
+      "lean_notes": "The actual learner starts at 1/2 and then predicts the strict-past empirical mean. Every target at every time belongs to [0,1]. These are distinct statements unless finite real convergence is established. This integration proves the eventual upper property for the actual learner, without proving ordinary-limit existence or replacing the printed formula silently. The prediction sequence is the same for every comparator; thresholds can depend on u and epsilon. Actual dependencies include the regret producer and empirical minimum. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.comparatorRegret",
+        "BanditRL.OnlineLearning.empiricalMean",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+        "BanditRL.OnlineLearning.theorem_1_3"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.theorem_1_3",
+      "title": "Theorem 1.3: guessing with the past mean",
+      "chapter": "online-foundations",
+      "featured": true,
+      "teaching_order": 2,
+      "plain": "The actual history-mean predictor achieves the source logarithmic regret bound.",
+      "math": "\\(R_T\\le4+4\\log T\\)",
+      "intuition": "The actual history-mean predictor achieves the source logarithmic regret bound.",
+      "why": "This guarantee concerns the actual causal past-mean predictor. It preserves the source logarithmic upper bound; lower bounds and broader initialization are separate obligations.",
+      "position": "Orabona v10 Chapter 1, printed page 4.",
+      "proof_idea": "The retained theorem_1_3 instantiates Be-the-Leader on Set.univ with empiricalMean_minimizes, sums meanPredict_stability at every round, and applies harmonic_le_one_add_log. Lean stability uses the recurrence and a squared-distance coefficient calculation instead of the source factor/absolute-value/triangle route. Figure 1.1 illustrates the harmonic comparison supplied by harmonic_le_one_add_log. The quarter-plus-tail estimate is a separate source/teaching branch, not an input to this retained proof.",
+      "lean_notes": "Theorem 1.3 uses the actual first-half, strict-past mean learner. Feasible empirical minimizers and stability are proved dependencies, not additional public premises. T>0, unit support only on the played finite prefix, initial prediction1/2 and zero-based Lean indices. The empty-prefix value is empiricalMean y 0 = 0, whereas meanPredict y 0 = 1/2; the one-target mean is empiricalMean y 1 = y 0. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.lemma_1_2",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_stability"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "title": "Theorem 1.3 proof: initial1/4 stability",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+      "math": "\\((x_1-y_1)^2-(x_1^*-y_1)^2\\le\\tfrac14\\)",
+      "intuition": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+      "why": "Expose the exact unnumbered estimate used in the source proof, with its original assumptions.",
+      "position": "Orabona v10 Chapter1, Theorem1.3 proof, printed p.5 / PDF p.17.",
+      "proof_idea": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+      "lean_notes": "The first target belongs to [0,1], the actual initial prediction is1/2, and the one-target empirical mean equals the target. Equality holds at0 and1. The outside-interval target2 shows why support matters. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean",
+        "BanditRL.OnlineLearning.meanPredict"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "title": "Theorem 1.3 proof: exact finite-horizon tail",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+      "math": "\\(R_T\\le\\tfrac14+4\\sum_{t=2}^{T}\\frac1t\\)",
+      "intuition": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+      "why": "Expose the exact unnumbered estimate used in the source proof, with its original assumptions.",
+      "position": "Orabona v10 Chapter1, Theorem1.3 proof, printed p.5 / PDF p.17.",
+      "proof_idea": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+      "lean_notes": "T>0 and every played target lies in[0,1]. The same actual learner and feasible empirical minimum are used. The tail is sum over range(T-1) of4/(t+2), empty atT=1. This upper bound does not establish a minimax lower bound. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean",
+        "BanditRL.OnlineLearning.empiricalMean_mem",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.lemma_1_2",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_initial_stability",
+        "BanditRL.OnlineLearning.meanPredict_stability"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "title": "The same signed regret as a sum of gaps",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 30,
+      "plain": "Use Mathlib Finset.sum_sub_distrib in reverse; instantiate the common carrier with Subtype W and embed the comparator from V.",
+      "math": "R_T(u)=\\sum_{t=1}^{T}(\\ell_t(x_t)-\\ell_t(u))",
+      "intuition": "Comparison uses one supplied prediction sequence and each fixed feasible comparator.",
+      "why": "Keep source domains and the exact one-sided upper condition explicit in the shared library.",
+      "position": "Orabona v10 printedp2/PDF14, comparator definition, Remark1.1 and Footnote1; library algebraic adapter/model mapping, not a new numbered source theorem.",
+      "proof_idea": "Use Mathlib Finset.sum_sub_distrib in reverse; instantiate the common carrier with Subtype W and embed the comparator from V.",
+      "lean_notes": "The shared ambient carrier realizes outputs in W and comparators in V subset W by using the subtype W. Losses must be defined on W; a V-only loss is not evaluated outside V. The source footnote supplies a modeling possibility, not an algorithmic guarantee. Finite algebra needs no geometry or probability. It does not prove causal recomputation, nonnegative regret or existence of a best comparator. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate. Restriction along the embedding V -> W commutes with regret when predictions already lie in V. Equality of losses on the played prefix preserves evaluation for one fixed prediction sequence; it does not recompute a causal learner. T = 0 uses empty sums and total real division. With no feasible comparator, the universal eventual property is vacuous and supplies no best comparator. RegretDomainsProbe retains eight fixture definitions and eight validation theorems: domain gap sum, restriction/pullback, proper inclusion, loss-prefix invariance, zero horizon, outside prediction and negative regret, two fixed comparators, and the bound-zero adapter consumer.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+      "title": "An eventual upper-bound adapter",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 31,
+      "plain": "For epsilon>0, tendsto_order gives that the bound is eventually below epsilon. Intersect with the actual regret-bound event and use transitivity; this does not prove the input bound for an arbitrary algorithm.",
+      "math": "\\begin{aligned}R_T(u)/T&\\le b_T(u)\\ \\text{eventually},\\\\b_T(u)&\\longrightarrow0\\\\&\\Longrightarrow\\ \\operatorname{NoRegret}.\\end{aligned}",
+      "intuition": "Comparison uses one supplied prediction sequence and each fixed feasible comparator.",
+      "why": "Keep source domains and the exact one-sided upper condition explicit in the shared library.",
+      "position": "Orabona v10 printedp2/PDF14, comparator definition, Remark1.1 and Footnote1; library algebraic adapter/model mapping, not a new numbered source theorem.",
+      "proof_idea": "For epsilon>0, tendsto_order gives that the bound is eventually below epsilon. Intersect with the actual regret-bound event and use transitivity; this does not prove the input bound for an arbitrary algorithm.",
+      "lean_notes": "For each fixed feasible comparator, the supplied eventual normalized-regret bound tends tozero. This is a generic conditional adapter; it does not produce that bound. The resulting threshold depends on comparator and epsilon. No ordinary limit, absolute bound or sign assertion is added. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.comparatorRegret"
+      ]
     }
   ]
 }
