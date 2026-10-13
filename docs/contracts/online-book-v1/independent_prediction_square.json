@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "independent_prediction_square",
+  "file": "BanditRLProof/OnlineLearningStochastic.lean",
+  "statement": "theorem independent_prediction_square {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (P Y : Ω → ℝ) (hP : MemLp P 2 μ) (hY : MemLp Y 2 μ) (h : IndepFun P Y μ) : (∫ ω, (P ω - Y ω)^2 ∂μ) = (∫ ω, (P ω - ∫ ω, Y ω ∂μ)^2 ∂μ) + variance Y μ",
+  "statement_hash": "90a2ed35bb5e8933fd8714dd530b17fe4f6c1799e004025f719e429550728e30",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T03:43:51+00:00"
+}

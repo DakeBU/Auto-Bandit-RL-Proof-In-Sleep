@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "history_policy_independent",
+  "file": "BanditRLProof/OnlineLearningHistory.lean",
+  "statement": "theorem history_policy_independent {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ) (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy) : IndepFun (fun ω => policy (fun i => Y i ω)) (Y t) μ",
+  "statement_hash": "40b381592e2e290aa1183176520de1eb2c398cd906b89b9dd440b141bb4e8fa5",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T03:58:51+00:00"
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "declaration": "noRegret_of_vanishing_bound",
+  "file": "BanditRLProof/OnlineLearningRegret.lean",
+  "statement": "theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (bound : X → ℕ → ℝ) (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T) (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) : NoRegret V loss prediction",
+  "statement_hash": "48fe5ea132376db68554cfaffb437ac2dbabc68abdac70fd9a56cb561548ad04",
+  "source_assumptions": [],
+  "created_at": "2026-09-14T03:45:48+00:00"
+}

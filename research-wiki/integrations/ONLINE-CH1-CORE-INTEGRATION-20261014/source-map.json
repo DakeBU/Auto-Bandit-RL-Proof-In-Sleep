@@ -1,0 +1,2279 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CH1-CORE-INTEGRATION-20261014",
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026",
+    "url": "https://arxiv.org/pdf/1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "scope": "Chapter 1 main text, printed pp. 1-6 / PDF pp. 13-18. History Bits begins on printed p. 6 and continues on p. 7; historical references and exercises are separately classified."
+  },
+  "origin_prs": [
+    117,
+    187,
+    188,
+    190
+  ],
+  "bounded_scope": "Nine original Chapter 1 core modules, 31 production declarations, four complete canaries. Numbered finite anchors and restricted derived APIs have separate acceptance scopes.",
+  "reader": "online-foundations",
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineLearning.lemma_1_2",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFoundations.lean",
+      "line": 12,
+      "signature": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)\n    (leader : ℕ → X) (T : ℕ)\n    (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V)\n    (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V,\n      (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) :\n    (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤\n      ∑ t ∈ Finset.range T, loss t (leader T)",
+      "source_role": "numbered-source-anchor",
+      "binder_groups": [
+        {
+          "binders": [
+            "X",
+            "V",
+            "loss",
+            "leader",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hmem"
+          ],
+          "classification": "SOURCE",
+          "reason": "For all 0<n<=T selected prefix minimizer is feasible."
+        },
+        {
+          "binders": [
+            "hmin"
+          ],
+          "classification": "SOURCE",
+          "reason": "For all 0<n<=T and every u in V the selected prefix loss is minimal."
+        }
+      ],
+      "body_review": "Actual induction, prefix restriction, terminal-summand cancellation and minimizer comparison. Both hmem and hmin used; neither supplied conclusion nor stronger regularity.",
+      "semantic_delta": "Arbitrary ambient type and total loss generalize Euclidean source; T=0 empty-sum extension. Positive-horizon source specializes faithfully.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted for stated numbered-source-anchor with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N26"
+      ],
+      "source_locations": [
+        {
+          "id": "N26",
+          "disposition": "NODE",
+          "printed_page": 4,
+          "pdf_page": 16,
+          "kind": "lemma",
+          "locator": "Lemma 1.2 full statement",
+          "statement": "V subset R^d, arbitrary losses ell_t:V -> R, and for EACH relevant t a minimizer x_t^star in argmin_{x in V} sum_{i=1}^t ell_i(x) exists. Then sum_{t=1}^T ell_t(x_t^star) <= sum_{t=1}^T ell_t(x_T^star). No uniqueness required."
+        }
+      ],
+      "neutral_name": "T01"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "line": 8,
+      "signature": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ",
+      "source_role": "source-formula-with-characterization",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "n"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        }
+      ],
+      "body_review": "Literal finite prefix sum divided by n; n=0 computes 0 through empty sum and total division. No classical-choice/fallback argmin selector.",
+      "semantic_delta": "Positive-n source characterized mean is supported by T02-T05. Zero is an explicit off-source arithmetic convention, not x0*=1/2 or a unique empty-prefix minimizer.",
+      "definition_kind": "literal-total-formula; characterized-source-correspondence-for-n-positive",
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted for stated source-formula-with-characterization with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N23",
+        "G04"
+      ],
+      "source_locations": [
+        {
+          "id": "N23",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "characterized_definition",
+          "locator": "Best strategy in hindsight display",
+          "statement": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t. Source treats argmin as the unique scalar minimizer; no fallback/default choice is printed."
+        },
+        {
+          "id": "G04",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "SOURCE_GAP",
+          "locator": "N23 immediate-to-see characterization",
+          "statement": "Source states but does not prove existence, uniqueness, range in [0,1], or the squared-loss empirical mean minimization identity. These are needed to instantiate Lemma 1.2. No completed-square proof is silently inserted.",
+          "status": "unproved-in-source-window",
+          "consumer": "N23"
+        }
+      ],
+      "neutral_name": "Q01"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_decomposition",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "line": 12,
+      "signature": "theorem empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :\n    (∑ t ∈ Finset.range n, (u - y t)^2) =\n      (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) +\n        n * (u - empiricalMean y n)^2",
+      "source_role": "derived-library-decomposition",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "n",
+            "u"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hn"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive horizon implicit in source mean characterization; stronger arbitrary-real sample/comparator identity is a library result."
+        }
+      ],
+      "body_review": "Expand sums of squares, n*mean=sum, ring identity; no result premise.",
+      "semantic_delta": "General real data and comparator; additional explicit algebraic identity fills source exposition gap, not a numbered theorem.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-library-decomposition with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N23",
+        "G04"
+      ],
+      "source_locations": [
+        {
+          "id": "N23",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "characterized_definition",
+          "locator": "Best strategy in hindsight display",
+          "statement": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t. Source treats argmin as the unique scalar minimizer; no fallback/default choice is printed."
+        },
+        {
+          "id": "G04",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "SOURCE_GAP",
+          "locator": "N23 immediate-to-see characterization",
+          "statement": "Source states but does not prove existence, uniqueness, range in [0,1], or the squared-loss empirical mean minimization identity. These are needed to instantiate Lemma 1.2. No completed-square proof is silently inserted.",
+          "status": "unproved-in-source-window",
+          "consumer": "N23"
+        }
+      ],
+      "neutral_name": "T02"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "line": 28,
+      "signature": "theorem empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) :\n    (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) ≤\n      ∑ t ∈ Finset.range n, (u - y t)^2",
+      "source_role": "characterization-component",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "n",
+            "u"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hn"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive mean horizon."
+        }
+      ],
+      "body_review": "Invoke T02 and nonnegative n*(u-mean)^2.",
+      "semantic_delta": "Global real minimization is stronger than constrained [0,1] result; combine T04 for feasibility.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated characterization-component with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N23",
+        "G04"
+      ],
+      "source_locations": [
+        {
+          "id": "N23",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "characterized_definition",
+          "locator": "Best strategy in hindsight display",
+          "statement": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t. Source treats argmin as the unique scalar minimizer; no fallback/default choice is printed."
+        },
+        {
+          "id": "G04",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "SOURCE_GAP",
+          "locator": "N23 immediate-to-see characterization",
+          "statement": "Source states but does not prove existence, uniqueness, range in [0,1], or the squared-loss empirical mean minimization identity. These are needed to instantiate Lemma 1.2. No completed-square proof is silently inserted.",
+          "status": "unproved-in-source-window",
+          "consumer": "N23"
+        }
+      ],
+      "neutral_name": "T03"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_mem",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "line": 36,
+      "signature": "theorem empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n)\n    (hy : ∀ t < n, y t ∈ Set.Icc (0 : ℝ) 1) :\n    empiricalMean y n ∈ Set.Icc (0 : ℝ) 1",
+      "source_role": "characterization-component",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "n"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hn"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive mean horizon."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "Every observed prefix outcome lies in [0,1]."
+        }
+      ],
+      "body_review": "Sum nonnegativity and sum<=n, divide by positive n.",
+      "semantic_delta": "Exact interval feasibility for positive prefix.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated characterization-component with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N23",
+        "N45",
+        "G04"
+      ],
+      "source_locations": [
+        {
+          "id": "N23",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "characterized_definition",
+          "locator": "Best strategy in hindsight display",
+          "statement": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t. Source treats argmin as the unique scalar minimizer; no fallback/default choice is printed."
+        },
+        {
+          "id": "N45",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 3 second inequality",
+          "statement": "<=2 |x_{t-1}^star-x_t^star|, using all three scalar values in [0,1]. This range premise is implicit at this use-site."
+        },
+        {
+          "id": "G04",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "SOURCE_GAP",
+          "locator": "N23 immediate-to-see characterization",
+          "statement": "Source states but does not prove existence, uniqueness, range in [0,1], or the squared-loss empirical mean minimization identity. These are needed to instantiate Lemma 1.2. No completed-square proof is silently inserted.",
+          "status": "unproved-in-source-window",
+          "consumer": "N23"
+        }
+      ],
+      "neutral_name": "T04"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_unique",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "line": 48,
+      "signature": "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)\n    (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤\n      ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) :\n    u = empiricalMean y n",
+      "source_role": "characterization-component",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "n",
+            "u"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hn"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive horizon for uniqueness."
+        },
+        {
+          "binders": [
+            "hu"
+          ],
+          "classification": "SOURCE",
+          "reason": "Candidate u has loss <= known mean loss; source argmin uniqueness characterization antecedent, not an algorithm assumption."
+        }
+      ],
+      "body_review": "T02 forces positive-n squared distance to zero, then u=mean.",
+      "semantic_delta": "Global real uniqueness under no-worse-than-mean antecedent; at n=0 not asserted.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated characterization-component with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N23",
+        "G04"
+      ],
+      "source_locations": [
+        {
+          "id": "N23",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "characterized_definition",
+          "locator": "Best strategy in hindsight display",
+          "statement": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t. Source treats argmin as the unique scalar minimizer; no fallback/default choice is printed."
+        },
+        {
+          "id": "G04",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "SOURCE_GAP",
+          "locator": "N23 immediate-to-see characterization",
+          "statement": "Source states but does not prove existence, uniqueness, range in [0,1], or the squared-loss empirical mean minimization identity. These are needed to instantiate Lemma 1.2. No completed-square proof is silently inserted.",
+          "status": "unproved-in-source-window",
+          "consumer": "N23"
+        }
+      ],
+      "neutral_name": "T05"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_succ",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "line": 62,
+      "signature": "theorem empiricalMean_succ (y : ℕ → ℝ) (t : ℕ) :\n    empiricalMean y (t + 1) = empiricalMean y t +\n      (y t - empiricalMean y t) / ((t : ℝ) + 1)",
+      "source_role": "derived-recurrence",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        }
+      ],
+      "body_review": "Separate t=0 computation, then unfold mean and use sum_range_succ and field algebra.",
+      "semantic_delta": "Includes library zero-prefix convention; recurrence is derived, source supplies only running-average description.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-recurrence with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N59",
+        "G08"
+      ],
+      "source_locations": [
+        {
+          "id": "N59",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "algorithm_properties",
+          "locator": "Same paragraph: summary/running average",
+          "statement": "FTL need not store complete history; running average suffices, yielding computational efficiency. No explicit recurrence or complexity model is supplied."
+        },
+        {
+          "id": "G08",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "SOURCE_GAP",
+          "locator": "N59 running average",
+          "statement": "Finite-memory/running-average implementability is asserted without the update recurrence or cost model. It is an exposition gap, not an extra regret-bound premise.",
+          "status": "unproved-in-source-window",
+          "consumer": "N59"
+        }
+      ],
+      "neutral_name": "T06"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.comparatorRegret",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineLearningRegret.lean",
+      "line": 35,
+      "signature": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ",
+      "source_role": "literal-source-definition-generalized",
+      "binder_groups": [
+        {
+          "binders": [
+            "X",
+            "loss",
+            "prediction",
+            "u",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        }
+      ],
+      "body_review": "Exact difference of two finite sums, source index shifted by one.",
+      "semantic_delta": "Does not enforce feasibility or causality; use carrier subtype to realize V or W domains. T=0 extension.",
+      "definition_kind": "literal",
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted for stated literal-source-definition-generalized with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N16",
+        "N19",
+        "N20"
+      ],
+      "source_locations": [
+        {
+          "id": "N16",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "definition",
+          "locator": "General Regret_T(u) display",
+          "statement": "Regret_T(u) := sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u). Literal finite-sum definition."
+        },
+        {
+          "id": "N19",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "remark",
+          "locator": "Remark 1.1",
+          "statement": "Regret also depends on ell_1,...,ell_T; this dependence is suppressed in notation."
+        },
+        {
+          "id": "N20",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "boundary",
+          "locator": "Footnote 1",
+          "statement": "In some cases prediction may lie in W strictly containing V. This is an optional extension, not the standing setting of Lemma 1.2 or Theorem 1.3; no loss extension to W is defined here."
+        }
+      ],
+      "neutral_name": "Q02"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegret",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineLearningRegret.lean",
+      "line": 40,
+      "signature": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop",
+      "source_role": "derived-upper-property-not-literal-source-limit",
+      "binder_groups": [
+        {
+          "binders": [
+            "X",
+            "V",
+            "loss",
+            "prediction"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        }
+      ],
+      "body_review": "Expands to forall u in V, forall epsilon>0, eventually comparatorRegret/T<=epsilon. All project-owned dependencies expanded.",
+      "semantic_delta": "Weaker than literal ordinary-limit-existence reading. Allows negative/divergent-below/oscillatory normalized values. No finite limit or convergence-to-zero conclusion.",
+      "definition_kind": "literal-upper-property; source-definition-delta",
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted as derived upper property only; rejected as unconditional literal ordinary-limit source definition.",
+      "source_topology_anchors": [
+        "N18",
+        "G07"
+      ],
+      "source_locations": [
+        {
+          "id": "N18",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "definition",
+          "locator": "We will say ... no-regret sentence",
+          "statement": "For EVERY FIXED u in V, regret is at most sublinear: lim_{T -> infinity} Regret_T(u)/T <= 0. The printed operator is lim, not limsup. No uniform-in-u supremum, expectation or high-probability qualifier is printed."
+        },
+        {
+          "id": "G07",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "SOURCE_GAP",
+          "locator": "N57 sublinear conclusion",
+          "statement": "No explicit limit proof is given that (4+4 ln T)/T tends to zero or that the upper bound implies the chosen printed no-regret definition. A pointwise upper bound alone implies limsup<=0; existence of the printed ordinary limit is a separate issue. Do not silently replace lim by limsup.",
+          "status": "unproved-in-source-window",
+          "consumer": "N57"
+        }
+      ],
+      "neutral_name": "Q03"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningRegret.lean",
+      "line": 45,
+      "signature": "theorem comparatorRegret_eq_sum {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) :\n    comparatorRegret loss prediction u T =\n      ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)",
+      "source_role": "derived-sum-identity",
+      "binder_groups": [
+        {
+          "binders": [
+            "X",
+            "loss",
+            "prediction",
+            "u",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        }
+      ],
+      "body_review": "Finset.sum_sub_distrib symmetry.",
+      "semantic_delta": "Exact alternate regret formula, no new learning guarantee.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-sum-identity with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N16"
+      ],
+      "source_locations": [
+        {
+          "id": "N16",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "definition",
+          "locator": "General Regret_T(u) display",
+          "statement": "Regret_T(u) := sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u). Literal finite-sum definition."
+        }
+      ],
+      "neutral_name": "T07"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningRegret.lean",
+      "line": 52,
+      "signature": "theorem noRegret_of_vanishing_bound {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (bound : X → ℕ → ℝ)\n    (hb : ∀ u ∈ V, ∀ᶠ T in atTop, comparatorRegret loss prediction u T / T ≤ bound u T)\n    (hl : ∀ u ∈ V, Tendsto (bound u) atTop (nhds 0)) :\n    NoRegret V loss prediction",
+      "source_role": "conditional-library-adapter",
+      "binder_groups": [
+        {
+          "binders": [
+            "X",
+            "V",
+            "loss",
+            "prediction",
+            "bound"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hb",
+            "hl"
+          ],
+          "classification": "EXCESS",
+          "reason": "Eventual regret upper bound and its vanishing are proof ingredients relative to a learning guarantee; legitimate explicit adapter inputs, not added source theorem hypotheses."
+        }
+      ],
+      "body_review": "Use tendsto_order epsilon upper bound, intersect eventual events, transitivity.",
+      "semantic_delta": "Proves Q03 only. Consumer T18 supplies both premises; adapter is not a source Anchor.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted conditional library property; any EXCESS-relative-to-source premise may not be retained in promotion as complete source endpoint.",
+      "source_topology_anchors": [
+        "N18",
+        "G07"
+      ],
+      "source_locations": [
+        {
+          "id": "N18",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "definition",
+          "locator": "We will say ... no-regret sentence",
+          "statement": "For EVERY FIXED u in V, regret is at most sublinear: lim_{T -> infinity} Regret_T(u)/T <= 0. The printed operator is lim, not limsup. No uniform-in-u supremum, expectation or high-probability qualifier is printed."
+        },
+        {
+          "id": "G07",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "SOURCE_GAP",
+          "locator": "N57 sublinear conclusion",
+          "statement": "No explicit limit proof is given that (4+4 ln T)/T tends to zero or that the upper bound implies the chosen printed no-regret definition. A pointwise upper bound alone implies limsup<=0; existence of the printed ordinary limit is a separate issue. Do not silently replace lim by limsup.",
+          "status": "unproved-in-source-window",
+          "consumer": "N57"
+        }
+      ],
+      "neutral_name": "T08"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.expected_square_decomposition",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningStochastic.lean",
+      "line": 13,
+      "signature": "theorem expected_square_decomposition {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ) (hY : MemLp Y 2 μ) (u : ℝ) :\n    (∫ ω, (u - Y ω)^2 ∂μ) = variance Y μ + (u - ∫ ω, Y ω ∂μ)^2",
+      "source_role": "conditional-library-probability-identity",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "u"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "EXCESS",
+          "reason": "L2 input is a legitimate generalized square-identity condition, but source bounded setting should derive it rather than add it to an exact source endpoint."
+        }
+      ],
+      "body_review": "Variance const-sub identity and integrability of differences produce squared-bias decomposition.",
+      "semantic_delta": "Single deterministic real comparator, generic L2 variable, no support or strategy-class conclusion.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted conditional library property; any EXCESS-relative-to-source premise may not be retained in promotion as complete source endpoint.",
+      "source_topology_anchors": [
+        "N06",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T09"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.independent_prediction_square",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningStochastic.lean",
+      "line": 27,
+      "signature": "theorem independent_prediction_square {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (P Y : Ω → ℝ)\n    (hP : MemLp P 2 μ) (hY : MemLp Y 2 μ) (h : IndepFun P Y μ) :\n    (∫ ω, (P ω - Y ω)^2 ∂μ) =\n      (∫ ω, (P ω - ∫ ω, Y ω ∂μ)^2 ∂μ) + variance Y μ",
+      "source_role": "conditional-library-probability-identity",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "P",
+            "Y"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hP",
+            "hY"
+          ],
+          "classification": "EXCESS",
+          "reason": "Explicit L2 conditions; legitimate identity inputs and derived by bounded consumers."
+        },
+        {
+          "binders": [
+            "h"
+          ],
+          "classification": "EXCESS",
+          "reason": "Current prediction/target independence is a dependency to be derived from online iid information, not a free source endpoint assumption."
+        }
+      ],
+      "body_review": "Variance difference formula, independent covariance zero, two integrals of differences and algebra.",
+      "semantic_delta": "No causal strategy produced here; T19/T25 discharge independence in concrete consumers.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted conditional library property; any EXCESS-relative-to-source premise may not be retained in promotion as complete source endpoint.",
+      "source_topology_anchors": [
+        "N06",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T10"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 8,
+      "signature": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ",
+      "source_role": "literal-source-algorithm",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        }
+      ],
+      "body_review": "if t=0 then 1/2 else Q01 y t.",
+      "semantic_delta": "Exact zero-based form of Theorem 1.3; total formula on real sequences but source range premises required for guarantee.",
+      "definition_kind": "literal",
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated literal-source-algorithm with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N25",
+        "N36"
+      ],
+      "source_locations": [
+        {
+          "id": "N25",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "algorithm",
+          "locator": "Hence, on each round paragraph",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i. Initially any x_1 in [0,1] is allowed in this informal strategy description. Name: Follow-the-Leader (FTL)."
+        },
+        {
+          "id": "N36",
+          "disposition": "NODE",
+          "printed_page": 4,
+          "pdf_page": 16,
+          "kind": "theorem",
+          "locator": "Theorem 1.3 full statement/display",
+          "statement": "For arbitrary y_1,...,y_T in [0,1], use x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i for t>=2 and x_1=x_0^star=0.5. Then Regret_T=sum (x_t-y_t)^2-min_{x in [0,1]}sum (x-y_t)^2 <= 4+4 ln T. Positive integer T implicit; deterministic, pathwise, no probability qualifier."
+        }
+      ],
+      "neutral_name": "Q04"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_prefix",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 12,
+      "signature": "theorem meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) :\n    meanPredict y t = meanPredict z t",
+      "source_role": "derived-causality-property",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "z",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "h"
+          ],
+          "classification": "EXCESS",
+          "reason": "Equal-past antecedent defines extensionality test between two sequences; legitimate conditional property, not extra premise of the source learner bound."
+        }
+      ],
+      "body_review": "Unfold actual algorithm and prefix sum; congruence on indices i<t.",
+      "semantic_delta": "Strict past only, t=0 constant case included; not probabilistic independence.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted conditional library property; any EXCESS-relative-to-source premise may not be retained in promotion as complete source endpoint.",
+      "source_topology_anchors": [
+        "N03",
+        "N24",
+        "N25"
+      ],
+      "source_locations": [
+        {
+          "id": "N03",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "protocol",
+          "locator": "Second bullet",
+          "statement": "Player selects x_t in [0,1] before seeing y_t."
+        },
+        {
+          "id": "N24",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "proof_idea",
+          "locator": "Now, given that we do not know the future paragraph",
+          "statement": "Cannot predict using final x_T^star; instead track best past prediction because successive optimal guesses change little. Not an assumption that the future resembles the past."
+        },
+        {
+          "id": "N25",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "algorithm",
+          "locator": "Hence, on each round paragraph",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i. Initially any x_1 in [0,1] is allowed in this informal strategy description. Name: Follow-the-Leader (FTL)."
+        }
+      ],
+      "neutral_name": "T11"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_mem",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 21,
+      "signature": "theorem meanPredict_mem (y : ℕ → ℝ) (t : ℕ)\n    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :\n    meanPredict y t ∈ Set.Icc (0 : ℝ) 1",
+      "source_role": "source-algorithm-feasibility",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "Every past observed outcome lies in [0,1]."
+        }
+      ],
+      "body_review": "Initial half checked, otherwise positive-prefix mean feasibility T04.",
+      "semantic_delta": "No current/future outcome constraint needed for current prediction feasibility.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated source-algorithm-feasibility with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N03",
+        "N23",
+        "N25"
+      ],
+      "source_locations": [
+        {
+          "id": "N03",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "protocol",
+          "locator": "Second bullet",
+          "statement": "Player selects x_t in [0,1] before seeing y_t."
+        },
+        {
+          "id": "N23",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "characterized_definition",
+          "locator": "Best strategy in hindsight display",
+          "statement": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t. Source treats argmin as the unique scalar minimizer; no fallback/default choice is printed."
+        },
+        {
+          "id": "N25",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "algorithm",
+          "locator": "Hence, on each round paragraph",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i. Initially any x_1 in [0,1] is allowed in this informal strategy description. Name: Follow-the-Leader (FTL)."
+        }
+      ],
+      "neutral_name": "T12"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_update",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 30,
+      "signature": "theorem empiricalMean_update (y : ℕ → ℝ) (t : ℕ) (ht : 0 < t) :\n    empiricalMean y (t+1) = empiricalMean y t +\n      (y t - empiricalMean y t) / (t+1)",
+      "source_role": "derived-recurrence-restriction",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "ht"
+          ],
+          "classification": "TYPING",
+          "reason": "Restricts to positive prefix; no need for extra source premise in source-facing learner theorem."
+        }
+      ],
+      "body_review": "Direct sum_range_succ field algebra.",
+      "semantic_delta": "Weaker domain duplicate of T06; no completed state-machine theorem. Purification debt only.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-recurrence-restriction with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N59",
+        "G08"
+      ],
+      "source_locations": [
+        {
+          "id": "N59",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "algorithm_properties",
+          "locator": "Same paragraph: summary/running average",
+          "statement": "FTL need not store complete history; running average suffices, yielding computational efficiency. No explicit recurrence or complexity model is supplied."
+        },
+        {
+          "id": "G08",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "SOURCE_GAP",
+          "locator": "N59 running average",
+          "statement": "Finite-memory/running-average implementability is asserted without the update recurrence or cost model. It is an exposition gap, not an extra regret-bound premise.",
+          "status": "unproved-in-source-window",
+          "consumer": "N59"
+        }
+      ],
+      "neutral_name": "T13"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_stability",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 42,
+      "signature": "theorem meanPredict_stability (y : ℕ → ℝ) (t : ℕ)\n    (hy : ∀ i ≤ t, y i ∈ Set.Icc (0 : ℝ) 1) :\n    (meanPredict y t - y t)^2 - (empiricalMean y (t+1) - y t)^2 ≤\n      4 / (t+1)",
+      "source_role": "source-proof-step-realization",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "Outcomes through current zero-based index lie in [0,1]."
+        }
+      ],
+      "body_review": "t=0 direct bound; later exact mean recurrence, squared deviation <=1, nonnegative coefficient 2/(t+1)-1/(t+1)^2, then <=4/(t+1).",
+      "semantic_delta": "Source constant 4 retained; actual recurrence route differs from source factor/triangle route. Initial bound loose 4, sharpened by T16.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated source-proof-step-realization with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N42",
+        "N43",
+        "N44",
+        "N45",
+        "N46",
+        "N47",
+        "N48",
+        "N49",
+        "N50"
+      ],
+      "source_locations": [
+        {
+          "id": "N42",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 1",
+          "statement": "Expand squared loss difference as (x_{t-1}^star)^2-2y_t x_{t-1}^star-(x_t^star)^2+2y_t x_t^star."
+        },
+        {
+          "id": "N43",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 2",
+          "statement": "Factor as (x_{t-1}^star+x_t^star-2y_t)(x_{t-1}^star-x_t^star)."
+        },
+        {
+          "id": "N44",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 3 first inequality",
+          "statement": "Product <= |x_{t-1}^star+x_t^star-2y_t| |x_{t-1}^star-x_t^star|."
+        },
+        {
+          "id": "N45",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 3 second inequality",
+          "statement": "<=2 |x_{t-1}^star-x_t^star|, using all three scalar values in [0,1]. This range premise is implicit at this use-site."
+        },
+        {
+          "id": "N46",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 4",
+          "statement": "=2 | (1/(t-1))sum_{i=1}^{t-1} y_i - (1/t)sum_{i=1}^{t} y_i |. Absolute bars confirmed from rendered page."
+        },
+        {
+          "id": "N47",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display line 5",
+          "statement": "=2 | (1/(t-1)-1/t)sum_{i=1}^{t-1} y_i - y_t/t |."
+        },
+        {
+          "id": "N48",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display final line first inequality",
+          "statement": "<=2 | (1/(t(t-1)))sum_{i=1}^{t-1} y_i | + 2|y_t|/t, by triangle inequality and t>=2."
+        },
+        {
+          "id": "N49",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display final line second inequality",
+          "statement": "<=2/t + 2|y_t|/t, using 0<=y_i<=1 for i<t and positive t,t-1."
+        },
+        {
+          "id": "N50",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "t>=2 display final line last inequality",
+          "statement": "<=4/t, using |y_t|<=1. Retain source constant 4, although a different analysis might tighten it."
+        }
+      ],
+      "neutral_name": "T14"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.theorem_1_3",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 81,
+      "signature": "theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) -\n      (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n        4 + 4 * Real.log T",
+      "source_role": "numbered-source-anchor",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hT"
+          ],
+          "classification": "TYPING",
+          "reason": "Source implicitly positive horizon, essential for log and source mean."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "Every outcome in the horizon is in [0,1]."
+        }
+      ],
+      "body_review": "BTL on real Set.univ uses proved global mean minimization; sum T14, rewrite harmonic sum, apply harmonic_le_one_add_log.",
+      "semantic_delta": "Exact 4+4 log T. Mean-loss benchmark equals source constrained minimum via T03/T04/T05. No excess public premise. Implementation route differs, source topology retained separately.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated numbered-source-anchor with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N36"
+      ],
+      "source_locations": [
+        {
+          "id": "N36",
+          "disposition": "NODE",
+          "printed_page": 4,
+          "pdf_page": 16,
+          "kind": "theorem",
+          "locator": "Theorem 1.3 full statement/display",
+          "statement": "For arbitrary y_1,...,y_T in [0,1], use x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i for t>=2 and x_1=x_0^star=0.5. Then Regret_T=sum (x_t-y_t)^2-min_{x in [0,1]}sum (x-y_t)^2 <= 4+4 ln T. Positive integer T implicit; deterministic, pathwise, no probability qualifier."
+        }
+      ],
+      "neutral_name": "T15"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 99,
+      "signature": "theorem meanPredict_initial_stability (y : ℕ → ℝ)\n    (hy : y 0 ∈ Set.Icc (0 : ℝ) 1) :\n    (meanPredict y 0 - y 0)^2 - (empiricalMean y 1 - y 0)^2 ≤ (1 : ℝ) / 4",
+      "source_role": "source-proof-step-realization",
+      "binder_groups": [
+        {
+          "binders": [
+            "y"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "First target in [0,1]."
+        }
+      ],
+      "body_review": "Unfold initial half and singleton mean; polynomial interval bound.",
+      "semantic_delta": "Exact first-round 1/4, endpoints attained; no empty-prefix confusion.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated source-proof-step-realization with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N41"
+      ],
+      "source_locations": [
+        {
+          "id": "N41",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "Now let us take a look / t=1 display",
+          "statement": "For t=1, (x_0^star-y_1)^2-(x_1^star-y_1)^2 <= 0.5^2, using x_0^star=0.5 and x_1^star=y_1."
+        }
+      ],
+      "neutral_name": "T16"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "line": 106,
+      "signature": "theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) -\n      (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n        (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "source_role": "source-proof-step-realization",
+      "binder_groups": [
+        {
+          "binders": [
+            "y",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hT"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive source horizon."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "All horizon outcomes in [0,1]."
+        }
+      ],
+      "body_review": "BTL on [0,1] with proved feasibility/minimality, signed loss difference sum, T16 initial term and T14 shifted tail, sum_range_succ split.",
+      "semantic_delta": "Exact source intermediate bound: 1/4 + sum k=0..T-2 4/(k+2). Empty tail T=1 preserved.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated source-proof-step-realization with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N51"
+      ],
+      "source_locations": [
+        {
+          "id": "N51",
+          "disposition": "NODE",
+          "printed_page": 5,
+          "pdf_page": 17,
+          "kind": "proof_step",
+          "locator": "Hence overall display first inequality",
+          "statement": "Regret_T<=0.25+4 sum_{t=2}^T 1/t, summing first-round bound and t>=2 bounds. For T=1, the latter sum is empty."
+        }
+      ],
+      "neutral_name": "T17"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_noRegret",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningAsymptotic.lean",
+      "line": 9,
+      "signature": "theorem meanPredict_noRegret (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+      "source_role": "derived-asymptotic-upper-producer",
+      "binder_groups": [
+        {
+          "binders": [
+            "y"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hy"
+          ],
+          "classification": "SOURCE",
+          "reason": "Infinite [0,1] outcome stream for all finite-horizon bounds."
+        }
+      ],
+      "body_review": "T15 + T03 bound fixed comparator regret; T08 with (4+4log T)/T and analytic limits 1/T,log T/T.",
+      "semantic_delta": "Only Q03. Does not prove existence of literal normalized regret limit; not full source no-regret semantics closure.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted upper-property producer only; no ordinary-limit existence closure.",
+      "source_topology_anchors": [
+        "N18",
+        "N57",
+        "G07"
+      ],
+      "source_locations": [
+        {
+          "id": "N18",
+          "disposition": "NODE",
+          "printed_page": 2,
+          "pdf_page": 14,
+          "kind": "definition",
+          "locator": "We will say ... no-regret sentence",
+          "statement": "For EVERY FIXED u in V, regret is at most sublinear: lim_{T -> infinity} Regret_T(u)/T <= 0. The printed operator is lim, not limsup. No uniform-in-u supremum, expectation or high-probability qualifier is printed."
+        },
+        {
+          "id": "N57",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "proof_summary",
+          "locator": "Let us write in words paragraph",
+          "statement": "Lemma 1.2 replaces best fixed competitor by sequence x_1^star,...,x_T^star in upper bound; FTL predicts previous leader, whose consecutive displacement goes to zero like 1/t; thus total regret is sublinear."
+        },
+        {
+          "id": "G07",
+          "disposition": "NODE",
+          "printed_page": 6,
+          "pdf_page": 18,
+          "kind": "SOURCE_GAP",
+          "locator": "N57 sublinear conclusion",
+          "statement": "No explicit limit proof is given that (4+4 ln T)/T tends to zero or that the upper bound implies the chosen printed no-regret definition. A pointwise upper bound alone implies limsup<=0; existence of the printed ordinary limit is a separate issue. Do not silently replace lim by limsup.",
+          "status": "unproved-in-source-window",
+          "consumer": "N57"
+        }
+      ],
+      "neutral_name": "T18"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_independent",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningInformation.lean",
+      "line": 13,
+      "signature": "theorem meanPredict_independent {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ) :\n    IndepFun (fun ω => meanPredict (fun i => Y i ω) t) (Y t) μ",
+      "source_role": "derived-information-producer",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        }
+      ],
+      "body_review": "Initial constant independent; later independence of past sum/current target, compose division and identity.",
+      "semantic_delta": "Actual strict-past mean predictor; no supplied current independence, no same law or support needed.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-information-producer with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N06",
+        "N25",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "N25",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "algorithm",
+          "locator": "Hence, on each round paragraph",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i. Initially any x_1 in [0,1] is allowed in this informal strategy description. Name: Follow-the-Leader (FTL)."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T19"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_measurable",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningIID.lean",
+      "line": 13,
+      "signature": "theorem meanPredict_measurable {Ω : Type*} [MeasurableSpace Ω]\n    (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (t : ℕ) :\n    Measurable (fun ω => meanPredict (fun i => Y i ω) t)",
+      "source_role": "derived-measurability-producer",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "Y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        }
+      ],
+      "body_review": "Unfold initial branch/arithmetic mean and use measurable finite arithmetic.",
+      "semantic_delta": "No probability measure/independence/support needed.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-measurability-producer with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N25"
+      ],
+      "source_locations": [
+        {
+          "id": "N25",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "algorithm",
+          "locator": "Hence, on each round paragraph",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i. Initially any x_1 in [0,1] is allowed in this informal strategy description. Name: Follow-the-Leader (FTL)."
+        }
+      ],
+      "neutral_name": "T20"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_memLp",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningIID.lean",
+      "line": 20,
+      "signature": "theorem meanPredict_memLp {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ) :\n    MemLp (fun ω => meanPredict (fun i => Y i ω) t) 2 μ",
+      "source_role": "restricted-integrability-producer",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        }
+      ],
+      "body_review": "T20 and actual feasibility T12, pointwise-to-eventual support, memLp_of_bounded.",
+      "semantic_delta": "Pointwise support restriction explicit; proves L2 instead of passing it to final identity.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor.",
+      "source_topology_anchors": [
+        "N25",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N25",
+          "disposition": "NODE",
+          "printed_page": 3,
+          "pdf_page": 15,
+          "kind": "algorithm",
+          "locator": "Hence, on each round paragraph",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1))sum_{i=1}^{t-1} y_i. Initially any x_1 in [0,1] is allowed in this informal strategy description. Name: Follow-the-Leader (FTL)."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T21"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.iid_meanPredict_excess",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningIID.lean",
+      "line": 29,
+      "signature": "theorem iid_meanPredict_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) -\n      T * variance (Y 0) μ =\n        ∑ t ∈ Finset.range T,\n          ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+      "source_role": "restricted-mean-learner-stochastic-result",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hlaw"
+          ],
+          "classification": "SOURCE",
+          "reason": "Each target has same distribution as Y0, matching identical-law part of iid."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        }
+      ],
+      "body_review": "Derive target/predictor L2, integrate finite sum, T10 with T19 independence, transport mean/variance by identical distribution and sum.",
+      "semantic_delta": "Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor.",
+      "source_topology_anchors": [
+        "N07",
+        "N06",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N07",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "definition",
+          "locator": "Display (1.1)",
+          "statement": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2 T."
+        },
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T22"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningIID.lean",
+      "line": 56,
+      "signature": "theorem iid_meanPredict_excess_nonneg {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    0 ≤ (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) -\n      T * variance (Y 0) μ",
+      "source_role": "restricted-mean-learner-stochastic-result",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hlaw"
+          ],
+          "classification": "SOURCE",
+          "reason": "Each target has same distribution as Y0, matching identical-law part of iid."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        }
+      ],
+      "body_review": "Rewrite T22; nonnegative integrals of squares and finite-sum nonnegativity.",
+      "semantic_delta": "Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor.",
+      "source_topology_anchors": [
+        "N09",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N09",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "Clearly, these quantities are nonnegative",
+          "statement": "Both stochastic benchmark differences (1.1),(1.2) are nonnegative for admissible prediction strategies."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T23"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.source_mean_optimal",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningIID.lean",
+      "line": 67,
+      "signature": "theorem source_mean_optimal {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ)\n    (hY : Measurable Y) (hb : ∀ ω, Y ω ∈ Set.Icc (0 : ℝ) 1) :\n    (∫ ω, Y ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n    (∫ ω, ((∫ ω, Y ω ∂μ) - Y ω)^2 ∂μ) = variance Y μ ∧\n    ∀ u : ℝ, variance Y μ ≤ ∫ ω, (u - Y ω)^2 ∂μ",
+      "source_role": "restricted-population-mean-optimality",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Measurable random-variable convention."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise support is stronger than a.e. support on arbitrary Omega; restricted API only."
+        }
+      ],
+      "body_review": "Boundedness yields L2 and L1, integral bounds give [0,1] mean, T09 at mean and arbitrary u gives variance optimum.",
+      "semantic_delta": "One distribution, deterministic comparator all real u, not cumulative arbitrary strategy optimality.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor.",
+      "source_topology_anchors": [
+        "N06",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T24"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.history_policy_independent",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningHistory.lean",
+      "line": 12,
+      "signature": "theorem history_policy_independent {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ)\n    (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy) :\n    IndepFun (fun ω => policy (fun i => Y i ω)) (Y t) μ",
+      "source_role": "derived-deterministic-history-information",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t",
+            "policy"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hp"
+          ],
+          "classification": "STANDING",
+          "reason": "Measurable deterministic history policy regularity; policy type itself excludes private random seed/current target."
+        }
+      ],
+      "body_review": "Independence of disjoint coordinate finsets, measurable policy/projection composition.",
+      "semantic_delta": "Finite strict-past deterministic measurable policies only; no randomized kernel or completed-information completeness.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted for stated derived-deterministic-history-information with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N06",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T25"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.history_policy_loss_ge_variance",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningHistory.lean",
+      "line": 23,
+      "signature": "theorem history_policy_loss_ge_variance {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ)\n    (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy)\n    (hpb : ∀ z, policy z ∈ Set.Icc (0 : ℝ) 1) :\n    variance (Y t) μ ≤ ∫ ω, (policy (fun i => Y i ω) - Y t ω)^2 ∂μ",
+      "source_role": "restricted-deterministic-history-lower-bound",
+      "binder_groups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t",
+            "policy"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        },
+        {
+          "binders": [
+            "hp"
+          ],
+          "classification": "STANDING",
+          "reason": "Measurable deterministic history policy."
+        },
+        {
+          "binders": [
+            "hpb"
+          ],
+          "classification": "EXCESS",
+          "reason": "All real history tuples must produce [0,1], stronger than feasibility only on legal histories."
+        }
+      ],
+      "body_review": "Compose measurable policy, derive predictor/target L2 from bounds, T10 with actual T25 independence, nonnegative centered prediction square.",
+      "semantic_delta": "Single current variance lower bound; no identical-law premise or common-variance cumulative endpoint; stronger pointwise/global-history restrictions.",
+      "definition_kind": null,
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor.",
+      "source_topology_anchors": [
+        "N06",
+        "G01"
+      ],
+      "source_locations": [
+        {
+          "id": "N06",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "assertion",
+          "locator": "If we knew the distribution ... cannot do better",
+          "statement": "Predicting the distribution mean every round has expected total loss sigma^2 T, sigma^2 the variance, and no admissible strategy has smaller expected loss."
+        },
+        {
+          "id": "G01",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "SOURCE_GAP",
+          "locator": "N06/N09",
+          "statement": "No variance decomposition or conditional nonanticipativity argument proving stochastic mean optimality/nonnegativity is supplied. The play order gives prediction-before-current-target; measurability and any independent random seed are not formalized.",
+          "status": "unproved-in-source-window",
+          "consumer": "N06"
+        }
+      ],
+      "neutral_name": "T26"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.normalized_excess",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineLearningHistory.lean",
+      "line": 42,
+      "signature": "theorem normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) :\n    total / T - variance = (total - T * variance) / T",
+      "source_role": "derived-normalization-identity",
+      "binder_groups": [
+        {
+          "binders": [
+            "total",
+            "variance",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hT"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive horizon required for source division."
+        }
+      ],
+      "body_review": "Nonzero cast T then field arithmetic.",
+      "semantic_delta": "Exact relation between scalar totals/averages; variance binder is any real scalar, no probability/asymptotic content.",
+      "definition_kind": null,
+      "verdict": "accepted",
+      "acceptance_scope": "Accepted for stated derived-normalization-identity with recorded source correspondence and boundary.",
+      "source_topology_anchors": [
+        "N07",
+        "N08"
+      ],
+      "source_locations": [
+        {
+          "id": "N07",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "definition",
+          "locator": "Display (1.1)",
+          "statement": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2 T."
+        },
+        {
+          "id": "N08",
+          "disposition": "NODE",
+          "printed_page": 1,
+          "pdf_page": 13,
+          "kind": "definition",
+          "locator": "Display (1.2) and equivalently sentence",
+          "statement": "(1/T) E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2; equals (1.1)/T for T>0."
+        }
+      ],
+      "neutral_name": "T27"
+    }
+  ],
+  "source_topology": {
+    "inventory_sha256": "38a99aec5ad47afd70e17a985875279432bbc72ffc02e1518d9beda49c2a6f2c",
+    "independent_review_sha256": "286bb21ce6183edc31e8566ce2bf01600e3a7f7cffd054f2b358a856a908b57d",
+    "node_count": 89,
+    "edges": "Source edges run producer to consumer; compiler edges run consumer to dependency. They are distinct evidence."
+  },
+  "source_gaps": [
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+  ],
+  "source_exclusions": [
+    {
+      "id": "X01",
+      "disposition": "EXCLUDED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "locator": "Chapter number/title and repeated page headers/folios on pp1-7",
+      "reason": "Navigation/typography, no mathematical claim",
+      "content": "Chapter 1: What is Online Learning?"
+    },
+    {
+      "id": "X02",
+      "disposition": "EXCLUDED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "locator": "Basically, we want to guess ... winning condition paragraph",
+      "reason": "Motivating prose with no additional proposition",
+      "content": "Goal is accurate sequential guessing; choose a success criterion."
+    },
+    {
+      "id": "X03",
+      "disposition": "EXCLUDED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "locator": "Our reasoning should provide sufficient justification paragraph",
+      "reason": "Forward motivation, no proof or additional assumption",
+      "content": "Later convex optimization and machine learning interpretations promised."
+    },
+    {
+      "id": "X04",
+      "disposition": "EXCLUDED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "locator": "Chapter 14 reference within N14",
+      "reason": "Out-of-window forward reference; does not supply a Chapter 1 proof premise",
+      "content": "Chapter 14"
+    },
+    {
+      "id": "X05",
+      "disposition": "EXCLUDED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "locator": "Framework paragraph beginning on p2 and three application bullets",
+      "reason": "Application motivation without theorem/proof",
+      "content": "Non-i.i.d. learning; clicks on banners, network routing, repeated-game equilibria."
+    },
+    {
+      "id": "X06",
+      "disposition": "EXCLUDED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "locator": "As we will see ... SGD paragraph",
+      "reason": "Forward application without proof dependency",
+      "content": "Stochastic optimization/SGD can also be analyzed."
+    },
+    {
+      "id": "X07",
+      "disposition": "EXCLUDED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "locator": "Let us now go back paragraph",
+      "reason": "Pedagogical transition",
+      "content": "Simple guessing example teaches ingredients; no real application claimed."
+    },
+    {
+      "id": "X08",
+      "disposition": "EXCLUDED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "locator": "Let us now try ... simple example paragraph spanning pp3-4",
+      "reason": "Pedagogical transition to lemma",
+      "content": "First-principles proof here, general methods later."
+    },
+    {
+      "id": "X09",
+      "disposition": "EXCLUDED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "locator": "In the next chapters paragraph",
+      "reason": "Forward pedagogical promise, no Chapter 1 proof premise",
+      "content": "A later algorithm will strictly generalize this strategy."
+    },
+    {
+      "id": "X10",
+      "disposition": "EXCLUDED",
+      "printed_page": 7,
+      "pdf_page": 19,
+      "locator": "Exercises heading and Problem 1.1",
+      "reason": "Exercise outside MAIN TEXT; no source proof supplied and not a Chapter 1 main-text closure requirement",
+      "content": "Vector y_t in R^d with ||y_t||_2<=1, predictions in R^d, squared Euclidean loss; requested dimension-free logarithmic regret, with Cauchy-Schwarz hint |<x,y>|<=||x||_2||y||_2. Hint included in exclusion; not silently counted as proved."
+    },
+    {
+      "id": "X11",
+      "disposition": "EXCLUDED",
+      "printed_page": 7,
+      "pdf_page": 19,
+      "locator": "Problem 1.2",
+      "reason": "Exercise outside MAIN TEXT; no source proof supplied and not a Chapter 1 main-text closure requirement",
+      "content": "Absolute loss |x-y_t| for x,y_t in [0,1]; show every median is an optimal fixed hindsight prediction. Not part of squared-loss theorem."
+    }
+  ],
+  "semantic_review_sha256": "c5283fedc324670a22ff2d79141b2a75c5411922491021bf72d6cc32c8927be2",
+  "chapter_1_complete": false,
+  "book_complete": false,
+  "remaining": [
+    "Ordinary-limit existence and reconciliation with the implemented eventual upper property",
+    "Arbitrary-initial FTL state family owned by original PR189",
+    "General stochastic kernels, completed-information policies and almost-sure support/factorization",
+    "Optimal-order lower bound, exercises and all other Chapter 1 obligations",
+    "Purification and complete Exposition Seal"
+  ],
+  "historical_progress_disposition": "Dated coverage, source inventory and historical route statuses are retained as provenance. Current bounded source mappings supersede their claims for these declarations only; no historical chapter acceptance label is promoted.",
+  "purification_boundary": "The original empiricalMean_update and empiricalMean_succ both remain, with their existing horizon interfaces. Preserving the reviewed original API is not a global duplicate-elimination certificate.",
+  "proof_reference_legend": {
+    "T01": "BanditRL.OnlineLearning.lemma_1_2",
+    "Q01": "BanditRL.OnlineLearning.empiricalMean",
+    "T02": "BanditRL.OnlineLearning.empiricalMean_decomposition",
+    "T03": "BanditRL.OnlineLearning.empiricalMean_minimizes",
+    "T04": "BanditRL.OnlineLearning.empiricalMean_mem",
+    "T05": "BanditRL.OnlineLearning.empiricalMean_unique",
+    "T06": "BanditRL.OnlineLearning.empiricalMean_succ",
+    "Q02": "BanditRL.OnlineLearning.comparatorRegret",
+    "Q03": "BanditRL.OnlineLearning.NoRegret",
+    "T07": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+    "T08": "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+    "T09": "BanditRL.OnlineLearning.expected_square_decomposition",
+    "T10": "BanditRL.OnlineLearning.independent_prediction_square",
+    "Q04": "BanditRL.OnlineLearning.meanPredict",
+    "T11": "BanditRL.OnlineLearning.meanPredict_prefix",
+    "T12": "BanditRL.OnlineLearning.meanPredict_mem",
+    "T13": "BanditRL.OnlineLearning.empiricalMean_update",
+    "T14": "BanditRL.OnlineLearning.meanPredict_stability",
+    "T15": "BanditRL.OnlineLearning.theorem_1_3",
+    "T16": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+    "T17": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+    "T18": "BanditRL.OnlineLearning.meanPredict_noRegret",
+    "T19": "BanditRL.OnlineLearning.meanPredict_independent",
+    "T20": "BanditRL.OnlineLearning.meanPredict_measurable",
+    "T21": "BanditRL.OnlineLearning.meanPredict_memLp",
+    "T22": "BanditRL.OnlineLearning.iid_meanPredict_excess",
+    "T23": "BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg",
+    "T24": "BanditRL.OnlineLearning.source_mean_optimal",
+    "T25": "BanditRL.OnlineLearning.history_policy_independent",
+    "T26": "BanditRL.OnlineLearning.history_policy_loss_ge_variance",
+    "T27": "BanditRL.OnlineLearning.normalized_excess"
+  },
+  "proof_reference_convention": "Qnn/Tnn are cross-reference IDs for this audit only, not source theorem numbers. A range such as T02-T05 includes all listed IDs T02,T03,T04,T05 in the legend."
+}

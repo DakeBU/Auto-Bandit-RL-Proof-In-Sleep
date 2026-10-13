@@ -4793,6 +4793,334 @@
         "takeaway": "Actual source supports and projection produce the trajectory and both exact residual bounds.",
         "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
       }
+    },
+    {
+      "slug": "online-foundations",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Chapter 1: Lemma 1.2, Theorem 1.3, comparator regret, squared-loss and information foundations",
+        "pages": "Main text printed pp. 1-6 / PDF pp. 13-18; History Bits starts on printed p. 6 and continues on p. 7",
+        "pdf_page": 13,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Prediction, prefix leader and initialization",
+          "meaning": "Source round t+1 is Lean index t. The prediction p0 is 1/2; for t>0, pt is the mean of exactly t past targets. The prefix leader an averages the first n targets and includes the current target when n=t+1. The literal mean a0 is zero by total real division. It is not the first prediction. Empirical minimizer characterization and the logarithmic bounds require positive horizons."
+        },
+        {
+          "term": "Signed comparator regret",
+          "meaning": "One supplied prediction sequence is compared with each fixed u. Regret may be negative. The eventual upper condition has a threshold depending on u and epsilon, with no uniform comparator threshold or asserted ordinary limit."
+        },
+        {
+          "term": "Stochastic benchmark",
+          "meaning": "Expected loss minus T times population variance differs from expected loss minus the random hindsight minimum. These core APIs use pointwise target support, and the finite-history policy lower bound bounds the policy on every real history tuple. The feasible population mean minimizes expected loss among all fixed real predictions."
+        }
+      ],
+      "algorithm": {
+        "title": "Follow-the-Leader for squared guessing loss",
+        "kind": "strict-past empirical mean",
+        "steps": [
+          {
+            "title": "Initialize",
+            "detail": "Predict one half before seeing the first target."
+          },
+          {
+            "title": "Predict",
+            "detail": "On later rounds, output the average of all previous targets."
+          },
+          {
+            "title": "Observe",
+            "detail": "Pay squared error and update the running average with the current target."
+          }
+        ],
+        "pseudocode": {
+          "title": "One prescribed past-mean learner",
+          "intro": "The population mean, comparator and horizon are analysis objects, never prediction inputs.",
+          "lines": [
+            "Initialize the running mean a_0 = 0 and the first prediction p_0 = 1/2.",
+            "Output pt before observing target yt.",
+            "Observe yt and pay (pt-yt)^2.",
+            "Update the empirical mean using a(t+1)=at+(yt-at)/(t+1).",
+            "For the next round use the updated empirical mean."
+          ],
+          "relationship": "The recurrence is a mathematical identity, including the empty-prefix transition. This package does not claim an extracted executable or a machine-cost theorem.",
+          "formula_label": "Strict-past prediction and running mean",
+          "math": "\\(a_0=0,\\quad p_0=\\tfrac12,\\quad p_t=a_t\\ (t>0),\\quad a_{t+1}=a_t+\\frac{y_t-a_t}{t+1}\\)",
+          "fallback": "The initial mean is zero and the first prediction is one half. Later predictions use the previous empirical mean; observing the current target updates the mean for the next round."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineLearning.lemma_1_2",
+        "BanditRL.OnlineLearning.theorem_1_3",
+        "BanditRL.OnlineLearning.meanPredict_noRegret",
+        "BanditRL.OnlineLearning.iid_meanPredict_excess"
+      ],
+      "source_theorems": [
+        {
+          "label": "Lemma 1.2: Be-the-Leader",
+          "pages": "printed p. 4",
+          "pdf_page": 16,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\sum_{t=1}^T\\ell_t(x_t^*)\\le\\sum_{t=1}^T\\ell_t(x_T^*)",
+          "fallback": "Prefix minimizers beat the final fixed leader in cumulative loss.",
+          "plain": "Prefix minimizers beat the final fixed leader in cumulative loss.",
+          "relationship": "Lemma 1.2 is retained with supplied feasible prefix minimizers on an arbitrary ambient type, explicitly generalizing the source Euclidean setting. Their existence is not proved for arbitrary losses. Zero horizon is an empty-sum extension. FoundationsProbe has seven validation theorems: prefix minimization, the instantiated comparison, strict values -2 < 0, zero and one horizons, and reversals after omitting optimality or feasibility. The latter uses an ambient loss extension at leaders outside V; it is not a valid V-only source game. These current-prefix hindsight leaders differ from the strict-past learner in the two-target example.",
+          "contract": {
+            "model": "Deterministic real-valued loss functions on a feasible set.",
+            "assumptions": "For every positive prefix n<=T, leader n belongs to V and minimizes its prefix sum against every u in V.",
+            "parameters": "Any ambient type, finite horizon and supplied leader sequence.",
+            "regret": "Current-prefix leader cumulative loss versus the final leader.",
+            "guarantee": "The displayed Be-the-Leader inequality; no causal-learner assertion."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        },
+        {
+          "label": "Theorem 1.3: guessing with the past mean",
+          "pages": "printed p. 4",
+          "pdf_page": 16,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T\\le4+4\\log T",
+          "fallback": "The actual history-mean predictor achieves the source logarithmic regret bound.",
+          "plain": "The actual history-mean predictor achieves the source logarithmic regret bound.",
+          "relationship": "Theorem 1.3 uses the actual first-half, strict-past mean learner. Feasible empirical minimizers and stability are proved dependencies, not additional public premises.",
+          "contract": {
+            "model": "Deterministic scalar squared-loss guessing.",
+            "assumptions": "T>0 and every target in the played finite prefix lies in [0,1].",
+            "parameters": "Any such finite sequence, including sequences selected adaptively after the prediction.",
+            "regret": "Cumulative loss minus the minimum over one fixed interval comparator, represented by the proved feasible empirical mean.",
+            "guarantee": "4+4 log T; no probability, future support or known-horizon premise."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        },
+        {
+          "label": "Printed no-regret definition and the explicit upper interpretation",
+          "pages": "printed p. 2",
+          "pdf_page": 14,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\lim_{T\\to\\infty} R_T(u)/T\\le 0",
+          "fallback": "Source: ordinary limit at most zero. Lean: every positive epsilon eventually upper-bounds normalized signed regret.",
+          "plain": "The printed source uses an ordinary limit. The implemented NoRegret property is the comparator-wise eventual upper-epsilon condition.",
+          "relationship": "These are distinct statements unless finite real convergence is established. This integration proves the eventual upper property for the actual learner, without proving ordinary-limit existence or replacing the printed formula silently.",
+          "contract": {
+            "model": "A fixed deterministic loss and prediction sequence.",
+            "assumptions": "The mean learner producer has all targets in [0,1]; the generic adapter separately consumes an eventual normalized upper bound tending to zero.",
+            "parameters": "For each fixed feasible u, then every epsilon>0, a threshold may depend on both.",
+            "regret": "Signed R_T(u)/T.",
+            "guarantee": "Eventual upper epsilon, not convergence to zero, nonnegative regret, an absolute bound or a uniform threshold."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        },
+        {
+          "label": "Derived identity explaining equation (1.1)",
+          "pages": "printed p. 1",
+          "pdf_page": 13,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\mathbb E\\sum_{t=1}^T(x_t-Y_t)^2-T\\sigma^2=\\sum_{t=1}^T\\mathbb E(x_t-\\mathbb EY_1)^2",
+          "fallback": "The expected excess is a sum of nonnegative squared estimation errors.",
+          "plain": "The expected excess is a sum of nonnegative squared estimation errors.",
+          "relationship": "The source motivates the population-variance benchmark. The displayed finite decomposition is a library derivation for this actual learner, not a second numbered source theorem or a stochastic convergence result. For a probability measure and measurable Y supported pointwise in [0,1], the population mean m = E[Y] belongs to [0,1], E[(m-Y)^2] = Var(Y), and Var(Y) <= E[(u-Y)^2] for every fixed real u. The preserved source_mean_optimal derives these facts from expected_square_decomposition. This identifies the fixed population benchmark; it does not compare the expectation of a random hindsight minimum or give an IID rate.",
+          "contract": {
+            "model": "A probability space with measurable jointly independent real targets of a common distribution.",
+            "assumptions": "Every target lies in [0,1] at every sample point. This pointwise support is stronger than almost-sure support.",
+            "parameters": "The same infinite process and the same actual past-mean learner, finite T including zero.",
+            "regret": "Expected cumulative squared loss minus T Var(Y0), with the fixed population benchmark outside expectation.",
+            "guarantee": "A finite sum of nonnegative mean-estimation errors. Measurability, L2 and current-target independence are proved for the learner; no rate follows from this identity alone."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        },
+        {
+          "label": "Theorem 1.3 proof: initial1/4 stability",
+          "pages": "printed p.5 (unnumbered proof bound)",
+          "pdf_page": 17,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "(x_1-y_1)^2-(x_1^*-y_1)^2\\le\\tfrac14",
+          "fallback": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+          "plain": "After observing the first target, its hindsight mean is that target, so the second squared loss is zero. The interval bounds imply y1(1-y1)>=0, which bounds the initial squared error by1/4.",
+          "relationship": "A separate retained lemma proves the first-round quarter bound in the source proof, including equality at endpoint targets.",
+          "contract": {
+            "model": "Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction.",
+            "assumptions": "Only the first target belongs to [0,1]. Future targets are unrestricted.",
+            "parameters": "Only source round 1 is involved: x_1 = 1/2 corresponds to meanPredict y 0 = 1/2, and x_1^* = y_1 corresponds to empiricalMean y 1 = y 0. Separately, empiricalMean y 0 = 0. This statement has no horizon or tail parameter.",
+            "regret": "Actual initial stability loss difference.",
+            "guarantee": "The one-observation hindsight mean is the first target, so its squared loss is zero. Only y0 in [0,1] is needed to bound the initial squared error by 1/4. Targets 0 and 1 attain 1/4, target 1/2 yields 0, and target 2 gives 9/4 outside the theorem domain. This first-round estimate makes no assertion about feasibility of later means when future targets are unrestricted."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate. FTLSharpProbe has six validation theorems plus one target fixture: endpoint equality at 1/4, strict interior value zero, outside-support value 9/4, one-round empty tail, two-round regret 3/4 below 9/4, and deterministic strict-past prefix invariance when current/future targets change, which is distinct from probabilistic independence."
+          }
+        },
+        {
+          "label": "Theorem 1.3 proof: exact finite-horizon tail",
+          "pages": "printed p.5 (unnumbered proof bound)",
+          "pdf_page": 17,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T\\le\\tfrac14+4\\sum_{t=2}^{T}\\frac1t",
+          "fallback": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+          "plain": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds.",
+          "relationship": "A separate retained refinement preserves the first-round quarter plus the finite harmonic tail. At T=1 the tail is empty; it is not a lower bound.",
+          "contract": {
+            "model": "Deterministic scalar squared-loss guessing. The predictor uses exactly the targets already observed: first prediction 1/2, then their empirical mean. Empty-prefix mean0 is bookkeeping and differs from the first prediction.",
+            "assumptions": "Positive horizon T; every target in its finite prefix belongs to [0,1]. There is no probability or global future-boundedness premise.",
+            "parameters": "Source rounds1..T are Lean indices0..T-1. The tail range(T-1) has real denominators t+2>0 and is empty at T=1.",
+            "regret": "Actual predictor loss minus the produced best-fixed mean loss.",
+            "guarantee": "Be-the-Leader compares the produced prefix minimizers with the final mean. Subtract these losses from the actual prediction losses, split off the first round, and add its1/4 estimate to the existing4/t bounds for later rounds. The final empirical mean is proved feasible and globally minimizing, so its loss is the source best-fixed minimum over [0,1]. Prefix leaders are produced for Be-the-Leader; hindsight leaders are auxiliary, while predictions use the strict past. The initial loss difference equals1/4 at targets0 and1, and0 at1/2. Target2 gives9/4 and lies outside the theorem domain. For targets0,1 the actual two-round regret is3/4 while the displayed bound is9/4. Changing the current unseen target leaves the prefix prediction unchanged."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate. FTLSharpProbe has six validation theorems plus one target fixture: endpoint equality at 1/4, strict interior value zero, outside-support value 9/4, one-round empty tail, two-round regret 3/4 below 9/4, and deterministic strict-past prefix invariance when current/future targets change, which is distinct from probabilistic independence."
+          }
+        },
+        {
+          "label": "Comparator regret with separate action and comparison domains",
+          "pages": "printed p.2 / PDF p.14; comparator definition, Remark1.1 and Footnote1; modelling audit",
+          "pdf_page": 14,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{aligned}V&\\subseteq W,\\quad x_t\\in W,\\quad u\\in V,\\quad\\ell_t:W\\to\\mathbb R,\\\\R_T(u)&=\\sum_{t=1}^{T}\\ell_t(x_t)-\\sum_{t=1}^{T}\\ell_t(u),\\\\\\operatorname{NoRegret}&:\\ \\forall u\\in V,\\ \\forall\\varepsilon>0,\\\\&\\qquad\\exists N\\ \\forall T\\ge N:\\ R_T(u)/T\\le\\varepsilon.\\end{aligned}",
+          "plain": "Subtract the two finite loss sums and distribute subtraction termwise using Mathlib Finset.sum_sub_distrib. For the adapter, tendsto_order makes a comparator-wise bound tending tozero less than any positive epsilon eventually; intersect this event with the supplied actual normalized-regret upper bound and use transitivity. The adapter does not itself construct that bound. The typed illustrative game has V=[0,1],W=[0,2], constant output2 and loss_t(x)=-x onW. For every comparator u∈V, each actual loss gap is u-2≤-1≤0; Finset.sum_nonpos and div_nonpos_of_nonpos_of_nonneg make its finite sum and normalized regret nonpositive. The actual shared adapter applies with bound0. At T2 the same output gives regret -4 against0 and -2 against1. This is a generalized negative-regret test, separate from the source squared guessing game and no universal W performance claim.",
+          "fallback": "Subtract the two finite loss sums and distribute subtraction termwise using Mathlib Finset.sum_sub_distrib. For the adapter, tendsto_order makes a comparator-wise bound tending tozero less than any positive epsilon eventually; intersect this event with the supplied actual normalized-regret upper bound and use transitivity. The adapter does not itself construct that bound. The typed illustrative game has V=[0,1],W=[0,2], constant output2 and loss_t(x)=-x onW. For every comparator u∈V, each actual loss gap is u-2≤-1≤0; Finset.sum_nonpos and div_nonpos_of_nonpos_of_nonneg make its finite sum and normalized regret nonpositive. The actual shared adapter applies with bound0. At T2 the same output gives regret -4 against0 and -2 against1. This is a generalized negative-regret test, separate from the source squared guessing game and no universal W performance claim.",
+          "relationship": "The shared ambient carrier realizes outputs in W and comparators in V subset W by using the subtype W. Losses must be defined on W; a V-only loss is not evaluated outside V. The source footnote supplies a modeling possibility, not an algorithmic guarantee. Restriction along the embedding V -> W commutes with regret when predictions already lie in V. Equality of losses on the played prefix preserves evaluation for one fixed prediction sequence; it does not recompute a causal learner. T = 0 uses empty sums and total real division. With no feasible comparator, the universal eventual property is vacuous and supplies no best comparator.",
+          "contract": {
+            "model": "Deterministic real losses with one common ambient carrier; optional W/V subtype interpretation.",
+            "assumptions": "No convexity, probability or sign assumption for the finite algebra. Embedding uses V subset W.",
+            "parameters": "One prediction sequence and any fixed comparator, including zero horizon. Pullback along V -> W and prefix equality concern the same fixed predictions.",
+            "regret": "Difference of sums equals sum of pointwise gaps.",
+            "guarantee": "The algebraic identity and a separately conditional eventual-bound adapter. Neither constructs a learner or a best comparator. Restriction along the embedding V -> W commutes with regret when predictions already lie in V. Equality of losses on the played prefix preserves evaluation for one fixed prediction sequence; it does not recompute a causal learner. T = 0 uses empty sums and total real division. With no feasible comparator, the universal eventual property is vacuous and supplies no best comparator."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled shared-library core",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        },
+        {
+          "label": "Empirical mean: the positive-prefix minimizer",
+          "pages": "printed p. 3",
+          "pdf_page": 15,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\sum_{t<n}(u-y_t)^2=\\sum_{t<n}(a_n-y_t)^2+n(u-a_n)^2",
+          "plain": "For n>0 the empirical mean uniquely minimizes cumulative squared loss; interval observations also make it feasible.",
+          "fallback": "For n>0 the empirical mean uniquely minimizes cumulative squared loss; interval observations also make it feasible.",
+          "relationship": "The source states the argmin characterization without its proof. The library supplies the squared-loss decomposition, feasibility and uniqueness; the literal empty-prefix value is separate.",
+          "contract": {
+            "model": "Derived library explanation of the cited Chapter 1 material.",
+            "assumptions": "Positive n; arbitrary real data for the algebra and unique global minimizer. Interval support is additionally used only for feasibility.",
+            "parameters": "A positive prefix length n > 0, real observations y, and a real comparator u. Unit support is needed for interval feasibility, not the algebraic characterization.",
+            "regret": "No additional regret or convergence claim.",
+            "guarantee": "For n>0 the empirical mean uniquely minimizes cumulative squared loss; interval observations also make it feasible."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled supporting interface",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        },
+        {
+          "label": "Strict finite-history policies and the variance benchmark",
+          "pages": "printed p. 1",
+          "pdf_page": 13,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\operatorname{Var}(Y_t)\\le\\mathbb E\\bigl(\\pi(Y_{<t})-Y_t\\bigr)^2",
+          "plain": "A measurable bounded deterministic strict-history policy is independent of the current target and cannot beat its variance in expected squared loss.",
+          "fallback": "A measurable bounded deterministic strict-history policy is independent of the current target and cannot beat its variance in expected squared loss.",
+          "relationship": "This derived finite-history API needs no identical-law premise and compares with the current variance. It does not represent all stochastic kernels, completed-information policies or almost-sure factorization classes.",
+          "contract": {
+            "model": "Derived library explanation of the cited Chapter 1 material.",
+            "assumptions": "A probability measure, measurable jointly independent targets, pointwise unit support, and a measurable policy taking values in [0,1] on every real history tuple.",
+            "parameters": "A probability space, measurable jointly independent real targets Y indexed by natural numbers, fixed time t, and a deterministic measurable policy pi : (Fin t -> Real) -> Real valued in [0,1] on every real history tuple. Target support is pointwise.",
+            "regret": "No additional regret or convergence claim.",
+            "guarantee": "A measurable bounded deterministic strict-history policy is independent of the current target and cannot beat its variance in expected squared loss."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled supporting interface",
+            "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Two targets: zero, then one",
+        "intro": "Use the actual source initial prediction 1/2 and strict-past mean.",
+        "steps": [
+          {
+            "title": "First prediction",
+            "detail": "Predict 1/2, observe zero, and pay 1/4.",
+            "math": "x_1=1/2,\\quad\\ell_1(x_1)=1/4.",
+            "fallback": "First loss is one quarter."
+          },
+          {
+            "title": "Second prediction",
+            "detail": "Predict zero, observe one, and pay one. The best fixed mean is one half.",
+            "math": "x_2=0,\\quad x_2^*=1/2,\\quad R_2=3/4.",
+            "fallback": "The actual regret is three quarters."
+          },
+          {
+            "title": "Compare cumulative losses",
+            "detail": "The actual strategy pays 5/4; the optimal fixed mean pays 1/2. Their difference is 3/4.",
+            "math": "R_2=5/4-1/2=3/4.",
+            "fallback": "Cumulative regret is three quarters."
+          }
+        ],
+        "takeaway": "The first-half, past-only predictor pays 5/4; the best fixed mean pays 1/2, so the regret is 3/4. The refined two-round upper bound is 1/4 + 4/2 = 9/4. The actual two-round regret is 3/4.",
+        "boundary": "FoundationsProbe has seven validation theorems: prefix minimization, the instantiated comparison, strict values -2 < 0, zero and one horizons, and reversals after omitting optimality or feasibility. The latter uses an ambient loss extension at leaders outside V; it is not a valid V-only source game. These current-prefix hindsight leaders differ from the strict-past learner in the two-target example. FTLSharpProbe has six validation theorems plus one target fixture: endpoint equality at 1/4, strict interior value zero, outside-support value 9/4, one-round empty tail, two-round regret 3/4 below 9/4, and deterministic strict-past prefix invariance when current/future targets change, which is distinct from probabilistic independence. RegretDomainsProbe has eight validation propositions and eight fixture definitions for the domain pullback, prefix invariance, zero horizon, proper inclusion, negative-regret values -4 and -2, and bound-zero adapter consumer. The original Chapter One canary examples additionally retain the two-target calculation and a fair two-point distribution. These are distinct games. All four whole canary files are retained and bound to current combined Tests and compiled-graph evidence in the integration packet."
+      },
+      "proof_bridge": {
+        "title": "From a feasible mean to causal regret and the IID identity",
+        "summary": "The deterministic leader argument and the stochastic information argument share the same prediction definition. Their conclusions remain distinct.",
+        "steps": [
+          {
+            "title": "Empirical minimizers and prefix comparison",
+            "detail": "Expand both squared-loss sums and use n an=sum yt. The residual is nonnegative and vanishes only at u=an when n>0. Interval feasibility follows by averaging. Let b_n be supplied feasible minimizers of every positive prefix of the arbitrary loss sequence. Cancel the final common summand, apply the induction hypothesis, and use prefix optimality against the feasible final leader. These hindsight leaders are generic; the arithmetic means a_n instantiate them only for squared loss in the following steps.",
+            "math": "\\begin{gathered}\\sum_{t<n}(u-y_t)^2-\\sum_{t<n}(a_n-y_t)^2=n(u-a_n)^2\\\\\\sum_{t<T}\\ell_t(b_{t+1})\\le\\sum_{t<T}\\ell_t(b_T)\\end{gathered}",
+            "fallback": "The exact residual establishes global minimality and uniqueness. Be-the-Leader compares current-prefix and final leaders."
+          },
+          {
+            "title": "Actual stability and finite regret",
+            "detail": "For t>0 use the running-mean recurrence and interval bounds in the difference of squares. Treat the initial-half prediction separately. Lean stability uses a recurrence and squared-distance coefficient calculation instead of the source factor/absolute-value/triangle route. Figure 1.1 illustrates the later harmonic-sum/integral comparison, whose bound is supplied by harmonic_le_one_add_log. The displayed refined chain is the source/teaching branch: insert feasible empirical minimizers into Be-the-Leader, split off the first quarter, and sum the positive-round tail. The actual retained theorem_1_3 instead instantiates Be-the-Leader on Set.univ with empiricalMean_minimizes, applies the coarser 4/(t+1) stability bound to every round, and uses harmonic_le_one_add_log. It does not call meanPredict_regret_refined.",
+            "math": "\\begin{gathered}(p_0-y_0)^2-(a_1-y_0)^2\\le\\tfrac14,\\qquad (p_t-y_t)^2-(a_{t+1}-y_t)^2\\le\\frac4{t+1}\\\\R_T\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s\\le4+4\\log T\\end{gathered}",
+            "fallback": "The initial round has a quarter bound; subsequent stability terms decay reciprocally. The finite tail refines the same source logarithmic upper bound."
+          },
+          {
+            "title": "Fixed comparators and explicit evaluation domains",
+            "detail": "The final empirical minimum is no larger than any fixed comparator loss. The normalized logarithmic upper bound tends to zero. Use the common carrier W and embed V subset W. Distribute finite-sum subtraction. In the validation game loss(x)=-x on [0,2] and output2 give negative signed regret against [0,1].",
+            "math": "\\begin{gathered}\\forall u\\in[0,1]\\;\\forall\\varepsilon>0\\;\\exists N\\;\\forall T\\ge N:\\ R_T(u)/T\\le\\varepsilon\\\\R_T(u)=\\sum_{t<T}(\\ell_t(p_t)-\\ell_t(u)),\\qquad R_2(0)=-4,\\quad R_2(1)=-2\\end{gathered}",
+            "fallback": "This establishes the upper-epsilon property, without an ordinary-limit existence theorem. A larger output domain is compatible with a smaller comparator domain only when losses are defined there."
+          },
+          {
+            "title": "Produce current-target independence",
+            "detail": "Joint independence of all targets and measurability make any measurable function of the finite strict past independent of the current target. Apply this to the actual past mean.",
+            "math": "\\pi(Y_0,\\ldots,Y_{t-1})\\ \\perp\\ Y_t",
+            "fallback": "The information premise is produced for the composed deterministic history policy."
+          },
+          {
+            "title": "Squared-loss benchmark and finite normalization",
+            "detail": "For independent square-integrable P,Y, use the variance identity and zero covariance. Pointwise support produces L2 for the concrete learner; identical laws align the means and variances before summing. For a probability measure and measurable Y supported pointwise in [0,1], the population mean m = E[Y] belongs to [0,1], E[(m-Y)^2] = Var(Y), and Var(Y) <= E[(u-Y)^2] for every fixed real u. The preserved source_mean_optimal derives these facts from expected_square_decomposition. This identifies the fixed population benchmark; it does not compare the expectation of a random hindsight minimum or give an IID rate. Write L_T = E[sum_{t<T}(p_t-Y_t)^2] and sigma^2 = Var(Y_0). Linearity of the finite integral sum gives the IID identity. Each residual squared-error integral is nonnegative; positive T permits the exact scalar normalization. The scalar normalization lemma itself applies to any real total.",
+            "math": "\\begin{gathered}\\begin{aligned}\\mathbb E(P-Y)^2&=\\mathbb E(P-\\mathbb EY)^2+\\operatorname{Var}(Y),\\\\m=\\mathbb EY&\\in[0,1],\\qquad\\mathbb E(m-Y)^2=\\operatorname{Var}(Y),\\\\\\mathbb E(u-Y)^2&=\\operatorname{Var}(Y)+(u-m)^2\\ge\\operatorname{Var}(Y).\\end{aligned}\\\\\\frac{L_T}{T}-\\sigma^2=\\frac{L_T-T\\sigma^2}{T}\\quad(T>0)\\end{gathered}",
+            "fallback": "The generic identity consumes independence; the actual mean learner derives that premise from strict past and joint independence. Finite nonnegativity and normalization do not by themselves prove stochastic asymptotic success."
+          }
+        ],
+        "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
+      }
     }
   ]
 }
