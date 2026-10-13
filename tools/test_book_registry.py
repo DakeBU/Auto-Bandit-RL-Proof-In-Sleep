@@ -150,6 +150,7 @@ class BookRegistryTests(unittest.TestCase):
             "BanditRLProof.OnlineSubgradientDescent",
             "BanditRLProof.OnlineLearningAsymptotic",
             "BanditRLProof.OnlineLearningFTL",
+            "BanditRLProof.OnlineFTLFailure",
             "BanditRLProof.OnlineLearningFoundations",
             "BanditRLProof.OnlineLearningHistory",
             "BanditRLProof.OnlineLearningIID",
@@ -163,7 +164,7 @@ class BookRegistryTests(unittest.TestCase):
             "BanditRLProof.OnlineGradientDescentSource",
         }
         declarations = [d for d in self.declarations if d["module"] in online_modules]
-        self.assertEqual(230, len(declarations))
+        self.assertEqual(240, len(declarations))
         for declaration in declarations:
             key = "declaration:" + declaration["full_name"]
             self.assertIn("online-learning", nodes[key]["books"])
@@ -218,6 +219,16 @@ class BookRegistryTests(unittest.TestCase):
                       if b["id"] == "online-learning")["chapter_refs"])
 
 
+    def test_ftl_failure_source_uses_shared_registry_with_chapter_boundary(self):
+        registry = self.registry()
+        nodes = membership_index(registry)
+        chapter = next(c for c in registry["chapters"] if c["id"] == "teaching:online-ftl-failure")
+        key = "declaration:BanditRL.OnlineLearning.example_2_10"
+        self.assertIn(key, chapter["node_ids"])
+        self.assertEqual(["online-learning"], nodes[key]["books"])
+        scope = next(c for c in self.chapters if c["slug"] == "online-ftl-failure")
+        self.assertIn("not an all-algorithm lower bound or Chapter 2/book completion.", scope["completion_definition"])
+
     def test_preview_badge_cannot_borrow_evidence_from_another_declaration(self):
         source = ('<details class="declaration" id="a"><summary>'
                   '<span class="status source">Source indexed</span></summary></details>'
@@ -253,7 +264,7 @@ class BookRegistryTests(unittest.TestCase):
                 bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
                 self.assertNotIn('chapters/online-', bandit_nav)
                 online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
-                self.assertEqual(23, online_nav.count('class="book-nav-link"'))
+                self.assertEqual(24, online_nav.count('class="book-nav-link"'))
                 self.assertNotIn('chapters/probability/', online_nav)
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
@@ -273,7 +284,7 @@ class BookRegistryTests(unittest.TestCase):
             self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
             self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
             online = site.teaching_chapters_for_book("online-learning", owned_only=True)
-            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability', 'online-subgradient-sum', 'online-subgradient-absolute', 'online-normal-cone', 'online-subgradient-max', 'online-hinge', 'online-affine-subgradient', 'online-lipschitz', 'online-convex-nonsmooth', 'online-osd', 'online-foundations'},
+            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability', 'online-subgradient-sum', 'online-subgradient-absolute', 'online-normal-cone', 'online-subgradient-max', 'online-hinge', 'online-affine-subgradient', 'online-lipschitz', 'online-convex-nonsmooth', 'online-osd', 'online-foundations', 'online-ftl-failure'},
                              {chapter["slug"] for chapter in online})
             shared = site.teaching_chapters_for_book("online-learning")
             self.assertIn("probability", {chapter["slug"] for chapter in shared})

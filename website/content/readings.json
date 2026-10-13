@@ -5121,6 +5121,136 @@
         ],
         "boundary": "This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate."
       }
+    },
+    {
+      "slug": "online-ftl-failure",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.1.2, Example2.10 (Failure of FTL)",
+        "pages": "printedp12/PDF24",
+        "pdf_page": 24,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "prefix coefficient",
+          "meaning": "S_t is the sum of precisely Lean indices i<t; current and future coefficients are not read."
+        },
+        {
+          "term": "initial prediction x0",
+          "meaning": "A fixed input x0 in [-1,1], corresponding to source x1. Prefix causality compares streams with this same input. In the formulas below j=1,2,... is a source round and x_1 is the initial decision. Lean t=j-1 and its input x0 represents x_1. The generic prefix helper also includes t=0."
+        },
+        {
+          "term": "comparator0",
+          "meaning": "The fixed zero decision has zero loss on every round."
+        }
+      ],
+      "algorithm": {
+        "title": "Actual linear-loss FTL",
+        "kind": "causal recursive predictor",
+        "steps": [
+          {
+            "title": "Accumulate past coefficients",
+            "detail": "Let S_0=0. Before round t, S_t contains precisely the earlier coefficients. Reveal the current loss after the action and update S_(t+1)=S_t+z_t."
+          },
+          {
+            "title": "Choose the historical minimizer",
+            "detail": "At Lean time0 output feasible x0. At positive times choose1 if S_t<0 and -1 otherwise; zero-prefix ties choose -1. The source witness has S_t=+/-1/2 at every positive time."
+          },
+          {
+            "title": "Evaluate the alternating stream",
+            "detail": "The initial coefficient is -1/2. Later coefficients alternate +1,-1 and each later played loss equals 1."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+        "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+        "BanditRL.OnlineLearning.example_2_10"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example 2.10: Failure of FTL",
+          "pages": "printedp12",
+          "pdf_page": 24,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(R_T(0)=T-1-\\frac{x_1}{2}\\ge T-\\frac32\\)",
+          "fallback": "Every later round incurs loss1; the initial loss is minus half the initial decision.",
+          "plain": "An actual FTL strategy can have linear regret on convex linear losses.",
+          "relationship": "The source lets the first action be arbitrary and asserts the later alternating endpoints. Lean realizes the rule with an explicit family indexed by the same arbitrary feasible initial action. The strict signs in this loss sequence force those endpoints. Generic ties are handled by choosing -1. Membership plus the objective inequality certify the concrete feasible FTL selection, including the empty past. The regret formula is then proved from actual played losses. Six helper theorems and three definitions refine this one example.",
+          "contract": {
+            "model": "Linear losses z_t x on V=[-1,1].",
+            "assumptions": "Fixed x1 in [-1,1], T>=1. Source z1=-1/2, z_t=+1 on even t and -1 on odd t>1. Lean time0 corresponds to source round1; positive-time generic zero-prefix ties choose -1.",
+            "parameters": "All positive integer horizons and feasible initial choices.",
+            "regret": "Deterministic actual played-loss regret against the fixed feasible comparator0; no expectation or optimal-hindsight-comparator equality.",
+            "guarantee": "T-1-x1/2, hence at least T-3/2."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Causal FTL and exact source counterexample",
+            "boundary": "One explicit FTL selection family with every feasible initialization, on the specified deterministic loss sequence. The generic positive-time zero-prefix tie chooses -1; this failure stream never has such a tie. The Lean target names this family rather than quantifying over arbitrary argmin trajectories. This is not an all-algorithm lower bound or Chapter 2/book completion."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Six rounds from initial decision 1/3",
+        "intro": "Use the same source loss sequence and initialize the actual predictor at 1/3.",
+        "steps": [
+          {
+            "title": "Include the arbitrary initial loss",
+            "detail": "The first coefficient is-1/2, so the initial loss is-1/6.",
+            "math": "\\(\\ell_1(x_1)=-\\frac16\\)",
+            "fallback": "The first round is not silently discarded."
+          },
+          {
+            "title": "Follow the past minimizer",
+            "detail": "The next predictions are1,-1,1,-1,1; every later loss is1.",
+            "math": "\\(x_2=1,\\quad x_3=-1\\)",
+            "fallback": "The public canary computes the actual initial predictions."
+          },
+          {
+            "title": "Compute exact regret",
+            "detail": "Comparator0 has zero loss, giving total regret29/6.",
+            "math": "\\(R_6(0)=5-\\frac16=\\frac{29}{6}\\)",
+            "fallback": "The public canary instantiates the source theorem at a nonzero initial value."
+          }
+        ],
+        "takeaway": "Convexity alone does not protect unregularized FTL from alternating losses.",
+        "boundary": "The six_rounds canary directly instantiates example_2_10 to obtain 29/6. The actual_predictions canary unfolds the definitions to check the first three outputs 1/3, 1, -1. One explicit FTL selection family with every feasible initialization, on the specified deterministic loss sequence. The generic positive-time zero-prefix tie chooses -1; this failure stream never has such a tie. The Lean target names this family rather than quantifying over arbitrary argmin trajectories. This is not an all-algorithm lower bound or Chapter 2/book completion."
+      },
+      "proof_bridge": {
+        "title": "Why following yesterday loses on every later round",
+        "summary": "The source asserts the alternating predictions. Expanding that omitted bridge requires the past coefficient sign and its constrained minimizer. Then the actual played losses give the exact regret.",
+        "steps": [
+          {
+            "title": "Compute the strict-past coefficient",
+            "detail": "For source round j>=2, pair the alternating coefficients after the exceptional first coefficient. The past sum is -1/2 when j is even and +1/2 when j is odd. The current coefficient is not included.",
+            "math": "\\(\\sum_{i=1}^{j-1}z_i=\\begin{cases}-1/2,&j\\text{ even},\\\\1/2,&j\\text{ odd}.\\end{cases}\\)",
+            "fallback": "prefixCoefficient_eq_sum and failure_prefixCoefficient establish the corresponding zero-based identity."
+          },
+          {
+            "title": "Minimize the past linear objective",
+            "detail": "The past objective is that coefficient sum times x. A negative sum is minimized at 1 and a positive sum at -1 on [-1,1]. Both signs are strict for this stream, so the endpoint is unique mathematically. The actual implementation proves feasibility, the objective inequality and the resulting prediction pattern.",
+            "math": "\\(x_j=\\begin{cases}1,&j\\text{ even},\\\\-1,&j\\text{ odd},\\end{cases}\\qquad j\\ge2\\)",
+            "fallback": "Combine linearFTLPredict_mem and linearFTLPredict_minimizes; failure_prediction gives the actual outputs. No separate universal-argmin uniqueness theorem is asserted."
+          },
+          {
+            "title": "Keep the exceptional first loss",
+            "detail": "At the first round the loss is -x_1/2. At every later round the coefficient and chosen endpoint have the same sign, so the loss is 1. For T>=1 there are exactly T-1 later rounds.",
+            "math": "\\(\\sum_{j=1}^{T}z_jx_j=-\\frac{x_1}{2}+\\sum_{j=2}^{T}1=T-1-\\frac{x_1}{2}\\)",
+            "fallback": "The local hloss and finite-sum induction inside example_2_10 keep the initial loss exactly."
+          },
+          {
+            "title": "Subtract the fixed comparator and use feasibility",
+            "detail": "Comparator zero belongs to [-1,1] and pays zero at every round. Subtract its loss, then use x_1<=1. The lower bound can be negative for the first round and becomes linear as the horizon grows.",
+            "math": "\\(R_T(0)=T-1-\\frac{x_1}{2}\\ge T-\\frac32\\)",
+            "fallback": "example_2_10 proves both the exact equality and this lower bound; it does not identify the best comparator in hindsight."
+          }
+        ],
+        "boundary": "The prefix-sign and minimizer calculation expand source gap G01; they are library proof bridges, not extra source premises. One explicit FTL selection family with every feasible initialization, on the specified deterministic loss sequence. The generic positive-time zero-prefix tie chooses -1; this failure stream never has such a tie. The Lean target names this family rather than quantifying over arbitrary argmin trajectories. This is not an all-algorithm lower bound or Chapter 2/book completion."
+      }
     }
   ]
 }

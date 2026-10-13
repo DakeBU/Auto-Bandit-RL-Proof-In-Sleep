@@ -860,6 +860,30 @@
         "The source optimal-order lower-bound claim is not proved here. Exercises 1.1 and 1.2 and historical references are classified separately.",
         "Exercises 1.1 and 1.2 remain optional/planned outside this bounded main-text integration. The mandatory proof-leaf total is unknown; the lower-bound/source audit and general-initial/state obligations remain unclosed here. Historical contributor acceptance is superseded only by the current manifest and gates."
       ]
+    },
+    {
+      "slug": "online-ftl-failure",
+      "title": "Why Follow-the-Leader can incur linear regret",
+      "short_title": "FTL counterexample",
+      "status": "compiled",
+      "summary": "An actual strict-past FTL family on [-1,1] has exact comparator-zero regret T-1-x1/2 on the alternating loss sequence.",
+      "audience": "Readers of Orabona Chapter 2 convex-analysis foundations.",
+      "completion_definition": "One source example, three literal definitions, six structural helper theorems and the exact regret theorem, with the two complete original canaries. One explicit FTL selection family with every feasible initialization, on the specified deterministic loss sequence. The generic positive-time zero-prefix tie chooses -1; this failure stream never has such a tie. The Lean target names this family rather than quantifying over arbitrary argmin trajectories. This is not an all-algorithm lower bound or Chapter 2/book completion.",
+      "completion_blockers": [
+        "Other Chapter 2 statements and full-book acceptance are separate."
+      ],
+      "learning_goals": [
+        "Compute the decision using strictly previous losses.",
+        "Verify feasibility and the historical minimization rule.",
+        "Derive the exact alternating-stream regret including the initial loss."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineFTLFailure.lean"
+      ],
+      "open_gaps": [
+        "A universal theorem over externally supplied argmin trajectories is not part of this concrete-family API.",
+        "Purification and a full Exposition Seal remain separate."
+      ]
     }
   ]
 }

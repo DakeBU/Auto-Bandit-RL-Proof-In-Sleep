@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014",
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026",
+    "url": "https://arxiv.org/pdf/1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "scope": "Example 2.10, printed page 12 / PDF page 24, with FTL definition printed 11 / PDF23 and regret protocol printed8 / PDF20."
+  },
+  "origin_prs": [
+    129,
+    155
+  ],
+  "reader": "online-ftl-failure",
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineLearning.prefixCoefficient",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 27,
+      "signature": "def prefixCoefficient (z : ℕ → ℝ) : ℕ → ℝ\n  | 0 => 0\n  | t+1 => prefixCoefficient z t + z t",
+      "neutral_name": "Q01",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "z : Nat -> Real",
+          "classification": "TYPING",
+          "reason": "arbitrary real coefficient stream"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": {
+        "kind": "literal",
+        "meaning": "Recursive sum of strict-past coefficients",
+        "characterization": "No unspecified argmin fallback or uniqueness assumption. The explicit generic tie is a legitimate choice; feasibility and minimizing property are separately proved."
+      },
+      "source_topology_anchors": [
+        "S04",
+        "G01"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.linearFTLPredict",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 31,
+      "signature": "def linearFTLPredict (z : ℕ → ℝ) (x0 : ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then x0 else if prefixCoefficient z t < 0 then 1 else -1",
+      "neutral_name": "Q02",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "z : Nat -> Real, x0 : Real, t : Nat",
+          "classification": "TYPING",
+          "reason": "literal total predictor inputs; feasibility is a later theorem premise"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": {
+        "kind": "literal",
+        "meaning": "Explicit concrete selection: prescribed x0 at zero, endpoint 1 for negative past sum and -1 otherwise",
+        "characterization": "No unspecified argmin fallback or uniqueness assumption. The explicit generic tie is a legitimate choice; feasibility and minimizing property are separately proved."
+      },
+      "source_topology_anchors": [
+        "S04",
+        "S05",
+        "G01"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.failureCoefficient",
+      "kind": "def",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 34,
+      "signature": "def failureCoefficient (t : ℕ) : ℝ :=\n  if t = 0 then -(1/2) else if t % 2 = 1 then 1 else -1",
+      "neutral_name": "Q03",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "t : Nat",
+          "classification": "TYPING",
+          "reason": "zero-based index; source round is t+1"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": {
+        "kind": "literal",
+        "meaning": "Exact zero-based fixed source loss sequence",
+        "characterization": "No unspecified argmin fallback or uniqueness assumption. The explicit generic tie is a legitimate choice; feasibility and minimizing property are separately proved."
+      },
+      "source_topology_anchors": [
+        "S06"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 37,
+      "signature": "theorem prefixCoefficient_eq_sum (z : ℕ → ℝ) (t : ℕ) :\n    prefixCoefficient z t = ∑ i ∈ range t, z i",
+      "neutral_name": "T01",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "z : Nat -> Real, t : Nat",
+          "classification": "TYPING",
+          "reason": "finite-prefix algebra on an arbitrary stream"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "G01"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 43,
+      "signature": "theorem linearFTLPredict_prefix (z w : ℕ → ℝ) (x0 : ℝ) (t : ℕ)\n    (h : ∀ i < t, z i = w i) : linearFTLPredict z x0 t = linearFTLPredict w x0 t",
+      "neutral_name": "T02",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "z w : Nat -> Real, x0 : Real, t : Nat",
+          "classification": "TYPING",
+          "reason": "same fixed initial input"
+        }
+      ],
+      "library_conditions": [
+        {
+          "binder": "forall i < t, z i = w i",
+          "purpose": "comparison condition defining strict-prefix invariance, not a premise of the source counterexample",
+          "scope": "Level B helper-domain or comparison premise; outside SourceAnchor correction classification"
+        }
+      ],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "S03",
+        "S04"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.linearFTLPredict_mem",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 52,
+      "signature": "theorem linearFTLPredict_mem (z : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (-1 : ℝ) 1)\n    (t : ℕ) : linearFTLPredict z x0 t ∈ Icc (-1 : ℝ) 1",
+      "neutral_name": "T03",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "z : Nat -> Real, x0 : Real, t : Nat",
+          "classification": "TYPING",
+          "reason": "generic library parameters"
+        },
+        {
+          "binder": "hx0 : -1 <= x0 and x0 <= 1",
+          "classification": "SOURCE",
+          "reason": "source first prediction may be any feasible point; interval membership expanded"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "S01",
+        "S05"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 57,
+      "signature": "theorem linearFTLPredict_minimizes (z : ℕ → ℝ) (x0 : ℝ) (t : ℕ)\n    (u : ℝ) (hu : u ∈ Icc (-1 : ℝ) 1) :\n    (∑ i ∈ range t, z i * linearFTLPredict z x0 t) ≤ ∑ i ∈ range t, z i * u",
+      "neutral_name": "T04",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "z : Nat -> Real, x0 : Real, t : Nat, u : Real",
+          "classification": "TYPING",
+          "reason": "generic library parameters"
+        },
+        {
+          "binder": "hu : -1 <= u and u <= 1",
+          "classification": "SOURCE",
+          "reason": "feasible competitor in the FTL objective; interval membership expanded"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "S04",
+        "G01"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.failure_prefixCoefficient",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 69,
+      "signature": "theorem failure_prefixCoefficient (t : ℕ) (ht : 0 < t) :\n    prefixCoefficient failureCoefficient t = if t % 2 = 1 then -(1/2) else (1/2)",
+      "neutral_name": "T05",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "t : Nat",
+          "classification": "TYPING",
+          "reason": "past prefix length"
+        }
+      ],
+      "library_conditions": [
+        {
+          "binder": "ht : 0 < t",
+          "purpose": "parity formula concerns nonempty past; false at zero, with prefix sum zero instead",
+          "scope": "Level B helper-domain or comparison premise; outside SourceAnchor correction classification"
+        }
+      ],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "S06",
+        "G01"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.failure_prediction",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 83,
+      "signature": "theorem failure_prediction (x0 : ℝ) (t : ℕ) (ht : 0 < t) :\n    linearFTLPredict failureCoefficient x0 t = if t % 2 = 1 then 1 else -1",
+      "neutral_name": "T06",
+      "level": "B library refinement",
+      "binder_inputs": [
+        {
+          "binder": "x0 : Real, t : Nat",
+          "classification": "TYPING",
+          "reason": "the later prediction does not depend on the initial input"
+        },
+        {
+          "binder": "ht : 0 < t",
+          "classification": "SOURCE",
+          "reason": "source explicitly exempts first-round arbitrary choice"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "S07",
+        "G01"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    },
+    {
+      "name": "BanditRL.OnlineLearning.example_2_10",
+      "kind": "theorem",
+      "path": "BanditRLProof/OnlineFTLFailure.lean",
+      "line": 89,
+      "signature": "theorem example_2_10 (x0 : ℝ) (hx0 : x0 ∈ Icc (-1 : ℝ) 1) (T : ℕ) (hT : 0 < T) :\n    (∑ t ∈ range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) -\n      (∑ t ∈ range T, failureCoefficient t * (0 : ℝ)) = (T : ℝ) - 1 - x0 / 2 ∧\n    (T : ℝ) - 3/2 ≤\n      (∑ t ∈ range T, failureCoefficient t * linearFTLPredict failureCoefficient x0 t) -\n        (∑ t ∈ range T, failureCoefficient t * (0 : ℝ))",
+      "neutral_name": "T07",
+      "level": "A SourceAnchor",
+      "binder_inputs": [
+        {
+          "binder": "x0 : Real, T : Nat",
+          "classification": "TYPING",
+          "reason": "initial real decision and finite integer horizon"
+        },
+        {
+          "binder": "hx0 : -1 <= x0 and x0 <= 1",
+          "classification": "SOURCE",
+          "reason": "arbitrary source-feasible initial prediction; not fixed to zero"
+        },
+        {
+          "binder": "hT : 0 < T",
+          "classification": "STANDING",
+          "reason": "source-implicit positive horizon used by first-round calculation; no parity restriction"
+        }
+      ],
+      "library_conditions": [],
+      "definition_audit": null,
+      "source_topology_anchors": [
+        "S02",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "verdict": "accepted-with-explicit-delta",
+      "acceptance_scope": "Independent source/body review only; actual combined graph/publication gates recorded separately."
+    }
+  ],
+  "neutral_legend": {
+    "BanditRL.OnlineLearning.prefixCoefficient": "Q01",
+    "BanditRL.OnlineLearning.linearFTLPredict": "Q02",
+    "BanditRL.OnlineLearning.failureCoefficient": "Q03",
+    "BanditRL.OnlineLearning.prefixCoefficient_eq_sum": "T01",
+    "BanditRL.OnlineLearning.linearFTLPredict_prefix": "T02",
+    "BanditRL.OnlineLearning.linearFTLPredict_mem": "T03",
+    "BanditRL.OnlineLearning.linearFTLPredict_minimizes": "T04",
+    "BanditRL.OnlineLearning.failure_prefixCoefficient": "T05",
+    "BanditRL.OnlineLearning.failure_prediction": "T06",
+    "BanditRL.OnlineLearning.example_2_10": "T07",
+    "Tests.OnlineFTLFailure.six_rounds": "T08",
+    "Tests.OnlineFTLFailure.actual_predictions": "T09"
+  },
+  "assumption_delta_ledger": [
+    {
+      "kind": "same",
+      "detail": "Exact exceptional coefficient -1/2, arbitrary feasible initial input, comparator zero, exact -1 and -x0/2, lower bound -3/2."
+    },
+    {
+      "kind": "source-implicit",
+      "detail": "Positive finite horizon T; no empty-horizon version of the source identity."
+    },
+    {
+      "kind": "same",
+      "detail": "Zero-based Lean index t corresponds to source round t+1; strict past excludes current coefficient."
+    },
+    {
+      "kind": "API-limitation",
+      "detail": "The Lean theorem names one explicit FTL selection family indexed by every feasible x0; it does not quantify over an arbitrary supplied sequence satisfying the argmin rule. The source failure stream has strict nonzero past signs; reader mathematical uniqueness is not advertised as a separate Lean uniqueness theorem."
+    },
+    {
+      "kind": "generalization",
+      "detail": "Generic prefix/minimization helpers accept arbitrary real streams. Objective inequality alone allows infeasible x0 at t=0 because both sums are zero. Pair membership with minimizing inequality to identify feasible FTL."
+    },
+    {
+      "kind": "same",
+      "detail": "Deterministic pathwise finite sums. No expectation, stochastic independence, optimal-comparator equality or all-algorithm lower bound."
+    }
+  ],
+  "source_gap": {
+    "G01": {
+      "prefixSign": [
+        "prefixCoefficient_eq_sum",
+        "failure_prefixCoefficient"
+      ],
+      "endpointSelection": [
+        "linearFTLPredict_mem",
+        "linearFTLPredict_minimizes",
+        "failure_prediction"
+      ],
+      "uniquenessBoundary": "Source strict signs mathematically force endpoints; no universal argmin uniqueness theorem is claimed as a Lean declaration."
+    }
+  },
+  "independent_review": {
+    "stage_a_sha256": "24522038823a8a0aadb3f920d76924b40474554cc260b6d189b9ba77e2f3453c",
+    "stage_b_sha256": "090629290ee410f07f4d3a76eba2749ea3263763c80795791a5ca991d0689e9c",
+    "blind_receipt_sha256": "7179c08237212dcd07ac266138090a56f6f257337f15cf1a258f5a7c66b823b0"
+  },
+  "boundary": "One numbered source example via a concrete FTL family; generic helpers are not additional source results. Universal argmin-trajectory uniqueness is not a compiled claim. Collateral old-PR OGD/Huber/chapter obligations retain their separate owners. Purification and Exposition Seal remain pending.",
+  "retained_original_scope": {
+    "ledger": "retained-obligations.json",
+    "all_original_paths": "historical-scope.json",
+    "preservation": "historical-preservation.json",
+    "status": "recorded-pending-independent-transfer-review",
+    "boundary": "Non-FTL obligations retain separate current or open owners and are not discharged by this FTL theorem."
+  }
+}

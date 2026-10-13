@@ -738,3 +738,4 @@ import BanditRLProof.OnlineLearningInformation
 import BanditRLProof.OnlineLearningMean
 import BanditRLProof.OnlineLearningRegret
 import BanditRLProof.OnlineLearningStochastic
+import BanditRLProof.OnlineFTLFailure
