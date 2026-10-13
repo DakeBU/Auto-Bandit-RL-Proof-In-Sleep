@@ -4524,6 +4524,275 @@
         "takeaway": "A convex function may have uncountably many nonsmooth points even though its restriction along the displayed segment is constant.",
         "boundary": "This bounded example does not complete Chapter 2 or the book. Exact nonsmooth-locus equality, exact continuum cardinality and a general almost-everywhere differentiability theorem are outside this package."
       }
+    },
+    {
+      "slug": "online-osd",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.2.2 Lemma2.31/Algorithm2.2 and explicit Theorem2.13/eq2.1 transfer; printed21 constant-step formula",
+        "pages": "printed13-15,19-21/PDF25-27,31-33",
+        "pdf_page": 31,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Proper functions and global supports",
+          "meaning": "A proper function never equals minus infinity and is finite somewhere. Its subgradient inequality tests every ambient point. Properness and an actual support prove finiteness before toReal is used."
+        },
+        {
+          "term": "A prescribed mathematical choice",
+          "meaning": "G(f,x) selects one vector from the global subdifferential when nonempty and returns zero otherwise. Valid feasible queries use the nonempty branch. This is a whole-function noncomputable choice, with no measurable, executable or general adaptive-oracle claim."
+        },
+        {
+          "term": "Round and endpoint indices",
+          "meaning": "Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator."
+        }
+      ],
+      "algorithm": {
+        "title": "Output, observe, support, project",
+        "kind": "source algorithm",
+        "steps": [
+          {
+            "title": "Output the feasible current point",
+            "detail": "Start from the prescribed x1 in V. Projection membership proves every later output feasible. Strict-prefix induction compares equal past losses and schedules, so current/future loss changes do not change the current point."
+          },
+          {
+            "title": "Observe the current loss and choose its support",
+            "detail": "After output and payment, use the current loss information to select a global support at the played point. The library fixes G(f,x) and proves membership in the nonempty support set."
+          },
+          {
+            "title": "Project the genuine update",
+            "detail": "Use the shared nearest-point projection on Xt-eta(t)gt. Its existing projection theorem and support inequality produce the full Lemma2.31 chain, then divide by the positive current eta."
+          }
+        ],
+        "pseudocode": {
+          "title": "Projected OSD with a prescribed schedule",
+          "intro": "Algorithm 2.2 permits any valid subgradient after the action. The library realizes one such selection as a mathematical whole-function choice.",
+          "formula_label": "Actual update and output order",
+          "math": "\\(X_0=x_1\\in V,\\qquad g_t\\in\\partial f_t(X_t),\\qquad X_{t+1}=\\Pi_V(X_t-\\eta_tg_t)\\)",
+          "fallback": "Each next point is the projection of the current point minus its positive step times the actual current-loss support.",
+          "lines": [
+            "Prescribe a nonempty closed convex V, a feasible x1 and positive played rates.",
+            "Initialize X0=x1.",
+            "At zero-based round t, output the already determined Xt.",
+            "Pay the finite loss ft(Xt), then obtain the current information needed for a support.",
+            "For this implementation, select gt=G(ft,Xt) from the actual global subdifferential.",
+            "Set X(t+1) to the nearest point in V to Xt-eta(t)gt."
+          ],
+          "relationship": "The same prescribed run serves every feasible comparator. Strict-prefix equality compares full past loss functions and past rates; it does not certify an externally supplied initialization or schedule as future-independent."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+        "BanditRL.OnlineSubgradientDescent.regret_fixed",
+        "BanditRL.OnlineSubgradientDescent.regret_variable",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned"
+      ],
+      "source_theorems": [
+        {
+          "label": "Lemma 2.31: both one-step inequalities",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\eta(f(x)-f(u))\\le\\eta\\langle g,x-u\\rangle\\le\\frac{\\|x-u\\|^2-\\|\\Pi_V(x-\\eta g)-u\\|^2}{2}+\\frac{\\eta^2}{2}\\|g\\|^2\\)",
+          "fallback": "A global support gives the loss linearization and the projected squared-distance inequality, including its negative terminal term.",
+          "plain": "A global support gives the loss linearization and the projected squared-distance inequality, including its negative terminal term.",
+          "relationship": "The source uses x_t in its feasible-iterate algorithm context without an explicit standalone membership binder. The Lean lemma additionally allows an arbitrary ambient x when an actual global support at x is supplied; that is an explicit stronger standalone variant.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "Nonempty closed convex V; proper f subdifferentiable on V; positive eta; u in V; actual g in the global subdifferential at x. Feasible x_t belongs to the surrounding source algorithm convention.",
+            "parameters": "Every feasible comparator and every supplied global support at the current point. The stronger Lean standalone lemma does not require current-point membership in V.",
+            "regret": "Finite real single-step loss gap f(x)-f(u), justified by properness and actual global supports. This standalone lemma assumes no online regret sum or algorithm trajectory.",
+            "guarantee": "Both eta-scaled inequalities and the negative projected terminal distance."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical projected-subgradient declarations",
+            "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+          }
+        },
+        {
+          "label": "Algorithm 2.2: output, pay, obtain a support, project",
+          "pages": "printed20",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(X_0=x_1\\in V,\\quad g_t=G(f_t,X_t)\\in\\partial f_t(X_t),\\quad X_{t+1}=\\Pi_V(X_t-\\eta_tg_t)\\)",
+          "fallback": "The actual recursive mathematical algorithm outputs before the current loss and uses a genuine selected support.",
+          "plain": "The actual recursive mathematical algorithm outputs before the current loss and uses a genuine selected support.",
+          "relationship": "The source permits any valid support. This implementation fixes G(f,x), a noncomputable whole-function/point choice. The prefix theorem compares complete past functions and schedules; a general feedback policy is separate.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "Feasible prescribed initialization, proper current losses subdifferentiable on V; positive played eta for performance.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "All-round feasibility, strict-prefix equality, selected support and actual finite played/comparator values."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical projected-subgradient declarations",
+            "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+          }
+        },
+        {
+          "label": "Transferred Theorem 2.13: constant rate",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta}\\)",
+          "fallback": "The exact fixed-step regret bound holds on the same subgradient trajectory, with its negative terminal residual.",
+          "plain": "The exact fixed-step regret bound holds on the same subgradient trajectory, with its negative terminal residual.",
+          "relationship": "The printed19 transfer reuses constant-rate telescoping after replacing the gradient step by Lemma 2.31. No bounded diameter is needed. Lean also proves the empty-horizon extension; the printed eta_T notation assumes a positive horizon.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "Positive constant eta, feasible prescribed x1 and comparator u, and proper losses subdifferentiable on V at each played round. No bounded-domain premise.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "Full residual bound from genuine same-trajectory telescoping."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical projected-subgradient declarations",
+            "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+          }
+        },
+        {
+          "label": "Transferred Theorem 2.13: nonincreasing rates",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(R_T(u)\\le\\frac{D^2}{2\\eta_T}+\\sum_{t=1}^T\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|x_{T+1}-u\\|^2}{2\\eta_T}\\)",
+          "fallback": "Decreasing positive played steps use the last played eta and retain the terminal distance.",
+          "plain": "Decreasing positive played steps use the last played eta and retain the terminal distance.",
+          "relationship": "The source transfer reuses the weighted telescope with the subgradient step. Lean provides both a finite diameter upper-bound variant and the actual Metric.diam variant with an explicit bounded-set premise. This is the finite informative regime of the source display.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "T>=1; prescribed feasible x1 and comparator u in V; positive nonincreasing eta through played rounds; each played loss proper and subdifferentiable on V; bounded V for Metric.diam, or an actual uniform D upper bound.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "The full variable bound, including negative terminal residual."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical projected-subgradient declarations",
+            "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+          }
+        },
+        {
+          "label": "Transferred equation (2.1): tuned constant rate",
+          "pages": "printed19",
+          "pdf_page": 31,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\quad R_T(u)\\le DG\\sqrt T\\quad(\\forall u\\in V)\\)",
+          "fallback": "One prescribed horizon-tuned trajectory satisfies DG sqrt(T) for every feasible comparator.",
+          "plain": "One prescribed horizon-tuned trajectory satisfies DG sqrt(T) for every feasible comparator.",
+          "relationship": "Equation (2.1) is first derived for gradients at printed15; printed19 transfers it to selected subgradients. Lean uses positive upper bounds D,G and positive horizon T. The norm premise applies to the actual chosen supports on this same tuned trajectory; it is not inferred from Lipschitzness merely on V.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "T>=1,D>0,G>0; prescribed feasible x1 in V; every played loss proper and subdifferentiable on V; all feasible pair distances<=D; actual chosen supports on this very eta-dependent trajectory have norms<=G.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "Uniform feasible-comparator bound with eta=D/(G sqrt T)."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical projected-subgradient declarations",
+            "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+          }
+        },
+        {
+          "label": "Printed21: coarse constant-rate bound",
+          "pages": "printed21",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=1}^T\\|g_t\\|^2\\)",
+          "fallback": "Drop only the known nonnegative subtracted residual from the full fixed bound.",
+          "plain": "Drop only the known nonnegative subtracted residual from the full fixed bound.",
+          "relationship": "Drop the nonpositive terminal term from the constant-rate sharp bound. The variable-rate diameter theorem is not a prerequisite.",
+          "contract": {
+            "model": "Finite-dimensional real Euclidean space and actual nonempty closed convex V.",
+            "assumptions": "eta>0; feasible prescribed x1 and comparator u; each played loss proper and subdifferentiable on V. Lean additionally admits T=0 and no bounded-domain premise is added.",
+            "parameters": "Same actual support choice and recursively projected trajectory, every feasible comparator; Lean0 = source1.",
+            "regret": "Finite real losses are produced from properness/supports; regret sums this same trajectory.",
+            "guarantee": "The displayed printed21 formula as a separate corollary."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical projected-subgradient declarations",
+            "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "From global support to sharp regret bounds",
+        "summary": "A single support-and-projection inequality feeds two separate telescoping branches. Positive constant rates need no bounded domain; the variable-rate branch uses a diameter bound.",
+        "steps": [
+          {
+            "title": "Justify the finite loss values",
+            "detail": "Properness provides a finite ambient witness. A global support rules out positive infinity at its query; subdifferentiability supplies a support at every feasible comparator. The library proves this bridge before using real differences.",
+            "math": "\\(f_t(X_t),f_t(u)\\in\\mathbb R\\)",
+            "fallback": "The real conversion is justified by properness and support."
+          },
+          {
+            "title": "Combine support with actual nearest projection",
+            "detail": "The global support inequality at u gives the first inequality. Projection contraction and the squared-norm expansion give the second. Feasibility and the current choice then instantiate the same chain at every actual iterate.",
+            "math": "\\(\\eta_t(f_t(X_t)-f_t(u))\\le\\eta_t\\langle g_t,X_t-u\\rangle\\le\\frac{\\|X_t-u\\|^2-\\|X_{t+1}-u\\|^2}{2}+\\frac{\\eta_t^2}{2}\\|g_t\\|^2\\)",
+            "fallback": "Both inequalities retain the true projected endpoint."
+          },
+          {
+            "title": "Constant rate: telescope without a diameter bound",
+            "detail": "Divide by the positive constant eta and sum. Consecutive squared distances cancel, leaving the actual initial and terminal distances. This branch applies even when V is unbounded.",
+            "math": "\\(R_T(u)\\le\\frac{\\|x_1-u\\|^2}{2\\eta}+\\frac\\eta2\\sum_{t=0}^{T-1}\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta}\\)",
+            "fallback": "No variable-rate result or diameter premise enters this branch."
+          },
+          {
+            "title": "Variable rates: control nonnegative reciprocal weights",
+            "detail": "For positive nonincreasing rates, regroup the divided one-step sum. Internal coefficients 1/eta(t+1)-1/eta(t) are nonnegative. Feasible distances are at most D; bounding the positive coefficients and telescoping their reciprocals leaves the negative terminal term unchanged.",
+            "math": "\\(R_T(u)\\le\\frac{D^2}{2\\eta_{T-1}}+\\sum_{t=0}^{T-1}\\frac{\\eta_t}{2}\\|g_t\\|^2-\\frac{\\|X_T-u\\|^2}{2\\eta_{T-1}}\\)",
+            "fallback": "This separate branch requires T positive and a finite diameter bound."
+          },
+          {
+            "title": "Tune the constant-rate branch",
+            "detail": "Drop its nonpositive terminal term. Bound the initial distance by D and each actual selected support by G; substitute eta=D/(G sqrt(T)). With D,G,T positive, the two terms sum to DG sqrt(T). This is the source-authorized subgradient transfer of the printed15 tuning calculation.",
+            "math": "\\(\\eta=\\frac{D}{G\\sqrt T},\\qquad R_T(u)\\le\\frac{D^2}{2\\eta}+\\frac\\eta2TG^2=DG\\sqrt T\\)",
+            "fallback": "Diameter control makes one prescribed tuned run valid for all feasible comparators."
+          }
+        ],
+        "boundary": "The ambient space is finite-dimensional and real with its Euclidean inner product. The feasible set is nonempty, closed and convex. Properness means no minus-infinity value and a finite ambient witness; a support is tested against every ambient point. No global convexity, differentiability or closed-loss assumption is added. Lean X0 is source x1; output Xt precedes loss t; terminal XT is source x(T+1), and the last played rate is eta(T-1). The initialization and schedule are prescribed independently of the comparator. The source states the transfer from gradient to subgradient bounds. Projection well-definedness, proper-support finiteness, selection validity and feasibility induction are explicit library bridges. The source does not separately treat zero-parameter tuning. This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+      },
+      "worked_example": {
+        "title": "Non-smooth losses and actual clipping",
+        "intro": "These library fixtures test the actual choice, projection and recurrence. They are not a claim to have formalized the separate shifted-loss game of source Example 2.32.",
+        "steps": [
+          {
+            "title": "Two nonzero supports and actual projections",
+            "detail": "For f(x)=|x| on V=[-1,1], start at x1=1 with eta=3. At the nonzero played points, the support classification forces slopes 1 and -1. Raw updates -2 and 2 project to -1 and 1. The two losses sum to 2 and comparator 0 pays 0.",
+            "math": "\\(1\\to-1\\to1,\\quad R_2(0)=2\\)",
+            "fallback": "Neither slopes nor trajectory/regret are supplied as assumptions."
+          },
+          {
+            "title": "Positive fixed and variable terminal residuals",
+            "detail": "The fixed-rate terminal subtraction equals 1/6. Rates 3 then 2 give the same terminal point 1 and subtraction 1/4; the exact variable bound is directly instantiated.",
+            "math": "\\(\\frac{\\|X_2\\|^2}{2\\cdot3}=\\frac16,\\quad\\frac{\\|X_2\\|^2}{2\\cdot2}=\\frac14\\)",
+            "fallback": "Dropping the residual would change the displayed bound."
+          },
+          {
+            "title": "All-comparator tuning and prefix perturbation",
+            "detail": "The complete absolute-value support sets bound the chosen norm by 1 on V, yielding 2 sqrt(T) for every feasible comparator and every positive horizon T. Changing inputs at time 2 and later, even to rate -99 and top-valued loss, leaves output X2=1 because the strict past is unchanged.",
+            "math": "\\(R_T(u)\\le2\\sqrt T\\quad(u\\in[-1,1],\\ T>0)\\)",
+            "fallback": "Causality tests actual recursion and unconstrained future data."
+          },
+          {
+            "title": "Arbitrary ambient current point and empty horizon",
+            "detail": "An affine-loss fixture starts at x=2 outside V, uses actual support 3 and eta=2, and projects the raw update -4 to -1. It exercises the stronger standalone lemma. The fixed theorem is also checked at T=0 with exact cancellation.",
+            "math": "\\(x=2\\notin[-1,1],\\quad\\Pi_{[-1,1]}(-4)=-1\\)",
+            "fallback": "Standalone x is arbitrary; source-valid algorithm outputs remain feasible."
+          }
+        ],
+        "takeaway": "Actual source supports and projection produce the trajectory and both exact residual bounds.",
+        "boundary": "This package fixes one noncomputable choice from the current whole function and point. A general support-policy/oracle family, Example 2.32, the remaining chapter results and whole-book completion are separate."
+      }
     }
   ]
 }
