@@ -653,8 +653,10 @@
     return promise;
   };
 
-  const searchNodeFromEntry = (entry, shards) => {
-    const [id, kind, status, shardIndex, storedLabel, storedSubtitle] = entry;
+  const searchNodeFromEntry = (entry, payload) => {
+    const [id, kind, storedStatus, shardIndex, storedLabel, storedSubtitle] = entry;
+    const status = payload.schema_version === 3 ? payload.statuses[storedStatus] : storedStatus;
+    const shards = payload.shards;
     const identity = id.slice(id.indexOf(":") + 1);
     const isDeclaration = id.startsWith("declaration:");
     const isModule = id.startsWith("module:");
@@ -683,7 +685,7 @@
       search.setAttribute("aria-busy", "true");
       searchDataPromise = fetchGraph(app.dataset.graphSearchSource)
         .then((payload) => {
-          searchNodes = payload.entries.map((entry) => searchNodeFromEntry(entry, payload.shards));
+          searchNodes = payload.entries.map((entry) => searchNodeFromEntry(entry, payload));
           search.removeAttribute("aria-busy");
           return true;
         })

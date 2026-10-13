@@ -962,15 +962,23 @@ def main() -> int:
             if not (output / "lean-graph" / shard).exists():
                 errors.append(f"lean-graph/search-index.json references missing shard {shard}")
         search_schema = lean_graph_search.get("schema_version", 1)
-        if search_schema not in (1, 2):
+        if search_schema not in (1, 2, 3):
             errors.append("lean-graph/search-index.json has an unsupported schema version")
+        search_statuses = lean_graph_search.get("statuses", [])
+        if search_schema == 3 and (not isinstance(search_statuses, list) or not search_statuses
+                                   or not all(isinstance(status, str) and status for status in search_statuses)):
+            errors.append("lean-graph/search-index.json has an invalid status dictionary")
+            search_statuses = []
         for entry in lean_graph_search.get("entries", []):
-            valid_length = len(entry) in ((4, 6) if search_schema == 2 else (6,)) if isinstance(entry, list) else False
+            valid_length = len(entry) in ((4, 6) if search_schema in (2, 3) else (6,)) if isinstance(entry, list) else False
             if not valid_length:
                 errors.append("lean-graph/search-index.json contains a malformed entry")
                 break
             if len(entry) == 4 and not str(entry[0]).startswith(("declaration:", "module:")):
                 errors.append("lean-graph/search-index.json omits a non-derived node label")
+                break
+            if search_schema == 3 and (type(entry[2]) is not int or not 0 <= entry[2] < len(search_statuses)):
+                errors.append("lean-graph/search-index.json contains an invalid status index")
                 break
             search_node_ids.add(entry[0])
             if not isinstance(entry[3], int) or not 0 <= entry[3] < len(search_shards):
@@ -1554,8 +1562,17 @@ def main() -> int:
             errors.append(f"{relative}: source theorem cards and a no-theorem boundary cannot coexist")
         if page_source.count('class="source-theorem-contract"') != collector.source_theorem_card_count:
             errors.append(f"{relative}: every source theorem needs one complete source contract")
-        if page_source.count("Original at ") != collector.source_theorem_card_count:
-            errors.append(f"{relative}: every source theorem needs one page-specific original-source link")
+        page_reading = readings_by_slug.get(chapter_slug, {})
+        page_theorems = ([page_reading["source_theorem"]] if page_reading.get("source_theorem") else []) + page_reading.get("source_theorems", [])
+        provenances = [item.get("statement_provenance", "source-restatement") for item in page_theorems]
+        if any(value not in ("source-restatement", "derived-instantiation", "derived-support") for value in provenances):
+            errors.append(f"{relative}: unknown source statement provenance")
+        original_count = provenances.count("source-restatement")
+        context_count = len(provenances) - original_count
+        if (len(provenances) != collector.source_theorem_card_count
+                or page_source.count("Original at ") != original_count
+                or page_source.count("Source context at ") != context_count):
+            errors.append(f"{relative}: every statement needs a page-specific link matching its source provenance")
         if page_source.count("#page=") < collector.source_theorem_card_count + 1:
             errors.append(f"{relative}: source guide links are not page-specific")
         if collector.algorithm_flow_count != 1:

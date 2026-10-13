@@ -1,0 +1,447 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CH2-GUESSING-OGD-INTEGRATION-20261014",
+  "base": "af3b6ef75fcb34c6014b5f9cc4b2acf65739a49f",
+  "frozen_tip": "8045070bf1ee53c83778d04eb168f8ad6f728b59",
+  "original_prs": [
+    {
+      "number": 130,
+      "head": "f24f62c12835190fd5476f4f67e98aa5a056a34f",
+      "base": "03ccbca966e0673a63bdae8834985e3d39268583",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/130"
+    },
+    {
+      "number": 164,
+      "head": "52f628a7ae699887069c5a621d301901718ed772",
+      "base": "25c77a837c849eb78832673063483db5f663a73a",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/164"
+    }
+  ],
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21June2026",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      "Example2.14 printed15/PDF27",
+      "Chapter1 empirical-mean guessing printed4/PDF16"
+    ],
+    "source_topology_status": "ACCEPTED_SOURCE_TOPOLOGY",
+    "source_topology_receipt_sha256": "7d632449ee1daf17e11f4c22e811554ffe29da2b7412efa81a3182008743874a"
+  },
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineGradientDescent.unitInterval",
+      "neutral": "Q01",
+      "signature": "def unitInterval : Domain ℝ where\n  carrier := Icc 0 1\n  nonempty := ⟨0, by norm_num⟩\n  closed := isClosed_Icc\n  convex := convex_Icc 0 1",
+      "level": "A source-facing anchor",
+      "inputs": [],
+      "excessSourceInputs": [],
+      "definitionAudit": {
+        "kind": "literal",
+        "carrier": "Set.Icc (0:Real)1",
+        "fields": "nonempty, closed and convex are proved witnesses, not caller hypotheses",
+        "projection": "Previously accepted Domain/project and complete existence-uniqueness/specification are supplied as compiler-elaborated context; no new fallback definition."
+      }
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.project_unitInterval",
+      "neutral": "T01",
+      "signature": "theorem project_unitInterval (z : ℝ) :\n    project unitInterval z = min (max z 0) 1",
+      "level": "A source-facing anchor",
+      "inputs": [
+        {
+          "binder": "z : Real",
+          "classification": "TYPING",
+          "reason": "Projection formula applies on the full real carrier, not just feasible input."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.square_regular",
+      "neutral": "T02",
+      "signature": "theorem square_regular (y : ℝ) :\n    RegularLoss unitInterval (fun x : ℝ => (x-y)^2)",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "y : Real",
+          "classification": "library-condition",
+          "reason": "Unrestricted real shift; result produces global square-loss regularity."
+        }
+      ],
+      "excessSourceInputs": [],
+      "expandedResult": "Exists open U containing [0,1], ConvexOn Real U squareLoss and DifferentiableOn Real squareLoss U. The proof supplies U=univ. This stronger historical API is produced, never assumed by example_2_14."
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.gradient_square",
+      "neutral": "T03",
+      "signature": "theorem gradient_square (y x : ℝ) :\n    gradient (fun x : ℝ => (x-y)^2) x = 2 * (x-y)",
+      "level": "A source-facing anchor",
+      "inputs": [
+        {
+          "binder": "y x : Real",
+          "classification": "TYPING",
+          "reason": "Ambient real square derivative; full real-domain identity generalizes the interval application."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.gradient_square_bound",
+      "neutral": "T04",
+      "signature": "theorem gradient_square_bound (y x : ℝ) (hy : y ∈ Icc (0 : ℝ) 1)\n    (hx : x ∈ Icc (0 : ℝ) 1) : ‖gradient (fun x : ℝ => (x-y)^2) x‖ ≤ 2",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "y x : Real",
+          "classification": "library-condition",
+          "reason": "Real label and decision."
+        },
+        {
+          "binder": "hy : 0 <= y and y <= 1",
+          "classification": "library-condition",
+          "reason": "Feasible label required by this uniform bound."
+        },
+        {
+          "binder": "hx : 0 <= x and x <= 1",
+          "classification": "library-condition",
+          "reason": "Feasible action required by this uniform bound."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.square_step_clamp",
+      "neutral": "T05",
+      "signature": "theorem square_step_clamp (η y x : ℝ) :\n    step unitInterval η (fun x : ℝ => (x-y)^2) x =\n      min (max (x - 2 * η * (x-y)) 0) 1",
+      "level": "A source-facing anchor",
+      "inputs": [
+        {
+          "binder": "eta y x : Real",
+          "classification": "TYPING",
+          "reason": "Algebraic identity of one update for every real step and inputs; not a regret guarantee for arbitrary steps."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.example_2_14",
+      "neutral": "T06",
+      "signature": "theorem example_2_14 (y : ℕ → ℝ) (x0 : ℝ) (hx0 : x0 ∈ Icc (0 : ℝ) 1)\n    (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Icc (0 : ℝ) 1) :\n    ∀ u ∈ Icc (0 : ℝ) 1,\n      regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T ≤\n        2 * Real.sqrt T",
+      "level": "A source-facing anchor",
+      "inputs": [
+        {
+          "binder": "y : Nat -> Real, x0 : Real, T : Nat",
+          "classification": "TYPING",
+          "reason": "Label sequence, initial action and finite horizon."
+        },
+        {
+          "binder": "hx0 : 0 <= x0 and x0 <= 1",
+          "classification": "STANDING",
+          "reason": "Algorithm2.1 starts at a feasible point; no fixed initialization is required."
+        },
+        {
+          "binder": "hT : 0 < T",
+          "classification": "STANDING",
+          "reason": "Positive known horizon for positive tuned step; empty-horizon totalized expression is not this guarantee."
+        },
+        {
+          "binder": "hy : forall t < T, 0 <= y t and y t <= 1",
+          "classification": "SOURCE",
+          "reason": "Real labels within the guessing-game interval, not binary-only."
+        },
+        {
+          "binder": "forall u, 0 <= u and u <= 1",
+          "classification": "SOURCE",
+          "reason": "Guarantee against each fixed feasible comparator, represented inside the conclusion."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+      "neutral": "T07",
+      "signature": "theorem guessing_zero_trajectory (n : ℕ) (hn : 0 < n) (t : ℕ) :\n    iterate unitInterval (1/(4*(n:ℝ))) (fun _ x => (x-0)^2) 1 t =\n      (1 - 1/(2*(n:ℝ)))^t",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "n t : Nat",
+          "classification": "library-condition",
+          "reason": "Step tuning parameter and trajectory index."
+        },
+        {
+          "binder": "hn : 0 < n",
+          "classification": "library-condition",
+          "reason": "Explicit condition of this derived geometric-trajectory lemma; not a new premise of Example2.14."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+      "neutral": "T08",
+      "signature": "theorem guessing_tuned_eta_square (n : ℕ) :\n    1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)) = 1/(4*(n:ℝ))",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "n : Nat",
+          "classification": "library-condition",
+          "reason": "Algebraic step identity valid also at n=0 under Lean total real division."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+      "neutral": "T09",
+      "signature": "theorem guessing_squared_horizon_lower (n : ℕ) (hn : 0 < n) :\n    (n:ℝ)/4 ≤ regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n      (fun _ x => (x-0)^2) 1 0 ((2*n)^2)",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "n : Nat",
+          "classification": "library-condition",
+          "reason": "Square horizon parameter."
+        },
+        {
+          "binder": "hn : 0 < n",
+          "classification": "library-condition",
+          "reason": "Derived lower witness uses positive step and horizon, fixed initial action1 and all-zero labels."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+      "neutral": "T10",
+      "signature": "theorem meanPredict_zero_cumulativeLoss (T : ℕ) (hT : 0 < T) :\n    (∑ t ∈ range T,\n      (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2) = 1/4",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "T : Nat",
+          "classification": "library-condition",
+          "reason": "Finite horizon."
+        },
+        {
+          "binder": "hT : 0 < T",
+          "classification": "library-condition",
+          "reason": "Includes the fixed initial square loss1/4; at T=0 the sum is0."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+      "neutral": "T11",
+      "signature": "theorem guessing_vs_mean_lower (n : ℕ) (hn : 0 < n) :\n    (n : ℝ)/4 - 1/4 ≤\n      regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n        (fun _ x => (x-0)^2) 1 0 ((2*n)^2) -\n      (∑ t ∈ range ((2*n)^2),\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "n : Nat",
+          "classification": "library-condition",
+          "reason": "Same square horizon for both losses."
+        },
+        {
+          "binder": "hn : 0 < n",
+          "classification": "library-condition",
+          "reason": "Derived concrete comparison, with different explicitly fixed initializations."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded",
+      "neutral": "T12",
+      "signature": "theorem guessing_vs_mean_unbounded (C : ℝ) (N : ℕ) :\n    ∃ n : ℕ, N < n ∧\n      C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : ℕ) : ℝ)))\n        (fun _ x => (x-0)^2) 1 0 ((2*n)^2) -\n      (∑ t ∈ range ((2*n)^2),\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)",
+      "level": "B canonical derived library refinement",
+      "inputs": [
+        {
+          "binder": "C : Real, N : Nat",
+          "classification": "library-condition",
+          "reason": "Arbitrary threshold and lower index cutoff precede the existential tuning index n."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingOGD.labels",
+      "neutral": "Q02",
+      "signature": "noncomputable def labels (t : ℕ) : ℝ := if t = 0 then 1 else 0",
+      "level": "C complete original validation consumer",
+      "inputs": [
+        {
+          "binder": "t : Nat",
+          "classification": "test-input",
+          "reason": "Deterministic test stream."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingOGD.losses",
+      "neutral": "Q03",
+      "signature": "noncomputable def losses (t : ℕ) (x : ℝ) : ℝ := (x-labels t)^2",
+      "level": "C complete original validation consumer",
+      "inputs": [
+        {
+          "binder": "t : Nat, x : Real",
+          "classification": "test-input",
+          "reason": "Actual square losses of the test stream."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingOGD.first_projected",
+      "neutral": "T13",
+      "signature": "lemma first_projected : iterate unitInterval 1 losses (1/2) 1 = 1",
+      "level": "C complete original validation consumer",
+      "inputs": [],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingOGD.second_projected",
+      "neutral": "T14",
+      "signature": "lemma second_projected : iterate unitInterval 1 losses (1/2) 2 = 0",
+      "level": "C complete original validation consumer",
+      "inputs": [],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingOGD.source_four_rounds",
+      "neutral": "T15",
+      "signature": "lemma source_four_rounds : ∀ u ∈ Icc (0:ℝ) 1,\n    regret unitInterval (1/4) losses (1/2) u 4 ≤ 4",
+      "level": "C complete original validation consumer",
+      "inputs": [
+        {
+          "binder": "forall u, 0 <= u and u <= 1",
+          "classification": "test-conclusion",
+          "reason": "Instantiates the upper guarantee at T4, eta1/4, initialization1/2."
+        }
+      ],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingLower.first_state",
+      "neutral": "T16",
+      "signature": "lemma first_state : iterate unitInterval (1/16) (fun _ x => (x-0)^2) 1 1 = 7/8",
+      "level": "C complete original validation consumer",
+      "inputs": [],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingLower.source_lower",
+      "neutral": "T17",
+      "signature": "lemma source_lower : 1 ≤ regret unitInterval (1/16) (fun _ x => (x-0)^2) 1 0 64",
+      "level": "C complete original validation consumer",
+      "inputs": [],
+      "excessSourceInputs": []
+    },
+    {
+      "name": "Tests.OnlineGuessingComparison.actual_zero_stream_gap",
+      "neutral": "T18",
+      "signature": "lemma actual_zero_stream_gap :\n    (3/4 : ℝ) ≤\n      regret unitInterval (1/16) (fun _ x => (x-0)^2) 1 0 64 -\n      (∑ t ∈ range 64,\n        (BanditRL.OnlineLearning.meanPredict (fun _ : ℕ => (0 : ℝ)) t)^2)",
+      "level": "C complete original validation consumer",
+      "inputs": [],
+      "excessSourceInputs": []
+    }
+  ],
+  "definition_context": {
+    "evidence_location": "private-maintenance archive; not a public relative file link",
+    "name": "batch11-elaboration/context-output-v1.log",
+    "sha256": "5dd2b5b5dc1948506fd882da054023f1c1a0c17083f09ddbe479b9661320b2e6",
+    "status": "Compiler-elaborated shared definitions inspected during independent StageB",
+    "semantic_review_receipt_sha256": "c2c7312ccd85e04abb10a9e4de9d8bffa657e500a0ba658b27044a2b015a8dd2"
+  },
+  "source_lean_deltas": [
+    {
+      "kind": "same",
+      "detail": "Real interval actions and labels, actual projected square-gradient recurrence, strict-past action at index t and feedback y_t only in next update; no probabilistic assumptions."
+    },
+    {
+      "kind": "source-implicit",
+      "detail": "T positive and known for each tuned run. Zero-based indices enumerate source rounds1 throughT; x0 is source first action."
+    },
+    {
+      "kind": "generalization",
+      "detail": "Ambient gradient and clamp identities hold on arbitrary real arguments and arbitrary real step; the regret theorem still uses the exact positive horizon-tuned step."
+    },
+    {
+      "kind": "derived-instantiation",
+      "detail": "Source gives O(sqrt T); finite constant2 at eta1/(2sqrt T) is a derived instantiation of accepted D1,L2 bound, not a verbatim source numeral.",
+      "provenance": "Derived library support for source comparison, not a verbatim printed source theorem or numeral."
+    },
+    {
+      "kind": "derived-support",
+      "detail": "Positive-n geometric lower witness and concrete mean comparison are derived support for the informal source comparison, not a printed lower theorem or Chapter4/minimax result.",
+      "provenance": "Derived library support for source comparison, not a verbatim printed source theorem or numeral."
+    },
+    {
+      "kind": "derived-comparison-restriction",
+      "detail": "Comparison uses OGD initial1 and mean initial1/2 on the same zero stream. It is not equal-initialization, all-stream, all-initialization or every-algorithm.",
+      "provenance": "Derived library support for source comparison, not a verbatim printed source theorem or numeral."
+    },
+    {
+      "kind": "derived-support",
+      "detail": "Unbounded-gap quantifiers are forall real C and natural cutoff N, exists n>N. Step depends on n; this is a family of separately tuned runs, not a horizon-independent run.",
+      "provenance": "Derived library support for source comparison, not a verbatim printed source theorem or numeral."
+    }
+  ],
+  "frozen_files": [
+    {
+      "path": "BanditRLProof/OnlineGuessingOGD.lean",
+      "sha256": "9df3ea83195ed46976e9e35e47cc8a8666e4d7cbde57b1a7e540f9a2de3ee25f"
+    },
+    {
+      "path": "BanditRLProof/OnlineGuessingLower.lean",
+      "sha256": "410a85a32a24c70994395e956ef85e187b95b5e9264878c1bb3c1950ae41f688"
+    },
+    {
+      "path": "BanditRLProof/OnlineGuessingComparison.lean",
+      "sha256": "c34213996a02f2d2e498ed2e36029a32ecc76c4e4a5bdbe4b2ee1c5ae11cc64c"
+    },
+    {
+      "path": "Tests/OnlineGuessingOGDCanary.lean",
+      "sha256": "9de73004d8086b4e3dc516b78751514ff2ddb9e04f4e7668ad553332d5c27a97"
+    },
+    {
+      "path": "Tests/OnlineGuessingLowerCanary.lean",
+      "sha256": "a33f314a9e83c7f92a5be837e62e4e6d6504935e6775649972e78cc1f51c372b"
+    },
+    {
+      "path": "Tests/OnlineGuessingComparisonCanary.lean",
+      "sha256": "ba695256f24eec52d0d5bf27411068bfceb484120de3c3495c7cabd661a948c0"
+    }
+  ],
+  "review": {
+    "status": "accepted-with-explicit-delta",
+    "topology_receipt_sha256": "7d632449ee1daf17e11f4c22e811554ffe29da2b7412efa81a3182008743874a",
+    "semantic_receipt_sha256": "c2c7312ccd85e04abb10a9e4de9d8bffa657e500a0ba658b27044a2b015a8dd2",
+    "blind_reconstruction_sha256": "f0bc8e3d0f53fba7a74a5684dca787b459fadc5c77e98f7c2886ce93b4beb0f7",
+    "actor_boundary": "Distinct automated actors, not external human review"
+  },
+  "compiled_graph": {
+    "counts": {
+      "project_nodes": 21,
+      "module_imports": 3380,
+      "external_boundary_nodes": 662,
+      "edges": 2815
+    },
+    "sha256": "bc4b2072145f497efe64073a9a0681830ccc088784206a9e40d4ffc7d7d6f58f",
+    "same_module_generated_boundary": [
+      "BanditRL.OnlineGradientDescent.step.eq_1",
+      "BanditRL.OnlineGradientDescent.unitInterval._proof_1",
+      "BanditRL.OnlineGradientDescent.unitInterval._proof_2",
+      "BanditRL.OnlineGradientDescent.unitInterval._proof_3",
+      "Tests.OnlineGuessingComparison.actual_zero_stream_gap._proof_1_1",
+      "Tests.OnlineGuessingLower.first_state._proof_1_1",
+      "Tests.OnlineGuessingLower.source_lower._proof_1_1",
+      "Tests.OnlineGuessingOGD.source_four_rounds._proof_1_1"
+    ],
+    "outside_module_boundary_count": 654,
+    "semantics": "Direct compiled type/value constants. Source topology and teaching links remain distinct."
+  },
+  "retained_original_scope": "retained-obligations.json",
+  "boundary": "Positive known horizon, all feasible comparators and arbitrary feasible initialization for the upper guarantee. Concrete zero stream, square horizons and separately horizon-tuned runs for the lower/comparison. OGD starts at one while the mean starts at one half. No minimax, uniform superiority, anytime guarantee, new compiled best-comparator corollary, chapter/book completion or purification seal."
+}

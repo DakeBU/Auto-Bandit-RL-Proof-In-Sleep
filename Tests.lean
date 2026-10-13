@@ -142,3 +142,6 @@ import Tests.OnlineLearningFTLSharpCanary
 import Tests.OnlineLearningFoundationsCanary
 import Tests.OnlineLearningRegretDomainsCanary
 import Tests.OnlineFTLFailureCanary
+import Tests.OnlineGuessingOGDCanary
+import Tests.OnlineGuessingLowerCanary
+import Tests.OnlineGuessingComparisonCanary

@@ -739,3 +739,6 @@ import BanditRLProof.OnlineLearningMean
 import BanditRLProof.OnlineLearningRegret
 import BanditRLProof.OnlineLearningStochastic
 import BanditRLProof.OnlineFTLFailure
+import BanditRLProof.OnlineGuessingOGD
+import BanditRLProof.OnlineGuessingLower
+import BanditRLProof.OnlineGuessingComparison
