@@ -1,0 +1,215 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-GUESSING-OGD-INTEGRATION-20261014",
+  "route": "online-learning / Chapter2 squared-loss guessing",
+  "frontier_cell": "online-guessing-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21June2026",
+    "anchor": "Example2.14 printed15/PDF27; Chapter1 strict-past empirical-mean comparison printed4/PDF16; upstream OGD algorithm and guarantee in Chapter2.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged three-module squared-loss guessing upper/lower/comparison package and all original canaries from PR130/164 into the shared library, preserving collateral source obligations.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineGuessingComparison.lean",
+    "BanditRLProof/OnlineGuessingLower.lean",
+    "BanditRLProof/OnlineGuessingOGD.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py",
+    "website/static/lean-graph.js",
+    "website/static/site.css"
+  ],
+  "declarations": [
+    "BanditRL.OnlineGradientDescent.unitInterval",
+    "BanditRL.OnlineGradientDescent.project_unitInterval",
+    "BanditRL.OnlineGradientDescent.square_regular",
+    "BanditRL.OnlineGradientDescent.gradient_square",
+    "BanditRL.OnlineGradientDescent.gradient_square_bound",
+    "BanditRL.OnlineGradientDescent.square_step_clamp",
+    "BanditRL.OnlineGradientDescent.example_2_14",
+    "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+    "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+    "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+    "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+    "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+    "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Canonical shared OGD Domain/projection/iterate/regret API and Chapter1 mean predictor",
+      "Original PR130/164 exact source and complete canaries; all558originaldelta rows",
+      "Mathlib derivative,finite sum,power and square-root declarations used by retained proofs"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescent.project_eq_of_variational",
+      "BanditRL.OnlineGradientDescent.iterate_mem",
+      "BanditRL.OnlineGradientDescent.equation_2_1",
+      "BanditRL.OnlineLearning.meanPredict",
+      "BanditRL.OnlineLearning.empiricalMean",
+      "Even.convexOn_pow",
+      "one_add_mul_le_pow"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineGradientDescent.unitInterval",
+      "BanditRL.OnlineGradientDescent.project_unitInterval",
+      "BanditRL.OnlineGradientDescent.square_regular",
+      "BanditRL.OnlineGradientDescent.gradient_square",
+      "BanditRL.OnlineGradientDescent.gradient_square_bound",
+      "BanditRL.OnlineGradientDescent.square_step_clamp",
+      "BanditRL.OnlineGradientDescent.example_2_14",
+      "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+      "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+      "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+      "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+      "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded"
+    ],
+    "known_consumers": [
+      "Original projected-step canaries directly consume square_step_clamp",
+      "Original four-round canary consumes example_2_14",
+      "Original lower canaries consume guessing_zero_trajectory and guessing_squared_horizon_lower",
+      "Original comparison canary consumes guessing_vs_mean_lower"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Preserve byte-exact historical proof bodies and shared upstream foundations. No separate book project or duplicated recurrence."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/batch11_blind_decoder",
+    "source_reviewer": "/root/batch11_source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The source prints O(sqrt(T)); 2*sqrt(T) is the library constant derived using D=1,G=2. The actual lower/comparison fixes all-zero labels, OGD initial action1, mean initial action1/2 and separate known-horizon runs T=(2n)^2. The later-index unbounded gap is not a Tendsto theorem or an anytime run. All-comparator upper bounds are proved; hindsight minimization is a mathematical reader bridge, not a new named compiled corollary. One domain definition and12 production theorems with all three complete canary files (two fixtures,six proofs). Positive horizon and feasible labels/initialization/comparator remain explicit for the upper bound; n>0 remains explicit for lower/comparison. No uniform superiority over streams or initializations, all-algorithm/minimax lower bound, Chapter4 result, chapter/book completion, full purification or Exposition Seal."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Concrete scalar specialization of the existing OGD recurrence and existing empirical-mean predictor. No new cross-setting transport certificate or conceptual bridge is established.",
+    "focus_targets": [
+      "online-guessing-ogd"
+    ],
+    "visual_review": "Actual desktop/mobile source cards, five-step proof bridge, notation and folded exact statements reviewed. Complete proof bodies are available through source links; committed and deployed pins remain separate gates.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one scoped chapter/reader,three source cards,five proof steps,eight highlights,13productiondeclarations; existing sibling entries preserved",
+    "banditrlwiki": "no-change-with-reason: no Bandit/RL/Extended Topics endpoint changed",
+    "results_ledger": "no-change-with-reason: bounded example integration does not complete a chapter or book",
+    "roadmap": "no-change-with-reason: no existing roadmap endpoint changes",
+    "website_surfaces": [
+      "Online Book squared-loss guessing route",
+      "Shared declaration registry and original guessing-specific regression guard",
+      "Source/provenance and retained obligations in research-wiki/integrations/ONLINE-CH2-GUESSING-OGD-INTEGRATION-20261014",
+      "Contributor credit in research-wiki/integrations/ONLINE-CH2-GUESSING-OGD-INTEGRATION-20261014/README.md"
+    ]
+  },
+  "truth_boundary": "One domain definition and12 production theorems with all three complete canary files (two fixtures,six proofs). Positive horizon and feasible labels/initialization/comparator remain explicit for the upper bound; n>0 remains explicit for lower/comparison. No uniform superiority over streams or initializations, all-algorithm/minimax lower bound, Chapter4 result, chapter/book completion, full purification or Exposition Seal. The source prints O(sqrt(T)); 2*sqrt(T) is the library constant derived using D=1,G=2. The actual lower/comparison fixes all-zero labels, OGD initial action1, mean initial action1/2 and separate known-horizon runs T=(2n)^2. The later-index unbounded gap is not a Tendsto theorem or an anytime run. All-comparator upper bounds are proved; hindsight minimization is a mathematical reader bridge, not a new named compiled corollary. Final packet/contributor review,exact-headCI,merge,main/live and guarded cleanup are separate.",
+  "verification": {
+    "focused_checks": [
+      "Combined BanditRLProof and whole Tests passed with frozen source bytes",
+      "21selected declarations and source ranges checked; only standard axioms",
+      "2815direct type/value edges;662boundarynodes comprise8same-modulegenerated and654outside-module",
+      "29registry tests passed after adding the new chapter to the exact expected route set",
+      "Actual desktop/mobile rendering and folded statements independently reviewed"
+    ],
+    "bandit_check": "Full combined library,Tests,graph export,placeholder checks and462Python tests passed with7platform skips. Initial exact-route-set failure preserved and corrected without weakening assertions.",
+    "site_build": "Passed --lean-verified after actual Lean gate.",
+    "site_check": "Passed current site,process-memory and staged-diff checks. Lossless schema3 status dictionary reduces search index from1500860 to1395946bytes; all11666decoded nodes match and schema1/2 compatibility plus desktop/mobile actual searches passed.",
+    "independent_review": "Distinct source-only extractor,source-first reviewer,neutral decoder,actual-body/graph/render reviewer and whole-original scope reviewer; exact final public packet review remains separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original authors and source provenance retained in immutable PR/commit history"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Original proofs,whole canaries,558historicalrows and collateral obligations preserved. Source-topology revisions and one exact route-set test repair retained with evidence. No mathematical inputs changed.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineGuessingOGD.lean",
+        "BanditRLProof/OnlineGuessingLower.lean",
+        "BanditRLProof/OnlineGuessingComparison.lean",
+        "Tests/OnlineGuessingOGDCanary.lean",
+        "Tests/OnlineGuessingLowerCanary.lean",
+        "Tests/OnlineGuessingComparisonCanary.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-scalar-projection-upper-geometric-lower-mean-comparison"
+      ],
+      "expected_information_gain": "Protocol-required independent audit actors, no competing proof search.",
+      "shared_verified_context_digest": "Pinnedsource cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozenstack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Retained original scalar guessing implementation",
+      "selection_reason": "No parallel proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Three attributed source cards,five formula proof steps,eight highlights,actual trajectory examples and folded statements reviewed on desktop/mobile. Full Exposition Seal not asserted.",
+      "source_expansion_nodes": [
+        "e214:clip",
+        "gap:clip-characterization",
+        "gap:e214-instantiation",
+        "e214:sqrt-guarantee",
+        "gap:comparison-lower-bound",
+        "e214:comparison",
+        "gap:e214-best-fixed"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineGradientDescent.unitInterval",
+        "BanditRL.OnlineGradientDescent.project_unitInterval",
+        "BanditRL.OnlineGradientDescent.square_regular",
+        "BanditRL.OnlineGradientDescent.gradient_square",
+        "BanditRL.OnlineGradientDescent.gradient_square_bound",
+        "BanditRL.OnlineGradientDescent.square_step_clamp",
+        "BanditRL.OnlineGradientDescent.example_2_14",
+        "BanditRL.OnlineGradientDescent.guessing_zero_trajectory",
+        "BanditRL.OnlineGradientDescent.guessing_tuned_eta_square",
+        "BanditRL.OnlineGradientDescent.guessing_squared_horizon_lower",
+        "BanditRL.OnlineGradientDescent.meanPredict_zero_cumulativeLoss",
+        "BanditRL.OnlineGradientDescent.guessing_vs_mean_lower",
+        "BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

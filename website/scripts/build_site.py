@@ -1742,15 +1742,31 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
                     + contract_items
                     + '</dl>'
                 )
+            provenance = theorem.get("statement_provenance", "source-restatement")
+            labels = {
+                "source-restatement": ("Source theorem · faithful restatement", "Source mathematical statement", "Original at"),
+                "derived-instantiation": ("Derived instantiation of source guarantee", "Derived explicit guarantee", "Source context at"),
+                "derived-support": ("Derived library result", "Derived mathematical statement", "Source context at"),
+            }
+            if provenance not in labels:
+                raise ValueError(f"Unknown statement provenance: {provenance}")
+            statement_kicker, statement_label, source_link_label = labels[provenance]
+            provenance_note = (
+                "The mathematical content is restated in this site's notation; wording is ours. "
+                f"See {theorem['pages']} in the linked source for the original statement and full assumptions."
+                if provenance == "source-restatement" else
+                "This displayed statement is derived in the library. "
+                f"The linked {theorem['pages']} supplies its source context; this explicit statement is not printed there as-is."
+            )
             theorem_card = f"""
 <article class="source-theorem-card">
-  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(paged_source_url(theorem), quote=True)}">Original at {html.escape(theorem['pages'])} ↗</a></div>
+  <div class="source-theorem-heading"><div><span class="panel-kicker">{html.escape(statement_kicker)}</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(paged_source_url(theorem), quote=True)}">{html.escape(source_link_label)} {html.escape(theorem['pages'])} ↗</a></div>
   {local_status_html}
   <p>{html.escape(theorem['plain'])}</p>
   {contract_html}
-  {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
+  {render_math_statement(statement_label, theorem['math'], theorem['fallback'])}
   <p class="source-note"><strong>BanditRLlib relationship.</strong> {html.escape(theorem['relationship'])}</p>
-  <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See {html.escape(theorem['pages'])} in the linked source for the original statement and full assumptions.</p>
+  <p class="copyright-note">{html.escape(provenance_note)}</p>
 </article>"""
             if len(theorems) > 1:
                 summary_meta = (
@@ -1765,7 +1781,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
                 )
                 theorem_cards.append(f"""
 <details class="source-theorem-disclosure">
-  <summary><span><span class="panel-kicker">Source route</span><strong>{html.escape(theorem['label'])}</strong></span>{summary_meta}</summary>
+  <summary><span><span class="panel-kicker">{html.escape(statement_kicker)}</span><strong>{html.escape(theorem['label'])}</strong></span>{summary_meta}</summary>
   {theorem_card}
 </details>""")
             else:
@@ -1773,7 +1789,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
         if len(theorems) > 1:
             theorem_html = (
                 f'<div class="source-route-intro"><strong>{len(theorems)} distinct theory routes, one frontier.</strong>'
-                '<span>Open the source theorem you want to compare; the other routes stay compact.</span></div>'
+                '<span>Open the statement you want to compare; the other routes stay compact.</span></div>'
                 '<div class="source-theorem-route-list">'
                 + "".join(theorem_cards)
                 + '</div>'
@@ -4899,6 +4915,8 @@ def build_lean_graph(
 
     search_shards = sorted(set(node_shards.values()))
     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
+    search_statuses = sorted({node["status"] for node in nodes.values()})
+    search_status_ids = {status: index for index, status in enumerate(search_statuses)}
     search_entries: list[list[Any]] = []
     for node in nodes.values():
         # The browser derives declaration/module labels from the ID. Omit the
@@ -4908,7 +4926,7 @@ def build_lean_graph(
             [
                 node["id"],
                 node["kind"],
-                node["status"],
+                search_status_ids[node["status"]],
                 search_shard_ids[node["shard"]],
             ] + ([] if derived_label else [node["label"], node["subtitle"]])
         )
@@ -4917,8 +4935,9 @@ def build_lean_graph(
         search_index_path,
         json.dumps(
             {
-                "schema_version": 2,
+                "schema_version": 3,
                 "generated_at": generated_at,
+                "statuses": search_statuses,
                 "shards": search_shards,
                 "entries": search_entries,
             },

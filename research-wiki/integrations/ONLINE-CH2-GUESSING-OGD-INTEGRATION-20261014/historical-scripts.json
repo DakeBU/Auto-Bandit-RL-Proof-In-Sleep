@@ -1,0 +1,2638 @@
+{
+  "actor": "/root/batch11_scope_reviewer",
+  "scripts": [
+    {
+      "row_id": "R056",
+      "path": "runs/online-guessing-ogd-20260914/check-contracts.py",
+      "sha256": "328c775bfde9a8a47def30e12c07844cc60885b9753db0033f8b0cfab11fef69",
+      "calls": {
+        "read_text": 3,
+        "loads": 3,
+        "print": 1,
+        "run": 1,
+        "append": 1,
+        "startswith": 1,
+        "dumps": 1,
+        "resolve": 1,
+        "write": 1,
+        "SystemExit": 1,
+        "hexdigest": 2,
+        "str": 3,
+        "Path": 1,
+        "sha256": 2,
+        "encode": 2
+      },
+      "operationLines": [
+        {
+          "line": 1,
+          "text": "import json,hashlib,subprocess,sys"
+        },
+        {
+          "line": 7,
+          "text": " p=subprocess.run([sys.executable,str(root/'tools/bandit.py'),'safe-verify','--fence',str(c/(n+'.json')),'--lean-file',str(m)],capture_output=True,cwd=root)"
+        },
+        {
+          "line": 8,
+          "text": " if p.returncode:sys.stderr.buffer.write(p.stdout+p.stderr);raise SystemExit(p.returncode)"
+        }
+      ],
+      "static_review": "Checks six frozen OGD headers/context then invokes historical bandit safe-verify; subprocess behavior depends on that historical harness. No fresh compilation inferred.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R057",
+      "path": "runs/online-guessing-ogd-20260914/check-lower-contracts.py",
+      "sha256": "eaf6d86e78f5b928c1a017e5d0ff97ed4b923129ccec646471f1b52cae8a7fbb",
+      "calls": {
+        "read_text": 3,
+        "loads": 3,
+        "print": 1,
+        "run": 1,
+        "append": 1,
+        "startswith": 1,
+        "dumps": 1,
+        "resolve": 1,
+        "write": 1,
+        "SystemExit": 1,
+        "hexdigest": 2,
+        "str": 3,
+        "Path": 1,
+        "sha256": 2,
+        "encode": 2
+      },
+      "operationLines": [
+        {
+          "line": 1,
+          "text": "import json,hashlib,subprocess,sys"
+        },
+        {
+          "line": 7,
+          "text": " p=subprocess.run([sys.executable,str(root/'tools/bandit.py'),'safe-verify','--fence',str(c/(n+'.json')),'--lean-file',str(m)],capture_output=True,cwd=root)"
+        },
+        {
+          "line": 8,
+          "text": " if p.returncode:sys.stderr.buffer.write(p.stdout+p.stderr);raise SystemExit(p.returncode)"
+        }
+      ],
+      "static_review": "Checks three lower headers/context then invokes historical safe-verify. Header guards are separate from compilation.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R060",
+      "path": "runs/online-guessing-ogd-20260914/extract-dependencies.py",
+      "sha256": "a6d8e278d9fb305dcc1359ab39e3f3e60504e8e820712baafca8c622d65b4bab",
+      "calls": {
+        "Path": 4,
+        "read_bytes": 1,
+        "loads": 3,
+        "all": 1,
+        "write_text": 1,
+        "print": 1,
+        "extend": 1,
+        "hexdigest": 2,
+        "any": 3,
+        "append": 1,
+        "dumps": 1,
+        "len": 4,
+        "read_text": 3,
+        "sha256": 2,
+        "str": 2,
+        "encode": 1,
+        "startswith": 1,
+        "get": 1
+      },
+      "operationLines": [
+        {
+          "line": 48,
+          "text": "(run / 'compiled-dependencies.json').write_text(json.dumps(out, indent=2)+'\\n', encoding='utf-8')"
+        }
+      ],
+      "static_review": "Reads historical graph/frozen contracts and writes compiled-dependencies.json. Dependency selection/counts are historical, not current compiler evidence.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R099",
+      "path": "tools/test_book_registry.py",
+      "sha256": "ebed2d21fa23c7435ab709ee8294adbbef0db0d2dc60bdd4cfd0fc065339081b",
+      "calls": {
+        "main": 1,
+        "load_json": 4,
+        "scan_lean_tree": 1,
+        "assign_chapters": 1,
+        "build_registry": 1,
+        "registry": 21,
+        "membership_index": 14,
+        "assertEqual": 28,
+        "assertTrue": 5,
+        "next": 24,
+        "deepcopy": 4,
+        "append": 4,
+        "items": 3,
+        "assertIn": 29,
+        "assertIsNone": 1,
+        "assertNotIn": 5,
+        "assertFalse": 3,
+        "len": 7,
+        "assertRaisesRegex": 5,
+        "keys": 3,
+        "endswith": 1,
+        "join": 1,
+        "declaration_has_expected_badge": 5,
+        "render_book_breadcrumb": 2,
+        "values": 1,
+        "layout": 1,
+        "split": 2,
+        "count": 3
+      },
+      "operationLines": [
+        {
+          "line": 25,
+          "text": "                              verified, \"fixture-commit\")"
+        }
+      ],
+      "static_review": "Test suite scans shared Lean tree and builds fixture registry. New PR130 regression checks example_2_14 and lower witness membership, online-learning book assignment and explicit Chapter2 noncompletion. Port this behavior into current test file while retaining all existing tests.",
+      "executed": false,
+      "disposition": "port-regression-behavior-only",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R152",
+      "path": "runs/online-guessing-migration-20261006/bootstrap-v1.py",
+      "sha256": "aae56b123fda3a02c190eec6f00afad176e3b7f9e973f42225e82f6ba914e35c",
+      "calls": {
+        "insert": 1,
+        "write_bytes": 3,
+        "Path": 12,
+        "PdfReader": 1,
+        "write": 9,
+        "print": 1,
+        "str": 2,
+        "hexdigest": 2,
+        "mkdir": 1,
+        "strip": 2,
+        "exists": 2,
+        "read_bytes": 4,
+        "sha": 2,
+        "extract_text": 2,
+        "join": 2,
+        "read_text": 1,
+        "findall": 1,
+        "len": 1,
+        "dict": 4,
+        "open": 1,
+        "isinstance": 1,
+        "lean_declaration_header": 1,
+        "append": 1,
+        "sha256": 2,
+        "dump": 1,
+        "check_output": 2,
+        "resolve": 1,
+        "range": 1,
+        "rstrip": 1,
+        "as_posix": 1,
+        "encode": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 9,
+          "text": "def write(p,x):"
+        },
+        {
+          "line": 10,
+          "text": " p=Path(p);assert not p.exists(),p;p.parent.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 11,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 12,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 13,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 14,
+          "text": "assert subprocess.check_output(['git','branch','--show-current'],encoding='utf-8').strip()=='codex/research-online-guessing-migration'"
+        },
+        {
+          "line": 15,
+          "text": "assert subprocess.check_output(['git','rev-parse','HEAD'],encoding='utf-8').strip()=='25c77a837c849eb78832673063483db5f663a73a'"
+        },
+        {
+          "line": 17,
+          "text": "runner.write_bytes(Path('runs/online-jensen-migration-20261005/run-command.py').read_bytes())"
+        },
+        {
+          "line": 21,
+          "text": "write(run/'source-printed15-pdf27.txt',reader.pages[26].extract_text())"
+        },
+        {
+          "line": 22,
+          "text": "write(run/'source-chapter1-pdf13-19.txt','\\n\\n'.join('PHYSICAL PAGE '+str(i+1)+'\\n'+reader.pages[i].extract_text() for i in range(12,19)))"
+        },
+        {
+          "line": 31,
+          "text": " for p0 in [p]:(run/('original-'+Path(p0).name+'.txt')).write_bytes(Path(p0).read_bytes())"
+        },
+        {
+          "line": 33,
+          "text": "for p in canaries:(run/('original-'+Path(p).name+'.txt')).write_bytes(Path(p).read_bytes())"
+        },
+        {
+          "line": 50,
+          "text": "write(run/'planned-comparison-headers-v1.json',dict(status='planned-exact-terminals-no-body-or-compilation-claim',headers=new,public_module='BanditRLProof/OnlineGuessingComparison.lean',new_proofs=3,new_definitions=0))"
+        },
+        {
+          "line": 51,
+          "text": "write(run/'retained-headers-v1.json',headers)"
+        },
+        {
+          "line": 68,
+          "text": "write(run/'leaves/actual-types-v1.lean',probe)"
+        },
+        {
+          "line": 69,
+          "text": "write(run/'00_context.md','''Persistent real Orabona Chapters1–16 Goal ACTIVE/unbudgeted. Current Example2.14 bounded package is based on exact OPEN draft PR163 final25c77a837c849eb78832673063483db5f663a73a, not main. Canonical origin/main freshly fetched6847b678a73db68dee5101d6f05c2453c1405afc, canonical clean; shared Git E:/ABRL/research/.git, existing research-online-book checkout reused on codex/research-online-guessing-migration. Other worktrees preserved (extended-topics now6193afc..., independently changing). No merge/deploy/retirement, generated_site/private/anonymous/stores/junctions untouched. GPT-6 Astra/medium requested for all roles; model/runtime attestation not claimed."
+        },
+        {
+          "line": 73,
+          "text": "Required repo read order/skills/source/route inspected. Three distinct automated roles required by .agents/skills/bandit-semantic-roundtrip/SKILL.md; existing actors reused with restricted current packets, history not erased. Pipeline command gates and prompt/file conventions distinguished. Global reference-index rewrite not run because it mutates unrelated indices outside this bounded scope; actual read-only retrieval and compiled API/type probes used. Earlier read-only guessed paths statement-fingerprints.json and a separate lower run directory were absent; rg found headers.json and the actual combined online-guessing-ogd-20260914 run. These are retrieval errors, not Lean failures or target repairs."
+        },
+        {
+          "line": 76,
+          "text": "write(run/'bootstrap-generated-before-use-v1.json',dict(rows=[dict(path=p.as_posix(),sha256=sha(p)) for p in [runner,run/'leaves/actual-types-v1.lean',run/'planned-comparison-headers-v1.json']],stage='before-first-child-use'))"
+        }
+      ],
+      "static_review": "Asserts historical branch/base, copies runner/old modules/canaries, reads cached PDF via PdfReader and writes source extracts/planned types/context/probe. Creates historical files and is not read-only.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R159",
+      "path": "runs/online-guessing-migration-20261006/browser-v1.py",
+      "sha256": "9827e33b9d3e7e8462fd0a478105cc75b86334449830fe3685557c6d1404561f",
+      "calls": {
+        "resolve": 2,
+        "Path": 3,
+        "print": 1,
+        "is_file": 3,
+        "open": 2,
+        "ThreadingHTTPServer": 1,
+        "Thread": 1,
+        "start": 1,
+        "monotonic": 2,
+        "dump": 1,
+        "write": 2,
+        "partial": 1,
+        "str": 7,
+        "run": 1,
+        "write_bytes": 1,
+        "shutdown": 1,
+        "server_close": 1,
+        "join": 1,
+        "dict": 1,
+        "flush": 1,
+        "hexdigest": 1,
+        "sha256": 1,
+        "read_bytes": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import functools,hashlib,http.server,json,subprocess,threading,time"
+        },
+        {
+          "line": 9,
+          "text": "with (run/'browser-v1-server.log').open('w',encoding='utf-8') as log:"
+        },
+        {
+          "line": 11,
+          "text": "  def log_message(self,fmt,*args):log.write((fmt%args)+'\\n');log.flush()"
+        },
+        {
+          "line": 19,
+          "text": "  child=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW,timeout=55)"
+        },
+        {
+          "line": 20,
+          "text": "  (run/'browser-v1-edge.log').write_bytes(child.stdout)"
+        },
+        {
+          "line": 23,
+          "text": "with (run/'browser-v1-binding.json').open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 26,
+          "text": "  profile_preserved=str(profile),server_owned=True,server_stopped=True),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Starts ephemeral localhost HTTP server, launches isolated headless Edge, writes screenshot/log/binding, stops owned server but preserves profile. Only first 1440x1800 viewport. No current rendered review inferred.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R169",
+      "path": "runs/online-guessing-migration-20261006/check-scoped-diff-v1.py",
+      "sha256": "d40b57e1da1d6309ea17e20af7b50322237fce37286ce41c2908fa6c4efe18e6",
+      "calls": {
+        "splitlines": 1,
+        "run": 1,
+        "print": 2,
+        "exit": 1,
+        "Path": 1,
+        "startswith": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "len": 2,
+        "check_output": 1,
+        "endswith": 4,
+        "append": 2,
+        "dict": 2,
+        "decode": 1,
+        "as_posix": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import json,subprocess,sys"
+        },
+        {
+          "line": 5,
+          "text": "paths=subprocess.check_output(['git','diff','--name-only',base+'...HEAD'],encoding='utf-8').splitlines()"
+        },
+        {
+          "line": 15,
+          "text": "child=subprocess.run(['git','diff','--check',base+'...HEAD','--',*checked],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)"
+        },
+        {
+          "line": 17,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(exit_code=child.returncode,base=base,checked_paths=checked,exceptions=exceptions,production_JSON_scripts_docs_checked=True),f,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 19,
+          "text": "if child.returncode:print(child.stdout.decode('utf-8',errors='replace'))"
+        }
+      ],
+      "static_review": "Reads historical base...HEAD changed paths, excludes enumerated raw evidence, invokes git diff --check and writes audit. v3 permits CR-at-EOL. Scoped pass does not erase original raw whitespace failures.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R170",
+      "path": "runs/online-guessing-migration-20261006/check-scoped-diff-v2.py",
+      "sha256": "8cdc300f9ef3e386cbbd97c83dcbddb5c0c79aa330206596e4220a98334d0343",
+      "calls": {
+        "splitlines": 1,
+        "run": 1,
+        "print": 2,
+        "exit": 1,
+        "Path": 1,
+        "startswith": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "len": 2,
+        "check_output": 1,
+        "endswith": 4,
+        "append": 2,
+        "dict": 2,
+        "decode": 1,
+        "as_posix": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import json,subprocess,sys"
+        },
+        {
+          "line": 5,
+          "text": "paths=subprocess.check_output(['git','diff','--name-only',base+'...HEAD'],encoding='utf-8').splitlines()"
+        },
+        {
+          "line": 15,
+          "text": "child=subprocess.run(['git','diff','--check',base+'...HEAD','--',*checked],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)"
+        },
+        {
+          "line": 17,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(exit_code=child.returncode,base=base,checked_paths=checked,exceptions=exceptions,production_JSON_scripts_docs_checked=True),f,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 19,
+          "text": "if child.returncode:print(child.stdout.decode('utf-8',errors='replace'))"
+        }
+      ],
+      "static_review": "Reads historical base...HEAD changed paths, excludes enumerated raw evidence, invokes git diff --check and writes audit. v3 permits CR-at-EOL. Scoped pass does not erase original raw whitespace failures.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R171",
+      "path": "runs/online-guessing-migration-20261006/check-scoped-diff-v3.py",
+      "sha256": "309a2c07cd5410e5dbc929c93666e6e92065a2c60dd097a809a380c4a952be17",
+      "calls": {
+        "splitlines": 1,
+        "run": 1,
+        "print": 2,
+        "exit": 1,
+        "Path": 1,
+        "startswith": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "len": 2,
+        "check_output": 1,
+        "endswith": 4,
+        "append": 2,
+        "dict": 2,
+        "decode": 1,
+        "as_posix": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import json,subprocess,sys"
+        },
+        {
+          "line": 5,
+          "text": "paths=subprocess.check_output(['git','diff','--name-only',base+'...HEAD'],encoding='utf-8').splitlines()"
+        },
+        {
+          "line": 15,
+          "text": "child=subprocess.run(['git','-c','core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol','diff','--check',base+'...HEAD','--',*checked],stdout=subprocess.PIPE,stderr=subprocess.STDOUT)"
+        },
+        {
+          "line": 17,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(exit_code=child.returncode,base=base,checked_paths=checked,exceptions=exceptions,production_JSON_scripts_docs_checked=True,CR_at_end_of_CRLF_is_line_ending=True),f,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 19,
+          "text": "if child.returncode:print(child.stdout.decode('utf-8',errors='replace'))"
+        }
+      ],
+      "static_review": "Reads historical base...HEAD changed paths, excludes enumerated raw evidence, invokes git diff --check and writes audit. v3 permits CR-at-EOL. Scoped pass does not erase original raw whitespace failures.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R172",
+      "path": "runs/online-guessing-migration-20261006/commit-owned-v1.py",
+      "sha256": "48a12c16ad4e8197510c33d704f9e038d1a9e73db8b2d17355f376898f27c1c0",
+      "calls": {
+        "print": 2,
+        "strip": 2,
+        "run": 1,
+        "exit": 1,
+        "check_output": 2,
+        "decode": 1
+      },
+      "operationLines": [
+        {
+          "line": 2,
+          "text": "import subprocess,sys"
+        },
+        {
+          "line": 8,
+          "text": "assert subprocess.check_output(['git','branch','--show-current'],encoding='utf-8').strip()=='codex/research-online-guessing-migration'"
+        },
+        {
+          "line": 9,
+          "text": "for cmd in [['git','add','--',*paths],['git','commit','-m',sys.argv[1]]]:"
+        },
+        {
+          "line": 10,
+          "text": " p=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)"
+        },
+        {
+          "line": 11,
+          "text": " if p.returncode:print(p.stdout.decode('utf-8',errors='replace'));sys.exit(p.returncode)"
+        },
+        {
+          "line": 12,
+          "text": "print(subprocess.check_output(['git','rev-parse','HEAD'],encoding='utf-8').strip())"
+        }
+      ],
+      "static_review": "Stages enumerated owned files with git add and commits with caller message after historical branch assertion. Mutates shared Git/index. Never replay.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R203",
+      "path": "runs/online-guessing-migration-20261006/create-pr-v1.py",
+      "sha256": "ebf0f8cb0526dafc3afcce16b924eebd660b888ccccdb811c37e6cc09ae8f2fa",
+      "calls": {
+        "api": 3,
+        "strip": 1,
+        "print": 1,
+        "Path": 2,
+        "loads": 2,
+        "run": 1,
+        "write_bytes": 2,
+        "hexdigest": 1,
+        "split": 1,
+        "as_posix": 1,
+        "dumps": 1,
+        "read_text": 1,
+        "exists": 1,
+        "RuntimeError": 1,
+        "load": 2,
+        "check_output": 2,
+        "dict": 1,
+        "sha256": 1,
+        "read_bytes": 1
+      },
+      "operationLines": [
+        {
+          "line": 1,
+          "text": "\"\"\"Create one authorized draft PR after fresh duplicate/base/push checks.\"\"\""
+        },
+        {
+          "line": 3,
+          "text": "import hashlib,json,subprocess"
+        },
+        {
+          "line": 8,
+          "text": " child=subprocess.run(['gh','api',*args],stdout=subprocess.PIPE,stderr=subprocess.PIPE)"
+        },
+        {
+          "line": 10,
+          "text": "  (run/(label+'-error.log')).write_bytes(child.stderr)"
+        },
+        {
+          "line": 12,
+          "text": " out.write_bytes(child.stdout);return json.loads(child.stdout)"
+        },
+        {
+          "line": 13,
+          "text": "assert load(run/'push-creation-v2-01-exit.json')['exit_code']==0"
+        },
+        {
+          "line": 20,
+          "text": "head=subprocess.check_output(['git','rev-parse','HEAD'],encoding='utf-8').strip()"
+        },
+        {
+          "line": 21,
+          "text": "remote=subprocess.check_output(['git','ls-remote','origin','refs/heads/codex/research-online-guessing-migration'],encoding='utf-8').split()[0]"
+        }
+      ],
+      "static_review": "Checks old push/payload/base/duplicates, reads GitHub, then POSTs a draft PR via gh api. Genuine remote mutation, not merely payload preparation. Never replay.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R279",
+      "path": "runs/online-guessing-migration-20261006/integrate-reader-v1.py",
+      "sha256": "d4880196a1d58a8c1aee352e793a1b5f4e2090975f079a03498609a226285100",
+      "calls": {
+        "load": 10,
+        "items": 1,
+        "write_new": 3,
+        "next": 2,
+        "append": 5,
+        "update": 4,
+        "dict": 20,
+        "print": 1,
+        "Path": 6,
+        "hexdigest": 1,
+        "loads": 1,
+        "mkdir": 1,
+        "len": 3,
+        "open": 3,
+        "write": 3,
+        "read_text": 1,
+        "exists": 1,
+        "dump": 2,
+        "get": 5,
+        "sha": 2,
+        "set": 1,
+        "sha256": 1,
+        "read_bytes": 1,
+        "startswith": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write_new(p,x):"
+        },
+        {
+          "line": 8,
+          "text": " p=Path(p);assert not p.exists(),p;p.parent.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 11,
+          "text": " with Path(p).open('w',encoding='utf-8',newline='\\n') as f:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 19,
+          "text": "write_new(run/'body-binding-audit-v1.json',dict(status='passed',raw_rows=len(reviewed),report_sha256=receipt['report_sha256'],reader_corrections=receipt.get('required_reader_corrections',[]),all12target_bodies_accepted=True,final_source_package_accepted=False))"
+        },
+        {
+          "line": 63,
+          "text": "write_new('research-wiki/contribution-contracts/online-guessing-migration-20261006.json',base)"
+        },
+        {
+          "line": 64,
+          "text": "with Path('MANIFEST.md').open('a',encoding='utf-8',newline='\\n') as f:f.write('\\nSource Example2.14/direct comparison: runs/online-guessing-migration-20261006,9retained+3newproofs/1retaineddomain; real causal known-horizon OGD vs actual mean on samezero stream/different disclosed fixedinit. Source contract/BODY reviewed, corrected reader/final gates pending. Chapter2null/wholeGoal active, not main/live.\\n')"
+        },
+        {
+          "line": 65,
+          "text": "write_new(run/'reader-integration-v1.json',dict(status='eight-reader-corrections-applied-final-review-pending',new_proofs=3,retained_proofs=9,retained_definitions=1,new_definitions=0,curated_links=4,highlights=8,featured_orders=[1,2,3,4,5,6],only_online_guessing_subtree_changed=True,all_other_Book_subtrees_unchanged=True,old_proofs_unitInterval_canaries_unchanged=True,Lean_code_unchanged_since_current_root_and_canary_gates=True,source_package_accepted=False,chapter_complete=False,goal_complete=False))"
+        }
+      ],
+      "static_review": "Consumes old body acceptance, rewrites only selected chapter/readings/highlights records, writes contribution manifest and appends MANIFEST. Historical counts/badges are generated here, not independently proven by executing writer.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R342",
+      "path": "runs/online-guessing-migration-20261006/normalize-draft-fingerprints-v2.py",
+      "sha256": "6ae1e5c52059cc6fdf02c9e98d6801955331bb01e225003ef90c6e4455f6302e",
+      "calls": {
+        "insert": 1,
+        "Path": 4,
+        "load": 2,
+        "items": 3,
+        "write": 4,
+        "print": 1,
+        "str": 1,
+        "loads": 1,
+        "normalize_statement": 1,
+        "append": 1,
+        "dict": 2,
+        "read_text": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "startswith": 2,
+        "resolve": 1,
+        "hexdigest": 1,
+        "sha256": 1,
+        "encode": 1
+      },
+      "operationLines": [
+        {
+          "line": 8,
+          "text": "def write(p,x):"
+        },
+        {
+          "line": 10,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 17,
+          "text": "write(contract/'headers-native-v2.json',headers)"
+        },
+        {
+          "line": 22,
+          "text": "write(run/'draft-freeze-v2.json',freeze)"
+        },
+        {
+          "line": 23,
+          "text": "write(run/'fingerprint-correction-v2.json',dict(status='draft-metadata-correction-before-source-stabilization',rows=changed,reason='Native lean_declaration_header returns normalize_statement; v1 planned three headers were multiline raw text rather than canonical native normalized text. Exact binder/assumption/conclusion/algorithm tokens unchanged; raw v1 preserved. No new body existed and no mathematical target weakened. Restricted blind packet is unchanged because its statements have exactly the same tokens.',prior_contract='headers.json',authoritative_contract='headers-native-v2.json',authoritative_freeze='draft-freeze-v2.json',mathematical_repair=False))"
+        }
+      ],
+      "static_review": "Writes native normalized header fingerprints/freeze and correction receipt. Whitespace/metadata normalization; does not establish proof.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R352",
+      "path": "runs/online-guessing-migration-20261006/port-public-v1.py",
+      "sha256": "4741cad47457a8a6f38638289b31b50b8f39de343352729a11604c0f4530a6b0",
+      "calls": {
+        "insert": 1,
+        "load": 4,
+        "items": 3,
+        "Path": 18,
+        "sub": 2,
+        "write_text": 6,
+        "read_text": 5,
+        "index": 2,
+        "replace": 2,
+        "print": 1,
+        "str": 1,
+        "loads": 1,
+        "hexdigest": 3,
+        "exists": 5,
+        "read_bytes": 6,
+        "write_bytes": 2,
+        "strip": 1,
+        "endswith": 1,
+        "len": 2,
+        "tokens": 2,
+        "sha": 2,
+        "set": 1,
+        "join": 2,
+        "dumps": 2,
+        "sha256": 3,
+        "encode": 3,
+        "count": 1,
+        "dict": 3,
+        "resolve": 1,
+        "_strip_lean_comments": 1,
+        "lean_declaration_header": 2,
+        "as_posix": 1
+      },
+      "operationLines": [
+        {
+          "line": 34,
+          "text": "public.write_text(comment+body,encoding='utf-8')"
+        },
+        {
+          "line": 54,
+          "text": " Path(p).write_bytes(('/-!\\n'+explain+'\\n-/\\n\\n').encode()+old)"
+        },
+        {
+          "line": 56,
+          "text": "canary.write_text('''import BanditRLProof"
+        },
+        {
+          "line": 75,
+          "text": " newline=b'\\r\\n' if b'\\r\\n' in raw else b'\\n';path.write_bytes(raw.replace(old+newline,old+newline+new+newline,1))"
+        },
+        {
+          "line": 87,
+          "text": "probe.write_text('import BanditRLProof\\nimport Tests.OnlineGuessingOGDCanary\\nimport Tests.OnlineGuessingLowerCanary\\nimport Tests.OnlineGuessingComparisonCanary\\n\\n'+''.join('#check @'+n+'\\n#print axioms '+n+'\\n' for n in names),encoding='utf-8')"
+        },
+        {
+          "line": 88,
+          "text": "(run/'public-named-declarations-v1.json').write_text(json.dumps(dict(axiom_probe=names,public_proofs=12,public_definitions=1,canary_proofs=6,canary_definitions=2,retained_proofs=9,new_proofs=3,new_definitions=0),indent=2)+'\\n',encoding='utf-8')"
+        },
+        {
+          "line": 92,
+          "text": "export=export.replace('nine retained interval square-loss/bound/comparison-substrate proofs and one domain definition','twelve interval square-loss/source comparison proofs and one domain definition')"
+        },
+        {
+          "line": 93,
+          "text": "out=run/'leaves/export-public-dependencies-v1.lean';assert not out.exists();out.write_text(export,encoding='utf-8')"
+        },
+        {
+          "line": 96,
+          "text": "binding.write_text(json.dumps(dict(stage='ported-actual-closed-scratch-bodies-public-gates-pending',rows=[dict(path=p.as_posix(),sha256=sha(p)) for p in paths],all12frozen_headers_unchanged=True,old9proof_tokens_unitInterval_unchanged=True,old2canaries_bytefixed=True,new_proofs=3,new_definitions=0,source_package_accepted=False,chapter_complete=False,goal_complete=False),indent=2)+'\\n',encoding='utf-8')"
+        }
+      ],
+      "static_review": "Writes new comparison production module and canary, prefixes old module comments, inserts root/Tests imports, writes named-axiom/dependency probes. Direct production mutation from historical context; never replay.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R362",
+      "path": "runs/online-guessing-migration-20261006/prepare-body-review-v1.py",
+      "sha256": "4137911a88c8f90b11ff616db1de020baf41eba5f738c0854be6a6368aeaafed",
+      "calls": {
+        "insert": 1,
+        "load": 8,
+        "items": 2,
+        "write": 6,
+        "read_text": 6,
+        "findall": 1,
+        "all": 1,
+        "Path": 12,
+        "write_bytes": 1,
+        "run": 1,
+        "update": 2,
+        "print": 1,
+        "str": 3,
+        "hexdigest": 2,
+        "loads": 1,
+        "strip": 1,
+        "endswith": 1,
+        "sub": 3,
+        "tokens": 4,
+        "sha": 8,
+        "append": 1,
+        "dict": 5,
+        "read_bytes": 4,
+        "is_file": 2,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "strip_directives": 1,
+        "len": 3,
+        "set": 3,
+        "sum": 2,
+        "as_posix": 2,
+        "sha256": 2,
+        "dump": 1,
+        "split": 1,
+        "values": 2,
+        "rglob": 1,
+        "resolve": 1,
+        "_strip_lean_comments": 1,
+        "rstrip": 1,
+        "encode": 1,
+        "sorted": 1,
+        "startswith": 2,
+        "lean_declaration_header": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 9,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 11,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 12,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 13,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 31,
+          "text": "write('prior-contract-binding-v1.json',dict(status='passed',rows=prior,original_receipt_immutable=True,explicit_root_Tests_new_imports_and_comment_supersession=True))"
+        },
+        {
+          "line": 42,
+          "text": "(run/'compiled-public-graph-v1.json').write_bytes(gp.read_bytes())"
+        },
+        {
+          "line": 43,
+          "text": "write('public-actual-bindings-v1.json',dict(status='actual-public-body-candidate',public_modules={p:sha(p) for p in set(row['file'] for row in headers.values())},headers=freeze['headers'],old_canaries=freeze['canary'],new_canary={'Tests/OnlineGuessingComparisonCanary.lean':sha('Tests/OnlineGuessingComparisonCanary.lean')},axioms=axioms,named_axiom_count=21,native_guards=12,retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,canary_proofs=6,canary_definitions=2,actual_scope_nodes=13,actual_scope_edges=len(g['edges']),graph_sha256=sha(gp),project_value_pairs=[p for p in pairs if p[0].startswith('BanditRL.') and p[1].startswith('BanditRL.')],full_graph_export=False,canary_graph_export=False,actual_passed_gates=labels,root_jobs=9089,source_package_accepted=False,chapter_complete=False,goal_complete=False,proof_repairs=[],import_parser_repair='New leading module-doc marker before imports -> ordinary block comment; failed source/log exactbytes retained; all12headers and allproof tokens same',body_review_pending=True,reader_site_full_harness_pending=True))"
+        },
+        {
+          "line": 44,
+          "text": "subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),'public-comparison-trial-v1',sys.executable,'-X','utf8','tools/bandit.py','trial-log','--task',task,'--role','lower','--kind','build','--status','compiled','--run-id',run.name,'--attempt-id','GUESSING-COMPARISON-V1','--lean','BanditRLProof/OnlineGuessingComparison.lean','--statement-hash',freeze['headers']['guessing_vs_mean_unbounded'],'--new-declaration','BanditRL.OnlineGradientDescent.guessing_vs_mean_unbounded','--verifier-evidence',str(run/'public-axioms-v1-01.log'),'--progress-class','terminal','--notes','Actual3new comparison bodies plus9retainedproofs1definition/fresh root9089/canaries21namedaxes12guards. Frozen arbitrary-threshold source comparison terminal closed, distinct BODY/package acceptance still pending; not chapter/book/productivity experiment.'],check=True)"
+        },
+        {
+          "line": 45,
+          "text": "write('public-body-review-packet-v1.md','''Required distinct BODY review, GPT-6 Astra/medium requested. Independently hash ALL public-body-inputs-v1.json rows and resolve144 prior source rows through prior-contract-binding-v1/exact raw snapshots. Source Example2.14 printed15/PDF27/source mean predictor/Theorem1.3 p4/PDF16, current restricted12target reconstruction. ALL12nativev2headers match;9retainedprooftokens/unitInterval unchanged, old2wholecanaries bytefixed. NEW3actual bodies ported from separately successful scratch leaves, exact proof tokens same, no desired regret/stability/divergence oracle. Current actual compiled13node graph/edgecount directtype/value includingdefinitions, notfull/canary graph. Inspect real reuse pairs, not teaching arrows inferred as dependencies."
+        },
+        {
+          "line": 53,
+          "text": "Eight source-contract reader corrections remain pending; identify reader fixes separately from mathematical repairs. Source body acceptance is distinct from full Tests/harness/contributor/history/site/registry/finalreader/PR gate, not yet done. One source Example2.14/twelvepublicproofs9retained3new1retaineddef, not12newprintedtheorems. Sharedgraph/new3proofnodes onlyif registry verified, sameBook/root/toolchain. Stacked OPENdraft163 exact25c77a837c849eb78832673063483db5f663a73a, notmain; Chapter2totalnull/incomplete/wholeGoalACTIVEunbudgeted/legacy13beforepackage/no merge/live/retirement. Three required automated roles requestedmedium, historynoterased/nohuman/external/runtime attestation. Command-enforced gates and role/prompt/file conventions distinct. Global reference-index rewrite notrun outside bounded window, actual read-onlyretrieval/API/compiledgraphs fresh. Write ONLY public-body-review-v1.md/public-body-receipt-v1.json here, actor.task=/root/source_reviewer,12target_verdicts/sevenslots/actualproducers/canaries, mathematical_repairs versus required_reader_corrections, ALL reviewed_files/reportSHA. Do not edit inputs or accept chapter/book/main/live.''')"
+        },
+        {
+          "line": 58,
+          "text": "write('public-body-inputs-v1.json',dict(scope='12actualpublicbodies9retained3new+1domain/whole3canaries6proofs2defs/21axes12guards; source/body/package separate',rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        }
+      ],
+      "static_review": "Checks old binding chains and token preservation, copies compiled graph, logs lifecycle/trial through historical harness, writes body-review packet and input manifest. Does not perform independent review.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R366",
+      "path": "runs/online-guessing-migration-20261006/prepare-candidate-v1.py",
+      "sha256": "1ab0ee0eb171440210b22d1dcbed0a103d4f14ce7ba2c337dc5c1f1908491b05",
+      "calls": {
+        "insert": 1,
+        "load": 7,
+        "items": 5,
+        "write": 7,
+        "gate": 3,
+        "print": 1,
+        "str": 7,
+        "Path": 6,
+        "hexdigest": 2,
+        "loads": 2,
+        "run": 1,
+        "search": 1,
+        "int": 1,
+        "dict": 5,
+        "join": 1,
+        "dumps": 2,
+        "sha": 4,
+        "read_text": 3,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "group": 1,
+        "splitlines": 1,
+        "strip": 1,
+        "sha256": 2,
+        "dump": 1,
+        "resolve": 1,
+        "read_bytes": 1,
+        "rstrip": 1,
+        "encode": 1,
+        "get": 1,
+        "lean_declaration_header": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 9,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 11,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 12,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 13,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 14,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 29,
+          "text": "write('proof-obligations-candidate-v1.json',dict(stage='candidate',required=[dict(name=n,statement_hash=h,state='actual-public-body-and-combined-Lean-passed-package-gates-pending') for n,h in freeze['headers'].items()],fixed_new_terminal='guessing_vs_mean_unbounded',retained_proofs=9,new_proofs=3,retained_definitions=1,new_definitions=0,source_package_accepted=False,chapter_total=None,goal_complete=False))"
+        },
+        {
+          "line": 30,
+          "text": "write('candidate-decision-v1.json',dict(status='candidate',retained_proofs=9,new_proofs=3,retained_definitions=1,new_definitions=0,public_canary_proofs=6,public_canary_definitions=2,named_axiom_count=21,native_guards=12,compiled_scoped_nodes=13,compiled_scoped_edges=2113,compiled_graph_sha256=actual['graph_sha256'],root_jobs=9089,Tests_jobs=9232,root_Tests_sequential=True,Lean_files_unchanged_after_gates=True,build_boundary='Fresh successful gate invocations with cached jobs; not clean rebuilding every job.',source_contract_body_accepted=True,corrected_final_reader_pending=True,full_harness_site_registry_PR_pending=True,legacy_before=13,legacy_after_acceptance_only=11,chapter2_total=None,chapter_complete=False,goal_complete=False,merged=False,live=False))"
+        },
+        {
+          "line": 32,
+          "text": "write('memory-digest-candidate-v1.md',digest)"
+        },
+        {
+          "line": 33,
+          "text": "write('retrieval-index-candidate-v1.md','Exact12nativev2headers/source/DAG in online-guessing-migration-v1; new actual OnlineGuessingComparison proof bodies/current named audit/logs/canary/compiled13nodes2113directreferences. Actual meanPredict/empiricalMean/strict-prefix/equation2.1/trueclamptrajectory/Bernoulli/finiteconditional sum/exists_nat_gt reused; no prooforacle. Global reference-index notrun outside bounded scope, read-only retrieval/current types/environment used. Current/prior raw snapshots/required distinct automated receipts, source versus3derivedcompares visible. Pendingcandidate package, chapter/book incomplete.')"
+        },
+        {
+          "line": 35,
+          "text": "write('candidate-scoped-trials-v1.jsonl','\\n'.join(json.dumps(t) for t in trials if t.get('task')==task))"
+        }
+      ],
+      "static_review": "Checks stored gate outcomes/headers, writes candidate/obligation/memory records and invokes lifecycle/frontier/shadow/trial harness operations. Writes dated process state.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R370",
+      "path": "runs/online-guessing-migration-20261006/prepare-draft-v1.py",
+      "sha256": "adc3e04d5305ada3322dd5ff551ce880c9465993ac071cd8bbcde30867a17cbd",
+      "calls": {
+        "Path": 7,
+        "load": 4,
+        "write": 15,
+        "enumerate": 1,
+        "read_text": 2,
+        "index": 2,
+        "replace": 2,
+        "items": 7,
+        "gate": 2,
+        "print": 1,
+        "hexdigest": 2,
+        "loads": 1,
+        "mkdir": 1,
+        "run": 1,
+        "group": 1,
+        "rstrip": 2,
+        "dict": 9,
+        "len": 1,
+        "startswith": 4,
+        "dumps": 1,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "str": 3,
+        "sha256": 2,
+        "dump": 1,
+        "match": 1,
+        "join": 1,
+        "read_bytes": 1,
+        "split": 1,
+        "zfill": 1,
+        "sha": 3,
+        "encode": 1,
+        "as_posix": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 8,
+          "text": "def write(p,x):"
+        },
+        {
+          "line": 9,
+          "text": " p=Path(p);assert not p.exists(),p;p.parent.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 10,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 11,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 12,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 13,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 24,
+          "text": "write(contract/'headers.json',headers)"
+        },
+        {
+          "line": 36,
+          "text": "write(contract/'source-intent.md',intent)"
+        },
+        {
+          "line": 37,
+          "text": "write(contract/'source-card.json',dict(url='https://arxiv.org/pdf/1912.13213v10',source_path='../research-online-ogd/tmp/pdfs/orabona-v10.pdf',source_sha256='cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17',source_anchor='Example2.14 printed15/PDF27; source mean predictor/Theorem1.3 printed4/PDF16 dependency',source_examples=1,retained_proofs=9,retained_definitions=1,planned_new_proofs=3,new_definitions=0,source_accepted=False))"
+        },
+        {
+          "line": 39,
+          "text": "write(contract/'dependency-DAG-v1.json',dict(DAG=dag,retained_sources=9,planned_new_leaves=3,first_ready_new_leaf='meanPredict_zero_cumulativeLoss',terminal='guessing_vs_mean_unbounded',probability_mode='deterministic pathwise',compiled_new_bodies=False))"
+        },
+        {
+          "line": 40,
+          "text": "write(run/'retrieval-decision-v1.md','Source card ORABONA-V10-EX2.14; retained OnlineGuessingOGD/Lower and actual meanPredict/empiricalMean/prefix/theorem1.3 inspected. Existing scope declares no duplicate general wrappers. MLIB-FINSET-SUMS finite conditional sum/range, actual exists_nat_gt Archimedean API verified in pinned source and successful type probe; sum_ite_eq and sum_ite_eq\\x27 verified. Reuse direct interval/gradient/causal producer/lower witness and source mean algorithm, add only actual cross-algorithm comparison. Theorem cards/mathlib-candidates/frontier cards/proof-weapons inspected; no named proof weapon needed and no upstream dependency change. Global reference-index command rewrites all unrelated indices outside bounded user window, so not run; scoped current CLI retrieval/type expressions/module builds performed. New three statements planned/no body, no compiled acceptance claim.')"
+        },
+        {
+          "line": 42,
+          "text": " write(Path(folder)/(task+'.md'),'# '+title+'\\n\\n'+intent+'\\n\\nDAG: '+dag)"
+        },
+        {
+          "line": 43,
+          "text": "write(run/'10_upper_director-v1.md','One source Example2.14, retain exact9proofs1def and close a genuine actual-OGD-vs-mean unbounded comparison. Three planned new terminal types already checked. No source numerical attribution/every-initialization/minimax claim. Dependency-ready finite zero-mean leaf first, bounded single lower route. Source/contract review must precede new bodies, current distinct roles medium, chapter/book Goal active.')"
+        },
+        {
+          "line": 44,
+          "text": "write(run/'20_architect-v1.md',intent+'\\n\\nDAG: '+dag)"
+        },
+        {
+          "line": 53,
+          "text": " neutral+=row['statement'].replace('theorem '+name,'theorem N'+str(i).zfill(2),1)+'\\n\\n'"
+        },
+        {
+          "line": 55,
+          "text": "write(run/'blind-packet-v1.md',neutral)"
+        },
+        {
+          "line": 58,
+          "text": "write(run/'draft-freeze-v1.json',dict(stage='draft',headers={n:r['statement_hash'] for n,r in headers.items()},retained_headers={n:r['statement_hash'] for n,r in headers.items() if r['state'].startswith('retained')},planned_new_headers={n:r['statement_hash'] for n,r in headers.items() if r['state'].startswith('planned')},module={p:sha(p) for p in modules},canary={p:sha(p) for p in canaries},retained_proofs=9,retained_definitions=1,new_proofs_planned=3,new_definitions=0,source_accepted=False,chapter_complete=False,goal_complete=False,DAG=dag))"
+        },
+        {
+          "line": 59,
+          "text": "write(run/'proof-obligations-v1.json',dict(stage='draft',required=[dict(name=n,statement_hash=r['statement_hash'],state=r['state']+'-distinct-review-pending') for n,r in headers.items()],whole_source_comparison_accepted=False,chapter_total=None,goal_complete=False,DAG=dag))"
+        },
+        {
+          "line": 64,
+          "text": "export=export.replace('two selected retained source-Jensen/negative-part theorems; direct type/value boundary only','nine retained interval square-loss/bound/comparison-substrate proofs and one domain definition; direct type/value boundary only')"
+        },
+        {
+          "line": 65,
+          "text": "write(run/'leaves/export-retained-dependencies-v1.lean',export)"
+        },
+        {
+          "line": 66,
+          "text": "write(run/'draft-generated-before-use-v1.json',dict(rows=[dict(path=(run/'leaves/export-retained-dependencies-v1.lean').as_posix(),sha256=sha(run/'leaves/export-retained-dependencies-v1.lean'))],stage='before-first-export-use'))"
+        }
+      ],
+      "static_review": "Writes contracts/source card/intent/tasks/obligations, neutral packet, freeze, graph probe and lifecycle events. Source/proof acceptance remains separate.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R371",
+      "path": "runs/online-guessing-migration-20261006/prepare-final-reader-v1.py",
+      "sha256": "1af480586d509dc34d42676207508a545de68f972cbf530c00a781cf49639fc4",
+      "calls": {
+        "Path": 7,
+        "read_text": 4,
+        "load": 10,
+        "split": 2,
+        "write": 5,
+        "set": 1,
+        "update": 3,
+        "add": 2,
+        "print": 1,
+        "hexdigest": 1,
+        "loads": 1,
+        "int": 1,
+        "dict": 4,
+        "is_file": 2,
+        "len": 3,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "group": 2,
+        "any": 1,
+        "as_posix": 3,
+        "is_dir": 1,
+        "str": 1,
+        "sha256": 1,
+        "dump": 1,
+        "rglob": 1,
+        "read_bytes": 1,
+        "search": 2,
+        "rstrip": 1,
+        "lstrip": 1,
+        "sorted": 1,
+        "sha": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 10,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 11,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 28,
+          "text": "write('integrated-gates-overlay-v1.json',dict(status='passed-scoped-integrated-gates-final-semantic-review-pending',actual_passed_gates=gates,root_jobs=9089,Tests_jobs=9232,full_tests=466,existing_skips=7,public_axiom_names=21,native_guards=12,retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,preserved_old_IDs_URLs=10806,actual_scoped_graph_nodes=13,actual_scoped_graph_edges=2113,site_source_commit=manifest['source_commit'],source_dirty=False,lean_verified=True,prior_raw_bindings_checked=history['raw_rows_verified'],exact_stacked_base='25c77a837c849eb78832673063483db5f663a73a',stacked_base_PR=163,main_relative_gate='FAIL9legacyproductioncontracts',main_missing_production_paths=missing,full_whitespace_gate='FAILexactrawlogs',scoped_whitespace_gate='PASSenumeratedrawexceptions',root_Tests_execution_overlapped=False,execution_boundary='Fresh successful gate invocations; root ended before Tests started, with cached jobs. Not a clean rebuild of every job.',failure_repairs='Metadata fingerprint whitespace normalization before stabilization; source-helper guessed old OGD v1 path corrected with equality-checked resume; import parser leading doc marker changed only; full harness first440tests failed untracked owned new Lean source, staged only two new sources then fresh v2 passed. Raw failures/snapshots retained; no mathematical statement/body/test repair.',renderer_adapter='Same five reader proof steps moved from unused proof key to actual proof_bridge field; no mathematical content change.',global_reference_index_refresh='Not run: mutates unrelated global indices; scoped actual environment/retrieval fresh.',source_package_accepted=False,chapter2_mandatory_total=None,chapter_complete=False,goal_complete=False,merged=False,live=False))"
+        },
+        {
+          "line": 29,
+          "text": "write('final-reader-packet-v1.md','''Required distinct FINAL SOURCE/READER/PACKAGE review, GPT-6 Astra / medium. Independently hash ALL final-reader-inputs-v1.json rows and resolve raw histories through history-binding-audit-v1/exact snapshot chains. Source Orabona v10 Example2.14 printed15/PDF27 plus actual Chapter1 guessing game/mean predictor/Theorem1.3 printed4/PDF16 dependencies. ONE printed example,9 retained proofs1domain,THREE NEW derived comparison proofs/0newdefinitions. Whole book real Goal ACTIVE/unbudgeted, Chapter2 mandatorytotal null/incomplete. Do not call these three printed theorem results or accept allChapter1/Chapter2."
+        },
+        {
+          "line": 39,
+          "text": "Whole3canarymodules6proofs2defs: old clippingabove/below genuine projections, tunedT4 upper, actual n4T64 firstpoint/lower, NEW sameactualtwoalgorithmgap3/4. Complete21unique namedaxes includes12publicproofs1domain6canaryproofs2canarydefs, standard3-or-none/no sorryAx; twelve nativeguards are not compilation. Current scopedcompiled13nodes2113direct type/value references INCLUDINGdefinitions, actual gap→mean/lower and unbounded→gap edges checked, not full/canarygraph. Sequentialroot9089Tests9232success/cachedjobs, fullv2 466tests7existing skips, task-onlyfrontier/shadow/historybindings/exactstackedcontributor/scopedwhitespace/cleanlocalsite/registrypassed. Main-relative diagnostic FAIL9 other legacy paths; rawwhitespace FAIL rawevidence preserved, checked production/metadata PASS enumerated exceptions. Global reference-index rewrite notrun outside bounded window; actual scoped read-onlyretrieval fresh. Earlier reports/receipts rawbytes resolve/preserved, only online-guessing-ogd reader subtree/new comparisonmodule mapping changed; other Books structurally unchanged."
+        },
+        {
+          "line": 41,
+          "text": "Same shared registry identity/all10806oldIDsURLs preserved plus3NEWactualproofnodes; twelve frozen theorem nodes and retained domainnode allcompiled/OnlineBook mapping. Cleanlocalsite sourcecommit/source_dirtyfalse/lean_verifiedtrue after current gate; later deliveryhead can differ metadata-only. Actual screenshotfirstviewport separately viewed, complete HTML reviewed; no unobserved lowerpixels/physicaldevice claim, server stopped/taskprofilepreserved/generated_siteuntouched. Three distinct REQUIRED automated roles requested Astra/medium, currentpacket blind reconstruction does not erase history/no human or external/runtimeattestation. Runtimecommands and prompt/file roleconventions distinguished."
+        },
+        {
+          "line": 52,
+          "text": "write('final-reader-inputs-v1.json',dict(scope='Source Example2.14+derived actual three comparison proofs,9retainedproofs1domain/3canarymodules/corrected reader',canonical_surfaces=surfaces,site_commit=manifest['source_commit'],retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,mandatory_chapter_total=None,source_package_accepted=False,chapter_complete=False,goal_complete=False,rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        },
+        {
+          "line": 53,
+          "text": "print('Comparison final fixed inputs',len(paths),'clean site source',manifest['source_commit'])"
+        }
+      ],
+      "static_review": "Reads stored acceptance/gate/site/history inputs and writes final review packet/manifest. Versions revise provenance bindings; hard-coded historical job/node counts are not current evidence. Does not run independent review.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R372",
+      "path": "runs/online-guessing-migration-20261006/prepare-final-reader-v2.py",
+      "sha256": "e6ba87f0dccd815958ab3b0ed394493ee691e6c2048c1f073b4fc34fdb5a441f",
+      "calls": {
+        "Path": 7,
+        "read_text": 4,
+        "load": 10,
+        "split": 2,
+        "write": 5,
+        "set": 1,
+        "update": 3,
+        "add": 2,
+        "print": 1,
+        "hexdigest": 1,
+        "loads": 1,
+        "int": 1,
+        "dict": 4,
+        "is_file": 2,
+        "len": 3,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "group": 2,
+        "any": 1,
+        "as_posix": 3,
+        "is_dir": 1,
+        "str": 1,
+        "sha256": 1,
+        "dump": 1,
+        "rglob": 1,
+        "read_bytes": 1,
+        "search": 2,
+        "rstrip": 1,
+        "lstrip": 1,
+        "sorted": 1,
+        "sha": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 10,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 11,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 28,
+          "text": "write('integrated-gates-overlay-v1.json',dict(status='passed-scoped-integrated-gates-final-semantic-review-pending',actual_passed_gates=gates,root_jobs=9089,Tests_jobs=9232,full_tests=466,existing_skips=7,public_axiom_names=21,native_guards=12,retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,preserved_old_IDs_URLs=10806,actual_scoped_graph_nodes=13,actual_scoped_graph_edges=2113,site_source_commit=manifest['source_commit'],source_dirty=False,lean_verified=True,prior_raw_bindings_checked=history['raw_rows_verified'],exact_stacked_base='25c77a837c849eb78832673063483db5f663a73a',stacked_base_PR=163,main_relative_gate='FAIL9legacyproductioncontracts',main_missing_production_paths=missing,full_whitespace_gate='FAILexactrawlogs',scoped_whitespace_gate='PASSenumeratedrawexceptions',root_Tests_execution_overlapped=False,execution_boundary='Fresh successful gate invocations; root ended before Tests started, with cached jobs. Not a clean rebuild of every job.',failure_repairs='Metadata fingerprint whitespace normalization before stabilization; source-helper guessed old OGD v1 path corrected with equality-checked resume; import parser leading doc marker changed only; full harness first440tests failed untracked owned new Lean source, staged only two new sources then fresh v2 passed. Exact contributor v1 failed including Tests in production affected_files; metadata-only move to explicit owned_test_files, v2 exact production gate passed. Raw failures/snapshots retained; no mathematical statement/body/test repair.',renderer_adapter='Same five reader proof steps moved from unused proof key to actual proof_bridge field; no mathematical content change.',global_reference_index_refresh='Not run: mutates unrelated global indices; scoped actual environment/retrieval fresh.',source_package_accepted=False,chapter2_mandatory_total=None,chapter_complete=False,goal_complete=False,merged=False,live=False))"
+        },
+        {
+          "line": 29,
+          "text": "write('final-reader-packet-v1.md','''Required distinct FINAL SOURCE/READER/PACKAGE review, GPT-6 Astra / medium. Independently hash ALL final-reader-inputs-v1.json rows and resolve raw histories through history-binding-audit-v1/exact snapshot chains. Source Orabona v10 Example2.14 printed15/PDF27 plus actual Chapter1 guessing game/mean predictor/Theorem1.3 printed4/PDF16 dependencies. ONE printed example,9 retained proofs1domain,THREE NEW derived comparison proofs/0newdefinitions. Whole book real Goal ACTIVE/unbudgeted, Chapter2 mandatorytotal null/incomplete. Do not call these three printed theorem results or accept allChapter1/Chapter2."
+        },
+        {
+          "line": 39,
+          "text": "Whole3canarymodules6proofs2defs: old clippingabove/below genuine projections, tunedT4 upper, actual n4T64 firstpoint/lower, NEW sameactualtwoalgorithmgap3/4. Complete21unique namedaxes includes12publicproofs1domain6canaryproofs2canarydefs, standard3-or-none/no sorryAx; twelve nativeguards are not compilation. Current scopedcompiled13nodes2113direct type/value references INCLUDINGdefinitions, actual gap→mean/lower and unbounded→gap edges checked, not full/canarygraph. Sequentialroot9089Tests9232success/cachedjobs, fullv2 466tests7existing skips, task-onlyfrontier/shadow/historybindings/exactstackedcontributor/scopedwhitespace/cleanlocalsite/registrypassed. Main-relative diagnostic FAIL9 other legacy paths; rawwhitespace FAIL rawevidence preserved, checked production/metadata PASS enumerated exceptions. Global reference-index rewrite notrun outside bounded window; actual scoped read-onlyretrieval fresh. Earlier reports/receipts rawbytes resolve/preserved, only online-guessing-ogd reader subtree/new comparisonmodule mapping changed; other Books structurally unchanged."
+        },
+        {
+          "line": 41,
+          "text": "Same shared registry identity/all10806oldIDsURLs preserved plus3NEWactualproofnodes; twelve frozen theorem nodes and retained domainnode allcompiled/OnlineBook mapping. Cleanlocalsite sourcecommit/source_dirtyfalse/lean_verifiedtrue after current gate; later deliveryhead can differ metadata-only. Actual screenshotfirstviewport separately viewed, complete HTML reviewed; no unobserved lowerpixels/physicaldevice claim, server stopped/taskprofilepreserved/generated_siteuntouched. Three distinct REQUIRED automated roles requested Astra/medium, currentpacket blind reconstruction does not erase history/no human or external/runtimeattestation. Runtimecommands and prompt/file roleconventions distinguished."
+        },
+        {
+          "line": 52,
+          "text": "write('final-reader-inputs-v1.json',dict(scope='Source Example2.14+derived actual three comparison proofs,9retainedproofs1domain/3canarymodules/corrected reader',canonical_surfaces=surfaces,site_commit=manifest['source_commit'],retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,mandatory_chapter_total=None,source_package_accepted=False,chapter_complete=False,goal_complete=False,rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        },
+        {
+          "line": 53,
+          "text": "print('Comparison final fixed inputs',len(paths),'clean site source',manifest['source_commit'])"
+        }
+      ],
+      "static_review": "Reads stored acceptance/gate/site/history inputs and writes final review packet/manifest. Versions revise provenance bindings; hard-coded historical job/node counts are not current evidence. Does not run independent review.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R373",
+      "path": "runs/online-guessing-migration-20261006/prepare-final-reader-v3.py",
+      "sha256": "f963b5a2529f8b260ae6ac114ae2b14d237864c0e3039f5e55680f11c56290f0",
+      "calls": {
+        "Path": 7,
+        "read_text": 4,
+        "load": 10,
+        "split": 2,
+        "write": 5,
+        "set": 1,
+        "update": 3,
+        "add": 2,
+        "print": 1,
+        "hexdigest": 1,
+        "loads": 1,
+        "int": 1,
+        "dict": 4,
+        "is_file": 2,
+        "len": 3,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "group": 2,
+        "any": 1,
+        "as_posix": 3,
+        "is_dir": 1,
+        "str": 1,
+        "sha256": 1,
+        "dump": 1,
+        "rglob": 1,
+        "read_bytes": 1,
+        "search": 2,
+        "rstrip": 1,
+        "lstrip": 1,
+        "sorted": 1,
+        "sha": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 10,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 11,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 28,
+          "text": "write('integrated-gates-overlay-v1.json',dict(status='passed-scoped-integrated-gates-final-semantic-review-pending',actual_passed_gates=gates,root_jobs=9089,Tests_jobs=9232,full_tests=466,existing_skips=7,public_axiom_names=21,native_guards=12,retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,preserved_old_IDs_URLs=10806,actual_scoped_graph_nodes=13,actual_scoped_graph_edges=2113,site_source_commit=manifest['source_commit'],source_dirty=False,lean_verified=True,prior_raw_bindings_checked=history['raw_rows_verified'],exact_stacked_base='25c77a837c849eb78832673063483db5f663a73a',stacked_base_PR=163,main_relative_gate='FAIL9legacyproductioncontracts',main_missing_production_paths=missing,full_whitespace_gate='FAILexactrawlogs',scoped_whitespace_gate='PASSenumeratedrawexceptions',root_Tests_execution_overlapped=False,execution_boundary='Fresh successful gate invocations; root ended before Tests started, with cached jobs. Not a clean rebuild of every job.',failure_repairs='Metadata fingerprint whitespace normalization before stabilization; source-helper guessed old OGD v1 path corrected with equality-checked resume; import parser leading doc marker changed only; full harness first440tests failed untracked owned new Lean source, staged only two new sources then fresh v2 passed. Exact contributor v1 failed including Tests in production affected_files; metadata-only move to explicit owned_test_files, v2 exact production gate passed. Raw failures/snapshots retained; no mathematical statement/body/test repair.',renderer_adapter='Same five reader proof steps moved from unused proof key to actual proof_bridge field; no mathematical content change.',global_reference_index_refresh='Not run: mutates unrelated global indices; scoped actual environment/retrieval fresh.',source_package_accepted=False,chapter2_mandatory_total=None,chapter_complete=False,goal_complete=False,merged=False,live=False))"
+        },
+        {
+          "line": 29,
+          "text": "write('final-reader-packet-v1.md','''Required distinct FINAL SOURCE/READER/PACKAGE review, GPT-6 Astra / medium. Independently hash ALL final-reader-inputs-v1.json rows and resolve raw histories through history-binding-audit-v1/exact snapshot chains. Source Orabona v10 Example2.14 printed15/PDF27 plus actual Chapter1 guessing game/mean predictor/Theorem1.3 printed4/PDF16 dependencies. ONE printed example,9 retained proofs1domain,THREE NEW derived comparison proofs/0newdefinitions. Whole book real Goal ACTIVE/unbudgeted, Chapter2 mandatorytotal null/incomplete. Do not call these three printed theorem results or accept allChapter1/Chapter2."
+        },
+        {
+          "line": 39,
+          "text": "Whole3canarymodules6proofs2defs: old clippingabove/below genuine projections, tunedT4 upper, actual n4T64 firstpoint/lower, NEW sameactualtwoalgorithmgap3/4. Complete21unique namedaxes includes12publicproofs1domain6canaryproofs2canarydefs, standard3-or-none/no sorryAx; twelve nativeguards are not compilation. Current scopedcompiled13nodes2113direct type/value references INCLUDINGdefinitions, actual gap→mean/lower and unbounded→gap edges checked, not full/canarygraph. Sequentialroot9089Tests9232success/cachedjobs, fullv2 466tests7existing skips, task-onlyfrontier/shadow/historybindings/exactstackedcontributor/scopedwhitespace/cleanlocalsite/registrypassed. Main-relative diagnostic FAIL9 other legacy paths; rawwhitespace FAIL rawevidence preserved, checked production/metadata PASS enumerated exceptions. Global reference-index rewrite notrun outside bounded window; actual scoped read-onlyretrieval fresh. Earlier reports/receipts rawbytes resolve/preserved, only online-guessing-ogd reader subtree/new comparisonmodule mapping changed; other Books structurally unchanged."
+        },
+        {
+          "line": 41,
+          "text": "Same shared registry identity/all10806oldIDsURLs preserved plus3NEWactualproofnodes; twelve frozen theorem nodes and retained domainnode allcompiled/OnlineBook mapping. Cleanlocalsite sourcecommit/source_dirtyfalse/lean_verifiedtrue after current gate; later deliveryhead can differ metadata-only. Actual screenshotfirstviewport separately viewed, complete HTML reviewed; no unobserved lowerpixels/physicaldevice claim, server stopped/taskprofilepreserved/generated_siteuntouched. Three distinct REQUIRED automated roles requested Astra/medium, currentpacket blind reconstruction does not erase history/no human or external/runtimeattestation. Runtimecommands and prompt/file roleconventions distinguished."
+        },
+        {
+          "line": 52,
+          "text": "write('final-reader-inputs-v1.json',dict(scope='Source Example2.14+derived actual three comparison proofs,9retainedproofs1domain/3canarymodules/corrected reader',canonical_surfaces=surfaces,site_commit=manifest['source_commit'],retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,mandatory_chapter_total=None,source_package_accepted=False,chapter_complete=False,goal_complete=False,rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        },
+        {
+          "line": 53,
+          "text": "print('Comparison final fixed inputs',len(paths),'clean site source',manifest['source_commit'])"
+        }
+      ],
+      "static_review": "Reads stored acceptance/gate/site/history inputs and writes final review packet/manifest. Versions revise provenance bindings; hard-coded historical job/node counts are not current evidence. Does not run independent review.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R376",
+      "path": "runs/online-guessing-migration-20261006/prepare-final-reader-v4.py",
+      "sha256": "d2ceb76a82b015b41f85dee90e538ebfd828f0147f29c3b003d6dad0ed366634",
+      "calls": {
+        "Path": 7,
+        "read_text": 4,
+        "load": 10,
+        "split": 2,
+        "write": 5,
+        "set": 1,
+        "update": 3,
+        "add": 2,
+        "print": 1,
+        "hexdigest": 1,
+        "loads": 1,
+        "int": 1,
+        "dict": 4,
+        "is_file": 2,
+        "len": 3,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "group": 2,
+        "any": 1,
+        "as_posix": 3,
+        "is_dir": 1,
+        "str": 1,
+        "sha256": 1,
+        "dump": 1,
+        "rglob": 1,
+        "read_bytes": 1,
+        "search": 2,
+        "rstrip": 1,
+        "lstrip": 1,
+        "sorted": 1,
+        "sha": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 10,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 11,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 28,
+          "text": "write('integrated-gates-overlay-v1.json',dict(status='passed-scoped-integrated-gates-final-semantic-review-pending',actual_passed_gates=gates,root_jobs=9089,Tests_jobs=9232,full_tests=466,existing_skips=7,public_axiom_names=21,native_guards=12,retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,preserved_old_IDs_URLs=10806,actual_scoped_graph_nodes=13,actual_scoped_graph_edges=2113,site_source_commit=manifest['source_commit'],source_dirty=False,lean_verified=True,prior_raw_bindings_checked=history['raw_rows_verified'],exact_stacked_base='25c77a837c849eb78832673063483db5f663a73a',stacked_base_PR=163,main_relative_gate='FAIL9legacyproductioncontracts',main_missing_production_paths=missing,full_whitespace_gate='FAILexactrawlogs',scoped_whitespace_gate='PASSenumeratedrawexceptions',root_Tests_execution_overlapped=False,execution_boundary='Fresh successful gate invocations; root ended before Tests started, with cached jobs. Not a clean rebuild of every job.',failure_repairs='Metadata fingerprint whitespace normalization before stabilization; source-helper guessed old OGD v1 path corrected with equality-checked resume; import parser leading doc marker changed only; full harness first440tests failed untracked owned new Lean source, staged only two new sources then fresh v2 passed. Exact contributor v1 failed including Tests in production affected_files; metadata-only move to explicit owned_test_files, v2 exact production gate passed. Registry v1 audit compared two unequal short def-where parser headers; v2 uses actual site scanner hash plus complete unchanged module token guard and matching old domain node hash. Raw failures/snapshots retained; no mathematical statement/body/test repair.',renderer_adapter='Same five reader proof steps moved from unused proof key to actual proof_bridge field; no mathematical content change.',global_reference_index_refresh='Not run: mutates unrelated global indices; scoped actual environment/retrieval fresh.',source_package_accepted=False,chapter2_mandatory_total=None,chapter_complete=False,goal_complete=False,merged=False,live=False))"
+        },
+        {
+          "line": 29,
+          "text": "write('final-reader-packet-v1.md','''Required distinct FINAL SOURCE/READER/PACKAGE review, GPT-6 Astra / medium. Independently hash ALL final-reader-inputs-v1.json rows and resolve raw histories through history-binding-audit-v1/exact snapshot chains. Source Orabona v10 Example2.14 printed15/PDF27 plus actual Chapter1 guessing game/mean predictor/Theorem1.3 printed4/PDF16 dependencies. ONE printed example,9 retained proofs1domain,THREE NEW derived comparison proofs/0newdefinitions. Whole book real Goal ACTIVE/unbudgeted, Chapter2 mandatorytotal null/incomplete. Do not call these three printed theorem results or accept allChapter1/Chapter2."
+        },
+        {
+          "line": 39,
+          "text": "Whole3canarymodules6proofs2defs: old clippingabove/below genuine projections, tunedT4 upper, actual n4T64 firstpoint/lower, NEW sameactualtwoalgorithmgap3/4. Complete21unique namedaxes includes12publicproofs1domain6canaryproofs2canarydefs, standard3-or-none/no sorryAx; twelve nativeguards are not compilation. Current scopedcompiled13nodes2113direct type/value references INCLUDINGdefinitions, actual gap→mean/lower and unbounded→gap edges checked, not full/canarygraph. Sequentialroot9089Tests9232success/cachedjobs, fullv2 466tests7existing skips, task-onlyfrontier/shadow/historybindings/exactstackedcontributor/scopedwhitespace/cleanlocalsite/registrypassed. Main-relative diagnostic FAIL9 other legacy paths; rawwhitespace FAIL rawevidence preserved, checked production/metadata PASS enumerated exceptions. Global reference-index rewrite notrun outside bounded window; actual scoped read-onlyretrieval fresh. Earlier reports/receipts rawbytes resolve/preserved, only online-guessing-ogd reader subtree/new comparisonmodule mapping changed; other Books structurally unchanged."
+        },
+        {
+          "line": 41,
+          "text": "Same shared registry identity/all10806oldIDsURLs preserved plus3NEWactualproofnodes; twelve frozen theorem nodes and retained domainnode allcompiled/OnlineBook mapping. Cleanlocalsite sourcecommit/source_dirtyfalse/lean_verifiedtrue after current gate; later deliveryhead can differ metadata-only. Actual screenshotfirstviewport separately viewed, complete HTML reviewed; no unobserved lowerpixels/physicaldevice claim, server stopped/taskprofilepreserved/generated_siteuntouched. Three distinct REQUIRED automated roles requested Astra/medium, currentpacket blind reconstruction does not erase history/no human or external/runtimeattestation. Runtimecommands and prompt/file roleconventions distinguished."
+        },
+        {
+          "line": 52,
+          "text": "write('final-reader-inputs-v1.json',dict(scope='Source Example2.14+derived actual three comparison proofs,9retainedproofs1domain/3canarymodules/corrected reader',canonical_surfaces=surfaces,site_commit=manifest['source_commit'],retained_proofs=9,retained_definitions=1,new_proofs=3,new_definitions=0,new_registry_nodes=3,mandatory_chapter_total=None,source_package_accepted=False,chapter_complete=False,goal_complete=False,rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        },
+        {
+          "line": 53,
+          "text": "print('Comparison final fixed inputs',len(paths),'clean site source',manifest['source_commit'])"
+        }
+      ],
+      "static_review": "Reads stored acceptance/gate/site/history inputs and writes final review packet/manifest. Versions revise provenance bindings; hard-coded historical job/node counts are not current evidence. Does not run independent review.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R377",
+      "path": "runs/online-guessing-migration-20261006/prepare-pr-v1.py",
+      "sha256": "19acdd94f2c826a4f321de4d12fd499e21de2dc5e03d21df00ec7250d9e458eb",
+      "calls": {
+        "load": 3,
+        "replace": 1,
+        "print": 1,
+        "Path": 2,
+        "loads": 1,
+        "read_text": 1,
+        "dict": 1,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "write": 2,
+        "dump": 1
+      },
+      "operationLines": [
+        {
+          "line": 11,
+          "text": "Three new public proofs close this comparison through the actual two algorithms and an Archimedean witness. OGD starts at1, the source mean predictor at1/2; each OGD run uses its known positive horizon. The terminal is unbounded-tail existence, not an equal-initialization, every-stream, every-initialization, single-anytime-run, Tendsto, minimax or Chapter4 guarantee. These are derived refinements, not three numerical theorems printed in the book. The source real[0,1] labels, prediction-before-feedback order, true projection/gradient and produced global square regularity are retained. The printed O(sqrtT) and derived constant2sqrtT are distinguished."
+        },
+        {
+          "line": 22,
+          "text": "Stacked on OPEN draft#163 at exact25c77a837c849eb78832673063483db5f663a73a, not main. Exact stacked contributor gate covers seven production surfaces/one manifest; main-relative diagnostics still lack9other legacy contracts. Raw whitespace diagnostics on preserved evidence remain failed; scoped production/JSON/scripts/docs passed with enumerated raw exceptions. Historical raw receipt bindings and task-only frontier/shadow passed; global reference-index rewrite was not run outside this bounded scope."
+        },
+        {
+          "line": 27,
+          "text": "'''.replace('SOURCE_COMMIT','`'+reg['source_commit']+'`')"
+        },
+        {
+          "line": 30,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 31,
+          "text": "  if isinstance(value,str):f.write(value)"
+        },
+        {
+          "line": 32,
+          "text": "  else:json.dump(value,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Checks stored acceptance and prepares body/structured draft PR payload on disk. v3 also checks committed raw audit. No remote POST in this preparation script.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R378",
+      "path": "runs/online-guessing-migration-20261006/prepare-pr-v2.py",
+      "sha256": "2b1ba720d840b6fe4088ab977828fcac03b76f297c4a72562453452a218e410f",
+      "calls": {
+        "load": 3,
+        "replace": 1,
+        "print": 1,
+        "Path": 2,
+        "loads": 1,
+        "read_text": 1,
+        "dict": 1,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "write": 2,
+        "dump": 1
+      },
+      "operationLines": [
+        {
+          "line": 11,
+          "text": "Three new public proofs close this comparison through the actual two algorithms and an Archimedean witness. OGD starts at1, the source mean predictor at1/2; each OGD run uses its known positive horizon. The terminal is unbounded-tail existence, not an equal-initialization, every-stream, every-initialization, single-anytime-run, Tendsto, minimax or Chapter4 guarantee. These are derived refinements, not three numerical theorems printed in the book. The source real[0,1] labels, prediction-before-feedback order, true projection/gradient and produced global square regularity are retained. The printed O(sqrtT) and derived constant2sqrtT are distinguished."
+        },
+        {
+          "line": 22,
+          "text": "Stacked on OPEN draft#163 at exact25c77a837c849eb78832673063483db5f663a73a, not main. Exact stacked contributor gate covers seven production surfaces/one manifest; main-relative diagnostics still lack9other legacy contracts. Raw whitespace diagnostics on preserved evidence remain failed; scoped production/JSON/scripts/docs passed with enumerated raw exceptions. Historical raw receipt bindings and task-only frontier/shadow passed; global reference-index rewrite was not run outside this bounded scope."
+        },
+        {
+          "line": 27,
+          "text": "'''.replace('SOURCE_COMMIT','`'+reg['source_commit']+'`')"
+        },
+        {
+          "line": 30,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 31,
+          "text": "  if isinstance(value,str):f.write(value)"
+        },
+        {
+          "line": 32,
+          "text": "  else:json.dump(value,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Checks stored acceptance and prepares body/structured draft PR payload on disk. v3 also checks committed raw audit. No remote POST in this preparation script.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R381",
+      "path": "runs/online-guessing-migration-20261006/prepare-pr-v3.py",
+      "sha256": "e10f88d80e679e43b73f11dca172c56319a730e1048446160a2c6d3bb46f2992",
+      "calls": {
+        "load": 4,
+        "replace": 1,
+        "print": 1,
+        "Path": 2,
+        "loads": 1,
+        "read_text": 1,
+        "dict": 1,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "write": 2,
+        "dump": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "assert load(run/'committed-raw-audit-v1.json')['status']=='passed'"
+        },
+        {
+          "line": 12,
+          "text": "Three new public proofs close this comparison through the actual two algorithms and an Archimedean witness. OGD starts at1, the source mean predictor at1/2; each OGD run uses its known positive horizon. The terminal is unbounded-tail existence, not an equal-initialization, every-stream, every-initialization, single-anytime-run, Tendsto, minimax or Chapter4 guarantee. These are derived refinements, not three numerical theorems printed in the book. The source real[0,1] labels, prediction-before-feedback order, true projection/gradient and produced global square regularity are retained. The printed O(sqrtT) and derived constant2sqrtT are distinguished."
+        },
+        {
+          "line": 23,
+          "text": "Stacked on OPEN draft#163 at exact25c77a837c849eb78832673063483db5f663a73a, not main. Exact stacked contributor gate covers seven production surfaces/one manifest; main-relative diagnostics still lack9other legacy contracts. Raw whitespace diagnostics on preserved evidence remain failed; scoped production/JSON/scripts/docs passed with enumerated raw exceptions. Historical local raw receipt bindings and task-only frontier/shadow passed. A run-local .gitattributes retains exact current-run evidence bytes in Git, and a separate committed-raw audit passes; older directories were not changed or blanket recertified across platforms; global reference-index rewrite was not run outside this bounded scope."
+        },
+        {
+          "line": 28,
+          "text": "'''.replace('SOURCE_COMMIT','`'+reg['source_commit']+'`')"
+        },
+        {
+          "line": 31,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 32,
+          "text": "  if isinstance(value,str):f.write(value)"
+        },
+        {
+          "line": 33,
+          "text": "  else:json.dump(value,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Checks stored acceptance and prepares body/structured draft PR payload on disk. v3 also checks committed raw audit. No remote POST in this preparation script.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R385",
+      "path": "runs/online-guessing-migration-20261006/prepare-proving-v1.py",
+      "sha256": "581e8bfed52f3490f2041735bd0fe02ba33937e0b94a41fa71ab8fcf81b1c628",
+      "calls": {
+        "load": 3,
+        "items": 3,
+        "write": 6,
+        "print": 1,
+        "Path": 4,
+        "hexdigest": 1,
+        "loads": 1,
+        "mkdir": 1,
+        "run": 1,
+        "set": 1,
+        "dict": 7,
+        "list": 1,
+        "write_bytes": 1,
+        "append": 1,
+        "gate": 1,
+        "read_text": 1,
+        "exists": 2,
+        "open": 1,
+        "isinstance": 1,
+        "get": 3,
+        "sha": 4,
+        "read_bytes": 2,
+        "dumps": 1,
+        "sha256": 1,
+        "dump": 1,
+        "str": 2,
+        "rsplit": 1,
+        "len": 1,
+        "replace": 1,
+        "as_posix": 1,
+        "rstrip": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,subprocess,sys"
+        },
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 8,
+          "text": " p=run/n;assert not p.exists(),p;p.parent.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 10,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 11,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 12,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 21,
+          "text": "write('contract-binding-audit-v1.json',dict(status='passed',raw_rows=len(reviewed),verdict=r['verdict'],report_sha256=r['report_sha256'],required_reader_corrections=r.get('required_reader_corrections',[]),retained_proofs=9,retained_definitions=1,new_targets=3,new_bodies_compiled=False,source_package_accepted=False))"
+        },
+        {
+          "line": 24,
+          "text": " dest=run/'leaves'/('pre-integration-'+p.replace('/','--')+'.txt');assert not dest.exists();dest.write_bytes(Path(p).read_bytes())"
+        },
+        {
+          "line": 26,
+          "text": "write('historical-raw-supersession-v1.json',dict(rows=snapshots,previous_accepted_packages_immutable=True,exact_current_raw_bytes_preserved=True))"
+        },
+        {
+          "line": 29,
+          "text": "write('proof-obligations-proving-v1.json',dict(stage='proving',required=[dict(name=n,statement_hash=h,state='contract-source-stabilized-body-pending') for n,h in freeze['headers'].items()],first_ready_leaf='meanPredict_zero_cumulativeLoss',finite_terminal='guessing_vs_mean_unbounded',chapter_total=None,source_package_accepted=False,goal_complete=False))"
+        },
+        {
+          "line": 30,
+          "text": "write('30_lower_worker-plan-v1.md','Single lower proof route fixed after distinct source stabilization. New first leaf unfolds actual source meanPredict/empiricalMean on the zero stream; only initial contribution1/4 survives in nonempty finite range, using actual sum_ite_eq\\x27. Actual lower witness gives regret>=n/4 at positive square horizon; subtract produced exact mean loss yields n/4-1/4 gap. exists_nat_gt(max(4*C+1,(N:real))) produces n>N/positive n and strict threshold inequality, then actual lower closes public terminal. No desired stability/regret/loss gap premise inserted. Each new theorem header must match native-v2 fingerprint and each attempt/compiler failure retained. Retained interval/gradient/regularity/tuned/lower proof bodies and2wholecanaries unchanged. Fresh named-public/root/Tests/21axes/12guards/fullsite/body/final source gates remain pending; not accepted source/chapter/book.')"
+        }
+      ],
+      "static_review": "Checks source reviewer receipt/bindings, saves old raw root/module snapshots, writes proving obligations/worker plan and invokes lifecycle transitions. No independent source review performed by writer.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R390",
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-v1.py",
+      "sha256": "6c5cb4b09e288566ee4533de5dba58015df7ed4bbea35b7fd27dce53454103b2",
+      "calls": {
+        "load": 4,
+        "items": 1,
+        "Path": 6,
+        "write_bytes": 1,
+        "write": 5,
+        "update": 2,
+        "print": 1,
+        "hexdigest": 1,
+        "loads": 1,
+        "sum": 2,
+        "read_bytes": 2,
+        "dict": 4,
+        "as_posix": 2,
+        "is_file": 3,
+        "len": 3,
+        "read_text": 1,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "sha": 5,
+        "dumps": 2,
+        "rglob": 2,
+        "sha256": 1,
+        "dump": 1,
+        "rstrip": 1,
+        "sorted": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 9,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 10,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 11,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 22,
+          "text": "(run/'compiled-retained-graph-v1.json').write_bytes(gp.read_bytes())"
+        },
+        {
+          "line": 23,
+          "text": "write('ready-dependencies-v1.json',dict(status='retained-frontier-actual-compiled',scope_nodes=10,actual_edges=1733,graph_sha256=sha(gp),retained_proofs=9,retained_definitions=1,new_targets_type_checked=3,new_bodies_compiled=False,full_graph_export=False,canary_graph_export=False,edge_boundary='Direct type/value references include definition uses, not all theorem-to-theorem pairs.',first_ready_new_leaf='meanPredict_zero_cumulativeLoss'))"
+        },
+        {
+          "line": 24,
+          "text": "write('source-review-packet-v1.md','''Required distinct anti-anchored CONTRACT review, requested GPT-6 Astra/medium. Independently hash ALL contract-source-inputs-v1.json rows; source re-read exact cached Orabona v10 Example2.14 printed15/PDF27 AND source real-valued guessing game/actual strict-prefix mean predictor/Theorem1.3 printed4/PDF16. Check 12 target contracts in headers-native-v2.json:9 RETAINED public proofs and3 PLANNED exact type expressions, actual types-v1 compiled but no new proof body or named-public theorem exists. Nine native fences and actual retained graph10nodes1733directtype/valueedges include unitInterval definition, not full/canary graph. Existing historical same-actor acceptance is not current distinct review. Blind current packet restricted/supplied notation, history not erased. Fingerprint correction v2 ONLY native whitespace normalization for3plannedheaders before source stabilization, original raw v1 retained/exact mathematical tokens identical, no target weakening or body repair."
+        },
+        {
+          "line": 32,
+          "text": "Single lower ready zero-mean finite sum -> lossgap lower -> arbitrary threshold/witness, no branch explosion. Goal wholeChapters1–16 ACTIVE/unbudgeted; Chapter2totalnull/incomplete, Chapter1migration/future3–16unenumeratedmandatory. Legacy13 before; eventual two retained-module migration delta13→11 ONLY if all gates accepted. Stack OPENdraft163 exact25c77a837c849eb78832673063483db5f663a73a, notmain; no merge/live/retirement. Shared graph/registry/book root retained. No prior receipts/reports edits; exact raw history snapshots will preserve changed public/global surfaces before integration. Task-only frontier/globalSGB protected. Native command gates distinct from prompt/file roles. reference-index global rewrite deliberatelynotrun outside bounded window, scopedcurrentCLI/type/graphretrieval fresh, no runtime/model/independenthuman claim. Write ONLY source-contract-review-v1.md/source-contract-receipt-v1.json here, actor.task=/root/source_reviewer, verdict,12 target_verdicts/sevenslots/classifications, mathematical_repairs and required_reader_corrections separately, all reviewed_files/report SHA. Do not edit inputs or accept new bodies/wholechapter/wholebook.''')"
+        },
+        {
+          "line": 46,
+          "text": "write('contract-source-inputs-v1.json',dict(scope='One source Example2.14 and3planned genuine same-stream comparisons/9retainedproofs1def; not chapter/book',authoritative_headers='docs/contracts/online-guessing-migration-v1/headers-native-v2.json',rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        }
+      ],
+      "static_review": "Reads headers/blind/source/hash packets and writes source review manifests plus graph copies. v1 fails guessed historical input path; v2 resolves actual input and equality-checks existing outputs. Writer is not source reviewer.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R393",
+      "path": "runs/online-guessing-migration-20261006/prepare-source-review-v2.py",
+      "sha256": "04621632731fca5499b689bbf5325d27dde1bfa18f8fd1c3aae2caa7dd8bf120",
+      "calls": {
+        "load": 5,
+        "items": 1,
+        "Path": 6,
+        "write": 5,
+        "update": 2,
+        "print": 1,
+        "hexdigest": 1,
+        "loads": 1,
+        "exists": 1,
+        "sum": 2,
+        "read_bytes": 3,
+        "dict": 4,
+        "as_posix": 2,
+        "is_file": 3,
+        "len": 3,
+        "read_text": 2,
+        "open": 1,
+        "isinstance": 2,
+        "sha": 5,
+        "dumps": 2,
+        "rglob": 2,
+        "sha256": 1,
+        "dump": 1,
+        "rstrip": 3,
+        "sorted": 1
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 12,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 13,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 14,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 26,
+          "text": "write('ready-dependencies-v1.json',dict(status='retained-frontier-actual-compiled',scope_nodes=10,actual_edges=1733,graph_sha256=sha(gp),retained_proofs=9,retained_definitions=1,new_targets_type_checked=3,new_bodies_compiled=False,full_graph_export=False,canary_graph_export=False,edge_boundary='Direct type/value references include definition uses, not all theorem-to-theorem pairs.',first_ready_new_leaf='meanPredict_zero_cumulativeLoss'))"
+        },
+        {
+          "line": 27,
+          "text": "write('source-review-packet-v1.md','''Required distinct anti-anchored CONTRACT review, requested GPT-6 Astra/medium. Independently hash ALL contract-source-inputs-v1.json rows; source re-read exact cached Orabona v10 Example2.14 printed15/PDF27 AND source real-valued guessing game/actual strict-prefix mean predictor/Theorem1.3 printed4/PDF16. Check 12 target contracts in headers-native-v2.json:9 RETAINED public proofs and3 PLANNED exact type expressions, actual types-v1 compiled but no new proof body or named-public theorem exists. Nine native fences and actual retained graph10nodes1733directtype/valueedges include unitInterval definition, not full/canary graph. Existing historical same-actor acceptance is not current distinct review. Blind current packet restricted/supplied notation, history not erased. Fingerprint correction v2 ONLY native whitespace normalization for3plannedheaders before source stabilization, original raw v1 retained/exact mathematical tokens identical, no target weakening or body repair."
+        },
+        {
+          "line": 35,
+          "text": "Single lower ready zero-mean finite sum -> lossgap lower -> arbitrary threshold/witness, no branch explosion. Goal wholeChapters1–16 ACTIVE/unbudgeted; Chapter2totalnull/incomplete, Chapter1migration/future3–16unenumeratedmandatory. Legacy13 before; eventual two retained-module migration delta13→11 ONLY if all gates accepted. Stack OPENdraft163 exact25c77a837c849eb78832673063483db5f663a73a, notmain; no merge/live/retirement. Shared graph/registry/book root retained. No prior receipts/reports edits; exact raw history snapshots will preserve changed public/global surfaces before integration. Task-only frontier/globalSGB protected. Native command gates distinct from prompt/file roles. reference-index global rewrite deliberatelynotrun outside bounded window, scopedcurrentCLI/type/graphretrieval fresh, no runtime/model/independenthuman claim. Write ONLY source-contract-review-v1.md/source-contract-receipt-v1.json here, actor.task=/root/source_reviewer, verdict,12 target_verdicts/sevenslots/classifications, mathematical_repairs and required_reader_corrections separately, all reviewed_files/report SHA. Do not edit inputs or accept new bodies/wholechapter/wholebook.''')"
+        },
+        {
+          "line": 49,
+          "text": "write('contract-source-inputs-v1.json',dict(scope='One source Example2.14 and3planned genuine same-stream comparisons/9retainedproofs1def; not chapter/book',authoritative_headers='docs/contracts/online-guessing-migration-v1/headers-native-v2.json',rows=[dict(path=p,sha256=sha(p)) for p in sorted(paths)]))"
+        }
+      ],
+      "static_review": "Reads headers/blind/source/hash packets and writes source review manifests plus graph copies. v1 fails guessed historical input path; v2 resolves actual input and equality-checks existing outputs. Writer is not source reviewer.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R454",
+      "path": "runs/online-guessing-migration-20261006/reader-renderer-adapter-v2.py",
+      "sha256": "6d716c6f23e2184d547e13c572f2d90815a85eb2cfa47656dba4fb96f08ad792",
+      "calls": {
+        "Path": 4,
+        "read_bytes": 2,
+        "loads": 2,
+        "next": 2,
+        "read_text": 1,
+        "write_bytes": 1,
+        "pop": 1,
+        "print": 1,
+        "hexdigest": 1,
+        "all": 1,
+        "exists": 2,
+        "open": 2,
+        "dump": 2,
+        "write": 2,
+        "len": 1,
+        "dict": 1,
+        "sha256": 1,
+        "set": 2,
+        "as_posix": 1,
+        "sha": 3
+      },
+      "operationLines": [
+        {
+          "line": 11,
+          "text": "snap=run/'leaves/reader-before-renderer-adapter-v2.json.txt';assert not snap.exists();snap.write_bytes(raw)"
+        },
+        {
+          "line": 13,
+          "text": "with p.open('w',encoding='utf-8',newline='\\n') as f:json.dump(data,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 17,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(status='actual-renderer-field-adapted-before-site-build',before_snapshot=snap.as_posix(),before_sha256=sha(snap),after_sha256=sha(p),renderer_sha256=sha('website/scripts/build_site.py'),delta='proof -> proof_bridge; exact five source-to-Lean proof steps unchanged, actual renderer recognized',all_other_readings_unchanged=True,mathematical_repair=False,Lean_change=False),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Snapshots readings then changes selected unused proof field to proof_bridge, asserts equal mathematical content and unchanged sibling records. Production publication mutation only.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R456",
+      "path": "runs/online-guessing-migration-20261006/record-acceptance-v1.py",
+      "sha256": "265367b72baf13fa27e5fb93b714486647d8403e06c9f76a9b60aff27847d9e0",
+      "calls": {
+        "insert": 1,
+        "append": 2,
+        "load": 9,
+        "items": 6,
+        "dict": 11,
+        "write": 12,
+        "gate": 4,
+        "print": 1,
+        "str": 11,
+        "Path": 9,
+        "loads": 2,
+        "run": 1,
+        "strip": 2,
+        "sha": 11,
+        "join": 1,
+        "dumps": 2,
+        "read_text": 4,
+        "hexdigest": 2,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "endswith": 1,
+        "splitlines": 1,
+        "dump": 1,
+        "get": 3,
+        "sub": 1,
+        "read_bytes": 3,
+        "tokens": 2,
+        "len": 1,
+        "resolve": 1,
+        "sha256": 2,
+        "_strip_lean_comments": 1,
+        "rstrip": 1,
+        "encode": 1,
+        "lean_declaration_header": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 12,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 14,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 15,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 16,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 17,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 49,
+          "text": "write('accepted-binding-audit-v1.json',dict(status='passed',raw_review_rows=len(rows),rows=rows,all_final_fixed_inputs_rechecked=True,frozen_headers=freeze['headers'],all_actual_body_and_canary_bytes_fixed=True,prior_final_history_bindings='history-binding-audit-v1.json',prior_accepted_reports_receipts_unmodified=True))"
+        },
+        {
+          "line": 50,
+          "text": "write('accepted-decision-v1.json',dict(status='accepted-with-explicit-delta',scope='One printed Orabona v10 Example2.14 plus derived actual same-zero-stream OGD versus mean comparison',source_anchor='printed15/PDF27; Chapter1 mean predictor dependency printed4/PDF16',frozen_headers=freeze['headers'],explicit_delta='Printed O(sqrtT), derived2sqrtT and fixed-initialization lower. Samezero stream/different valid fixed initializations OGD1/mean1/2; actual strict-prefix mean loss1/4, actualgap>=n/4-1/4, forall realC/naturalN existsn>N gap>C. Separate known-horizon runs, unbounded-tail existence, not equal-initialization/uniformstream/everyinit/anytime/Tendsto/minimax/Chapter4 theorem. Real[0,1] labels and produced global regularity.',retained_public_proofs=9,retained_public_definitions=1,new_public_proofs=3,new_definitions=0,public_canary_proofs=6,public_canary_definitions=2,named_axiom_audits=21,native_guards=12,new_registry_nodes=3,old_registry_IDs_URLs_preserved=10806,root_jobs=9089,Tests_jobs=9232,full_tests=466,existing_skips=7,root_Tests_execution_overlapped=False,build_boundary=integrated['execution_boundary'],site_source_commit=load(run/'registry-v1.json')['source_commit'],stacked_base='25c77a837c849eb78832673063483db5f663a73a',stacked_base_PR=163,final_review_receipt='final-reader-receipt-v1.json',final_review_report_sha256=final['report_sha256'],compiled_scope_graph='compiled-public-graph-v1.json',compiled_scope_nodes=13,compiled_scope_edges=2113,full_graph_export=False,canary_graph_export=False,mathematical_repairs=[],nonmathematical_repairs=integrated['failure_repairs'],renderer_adapter=integrated['renderer_adapter'],reader_corrections='Eight required contract/BODY corrections applied and distinctly rechecked.',main_relative_gate=integrated['main_relative_gate'],full_whitespace_gate=integrated['full_whitespace_gate'],scoped_whitespace_gate=integrated['scoped_whitespace_gate'],chapter_mandatory_total=None,PR_delivery_pending=True,merged=False,live=False,**boundary))"
+        },
+        {
+          "line": 51,
+          "text": "write('accepted-obligations-v1.json',dict(required=[dict(name=n,statement_hash=h,state='accepted-source-example-or-derived-comparison') for n,h in freeze['headers'].items()],source_printed_results=1,new_proofs=3,new_definitions=0,remaining_chapter_legacy_migrations=11,legacy_migrations_before=13,exact_accepted_legacy_delta='Only OnlineGuessingOGD and OnlineGuessingLower; three new comparison proofs counted separately, not twelve new results.',chapter_total=None,future_chapters='3-16 unenumerated mandatory',main_missing_changed_production_contract_paths=9,**boundary))"
+        },
+        {
+          "line": 52,
+          "text": "write('source-inventory-acceptance-overlay-v1.json',dict(base_inventory='docs/contracts/online-book-v1/source-inventory.json',base_sha256=sha('docs/contracts/online-book-v1/source-inventory.json'),additive_only=True,source_anchor='Example2.14 printed15/PDF27',accepted_public_names=['BanditRL.OnlineGradientDescent.'+n for n in freeze['headers']],source_printed_results=1,derived_new_comparison_proofs=3,Chapter1_dependency_is_not_chapter_acceptance=True,**boundary))"
+        },
+        {
+          "line": 53,
+          "text": "write('contribution-acceptance-overlay-v1.json',dict(manifest='research-wiki/contribution-contracts/online-guessing-migration-20261006.json',manifest_sha256=sha('research-wiki/contribution-contracts/online-guessing-migration-20261006.json'),source_contract='source-contract-receipt-v1.json',body='public-body-receipt-v1.json',reader='final-reader-receipt-v1.json',integrated='integrated-gates-overlay-v1.json',accepted_decision='accepted-decision-v1.json',semantic_status='accepted-with-explicit-delta',earlier_candidate_pending_fields_superseded_additively=True,**boundary))"
+        },
+        {
+          "line": 54,
+          "text": "write('memory-digest-accepted-v1.md','Only Example2.14 and derived true comparison accepted:9retainedproofs1domain/3newproofs0newdefinitions. Real[0,1] labels/true projection gradient/global square regularity/samecausal positive knownhorizon OGD/printed O√T vsderived2√T. Zero stream/OGDinit1/meaninit1/2, true meanloss1/4 and OGDlowern/4 produce gapn/4-1/4 and forall realC,naturalN existsn>N gap>C. Not equal-init/uniform-stream/anytime/Tendsto/minimax/Chapter4 claim. Positive n squarehorizons; n0eta totalalgebra, n1lowergap0. Whole6canaryproofs2defs/21namedstandard3-or-noneaxes/12guards/actualcompiled13nodes2113directedges/notfullcanarygraph. Sequentialroot9089Tests9232/full466tests7skips/cleanlocalsite13nodes10806oldIDsURLs3new/history/actualfirstviewportpassed. Metadata/importparser/Git-index/contributor-list failures retained, no math/test weakening; reader proof_bridge adapter samecontent. Eight reader corrections distinctly reviewed. Legacy13→11 only two retained guessing modules;3newproofs separate. Chapter1migration/Chapter2null/wholeGoalACTIVE/main/liveunchanged, PRpending/worktreeretained.')"
+        },
+        {
+          "line": 55,
+          "text": "write('retrieval-index-accepted-v1.md','Accepted source Example2.14 and actual3derived comparison proofs in current decisions/receipts/overlays. Actual meanPredict strictprefix definition produces exact1/4; actualOGD lower produces gapn/4-1/4; exists_nat_gt provides actual threshold witness. Twelve nativev2headers/nine old prooftokens/fullunitInterval unchanged, oldcanaries bytefixed/newgenuinegapcanary. All21namedaxes12guards/rootTestsfullgate/site3newnodes/oldURLs/compiled13nodes2113directreferences. RemainingChapter2 maintext/appendix/legacy obligations stillrequired, some compiled but unaudited; noChapter3proofwork, wholeGoalACTIVE.')"
+        },
+        {
+          "line": 56,
+          "text": "write('program-milestone-v1.json',dict(total_Goal='Chapters1-16 ACTIVE unbudgeted',bounded_milestone='Source Example2.14 and true OGD versus mean derived comparison accepted',legacy_remaining_before=13,legacy_remaining_after=11,exact_legacy_modules=['OnlineGuessingOGD','OnlineGuessingLower'],new_proofs=3,new_definitions=0,new_registry_nodes=3,source_printed_results=1,chapter2_mandatory_total=None,Chapter1_complete=False,chapter2_complete=False,chapters3_16='unenumerated mandatory',main_updated=False,live_updated=False,**boundary))"
+        },
+        {
+          "line": 59,
+          "text": "write('accepted-scoped-trials-v1.jsonl','\\n'.join(json.dumps(t) for t in trials if t.get('task')==task))"
+        },
+        {
+          "line": 63,
+          "text": "write('native-acceptance-overlay-v1.json',dict(status='passed',accepted_decision='accepted-decision-v1.json',accepted_decision_sha256=sha(run/'accepted-decision-v1.json'),actual_attempt='GUESSING-COMPARISON-V1',frontier='accepted-frontier-v1.json',shadow='accepted-frontier-shadow-v1',**boundary))"
+        }
+      ],
+      "static_review": "Verifies existing final reviewer receipt/hashes and stored successful gates, then writes accepted decision, task overlays, source inventory overlay, milestone and memory, and invokes accepted lifecycle/frontier/trial harness writes. Hard-coded counts/status are historical bookkeeping, not self-authenticating proof. v2 retains same mathematical scope.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R459",
+      "path": "runs/online-guessing-migration-20261006/record-acceptance-v2.py",
+      "sha256": "f4fdc433d32384004dd5715d484bf2bc67b565d78ea9c1da391a2a29d2da9ece",
+      "calls": {
+        "insert": 1,
+        "append": 2,
+        "load": 9,
+        "items": 6,
+        "dict": 11,
+        "write": 12,
+        "gate": 4,
+        "print": 1,
+        "str": 11,
+        "Path": 9,
+        "loads": 2,
+        "run": 1,
+        "strip": 2,
+        "sha": 11,
+        "join": 1,
+        "dumps": 2,
+        "read_text": 4,
+        "hexdigest": 2,
+        "exists": 1,
+        "open": 1,
+        "isinstance": 1,
+        "endswith": 1,
+        "splitlines": 1,
+        "dump": 1,
+        "get": 3,
+        "sub": 1,
+        "read_bytes": 3,
+        "tokens": 2,
+        "len": 1,
+        "resolve": 1,
+        "sha256": 2,
+        "_strip_lean_comments": 1,
+        "rstrip": 1,
+        "encode": 1,
+        "lean_declaration_header": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 12,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 14,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 15,
+          "text": "  if isinstance(x,str):f.write(x.rstrip('\\n')+'\\n')"
+        },
+        {
+          "line": 16,
+          "text": "  else:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 17,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 49,
+          "text": "write('accepted-binding-audit-v1.json',dict(status='passed',raw_review_rows=len(rows),rows=rows,all_final_fixed_inputs_rechecked=True,frozen_headers=freeze['headers'],all_actual_body_and_canary_bytes_fixed=True,prior_final_history_bindings='history-binding-audit-v1.json',prior_accepted_reports_receipts_unmodified=True))"
+        },
+        {
+          "line": 50,
+          "text": "write('accepted-decision-v1.json',dict(status='accepted-with-explicit-delta',scope='One printed Orabona v10 Example2.14 plus derived actual same-zero-stream OGD versus mean comparison',source_anchor='printed15/PDF27; Chapter1 mean predictor dependency printed4/PDF16',frozen_headers=freeze['headers'],explicit_delta='Printed O(sqrtT), derived2sqrtT and fixed-initialization lower. Samezero stream/different valid fixed initializations OGD1/mean1/2; actual strict-prefix mean loss1/4, actualgap>=n/4-1/4, forall realC/naturalN existsn>N gap>C. Separate known-horizon runs, unbounded-tail existence, not equal-initialization/uniformstream/everyinit/anytime/Tendsto/minimax/Chapter4 theorem. Real[0,1] labels and produced global regularity.',retained_public_proofs=9,retained_public_definitions=1,new_public_proofs=3,new_definitions=0,public_canary_proofs=6,public_canary_definitions=2,named_axiom_audits=21,native_guards=12,new_registry_nodes=3,old_registry_IDs_URLs_preserved=10806,root_jobs=9089,Tests_jobs=9232,full_tests=466,existing_skips=7,root_Tests_execution_overlapped=False,build_boundary=integrated['execution_boundary'],site_source_commit=load(run/'registry-v2.json')['source_commit'],stacked_base='25c77a837c849eb78832673063483db5f663a73a',stacked_base_PR=163,final_review_receipt='final-reader-receipt-v1.json',final_review_report_sha256=final['report_sha256'],compiled_scope_graph='compiled-public-graph-v1.json',compiled_scope_nodes=13,compiled_scope_edges=2113,full_graph_export=False,canary_graph_export=False,mathematical_repairs=[],nonmathematical_repairs=integrated['failure_repairs'],renderer_adapter=integrated['renderer_adapter'],reader_corrections='Eight required contract/BODY corrections applied and distinctly rechecked.',main_relative_gate=integrated['main_relative_gate'],full_whitespace_gate=integrated['full_whitespace_gate'],scoped_whitespace_gate=integrated['scoped_whitespace_gate'],chapter_mandatory_total=None,PR_delivery_pending=True,merged=False,live=False,**boundary))"
+        },
+        {
+          "line": 51,
+          "text": "write('accepted-obligations-v1.json',dict(required=[dict(name=n,statement_hash=h,state='accepted-source-example-or-derived-comparison') for n,h in freeze['headers'].items()],source_printed_results=1,new_proofs=3,new_definitions=0,remaining_chapter_legacy_migrations=11,legacy_migrations_before=13,exact_accepted_legacy_delta='Only OnlineGuessingOGD and OnlineGuessingLower; three new comparison proofs counted separately, not twelve new results.',chapter_total=None,future_chapters='3-16 unenumerated mandatory',main_missing_changed_production_contract_paths=9,**boundary))"
+        },
+        {
+          "line": 52,
+          "text": "write('source-inventory-acceptance-overlay-v1.json',dict(base_inventory='docs/contracts/online-book-v1/source-inventory.json',base_sha256=sha('docs/contracts/online-book-v1/source-inventory.json'),additive_only=True,source_anchor='Example2.14 printed15/PDF27',accepted_public_names=['BanditRL.OnlineGradientDescent.'+n for n in freeze['headers']],source_printed_results=1,derived_new_comparison_proofs=3,Chapter1_dependency_is_not_chapter_acceptance=True,**boundary))"
+        },
+        {
+          "line": 53,
+          "text": "write('contribution-acceptance-overlay-v1.json',dict(manifest='research-wiki/contribution-contracts/online-guessing-migration-20261006.json',manifest_sha256=sha('research-wiki/contribution-contracts/online-guessing-migration-20261006.json'),source_contract='source-contract-receipt-v1.json',body='public-body-receipt-v1.json',reader='final-reader-receipt-v1.json',integrated='integrated-gates-overlay-v1.json',accepted_decision='accepted-decision-v1.json',semantic_status='accepted-with-explicit-delta',earlier_candidate_pending_fields_superseded_additively=True,**boundary))"
+        },
+        {
+          "line": 54,
+          "text": "write('memory-digest-accepted-v1.md','Only Example2.14 and derived true comparison accepted:9retainedproofs1domain/3newproofs0newdefinitions. Real[0,1] labels/true projection gradient/global square regularity/samecausal positive knownhorizon OGD/printed O√T vsderived2√T. Zero stream/OGDinit1/meaninit1/2, true meanloss1/4 and OGDlowern/4 produce gapn/4-1/4 and forall realC,naturalN existsn>N gap>C. Not equal-init/uniform-stream/anytime/Tendsto/minimax/Chapter4 claim. Positive n squarehorizons; n0eta totalalgebra, n1lowergap0. Whole6canaryproofs2defs/21namedstandard3-or-noneaxes/12guards/actualcompiled13nodes2113directedges/notfullcanarygraph. Sequentialroot9089Tests9232/full466tests7skips/cleanlocalsite13nodes10806oldIDsURLs3new/history/actualfirstviewportpassed. Metadata/importparser/Git-index/contributor-list failures retained, no math/test weakening; reader proof_bridge adapter samecontent. Eight reader corrections distinctly reviewed. Legacy13→11 only two retained guessing modules;3newproofs separate. Chapter1migration/Chapter2null/wholeGoalACTIVE/main/liveunchanged, PRpending/worktreeretained.')"
+        },
+        {
+          "line": 55,
+          "text": "write('retrieval-index-accepted-v1.md','Accepted source Example2.14 and actual3derived comparison proofs in current decisions/receipts/overlays. Actual meanPredict strictprefix definition produces exact1/4; actualOGD lower produces gapn/4-1/4; exists_nat_gt provides actual threshold witness. Twelve nativev2headers/nine old prooftokens/fullunitInterval unchanged, oldcanaries bytefixed/newgenuinegapcanary. All21namedaxes12guards/rootTestsfullgate/site3newnodes/oldURLs/compiled13nodes2113directreferences. RemainingChapter2 maintext/appendix/legacy obligations stillrequired, some compiled but unaudited; noChapter3proofwork, wholeGoalACTIVE.')"
+        },
+        {
+          "line": 56,
+          "text": "write('program-milestone-v1.json',dict(total_Goal='Chapters1-16 ACTIVE unbudgeted',bounded_milestone='Source Example2.14 and true OGD versus mean derived comparison accepted',legacy_remaining_before=13,legacy_remaining_after=11,exact_legacy_modules=['OnlineGuessingOGD','OnlineGuessingLower'],new_proofs=3,new_definitions=0,new_registry_nodes=3,source_printed_results=1,chapter2_mandatory_total=None,Chapter1_complete=False,chapter2_complete=False,chapters3_16='unenumerated mandatory',main_updated=False,live_updated=False,**boundary))"
+        },
+        {
+          "line": 59,
+          "text": "write('accepted-scoped-trials-v1.jsonl','\\n'.join(json.dumps(t) for t in trials if t.get('task')==task))"
+        },
+        {
+          "line": 63,
+          "text": "write('native-acceptance-overlay-v1.json',dict(status='passed',accepted_decision='accepted-decision-v1.json',accepted_decision_sha256=sha(run/'accepted-decision-v1.json'),actual_attempt='GUESSING-COMPARISON-V1',frontier='accepted-frontier-v1.json',shadow='accepted-frontier-shadow-v1',**boundary))"
+        }
+      ],
+      "static_review": "Verifies existing final reviewer receipt/hashes and stored successful gates, then writes accepted decision, task overlays, source inventory overlay, milestone and memory, and invokes accepted lifecycle/frontier/trial harness writes. Hard-coded counts/status are historical bookkeeping, not self-authenticating proof. v2 retains same mathematical scope.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R473",
+      "path": "runs/online-guessing-migration-20261006/repair-contributor-list-v2.py",
+      "sha256": "3805174108d56f4b6071799d52172efd002060b7c74b15706ca1a09cbf496dbf",
+      "calls": {
+        "load": 3,
+        "items": 2,
+        "gate": 2,
+        "Path": 4,
+        "write_bytes": 1,
+        "all": 1,
+        "print": 1,
+        "loads": 1,
+        "hexdigest": 1,
+        "run": 1,
+        "read_text": 2,
+        "dumps": 2,
+        "exists": 2,
+        "read_bytes": 2,
+        "open": 2,
+        "dump": 2,
+        "write": 2,
+        "sha": 4,
+        "dict": 3,
+        "sha256": 1,
+        "str": 1,
+        "as_posix": 2
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,subprocess,sys"
+        },
+        {
+          "line": 7,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 14,
+          "text": "p=Path('research-wiki/contribution-contracts/online-guessing-migration-20261006.json');snap=run/'leaves/manifest-before-contributor-list-v2.json.txt';assert not snap.exists();snap.write_bytes(p.read_bytes())"
+        },
+        {
+          "line": 18,
+          "text": "with p.open('w',encoding='utf-8',newline='\\n') as f:json.dump(data,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 20,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(status='manifest-field-classification-only',original_path=p.as_posix(),original_snapshot=snap.as_posix(),raw_sha256=sha(snap),current_sha256=sha(p),production_files=data['affected_files'],owned_test_files=tests,proof_and_test_bytes_unchanged=True,mathematical_repairs=[]),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Snapshots manifest, removes Tests from production affected_files and records owned_test_files, reruns contributor diagnostics. Metadata classification repair, no math closure.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R477",
+      "path": "runs/online-guessing-migration-20261006/repair-import-comments-v2.py",
+      "sha256": "b6385e58b5789ee78b4f6e6ec6db9ee16c03a43f0963295d996808b2f1edbd6b",
+      "calls": {
+        "insert": 1,
+        "gate": 2,
+        "load": 3,
+        "items": 2,
+        "write": 2,
+        "print": 1,
+        "str": 2,
+        "Path": 6,
+        "loads": 1,
+        "hexdigest": 2,
+        "strip": 1,
+        "run": 1,
+        "read_text": 3,
+        "dumps": 2,
+        "read_bytes": 2,
+        "startswith": 1,
+        "write_bytes": 2,
+        "append": 1,
+        "dict": 4,
+        "exists": 2,
+        "open": 1,
+        "dump": 1,
+        "tokens": 2,
+        "sha": 3,
+        "sha256": 2,
+        "sub": 1,
+        "decode": 1,
+        "resolve": 1,
+        "_strip_lean_comments": 1,
+        "as_posix": 1,
+        "encode": 1,
+        "lean_declaration_header": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,re,subprocess,sys"
+        },
+        {
+          "line": 10,
+          "text": "def write(n,x):"
+        },
+        {
+          "line": 12,
+          "text": " with p.open('w',encoding='utf-8',newline='\\n') as f:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 13,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 16,
+          "text": "gate('import-comment-repair-lifecycle-v2',sys.executable,'-X','utf8','tools/bandit.py','lifecycle-event','--session',task,'--event','repair','--payload-json',json.dumps(dict(run_id=run.name,failed_build='focused-v1-01',reason='Module doc comment before imports was a command; replace only newly inserted leading doc marker by ordinary ignored block comment.',mathematical_target_changed=False,proof_tokens_changed=False)))"
+        },
+        {
+          "line": 20,
+          "text": " snap=run/'leaves'/('import-comment-before-repair-'+path.name+'.txt');assert not snap.exists();snap.write_bytes(raw)"
+        },
+        {
+          "line": 21,
+          "text": " path.write_bytes(b'/-'+raw[3:])"
+        },
+        {
+          "line": 27,
+          "text": "write('import-comment-repair-v2.json',dict(status='format-only-parser-repair',rows=rows,actual_failed_log='focused-v1-01.log',all12frozen_headers_unchanged=True,all_proof_tokens_unchanged=True,old_unitInterval_and_canaries_unchanged=True,mathematical_repairs=[],fresh_focused_gate_pending=True))"
+        }
+      ],
+      "static_review": "Preserves raw leading-comment snapshots then changes /-! to /- before imports, checks unchanged proof tokens/headers/canaries and emits lifecycle/repair records. Parser-only repair.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R478",
+      "path": "runs/online-guessing-migration-20261006/repair-untracked-harness-v2.py",
+      "sha256": "dfa17e8f1a5b41607f338f69a3f3d5f5b0401ea5c8f3b412b72280e09823986a",
+      "calls": {
+        "gate": 3,
+        "run": 2,
+        "print": 1,
+        "Path": 3,
+        "loads": 1,
+        "hexdigest": 1,
+        "read_text": 2,
+        "sha": 2,
+        "dumps": 3,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "load": 1,
+        "dict": 4,
+        "sha256": 1,
+        "str": 1,
+        "read_bytes": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,subprocess,sys"
+        },
+        {
+          "line": 7,
+          "text": "def gate(label,*args):subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),label,*args],check=True)"
+        },
+        {
+          "line": 13,
+          "text": "subprocess.run(['git','add','--',*paths],check=True)"
+        },
+        {
+          "line": 16,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(status='Git-index-only-repair',staged_owned_paths=before,failed_test_count=440,failed_existing_skips=7,raw_failure_preserved=True,proof_inputs_changed=False,mathematical_repairs=[]),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Runs git add for new owned production/canary so historical tracked-source harness sees them, records index-only repair and reruns harness/lifecycle. Mutates index.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R489",
+      "path": "runs/online-guessing-migration-20261006/run-command.py",
+      "sha256": "c513b8a171af602dd3f72af15823ed5f1308faccdb8526d5dcca87ddcbf86887",
+      "calls": {
+        "reconfigure": 1,
+        "isoformat": 2,
+        "monotonic": 3,
+        "run": 1,
+        "write_bytes": 1,
+        "print": 3,
+        "exit": 1,
+        "resolve": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "round": 1,
+        "now": 2,
+        "Path": 1,
+        "decode": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import subprocess,sys,json,datetime,time"
+        },
+        {
+          "line": 8,
+          "text": "p=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)"
+        },
+        {
+          "line": 9,
+          "text": "(root/(label+'.log')).write_bytes(p.stdout)"
+        },
+        {
+          "line": 10,
+          "text": "with (root/(label+'-exit.json')).open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 11,
+          "text": "    json.dump({'command':cmd,'exit_code':p.returncode,'started_at':start,'ended_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'elapsed_seconds':time.monotonic()-tick},f,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 15,
+          "text": "    print(p.stdout.decode('utf-8',errors='replace')[-2400:])"
+        }
+      ],
+      "static_review": "Executes arbitrary argv subprocess and writes .log/-exit.json, propagates returncode. Can execute arbitrary writes or network commands supplied by caller. Never replay as harmless verifier.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R546",
+      "path": "runs/online-guessing-migration-20261006/verify-committed-raw-v1.py",
+      "sha256": "d86d2b5495eecd89c4c0ad9d8ec8530b0ceef7894f313587084927bfbea27534",
+      "calls": {
+        "sorted": 1,
+        "print": 1,
+        "Path": 1,
+        "rglob": 1,
+        "as_posix": 1,
+        "run": 1,
+        "read_bytes": 1,
+        "append": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "len": 2,
+        "is_file": 1,
+        "AssertionError": 1,
+        "dict": 2,
+        "hexdigest": 1,
+        "strip": 1,
+        "sha256": 1,
+        "check_output": 1
+      },
+      "operationLines": [
+        {
+          "line": 1,
+          "text": "\"\"\"Check exact current-run committed bytes separately from local semantic receipt checks.\"\"\""
+        },
+        {
+          "line": 3,
+          "text": "import hashlib,json,subprocess"
+        },
+        {
+          "line": 9,
+          "text": " child=subprocess.run(['git','show','HEAD:'+rel],stdout=subprocess.PIPE,stderr=subprocess.PIPE)"
+        },
+        {
+          "line": 10,
+          "text": " if child.returncode:raise AssertionError('Owned evidence not committed: '+rel)"
+        },
+        {
+          "line": 12,
+          "text": " rows.append(dict(path=rel,sha256=hashlib.sha256(raw).hexdigest(),committed_equals_local_raw=True))"
+        },
+        {
+          "line": 13,
+          "text": "out=run/'committed-raw-audit-v1.json';assert not out.exists()"
+        },
+        {
+          "line": 14,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 15,
+          "text": " json.dump(dict(status='passed',commit=subprocess.check_output(['git','rev-parse','HEAD'],encoding='utf-8').strip(),checked_files=len(rows),rows=rows,current_run_raw_bytes_retained_by='run-local .gitattributes * -text',boundary='Only this run committed raw bytes checked. Earlier directories unchanged; earlier receipts resolved against actual local raw snapshots. No blanket cross-platform recertification or clean rebuild claim.'),f,indent=2);f.write('\\n')"
+        },
+        {
+          "line": 16,
+          "text": "print('Exact current-run committed raw bytes match',len(rows),'evidence files.')"
+        }
+      ],
+      "static_review": "Reads Git HEAD blobs for run files, compares exact local bytes and writes committed-raw audit. Integrity only, no new semantic verdict.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R547",
+      "path": "runs/online-guessing-migration-20261006/verify-history-bindings-v1.py",
+      "sha256": "71dd3f9aecc7ed1bef280f2a4d45a70bbe448fdcd11b7fd47f1b6afb9ef9dc2b",
+      "calls": {
+        "print": 1,
+        "Path": 13,
+        "loads": 1,
+        "str": 1,
+        "load": 5,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "len": 2,
+        "read_text": 1,
+        "hexdigest": 1,
+        "sha": 4,
+        "append": 1,
+        "set": 1,
+        "dict": 2,
+        "get": 4,
+        "sha256": 1,
+        "read_bytes": 1,
+        "as_posix": 1
+      },
+      "operationLines": [
+        {
+          "line": 39,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 42,
+          "text": "  earlier_accepted_reports_receipts_unmodified=True,boundary='Listed current/prior final bindings only; not blanket historical recertification.'),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Reads/hash-checks named current/prior snapshot chains and writes binding receipt. Does not recertify all historical semantics.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R551",
+      "path": "runs/online-guessing-migration-20261006/verify-public-fences-v1.py",
+      "sha256": "8e04077a8aadf23123f107ed53ced112789ceeb9ab3d120fb4d91b5eb8a3f09c",
+      "calls": {
+        "insert": 1,
+        "load": 3,
+        "items": 1,
+        "print": 1,
+        "str": 5,
+        "Path": 4,
+        "loads": 1,
+        "lean_declaration_header": 1,
+        "run": 2,
+        "exists": 2,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "read_text": 1,
+        "dict": 1,
+        "hexdigest": 1,
+        "resolve": 1,
+        "sha256": 1,
+        "encode": 1
+      },
+      "operationLines": [
+        {
+          "line": 3,
+          "text": "import hashlib,json,subprocess,sys"
+        },
+        {
+          "line": 11,
+          "text": " subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),'public-fence-v1-'+n,sys.executable,'-X','utf8','tools/bandit.py','statement-fence','--declaration','BanditRL.OnlineGradientDescent.'+n,'--file',row['file'],'--output',str(fence)],check=True)"
+        },
+        {
+          "line": 13,
+          "text": " subprocess.run([sys.executable,'-X','utf8',str(run/'run-command.py'),'safe-public-v1-'+n,sys.executable,'-X','utf8','tools/bandit.py','safe-verify','--fence',str(fence),'--lean-file',row['file'],'--lean-file','Tests/OnlineGuessingComparisonCanary.lean'],check=True)"
+        },
+        {
+          "line": 15,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:json.dump(dict(status='passed',guards=12,unchanged_headers=freeze['headers'],fingerprints='authoritative native-normalized-v2, all mathematical tokens same as rawv1',guard_is_not_compilation=True),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Invokes historical statement-fence and safe-verify for twelve targets including comparison canary, writes fence/audit outputs. Header checks are not compilation.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R552",
+      "path": "runs/online-guessing-migration-20261006/verify-registry-v1.py",
+      "sha256": "0d79caa96a62a7c7d3f8df4148a8c97c0b41ac4fa92c070ade8cacbdc36bcf24",
+      "calls": {
+        "insert": 1,
+        "Path": 6,
+        "load": 4,
+        "items": 1,
+        "lean_declaration_header": 1,
+        "append": 2,
+        "all": 1,
+        "print": 1,
+        "str": 1,
+        "loads": 1,
+        "hexdigest": 2,
+        "len": 4,
+        "dict": 3,
+        "set": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "read_text": 1,
+        "sha256": 2,
+        "resolve": 1,
+        "read_bytes": 1,
+        "as_posix": 1,
+        "sha": 1,
+        "sorted": 1,
+        "encode": 1
+      },
+      "operationLines": [
+        {
+          "line": 11,
+          "text": "assert manifest['source_commit']==registry['source_commit']"
+        },
+        {
+          "line": 31,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 32,
+          "text": " json.dump(dict(status='passed',source_commit=manifest['source_commit'],source_dirty=False,lean_verified=True,registry_path=(site/'books/registry.json').as_posix(),registry_sha256=sha(site/'books/registry.json'),identity=registry['identity'],checks=checks,preserved_base_node_ids_and_urls=10806,new_registry_nodes=3,new_node_ids=sorted(new_ids)),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Reads site/registry and frozen headers, writes audit if assertions pass. Original v1 fails on def-where short-header mismatch; preserve failure.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    },
+    {
+      "row_id": "R553",
+      "path": "runs/online-guessing-migration-20261006/verify-registry-v2.py",
+      "sha256": "26ff0ea2df223755f84ac421163ba27cc3d9f560e298f92049571337e2b19c16",
+      "calls": {
+        "insert": 1,
+        "Path": 8,
+        "load": 5,
+        "items": 1,
+        "lean_declaration_header": 1,
+        "next": 2,
+        "read_text": 3,
+        "append": 2,
+        "all": 1,
+        "print": 1,
+        "str": 1,
+        "loads": 1,
+        "hexdigest": 3,
+        "len": 4,
+        "strip": 1,
+        "tokens": 2,
+        "dict": 3,
+        "set": 1,
+        "exists": 1,
+        "open": 1,
+        "dump": 1,
+        "write": 1,
+        "sha256": 3,
+        "sub": 1,
+        "resolve": 2,
+        "read_bytes": 1,
+        "scan_module": 1,
+        "_strip_lean_comments": 1,
+        "as_posix": 1,
+        "sha": 1,
+        "sorted": 1,
+        "encode": 2
+      },
+      "operationLines": [
+        {
+          "line": 7,
+          "text": "import re,subprocess"
+        },
+        {
+          "line": 14,
+          "text": "assert manifest['source_commit']==registry['source_commit']"
+        },
+        {
+          "line": 39,
+          "text": "with out.open('w',encoding='utf-8',newline='\\n') as f:"
+        },
+        {
+          "line": 40,
+          "text": " json.dump(dict(status='passed',source_commit=manifest['source_commit'],source_dirty=False,lean_verified=True,registry_path=(site/'books/registry.json').as_posix(),registry_sha256=sha(site/'books/registry.json'),identity=registry['identity'],checks=checks,preserved_base_node_ids_and_urls=10806,new_registry_nodes=3,new_node_ids=sorted(new_ids)),f,indent=2);f.write('\\n')"
+        }
+      ],
+      "static_review": "Uses actual scanner signature plus whole unchanged token check to repair v1 definition-header mismatch; writes audit. Stored lean_verified/source_dirty flags are checked historical assertions, not fresh build.",
+      "executed": false,
+      "disposition": "preserved-historical-executable-never-replayed",
+      "new_acceptance_evidence": false
+    }
+  ],
+  "count": 39,
+  "historical_scripts_executed": false
+}
