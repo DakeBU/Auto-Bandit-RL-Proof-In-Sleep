@@ -141,3 +141,4 @@ import Tests.OnlineLearningChapterOneCanary
 import Tests.OnlineLearningFTLSharpCanary
 import Tests.OnlineLearningFoundationsCanary
 import Tests.OnlineLearningRegretDomainsCanary
+import Tests.OnlineFTLFailureCanary

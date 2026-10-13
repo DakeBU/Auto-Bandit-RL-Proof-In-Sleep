@@ -3915,6 +3915,57 @@
       "dependencies": [
         "BanditRL.OnlineLearning.comparatorRegret"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.example_2_10",
+      "title": "Exact linear-regret counterexample",
+      "chapter": "online-ftl-failure",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Exact linear-regret counterexample",
+      "math": "\\(R_T(0)=T-1-x_0/2\\ge T-3/2\\)",
+      "intuition": "The alternating prefix forces each later prediction to incur loss1; keep the initial loss exactly.",
+      "why": "Connects the actual causal FTL algorithm to the source counterexample.",
+      "position": "Orabona v10, Example 2.10, printed page 12 / PDF page 24.",
+      "proof_idea": "The alternating prefix forces each later prediction to incur loss1; keep the initial loss exactly.",
+      "lean_notes": "Every feasible x0 and T>=1; comparator0 is fixed and feasible. Equality and lower bound use actual played losses, with initial loss -x0/2. Lean0 is source1. No T0 formula or lower bound against all algorithms. One explicit FTL selection family with every feasible initialization, on the specified deterministic loss sequence. The generic positive-time zero-prefix tie chooses -1; this failure stream never has such a tie. The Lean target names this family rather than quantifying over arbitrary argmin trajectories. This is not an all-algorithm lower bound or Chapter 2/book completion.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.failure_prediction"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+      "title": "The predictor minimizes historical loss",
+      "chapter": "online-ftl-failure",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "The selected action has no larger historical objective than any feasible comparator.",
+      "math": "\\(\\sum_{i<t}z_i x_t\\le\\sum_{i<t}z_i u,\\qquad u\\in[-1,1]\\)",
+      "intuition": "The sign of the accumulated coefficient selects the correct interval endpoint.",
+      "why": "Connects the actual causal FTL algorithm to the source counterexample.",
+      "position": "Orabona v10, Example 2.10, printed page 12 / PDF page 24.",
+      "proof_idea": "The sign of the accumulated coefficient selects the correct interval endpoint.",
+      "lean_notes": "The inequality permits any real x0: at time0 both sums vanish. Combine linearFTLPredict_mem with feasible x0 in[-1,1] to obtain an actual feasible argmin. Later zero-prefix ties use -1; the source failure witness has none.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.prefixCoefficient_eq_sum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+      "title": "FTL uses only the strict past",
+      "chapter": "online-ftl-failure",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "FTL uses only the strict past",
+      "math": "\\((\\forall i<t,\\ z_i=w_i)\\Longrightarrow x_t(z,x_0)=x_t(w,x_0)\\)",
+      "intuition": "Equal past coefficient streams give the same prediction.",
+      "why": "Connects the actual causal FTL algorithm to the source counterexample.",
+      "position": "Orabona v10, Example 2.10, printed page 12 / PDF page 24.",
+      "proof_idea": "Equal past coefficient streams give the same prediction.",
+      "lean_notes": "Generic coefficient streams and any fixed real initial x0; strict-prefix equality excludes the current coefficient. This causality theorem alone does not assert feasibility or restrict an external initialization procedure.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.prefixCoefficient_eq_sum"
+      ]
     }
   ]
 }

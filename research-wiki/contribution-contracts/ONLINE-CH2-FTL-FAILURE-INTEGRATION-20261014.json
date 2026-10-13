@@ -1,0 +1,199 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014",
+  "route": "online-learning / Chapter 2 FTL failure",
+  "frontier_cell": "online-ftl-failure",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026",
+    "anchor": "Example 2.10, printed12/PDF24; strict-past FTL printed11/PDF23 and regret protocol printed8/PDF20.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged frozen FTL implementation and complete two-canary module from PR129/155 into the shared project, with bounded current reader and explicit preservation/ownership of all collateral obligations.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineFTLFailure.lean",
+    "Tests.lean",
+    "Tests/OnlineFTLFailureCanary.lean",
+    "research-wiki/integrations/ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014/historical-preservation.json",
+    "research-wiki/integrations/ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014/historical-scope.json",
+    "research-wiki/integrations/ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014/retained-obligations.json",
+    "research-wiki/integrations/ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014/source-map.json",
+    "tools/test_book_registry.py",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.prefixCoefficient",
+    "BanditRL.OnlineLearning.linearFTLPredict",
+    "BanditRL.OnlineLearning.failureCoefficient",
+    "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+    "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+    "BanditRL.OnlineLearning.linearFTLPredict_mem",
+    "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+    "BanditRL.OnlineLearning.failure_prefixCoefficient",
+    "BanditRL.OnlineLearning.failure_prediction",
+    "BanditRL.OnlineLearning.example_2_10"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Current shared Lean/Lake project and canonical registry",
+      "Original PR129/155 source, complete canaries, all356 delta rows and frozen stack",
+      "Existing Mathlib finite-sum and ordered-real algebra used by retained proof bodies"
+    ],
+    "reused_declarations": [
+      "Finset.sum_range_succ",
+      "Finset.sum_mul",
+      "Nat.exists_eq_succ_of_ne_zero"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.prefixCoefficient",
+      "BanditRL.OnlineLearning.linearFTLPredict",
+      "BanditRL.OnlineLearning.failureCoefficient",
+      "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+      "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+      "BanditRL.OnlineLearning.linearFTLPredict_mem",
+      "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+      "BanditRL.OnlineLearning.failure_prefixCoefficient",
+      "BanditRL.OnlineLearning.failure_prediction",
+      "BanditRL.OnlineLearning.example_2_10"
+    ],
+    "known_consumers": [
+      "Tests.OnlineFTLFailure.six_rounds directly consumes example_2_10",
+      "Tests.OnlineFTLFailure.actual_predictions unfolds the three production definitions"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse byte-exact original source and canary with current aggregate roots, registry guard and reader. No new proof route or separate Lean project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/batch10_blind_decoder",
+    "source_reviewer": "/root/batch10_source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The source describes FTL with any first feasible action. The Lean theorem names one explicit selection family for every feasible initialization. Strict nonzero past signs force the later endpoints mathematically; no compiled universal uniqueness theorem over externally supplied argmin trajectories is asserted. Generic positive-time zero-prefix ties choose -1, and objective minimization at time zero alone does not establish feasibility. One Example 2.10 witness family, three definitions and seven theorems. Comparator zero and positive horizon remain explicit. No lower bound for every online algorithm, optimal-comparator equality, Chapter 2/book completion, full purification or Exposition Seal. Non-FTL original obligations retain separately named current or open owners."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "This is the existing source alternating-loss FTL counterexample, with finite-prefix algebra. No new cross-setting transport certificate or conceptual bridge is established.",
+    "focus_targets": [
+      "online-ftl-failure"
+    ],
+    "visual_review": "Local desktop/mobile proof bridge and notation primer actually inspected. Eleven formulas render, three exact statements are folded and Online Book navigation is retained. Complete proof bodies are accessed through source links, whose committed/pushed and deployed pins remain separate gates.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one source card, four proof steps, three highlights and10 production declarations; sibling records unchanged",
+    "banditrlwiki": "no-change-with-reason: no Bandit/RL/Extended Topics frontier endpoint changes",
+    "results_ledger": "no-change-with-reason: no chapter or book completion",
+    "roadmap": "no-change-with-reason: existing roadmap endpoints unchanged; bounded Online teaching route added",
+    "website_surfaces": [
+      "Online Book and FTL failure chapter",
+      "Canonical declaration registry and original FTL-specific regression guard",
+      "Source/provenance and retained-obligation mappings in research-wiki/integrations/ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014",
+      "Contributor credit and exact evidence bindings in research-wiki/integrations/ONLINE-CH2-FTL-FAILURE-INTEGRATION-20261014/README.md"
+    ]
+  },
+  "truth_boundary": "One Example 2.10 witness family, three definitions and seven theorems. Comparator zero and positive horizon remain explicit. No lower bound for every online algorithm, optimal-comparator equality, Chapter 2/book completion, full purification or Exposition Seal. Non-FTL original obligations retain separately named current or open owners. The source describes FTL with any first feasible action. The Lean theorem names one explicit selection family for every feasible initialization. Strict nonzero past signs force the later endpoints mathematically; no compiled universal uniqueness theorem over externally supplied argmin trajectories is asserted. Generic positive-time zero-prefix ties choose -1, and objective minimization at time zero alone does not establish feasibility. Local acceptance is separate from final contributor/packet review, exact-head CI, merge, main/live deployment and guarded cleanup.",
+  "verification": {
+    "focused_checks": [
+      "Original three definitions, seven theorem bodies and two whole canaries privately elaborated",
+      "Combined BanditRLProof and whole Tests passed; full harness rebuilt library9082jobs and Tests9223jobs",
+      "All12 selected declarations checked with only standard axioms;1120 direct type/value edges inspected",
+      "375 selected-graph boundary nodes comprise7 same-module generated helpers and368 outside-module nodes",
+      "Desktop/mobile rendering and three exact folded statements independently checked"
+    ],
+    "bandit_check": "Full combined Lean, Tests, graph export, placeholder checks and460 Python tests passed, with7 documented skips. Executable inputs unchanged after notation-only formatting repair.",
+    "site_build": "Passed --lean-verified after actual full gate; notation primer regrouped without losing mathematical text.",
+    "site_check": "Passed after exactly-three-primer repair; process-memory and staged-diff checks also passed.",
+    "independent_review": "Distinct source-only extractor, source-first reviewer, neutral decoder, actual-body/graph/render reviewer and whole-original scope audit. Final public-packet review remains a separate check."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original authors and provenance retained in immutable source PR history"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Original bodies, canaries, all historical successes/failures and collateral preserved. Corrected Level B binder metadata, notation item count and absent-base provenance URLs without changing mathematical inputs. Rejected versions retained privately.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineFTLFailure.lean",
+        "Tests/OnlineFTLFailureCanary.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-ftl-prefix-sign-endpoint-played-loss-route"
+      ],
+      "expected_information_gain": "Separate protocol-mandated audit roles; no competing proof search.",
+      "shared_verified_context_digest": "Pinned source cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Retained original FTL failure implementation",
+      "selection_reason": "No parallel proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "One attributed source card, four formula proof steps, three highlights, actual-trajectory example, exact folded statements and desktop/mobile rendering reviewed. Full Exposition Seal not asserted.",
+      "source_expansion_nodes": [
+        "S04",
+        "S05",
+        "S06",
+        "G01",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.prefixCoefficient",
+        "BanditRL.OnlineLearning.linearFTLPredict",
+        "BanditRL.OnlineLearning.failureCoefficient",
+        "BanditRL.OnlineLearning.prefixCoefficient_eq_sum",
+        "BanditRL.OnlineLearning.linearFTLPredict_prefix",
+        "BanditRL.OnlineLearning.linearFTLPredict_mem",
+        "BanditRL.OnlineLearning.linearFTLPredict_minimizes",
+        "BanditRL.OnlineLearning.failure_prefixCoefficient",
+        "BanditRL.OnlineLearning.failure_prediction",
+        "BanditRL.OnlineLearning.example_2_10"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
