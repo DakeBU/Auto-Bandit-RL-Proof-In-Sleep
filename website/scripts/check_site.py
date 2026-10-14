@@ -1509,6 +1509,7 @@ def main() -> int:
         "online-foundations",
         "online-osd",
         "online-guessing-osd",
+        "online-osd-policy",
         "etc",
         "ucb",
         "oful",
