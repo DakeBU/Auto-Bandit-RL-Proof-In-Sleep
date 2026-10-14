@@ -1,0 +1,1089 @@
+{
+  "schema_version": "1.0",
+  "id": "orabonav10-example2.32-source-only-batch13",
+  "status": "EXTRACTED_PENDING_INDEPENDENT_TOPOLOGY_REVIEW",
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "root": "target-regret",
+  "scope": "Example 2.32 and bounded direct semantic, update, support and regret dependencies. No whole-chapter completion claim.",
+  "node_semantics": "NODE records source content; SOURCE_GAP records an omitted bridge, not an assertion of source invalidity.",
+  "edge_direction": "premises -> conclusion; an edge has AND inputs unless explicitly marked otherwise. Multiple sufficient tuning routes are OR alternatives. Historical OGD ancestry is retained separately from the OSD support replacement.",
+  "nodes": [
+    {
+      "id": "game",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 13,
+        "printed_page": 1,
+        "locator": "Chapter 1 opening three bullets"
+      },
+      "content": "For t=1,...,T, adversary chooses y_t in [0,1] secretly, player chooses x_t in [0,1], then y_t is revealed. Example 2.32 replaces squared loss by absolute loss."
+    },
+    {
+      "id": "regret",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Arbitrary-sequence paragraph; both unnumbered Regret displays; Remark 1.1"
+      },
+      "content": "Regret_T(u)=sum_t loss_t(x_t)-sum_t loss_t(u), fixed u in V unknown to the algorithm. Best-fixed comparator regret uses min over [0,1]. Arbitrary data sequences, no stochastic assumption. Suppressed dependence on losses is explicit."
+    },
+    {
+      "id": "online-protocol",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 20,
+        "printed_page": 8,
+        "locator": "Section 2.1 game bullets and following Regret display"
+      },
+      "content": "Output, incur loss, receive feedback. Adversarial losses and comparison with any fixed u in V."
+    },
+    {
+      "id": "convex-set",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Definition 2.2"
+      },
+      "content": "V convex means closed under lambda x+(1-lambda)y for 0<lambda<1."
+    },
+    {
+      "id": "domain",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Paragraph starting We will make use of extended-real-valued functions"
+      },
+      "content": "dom f={x:f(x)<+infinity}."
+    },
+    {
+      "id": "convex-function",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Definition 2.3"
+      },
+      "content": "Convexity means convex epigraph."
+    },
+    {
+      "id": "support-gradient",
+      "kind": "CITED_SOURCE_FACT",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.7, sole display and Rockafellar citation"
+      },
+      "content": "For convex f:R^d -> (-infinity,+infinity], x in int dom f and f differentiable at x, f(y)>=f(x)+<gradient f(x),y-x> for all y. Cited Rockafellar (1970), Theorem 25.1 and Corollary 25.1.1, external proof not reproduced."
+    },
+    {
+      "id": "optimality",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8 statement and two proof paragraphs"
+      },
+      "content": "On nonempty convex V, for f convex and differentiable on an open set containing V and x* in V, x* minimizes f iff <gradient f(x*),y-x*>>=0 for all y in V. Sufficiency uses 2.7; necessity uses a feasible line segment and negative directional derivative contradiction."
+    },
+    {
+      "id": "ogd",
+      "kind": "ALGORITHM",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Algorithm 2.1 lines Require and 1-6"
+      },
+      "content": "x_1 in nonempty closed convex V, positive eta_t. Predict x_t, pay convex differentiable loss, take g_t=gradient loss_t(x_t), update x_(t+1)=Pi_V(x_t-eta_t g_t)."
+    },
+    {
+      "id": "projection",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Paragraph before Proposition 2.11; Proposition 2.11 statement"
+      },
+      "content": "Pi_V(x)=argmin_(y in V)||x-y||_2 is asserted to be the unique Euclidean projection; ||Pi_V(x)-y||_2<=||x-y||_2 for y in nonempty closed convex V."
+    },
+    {
+      "id": "projection-proof",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Proposition 2.11 proof, continues PDF25 top display"
+      },
+      "content": "Equality of norm and half-squared-norm argmin, application of Theorem 2.8 gives <Pi_V(x)-x,y-Pi_V(x)>>=0; squared-distance expansion and nonnegative terms give contraction toward each feasible y."
+    },
+    {
+      "id": "one-step-ogd",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Lemma 2.12 statement and its full proof display"
+      },
+      "content": "eta_t(loss_t(x_t)-loss_t(u))<=eta_t<g_t,x_t-u><=||x_t-u||^2/2-||x_(t+1)-u||^2/2+eta_t^2||g_t||^2/2. Uses projection contraction, squared-norm expansion and gradient support."
+    },
+    {
+      "id": "regret-variable",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Theorem 2.13 first display; proof PDF26 first display"
+      },
+      "content": "For diameter D and 0<eta_(t+1)<=eta_t, R_T(u)<=D^2/(2 eta_T)+sum eta_t||g_t||^2/2-||x_(T+1)-u||^2/(2 eta_T). Divide one-step by eta_t, sum, rearrange weighted distances, bound distances by D using nonnegative inverse-rate differences, telescope inverse-rate differences."
+    },
+    {
+      "id": "regret-constant",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Theorem 2.13 Moreover display; proof PDF26 second display"
+      },
+      "content": "For constant eta>0, R_T(u)<=||u-x_1||^2/(2 eta)+(eta/2)sum||g_t||^2-||x_(T+1)-u||^2/(2 eta). Constant coefficients telescope exactly."
+    },
+    {
+      "id": "terminal-term",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof third bullet"
+      },
+      "content": "The terminal-distance term is nonpositive and may be discarded for a weaker bound, though retained by the source theorem."
+    },
+    {
+      "id": "learning-rate-limit",
+      "kind": "SOURCE_BOUNDARY",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "First two displays and However paragraph"
+      },
+      "content": "Formal minimization using comparator distance and future gradient energy is unavailable online: future gradients depend on eta, comparator is unknown, adversary can react to the learning rate."
+    },
+    {
+      "id": "tuning",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "For the moment paragraph; eta-star display; numbered equation (2.1)"
+      },
+      "content": "Assume ||g_t||_2<=L and bounded diameter D. Minimize D^2/(2 eta)+eta L^2 T/2 to obtain eta*=D/(L sqrt(T)) and bound D L sqrt(T). Tuning is for fixed number of iterations (PDF26 final paragraph)."
+    },
+    {
+      "id": "interval-projection",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "Example 2.14 sentence beginning The projection"
+      },
+      "content": "Pi_[0,1](z)=min(max(z,0),1). Statement supplied without its scalar proof."
+    },
+    {
+      "id": "proper",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition 2.18"
+      },
+      "content": "Proper means nowhere -infinity and finite somewhere."
+    },
+    {
+      "id": "subgradient",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition 2.20 and sole display; PDF29 opening paragraph"
+      },
+      "content": "For proper f, g is a subgradient at x iff f(y)>=f(x)+<g,y-x> for all y. Partial f(x) is the set of all such g; subdifferentiable iff nonempty."
+    },
+    {
+      "id": "abs-subdifferential",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 30,
+        "printed_page": 18,
+        "locator": "Example 2.24 complete case display"
+      },
+      "content": "For f(x)=|x|, partial f(x)={1} if x>0, [-1,1] if x=0, {-1} if x<0. No proof displayed."
+    },
+    {
+      "id": "affine-subgradient",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 30,
+        "printed_page": 18,
+        "locator": "Theorem 2.28 statement and proof display"
+      },
+      "content": "For proper f and h(x)=f(Ax+b), A^T partial f(Ax+b) is a subset of partial h(x). Proof substitutes affine arguments into the subgradient support inequality. Inclusion only, not equality."
+    },
+    {
+      "id": "subgradient-transfer",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Section 2.2.2 first paragraph and its support display"
+      },
+      "content": "Theorem 2.13 analysis uses loss_t(x_t)-loss_t(u)<=<g_t,x_t-u>; this holds for any subgradient, so the regret bounds transfer with differentiability replaced by subdifferentiability."
+    },
+    {
+      "id": "one-step-osd",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Lemma 2.31 statement and sole display"
+      },
+      "content": "For nonempty closed convex V, loss subdifferentiable on V, eta_t>0, g_t in partial loss_t(x_t), projected update, the complete two-inequality one-step bound of 2.12 holds for every u in V."
+    },
+    {
+      "id": "osd",
+      "kind": "ALGORITHM",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 Require and lines 1-6; following paragraph"
+      },
+      "content": "Start x_1 in nonempty closed convex V, eta_1,...,eta_T>0; output x_t, pay subdifferentiable loss, choose g_t in partial loss_t(x_t), update with Euclidean projection. The prose identifies line 4 as the change from Algorithm 2.1."
+    },
+    {
+      "id": "target-loss",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example 2.32 opening two sentences"
+      },
+      "content": "Reuse Chapter 1 guessing game with loss_t(x)=|x-y_t|, requiring subgradients because the losses are nondifferentiable."
+    },
+    {
+      "id": "target-cases",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example 2.32 three-case display"
+      },
+      "content": "partial loss_t(x)={1} for x>y_t, [-1,1] for x=y_t, {-1} for x<y_t. The source allows the entire interval at equality, with no specified tie selection."
+    },
+    {
+      "id": "target-regret",
+      "kind": "TARGET_SOURCE_CLAIM",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example 2.32 final sentence"
+      },
+      "content": "Running OSD with the optimal learning rate gives a regret of O(sqrt(T)) as T tends to infinity. This sentence gives no explicit eta, finite-T constant, or comparator formula."
+    },
+    {
+      "id": "gap-projection-existence",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Projection definition before Proposition 2.11"
+      },
+      "content": "Existence and uniqueness of the Euclidean argmin for a nonempty closed convex set are asserted, not proved in the direct source region.",
+      "consumer": "projection",
+      "status": "omitted-source-bridge-not-a-refutation"
+    },
+    {
+      "id": "gap-scalar-projection",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "Example 2.14 projection sentence"
+      },
+      "content": "Scalar clipping characterization is stated without a proof.",
+      "consumer": "interval-projection",
+      "status": "omitted-source-bridge-not-a-refutation"
+    },
+    {
+      "id": "gap-abs-cases",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 30,
+        "printed_page": 18,
+        "locator": "Example 2.24 case display"
+      },
+      "content": "Complete absolute-value subdifferential characterization is given without proving support or the reverse exclusion.",
+      "consumer": "abs-subdifferential",
+      "status": "omitted-source-bridge-not-a-refutation"
+    },
+    {
+      "id": "gap-shifted-cases",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example 2.32 We can easily see and case display"
+      },
+      "content": "Translation of the complete absolute subdifferential is not proved. Theorem 2.28 supplies an inclusion, not the reverse inclusion needed for equality.",
+      "consumer": "target-cases",
+      "status": "omitted-source-bridge-not-a-refutation"
+    },
+    {
+      "id": "gap-specialization",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example 2.32 final sentence"
+      },
+      "content": "No written calculation discharges V=[0,1] closed/convex/nonempty, D=1, |g_t|<=1, eta=1/sqrt(T)>0 for T>=1, or substitutes these into the transferred bound.",
+      "consumer": "target-regret",
+      "status": "omitted-source-bridge-not-a-refutation"
+    },
+    {
+      "id": "gap-best-comparator",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example 2.32 final sentence, referring back to Chapter 1"
+      },
+      "content": "If regret means best-fixed guessing-game regret, existence of a minimizing absolute-loss comparator and passage from the uniform all-u bound to the minimum are not written here.",
+      "consumer": "target-regret",
+      "status": "omitted-source-bridge-not-a-refutation"
+    },
+    {
+      "id": "game-adaptivity",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "A Winning Strategy, first paragraph, beginning Can we win the number guessing game? and ending the adversary."
+      },
+      "content": "The guessing game can also be won when the adversary chooses its number after observing the player choice. The source imposes no restriction on how the adversary decides the numbers and explicitly allows adversarial choices. Thus the initial secret-before-prediction ordering on PDF13 is not a restriction on the later guessing-game guarantee. The player still receives y_t only after outputting x_t.",
+      "source_evidence": [
+        "evidence/pdf-page-015-v2.png",
+        "evidence/pdf-page-015-v2.txt",
+        "evidence/pdf-page-015-word-geometry-v2.json"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "projection-opt",
+      "premises": [
+        "optimality",
+        "gap-projection-existence"
+      ],
+      "conclusion": "projection-proof",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF24 Proposition 2.11 proof",
+      "premise_discharge": "Squared distance is convex and differentiable on R^d; source V supplies nonempty closed convex, projection is a minimizer via its asserted definition."
+    },
+    {
+      "id": "projection-finish",
+      "premises": [
+        "projection-proof"
+      ],
+      "conclusion": "projection",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 first display",
+      "premise_discharge": "Feasible y, nonnegative cross term, nonnegative squared norm and nonnegative norms."
+    },
+    {
+      "id": "optimality-sufficient",
+      "premises": [
+        "support-gradient"
+      ],
+      "conclusion": "optimality",
+      "operator": "AND",
+      "relation": "proof_of_one_direction",
+      "consumer_use_site": "PDF23 Theorem 2.8 first proof paragraph",
+      "premise_discharge": "x* lies in V contained in the differentiability open set. This edge supports only the sufficiency half; necessity is the independent line-segment paragraph."
+    },
+    {
+      "id": "one-step-gradient",
+      "premises": [
+        "projection",
+        "support-gradient",
+        "ogd"
+      ],
+      "conclusion": "one-step-ogd",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 Lemma 2.12 proof",
+      "premise_discharge": "u in V, x_t in V, eta_t>0, and convex differentiability on open neighborhood; square expansion is explicitly displayed."
+    },
+    {
+      "id": "variable-sum",
+      "premises": [
+        "one-step-ogd"
+      ],
+      "conclusion": "regret-variable",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 last sentence and PDF26 first display",
+      "premise_discharge": "Positive rates permit division; nonincreasing rates make inverse differences nonnegative; projected iterates and comparator in V bound distances by D."
+    },
+    {
+      "id": "constant-sum",
+      "premises": [
+        "one-step-ogd"
+      ],
+      "conclusion": "regret-constant",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF26 In the same way display",
+      "premise_discharge": "Constant positive eta permits telescoping with no diameter substitution and retains the negative terminal term."
+    },
+    {
+      "id": "osd-step",
+      "premises": [
+        "projection",
+        "subgradient",
+        "osd"
+      ],
+      "conclusion": "one-step-osd",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF31 Section 2.2.2 and Lemma 2.31",
+      "premise_discharge": "g_t belongs to partial loss_t(x_t), u in V, eta_t>0; Algorithm 2.2 ensures x_t in V. Subgradient definition supplies the loss-support inequality without differentiability."
+    },
+    {
+      "id": "osd-transfer",
+      "premises": [
+        "one-step-osd"
+      ],
+      "conclusion": "subgradient-transfer",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF31 Theorem 2.13 transfer paragraph",
+      "premise_discharge": "Same division, sum, telescoping as PDF26. For variable-rate branch require diameter and nonincreasing rates; constant-rate branch requires positive constant eta."
+    },
+    {
+      "id": "tune-constant",
+      "premises": [
+        "regret-constant",
+        "terminal-term"
+      ],
+      "conclusion": "tuning",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF27 loose-upper-bound paragraph and (2.1)",
+      "premise_discharge": "Bound ||u-x1||<=D and ||g_t||<=L; choose fixed-horizon eta=D/(L sqrt(T)), with D,L,T positive for this formula."
+    },
+    {
+      "id": "tune-variable",
+      "premises": [
+        "regret-variable",
+        "terminal-term"
+      ],
+      "conclusion": "tuning",
+      "operator": "AND",
+      "relation": "alternative_sufficient_specialization",
+      "consumer_use_site": "PDF27 loose-upper-bound paragraph and (2.1)",
+      "premise_discharge": "Set all eta_t equal; D and L bounds as above. This is an alternative sufficient bound route, not an extra premise for tune-constant."
+    },
+    {
+      "id": "cases-support",
+      "premises": [
+        "abs-subdifferential",
+        "affine-subgradient",
+        "target-loss"
+      ],
+      "conclusion": "target-cases",
+      "operator": "AND",
+      "relation": "partial_support_not_complete_proof",
+      "consumer_use_site": "PDF32 three-case display",
+      "premise_discharge": "Take d=m=1, A=1, b=-y_t and proper f=abs. Gives inclusion only. Reverse inclusion remains gap-shifted-cases."
+    },
+    {
+      "id": "game-specialization",
+      "premises": [
+        "game",
+        "game-adaptivity",
+        "target-loss",
+        "osd"
+      ],
+      "conclusion": "target-regret",
+      "operator": "AND",
+      "relation": "semantic_inputs",
+      "consumer_use_site": "PDF32 Example 2.32 full paragraph",
+      "premise_discharge": "V=[0,1] and y_t in [0,1] inherit the game domains. game-adaptivity supplies the explicit extension allowing the adversary to choose y_t after seeing x_t, so the original secret-before-output order is not a required restriction. The revealed y_t supplies loss/subgradient after prediction. No independence, expectation or high-probability event is assumed."
+    },
+    {
+      "id": "target-route",
+      "premises": [
+        "subgradient-transfer",
+        "tuning",
+        "target-cases",
+        "gap-specialization"
+      ],
+      "conclusion": "target-regret",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF32 final sentence",
+      "premise_discharge": "Transferred tuning with D=L=1 gives an upper guarantee; explicit constant and substitutions are derived below, not quoted from Example 2.32."
+    },
+    {
+      "id": "abs-gap-record",
+      "premises": [
+        "subgradient",
+        "gap-abs-cases"
+      ],
+      "conclusion": "abs-subdifferential",
+      "operator": "AND",
+      "relation": "open_source_obligation",
+      "consumer_use_site": "PDF30 Example 2.24",
+      "premise_discharge": "The source supplies the complete case statement; no complete proof is displayed. This edge records an open source-proof obligation, not a completed proof."
+    },
+    {
+      "id": "shift-gap-record",
+      "premises": [
+        "abs-subdifferential",
+        "gap-shifted-cases"
+      ],
+      "conclusion": "target-cases",
+      "operator": "AND",
+      "relation": "open_source_obligation",
+      "consumer_use_site": "PDF32 Example 2.32 case display",
+      "premise_discharge": "Proper ambient absolute loss and real translation. The reverse inclusion remains an omitted bridge."
+    },
+    {
+      "id": "scalar-gap-record",
+      "premises": [
+        "projection",
+        "gap-scalar-projection"
+      ],
+      "conclusion": "interval-projection",
+      "operator": "AND",
+      "relation": "open_source_obligation",
+      "consumer_use_site": "PDF27 Example 2.14 projection sentence",
+      "premise_discharge": "The set [0,1] supplies nonempty closed convex conditions; equality with clipping is stated but not derived."
+    },
+    {
+      "id": "best-fixed-gap-record",
+      "premises": [
+        "regret",
+        "gap-best-comparator"
+      ],
+      "conclusion": "target-regret",
+      "operator": "AND",
+      "relation": "conditional_open_source_obligation",
+      "consumer_use_site": "PDF32 final sentence read with Chapter 1 best-fixed regret",
+      "premise_discharge": "Only needed if interpreting regret as the minimum-comparator version, rather than the all-fixed-u bound. This is a conditional semantic bridge, not an extra assumption on the game."
+    },
+    {
+      "id": "guessing-adaptivity-inheritance",
+      "premises": [
+        "game-adaptivity"
+      ],
+      "conclusion": "target-loss",
+      "operator": "AND",
+      "relation": "standing_semantic_scope",
+      "consumer_use_site": "PDF32 Example 2.32 opening sentence refers to the guessing game of the first chapter again",
+      "premise_discharge": "Inherit the Chapter 1 domain and feedback conventions while changing only the loss. PDF15 explicitly permits y_t to depend on the current output x_t. This does not require the adversary to use both the initial before-output ordering and the after-output ordering. The pathwise OSD support and distance inequalities impose no independence or pre-output choice restriction on y_t."
+    }
+  ],
+  "alternative_route_groups": [
+    {
+      "target": "tuning",
+      "operator": "OR",
+      "routes": [
+        "tune-constant",
+        "tune-variable"
+      ],
+      "note": "Either constant-rate theorem branch, or variable-rate branch specialized to constant eta, suffices for the loose DL sqrt(T) upper bound. Neither requires both bounds."
+    }
+  ],
+  "coverage_inventory": [
+    {
+      "id": "region:game",
+      "pdf_page": 13,
+      "locator": "Chapter 1 opening three bullets",
+      "disposition": "NODE",
+      "node_id": "game"
+    },
+    {
+      "id": "region:regret",
+      "pdf_page": 14,
+      "locator": "Arbitrary-sequence paragraph; both unnumbered Regret displays; Remark 1.1",
+      "disposition": "NODE",
+      "node_id": "regret"
+    },
+    {
+      "id": "region:online-protocol",
+      "pdf_page": 20,
+      "locator": "Section 2.1 game bullets and following Regret display",
+      "disposition": "NODE",
+      "node_id": "online-protocol"
+    },
+    {
+      "id": "region:convex-set",
+      "pdf_page": 21,
+      "locator": "Definition 2.2",
+      "disposition": "NODE",
+      "node_id": "convex-set"
+    },
+    {
+      "id": "region:domain",
+      "pdf_page": 21,
+      "locator": "Paragraph starting We will make use of extended-real-valued functions",
+      "disposition": "NODE",
+      "node_id": "domain"
+    },
+    {
+      "id": "region:convex-function",
+      "pdf_page": 22,
+      "locator": "Definition 2.3",
+      "disposition": "NODE",
+      "node_id": "convex-function"
+    },
+    {
+      "id": "region:support-gradient",
+      "pdf_page": 23,
+      "locator": "Theorem 2.7, sole display and Rockafellar citation",
+      "disposition": "NODE",
+      "node_id": "support-gradient"
+    },
+    {
+      "id": "region:optimality",
+      "pdf_page": 23,
+      "locator": "Theorem 2.8 statement and two proof paragraphs",
+      "disposition": "NODE",
+      "node_id": "optimality"
+    },
+    {
+      "id": "region:ogd",
+      "pdf_page": 24,
+      "locator": "Algorithm 2.1 lines Require and 1-6",
+      "disposition": "NODE",
+      "node_id": "ogd"
+    },
+    {
+      "id": "region:projection",
+      "pdf_page": 24,
+      "locator": "Paragraph before Proposition 2.11; Proposition 2.11 statement",
+      "disposition": "NODE",
+      "node_id": "projection"
+    },
+    {
+      "id": "region:projection-proof",
+      "pdf_page": 24,
+      "locator": "Proposition 2.11 proof, continues PDF25 top display",
+      "disposition": "NODE",
+      "node_id": "projection-proof"
+    },
+    {
+      "id": "region:one-step-ogd",
+      "pdf_page": 25,
+      "locator": "Lemma 2.12 statement and its full proof display",
+      "disposition": "NODE",
+      "node_id": "one-step-ogd"
+    },
+    {
+      "id": "region:regret-variable",
+      "pdf_page": 25,
+      "locator": "Theorem 2.13 first display; proof PDF26 first display",
+      "disposition": "NODE",
+      "node_id": "regret-variable"
+    },
+    {
+      "id": "region:regret-constant",
+      "pdf_page": 25,
+      "locator": "Theorem 2.13 Moreover display; proof PDF26 second display",
+      "disposition": "NODE",
+      "node_id": "regret-constant"
+    },
+    {
+      "id": "region:terminal-term",
+      "pdf_page": 26,
+      "locator": "Post-proof third bullet",
+      "disposition": "NODE",
+      "node_id": "terminal-term"
+    },
+    {
+      "id": "region:learning-rate-limit",
+      "pdf_page": 27,
+      "locator": "First two displays and However paragraph",
+      "disposition": "NODE",
+      "node_id": "learning-rate-limit"
+    },
+    {
+      "id": "region:tuning",
+      "pdf_page": 27,
+      "locator": "For the moment paragraph; eta-star display; numbered equation (2.1)",
+      "disposition": "NODE",
+      "node_id": "tuning"
+    },
+    {
+      "id": "region:interval-projection",
+      "pdf_page": 27,
+      "locator": "Example 2.14 sentence beginning The projection",
+      "disposition": "NODE",
+      "node_id": "interval-projection"
+    },
+    {
+      "id": "region:proper",
+      "pdf_page": 28,
+      "locator": "Definition 2.18",
+      "disposition": "NODE",
+      "node_id": "proper"
+    },
+    {
+      "id": "region:subgradient",
+      "pdf_page": 28,
+      "locator": "Definition 2.20 and sole display; PDF29 opening paragraph",
+      "disposition": "NODE",
+      "node_id": "subgradient"
+    },
+    {
+      "id": "region:abs-subdifferential",
+      "pdf_page": 30,
+      "locator": "Example 2.24 complete case display",
+      "disposition": "NODE",
+      "node_id": "abs-subdifferential"
+    },
+    {
+      "id": "region:affine-subgradient",
+      "pdf_page": 30,
+      "locator": "Theorem 2.28 statement and proof display",
+      "disposition": "NODE",
+      "node_id": "affine-subgradient"
+    },
+    {
+      "id": "region:subgradient-transfer",
+      "pdf_page": 31,
+      "locator": "Section 2.2.2 first paragraph and its support display",
+      "disposition": "NODE",
+      "node_id": "subgradient-transfer"
+    },
+    {
+      "id": "region:one-step-osd",
+      "pdf_page": 31,
+      "locator": "Lemma 2.31 statement and sole display",
+      "disposition": "NODE",
+      "node_id": "one-step-osd"
+    },
+    {
+      "id": "region:osd",
+      "pdf_page": 32,
+      "locator": "Algorithm 2.2 Require and lines 1-6; following paragraph",
+      "disposition": "NODE",
+      "node_id": "osd"
+    },
+    {
+      "id": "region:target-loss",
+      "pdf_page": 32,
+      "locator": "Example 2.32 opening two sentences",
+      "disposition": "NODE",
+      "node_id": "target-loss"
+    },
+    {
+      "id": "region:target-cases",
+      "pdf_page": 32,
+      "locator": "Example 2.32 three-case display",
+      "disposition": "NODE",
+      "node_id": "target-cases"
+    },
+    {
+      "id": "region:target-regret",
+      "pdf_page": 32,
+      "locator": "Example 2.32 final sentence",
+      "disposition": "NODE",
+      "node_id": "target-regret"
+    },
+    {
+      "id": "region:gap-projection-existence",
+      "pdf_page": 24,
+      "locator": "Projection definition before Proposition 2.11",
+      "disposition": "NODE",
+      "node_id": "gap-projection-existence"
+    },
+    {
+      "id": "region:gap-scalar-projection",
+      "pdf_page": 27,
+      "locator": "Example 2.14 projection sentence",
+      "disposition": "NODE",
+      "node_id": "gap-scalar-projection"
+    },
+    {
+      "id": "region:gap-abs-cases",
+      "pdf_page": 30,
+      "locator": "Example 2.24 case display",
+      "disposition": "NODE",
+      "node_id": "gap-abs-cases"
+    },
+    {
+      "id": "region:gap-shifted-cases",
+      "pdf_page": 32,
+      "locator": "Example 2.32 We can easily see and case display",
+      "disposition": "NODE",
+      "node_id": "gap-shifted-cases"
+    },
+    {
+      "id": "region:gap-specialization",
+      "pdf_page": 32,
+      "locator": "Example 2.32 final sentence",
+      "disposition": "NODE",
+      "node_id": "gap-specialization"
+    },
+    {
+      "id": "region:gap-best-comparator",
+      "pdf_page": 32,
+      "locator": "Example 2.32 final sentence, referring back to Chapter 1",
+      "disposition": "NODE",
+      "node_id": "gap-best-comparator"
+    },
+    {
+      "id": "excluded:ch1-stochastic",
+      "pdf_page": 13,
+      "locator": "Text after game bullets, equations (1.1),(1.2)",
+      "disposition": "EXCLUDED",
+      "reason": "Squared-loss i.i.d. motivation is not an assumption or proof of Example 2.32."
+    },
+    {
+      "id": "excluded:ch1-expectation",
+      "pdf_page": 14,
+      "locator": "Opening expectation display",
+      "disposition": "EXCLUDED",
+      "reason": "Historical motivation discarded by the following arbitrary-sequence passage."
+    },
+    {
+      "id": "excluded:ch1-other",
+      "pdf_page": 14,
+      "locator": "Dynamic competitor discussion, footnote 1 and trailing continuation",
+      "disposition": "EXCLUDED",
+      "reason": "Dynamic comparators and enlarged prediction sets are outside the fixed-comparator guessing target."
+    },
+    {
+      "id": "excluded:ch1-ftl",
+      "pdf_page": 15,
+      "locator": "PDF15-19, Chapter 1 squared-loss strategy/proof/history/problems, EXCEPT the A Winning Strategy first paragraph on PDF15, separately inventoried as region:game-adaptivity",
+      "disposition": "EXCLUDED",
+      "reason": "The squared-loss FTL construction, proof, historical discussion and exercises are not dependencies of the generic absolute-loss OSD argument. This exclusion does not cover the standing adaptivity convention in the A Winning Strategy first paragraph."
+    },
+    {
+      "id": "excluded:oco-motivation",
+      "pdf_page": 20,
+      "locator": "Chapter introduction and prose following regret display",
+      "disposition": "EXCLUDED",
+      "reason": "Motivation, not additional hypotheses."
+    },
+    {
+      "id": "excluded:remark21",
+      "pdf_page": 21,
+      "locator": "Opening continuation, OCO prose, Remark 2.1 and Reddi citation",
+      "disposition": "EXCLUDED",
+      "reason": "General motivation and Adam caution, not dependencies of this bound."
+    },
+    {
+      "id": "excluded:fig21",
+      "pdf_page": 21,
+      "locator": "Figure 2.1 and explanatory no holes prose",
+      "disposition": "EXCLUDED",
+      "reason": "Illustrates Definition 2.2; not a proof premise."
+    },
+    {
+      "id": "excluded:indicator",
+      "pdf_page": 21,
+      "locator": "Indicator display and Boyd-Vandenberghe citation",
+      "disposition": "EXCLUDED",
+      "reason": "No indicator-loss extension is used. Subgradients are of ambient absolute loss, not of absolute loss plus an interval indicator."
+    },
+    {
+      "id": "excluded:convex-background",
+      "pdf_page": 22,
+      "locator": "Figure 2.2, Theorem 2.4 with Rockafellar citation, Examples 2.5-2.6, closure-operation bullets",
+      "disposition": "EXCLUDED",
+      "reason": "Generic convexity recognition background. OSD uses the explicit global support definition and case display directly. These are not extra AND inputs to the target."
+    },
+    {
+      "id": "excluded:indicator-cont",
+      "pdf_page": 22,
+      "locator": "Opening indicator/Fenchel paragraphs and paragraph after Definition 2.3",
+      "disposition": "EXCLUDED",
+      "reason": "Indicator and conjugacy discussion is not used."
+    },
+    {
+      "id": "excluded:optimality-comment",
+      "pdf_page": 23,
+      "locator": "Geometric interpretation after 2.8",
+      "disposition": "EXCLUDED",
+      "reason": "Useful explanation but interior stationarity is not required for constrained projection."
+    },
+    {
+      "id": "excluded:jensen",
+      "pdf_page": 23,
+      "locator": "Theorem 2.9",
+      "disposition": "EXCLUDED",
+      "reason": "No expectation/Jensen step enters this deterministic pathwise argument."
+    },
+    {
+      "id": "excluded:ftl",
+      "pdf_page": 23,
+      "locator": "Section 2.1.2 opening FTL definition, continued PDF24 and Example 2.10",
+      "disposition": "EXCLUDED",
+      "reason": "Motivates OGD; FTL failure is not a proof dependency of OSD regret."
+    },
+    {
+      "id": "excluded:ogd-sgd",
+      "pdf_page": 24,
+      "locator": "Prose between Example 2.10 and projection introduction",
+      "disposition": "EXCLUDED",
+      "reason": "Algorithm motivation and stochastic comparison, no additional proof premise."
+    },
+    {
+      "id": "excluded:postproof-observations",
+      "pdf_page": 26,
+      "locator": "Post-proof bullets 1,2,4,5",
+      "disposition": "EXCLUDED",
+      "reason": "Timing, unbounded-domain and rate-choice commentary retained as context but no extra dependencies. References to 15.5.1, 5.2, Chapter 3 are outside scope."
+    },
+    {
+      "id": "excluded:future-rates",
+      "pdf_page": 27,
+      "locator": "Paragraph referencing Chapter 5, Section 4.2 and Chapter 13; optimality sentence after (2.1)",
+      "disposition": "EXCLUDED",
+      "reason": "No lower bound, adaptive method, parameter-free method or minimax claim is needed for this upper bound."
+    },
+    {
+      "id": "excluded:squared-ex214",
+      "pdf_page": 27,
+      "locator": "Example 2.14 except projection sentence",
+      "disposition": "EXCLUDED",
+      "reason": "Squared-loss gradient and suboptimality comparison are distinct from absolute-loss target."
+    },
+    {
+      "id": "excluded:stock",
+      "pdf_page": 27,
+      "locator": "Example 2.15, continues PDF28 top",
+      "disposition": "EXCLUDED",
+      "reason": "Huber-loss stock prediction is a separate example."
+    },
+    {
+      "id": "excluded:subgrad-intro",
+      "pdf_page": 28,
+      "locator": "Section 2.2 opening motivation",
+      "disposition": "EXCLUDED",
+      "reason": "Nondifferentiability motivation adds no premise beyond the target loss and subgradient definition."
+    },
+    {
+      "id": "excluded:closed-function",
+      "pdf_page": 28,
+      "locator": "Definition 2.16, l.s.c. citation, Examples 2.17 and 2.19",
+      "disposition": "EXCLUDED",
+      "reason": "Closed-function and indicator facts are not required by this direct absolute-loss argument."
+    },
+    {
+      "id": "excluded:subgrad-existence",
+      "pdf_page": 29,
+      "locator": "Second/third paragraphs, Rockafellar 23.4 citation and footnote 1",
+      "disposition": "EXCLUDED",
+      "reason": "General interior subgradient-existence theorem is unnecessary because the explicit absolute-loss case sets are nonempty everywhere."
+    },
+    {
+      "id": "excluded:thm221",
+      "pdf_page": 29,
+      "locator": "Theorem 2.21 and full proof",
+      "disposition": "EXCLUDED",
+      "reason": "Convexity from everywhere subdifferentiability is background; Lemma 2.31 directly assumes subdifferentiability."
+    },
+    {
+      "id": "excluded:thm222",
+      "pdf_page": 29,
+      "locator": "Theorem 2.22 and Rockafellar citation",
+      "disposition": "EXCLUDED",
+      "reason": "Gradient uniqueness equivalence is not needed to choose any allowed absolute-loss subgradient."
+    },
+    {
+      "id": "excluded:thm223",
+      "pdf_page": 29,
+      "locator": "Theorem 2.23 and proof, continues PDF30 first paragraph including Bauschke-Combettes citation",
+      "disposition": "EXCLUDED",
+      "reason": "No sum rule is needed for the per-round absolute-loss support or regret telescoping."
+    },
+    {
+      "id": "excluded:normal-cone",
+      "pdf_page": 30,
+      "locator": "Example 2.25",
+      "disposition": "EXCLUDED",
+      "reason": "Would concern constrained/indicator subgradients, not the ambient loss used by Algorithm 2.2."
+    },
+    {
+      "id": "excluded:max-hinge",
+      "pdf_page": 30,
+      "locator": "Theorem 2.26, external citation and Example 2.27",
+      "disposition": "EXCLUDED",
+      "reason": "Max-rule and hinge example are not used by the displayed absolute-value case statement."
+    },
+    {
+      "id": "excluded:lipschitz",
+      "pdf_page": 31,
+      "locator": "Definition 2.29, Theorem 2.30 and full proof",
+      "disposition": "EXCLUDED",
+      "reason": "Possible optional route for a norm bound, but Example 2.32 does not cite it and its own case display immediately bounds every g. Do not make it an AND prerequisite."
+    },
+    {
+      "id": "excluded:nondiff-set",
+      "pdf_page": 31,
+      "locator": "Misconception paragraph before Section 2.2.2",
+      "disposition": "EXCLUDED",
+      "reason": "Separate illustration, no proof premise."
+    },
+    {
+      "id": "excluded:units",
+      "pdf_page": 32,
+      "locator": "Section 2.2.3 and PDF33 continuation",
+      "disposition": "EXCLUDED",
+      "reason": "Subsequent dimensional analysis is not part of Example 2.32 proof; it is not treated as upstream support."
+    },
+    {
+      "id": "region:game-adaptivity",
+      "pdf_page": 15,
+      "locator": "A Winning Strategy, first paragraph, beginning Can we win the number guessing game? and ending the adversary.",
+      "disposition": "NODE",
+      "node_id": "game-adaptivity"
+    }
+  ],
+  "derived_instantiation": {
+    "status": "DERIVED_INSTANTIATION_NOT_VERBATIM_SOURCE_AND_NOT_SOURCE_REPAIR",
+    "objects": "For each fixed integer horizon T>=1, y_1,...,y_T in [0,1], allowing y_t to be chosen after observing current x_t, any x_1 in [0,1], any causal allowed choice g_t in partial |.-y_t|(x_t) after y_t is revealed, and any u in [0,1].",
+    "update": "x_(t+1)=min(max(x_t-eta*g_t,0),1), eta=1/sqrt(T). A tie may use any g_t in [-1,1].",
+    "finite_bound": "R_T(u)<=((u-x_1)^2-(x_(T+1)-u)^2)/(2 eta)+(eta/2)sum_(t=1)^T g_t^2 <= 1/(2 eta)+eta*T/2 = sqrt(T).",
+    "discharges": {
+      "D": "Diameter of [0,1] is 1.",
+      "L": "All three source case sets are contained in [-1,1], so |g_t|<=1, including ties.",
+      "loss_domain": "loss_t is the finite ambient function R -> R, not an extended-real constrained loss.",
+      "set": "[0,1] is nonempty, closed and convex.",
+      "rate": "T>=1 implies eta>0; eta is constant during that horizon, with T known for this specialization.",
+      "iterates": "Initial feasibility and projection preserve x_t in [0,1].",
+      "feedback": "The player outputs x_t before learning y_t. The adversary may choose y_t after observing x_t (PDF15, A Winning Strategy first paragraph); once y_t is revealed, the case subgradient is available. The support and distance proof is pathwise and requires no independence or pre-output choice restriction.",
+      "terminal": "-(x_(T+1)-u)^2/(2 eta)<=0 is discarded only in the weaker upper bound."
+    },
+    "upper_asymptotic": "The displayed finite inequality implies an eventual one-sided upper bound R_T(u)<=C sqrt(T) with C=1. The source writes O(sqrt(T)); it does not supply a two-sided |R_T(u)| bound. Do not silently equate these contracts.",
+    "best_fixed": "Continuity of sum_t |u-y_t| on compact [0,1] gives a minimizing comparator; applying the uniform bound there gives best-fixed regret <=sqrt(T). This standard bridge is derived and not displayed in Example 2.32.",
+    "boundaries": [
+      "No lower or minimax bound.",
+      "No assertion that R_T(u) is nonnegative.",
+      "No fixed horizon-independent anytime sequence is specified by this tuning.",
+      "No iid, martingale, confidence or probability requirement.",
+      "No scalar tie convention or sign(0) definition specified.",
+      "No exact finite constant or explicit learning rate is printed in Example 2.32 itself."
+    ]
+  },
+  "review_boundary": "Extractor has not approved its own graph; independent reviewer must audit raw source and topology.",
+  "version": "v2",
+  "supersedes_for_review": "source-topology-v1.json",
+  "revision_scope": "Narrow source-coverage correction for printed page 3 / PDF15 adversary adaptivity. No mathematical source repair or implementation verdict."
+}

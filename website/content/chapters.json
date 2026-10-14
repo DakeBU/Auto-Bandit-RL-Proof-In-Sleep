@@ -937,6 +937,33 @@
         "A universal theorem over externally supplied argmin trajectories is not part of this concrete-family API.",
         "Purification and a full Exposition Seal remain separate."
       ]
+    },
+    {
+      "slug": "online-guessing-osd",
+      "title": "Absolute-loss guessing by projected subgradient descent",
+      "short_title": "Absolute-loss guessing",
+      "status": "compiled",
+      "summary": "The full absolute-loss support set supplies a causal projected update and a square-root regret bound for each known horizon.",
+      "audience": "Readers of Orabona Example 2.32.",
+      "completion_definition": "One bounded Example 2.32 integration: one loss definition and twelve production proofs, with all 27 original canary proofs, six test definitions and one abbreviation.",
+      "completion_blockers": [
+        "General finite-history policies require their separate source and integration reviews.",
+        "Other source obligations and chapter/book acceptance remain open."
+      ],
+      "learning_goals": [
+        "Keep every support in [-1,1] when prediction equals the label.",
+        "Predict before feedback, then apply the actual selected support and interval projection.",
+        "Derive a same-run bound for every fixed comparator while retaining the sharp terminal-distance term.",
+        "Distinguish a horizon-indexed one-sided average bound from convergence of signed regret."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineGuessingSubgradient.lean"
+      ],
+      "open_gaps": [
+        "This integrates the canonical current-loss selector. General finite-history support policies remain separately owned by open PR149/181/182. Chapter, book and purification acceptance remain separate.",
+        "The selector is noncomputable; executable or randomized policy semantics require separate work.",
+        "The all-comparator bound is formalized directly; an attained best-hindsight minimum interface is not part of this module."
+      ]
     }
   ]
 }
