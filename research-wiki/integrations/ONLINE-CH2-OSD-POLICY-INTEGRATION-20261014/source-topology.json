@@ -1,0 +1,1890 @@
+{
+  "schema_version": "1.0",
+  "version": "v2",
+  "id": "batch14-generic-osd-orabona-v10",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "status": "EXTRACTED_PENDING_DISTINCT_SOURCE_REVIEW",
+  "scope": "Generic Algorithm2.2/Lemma2.31 and the source transfer of Theorem2.13/eq(2.1), with standing semantic conventions and direct proof dependencies.",
+  "roots": [
+    "algorithm22",
+    "lemma231",
+    "osd-transfer",
+    "bounded-tuning",
+    "osd-fixed-coarse-printed"
+  ],
+  "nodes": [
+    {
+      "id": "initial-game",
+      "kind": "STANDING_EXAMPLE",
+      "anchor": {
+        "pdf_page": 13,
+        "printed_page": 1,
+        "locator": "Chapter 1 opening game bullets"
+      },
+      "content": "Initial example: adversary secretly chooses y_t in [0,1], player outputs x_t in [0,1], number then revealed and squared loss paid. This is the initial example, not an oblivious-adversary restriction."
+    },
+    {
+      "id": "arbitrary-data",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Now the last step paragraph and best-fixed regret display"
+      },
+      "content": "Remove data-generation assumptions; for deterministic algorithms the comparison is pathwise without expectation."
+    },
+    {
+      "id": "regret-definition",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Generalization paragraph, Regret_T(u) display, following paragraph, Remark 1.1"
+      },
+      "content": "For loss_t:V->R, R_T(u)=sum_(t=1)^T loss_t(x_t)-sum_(t=1)^T loss_t(u). Comparator u in V is fixed and unknown to the algorithm. The same run is compared with every u. Suppressed loss-sequence dependence is explicit."
+    },
+    {
+      "id": "after-output-adversary",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "A Winning Strategy first paragraph"
+      },
+      "content": "The adversary may choose its number after observing the player current output. There is no assumption on how the numbers are decided."
+    },
+    {
+      "id": "no-statistical-model",
+      "kind": "STANDING_EXPLANATION",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "Paragraph beginning Now the fact that the numbers are adversarially chosen"
+      },
+      "content": "A statistical model can be invalidated when the adversary changes the generation mechanism after the learner acts."
+    },
+    {
+      "id": "general-online-game",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 20,
+        "printed_page": 8,
+        "locator": "Section 2.1 game bullets, regret display, following adversarial-loss paragraph"
+      },
+      "content": "For t=1,...,T: output x_t in V subset R^d; pay real loss_t(x_t); receive some feedback. Losses are adversarial. Convexity/bounded gradients are example restrictions; future knowledge is not assumed. No specific feedback oracle or filtration is defined here."
+    },
+    {
+      "id": "convex-set",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Definition 2.2"
+      },
+      "content": "V convex: lambda x+(1-lambda)y in V for x,y in V and 0<lambda<1."
+    },
+    {
+      "id": "extended-domain",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Extended-real paragraph and dom f formula"
+      },
+      "content": "Functions may be extended-real valued; dom f={x:f(x)<+infinity}."
+    },
+    {
+      "id": "indicator-convention",
+      "kind": "SOURCE_CONVENTION",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Indicator definition and Boyd-Vandenberghe (2004) citation; PDF22 opening paragraph",
+        "continues_to_pdf_page": 22
+      },
+      "content": "The indicator is zero on V and +infinity elsewhere, enforcing feasibility through finite loss. This is background for ambient extended-real notation; Algorithm 2.2 does not automatically replace a supplied loss by loss+indicator."
+    },
+    {
+      "id": "convex-function",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Definition 2.3"
+      },
+      "content": "Convexity is convexity of the epigraph."
+    },
+    {
+      "id": "convex-characterization",
+      "kind": "EXTERNAL_SOURCE_LEAF",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Theorem 2.4 display and Rockafellar (1970) Theorem 4.1 citation"
+      },
+      "content": "Convex-domain f:R^d->(-infinity,+infinity] is convex iff f(lambda x+(1-lambda)y)<=lambda f(x)+(1-lambda)f(y) for 0<lambda<1. External theorem cited, not proved here."
+    },
+    {
+      "id": "gradient-support",
+      "kind": "EXTERNAL_SOURCE_LEAF",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.7 display and Rockafellar (1970), Theorem 25.1/Corollary 25.1.1 citation"
+      },
+      "content": "Convex f, x in int dom f, differentiability at x imply f(y)>=f(x)+<grad f(x),y-x> for every y. External theorem cited, not proved here."
+    },
+    {
+      "id": "optimality-statement",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8"
+      },
+      "content": "For nonempty convex V, x* in V, f convex and differentiable on an open set containing V, x* minimizes f iff <grad f(x*),y-x*>>=0 for every y in V."
+    },
+    {
+      "id": "optimality-sufficiency",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8 first proof paragraph and display"
+      },
+      "content": "Apply Theorem 2.7 and the nonnegative inner product to lower-bound f(y) by f(x*)."
+    },
+    {
+      "id": "optimality-necessity",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8 second proof paragraph"
+      },
+      "content": "If a feasible direction has negative directional derivative, convexity of V keeps its short line segment feasible, and differentiability yields a smaller function value, contradicting minimality."
+    },
+    {
+      "id": "algorithm-ogd",
+      "kind": "ALGORITHM",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Algorithm 2.1 Require and lines 1-6"
+      },
+      "content": "Nonempty closed convex V, x_1 in V, all eta_t>0. Output x_t, pay convex loss differentiable on open neighborhood of V, use gradient g_t, update x_(t+1)=Pi_V(x_t-eta_t g_t)."
+    },
+    {
+      "id": "ogd-adversarial-explanation",
+      "kind": "SOURCE_EXPLANATION",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Paragraph beginning Hence we will see an alternative strategy"
+      },
+      "content": "Gradient step then projection. The losses differ by round and are adversarial rather than drawn from a fixed distribution."
+    },
+    {
+      "id": "projection-definition",
+      "kind": "CHARACTERIZED_DEFINITION",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "First we show paragraph and Proposition 2.11 definition"
+      },
+      "content": "Pi_V(z)=argmin_(y in V)||z-y||_2 is called the unique projection for nonempty closed convex V."
+    },
+    {
+      "id": "projection-contraction",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Proposition 2.11 statement"
+      },
+      "content": "For y in V, ||Pi_V(z)-y||_2<=||z-y||_2."
+    },
+    {
+      "id": "projection-optimality-step",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Proposition 2.11 proof first paragraph and display"
+      },
+      "content": "The norm and half squared norm have the same argmin. Apply Theorem 2.8 to f(y)=||z-y||^2/2 to get <Pi_V(z)-z,y-Pi_V(z)>>=0."
+    },
+    {
+      "id": "projection-square-step",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Top Therefore display finishing Proposition 2.11"
+      },
+      "content": "Expand ||y-z||^2 about Pi_V(z). Drop nonnegative cross and squared displacement terms to obtain contraction."
+    },
+    {
+      "id": "ogd-one-step",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Lemma 2.12 statement and display"
+      },
+      "content": "eta_t(loss_t(x_t)-loss_t(u))<=eta_t<g_t,x_t-u><=||x_t-u||^2/2-||x_(t+1)-u||^2/2+eta_t^2||g_t||^2/2 for all u in V."
+    },
+    {
+      "id": "ogd-one-step-proof",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Lemma 2.12 proof display and Reordering sentence"
+      },
+      "content": "Projection contraction gives ||x_(t+1)-u||^2-||x_t-u||^2<=-2 eta_t<g_t,x_t-u>+eta_t^2||g_t||^2. Gradient support bounds loss difference; reorder."
+    },
+    {
+      "id": "thm213-decreasing",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Theorem 2.13 first statement and display"
+      },
+      "content": "D=sup_(x,y in V)||x-y||_2. For an arbitrary sequence of convex differentiable losses on an open neighborhood of V, x_1 in V, and nonincreasing positive rates, R_T(u)<=D^2/(2 eta_T)+sum eta_t||g_t||^2/2-||x_(T+1)-u||^2/(2 eta_T)."
+    },
+    {
+      "id": "thm213-fixed",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Theorem 2.13 Moreover statement and display"
+      },
+      "content": "When eta_t=eta for every round, R_T(u)<=||u-x_1||^2/(2 eta)+(eta/2)sum||g_t||^2-||x_(T+1)-u||^2/(2 eta)."
+    },
+    {
+      "id": "divide-sum",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Proof final sentence; PDF26 first display first line",
+        "continues_to_pdf_page": 26
+      },
+      "content": "Divide each one-step inequality by positive eta_t and sum t=1,...,T."
+    },
+    {
+      "id": "weighted-reindex",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "First display equality on second line"
+      },
+      "content": "Reindex weighted potentials to initial/(2 eta_1)-terminal/(2 eta_T)+(1/2)sum_(t=1)^(T-1)(1/eta_(t+1)-1/eta_t)||x_(t+1)-u||^2 plus weighted gradient energy."
+    },
+    {
+      "id": "diameter-control",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "First display inequality and final two equalities"
+      },
+      "content": "Nonincreasing positive rates make inverse-rate differences nonnegative. Replace initial/intermediate squared distances by D^2 and telescope inverse-rate differences. Retain negative terminal distance."
+    },
+    {
+      "id": "constant-telescope",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Second display following In the same way"
+      },
+      "content": "Constant eta cancels consecutive potentials exactly and retains initial and terminal squared distances. No diameter substitution appears."
+    },
+    {
+      "id": "feedback-timing",
+      "kind": "STANDING_CONVENTION",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 1, before Section 15.5.1 reference"
+      },
+      "content": "x_t is output before knowing loss_t. The author attributes the gradient energy term to this ordering."
+    },
+    {
+      "id": "unbounded-fixed",
+      "kind": "SOURCE_BOUNDARY",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 2"
+      },
+      "content": "Constant-eta bound holds even when D=infinity; it depends on distance between the chosen initial point and comparator."
+    },
+    {
+      "id": "negative-terminal",
+      "kind": "SOURCE_BOUNDARY",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 3"
+      },
+      "content": "The final term in both bounds is nonpositive, often discarded, but useful in advanced proofs."
+    },
+    {
+      "id": "diameter-boundary",
+      "kind": "SOURCE_BOUNDARY",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 4, through claim about unbounded OGD"
+      },
+      "content": "Variable-rate proof must control intermediate distances; this branch assumes bounded V. Author points to Section 5.2 for failure on unbounded domains. This is not a proof here of a universal impossibility for every variable-rate run."
+    },
+    {
+      "id": "fixed-horizon-tuning-context",
+      "kind": "SOURCE_CONVENTION",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 5 and final paragraph"
+      },
+      "content": "Use the regret analysis to choose rates. The next choice minimizes a constant-rate bound for a fixed number of iterations."
+    },
+    {
+      "id": "formal-energy-optimizer",
+      "kind": "SOURCE_CALCULATION",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "First bound display, eta optimizer in prose, and second bound display"
+      },
+      "content": "Formally minimizing A^2/(2 eta)+eta G/2 yields eta=A/sqrt(G), value A sqrt(G), for A=||u-x_1|| and G=sum||g_t||^2 in the nondegenerate algebraic case."
+    },
+    {
+      "id": "energy-optimizer-caveat",
+      "kind": "SOURCE_BOUNDARY",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "However paragraph"
+      },
+      "content": "Future gradients depend on eta itself; distance to the optimal comparator is unknown; adversary can observe the rate and choose a sequence invalidating the proposed choice. The algebraic optimizer is not an online algorithm guarantee."
+    },
+    {
+      "id": "bounded-tuning",
+      "kind": "SOURCE_CALCULATION",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "For the moment paragraph, eta-star display and equation (2.1)"
+      },
+      "content": "Assume ||g_t||<=L and bounded diameter D; bound ||u-x_1||<=D. Minimize D^2/(2 eta)+eta L^2 T/2 at eta*=D/(L sqrt(T)), giving D L sqrt(T)."
+    },
+    {
+      "id": "proper-function",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition 2.18"
+      },
+      "content": "Proper means nowhere -infinity and finite somewhere."
+    },
+    {
+      "id": "subgradient-definition",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition 2.20 and display"
+      },
+      "content": "For proper f:R^d->(-infinity,+infinity], g in R^d is a subgradient at x iff f(y)>=f(x)+<g,y-x> for every y in R^d. Convexity is not in this definition."
+    },
+    {
+      "id": "subgradient-choice",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Opening paragraph"
+      },
+      "content": "Subgradient need not be unique. partial f(x) is the set of all subgradients. Subdifferentiable means partial f(x) nonempty."
+    },
+    {
+      "id": "subgradient-domain",
+      "kind": "SOURCE_DOMAIN_FACT",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Observe paragraph"
+      },
+      "content": "For proper convex f, partial f(x) is empty outside dom f, since the defining inequality fails at f(x)=+infinity; dom partial f is a subset of dom f."
+    },
+    {
+      "id": "interior-existence",
+      "kind": "EXTERNAL_SOURCE_LEAF",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "A proper convex function paragraph; Rockafellar 23.4 citation; footnote 1"
+      },
+      "content": "Proper convex f is subdifferentiable on int dom f. The stronger relative-interior theorem is acknowledged but not used by the author. External proof not reproduced."
+    },
+    {
+      "id": "convex-from-support",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Paragraph before Theorem 2.21; theorem and full proof"
+      },
+      "content": "For real-valued f and convex V, subgradients at every point of V imply convexity of restriction: choose a support at lambda x1+(1-lambda)x2, evaluate at x1,x2, multiply and add to cancel inner products. This is contextual support, not an extra premise needed by Lemma 2.31."
+    },
+    {
+      "id": "lipschitz-definition",
+      "kind": "DEFINITION",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Definition 2.29"
+      },
+      "content": "L-Lipschitz on V subset dom f means |f(x)-f(y)|<=L||x-y|| for all x,y in V."
+    },
+    {
+      "id": "lipschitz-subgradients",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Theorem 2.30 statement"
+      },
+      "content": "For convex proper f, L-Lipschitz on int dom f in Euclidean norm iff every g in partial f(x), every x in int dom f, has ||g||<=L. Interior is part of this statement."
+    },
+    {
+      "id": "lipschitz-forward-proof",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Theorem 2.30 first proof paragraph and display"
+      },
+      "content": "If g=0, bound immediate. Otherwise take a small step epsilon g/||g|| remaining in int dom f; combine Lipschitz and support inequalities to obtain epsilon||g||<=L epsilon."
+    },
+    {
+      "id": "lipschitz-reverse-proof",
+      "kind": "SOURCE_PROOF",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Theorem 2.30 remaining proof paragraphs and displays"
+      },
+      "content": "Subgradient support and Cauchy-Schwarz bound f(x)-f(y), then interchange x,y. Supports at both interior points exist by the cited interior existence fact."
+    },
+    {
+      "id": "osd-transfer",
+      "kind": "SOURCE_TRANSFER",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Section 2.2.2 full opening paragraph and support display"
+      },
+      "content": "The only gradient property used in Theorem 2.13 is loss_t(x_t)-loss_t(u)<=<g_t,x_t-u>. It also holds for every selected subgradient. Thus all established regret bounds hold with differentiability replaced by subdifferentiability, and gradients by subgradients."
+    },
+    {
+      "id": "lemma231",
+      "kind": "SOURCE_ANCHOR",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Lemma 2.31 statement and full chained display"
+      },
+      "content": "V nonempty closed convex; loss_t:R^d->(-infinity,+infinity] subdifferentiable on V; eta_t>0; g_t in partial loss_t(x_t); x_(t+1)=Pi_V(x_t-eta_t g_t). Then for every u in V the full two-part one-step inequality from Lemma 2.12 holds."
+    },
+    {
+      "id": "algorithm22",
+      "kind": "SOURCE_ANCHOR",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 Require and lines 1-6; following paragraph"
+      },
+      "content": "V nonempty closed convex, x_1 in V, eta_1,...,eta_T>0. For t=1,...,T output x_t in V, pay loss_t(x_t), choose g_t in partial loss_t(x_t), project x_t-eta_t g_t into V. Source says gradient-selection line is the difference from Algorithm 2.1."
+    },
+    {
+      "id": "gap-projection-welldefined",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Unique point sentence preceding Proposition 2.11"
+      },
+      "content": "Existence and uniqueness of projection on every nonempty closed convex V are asserted without their proof in the bounded source region.",
+      "consumer": "projection-definition",
+      "status": "omitted_or_unspecified_bridge_not_source_invalidity"
+    },
+    {
+      "id": "gap-iterate-feasibility",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 lines Require,2,5"
+      },
+      "content": "The algorithm writes x_t in V but does not spell out induction from x_1 in V and projection membership. This is the use-site bridge for diameter control and subgradient availability.",
+      "consumer": "algorithm22",
+      "status": "omitted_or_unspecified_bridge_not_source_invalidity"
+    },
+    {
+      "id": "gap-finite-loss",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Lemma 2.31 extended-real signature and real loss-difference display"
+      },
+      "content": "The proper-function subgradient definition makes legal supports finite-valued points; subdifferentiability on all V gives finite comparator and iterate losses. The lemma does not spell out this finite-valued restriction before subtracting losses. PDF29 states the domain fact with convexity.",
+      "consumer": "lemma231",
+      "status": "omitted_or_unspecified_bridge_not_source_invalidity"
+    },
+    {
+      "id": "gap-generic-feedback",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 line 4 read with PDF20 some feedback"
+      },
+      "content": "Existence of a subgradient is a mathematical condition, not a specification of an oracle supplying one. The generic game does not identify the exact feedback object. Running OSD requires access sufficient for a legal selected subgradient after prediction; scalar loss alone is not certified sufficient.",
+      "consumer": "algorithm22",
+      "status": "omitted_or_unspecified_bridge_not_source_invalidity"
+    },
+    {
+      "id": "gap-transfer-expansion",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Section 2.2.2 transfer paragraph"
+      },
+      "content": "Author explicitly transfers Theorem 2.13 and states Lemma 2.31, but does not restate or reprint the full fixed/decreasing OSD telescoping proofs. These remain an explicit expansion bridge, not a source repair.",
+      "consumer": "osd-transfer",
+      "status": "omitted_or_unspecified_bridge_not_source_invalidity"
+    },
+    {
+      "id": "gap-tuning-degeneracy",
+      "kind": "SOURCE_GAP",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "eta-star display before (2.1)"
+      },
+      "content": "The displayed division and positive algorithm rate require D>0,L>0,T>0. Zero diameter, zero norm bound, zero horizon, and degenerate energy optimizer cases are not treated in this calculation.",
+      "consumer": "bounded-tuning",
+      "status": "omitted_or_unspecified_bridge_not_source_invalidity"
+    },
+    {
+      "id": "osd-fixed-coarse-printed",
+      "kind": "SOURCE_STATEMENT",
+      "anchor": {
+        "pdf_page": 33,
+        "printed_page": 21,
+        "locator": "Section2.2.3 paragraph beginning Finally let us perform a sanity check on the regret bound for OSD with a constant learning rate, and the following regret display"
+      },
+      "content": "The source explicitly reprints the OSD constant-rate bound R_T(u)<=||u-x_1||_2^2/(2 eta)+(eta/2)sum_(t=1)^T||g_t||_2^2 and identifies it with Theorem2.13. This is the coarse upper bound after omitting the nonpositive terminal potential. The surrounding dimensional calculations are separate."
+    }
+  ],
+  "edges": [
+    {
+      "id": "support-to-opt-suff",
+      "premises": [
+        "gradient-support"
+      ],
+      "conclusion": "optimality-sufficiency",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF23 first proof paragraph",
+      "premise_discharge": "x* in V contained in the open differentiability domain; assume the variational inequality."
+    },
+    {
+      "id": "opt-iff",
+      "premises": [
+        "optimality-sufficiency",
+        "optimality-necessity"
+      ],
+      "conclusion": "optimality-statement",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF23 Theorem2.8",
+      "premise_discharge": "Both implications required to establish iff, not alternative proofs."
+    },
+    {
+      "id": "projection-opt",
+      "premises": [
+        "optimality-necessity",
+        "projection-definition",
+        "gap-projection-welldefined"
+      ],
+      "conclusion": "projection-optimality-step",
+      "operator": "AND",
+      "relation": "source_proof_with_open_foundation",
+      "consumer_use_site": "PDF24 Proposition2.11 proof",
+      "premise_discharge": "Use necessity half only. Squared distance is convex/differentiable on R^d; asserted projection is a feasible minimizer. Gap remains explicit."
+    },
+    {
+      "id": "projection-squares",
+      "premises": [
+        "projection-optimality-step"
+      ],
+      "conclusion": "projection-square-step",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 top display",
+      "premise_discharge": "Feasible y supplies nonnegative cross term; squared displacement nonnegative."
+    },
+    {
+      "id": "projection-end",
+      "premises": [
+        "projection-square-step"
+      ],
+      "conclusion": "projection-contraction",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 completion of Proposition2.11",
+      "premise_discharge": "Nonnegative norms allow passage from squared inequality to norm inequality."
+    },
+    {
+      "id": "ogd-one-proof",
+      "premises": [
+        "projection-contraction",
+        "gradient-support",
+        "algorithm-ogd"
+      ],
+      "conclusion": "ogd-one-step-proof",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 Lemma2.12 proof",
+      "premise_discharge": "Projected update; comparator in V; eta_t>0; convex differentiability on open neighborhood supplies gradient support."
+    },
+    {
+      "id": "ogd-one-end",
+      "premises": [
+        "ogd-one-step-proof"
+      ],
+      "conclusion": "ogd-one-step",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 Reordering sentence",
+      "premise_discharge": "Rearrange the displayed squared-distance inequality."
+    },
+    {
+      "id": "ogd-sum",
+      "premises": [
+        "ogd-one-step"
+      ],
+      "conclusion": "divide-sum",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25-26 Theorem2.13 proof",
+      "premise_discharge": "Each eta_t positive, including T=1 via Algorithm2.1 Require; losses finite at feasible arguments."
+    },
+    {
+      "id": "weighted-algebra",
+      "premises": [
+        "divide-sum"
+      ],
+      "conclusion": "weighted-reindex",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF26 first display equality",
+      "premise_discharge": "Reindex t=1,...,T; keep initial and terminal terms; nonempty horizon used for eta_T."
+    },
+    {
+      "id": "diameter-algebra",
+      "premises": [
+        "weighted-reindex"
+      ],
+      "conclusion": "diameter-control",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF26 first display remaining lines",
+      "premise_discharge": "All iterates and u in V; finite D; eta_(t+1)<=eta_t and positivity imply nonnegative inverse differences."
+    },
+    {
+      "id": "decreasing-finish",
+      "premises": [
+        "diameter-control"
+      ],
+      "conclusion": "thm213-decreasing",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 first theorem display",
+      "premise_discharge": "T>=1; all source algorithm and decreasing-rate assumptions discharged above."
+    },
+    {
+      "id": "constant-algebra",
+      "premises": [
+        "divide-sum"
+      ],
+      "conclusion": "constant-telescope",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF26 second display",
+      "premise_discharge": "eta_t=eta>0; exact potential cancellation without a diameter bound."
+    },
+    {
+      "id": "fixed-finish",
+      "premises": [
+        "constant-telescope"
+      ],
+      "conclusion": "thm213-fixed",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF25 Moreover display",
+      "premise_discharge": "Same run, every u in V; no terminal term discarded."
+    },
+    {
+      "id": "osd-proof",
+      "premises": [
+        "projection-contraction",
+        "subgradient-definition",
+        "algorithm22",
+        "gap-finite-loss"
+      ],
+      "conclusion": "lemma231",
+      "operator": "AND",
+      "relation": "source_proof_with_open_domain_expansion",
+      "consumer_use_site": "PDF31 transfer paragraph and Lemma2.31",
+      "premise_discharge": "For any selected g_t, substitute u into global support; finite loss difference; eta_t>0. Repeat the displayed square expansion from Lemma2.12. Global differentiability is not used."
+    },
+    {
+      "id": "osd-transfer-proof",
+      "premises": [
+        "lemma231",
+        "divide-sum",
+        "weighted-reindex",
+        "diameter-control",
+        "constant-telescope",
+        "gap-transfer-expansion"
+      ],
+      "conclusion": "osd-transfer",
+      "operator": "AND",
+      "relation": "proof_template_reuse_of_two_conclusions",
+      "consumer_use_site": "PDF31 Section2.2.2",
+      "premise_discharge": "This consumer records the source transfer of BOTH conclusions as a pair. Reuse summation with the subgradient one-step provider: weighted-reindex plus diameter-control proves the decreasing conclusion, while constant-telescope separately proves the fixed conclusion. It does not require differentiable losses in OSD, or claim both branches are necessary for either single conclusion. The full expanded transfer is not printed."
+    },
+    {
+      "id": "osd-feasibility",
+      "premises": [
+        "projection-definition",
+        "gap-iterate-feasibility"
+      ],
+      "conclusion": "algorithm22",
+      "operator": "AND",
+      "relation": "open_source_obligation",
+      "consumer_use_site": "PDF32 Require and lines2,5",
+      "premise_discharge": "Initial membership and each projection membership maintain feasible iterates."
+    },
+    {
+      "id": "osd-oracle",
+      "premises": [
+        "subgradient-choice",
+        "gap-generic-feedback"
+      ],
+      "conclusion": "algorithm22",
+      "operator": "AND",
+      "relation": "open_source_obligation",
+      "consumer_use_site": "PDF32 line4",
+      "premise_discharge": "Subdifferentiability gives nonempty choices; actual access to a chosen support is implicit, with no narrower oracle specified."
+    },
+    {
+      "id": "finite-domain",
+      "premises": [
+        "proper-function",
+        "subgradient-definition",
+        "subgradient-domain"
+      ],
+      "conclusion": "gap-finite-loss",
+      "operator": "AND",
+      "relation": "derived_bridge_candidate",
+      "consumer_use_site": "PDF31 loss-difference display",
+      "premise_discharge": "Properness and a support at each V point preclude +infinity there. Direct properness argument applies even though PDF29 contextual statement also assumes convexity."
+    },
+    {
+      "id": "standing-game-use",
+      "premises": [
+        "arbitrary-data",
+        "after-output-adversary",
+        "general-online-game",
+        "regret-definition",
+        "feedback-timing"
+      ],
+      "conclusion": "algorithm22",
+      "operator": "AND",
+      "relation": "standing_semantic_scope",
+      "consumer_use_site": "PDF32 output/pay/select ordering",
+      "premise_discharge": "Adversarial choices are not required to be independent or fixed in advance. Player predicts before observing current loss feedback; comparator is an analysis parameter, not an input."
+    },
+    {
+      "id": "constant-unbounded",
+      "premises": [
+        "constant-telescope"
+      ],
+      "conclusion": "unbounded-fixed",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF26 bullet2",
+      "premise_discharge": "No D occurs in the retained fixed-rate bound."
+    },
+    {
+      "id": "loose-via-fixed",
+      "premises": [
+        "thm213-fixed",
+        "negative-terminal"
+      ],
+      "conclusion": "bounded-tuning",
+      "operator": "AND",
+      "relation": "alternative_sufficient_route",
+      "consumer_use_site": "PDF27 For the moment paragraph",
+      "premise_discharge": "Set eta>0 constant, ||u-x1||<=D, and for the very same generated run each ||g_t||<=L; drop only nonpositive terminal term."
+    },
+    {
+      "id": "loose-via-decreasing",
+      "premises": [
+        "thm213-decreasing",
+        "negative-terminal"
+      ],
+      "conclusion": "bounded-tuning",
+      "operator": "AND",
+      "relation": "alternative_sufficient_route",
+      "consumer_use_site": "PDF27 For the moment paragraph",
+      "premise_discharge": "Specialize eta_t=eta>0; same D,L and same-run requirements. This alternative does not require the fixed bound too."
+    },
+    {
+      "id": "formal-opt",
+      "premises": [
+        "thm213-fixed",
+        "negative-terminal"
+      ],
+      "conclusion": "formal-energy-optimizer",
+      "operator": "AND",
+      "relation": "algebraic_comparison_only",
+      "consumer_use_site": "PDF27 first two displays",
+      "premise_discharge": "Hold A and G numerically fixed for this scalar optimization; actual run quantities depend on eta. Nondegenerate A,G needed for positive finite minimizer."
+    },
+    {
+      "id": "lipschitz-forward",
+      "premises": [
+        "lipschitz-definition",
+        "subgradient-definition"
+      ],
+      "conclusion": "lipschitz-forward-proof",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF31 first proof paragraph",
+      "premise_discharge": "x lies in int dom f; a sufficiently small step remains there; g=0 handled separately; epsilon>0 permits cancellation."
+    },
+    {
+      "id": "lipschitz-reverse",
+      "premises": [
+        "interior-existence",
+        "subgradient-definition"
+      ],
+      "conclusion": "lipschitz-reverse-proof",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF31 remaining proof displays",
+      "premise_discharge": "Proper convex function supplies support at each interior point. Apply norm bound and Cauchy-Schwarz in both directions."
+    },
+    {
+      "id": "lipschitz-iff",
+      "premises": [
+        "lipschitz-forward-proof",
+        "lipschitz-reverse-proof"
+      ],
+      "conclusion": "lipschitz-subgradients",
+      "operator": "AND",
+      "relation": "proof_dependency",
+      "consumer_use_site": "PDF31 Theorem2.30",
+      "premise_discharge": "Both implications establish iff. This optional norm-bound provider requires interior points, not merely Lipschitz restriction to feasible V."
+    },
+    {
+      "id": "coarse-osd-from-sharp",
+      "premises": [
+        "thm213-fixed",
+        "osd-transfer",
+        "negative-terminal"
+      ],
+      "conclusion": "osd-fixed-coarse-printed",
+      "operator": "AND",
+      "relation": "source_corollary",
+      "consumer_use_site": "PDF33 explicit OSD constant-rate regret display, citing Theorem2.13",
+      "premise_discharge": "Use the fixed-step bound for the same legal Algorithm2.2 run with eta>0 and u in V, as transferred on PDF31. Since ||x_(T+1)-u||^2>=0 and eta>0, its negative terminal term is nonpositive and may be dropped, as noted on PDF26. No finite diameter, L bound or dimensional invariance premise enters."
+    }
+  ],
+  "coverage_inventory": [
+    {
+      "id": "region:initial-game",
+      "anchor": {
+        "pdf_page": 13,
+        "printed_page": 1,
+        "locator": "Chapter 1 opening game bullets"
+      },
+      "disposition": "NODE",
+      "node_id": "initial-game"
+    },
+    {
+      "id": "region:arbitrary-data",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Now the last step paragraph and best-fixed regret display"
+      },
+      "disposition": "NODE",
+      "node_id": "arbitrary-data"
+    },
+    {
+      "id": "region:regret-definition",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Generalization paragraph, Regret_T(u) display, following paragraph, Remark 1.1"
+      },
+      "disposition": "NODE",
+      "node_id": "regret-definition"
+    },
+    {
+      "id": "region:after-output-adversary",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "A Winning Strategy first paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "after-output-adversary"
+    },
+    {
+      "id": "region:no-statistical-model",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "Paragraph beginning Now the fact that the numbers are adversarially chosen"
+      },
+      "disposition": "NODE",
+      "node_id": "no-statistical-model"
+    },
+    {
+      "id": "region:general-online-game",
+      "anchor": {
+        "pdf_page": 20,
+        "printed_page": 8,
+        "locator": "Section 2.1 game bullets, regret display, following adversarial-loss paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "general-online-game"
+    },
+    {
+      "id": "region:convex-set",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Definition 2.2"
+      },
+      "disposition": "NODE",
+      "node_id": "convex-set"
+    },
+    {
+      "id": "region:extended-domain",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Extended-real paragraph and dom f formula"
+      },
+      "disposition": "NODE",
+      "node_id": "extended-domain"
+    },
+    {
+      "id": "region:indicator-convention",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Indicator definition and Boyd-Vandenberghe (2004) citation; PDF22 opening paragraph",
+        "continues_to_pdf_page": 22
+      },
+      "disposition": "NODE",
+      "node_id": "indicator-convention"
+    },
+    {
+      "id": "region:convex-function",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Definition 2.3"
+      },
+      "disposition": "NODE",
+      "node_id": "convex-function"
+    },
+    {
+      "id": "region:convex-characterization",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Theorem 2.4 display and Rockafellar (1970) Theorem 4.1 citation"
+      },
+      "disposition": "NODE",
+      "node_id": "convex-characterization"
+    },
+    {
+      "id": "region:gradient-support",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.7 display and Rockafellar (1970), Theorem 25.1/Corollary 25.1.1 citation"
+      },
+      "disposition": "NODE",
+      "node_id": "gradient-support"
+    },
+    {
+      "id": "region:optimality-statement",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8"
+      },
+      "disposition": "NODE",
+      "node_id": "optimality-statement"
+    },
+    {
+      "id": "region:optimality-sufficiency",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8 first proof paragraph and display"
+      },
+      "disposition": "NODE",
+      "node_id": "optimality-sufficiency"
+    },
+    {
+      "id": "region:optimality-necessity",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem 2.8 second proof paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "optimality-necessity"
+    },
+    {
+      "id": "region:algorithm-ogd",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Algorithm 2.1 Require and lines 1-6"
+      },
+      "disposition": "NODE",
+      "node_id": "algorithm-ogd"
+    },
+    {
+      "id": "region:ogd-adversarial-explanation",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Paragraph beginning Hence we will see an alternative strategy"
+      },
+      "disposition": "NODE",
+      "node_id": "ogd-adversarial-explanation"
+    },
+    {
+      "id": "region:projection-definition",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "First we show paragraph and Proposition 2.11 definition"
+      },
+      "disposition": "NODE",
+      "node_id": "projection-definition"
+    },
+    {
+      "id": "region:projection-contraction",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Proposition 2.11 statement"
+      },
+      "disposition": "NODE",
+      "node_id": "projection-contraction"
+    },
+    {
+      "id": "region:projection-optimality-step",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Proposition 2.11 proof first paragraph and display"
+      },
+      "disposition": "NODE",
+      "node_id": "projection-optimality-step"
+    },
+    {
+      "id": "region:projection-square-step",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Top Therefore display finishing Proposition 2.11"
+      },
+      "disposition": "NODE",
+      "node_id": "projection-square-step"
+    },
+    {
+      "id": "region:ogd-one-step",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Lemma 2.12 statement and display"
+      },
+      "disposition": "NODE",
+      "node_id": "ogd-one-step"
+    },
+    {
+      "id": "region:ogd-one-step-proof",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Lemma 2.12 proof display and Reordering sentence"
+      },
+      "disposition": "NODE",
+      "node_id": "ogd-one-step-proof"
+    },
+    {
+      "id": "region:thm213-decreasing",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Theorem 2.13 first statement and display"
+      },
+      "disposition": "NODE",
+      "node_id": "thm213-decreasing"
+    },
+    {
+      "id": "region:thm213-fixed",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Theorem 2.13 Moreover statement and display"
+      },
+      "disposition": "NODE",
+      "node_id": "thm213-fixed"
+    },
+    {
+      "id": "region:divide-sum",
+      "anchor": {
+        "pdf_page": 25,
+        "printed_page": 13,
+        "locator": "Proof final sentence; PDF26 first display first line",
+        "continues_to_pdf_page": 26
+      },
+      "disposition": "NODE",
+      "node_id": "divide-sum"
+    },
+    {
+      "id": "region:weighted-reindex",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "First display equality on second line"
+      },
+      "disposition": "NODE",
+      "node_id": "weighted-reindex"
+    },
+    {
+      "id": "region:diameter-control",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "First display inequality and final two equalities"
+      },
+      "disposition": "NODE",
+      "node_id": "diameter-control"
+    },
+    {
+      "id": "region:constant-telescope",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Second display following In the same way"
+      },
+      "disposition": "NODE",
+      "node_id": "constant-telescope"
+    },
+    {
+      "id": "region:feedback-timing",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 1, before Section 15.5.1 reference"
+      },
+      "disposition": "NODE",
+      "node_id": "feedback-timing"
+    },
+    {
+      "id": "region:unbounded-fixed",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 2"
+      },
+      "disposition": "NODE",
+      "node_id": "unbounded-fixed"
+    },
+    {
+      "id": "region:negative-terminal",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 3"
+      },
+      "disposition": "NODE",
+      "node_id": "negative-terminal"
+    },
+    {
+      "id": "region:diameter-boundary",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 4, through claim about unbounded OGD"
+      },
+      "disposition": "NODE",
+      "node_id": "diameter-boundary"
+    },
+    {
+      "id": "region:fixed-horizon-tuning-context",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Post-proof bullet 5 and final paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "fixed-horizon-tuning-context"
+    },
+    {
+      "id": "region:formal-energy-optimizer",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "First bound display, eta optimizer in prose, and second bound display"
+      },
+      "disposition": "NODE",
+      "node_id": "formal-energy-optimizer"
+    },
+    {
+      "id": "region:energy-optimizer-caveat",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "However paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "energy-optimizer-caveat"
+    },
+    {
+      "id": "region:bounded-tuning",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "For the moment paragraph, eta-star display and equation (2.1)"
+      },
+      "disposition": "NODE",
+      "node_id": "bounded-tuning"
+    },
+    {
+      "id": "region:proper-function",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition 2.18"
+      },
+      "disposition": "NODE",
+      "node_id": "proper-function"
+    },
+    {
+      "id": "region:subgradient-definition",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition 2.20 and display"
+      },
+      "disposition": "NODE",
+      "node_id": "subgradient-definition"
+    },
+    {
+      "id": "region:subgradient-choice",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Opening paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "subgradient-choice"
+    },
+    {
+      "id": "region:subgradient-domain",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Observe paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "subgradient-domain"
+    },
+    {
+      "id": "region:interior-existence",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "A proper convex function paragraph; Rockafellar 23.4 citation; footnote 1"
+      },
+      "disposition": "NODE",
+      "node_id": "interior-existence"
+    },
+    {
+      "id": "region:convex-from-support",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Paragraph before Theorem 2.21; theorem and full proof"
+      },
+      "disposition": "NODE",
+      "node_id": "convex-from-support"
+    },
+    {
+      "id": "region:lipschitz-definition",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Definition 2.29"
+      },
+      "disposition": "NODE",
+      "node_id": "lipschitz-definition"
+    },
+    {
+      "id": "region:lipschitz-subgradients",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Theorem 2.30 statement"
+      },
+      "disposition": "NODE",
+      "node_id": "lipschitz-subgradients"
+    },
+    {
+      "id": "region:lipschitz-forward-proof",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Theorem 2.30 first proof paragraph and display"
+      },
+      "disposition": "NODE",
+      "node_id": "lipschitz-forward-proof"
+    },
+    {
+      "id": "region:lipschitz-reverse-proof",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Theorem 2.30 remaining proof paragraphs and displays"
+      },
+      "disposition": "NODE",
+      "node_id": "lipschitz-reverse-proof"
+    },
+    {
+      "id": "region:osd-transfer",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Section 2.2.2 full opening paragraph and support display"
+      },
+      "disposition": "NODE",
+      "node_id": "osd-transfer"
+    },
+    {
+      "id": "region:lemma231",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Lemma 2.31 statement and full chained display"
+      },
+      "disposition": "NODE",
+      "node_id": "lemma231"
+    },
+    {
+      "id": "region:algorithm22",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 Require and lines 1-6; following paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "algorithm22"
+    },
+    {
+      "id": "region:gap-projection-welldefined",
+      "anchor": {
+        "pdf_page": 24,
+        "printed_page": 12,
+        "locator": "Unique point sentence preceding Proposition 2.11"
+      },
+      "disposition": "NODE",
+      "node_id": "gap-projection-welldefined"
+    },
+    {
+      "id": "region:gap-iterate-feasibility",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 lines Require,2,5"
+      },
+      "disposition": "NODE",
+      "node_id": "gap-iterate-feasibility"
+    },
+    {
+      "id": "region:gap-finite-loss",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Lemma 2.31 extended-real signature and real loss-difference display"
+      },
+      "disposition": "NODE",
+      "node_id": "gap-finite-loss"
+    },
+    {
+      "id": "region:gap-generic-feedback",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Algorithm 2.2 line 4 read with PDF20 some feedback"
+      },
+      "disposition": "NODE",
+      "node_id": "gap-generic-feedback"
+    },
+    {
+      "id": "region:gap-transfer-expansion",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Section 2.2.2 transfer paragraph"
+      },
+      "disposition": "NODE",
+      "node_id": "gap-transfer-expansion"
+    },
+    {
+      "id": "region:gap-tuning-degeneracy",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "eta-star display before (2.1)"
+      },
+      "disposition": "NODE",
+      "node_id": "gap-tuning-degeneracy"
+    },
+    {
+      "id": "excluded:stochastic-motivation",
+      "anchor": {
+        "pdf_page": 13,
+        "printed_page": 1,
+        "locator": "Everything after initial game bullets, including (1.1),(1.2)"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Squared-loss stochastic motivation is not a stochastic premise for OSD."
+    },
+    {
+      "id": "excluded:stochastic-rewrite",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Opening expectation display"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Motivation expressly removed by arbitrary-data paragraph."
+    },
+    {
+      "id": "excluded:dynamic-comparator",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Single-versus-sequence competitor discussion and Chapter14 reference"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Fixed-comparator OSD only, no shifting-comparator theorem."
+    },
+    {
+      "id": "excluded:no-regret-limit",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "No-regret limit sentence"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Recorded regret metric suffices; this task does not establish an asymptotic limit theorem for arbitrary schedules."
+    },
+    {
+      "id": "excluded:enlarged-prediction",
+      "anchor": {
+        "pdf_page": 14,
+        "printed_page": 2,
+        "locator": "Footnote1 and trailing applications sentence"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Algorithm2.2 uses predictions in V, not a larger W."
+    },
+    {
+      "id": "excluded:ch1-applications",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "Opening applications list and transition into guessing game"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Examples motivate the framework but supply no additional OSD premises."
+    },
+    {
+      "id": "excluded:ch1-ftl",
+      "anchor": {
+        "pdf_page": 15,
+        "printed_page": 3,
+        "locator": "From Now let us try to design a strategy through end of page, including best squared-loss mean and FTL formula"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Squared-loss FTL construction is separate. Explicitly excludes neither the earlier after-output-adversary paragraph nor the no-statistical-model paragraph."
+    },
+    {
+      "id": "excluded:ch1-later",
+      "anchor": {
+        "pdf_page": 16,
+        "printed_page": 4,
+        "locator": "PDF16-19 FTL proof, notes and exercises",
+        "continues_to_pdf_page": 19
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Outside bounded generic OSD route; not read into this batch or used as proof support."
+    },
+    {
+      "id": "excluded:chapter-intro",
+      "anchor": {
+        "pdf_page": 20,
+        "printed_page": 8,
+        "locator": "Opening chapter paragraph and final motivation continuation on PDF21",
+        "continues_to_pdf_page": 21
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Introduces OGD-to-OSD route but adds no proof premise."
+    },
+    {
+      "id": "excluded:remark21",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "OCO introduction and Remark2.1 including Reddi et al.2018 citation"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "General motivation/Adam caution; not needed for this proof."
+    },
+    {
+      "id": "excluded:figure21",
+      "anchor": {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "locator": "Figure2.1 and no holes paraphrase"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Illustration of separately included convex-set definition."
+    },
+    {
+      "id": "excluded:figure22",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Figure2.2"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Illustration, not a proof premise."
+    },
+    {
+      "id": "excluded:indicator-fenchel",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Fenchel conjugates reference 6.4.1 and indicator convexity explanatory paragraph"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Ambient convention is recorded; no Fenchel or indicator reduction is applied to the target."
+    },
+    {
+      "id": "excluded:convex-examples",
+      "anchor": {
+        "pdf_page": 22,
+        "printed_page": 10,
+        "locator": "Examples2.5,2.6; closure-operation bullets; PDF23 The proofs are left as exercises",
+        "continues_to_pdf_page": 23
+      },
+      "disposition": "EXCLUDED",
+      "reason": "General convexity-recognition examples are not required by direct support and projection argument."
+    },
+    {
+      "id": "excluded:optimality-geometry",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Paragraph after Theorem2.8"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Geometric and interior-stationarity comments are not needed for projection necessity."
+    },
+    {
+      "id": "excluded:jensen",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Theorem2.9 and its display"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "No probabilistic/Jensen step in the pathwise target."
+    },
+    {
+      "id": "excluded:ftl-failure",
+      "anchor": {
+        "pdf_page": 23,
+        "printed_page": 11,
+        "locator": "Section2.1.2 FTL paragraph/display through Example2.10 on PDF24",
+        "continues_to_pdf_page": 24
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Motivates OGD but is not its regret proof."
+    },
+    {
+      "id": "excluded:implicit-lookahead",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Section15.5.1 reference in first bullet"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Future lookahead algorithm is outside scope; current timing clause separately retained."
+    },
+    {
+      "id": "excluded:unbounded-counterexample",
+      "anchor": {
+        "pdf_page": 26,
+        "printed_page": 14,
+        "locator": "Section5.2 and Chapter3 references in fourth bullet"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Boundary warning retained; later counterexample/stochastic proofs not imported as current theorem dependencies."
+    },
+    {
+      "id": "excluded:future-algorithms",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "Indeed paragraph citing Chapter5, Section4.2, Chapter13"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Energy-optimizer caveat retained; lower-bound proof and later adaptive/parameter-free constructions excluded."
+    },
+    {
+      "id": "excluded:minimax",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "Sentence after (2.1) pointing to Chapter5 optimality"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "This packet concerns upper guarantees, not the later lower bound."
+    },
+    {
+      "id": "excluded:example214",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "Example2.14 complete"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Specialized squared-loss guessing is a consumer, not a prerequisite for generic OSD."
+    },
+    {
+      "id": "excluded:example215",
+      "anchor": {
+        "pdf_page": 27,
+        "printed_page": 15,
+        "locator": "Example2.15 including PDF28 Huber formulas and prose",
+        "continues_to_pdf_page": 28
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Separate example; does not establish generic assumptions."
+    },
+    {
+      "id": "excluded:section22-intro",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Section2.2 opening paragraph and nondifferentiable examples"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Motivation, not additional hypotheses."
+    },
+    {
+      "id": "excluded:closed-proper-indicators",
+      "anchor": {
+        "pdf_page": 28,
+        "printed_page": 16,
+        "locator": "Definition2.16, lower-semicontinuity note/Bauschke-Combettes1.24 citation, Examples2.17 and2.19, proper-function interest paragraph"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Closedness of the feasible set is required, but closedness of each loss is not a separate Lemma2.31 premise. Indicator examples are not required."
+    },
+    {
+      "id": "excluded:gradient-uniqueness",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Theorem2.22 and Rockafellar25.1 citation"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Unique-gradient equivalence is unnecessary for arbitrary legal subgradient selections."
+    },
+    {
+      "id": "excluded:sum-rule",
+      "anchor": {
+        "pdf_page": 29,
+        "printed_page": 17,
+        "locator": "Theorem2.23 and proof through PDF30 Bauschke-Combettes16.50 citation",
+        "continues_to_pdf_page": 30
+      },
+      "disposition": "EXCLUDED",
+      "reason": "No per-round sum-rule oracle construction is used."
+    },
+    {
+      "id": "excluded:abs-example",
+      "anchor": {
+        "pdf_page": 30,
+        "printed_page": 18,
+        "locator": "Example2.24"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Specific absolute-loss characterization is not a prerequisite for generic supports."
+    },
+    {
+      "id": "excluded:normal-cone",
+      "anchor": {
+        "pdf_page": 30,
+        "printed_page": 18,
+        "locator": "Example2.25"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Normal-cone example is not needed for projection proof used here. It also must not silently replace a given loss by an indicator-augmented loss."
+    },
+    {
+      "id": "excluded:max-hinge-affine",
+      "anchor": {
+        "pdf_page": 30,
+        "printed_page": 18,
+        "locator": "Theorem2.26/Bauschke-Combettes18.5 citation, Example2.27, Theorem2.28 and full proof"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Rules for constructing specialized subgradients are outside generic legal-support contract."
+    },
+    {
+      "id": "excluded:nondifferentiable-set",
+      "anchor": {
+        "pdf_page": 31,
+        "printed_page": 19,
+        "locator": "Misconception paragraph before Section2.2.2"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Separate illustration."
+    },
+    {
+      "id": "excluded:example232",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Example2.32 complete"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "A downstream absolute-loss consumer; not reused as the generic theorem proof."
+    },
+    {
+      "id": "excluded:units",
+      "anchor": {
+        "pdf_page": 32,
+        "printed_page": 20,
+        "locator": "Section2.2.3 introduction on PDF32, stopping at the page boundary; subsequent PDF33 regions are separately inventoried"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Units motivation and introductory dimensional rules are outside this bounded regret theorem scope. This exclusion does not cover the printed coarse OSD regret inequality on PDF33."
+    },
+    {
+      "id": "region:osd-fixed-coarse-printed",
+      "anchor": {
+        "pdf_page": 33,
+        "printed_page": 21,
+        "locator": "Section2.2.3 paragraph beginning Finally let us perform a sanity check on the regret bound for OSD with a constant learning rate, and the following regret display"
+      },
+      "disposition": "NODE",
+      "node_id": "osd-fixed-coarse-printed"
+    },
+    {
+      "id": "excluded:units-pdf33-before-bound",
+      "anchor": {
+        "pdf_page": 33,
+        "printed_page": 21,
+        "locator": "Page opening through the paragraph ending depend on the problem characteristics in a certain way, before Finally let us perform a sanity check"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Units of probability densities, dimensional-consistency discussion, the unprojected V=R^d illustrative update, and displays [g_t]=[loss]/[x], [eta]=[x]^2/[loss] are dimensional analysis. They do not prove additional generic OSD regret assumptions or a scaling theorem."
+    },
+    {
+      "id": "excluded:units-pdf33-after-bound",
+      "anchor": {
+        "pdf_page": 33,
+        "printed_page": 21,
+        "locator": "Immediately after coarse regret display, from The left-hand side is a sum of losses through both unit-check displays and end-of-page meter-to-kilometer example"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Checks of the units of both bound terms and start of the unit-conversion example are separate from the numerical regret inequality. No scaling invariance or transformed-gradient theorem is accepted by this packet."
+    },
+    {
+      "id": "excluded:units-later-pages",
+      "anchor": {
+        "pdf_page": 34,
+        "printed_page": 22,
+        "locator": "Continuation of Section2.2.3 after the PDF33 page boundary"
+      },
+      "disposition": "EXCLUDED",
+      "reason": "Remaining unit-scaling continuation lies outside the bounded regret extraction; it is not used or audited here."
+    }
+  ],
+  "alternative_routes": [
+    {
+      "consumer": "bounded-tuning",
+      "operator": "OR",
+      "routes": [
+        "loose-via-fixed",
+        "loose-via-decreasing"
+      ],
+      "explanation": "Either existing bound specialized to constant eta yields the loose D,L envelope. Both are not simultaneously necessary."
+    }
+  ],
+  "graph_semantics": {
+    "direction": "premises -> conclusion",
+    "AND": "All inputs of an edge are conjunctive, except alternative routes are grouped explicitly by OR.",
+    "template_edges": "proof_template_reuse_of_two_conclusions records the author transfer of both different bounds as a pair. Algebra is reused after replacing differentiable one-step premise by Lemma2.31; it does not reintroduce differentiability or require both branches for a single bound.",
+    "gaps": "SOURCE_GAP nodes record omitted arguments or under-specified operational semantics, not source invalidity.",
+    "optional_provider": "Lipschitz theorem is an optional norm-bound provider. Tuning may instead use a direct certified bound on selected supports. It is not an unconditional required edge to tuning.",
+    "distinct_targets": "Fixed and decreasing bounds have different assumptions/conclusions; they are not alternative proofs of the stronger fixed initial-distance formula."
+  },
+  "source_contract_file": "statement-contracts-v2.json",
+  "self_approval": false
+}

@@ -147,3 +147,4 @@ import Tests.OnlineGuessingLowerCanary
 import Tests.OnlineGuessingComparisonCanary
 import Tests.OnlineHuberCanary
 import Tests.OnlineGuessingSubgradientCanary
+import Tests.OnlineSubgradientPolicyCanary
