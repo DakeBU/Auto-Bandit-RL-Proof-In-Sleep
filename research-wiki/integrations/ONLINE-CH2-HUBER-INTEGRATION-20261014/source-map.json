@@ -1,0 +1,1700 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CH2-HUBER-INTEGRATION-20261014",
+  "base": "9baf0ce797060584d4a9dea1554358a1406b6e32",
+  "frozen_tip": "8045070bf1ee53c83778d04eb168f8ad6f728b59",
+  "original_prs": [
+    {
+      "number": 135,
+      "head": "23aa80a4bf284015ede17d807a7afee76ecace32",
+      "base": "ce5ecc949fee79d50da65d9fd2c1a00e071bbe23",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/135"
+    },
+    {
+      "number": 165,
+      "head": "f989706461cb466bc290261f4845f113621e807d",
+      "base": "52f628a7ae699887069c5a621d301901718ed772",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/165"
+    }
+  ],
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv1912.13213v10,21June2026",
+    "anchor": "Example2.15 printed15–16/PDF27–28; constant-step Theorem2.13",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "normative_atomic_binder_audit": {
+    "schema": "abrl.atomic-binder-review.v1",
+    "reviewer": "/root/batch12_source_reviewer",
+    "scope": "36 original entries plus 5 concrete value consumers",
+    "inputs": {
+      "statement_seal_sha256": "33db79ac7ba1d8f568911cc62e721367e8999b2c5799d59f926b807807cebeb1",
+      "statement_compiler_log_sha256": "3e40936e2b4346993c53ad170d682ff36ba9cc653615f761c886c8aa8e79807e",
+      "blind_manifest_sha256": "bb795be1e4720b8ecc1f4d9d9f5680abedbcf2b0f843ad52b75fcbe84a1d3d21"
+    },
+    "classification_policy": "Every source Anchor binder uses SOURCE, STANDING or TYPING; no RULED/EXCESS. LIBRARY_CONDITION occurs only on generic level B gluing hypotheses, which are proved and supplied internally for the application. Typeclass dependencies are expanded in the bound compiler supplement, and each actual top-level typeclass is explicitly listed here. No as-present placeholders.",
+    "standing_conventions": {
+      "delta": "SOURCE_IMPLICIT nonnegative threshold, independently reviewed; zero extension disclosed.",
+      "Z": "nonnegative feature norm-bound convention.",
+      "eta": "source Algorithm 2.1 positivity.",
+      "T_positive": "source meaningful positive-horizon tuning."
+    },
+    "typeclass_expansion": "NormedAddCommGroup and InnerProductSpace provide the compatible additive, metric/norm and real inner-product structures. CompleteSpace is completeness of that induced uniform space, not finite dimensionality or boundedness. Project-owned bundles are expanded separately below.",
+    "expanded_project_context": {
+      "Domain": [
+        "carrier : Set E",
+        "nonempty : carrier.Nonempty",
+        "closed : IsClosed carrier",
+        "convex : Convex Real carrier"
+      ],
+      "RegularLoss": [
+        "exists U : Set E",
+        "IsOpen U",
+        "V.carrier subset U",
+        "ConvexOn Real U f (includes convexity of U)",
+        "DifferentiableOn Real f U"
+      ],
+      "project": "Classical choice from actual proved nearest-point existence. project_existsUnique and project_spec characterize membership and attainment of the real infimum indexed over subtype V.carrier; no default/fallback.",
+      "step": "project V (x - eta smul gradient f x)",
+      "iterate": "index 0 = x0; index t+1 = step V eta (loss t) (iterate V eta loss x0 t)",
+      "regret": "sum over Finset.range T of loss t (iterate V eta loss x0 t) - loss t u"
+    },
+    "entries": [
+      {
+        "neutral": "T01",
+        "name": "BanditRL.OnlineHuber.hasDerivAt_ite_le",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem hasDerivAt_ite_le (f g : ℝ → ℝ) (c d : ℝ)\n    (hf : HasDerivAt f d c) (hg : HasDerivAt g d c) (he : f c = g c) :\n    HasDerivAt (fun x => if x ≤ c then f x else g x) d c",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "f",
+            "type": "Real -> Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "g",
+            "type": "Real -> Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "c",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "d",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 4
+          },
+          {
+            "binder": "hf",
+            "type": "HasDerivAt f d c",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Generic gluing lemma; internal use supplies the derivative.",
+            "position": 5
+          },
+          {
+            "binder": "hg",
+            "type": "HasDerivAt g d c",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Generic gluing lemma; internal use supplies the derivative.",
+            "position": 6
+          },
+          {
+            "binder": "he",
+            "type": "f c = g c",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Matching-value hypothesis for generic gluing, not a Huber Anchor premise.",
+            "position": 7
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "Q01",
+        "name": "BanditRL.OnlineHuber.huber",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "noncomputable def huber (delta r : ℝ) : ℝ :=\n  if |r| ≤ delta then r ^ 2 / 2 else delta * (|r| - delta / 2)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas",
+        "definition_audit": {
+          "kind": "literal",
+          "all_carrier_cases_reviewed": true,
+          "fallback_branch": false,
+          "note": "The two printed branches are literally total on all real delta,r. Negative-threshold regularity is not asserted."
+        }
+      },
+      {
+        "neutral": "T02",
+        "name": "BanditRL.OnlineHuber.huber_three_pieces",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_three_pieces (delta r : ℝ) (hd : 0 ≤ delta) :\n    huber delta r = if r ≤ -delta then -delta * r - delta ^ 2 / 2\n      else if r ≤ delta then r ^ 2 / 2 else delta * r - delta ^ 2 / 2",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 3
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T03",
+        "name": "BanditRL.OnlineHuber.huber_zero",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_zero (r : ℝ) : huber 0 r = 0",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T04",
+        "name": "BanditRL.OnlineHuber.hasDerivAt_join",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem hasDerivAt_join (f g df dg : ℝ → ℝ) (c x : ℝ)\n    (hf : ∀ r, HasDerivAt f (df r) r) (hg : ∀ r, HasDerivAt g (dg r) r)\n    (he : f c = g c) (hd : df c = dg c) :\n    HasDerivAt (fun r => if r ≤ c then f r else g r)\n      (if x ≤ c then df x else dg x) x",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "f",
+            "type": "Real -> Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "g",
+            "type": "Real -> Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "df",
+            "type": "Real -> Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "dg",
+            "type": "Real -> Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 4
+          },
+          {
+            "binder": "c",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "x",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hf",
+            "type": "forall (r : Real), HasDerivAt f (df r) r",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Global derivative witness for generic gluing.",
+            "position": 7
+          },
+          {
+            "binder": "hg",
+            "type": "forall (r : Real), HasDerivAt g (dg r) r",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Global derivative witness for generic gluing.",
+            "position": 8
+          },
+          {
+            "binder": "he",
+            "type": "f c = g c",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Matching value at join.",
+            "position": 9
+          },
+          {
+            "binder": "hd",
+            "type": "df c = dg c",
+            "classification": "LIBRARY_CONDITION",
+            "reason": "Matching derivative at join.",
+            "position": 10
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T05",
+        "name": "BanditRL.OnlineHuber.huber_hasDerivAt",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_hasDerivAt (delta r : ℝ) (hd : 0 ≤ delta) :\n    HasDerivAt (huber delta)\n      (if r ≤ -delta then -delta else if r ≤ delta then r else delta) r",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 3
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T06",
+        "name": "BanditRL.OnlineHuber.huber_deriv_clamp",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_deriv_clamp (delta r : ℝ) (hd : 0 ≤ delta) :\n    deriv (huber delta) r = max (-delta) (min r delta)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 3
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T07",
+        "name": "BanditRL.OnlineHuber.huber_convex",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_convex (delta : ℝ) (hd : 0 ≤ delta) :\n    ConvexOn ℝ Set.univ (huber delta)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 2
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas"
+      },
+      {
+        "neutral": "T08",
+        "name": "BanditRL.OnlineHuber.huber_deriv_bound",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_deriv_bound (delta r : ℝ) (hd : 0 ≤ delta) :\n    |deriv (huber delta) r| ≤ delta",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 3
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T09",
+        "name": "BanditRL.OnlineHuber.huber_deriv_source",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_deriv_source (delta r : ℝ) (hd : 0 ≤ delta) :\n    deriv (huber delta) r = if |r| ≤ delta then r else delta * Real.sign r",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "r",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 3
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas"
+      },
+      {
+        "neutral": "T10",
+        "name": "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_linear_hasGradientAt (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) :\n    HasGradientAt (fun w => huber delta (inner ℝ z w - y))\n      (deriv (huber delta) (inner ℝ z x - y) • z) x",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "y",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 7
+          },
+          {
+            "binder": "z",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 8
+          },
+          {
+            "binder": "x",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 9
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas"
+      },
+      {
+        "neutral": "T11",
+        "name": "BanditRL.OnlineHuber.huber_linear_convex",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_linear_convex (delta y : ℝ) (hd : 0 ≤ delta) (z : E) :\n    ConvexOn ℝ Set.univ (fun w => huber delta (inner ℝ z w - y))",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "y",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 7
+          },
+          {
+            "binder": "z",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 8
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted",
+        "nonminimal_typeclasses": "CompleteSpace E is actually elaborated despite unused-section-variable warning; T18 also retains InnerProductSpace Real E. No signature change authorized by this review."
+      },
+      {
+        "neutral": "T12",
+        "name": "BanditRL.OnlineHuber.huber_linear_gradient_bound",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_linear_gradient_bound (delta y : ℝ) (hd : 0 ≤ delta) (z x : E) :\n    ‖gradient (fun w => huber delta (inner ℝ z w - y)) x‖ ≤ delta * ‖z‖",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "y",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 7
+          },
+          {
+            "binder": "z",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 8
+          },
+          {
+            "binder": "x",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 9
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "Q02",
+        "name": "BanditRL.OnlineHuber.fullSpace",
+        "level": "B library support",
+        "exact_sealed_signature": "def fullSpace : Domain E :=\n  ⟨Set.univ, Set.univ_nonempty, isClosed_univ, convex_univ⟩",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted",
+        "definition_audit": {
+          "kind": "literal",
+          "all_carrier_cases_reviewed": true,
+          "fallback_branch": false,
+          "note": "Carrier univ and produced nonempty/closed/convex witnesses. No completeness parameter."
+        }
+      },
+      {
+        "neutral": "Q03",
+        "name": "BanditRL.OnlineHuber.linearLoss",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "noncomputable def linearLoss (delta : ℝ) (z : E) (y : ℝ) (x : E) : ℝ :=\n  huber delta (inner ℝ z x - y)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 4
+          },
+          {
+            "binder": "z",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "y",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "x",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 7
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas",
+        "definition_audit": {
+          "kind": "literal",
+          "all_carrier_cases_reviewed": true,
+          "fallback_branch": false,
+          "note": "Literal affine residual composition on the full ambient carrier. No completeness parameter."
+        }
+      },
+      {
+        "neutral": "T13",
+        "name": "BanditRL.OnlineHuber.project_fullSpace",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem project_fullSpace (x : E) : project (fullSpace : Domain E) x = x",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "x",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T14",
+        "name": "BanditRL.OnlineHuber.huber_regular",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_regular (delta y : ℝ) (hd : 0 ≤ delta) (z : E) :\n    RegularLoss fullSpace (linearLoss delta z y)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "y",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 7
+          },
+          {
+            "binder": "z",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 8
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted",
+        "expanded_conclusion": "exists U : Set E, IsOpen U and univ subset U and ConvexOn Real U (linearLoss delta z y) and DifferentiableOn Real (linearLoss delta z y) U. The proof produces U=univ and each field."
+      },
+      {
+        "neutral": "T15",
+        "name": "BanditRL.OnlineHuber.huber_step",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_step (delta y eta : ℝ) (hd : 0 ≤ delta) (z x : E) :\n    step fullSpace eta (linearLoss delta z y) x =\n      x - eta • ((if |inner ℝ z x - y| ≤ delta then inner ℝ z x - y\n        else delta * Real.sign (inner ℝ z x - y)) • z)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "y",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "eta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 7
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 8
+          },
+          {
+            "binder": "z",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 9
+          },
+          {
+            "binder": "x",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 10
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas"
+      },
+      {
+        "neutral": "T16",
+        "name": "BanditRL.OnlineHuber.huber_regret_fixed",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_regret_fixed (delta Z eta : ℝ) (hd : 0 ≤ delta)\n    (hZ : 0 ≤ Z) (heta : 0 < eta) (z : ℕ → E) (y : ℕ → ℝ)\n    (x0 u : E) (T : ℕ) (hz : ∀ t < T, ‖z t‖ ≤ Z) :\n    regret fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 u T ≤\n      ‖x0 - u‖ ^ 2 / (2 * eta) + eta / 2 * ((T : ℝ) * (delta * Z) ^ 2) -\n      ‖iterate fullSpace eta (fun t => linearLoss delta (z t) (y t)) x0 T - u‖ ^ 2 /\n        (2 * eta)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "Z",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "eta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 7
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 8
+          },
+          {
+            "binder": "hZ",
+            "type": "0 <= Z",
+            "classification": "STANDING",
+            "reason": "Nonnegative norm-bound convention. Redundant for nonempty bounded prefixes; retained even for T=0. Not a desired proof conclusion.",
+            "position": 9
+          },
+          {
+            "binder": "heta",
+            "type": "0 < eta",
+            "classification": "STANDING",
+            "reason": "Algorithm 2.1 positive constant step, used in Theorem 2.13.",
+            "position": 10
+          },
+          {
+            "binder": "z",
+            "type": "Nat -> E",
+            "classification": "TYPING",
+            "reason": "Feature sequence; unrestricted except the separate norm binder. Deterministic arbitrary streams generalize the stock-history illustration.",
+            "position": 11
+          },
+          {
+            "binder": "y",
+            "type": "Nat -> Real",
+            "classification": "TYPING",
+            "reason": "Label sequence, unrestricted real values; no stochastic/label-bound assumption.",
+            "position": 12
+          },
+          {
+            "binder": "x0",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 13
+          },
+          {
+            "binder": "u",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 14
+          },
+          {
+            "binder": "T",
+            "type": "Nat",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 15
+          },
+          {
+            "binder": "hz",
+            "type": "forall (t : Nat), t < T -> norm(z t) <= Z",
+            "classification": "SOURCE",
+            "reason": "Explicit uniform feature bound for the chosen prefix; inner t and t<T are expanded in this type.",
+            "position": 16
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas",
+        "redundant_binder": "hZ is unused in the proof. It is a nonnegative bound convention, not an assumed desired estimate; no EXCESS consumer premise."
+      },
+      {
+        "neutral": "T17",
+        "name": "BanditRL.OnlineHuber.huber_average_bound",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_average_bound (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z)\n    (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (T : ℕ) (hT : 0 < T)\n    (hz : ∀ t < T, ‖z t‖ ≤ Z) :\n    regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T ≤\n      (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "Z",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 7
+          },
+          {
+            "binder": "hZ",
+            "type": "0 <= Z",
+            "classification": "STANDING",
+            "reason": "Nonnegative norm-bound convention. Redundant for nonempty bounded prefixes; retained even for T=0. Not a desired proof conclusion.",
+            "position": 8
+          },
+          {
+            "binder": "z",
+            "type": "Nat -> E",
+            "classification": "TYPING",
+            "reason": "Feature sequence; unrestricted except the separate norm binder. Deterministic arbitrary streams generalize the stock-history illustration.",
+            "position": 9
+          },
+          {
+            "binder": "y",
+            "type": "Nat -> Real",
+            "classification": "TYPING",
+            "reason": "Label sequence, unrestricted real values; no stochastic/label-bound assumption.",
+            "position": 10
+          },
+          {
+            "binder": "x0",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 11
+          },
+          {
+            "binder": "u",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 12
+          },
+          {
+            "binder": "T",
+            "type": "Nat",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 13
+          },
+          {
+            "binder": "hT",
+            "type": "0 < T",
+            "classification": "STANDING",
+            "reason": "Positive horizon for the source tuning and division by T.",
+            "position": 14
+          },
+          {
+            "binder": "hz",
+            "type": "forall (t : Nat), t < T -> norm(z t) <= Z",
+            "classification": "SOURCE",
+            "reason": "Explicit uniform feature bound for the chosen prefix; inner t and t<T are expanded in this type.",
+            "position": 15
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas"
+      },
+      {
+        "neutral": "T18",
+        "name": "BanditRL.OnlineHuber.huber_rate_tendsto",
+        "level": "B library support",
+        "exact_sealed_signature": "theorem huber_rate_tendsto (delta Z : ℝ) (x0 u : E) :\n    Filter.Tendsto (fun T : ℕ => (‖x0 - u‖ ^ 2 + (delta * Z) ^ 2) / (2 * Real.sqrt T))\n      Filter.atTop (nhds 0)",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "Z",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "x0",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 7
+          },
+          {
+            "binder": "u",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 8
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted",
+        "nonminimal_typeclasses": "CompleteSpace E is actually elaborated despite unused-section-variable warning; T18 also retains InnerProductSpace Real E. No signature change authorized by this review."
+      },
+      {
+        "neutral": "T19",
+        "name": "BanditRL.OnlineHuber.huber_average_eventually",
+        "level": "A derived/source Anchor",
+        "exact_sealed_signature": "theorem huber_average_eventually (delta Z : ℝ) (hd : 0 ≤ delta) (hZ : 0 ≤ Z)\n    (z : ℕ → E) (y : ℕ → ℝ) (x0 u : E) (hz : ∀ t, ‖z t‖ ≤ Z)\n    (epsilon : ℝ) (he : 0 < epsilon) :\n    ∀ᶠ T : ℕ in Filter.atTop,\n      regret fullSpace (1 / Real.sqrt T) (fun t => linearLoss delta (z t) (y t)) x0 u T / T < epsilon",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "E",
+            "type": "Type u",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          },
+          {
+            "binder": "inst",
+            "type": "NormedAddCommGroup E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 2
+          },
+          {
+            "binder": "inst_1",
+            "type": "InnerProductSpace Real E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 3
+          },
+          {
+            "binder": "inst_2",
+            "type": "CompleteSpace E",
+            "classification": "TYPING",
+            "reason": "Actual elaborated Hilbert carrier assumption; source finite Euclidean instances satisfy it. Explicit generalization, not an extra restriction on source vectors.",
+            "position": 4
+          },
+          {
+            "binder": "delta",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 5
+          },
+          {
+            "binder": "Z",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 6
+          },
+          {
+            "binder": "hd",
+            "type": "0 <= delta",
+            "classification": "STANDING",
+            "reason": "Independently reviewed intended nonnegative Huber threshold. Source sign is implicit; zero is a disclosed degenerate extension. Not a RULED correction.",
+            "position": 7
+          },
+          {
+            "binder": "hZ",
+            "type": "0 <= Z",
+            "classification": "STANDING",
+            "reason": "Nonnegative norm-bound convention. Redundant for nonempty bounded prefixes; retained even for T=0. Not a desired proof conclusion.",
+            "position": 8
+          },
+          {
+            "binder": "z",
+            "type": "Nat -> E",
+            "classification": "TYPING",
+            "reason": "Feature sequence; unrestricted except the separate norm binder. Deterministic arbitrary streams generalize the stock-history illustration.",
+            "position": 9
+          },
+          {
+            "binder": "y",
+            "type": "Nat -> Real",
+            "classification": "TYPING",
+            "reason": "Label sequence, unrestricted real values; no stochastic/label-bound assumption.",
+            "position": 10
+          },
+          {
+            "binder": "x0",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 11
+          },
+          {
+            "binder": "u",
+            "type": "E",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 12
+          },
+          {
+            "binder": "hz",
+            "type": "forall (t : Nat), norm(z t) <= Z",
+            "classification": "SOURCE",
+            "reason": "Uniform all-time feature bound for the eventual claim.",
+            "position": 13
+          },
+          {
+            "binder": "epsilon",
+            "type": "Real",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 14
+          },
+          {
+            "binder": "he",
+            "type": "0 < epsilon",
+            "classification": "TYPING",
+            "reason": "Positive tolerance parameter in the definition-level eventual one-sided conclusion; not a loss/data hypothesis.",
+            "position": 15
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted-with-disclosed-source-deltas"
+      },
+      {
+        "neutral": "T20",
+        "name": "HuberSeamProbe.upper_join",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "lemma upper_join : HasDerivAt (fun x : ℝ => if x ≤ 1 then x^2/2 else x-1/2) 1 1",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T21",
+        "name": "HuberDerivativeProbe.lower_seam",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem lower_seam : HasDerivAt (huber 2) (-2) (-2)",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T22",
+        "name": "HuberDerivativeProbe.upper_seam",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem upper_seam : HasDerivAt (huber 2) 2 2",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T23",
+        "name": "HuberDerivativeProbe.zero_threshold",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem zero_threshold : HasDerivAt (huber 0) 0 (-7)",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T24",
+        "name": "HuberDerivativeProbe.quadratic_interior",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem quadratic_interior : HasDerivAt (huber 2) 1 1",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T25",
+        "name": "HuberDerivativeProbe.affine_exterior",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem affine_exterior : HasDerivAt (huber 2) 2 3",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T26",
+        "name": "HuberVectorProbe.nonzero_feature",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem nonzero_feature : gradient (fun w : ℝ => huber 2 (inner ℝ 3 w - 1)) 2 = 6",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T27",
+        "name": "HuberVectorProbe.zero_threshold",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem zero_threshold : gradient (fun w : ℝ => huber 0 (inner ℝ 3 w - 1)) 2 = 0",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T28",
+        "name": "HuberVectorProbe.feature_bound",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem feature_bound : ‖gradient (fun w : ℝ => huber 2 (inner ℝ 3 w - 1)) 2‖ ≤ 6",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T29",
+        "name": "HuberVectorProbe.global_convex",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem global_convex : ConvexOn ℝ Set.univ (fun w : ℝ => huber 2 (inner ℝ 3 w - 1))",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T30",
+        "name": "HuberOGDProbe.actual_step",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem actual_step : step (fullSpace : Domain ℝ) (1/2) (linearLoss 1 (1 : ℝ) 0) 2 = 3/2",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T31",
+        "name": "HuberOGDProbe.residual_bound",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem residual_bound (T : ℕ) :\n    regret fullSpace (1/2) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 0 T ≤\n      ‖(2 : ℝ) - 0‖ ^ 2 / (2 * (1/2)) + (1/2) / 2 * ((T : ℝ) * (1 * 1) ^ 2) -\n      ‖iterate fullSpace (1/2) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 T - 0‖ ^ 2 / (2*(1/2))",
+        "atomic_binders_in_elaborated_order": [
+          {
+            "binder": "T",
+            "type": "Nat",
+            "classification": "TYPING",
+            "reason": "Explicit mathematical object/carrier parameter; no hidden proof premise.",
+            "position": 1
+          }
+        ],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T32",
+        "name": "Tests.OnlineHuber.average_four",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem average_four :\n    regret fullSpace (1 / Real.sqrt 4) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 0 4 / 4 ≤ 5/4",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "T33",
+        "name": "Tests.OnlineHuber.eventually_tenth",
+        "level": "C validation consumer",
+        "exact_sealed_signature": "theorem eventually_tenth : ∀ᶠ T : ℕ in Filter.atTop,\n    regret fullSpace (1 / Real.sqrt T) (fun _ => linearLoss 1 (1 : ℝ) 0) 2 0 T / T < 1/10",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "S01",
+        "name": "Tests.OnlineHuberScalarCarryover.negative_exterior",
+        "level": "C validation consumer",
+        "exact_sealed_statement": "huber 2 (-3) = 4",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "S02",
+        "name": "Tests.OnlineHuberScalarCarryover.negative_seam",
+        "level": "C validation consumer",
+        "exact_sealed_statement": "huber 2 (-2) = 2",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "S03",
+        "name": "Tests.OnlineHuberScalarCarryover.positive_seam",
+        "level": "C validation consumer",
+        "exact_sealed_statement": "huber 2 2 = 2",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "S04",
+        "name": "Tests.OnlineHuberScalarCarryover.positive_exterior",
+        "level": "C validation consumer",
+        "exact_sealed_statement": "huber 2 3 = 4",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      },
+      {
+        "neutral": "S05",
+        "name": "Tests.OnlineHuberScalarCarryover.zero_threshold_value",
+        "level": "C validation consumer",
+        "exact_sealed_statement": "huber 0 7 = 0",
+        "atomic_binders_in_elaborated_order": [],
+        "excess": [],
+        "verdict": "accepted"
+      }
+    ],
+    "counts": {
+      "entries": 41,
+      "production_definitions": 3,
+      "production_proofs": 19,
+      "original_canary_proofs": 14,
+      "additional_value_proofs": 5
+    },
+    "required_manifest_level_repairs": [
+      "Treat T16 huber_regret_fixed and T17 huber_average_bound as A source-facing derived quantitative Anchors, not merely B, because reader publication attributes these guarantees to Example 2.15. Full binder and semantic review is supplied here."
+    ],
+    "proof_ingredients_not_binders": [
+      "Huber derivatives at all seams",
+      "global Huber convexity",
+      "ambient gradient formula",
+      "gradient norm bound",
+      "full-space projection identity",
+      "global RegularLoss",
+      "one-step/regret bound",
+      "vanishing envelope"
+    ]
+  },
+  "grouped_drafts": "Superseded provenance only, not the normative audit.",
+  "source_lean_deltas": [
+    "complete real Hilbert generalization of finite Euclidean source",
+    "arbitrary deterministic streams generalize stock-history illustration",
+    "source-implicit delta>=0 with disclosed zero extension",
+    "derived numerical constants and T=0 residual refinement",
+    "coefficient-one specialization of proportional step",
+    "separate known-horizon runs",
+    "one-sided eventual interpretation without ordinary signed limit or real-valued limsup theorem"
+  ],
+  "source_topology": "source-topology.json",
+  "source_gap_discharge": {
+    "threshold": "disclosed nonnegative convention and zero extension",
+    "calculus": "actual gluing/derivative/clamp convexity and affine chain proofs",
+    "gradient_bound": "derived delta times feature norm, then common Z bound",
+    "horizon": "coefficient1 with fixed initial state and separate constant-step runs",
+    "average": "numeric envelope limit and actual one-sided eventual inequality",
+    "projection": "reused existence/uniqueness/specification plus full-space identity"
+  },
+  "review": {
+    "verdict": "accepted-with-explicit-delta",
+    "semantic_receipt_sha256": "469ebe95b40fa9e597db87c58ebe0d221c833a7bb7c427c600bf73f5865743e9",
+    "atomic_audit_sha256": "dbfbbdd243f17d67ce17f9d87858c25c01ef8840244d89884a7e36a9eae210f3",
+    "blind_manifest_sha256": "bb795be1e4720b8ecc1f4d9d9f5680abedbcf2b0f843ad52b75fcbe84a1d3d21",
+    "actor_boundary": "Distinct automated roles, not external human review",
+    "reader_provenance_addendum_sha256": "e2845cd1ecd551311ddf78f34782d15e0db4ab254fc922d0fb43cbc5bd1128d8",
+    "reader_draft_v3_sha256": "3bde4a72c2af033ac9e7fdf039e6e641d9604dafe569856c035ad7035a1a67d5",
+    "reader_draft_v4_sha256": "acb6edc4575a3038cdeb5dfc581dce6249a73f5416d884fbc40ea6959a4d9dd8",
+    "reader_v4_repair_receipt_sha256": "968ae7c6e7c51e5ca236dd45e662bb5a5df0a73b640a34999f1bdd039a3590c2"
+  },
+  "compiled_graph": {
+    "counts": {
+      "project_nodes": 41,
+      "module_imports": 3388,
+      "external_boundary_nodes": 763,
+      "edges": 5139
+    },
+    "sha256": "159144a5ab8c2db53c54403b85224d99e67486998edcfa38f9bc17f511eefe97",
+    "same_module_generated_boundary": [
+      "BanditRL.OnlineHuber.fullSpace._proof_1",
+      "BanditRL.OnlineHuber.fullSpace._proof_2",
+      "BanditRL.OnlineHuber.fullSpace._proof_3",
+      "BanditRL.OnlineHuber.hasDerivAt_ite_le._simp_1_1",
+      "BanditRL.OnlineHuber.huber._proof_1"
+    ],
+    "outside_module_boundary_count": 758,
+    "semantics": "Direct compiled type/value constants; source and teaching overlays remain distinct."
+  },
+  "candidate_files": [
+    {
+      "path": "BanditRLProof/OnlineHuber.lean",
+      "sha256_raw": "3ce9cc1cc7b1b65cb332b860e502bf41c6b2699b59382b09af02ab0a16afe1e9",
+      "sha256_git_lf": "3ce9cc1cc7b1b65cb332b860e502bf41c6b2699b59382b09af02ab0a16afe1e9"
+    },
+    {
+      "path": "Tests/OnlineHuberCanary.lean",
+      "sha256_raw": "bbf47d1794d00b1f24507da7c7da97c55324654e781ebd11a40d547ce0662e38",
+      "sha256_git_lf": "ea9d8fa0f61c649767b01b6370a259bf9adec84a751b026f6b320dd302db5f27"
+    },
+    {
+      "path": "BanditRLProof.lean",
+      "sha256_raw": "ee412300723179cf5a4e243b5cd0738041c3ee712e8f9c943672c04ee060b5cf",
+      "sha256_git_lf": "ee412300723179cf5a4e243b5cd0738041c3ee712e8f9c943672c04ee060b5cf"
+    },
+    {
+      "path": "Tests.lean",
+      "sha256_raw": "324cbaa0d6f821187451e7f5aaacf8e381801e456327b0c1cb4ed20ddc7b5e89",
+      "sha256_git_lf": "324cbaa0d6f821187451e7f5aaacf8e381801e456327b0c1cb4ed20ddc7b5e89"
+    },
+    {
+      "path": "website/content/books.json",
+      "sha256_raw": "89968d23539ff7598c57e950242b29a63cf4e66de6735bf02358a9697d6f480f",
+      "sha256_git_lf": "89968d23539ff7598c57e950242b29a63cf4e66de6735bf02358a9697d6f480f"
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256_raw": "d812ba1783b6abfe609c6c42b58764bd702506e6b87d2d610e54fb2d495d0431",
+      "sha256_git_lf": "d812ba1783b6abfe609c6c42b58764bd702506e6b87d2d610e54fb2d495d0431"
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256_raw": "611b85cd1c00aad4c1fa0a8bc7b2c5efdb8be0481307bc5526ea9c4b9640debe",
+      "sha256_git_lf": "611b85cd1c00aad4c1fa0a8bc7b2c5efdb8be0481307bc5526ea9c4b9640debe"
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256_raw": "2bd26ad079b1de37e10cee34dd50cd527b52e15fb999368831fd09fbf6547b3a",
+      "sha256_git_lf": "2bd26ad079b1de37e10cee34dd50cd527b52e15fb999368831fd09fbf6547b3a"
+    },
+    {
+      "path": "tools/test_book_registry.py",
+      "sha256_raw": "d0b875f4130e88be05a687c9af31a0e336c6a4a296f67724b0e5daf4712c2865",
+      "sha256_git_lf": "d0b875f4130e88be05a687c9af31a0e336c6a4a296f67724b0e5daf4712c2865"
+    }
+  ],
+  "boundary": "No ordinary signed limit, absolute convergence, real-valued limsup theorem, uniform unbounded-comparator cutoff, moving comparator, anytime trajectory, financial prediction accuracy, chapter/book completion or purification claim.",
+  "initial_port_files": [
+    {
+      "path": "BanditRLProof/OnlineHuber.lean",
+      "sha256": "3ce9cc1cc7b1b65cb332b860e502bf41c6b2699b59382b09af02ab0a16afe1e9",
+      "bytes": 13908
+    },
+    {
+      "path": "Tests/OnlineHuberCanary.lean",
+      "sha256": "bbf47d1794d00b1f24507da7c7da97c55324654e781ebd11a40d547ce0662e38",
+      "bytes": 5329
+    },
+    {
+      "path": "BanditRLProof.lean",
+      "sha256": "ee412300723179cf5a4e243b5cd0738041c3ee712e8f9c943672c04ee060b5cf",
+      "bytes": 48779
+    },
+    {
+      "path": "Tests.lean",
+      "sha256": "324cbaa0d6f821187451e7f5aaacf8e381801e456327b0c1cb4ed20ddc7b5e89",
+      "bytes": 6744
+    },
+    {
+      "path": "website/content/books.json",
+      "sha256": "89968d23539ff7598c57e950242b29a63cf4e66de6735bf02358a9697d6f480f",
+      "bytes": 4385
+    },
+    {
+      "path": "website/content/chapters.json",
+      "sha256": "d812ba1783b6abfe609c6c42b58764bd702506e6b87d2d610e54fb2d495d0431",
+      "bytes": 75865
+    },
+    {
+      "path": "website/content/readings.json",
+      "sha256": "03d0e63e5c903414a5b1dc108416889fdd82eec388873d1ed59b21496564f0a6",
+      "bytes": 472535
+    },
+    {
+      "path": "website/content/highlights.json",
+      "sha256": "2bd26ad079b1de37e10cee34dd50cd527b52e15fb999368831fd09fbf6547b3a",
+      "bytes": 437397
+    },
+    {
+      "path": "tools/test_book_registry.py",
+      "sha256": "d0b875f4130e88be05a687c9af31a0e336c6a4a296f67724b0e5daf4712c2865",
+      "bytes": 29014
+    }
+  ],
+  "candidate_hash_convention": "Current raw working bytes and LF-normalized Git bytes are bound separately. initial_port_files preserve the reader-v2 combined-build snapshot. Later changes add derived provenance,combine notation without loss and update the local status label/boundary; Lean/test bytes are unchanged."
+}

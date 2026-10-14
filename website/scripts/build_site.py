@@ -1829,7 +1829,7 @@ def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dic
         else ""
     )
     theorem_note = (
-        f"{theorem_count} source theorem restatement{'s' if theorem_count != 1 else ''}, with assumptions and original links."
+        f"{theorem_count} source-linked statement{'s' if theorem_count != 1 else ''}, with assumptions and source links."
         if theorem_count
         else "The source boundary is explicit because no single theorem represents this chapter."
     )

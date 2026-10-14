@@ -355,6 +355,31 @@
       ]
     },
     {
+      "slug": "online-huber",
+      "title": "Huber linear prediction with unconstrained OGD",
+      "short_title": "Huber OGD",
+      "status": "compiled",
+      "summary": "Huber calculus supplies the actual full-space OGD update, its terminal-residual regret bound and a one-sided average guarantee for known-horizon runs.",
+      "audience": "Readers of Orabona Chapter 2.",
+      "completion_definition": "One source Example 2.15 integration node: 19 production proofs and three definitions, the 14 original canary statements, and five retained scalar-value tests. This does not complete Chapter 2 or the book.",
+      "completion_blockers": [
+        "Other Chapter 2 source targets and appendix dependencies require their own acceptance; existing compiled code does not settle source fidelity."
+      ],
+      "learning_goals": [
+        "Produce actual Huber calculus at both seams and delta0 under explicit source-implicit threshold.",
+        "Derive ambient feature gradient/global regularity/full-space projection, without bounded predictors or labels.",
+        "Retain the negative fixed-step terminal distance, then use one coefficient1 known-horizon constant-step run per positive T.",
+        "Distinguish a vanishing numeric upper envelope from actual one-sided eventual performance; no signed convergence/anytime/uniform cutoff."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineHuber.lean"
+      ],
+      "open_gaps": [
+        "The average result is one-sided and horizon-tuned. Uniform unbounded-comparator, moving-comparator and anytime guarantees are outside this result.",
+        "Whole-chapter acceptance and purification remain separate."
+      ]
+    },
+    {
       "slug": "online-convex",
       "title": "Convexity with extended-real values",
       "short_title": "Extended convexity",
