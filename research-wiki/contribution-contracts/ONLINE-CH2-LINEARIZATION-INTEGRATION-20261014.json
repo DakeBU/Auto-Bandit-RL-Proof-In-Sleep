@@ -1,0 +1,244 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-LINEARIZATION-INTEGRATION-20261014",
+  "route": "online-learning / Chapter2 causal convex-to-linear reduction",
+  "frontier_cell": "online-linearization",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21June2026",
+    "anchor": "Section2.3 unnumbered convex-to-linear comparison and transfer, printed22/PDF34; Definition2.18/2.20 and subgradient/OSD prerequisites separately mapped",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged30-declaration causal reduction module and complete35-declaration canary from PR150/184, with explicit bounded-interface restrictions and full original-scope preservation.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineLinearization.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py",
+    "website/static/lean-graph.js"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLinearization.Domain",
+    "BanditRL.OnlineLinearization.LinearPolicy",
+    "BanditRL.OnlineLinearization.SupportPolicy",
+    "BanditRL.OnlineLinearization.Feasible",
+    "BanditRL.OnlineLinearization.outputHistory",
+    "BanditRL.OnlineLinearization.history",
+    "BanditRL.OnlineLinearization.output",
+    "BanditRL.OnlineLinearization.selected",
+    "BanditRL.OnlineLinearization.LegalFeedback",
+    "BanditRL.OnlineLinearization.linearRun",
+    "BanditRL.OnlineLinearization.linearLoss",
+    "BanditRL.OnlineLinearization.regret",
+    "BanditRL.OnlineLinearization.outputHistory_last",
+    "BanditRL.OnlineLinearization.history_zero",
+    "BanditRL.OnlineLinearization.history_succ",
+    "BanditRL.OnlineLinearization.history_castSucc",
+    "BanditRL.OnlineLinearization.history_selected",
+    "BanditRL.OnlineLinearization.output_linear_run",
+    "BanditRL.OnlineLinearization.outputHistory_played",
+    "BanditRL.OnlineLinearization.output_mem",
+    "BanditRL.OnlineLinearization.history_prefix",
+    "BanditRL.OnlineLinearization.output_prefix",
+    "BanditRL.OnlineLinearization.oracle_feedback",
+    "BanditRL.OnlineLinearization.canonical_feedback",
+    "BanditRL.OnlineLinearization.trajectory_finite_loss",
+    "BanditRL.OnlineLinearization.support_gap",
+    "BanditRL.OnlineLinearization.linearLoss_gap",
+    "BanditRL.OnlineLinearization.regret_comparison",
+    "BanditRL.OnlineLinearization.regret_transfer",
+    "BanditRL.OnlineLinearization.canonical_regret_comparison"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Current main OnlineSubgradientPolicy shared SupportPolicy,OracleLaw and canonical selector",
+      "Current main OnlineSubgradientDescent properness,support and finite-loss APIs",
+      "Current main OnlineLearningRegret comparatorRegret and finite-sum identity",
+      "Both frozen original heads and full-stackTIP: target module/canary byte-identical; no mathematical declarations newly authored",
+      "Pinned Mathlib inner-product and finite-history primitives through actual imported dependencies"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineSubgradientDescent.lemma_2_31",
+      "BanditRL.OnlineSubgradientDescent.finite_loss",
+      "BanditRL.OnlineSubgradientPolicy.canonicalPolicy_legal",
+      "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "The unchanged35-declaration canary exercises comparison,strictslack,universalT2potential,canonicalprovider,invalidfuture andT0;44direct canary-to-production valueedges",
+      "regret_transfer composes regret_comparison with the supplied same-learner guarantee;canonical_regret_comparison composes the legal-provider adapter"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Port the existing bounded implementation and reuse accepted source-support/regret APIs without restoring stale inherited modules or adding duplicate foundational definitions."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-source-blind-decoder",
+    "source_reviewer": "independent-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The source gives one convex-to-linear regret reduction. This unchanged finite-history library realization retains a closed-domain API and properness/global support-availability conditions. Closedness is EXCESS for an unrestricted source Anchor; the broader source interface remains an open obligation. Structural recursion identities and the derived fixed-horizon guarantee schema are not additional numbered source results. This is the unchanged bounded deterministic library refinement of the Section 2.3 convex-to-linear reduction. The inherited closed-domain interface is EXCESS for the unrestricted source Anchor, which remains open. Properness and whole-domain support availability restrict the loss interface; actual played legality suffices for the ambient comparison without learner feasibility. Feasible learner and admissible losses at t<T justify provider adapters and exclude the canonical zero fallback on that prefix. A,p are fixed deterministic functions without external independence or measurable/executable implementation claims. The transferred hB covers every vector sequence and feasible comparator for the same learner at the given T; B may depend on the full sequence and may be negative. Real loss interpretation follows finiteness proofs before toReal. Source1..T is Lean0..T-1; T0 is an empty-sum extension. No numerical rate for arbitrary learners, universal optimality, unrestricted source closure, chapter/book completion, purification or Exposition Seal is asserted."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The same-run supporting-inequality transport is explicit, but this maintenance packet proves no separate cross-domain functor or new scientific mechanism.",
+    "focus_targets": [
+      "online-linearization"
+    ],
+    "visual_review": "Desktop/mobile mathematical content,disclosures and bounded-label repair independently reviewed;exact receipts in review-binding.json.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one new bounded Online Learning reader with3source-linkedcards,18formula notes,5proofsteps,7workedsteps and4notation entries;29owned Online routes",
+    "banditrlwiki": "no-change-with-reason: no Bandit/RL/Extended Topics terminal changed",
+    "results_ledger": "no-change-with-reason: this bounded reduction does not complete Chapter2 or the book",
+    "roadmap": "no-change-with-reason: unrestricted source Anchor and unintegrated historical obligations retain explicit owners",
+    "website_surfaces": [
+      "New Online Learning linearization reader and book navigation",
+      "Exact Lean module/declaration graph and source links",
+      "Two pseudocode allowlists and the existing book registry expectation",
+      "Schema3 status-index rejection in browser while preserving current status-only encoding and schema2 compatibility",
+      "Twelve retained groups andsixconditional prior-ledger transfers in research-wiki/integrations/ONLINE-CH2-LINEARIZATION-INTEGRATION-20261014",
+      "Contributor credit in research-wiki/integrations/ONLINE-CH2-LINEARIZATION-INTEGRATION-20261014/README.md"
+    ]
+  },
+  "truth_boundary": "The source gives one convex-to-linear regret reduction. This unchanged finite-history library realization retains a closed-domain API and properness/global support-availability conditions. Closedness is EXCESS for an unrestricted source Anchor; the broader source interface remains an open obligation. Structural recursion identities and the derived fixed-horizon guarantee schema are not additional numbered source results. This is the unchanged bounded deterministic library refinement of the Section 2.3 convex-to-linear reduction. The inherited closed-domain interface is EXCESS for the unrestricted source Anchor, which remains open. Properness and whole-domain support availability restrict the loss interface; actual played legality suffices for the ambient comparison without learner feasibility. Feasible learner and admissible losses at t<T justify provider adapters and exclude the canonical zero fallback on that prefix. A,p are fixed deterministic functions without external independence or measurable/executable implementation claims. The transferred hB covers every vector sequence and feasible comparator for the same learner at the given T; B may depend on the full sequence and may be negative. Real loss interpretation follows finiteness proofs before toReal. Source1..T is Lean0..T-1; T0 is an empty-sum extension. No numerical rate for arbitrary learners, universal optimality, unrestricted source closure, chapter/book completion, purification or Exposition Seal is asserted. Exact final candidate checks,CI,merge,main/live and fresh original disposition remain separate.",
+  "verification": {
+    "focused_checks": [
+      "Exact historical production/canary focusedbuild passed;combinedBanditRLProof9090jobs andTests9239jobs passed",
+      "65source-range and standardaxiom checks passed;independent importedgraph byteidentical with2925directtype/valueedges,64imports and507selectedboundarynodes",
+      "All28prespecified proof-value pairs verified;507boundarynodes split24project-ownedincluding9generatedhelpers and483outside-project"
+    ],
+    "bandit_check": "Full harness passed463Python tests with7platform skips. Subsequent only-label and preservation-packet edits retain all Lean/harness code;final all-file candidate gate pending.",
+    "site_build": "Verified build and sitecheck passed on18-file candidate after v5single-label repair. Currentgeneratedoutputs are not committed.",
+    "site_check": "Desktop/mobile render2,3source and18Lean disclosure keyboard controls,6actual search selections,11774current/schema2 decoder comparisons and16malformed cases passed. Actual browser rejects malformed dictionary/index and successfully retries corrected data.",
+    "independent_review": "Distinct source-only extractor,source-first reviewer,isolatedblind decoder and scope reviewer. Fullbody,compiledgraph,sourceprojection and actualcandidate/render receipts are separately bound."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original authorship remains in immutable PR and commit history"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Unrestricted source Anchor remains open because the inherited closed-domain API exceeds its premise set. Preserve and integrate only the independently accepted bounded refinement. All65declarations,957original rows,1034Gitblobs,220rawrepresentations and12ownershipgroups retained. Repaired private helper/path/metadata and display-label failures remain archived; none refutes the source mathematics.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineLinearization.lean",
+        "Tests/OnlineLinearizationCanary.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "same-run-convex-to-linear-bounded-library-integration"
+      ],
+      "expected_information_gain": "One existing proof route with required independent source,blind and scope audits; no competing proof-search routes or scheduler default change.",
+      "shared_verified_context_digest": "Source PDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17;frozen stack8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Exact historical supporting-inequality and same-run transport",
+      "selection_reason": "No parallel proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "The bounded reader has lossless source/statement/body/compiledgraph drilldowns. Unrestricted source Anchor and full purification/ExpositionSeal are not asserted.",
+      "source_expansion_nodes": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9",
+        "S10",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8",
+        "P9",
+        "P10",
+        "P11",
+        "C1",
+        "C2",
+        "G1",
+        "G2"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLinearization.Domain",
+        "BanditRL.OnlineLinearization.LinearPolicy",
+        "BanditRL.OnlineLinearization.SupportPolicy",
+        "BanditRL.OnlineLinearization.Feasible",
+        "BanditRL.OnlineLinearization.outputHistory",
+        "BanditRL.OnlineLinearization.history",
+        "BanditRL.OnlineLinearization.output",
+        "BanditRL.OnlineLinearization.selected",
+        "BanditRL.OnlineLinearization.LegalFeedback",
+        "BanditRL.OnlineLinearization.linearRun",
+        "BanditRL.OnlineLinearization.linearLoss",
+        "BanditRL.OnlineLinearization.regret",
+        "BanditRL.OnlineLinearization.outputHistory_last",
+        "BanditRL.OnlineLinearization.history_zero",
+        "BanditRL.OnlineLinearization.history_succ",
+        "BanditRL.OnlineLinearization.history_castSucc",
+        "BanditRL.OnlineLinearization.history_selected",
+        "BanditRL.OnlineLinearization.output_linear_run",
+        "BanditRL.OnlineLinearization.outputHistory_played",
+        "BanditRL.OnlineLinearization.output_mem",
+        "BanditRL.OnlineLinearization.history_prefix",
+        "BanditRL.OnlineLinearization.output_prefix",
+        "BanditRL.OnlineLinearization.oracle_feedback",
+        "BanditRL.OnlineLinearization.canonical_feedback",
+        "BanditRL.OnlineLinearization.trajectory_finite_loss",
+        "BanditRL.OnlineLinearization.support_gap",
+        "BanditRL.OnlineLinearization.linearLoss_gap",
+        "BanditRL.OnlineLinearization.regret_comparison",
+        "BanditRL.OnlineLinearization.regret_transfer",
+        "BanditRL.OnlineLinearization.canonical_regret_comparison"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

@@ -988,6 +988,31 @@
       "open_gaps": [
         "Deterministic policies receive whole loss functions and actual finite histories. The comparison holds one policy and initialization fixed. Randomized laws, executable finite-query oracles and anytime tuning require separate interfaces. Chapter and book completion remain separate."
       ]
+    },
+    {
+      "slug": "online-linearization",
+      "title": "Convex losses to causal linear feedback",
+      "short_title": "Convex-to-linear reduction",
+      "status": "compiled",
+      "summary": "A single generated feedback sequence connects convex loss differences to linear regret for the same learner and outputs.",
+      "audience": "Readers of Orabona v10 Section2.3.",
+      "completion_definition": "The unchanged causal reduction module has 18 proofs, 9 definitions and 3 aliases; its complete 35-declaration canary is retained. This bounded library interface makes the source reduction explicit without claiming its unrestricted premise set.",
+      "completion_blockers": [
+        "The unrestricted source interface and other Chapter 2 or whole-book obligations remain separate.",
+        "Purification and an Exposition Seal are separate from compilation and integration."
+      ],
+      "learning_goals": [
+        "Read vector feedback only after the current output.",
+        "Keep the learner and its outputs identical in convex and linear regret.",
+        "Distinguish a proved reduction from the supplied universal OLO guarantee.",
+        "Separate the source support inequality from the stronger inherited Lean domain interface."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineLinearization.lean"
+      ],
+      "open_gaps": [
+        "This is a bounded deterministic library realization. Closed-domain and global support-availability premises are inherited interface restrictions, not necessary conditions of the source supporting inequality. The unrestricted source Anchor, randomized guarantees, independence of externally chosen policies, executable selectors, universal optimality, chapter/book completion and purification are not established here."
+      ]
     }
   ]
 }

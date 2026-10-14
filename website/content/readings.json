@@ -6138,6 +6138,239 @@
         "takeaway": "A policy may depend on observed history while all regret quantities come from the same actual causal projection recurrence.",
         "boundary": "Deterministic policies receive whole loss functions and actual finite histories. The comparison holds one policy and initialization fixed. Randomized laws, executable finite-query oracles and anytime tuning require separate interfaces. Chapter and book completion remain separate."
       }
+    },
+    {
+      "slug": "online-linearization",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10,21June2026",
+        "sections": "Section2.3 convex-to-linear regret reduction; unnumbered main-text performance comparison, printed22/PDF34",
+        "pages": "Section2.3 printed22/PDF34",
+        "pdf_page": 34,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "One learner and one feedback sequence",
+          "meaning": "Fix the deterministic learner A and provider p. A reads strict-past vectors; p reads previous whole losses, reconstructed outputs through the current one, and the current whole loss after prediction. Comparators and T are evaluation arguments. Prefix comparisons hold A and p fixed and compare entire strict-past loss functions. This does not impose independence on external selection of A or p. Source rounds 1..T are indexed 0..T-1 in Lean; T=0 is the empty-sum extension. F_t(H) denotes the reconstructed output history: its entry i, for 0<=i<=t, is A_i applied to the strict prefix H restricted to indices below i."
+        },
+        {
+          "term": "Exact Lean domain and finite values",
+          "meaning": "The existing Lean domain is nonempty, closed and convex in a finite-dimensional real inner-product space. For each t<T, loss_t is proper (never minus infinity and finite at some ambient point) and has an ambient global support at every feasible point. Actual chosen feedback must be a legal global support at each played point before T. Played points need not lie in V for the ambient comparison. Feasibility is needed by the OCO and canonical-producer adapters. Closedness and whole-domain support availability are inherited interface restrictions, not necessary conditions of the bare finite-valued supporting inequality. Values at times t>=T are unrestricted by these finite-horizon performance hypotheses. Both compared values are proved finite before EReal.toReal is used as real loss. The symbol iota is the canonical embedding of a real number into EReal; the finite-value note writes this embedding explicitly."
+        },
+        {
+          "term": "A guarantee at a fixed horizon",
+          "meaning": "For the same A and the given T, hB covers every infinite vector sequence v and every u in V. B may depend on the full v,u,T and may be negative. No rate, sign or universal-in-T guarantee is supplied by the reduction."
+        },
+        {
+          "term": "Canonical support choice",
+          "meaning": "The shared selector chooses an arbitrary support when the ambient support set is nonempty and returns zero otherwise. No uniqueness, executable implementation, measurability, or minimum-norm property is asserted. For a feasible learner and admissible losses at t<T, the set is nonempty at every played point, so the zero fallback is unreachable on that valid prefix."
+        }
+      ],
+      "algorithm": {
+        "title": "Run one causal linear learner using observed supports",
+        "kind": "library realization of source reduction",
+        "steps": [
+          {
+            "title": "Output",
+            "detail": "Apply A_t to the actual strict-past vector history.",
+            "math": "X_t=A_t(H_t)",
+            "fallback": "Apply A_t to the actual strict-past vector history."
+          },
+          {
+            "title": "Observe and choose",
+            "detail": "Observe current proper subdifferentiable loss and select a genuine support at this X_t.",
+            "math": "g_t\\in\\partial f_t(X_t)",
+            "fallback": "Observe current proper subdifferentiable loss and select a genuine support at this X_t."
+          },
+          {
+            "title": "Append feedback",
+            "detail": "Append g_t to H_t and continue with the same learner.",
+            "math": "H_{t+1}=H_t\\mathbin{\\|}g_t",
+            "fallback": "Append g_t to H_t and continue with the same learner."
+          }
+        ],
+        "pseudocode": {
+          "title": "Finite-history implementation of Section2.3",
+          "intro": "The source gives a reduction argument. This finite-history recursion is an explicit deterministic library realization, with the interface restrictions below.",
+          "formula_label": "Actual feedback and next learner query",
+          "math": "X_t=A_t((g_s)_{s<t}),\\quad g_t=p(t,(f_s)_{s<t},(X_s)_{s\\le t},f_t),\\quad X_{t+1}=A_{t+1}((g_s)_{s\\le t})",
+          "fallback": "Output using past vectors, observe the current loss, choose a support and append it.",
+          "lines": [
+            "Fix one exogenous causal linear learner A and support policy p.",
+            "Initialize H0 as empty; A0 chooses the first point before a loss is read.",
+            "At t output A_t(H_t), then observe f_t and its finite played value.",
+            "Apply p to finite observed history and current whole f_t; require genuine support membership at X_t.",
+            "Append g_t and query the same A for the next round."
+          ],
+          "relationship": "Played-point support legality is sufficient for the ambient comparison. A feasible learner together with a universal provider law, or the existing canonical selector, supplies a feasible OCO realization."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineLinearization.output_linear_run",
+        "BanditRL.OnlineLinearization.support_gap",
+        "BanditRL.OnlineLinearization.regret_comparison",
+        "BanditRL.OnlineLinearization.regret_transfer"
+      ],
+      "source_theorems": [
+        {
+          "label": "Section 2.3: supporting inequalities reduce regret",
+          "pages": "printed22/PDF34",
+          "pdf_page": 34,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\sum_{t<T}(\\ell_t(X_t)-\\ell_t(u))\\le\\sum_{t<T}\\langle g_t,X_t-u\\rangle=\\sum_{t<T}(\\widetilde\\ell_t(X_t)-\\widetilde\\ell_t(u)),\\quad\\widetilde\\ell_t(x)=\\langle g_t,x\\rangle.\\)",
+          "fallback": "Sum the supporting inequalities at the same played points and fixed comparator. The result is linear regret on those same points.",
+          "plain": "A selected subgradient bounds each real loss difference. Summing preserves the comparator and the played sequence, so the resulting expression is linear regret.",
+          "relationship": "Faithful restatement of the one unnumbered source comparison, with time reindexed from 1..T to 0..T-1. The source algorithm-transfer paragraph additionally requires the same learner trajectory and an applicable linear guarantee. Example 2.14 explicitly cautions that the reduction need not be optimal.",
+          "contract": {
+            "model": "Online convex losses with chosen subgradients at the played points and one fixed comparator u in V.",
+            "assumptions": "The selected g_t gives the source supporting inequality between X_t and each compared u; the compared loss values are real. No closed-domain assumption is needed for this algebraic step.",
+            "parameters": "The same X_t,g_t and comparator u occur in every term. A performance transfer needs a linear learner whose guarantee applies to the induced feedback.",
+            "regret": "Comparator regret, summed over the finite horizon without expectations or probability events.",
+            "guarantee": "The convex-loss comparator regret is at most the same-action linear-loss comparator regret, with coefficient one. No numerical rate or universal optimality is asserted."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Bounded Lean comparison",
+            "boundary": "The exact historical Lean interfaces below retain extra domain and availability conditions; they are not an unrestricted source Anchor."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "The bounded Lean comparison on one generated run",
+          "pages": "Printed22/PDF34",
+          "pdf_page": 34,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R_T^{\\rm convex}(u)\\le\\sum_{t<T}\\langle g_t,X_t\\rangle-\\sum_{t<T}\\langle g_t,u\\rangle",
+          "fallback": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+          "plain": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+          "relationship": "Library realization of the source comparison, with explicit stronger interface conditions. The ambient played points may lie outside V when their global supports are legal.",
+          "contract": {
+            "model": "Fixed deterministic finite-vector learner and whole-loss/history support provider in the shared finite-dimensional real inner-product setting.",
+            "assumptions": "The existing Lean domain is nonempty, closed and convex in a finite-dimensional real inner-product space. For each t<T, loss_t is proper (never minus infinity and finite at some ambient point) and has an ambient global support at every feasible point. Actual chosen feedback must be a legal global support at each played point before T. Played points need not lie in V for the ambient comparison. Feasibility is needed by the OCO and canonical-producer adapters. Closedness and whole-domain support availability are inherited interface restrictions, not necessary conditions of the bare finite-valued supporting inequality.",
+            "parameters": "Fix the deterministic learner A and provider p. A reads strict-past vectors; p reads previous whole losses, reconstructed outputs through the current one, and the current whole loss after prediction. Comparators and T are evaluation arguments. Prefix comparisons hold A and p fixed and compare entire strict-past loss functions. This does not impose independence on external selection of A or p. Source rounds 1..T are indexed 0..T-1 in Lean; T=0 is the empty-sum extension.",
+            "regret": "Signed sum of real played loss minus real loss at one fixed feasible comparator. Properness and global supports establish finiteness before EReal.toReal.",
+            "guarantee": "For every u in V, actual convex regret is at most linear regret of the same A on its actual selected feedback sequence."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded library comparison",
+            "boundary": "This is a bounded deterministic library realization. Closed-domain and global support-availability premises are inherited interface restrictions, not necessary conditions of the source supporting inequality. The unrestricted source Anchor, randomized guarantees, independence of externally chosen policies, executable selectors, universal optimality, chapter/book completion and purification are not established here."
+          },
+          "statement_provenance": "derived-instantiation"
+        },
+        {
+          "label": "Transport an applicable all-vector guarantee",
+          "pages": "Printed22/PDF34",
+          "pdf_page": 34,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "(\\forall v\\in E^{\\mathbb N},\\,\\forall u\\in V,\\ R_T^{\\rm linear}(A,v,u)\\le B(v,u,T))\\Longrightarrow R_T^{\\rm convex}(u)\\le B(g,u,T)",
+          "fallback": "A bound for every vector sequence of the same learner applies to the generated feedback.",
+          "plain": "At the specified horizon, apply a separately established all-vector, all-comparator bound to the actual selected sequence.",
+          "relationship": "This is the explicit library guarantee schema for the source transfer paragraph. The input hB is a linear-regret guarantee, not an assumed convex-regret conclusion.",
+          "contract": {
+            "model": "Fixed deterministic finite-vector learner and whole-loss/history support provider in the shared finite-dimensional real inner-product setting.",
+            "assumptions": "The existing Lean domain is nonempty, closed and convex in a finite-dimensional real inner-product space. For each t<T, loss_t is proper (never minus infinity and finite at some ambient point) and has an ambient global support at every feasible point. Actual chosen feedback must be a legal global support at each played point before T. Played points need not lie in V for the ambient comparison. Feasibility is needed by the OCO and canonical-producer adapters. Closedness and whole-domain support availability are inherited interface restrictions, not necessary conditions of the bare finite-valued supporting inequality. Additionally, for this same A and fixed T, every vector sequence v and every u in V satisfy linear regret <= B(v,u,T).",
+            "parameters": "Fix the deterministic learner A and provider p. A reads strict-past vectors; p reads previous whole losses, reconstructed outputs through the current one, and the current whole loss after prediction. Comparators and T are evaluation arguments. Prefix comparisons hold A and p fixed and compare entire strict-past loss functions. This does not impose independence on external selection of A or p. Source rounds 1..T are indexed 0..T-1 in Lean; T=0 is the empty-sum extension.",
+            "regret": "Signed sum of real played loss minus real loss at one fixed feasible comparator. Properness and global supports establish finiteness before EReal.toReal.",
+            "guarantee": "Convex regret on the generated run is <= B(selected A loss p,u,T). B can depend on the whole sequence and may be negative. No bound is manufactured for an arbitrary learner."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded guarantee transport",
+            "boundary": "This is a bounded deterministic library realization. Closed-domain and global support-availability premises are inherited interface restrictions, not necessary conditions of the source supporting inequality. The unrestricted source Anchor, randomized guarantees, independence of externally chosen policies, executable selectors, universal optimality, chapter/book completion and purification are not established here."
+          },
+          "statement_provenance": "derived-instantiation"
+        }
+      ],
+      "proof_bridge": {
+        "title": "From finite loss gaps to the same linear run",
+        "summary": "Actual support feedback produces one vector sequence; history correspondence identifies both prediction sequences before any regret inequality.",
+        "steps": [
+          {
+            "title": "Establish finite compared values",
+            "detail": "Properness and an actual ambient global support force the played value to be finite even when the played point lies outside V. Support availability at each feasible point gives finite comparator values. Only then can EReal.toReal represent these losses.",
+            "math": "\\(\\ell_t(X_t),\\ell_t(u)\\in\\mathbb R,\\qquad \\ell_t(X_t)-\\ell_t(u)\\le\\langle g_t,X_t-u\\rangle.\\)",
+            "fallback": "Do not interpret the total toReal definition at infinity as source regret."
+          },
+          {
+            "title": "Identify feedback histories",
+            "detail": "Each stored vector is the actual support selected at that earlier round.",
+            "math": "H_t(i)=g_i\\quad(i<t)",
+            "fallback": "Each stored vector is the actual support selected at that earlier round."
+          },
+          {
+            "title": "Keep the same outputs",
+            "detail": "Running the linear policy on generated supports gives the original reduction outputs exactly.",
+            "math": "X_t=A_t((g_s)_{s<t})",
+            "fallback": "Running the linear policy on generated supports gives the original reduction outputs exactly."
+          },
+          {
+            "title": "Sum the true support gaps",
+            "detail": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs.",
+            "math": "R_T^{\\rm convex}(u)\\le\\sum_{t<T}\\langle g_t,X_t\\rangle-\\sum_{t<T}\\langle g_t,u\\rangle",
+            "fallback": "Every actual legal support bounds one played loss gap; the accumulated bound is linear regret at the same outputs."
+          },
+          {
+            "title": "Transport a separately established bound",
+            "detail": "For this same A and the given T, instantiate the assumed bound for every vector sequence and every feasible comparator at the actual selected sequence. No universal-in-T premise is inferred.",
+            "math": "(\\forall v\\in E^{\\mathbb N},\\,\\forall u\\in V,\\ R_T^{\\rm linear}(A,v,u)\\le B(v,u,T))\\Longrightarrow R_T^{\\rm convex}(u)\\le B(g,u,T)",
+            "fallback": "A bound proved for every vector sequence applies to the actually generated supports of the same learner."
+          }
+        ],
+        "boundary": "This is a bounded deterministic library realization. Closed-domain and global support-availability premises are inherited interface restrictions, not necessary conditions of the source supporting inequality. The unrestricted source Anchor, randomized guarantees, independence of externally chosen policies, executable selectors, universal optimality, chapter/book completion and purification are not established here."
+      },
+      "worked_example": {
+        "title": "A strict reduction with nonzero feedback",
+        "intro": "On real unbounded V, A_t is minus the sum of earlier vectors. First loss is (x-1)^2/2; second is x.",
+        "steps": [
+          {
+            "title": "Actual causal path",
+            "detail": "The genuine recursion outputs0,1 then terminal0 and selects -1,1.",
+            "math": "(X_0,X_1,X_2)=(0,1,0),\\quad(g_0,g_1)=(-1,1)",
+            "fallback": "The genuine recursion outputs0,1 then terminal0 and selects -1,1."
+          },
+          {
+            "title": "Strict regret slack",
+            "detail": "Against u=1, actual convex regret is1/2 while same-run linear regret is1. Energy2 and endpointdistance1 are nonzero.",
+            "math": "R_2^{\\rm convex}(1)=\\tfrac12<1=R_2^{\\rm linear}(1),\\quad\\sum g_t^2=2,\\quad|X_2-1|^2=1",
+            "fallback": "Against u=1, actual convex regret is1/2 while same-run linear regret is1. Energy2 and endpointdistance1 are nonzero."
+          },
+          {
+            "title": "A universal OLO producer",
+            "detail": "For every two-vector sequence and comparator, the same learner has an exact potential identity; public regret_transfer then applies to the generated sequence.",
+            "math": "R_2^{\\rm linear}(v,u)=\\tfrac{u^2}{2}+\\tfrac{v_0^2+v_1^2}{2}-\\tfrac{(-v_0-v_1-u)^2}{2}",
+            "fallback": "For every two-vector sequence and comparator, the same learner has an exact potential identity; public regret_transfer then applies to the generated sequence."
+          },
+          {
+            "title": "Retain the negative endpoint term",
+            "detail": "On the actual two-round run, energy is 2 and the squared distance from terminal X2=0 to u=1 is 1. The potential identity evaluates to 1, while convex regret is only 1/2.",
+            "math": "\\(\\sum_{t<2}g_t^2=2,\\quad|X_2-1|^2=1,\\quad B(g,1,2)=\\tfrac12+1-\\tfrac12=1.\\)",
+            "fallback": "The nonzero negative terminal term is part of the exact identity, not discarded."
+          },
+          {
+            "title": "Use the canonical support producer separately",
+            "detail": "The same feasible learner and admissible losses can instead use the existing classical selector. The public canonical comparison is proved for its own induced sequence; it does not assert the numerical trajectory of the explicit provider.",
+            "math": "\\(R_2^{\\mathrm{convex}}(1;A,p_{\\mathrm{can}})\\le R_2^{\\mathrm{linear}}(A,g^{\\mathrm{can}},1).\\)",
+            "fallback": "The chosen provider in the numerical example is legal on its actual run, without claiming a universal law for arbitrary losses or histories."
+          },
+          {
+            "title": "Change inadmissible current and future losses",
+            "detail": "Keep loss0 unchanged and replace every loss from time1 by plus infinity. With the same A and p, output1 remains1 because it depends only on strict-past feedback. This is a recurrence identity, not a regret or legality claim for the modified stream.",
+            "math": "\\(\\ell'_0=\\ell_0,\\quad\\ell'_t\\equiv+\\infty\\ (t\\ge1)\\quad\\Longrightarrow\\quad X'_1=X_1=1.\\)",
+            "fallback": "The modified infinite losses lie outside the performance hypotheses."
+          },
+          {
+            "title": "Read the zero-horizon extension literally",
+            "detail": "At T=0 both accumulated regrets are empty sums. The concrete zero-horizon comparison exercises the same public theorem without requiring any played-round premises.",
+            "math": "\\(R_0^{\\mathrm{convex}}(1)=R_0^{\\mathrm{linear}}(1)=0.\\)",
+            "fallback": "An empty finite-sum identity supplies no positive-horizon performance guarantee."
+          }
+        ],
+        "takeaway": "The example derives a nontrivial universal linear guarantee before transporting it; it does not assume a regret bound just for its chosen feedback.",
+        "boundary": "The numerical potential identity is universal in v and u only at T=2. The canonical-producer instance and invalid-future example have their own stated scope. This is a bounded deterministic library realization. Closed-domain and global support-availability premises are inherited interface restrictions, not necessary conditions of the source supporting inequality. The unrestricted source Anchor, randomized guarantees, independence of externally chosen policies, executable selectors, universal optimality, chapter/book completion and purification are not established here."
+      }
     }
   ]
 }
