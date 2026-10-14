@@ -79,6 +79,7 @@ TEACHING_PREVIEW_COUNT = 4
 PSEUDOCODE_CHAPTERS = {
     "online-foundations",
     "online-osd",
+    "online-guessing-osd",
     "etc",
     "ucb",
     "oful",
@@ -4913,7 +4914,10 @@ def build_lean_graph(
             module_core_ids,
         )
 
-    search_shards = sorted(set(node_shards.values()))
+    # Frequent shards use shorter indices; each entry still decodes to its
+    # original shard. Keep the current schema and status compression unchanged.
+    shard_frequencies = Counter(node["shard"] for node in nodes.values())
+    search_shards = sorted(shard_frequencies, key=lambda shard: (-shard_frequencies[shard], shard))
     search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
     search_statuses = sorted({node["status"] for node in nodes.values()})
     search_status_ids = {status: index for index, status in enumerate(search_statuses)}

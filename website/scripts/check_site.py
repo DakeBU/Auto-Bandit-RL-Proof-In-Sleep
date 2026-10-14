@@ -1508,6 +1508,7 @@ def main() -> int:
     algorithm_pseudocode_chapters = {
         "online-foundations",
         "online-osd",
+        "online-guessing-osd",
         "etc",
         "ucb",
         "oful",

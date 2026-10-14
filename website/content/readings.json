@@ -5589,6 +5589,228 @@
         ],
         "boundary": "The prefix-sign and minimizer calculation expand source gap G01; they are library proof bridges, not extra source premises. One explicit FTL selection family with every feasible initialization, on the specified deterministic loss sequence. The generic positive-time zero-prefix tie chooses -1; this failure stream never has such a tie. The Lean target names this family rather than quantifying over arbitrary argmin trajectories. This is not an all-algorithm lower bound or Chapter 2/book completion."
       }
+    },
+    {
+      "slug": "online-guessing-osd",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Example 2.32, Algorithm 2.2 and its Theorem 2.13 transfer",
+        "pages": "printed1-3,13-20/PDF13-15,25-32",
+        "pdf_page": 32,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Prediction, feedback and global supports",
+          "meaning": "X_0 is the source x_1. Predict X_t before revealing y_t; the source explicitly allows the adversary to choose y_t after seeing X_t. The support inequality for |x-y| compares against every real point, not just feasible predictions. At equality all slopes in [-1,1] are legal."
+        },
+        {
+          "term": "Canonical selector and interval",
+          "meaning": "The shared noncomputable selector depends on the current whole loss and point. For these losses support existence makes its default branch unreachable on the played run. Projection is the actual unique nearest point in [0,1]. Prefix equality fixes the external initial state and rates; it does not certify their independence from future data."
+        },
+        {
+          "term": "Signed regret and prescribed horizon",
+          "meaning": "R_T(u) is cumulative actual loss minus the fixed comparator loss. T>=1 determines one constant eta=1/sqrt(T) for that run, shared by all comparators. The eventual statement varies T across separately prescribed runs; it gives upper control, not signed convergence or an anytime schedule."
+        }
+      ],
+      "algorithm": {
+        "title": "Predict, reveal, select, clamp",
+        "kind": "canonical source-algorithm instance",
+        "steps": [
+          {
+            "title": "Predict using the strict past",
+            "detail": "Start at any X0 in [0,1] and output the current iterate before the current label is revealed."
+          },
+          {
+            "title": "Select from the complete support set",
+            "detail": "After feedback, use the actual canonical support of |x-y_t|. At a tie its value is unspecified within [-1,1]."
+          },
+          {
+            "title": "Apply the interval projection",
+            "detail": "Clamp the raw selected-support update to [0,1]. The next iterate is feasible."
+          }
+        ],
+        "pseudocode": {
+          "title": "Absolute-loss OSD for a known horizon",
+          "intro": "This is one canonical permitted selector. General history-dependent legal policies retain a separate review scope.",
+          "formula_label": "Actual update",
+          "math": "X_0=x_1\\in[0,1],\\quad\\eta=1/\\sqrt T,\\quad X_{t+1}=\\Pi_{[0,1]}(X_t-\\eta G(f_t,X_t))",
+          "fallback": "Output, reveal the label, select its support and clamp the actual update.",
+          "lines": [
+            "Prescribe T>=1, feasible x1 and eta=1/sqrt(T).",
+            "Initialize X0=x1.",
+            "For t<T, output Xt, then receive y_t in [0,1].",
+            "Set f_t(x)=|x-y_t| and g_t=G(f_t,Xt).",
+            "Set X(t+1)=min(1,max(0,Xt-eta*g_t))."
+          ],
+          "relationship": "The shared recurrence, current support membership and projection are the actual objects used in the regret theorem."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+        "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32",
+        "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example 2.32: the complete shifted support set",
+          "pages": "printed20; dependencies printed1-3,13-15,16-19",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\partial |x-y|=\\begin{cases}\\{1\\}&x>y,\\\\{[-1,1]}&x=y,\\\\\\{-1\\}&x<y.\\end{cases}\\)",
+          "fallback": "A matched prediction admits every slope between -1 and 1. Away from a match the supporting slope is unique.",
+          "plain": "A matched prediction admits every slope between -1 and 1. Away from a match the supporting slope is unique.",
+          "relationship": "The source prints the full equality. The library proves it for arbitrary real x and y by translating the global absolute-value support condition. Theorem 2.28 alone gives only one inclusion.",
+          "contract": {
+            "model": "Literal absolute loss on all real x,y and its ambient global subdifferential.",
+            "assumptions": "Arbitrary real x and y; the supporting inequality is tested against every real comparison point, including outside [0,1].",
+            "parameters": "No horizon, rate, feasible-point or selected-support parameter appears in this equality.",
+            "regret": "Pointwise equality of sets, before a trajectory or cumulative regret is introduced.",
+            "guarantee": "Exact equality of the global subdifferential sets, including both interval endpoints at a tie."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical absolute-loss OSD",
+            "boundary": "Complete ambient support-set equality for every real x and y, including all tie slopes. This card states no trajectory or cumulative-regret guarantee."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "The actual canonical update, expressed as a clamp",
+          "pages": "printed20; dependencies printed1-3,13-15,16-19",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(X_{t+1}=\\min\\{1,\\max\\{0,X_t-\\eta_tG(f_t,X_t)\\}\\}.\\)",
+          "fallback": "After the label is revealed, the shared selector chooses a global support at the current point and the genuine nearest-point projection clamps its update.",
+          "plain": "After the label is revealed, the shared selector chooses a global support at the current point and the genuine nearest-point projection clamps its update.",
+          "relationship": "This is the canonical-selector instantiation of Algorithm 2.2, with the interval projection identity supplied by Example 2.14. The source permits other legal support choices; their general history-policy family is outside this candidate.",
+          "contract": {
+            "model": "Shared canonical selected-support update and actual nearest projection onto [0,1], applied at any real point and label.",
+            "assumptions": "The algebraic clamp and prefix identities have no positivity or feasibility premise. The selected-norm helper retains a feasible current point.",
+            "parameters": "The clamp identity allows every real eta; strict-prefix equality fixes the same initial point and compares labels/rates before t.",
+            "regret": "These are update and causality identities, not regret estimates.",
+            "guarantee": "The clamp identity holds for arbitrary real eta, label and current point. Prefix equality holds for equal strict-prefix labels and rates. Performance requires the separate feasible positive-horizon assumptions."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical absolute-loss OSD",
+            "boundary": "Canonical update and strict-prefix identities. Performance appears in a separate quantitative card; the general legal history-selector family remains separately owned by open PR149/181/182."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "A quantitative known-horizon regret bound",
+          "pages": "printed20; dependencies printed1-3,13-15,16-19",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\eta=1/\\sqrt T,\\quad R_T(u)\\le\\sqrt T\\quad(T>0,\\ u\\in[0,1]).\\)",
+          "fallback": "One prescribed run competes with every fixed comparator in [0,1]. The interval diameter and all-support norm bound are both one.",
+          "plain": "One prescribed run competes with every fixed comparator in [0,1]. The interval diameter and all-support norm bound are both one.",
+          "relationship": "Example 2.32 states O(sqrt(T)) regret using the optimal rate. The displayed numerical constant and eta are derived by substituting D=G=1 into the preceding OSD/Theorem 2.13 tuning bound, rather than quoted as a printed formula.",
+          "contract": {
+            "model": "Scalar real predictions and labels in [0,1]; the literal loss is |x-y|, embedded finitely in EReal.",
+            "assumptions": "Feasible initial point and comparator; label feasibility on the played prefix for the finite bound, on all rounds for the eventual corollary. Properness, global support existence, selected-support norm and regret bounds are proved from the loss.",
+            "parameters": "Source round1 is Lean index0. For positive known T, eta=1/sqrt(T) is constant during that run. The same run is compared with every u. At a tie the canonical support lies in the full interval [-1,1]; its value is unspecified.",
+            "regret": "R_T(u)=sum from t=0 to T-1 of |X_t-y_t|-|u-y_t|. It is signed. The source permits choosing y_t after observing X_t; the deterministic bound applies to each resulting label sequence.",
+            "guarantee": "R_T(u)<=sqrt(T). Dividing by T gives an eventual upper-epsilon inequality along separately tuned horizon runs. The finite theorem retains the source label premise even though the proof does not use it."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical absolute-loss OSD",
+            "boundary": "This integrates the canonical current-loss selector. General finite-history support policies remain separately owned by open PR149/181/182. Chapter, book and purification acceptance remain separate. The theorem compares against every fixed comparator; a separately defined attained best-hindsight minimum is not formalized in this module."
+          },
+          "statement_provenance": "derived-instantiation"
+        },
+        {
+          "label": "Derived one-sided average guarantee",
+          "pages": "printed20; dependencies printed1-3,13-15,16-19",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\forall\\epsilon>0,\\quad R_T^{(T)}(u)/T<\\epsilon\\quad\\text{eventually}.\\)",
+          "fallback": "The upper envelope 1/sqrt(T) vanishes. Actual signed average regret is eventually below each positive epsilon.",
+          "plain": "The upper envelope 1/sqrt(T) vanishes. Actual signed average regret is eventually below each positive epsilon.",
+          "relationship": "This is a library corollary of the finite bound. Each horizon selects its own constant-rate run. A one-sided inequality supplies no lower bound and does not establish signed convergence to zero or one anytime trajectory.",
+          "contract": {
+            "model": "Scalar real predictions and labels in [0,1]; the literal loss is |x-y|, embedded finitely in EReal.",
+            "assumptions": "Fixed globally feasible label sequence, feasible initial point, fixed feasible comparator u and epsilon>0.",
+            "parameters": "At each positive horizon T a separate run uses eta_T=1/sqrt(T). T=0 is outside the finite guarantee and immaterial to eventuality.",
+            "regret": "R_T(u)=sum from t=0 to T-1 of |X_t-y_t|-|u-y_t|. It is signed. The source permits choosing y_t after observing X_t; the deterministic bound applies to each resulting label sequence.",
+            "guarantee": "For fixed labels, initial point, comparator and epsilon>0, the signed average of the separately tuned runs is eventually <epsilon."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Canonical absolute-loss OSD",
+            "boundary": "This integrates the canonical current-loss selector. General finite-history support policies remain separately owned by open PR149/181/182. Chapter, book and purification acceptance remain separate. The theorem compares against every fixed comparator; a separately defined attained best-hindsight minimum is not formalized in this module."
+          },
+          "statement_provenance": "derived-support"
+        }
+      ],
+      "worked_example": {
+        "title": "Four rounds with alternating labels",
+        "intro": "Take labels 0,1,0,1, initial point1 and eta=1/2, which equals the prescribed rate for T=4.",
+        "steps": [
+          {
+            "title": "Follow the genuine recurrence",
+            "detail": "The selected supports are 1,-1,1,-1; every played point is away from its label, so no tie choice enters.",
+            "math": "\\((X_0,X_1,X_2,X_3,X_4)=(1,\\tfrac12,1,\\tfrac12,1).\\)",
+            "fallback": "These are equalities for the shared recursive outputs."
+          },
+          {
+            "title": "Retain the terminal term",
+            "detail": "Against u=1/2, regret is1, support energy is4 and the terminal contribution is1/4. The sharp fixed-step right side equals the actual regret.",
+            "math": "\\(R_4(\\tfrac12)=1=\\tfrac14+1-\\tfrac14.\\)",
+            "fallback": "The negative terminal distance is material to this equality."
+          },
+          {
+            "title": "Read the tuned guarantee separately",
+            "detail": "The all-comparator theorem gives R4(u)<=2 for every u in [0,1]. It is an upper bound, distinct from the exact realized value above.",
+            "math": "\\(R_4(u)\\le\\sqrt4=2.\\)",
+            "fallback": "The original canaries also test nonzero legal tie supports, invalid supports, true clipping, strict-prefix equality and zero horizon."
+          }
+        ],
+        "takeaway": "The norm bound and telescoping argument are applied to the same actual selected-support trajectory.",
+        "boundary": "All 27 historical canary propositions are retained. The separate finite-history policy tests and guarantees remain outside this candidate."
+      },
+      "proof_bridge": {
+        "title": "From the full support set to square-root regret",
+        "summary": "The source transfers the projection proof to subgradients. The library makes the shifted support equality and quantitative substitutions explicit.",
+        "steps": [
+          {
+            "title": "Translate the full support inequality",
+            "detail": "The global supporting condition for |x-y| becomes that for |r| at r=x-y. A change of variables proves both directions, then the positive, zero and negative cases give the complete set.",
+            "math": "\\(g\\in\\partial|x-y|\\ \\Longleftrightarrow\\ g\\in\\partial|r|\\big|_{r=x-y},\\qquad |g|\\le1.\\)",
+            "fallback": "The comparison variable ranges over all real numbers. At zero the entire interval remains legal."
+          },
+          {
+            "title": "Produce a valid current support",
+            "detail": "Finite absolute losses are proper and have a global support at every feasible point. These facts discharge the shared selector interface and prove the norm bound for the actual selected support.",
+            "math": "\\(g_t=G(f_t,X_t)\\in\\partial f_t(X_t),\\qquad |g_t|\\le1.\\)",
+            "fallback": "Support existence and the norm bound are conclusions of the loss analysis, rather than supplied regret or gradient assumptions."
+          },
+          {
+            "title": "Project and telescope the same trajectory",
+            "detail": "The shared recurrence predicts using strict past feedback. After the current label is revealed, it applies the selected support and projection. The positive constant-step bound keeps its terminal residual.",
+            "math": "\\(\\begin{aligned}X_{t+1}&=\\Pi_{[0,1]}(X_t-\\eta g_t),\\\\R_T(u)&\\le\\frac{|X_0-u|^2-|X_T-u|^2}{2\\eta}+\\frac\\eta2\\sum_{t<T}|g_t|^2.\\end{aligned}\\)",
+            "fallback": "The source allows the adversary to see the current prediction before choosing its label. The proof is deterministic for the resulting sequence; the same trajectory serves all comparators."
+          },
+          {
+            "title": "Substitute the diameter and rate",
+            "detail": "Feasible initial point and comparator give |X0-u|<=1. The support sum is at most T. Dropping the nonpositive terminal term and setting eta=1/sqrt(T) yields the displayed constant.",
+            "math": "\\(R_T(u)\\le\\frac1{2\\eta}+\\frac{\\eta T}2=\\sqrt T\\qquad(T>0).\\)",
+            "fallback": "Tuning is fixed for the entire known-horizon run. The original label-feasibility premise stays in the statement."
+          },
+          {
+            "title": "Pass only the upper bound to the limit",
+            "detail": "Divide the finite inequality by positive T. Since 1/sqrt(T) tends to zero, the signed average is eventually below every positive epsilon along the horizon-indexed family.",
+            "math": "\\(\\frac{R_T^{(T)}(u)}T\\le\\frac1{\\sqrt T}\\longrightarrow0\\quad\\text{for the upper envelope}.\\)",
+            "fallback": "Only the numerical envelope is asserted to converge to zero. The actual average may remain negative."
+          }
+        ],
+        "boundary": "This integrates the canonical current-loss selector. General finite-history support policies remain separately owned by open PR149/181/182. Chapter, book and purification acceptance remain separate. The all-comparator bound is formalized directly; attainment of a cumulative-loss minimum remains a separate interface."
+      }
     }
   ]
 }

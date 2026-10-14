@@ -1,0 +1,152 @@
+import BanditRLProof.OnlineGuessingSubgradient
+
+/-! Public, actual projected absolute-loss trajectories. No supplied regret or
+stability inequalities; the canonical support choice is not assigned a zero tie.
+The tuned eventual statement concerns a family of separately prescribed runs. -/
+noncomputable section
+namespace GuessingOSDProbe
+open Set Finset Filter BanditRL.OnlineConvex
+open BanditRL.OnlineSubgradientDescent BanditRL.OnlineGuessingSubgradient
+abbrev interval := BanditRL.OnlineGradientDescent.unitInterval
+
+theorem shifted_positive : SourceSubdifferential (loss (1 / 3)) (2 / 3) = {(1 : ℝ)} :=
+  loss_subgradient_positive _ _ (by norm_num)
+
+theorem shifted_negative : SourceSubdifferential (loss (2 / 3)) (1 / 3) = {(-1 : ℝ)} :=
+  loss_subgradient_negative _ _ (by norm_num)
+
+theorem shifted_equal : SourceSubdifferential (loss (1 / 2)) (1 / 2) = Icc (-1 : ℝ) 1 :=
+  loss_subgradient_zero _
+
+theorem nonzero_tie_support : (1 / 3 : ℝ) ∈ SourceSubdifferential (loss (1 / 2)) (1 / 2) := by
+  rw [shifted_equal]; norm_num
+
+theorem invalid_tie_support : (2 : ℝ) ∉ SourceSubdifferential (loss (1 / 2)) (1 / 2) := by
+  rw [shifted_equal]; norm_num
+
+theorem canonical_tie_in_full_interval :
+    currentSubgradient (loss (1 / 2)) (1 / 2) ∈ Icc (-1 : ℝ) 1 := by
+  have hg := currentSubgradient_mem interval (loss (1 / 2)) (loss_on_unitInterval _)
+    (1 / 2) (by norm_num [interval, BanditRL.OnlineGradientDescent.unitInterval])
+  rwa [shifted_equal] at hg
+
+theorem chosen_above : currentSubgradient (loss 0) 1 = 1 := by
+  have hg := currentSubgradient_mem interval (loss 0) (loss_on_unitInterval _) 1
+    (by norm_num [interval, BanditRL.OnlineGradientDescent.unitInterval])
+  rw [loss_subgradient_positive 0 1 (by norm_num)] at hg
+  exact hg
+
+theorem chosen_below : currentSubgradient (loss 1) (1 / 2) = -1 := by
+  have hg := currentSubgradient_mem interval (loss 1) (loss_on_unitInterval _) (1 / 2)
+    (by norm_num [interval, BanditRL.OnlineGradientDescent.unitInterval])
+  rw [loss_subgradient_negative 1 (1 / 2) (by norm_num)] at hg
+  exact hg
+
+def labels (t : ℕ) : ℝ := if t % 2 = 0 then 0 else 1
+def losses (t : ℕ) : ℝ → EReal := loss (labels t)
+def eta : ℕ → ℝ := fun _ => 1 / 2
+def output (t : ℕ) : ℝ := iterate interval eta losses 1 t
+
+theorem labels_feasible (t : ℕ) : labels t ∈ Icc (0 : ℝ) 1 := by
+  unfold labels; split_ifs <;> norm_num
+
+theorem output_zero : output 0 = 1 := rfl
+
+theorem output_one : output 1 = 1 / 2 := by
+  change step interval (1 / 2) (loss 0) 1 = 1 / 2
+  rw [loss_step_clamp, chosen_above]; norm_num
+
+theorem output_two : output 2 = 1 := by
+  change step interval (1 / 2) (loss 1) (output 1) = 1
+  rw [output_one, loss_step_clamp, chosen_below]; norm_num
+
+theorem output_three : output 3 = 1 / 2 := by
+  change step interval (1 / 2) (loss 0) (output 2) = 1 / 2
+  rw [output_two, loss_step_clamp, chosen_above]; norm_num
+
+theorem output_four : output 4 = 1 := by
+  change step interval (1 / 2) (loss 1) (output 3) = 1
+  rw [output_three, loss_step_clamp, chosen_below]; norm_num
+
+theorem four_round_real_regret : regret interval eta losses 1 (1 / 2) 4 = 1 := by
+  simp only [regret, sum_range_succ, sum_range_zero, zero_add]
+  change ((losses 0 (output 0)).toReal - (losses 0 (1 / 2)).toReal) +
+    ((losses 1 (output 1)).toReal - (losses 1 (1 / 2)).toReal) +
+    ((losses 2 (output 2)).toReal - (losses 2 (1 / 2)).toReal) +
+    ((losses 3 (output 3)).toReal - (losses 3 (1 / 2)).toReal) = 1
+  rw [output_zero, output_one, output_two, output_three]
+  norm_num [losses, labels, loss]
+
+theorem four_round_fixed_with_terminal :
+    regret interval eta losses 1 (1 / 2) 4 ≤
+      ‖(1 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4,
+        ‖currentSubgradient (losses t) (output t)‖ ^ 2) -
+      ‖output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) := by
+  exact regret_fixed interval (1 / 2) (by norm_num) losses 1
+    (by norm_num [interval, BanditRL.OnlineGradientDescent.unitInterval]) 4
+    (fun t ht => loss_on_unitInterval _) (1 / 2)
+    (by norm_num [interval, BanditRL.OnlineGradientDescent.unitInterval])
+
+theorem four_round_energy :
+    (∑ t ∈ range 4, ‖currentSubgradient (losses t) (output t)‖ ^ 2) = (4 : ℝ) := by
+  simp only [sum_range_succ, sum_range_zero, zero_add,
+    output_zero, output_one, output_two, output_three]
+  norm_num [losses, labels, chosen_above, chosen_below]
+
+theorem four_round_positive_terminal :
+    ‖output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = (1 : ℝ) / 4 := by
+  rw [output_four]; norm_num
+
+theorem four_round_bound_rhs_exact :
+    ‖(1 : ℝ) - 1 / 2‖ ^ 2 / (2 * (1 / 2)) +
+      (1 / 2 : ℝ) / 2 * (∑ t ∈ range 4,
+        ‖currentSubgradient (losses t) (output t)‖ ^ 2) -
+      ‖output 4 - 1 / 2‖ ^ 2 / (2 * (1 / 2)) = 1 := by
+  rw [four_round_energy, four_round_positive_terminal]; norm_num
+
+theorem horizon_four_tuned_same_eta : (1 : ℝ) / Real.sqrt (4 : ℕ) = 1 / 2 := by
+  norm_num
+
+theorem all_comparators_four : ∀ u ∈ Icc (0 : ℝ) 1,
+    (∑ t ∈ range 4, (|output t - labels t| - |u - labels t|)) ≤ 2 := by
+  intro u hu
+  have h := example_2_32 labels 1 (by norm_num) 4 (by omega)
+    (fun t ht => labels_feasible t) u hu
+  simpa only [horizon_four_tuned_same_eta, show Real.sqrt (4 : ℕ) = (2 : ℝ) by norm_num,
+    output, interval, eta, losses] using h
+
+theorem chosen_clipping : currentSubgradient (loss 1) (1 / 4) = -1 := by
+  have hg := currentSubgradient_mem interval (loss 1) (loss_on_unitInterval _) (1 / 4)
+    (by norm_num [interval, BanditRL.OnlineGradientDescent.unitInterval])
+  rw [loss_subgradient_negative 1 (1 / 4) (by norm_num)] at hg
+  exact hg
+
+theorem actual_raw_overshoot_and_clamp :
+    (1 / 4 : ℝ) - 1 * currentSubgradient (loss 1) (1 / 4) = 5 / 4 ∧
+    step interval 1 (loss 1) (1 / 4) = 1 := by
+  rw [loss_step_clamp, chosen_clipping]; norm_num
+
+def futureLabels (t : ℕ) : ℝ := if t < 4 then labels t else 999
+def futureEta (t : ℕ) : ℝ := if t < 4 then eta t else -99
+
+theorem invalid_future_does_not_change_output :
+    iterate interval futureEta (fun s => loss (futureLabels s)) 1 4 = output 4 := by
+  symm
+  exact guessing_prefix eta futureEta labels futureLabels 1 4
+    (fun s hs => by simp [futureEta, hs]) (fun s hs => by simp [futureLabels, hs])
+
+theorem no_future_feasibility_assumed : futureLabels 4 = 999 ∧ futureEta 4 = -99 := by
+  norm_num [futureLabels, futureEta]
+
+theorem zero_horizon_regret : regret interval eta losses 1 (1 / 2) 0 = 0 := by
+  simp [regret]
+
+theorem eventual_one_sided_horizon_family (u ε : ℝ) (hu : u ∈ Icc (0 : ℝ) 1)
+    (hε : 0 < ε) : ∀ᶠ T : ℕ in atTop,
+      (∑ t ∈ range T,
+        (|iterate interval (fun _ => 1 / Real.sqrt T)
+          (fun s => loss (labels s)) 1 t - labels t| - |u - labels t|)) / T < ε := by
+  exact example_2_32_average_eventually labels 1 (by norm_num) labels_feasible u hu ε hε
+
+end GuessingOSDProbe

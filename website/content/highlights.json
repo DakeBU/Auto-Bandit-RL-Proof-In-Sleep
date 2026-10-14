@@ -4178,6 +4178,224 @@
         "BanditRL.OnlineHuber.huber_average_bound",
         "BanditRL.OnlineHuber.huber_rate_tendsto"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+      "title": "Translate global absolute supports",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The global support set of |x-y| at x equals that of |r| at r=x-y, for arbitrary real x,y.",
+      "math": "\\(f_y(z):=|z-y|,\\qquad \\partial f_y(x)=\\partial|\\cdot|(x-y)\\quad(x,y\\in\\mathbb R).\\)",
+      "intuition": "The global support set of |x-y| at x equals that of |r| at r=x-y, for arbitrary real x,y.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Change the global comparison variable by translation in both directions.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+      "title": "Support above the label",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "For y<x the entire support set is the singleton {1}.",
+      "math": "\\(x,y\\in\\mathbb R,\\quad y<x\\quad\\Longrightarrow\\quad\\partial f_y(x)=\\{1\\}.\\)",
+      "intuition": "For y<x the entire support set is the singleton {1}.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Translate, then apply the positive absolute-value support equality.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+        "BanditRL.OnlineConvex.abs_subgradient_positive"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+      "title": "Every tie support",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "At x=y the entire support set is [-1,1], including nonzero supports and both endpoints.",
+      "math": "\\(\\partial f_y(y)=[-1,1]\\qquad(y\\in\\mathbb R).\\)",
+      "intuition": "At x=y the entire support set is [-1,1], including nonzero supports and both endpoints.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Translate to zero and use the full interval characterization.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+        "BanditRL.OnlineConvex.abs_subgradient_zero"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative",
+      "title": "Support below the label",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "For x<y the entire support set is the singleton {-1}.",
+      "math": "\\(x,y\\in\\mathbb R,\\quad x<y\\quad\\Longrightarrow\\quad\\partial f_y(x)=\\{-1\\}.\\)",
+      "intuition": "For x<y the entire support set is the singleton {-1}.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Translate, then apply the negative absolute-value support equality.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subdifferential_translate",
+        "BanditRL.OnlineConvex.abs_subgradient_negative"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
+      "title": "Three-case global support equality",
+      "chapter": "online-guessing-osd",
+      "featured": true,
+      "teaching_order": 5,
+      "plain": "For arbitrary real x,y, the two strict cases and the full tie interval exhaust the global support set.",
+      "math": "\\(\\partial |x-y|=\\begin{cases}\\{1\\}&x>y,\\\\{[-1,1]}&x=y,\\\\\\{-1\\}&x<y.\\end{cases}\\)",
+      "intuition": "For arbitrary real x,y, the two strict cases and the full tie interval exhaust the global support set.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Split the order cases and compose the three support equalities.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+      "title": "Produce properness and support existence",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "Every real label gives a proper absolute loss with a nonempty global support at every feasible point.",
+      "math": "\\(\\operatorname{Proper}(f_y)\\ \\land\\ \\bigl(\\forall x\\in[0,1],\\ \\partial f_y(x)\\ne\\varnothing\\bigr)\\qquad(y\\in\\mathbb R).\\)",
+      "intuition": "Every real label gives a proper absolute loss with a nonempty global support at every feasible point.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Finite loss values prove properness; the three cases exhibit a support.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+      "title": "Bound every global support",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "Every global support at any real prediction and label has norm at most1.",
+      "math": "\\(x,y,g\\in\\mathbb R,\\quad g\\in\\partial f_y(x)\\quad\\Longrightarrow\\quad |g|\\le1.\\)",
+      "intuition": "Every global support at any real prediction and label has norm at most1.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "The singleton cases have norm1; the tie interval gives the same bound.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_positive",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_zero",
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_negative"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+      "title": "Bound the actual selected support",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "At a feasible current point the canonical support selected for any real label has norm at most1.",
+      "math": "\\(y\\in\\mathbb R,\\quad x\\in[0,1]\\quad\\Longrightarrow\\quad |G(f_y,x)|\\le1.\\)",
+      "intuition": "At a feasible current point the canonical support selected for any real label has norm at most1.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Produce support membership through the shared interface, then apply the all-support bound.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_subgradient_bound",
+        "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
+      "title": "Identify the actual clamp update",
+      "chapter": "online-guessing-osd",
+      "featured": true,
+      "teaching_order": 9,
+      "plain": "For arbitrary real rate, label and point, the actual step equals min(max(x-eta*G(f,x),0),1).",
+      "math": "\\(\\operatorname{step}_{[0,1]}(\\eta,f_y,x)=\\min\\{\\max\\{x-\\eta G(f_y,x),0\\},1\\}\\qquad(\\eta,y,x\\in\\mathbb R).\\)",
+      "intuition": "For arbitrary real rate, label and point, the actual step equals min(max(x-eta*G(f,x),0),1).",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Unfold the shared step and its exact interval projection.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project_unitInterval"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.guessing_prefix",
+      "title": "Strict-prefix equality",
+      "chapter": "online-guessing-osd",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "Equal rates and labels before t give equal outputs at t from the same initial point.",
+      "math": "\\(\\bigl[\\forall s<t,\\ \\eta_s=\\eta_s^{\\prime}\\ \\land\\ y_s=y_s^{\\prime}\\bigr]\\ \\Longrightarrow\\ X_t(x_0;\\eta,y)=X_t(x_0;\\eta^{\\prime},y^{\\prime}).\\)",
+      "intuition": "Equal rates and labels before t give equal outputs at t from the same initial point.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Apply the shared recursive prefix theorem to the equal prefix losses.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineSubgradientDescent.iterate_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.example_2_32",
+      "title": "Same-run square-root regret",
+      "chapter": "online-guessing-osd",
+      "featured": true,
+      "teaching_order": 11,
+      "plain": "For positive T, feasible initialization and played labels, one eta=1/sqrt(T) run satisfies R_T(u)<=sqrt(T) for every feasible u.",
+      "math": "\\(T\\in\\mathbb N_{>0},\\quad x_0\\in[0,1],\\quad \\forall t<T,\\ y_t\\in[0,1],\\quad \\eta_T=1/\\sqrt T:\\qquad \\forall u\\in[0,1],\\ R_T^{(T)}(u):=\\sum_{t<T}\\bigl(|X_t^{(T)}-y_t|-|u-y_t|\\bigr)\\le\\sqrt T.\\)",
+      "intuition": "For positive T, feasible initialization and played labels, one eta=1/sqrt(T) run satisfies R_T(u)<=sqrt(T) for every feasible u.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Produce diameter1, proper losses and the actual selected norm bound; instantiate shared OSD tuning.",
+      "lean_notes": "The complete original declaration and proof remain unchanged; source assumptions and wider helper domains are described in the adjacent cards.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.loss_on_unitInterval",
+        "BanditRL.OnlineGuessingSubgradient.current_subgradient_bound",
+        "BanditRL.OnlineSubgradientDescent.iterate_mem",
+        "BanditRL.OnlineSubgradientDescent.regret_tuned"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually",
+      "title": "One-sided average over known horizons",
+      "chapter": "online-guessing-osd",
+      "featured": true,
+      "teaching_order": 12,
+      "plain": "With globally feasible labels, the signed average regret against each fixed feasible comparator is eventually below every positive epsilon across separately tuned runs.",
+      "math": "\\(x_0,u\\in[0,1],\\quad (\\forall t,\\ y_t\\in[0,1]),\\quad\\varepsilon>0\\quad\\Longrightarrow\\quad\\exists N\\ge1,\\ \\forall T\\ge N,\\ \\frac{R_T^{(T)}(u)}{T}<\\varepsilon,\\qquad\\eta_T=1/\\sqrt T.\\)",
+      "intuition": "With globally feasible labels, the signed average regret against each fixed feasible comparator is eventually below every positive epsilon across separately tuned runs.",
+      "why": "Explains one part of the canonical Example 2.32 integration.",
+      "position": "Orabona v10 Example 2.32, printed20/PDF32, with library support and derived specializations distinguished.",
+      "proof_idea": "Divide the finite guarantee by positive T and use the reciprocal-square-root limit.",
+      "lean_notes": "The eventual conclusion is one-sided; Mathlib Real.tendsto_sqrt_atTop and tendsto_inv_atTop_zero supply the numerical envelope limit.",
+      "dependencies": [
+        "BanditRL.OnlineGuessingSubgradient.example_2_32"
+      ]
     }
   ]
 }
