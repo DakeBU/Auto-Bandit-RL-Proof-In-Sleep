@@ -1328,9 +1328,9 @@ def main() -> int:
                 f"readings.json: {reading.get('slug')} needs one to four unique teaching-route declarations"
             )
         notation = reading.get("notation")
-        if not isinstance(notation, list) or len(notation) != 3:
+        if not isinstance(notation, list) or not 3 <= len(notation) <= 4:
             errors.append(
-                f"readings.json: {reading.get('slug')} needs exactly three notation-primer entries"
+                f"readings.json: {reading.get('slug')} needs three or four notation-primer entries"
             )
             continue
         if any(
@@ -1345,7 +1345,7 @@ def main() -> int:
             if (
                 not all(str(worked_example.get(key, "")).strip() for key in ("title", "intro", "takeaway", "boundary"))
                 or not isinstance(steps, list)
-                or not 3 <= len(steps) <= 5
+                or not 3 <= len(steps) <= 9
                 or any(
                     not isinstance(step, dict)
                     or not all(str(step.get(key, "")).strip() for key in ("title", "detail", "math", "fallback"))
@@ -1557,7 +1557,7 @@ def main() -> int:
         if collector.source_guide_count != 1:
             errors.append(f"{relative}: expected one textbook source guide")
         if collector.notation_primer_count != 1:
-            errors.append(f"{relative}: expected one three-term notation primer")
+            errors.append(f"{relative}: expected one notation primer")
         if collector.source_theorem_card_count < 1 and collector.source_boundary_count != 1:
             errors.append(f"{relative}: expected at least one source theorem or one explicit source boundary")
         if collector.source_theorem_card_count and collector.source_boundary_count:

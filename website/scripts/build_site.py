@@ -5661,7 +5661,7 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 or not str(proof_bridge.get("summary", "")).strip()
                 or not str(proof_bridge.get("boundary", "")).strip()
                 or not isinstance(bridge_steps, list)
-                or not 3 <= len(bridge_steps) <= 5
+                or not 3 <= len(bridge_steps) <= 9
             ):
                 raise SystemExit(f"reading {reading['slug']} has an incomplete proof bridge")
             for step in bridge_steps:
@@ -5680,7 +5680,7 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 or not str(worked_example.get("takeaway", "")).strip()
                 or not str(worked_example.get("boundary", "")).strip()
                 or not isinstance(example_steps, list)
-                or not 3 <= len(example_steps) <= 5
+                or not 3 <= len(example_steps) <= 9
             ):
                 raise SystemExit(f"reading {reading['slug']} has an incomplete worked example")
             for step in example_steps:
