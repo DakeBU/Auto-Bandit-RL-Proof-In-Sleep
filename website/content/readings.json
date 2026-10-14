@@ -1872,6 +1872,144 @@
       }
     },
     {
+      "slug": "online-huber",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section 2.1.2, Example 2.15, with the constant-step branch of Theorem 2.13",
+        "pages": "printed15-16/PDF27-28",
+        "pdf_page": 27,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Residual loss and threshold",
+          "meaning": "For r=<z,x>-y, H_delta(r)=r^2/2 when |r|<=delta and delta(|r|-delta/2) otherwise. The convex regularity claims make the source-implicit convention delta>=0 explicit. At delta=0 the loss is zero; negative thresholds are outside those claims."
+        },
+        {
+          "term": "Space, features and feedback",
+          "meaning": "The source uses R^d; the Lean chain works in a complete real inner-product space. Predictors and comparators range over the full space. Features z_t are known before prediction; labels y_t enter the next update. The deterministic theorem assumes a feature norm bound but no label, residual or predictor bound."
+        },
+        {
+          "term": "Regret, indexing and known horizons",
+          "meaning": "R_T(u) sums ell_t(X_t)-ell_t(u) for t=0,...,T-1. X_0 is the source first predictor x_1, and X_T is source x_(T+1). The comparator u is fixed throughout a run. At each T>0 choose eta_T=1/sqrt(T), one constant step for that whole run. Coefficient one specializes the source proportionality prescription. The initial state, threshold, feature bound and comparator stay fixed as T varies. Eventual cutoffs may depend on the comparator and epsilon."
+        }
+      ],
+      "algorithm": {
+        "title": "Shared full-space OGD",
+        "kind": "causal gradient update",
+        "steps": [
+          {
+            "title": "Predict before feedback",
+            "detail": "The current point depends only on strict-prefix losses. Current feature z_t is available before predicting inner(z_t,x_t); then y_t is revealed and defines the current residual/loss. Library index0 is source round1, and iterate T is the source point after T updates."
+          },
+          {
+            "title": "Compute the true Huber gradient",
+            "detail": "Actual seam calculus produces the scalar derivative, including both seams and delta0. The ambient inner-product chain rule then produces gradient H_delta'(inner(z_t,x)-y_t)*z_t and norm<=delta*norm(z_t); no supplied desired-gradient, label/residual bound or regularity oracle."
+          },
+          {
+            "title": "Update in the full space",
+            "detail": "The genuine nonempty/closed/convex fullSpace Domain has selected projection identity. Global convexity and differentiability PRODUCE RegularLoss fullSpace, discharging the stronger historical API globally. Subtract eta times the current gradient for the next point in the same shared causal recursion; no finite diameter or bounded predictor set."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineHuber.huber_convex",
+        "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+        "BanditRL.OnlineHuber.huber_regret_fixed",
+        "BanditRL.OnlineHuber.huber_average_eventually"
+      ],
+      "source_theorems": [
+        {
+          "label": "Example 2.15: Huber prediction, with a derived quantitative bound",
+          "pages": "printed15-16",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\frac{R_T^{(T)}(u)}{T}\\le\\frac{\\|X_0-u\\|^2+(\\delta Z)^2}{2\\sqrt T}\\quad(T>0)\\)",
+          "fallback": "Only the numeric upper envelope tends0. For each fixed predictor u and epsilon>0, actual average regret is eventually <epsilon; it may stay negative.",
+          "plain": "Bounded features give bounded Huber gradients on the full predictor space. Constant-step OGD then gives a one-sided average-performance guarantee against each fixed linear predictor.",
+          "relationship": "The example prints the piecewise loss and gradient, asserts convexity, and applies Theorem 2.13 with a step proportional to 1/sqrt(T). The displayed coefficient-one bound is derived, not a verbatim source formula. Scalar seam calculus fills an omitted source proof. The complete real inner-product-space formulation generalizes finite Euclidean vectors; delta>=0 makes the intended threshold convention explicit. The informal average-performance sentence is represented by eventual upper inequalities, without claiming an existing signed limit or equality to zero.",
+          "contract": {
+            "model": "Actual complete real Hilbert E, including source finite Euclidean R^d; unrestricted full-space predictors, linear feature prediction and exact half-quadratic/linear Huber residual loss.",
+            "assumptions": "Delta>=0 source-implicit threshold; Z>=0 feature norm bound, finite prefix for fixed T or global for eventual claim. No labels/residual/predictor/diameter bound or supplied regularity/gradient/stability/regret oracle. Actual projection identity/global RegularLoss are produced.",
+            "parameters": "Fixed-step bound retaining the terminal residual: eta>0 and every T>=0. Tuned average: positive known horizon T, coefficient1 constant eta_T=1/sqrt(T), independent of comparator/future feedback. Delta0/Z0 admitted; T0 fixed distance terms cancel, tuned guarantee excludes T0. Generic update identity allows any real eta separately.",
+            "regret": "Actual shared causal iterate from any x0 against each fixed u, sum of current losses minus comparator losses; same horizon run serves all u. Eventual cutoff may depend on u/epsilon; no moving comparator/uniform cutoff.",
+            "guarantee": "Fixed-step actual regret retains -norm(x_T-u)^2/(2eta); dropping only that nonpositive term yields explicit average upper envelope. Numeric envelope Tendsto0; actual average regret only eventually <every positive epsilon, a family of separate known-horizon runs."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled Huber OGD chain",
+            "boundary": "One Example 2.15 and its supporting calculus/OGD chain. The numerical upper envelope tends to zero; signed average regret is only eventually below every positive epsilon for each fixed comparator. Runs are tuned separately to known horizons. Whole-chapter acceptance, other source obligations and purification remain separate."
+          },
+          "statement_provenance": "derived-instantiation"
+        }
+      ],
+      "worked_example": {
+        "title": "A nonzero Huber update",
+        "intro": "Take scalar feature1, label0, threshold1, initial predictor2 and step1/2.",
+        "steps": [
+          {
+            "title": "Linear-loss branch",
+            "detail": "The residual2 exceeds threshold1, so the derivative is1.",
+            "math": "\\(H_1^{\\prime}(2)=1\\)",
+            "fallback": "The exact source branch applies."
+          },
+          {
+            "title": "Actual shared update",
+            "detail": "The full-space projection does nothing and the next predictor is3/2.",
+            "math": "\\(x_1=2-\\tfrac12=\\tfrac32\\)",
+            "fallback": "The canary invokes the shared step, not a separate recurrence."
+          },
+          {
+            "title": "Horizon-four upper average bound",
+            "detail": "For the separate T4 known-horizon run eta=1/sqrt4=1/2, x0=2,u=0,delta=Z=1. The true average upper bound is5/4; this is not equality of realized losses.",
+            "math": "\\(R_4(0)/4\\le5/4\\)",
+            "fallback": "The bound follows from the source chain; it is not an equality of realized losses."
+          }
+        ],
+        "takeaway": "Actual seam calculus, nonzero feature geometry and the shared causal full-space update feed a fixed-step endpoint retaining the terminal residual before the positive-horizon average upper bound.",
+        "boundary": "The 14 original canary statements retain seam derivatives, nonzero feature gradients, full-space convexity, actual step, terminal-residual regret and average guarantees. Five additional historical value tests cover residuals -3,-2,2,3 at delta=2 and the zero threshold. These tests do not imply chapter completion."
+      },
+      "proof_bridge": {
+        "title": "From the piecewise loss to a one-sided average bound",
+        "summary": "The source applies the constant-step, unbounded-domain OGD theorem. The library supplies its omitted calculus and quantitative substitutions.",
+        "steps": [
+          {
+            "title": "Join the scalar pieces",
+            "detail": "At residuals plus and minus delta, adjacent values and derivatives agree. Gluing the three formulas gives the clamp derivative, whose monotonicity proves convexity. This includes the coincident seams at delta=0.",
+            "math": "\\(H_\\delta'(r)=\\max(-\\delta,\\min(r,\\delta)),\\qquad |H_\\delta'(r)|\\le\\delta\\)",
+            "fallback": "The generic gluing lemmas are internal calculus support. Convexity and derivative bounds are produced from the literal loss, not supplied as caller assumptions."
+          },
+          {
+            "title": "Differentiate the feature residual",
+            "detail": "Compose with x maps to <z_t,x>-y_t. The inner-product chain rule produces the gradient, and scalar derivative bounds control its norm for every predictor. Affine composition gives global convexity and differentiability.",
+            "math": "\\(\\begin{aligned}\\nabla\\ell_t(x)&=H_\\delta^{\\prime}(\\langle z_t,x\\rangle-y_t)z_t,\\\\\\|\\nabla\\ell_t(x)\\|&\\le\\delta\\|z_t\\|\\le\\delta Z.\\end{aligned}\\)",
+            "fallback": "No restriction on labels, residuals or predictors is needed. The proof supplies the global RegularLoss bundle required by the shared OGD API."
+          },
+          {
+            "title": "Use the actual full-space update",
+            "detail": "Projection onto the full space is the identity. The shared recurrence therefore subtracts eta times the actual gradient after each label is revealed. Applying the positive constant-step theorem and the feature bound retains the terminal distance, including its cancellation at horizon zero.",
+            "math": "\\(\\begin{aligned}X_{t+1}&=X_t-\\eta\\nabla\\ell_t(X_t),\\\\R_T(u)&\\le\\frac{\\|X_0-u\\|^2-\\|X_T-u\\|^2}{2\\eta}+\\frac{\\eta T(\\delta Z)^2}{2}.\\end{aligned}\\)",
+            "fallback": "The parent is theorem_2_13_fixed. The bounded-diameter DLsqrt(T) specialization is not used on this unbounded domain."
+          },
+          {
+            "title": "Tune a separate run for each horizon",
+            "detail": "For T>0, choose eta_T=1/sqrt(T), discard the nonpositive terminal term and divide by T. The threshold, feature bound, initial state and fixed comparator determine a finite numerator independent of T.",
+            "math": "\\(\\begin{aligned}\\eta_T&=1/\\sqrt T,\\\\\\frac{R_T^{(T)}(u)}T&\\le\\frac{A}{2\\sqrt T},\\qquad A=\\|X_0-u\\|^2+(\\delta Z)^2.\\end{aligned}\\)",
+            "fallback": "The superscript records a horizon-indexed family of constant-step runs. This is not an anytime step eta_t."
+          },
+          {
+            "title": "Read the terminal inequality precisely",
+            "detail": "The numerical envelope tends to zero. For each fixed comparator and epsilon>0 it is eventually below epsilon, hence so is the actual signed average regret. This argument supplies no lower bound and does not prove that signed average regret converges to zero.",
+            "math": "\\(\\frac{A}{2\\sqrt T}\\longrightarrow0\\quad\\Longrightarrow\\quad\\forall\\epsilon>0,\\ \\frac{R_T^{(T)}(u)}T<\\epsilon\\ \\text{eventually}\\)",
+            "fallback": "The conclusion is the literal eventual inequality. No real-valued limsup theorem, uniform cutoff over unbounded comparators, absolute convergence or financial accuracy statement is claimed."
+          }
+        ],
+        "boundary": "One Example 2.15 and its supporting calculus/OGD chain. The numerical upper envelope tends to zero; signed average regret is only eventually below every positive epsilon for each fixed comparator. Runs are tuned separately to known horizons. Whole-chapter acceptance, other source obligations and purification remain separate."
+      }
+    },
+    {
       "slug": "online-convex",
       "primary": {
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",

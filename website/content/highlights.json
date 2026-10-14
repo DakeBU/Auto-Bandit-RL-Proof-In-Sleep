@@ -4106,6 +4106,78 @@
         "BanditRL.OnlineGradientDescent.project_unitInterval",
         "BanditRL.OnlineGradientDescent.gradient_square"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_convex",
+      "title": "Global Huber convexity",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "Produce global convexity from the actual monotone clamp derivative; both seams and delta0 are included.",
+      "math": "\\(H_\\delta\\text{ is convex for }\\delta\\ge0\\)",
+      "intuition": "Produce global convexity from the actual monotone clamp derivative; both seams and delta0 are included.",
+      "why": "Connects the actual supporting library declaration to Example 2.15 in the shared project.",
+      "position": "Library support or derived quantitative refinement of Orabona v10 Example 2.15, printed pages 15–16 / PDF pages 27–28; not a separately numbered source theorem.",
+      "proof_idea": "Matching-value/derivative gluing produces actual seam calculus, then the scalar derivative clamp and monotone-derivative criterion prove global convexity.",
+      "lean_notes": "Delta>=0 is source-implicit/mathematically necessary, not a printed sign assumption. Delta0 valid; negative thresholds not convex/differentiable. No strong/strict convexity claim.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_deriv_clamp",
+        "BanditRL.OnlineHuber.huber_hasDerivAt"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+      "title": "Actual feature gradient",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "Derive the ambient gradient of the actual feature-residual Huber loss by the inner-product chain rule.",
+      "math": "\\(\\nabla\\ell(x)=H_\\delta^{\\prime}(\\langle z,x\\rangle-y)z\\)",
+      "intuition": "Derive the ambient gradient of the actual feature-residual Huber loss by the inner-product chain rule.",
+      "why": "Connects the actual supporting library declaration to Example 2.15 in the shared project.",
+      "position": "Library support or derived quantitative refinement of Orabona v10 Example 2.15, printed pages 15–16 / PDF pages 27–28; not a separately numbered source theorem.",
+      "proof_idea": "Actual scalar hasDerivAt and innerSL affine functional produce gradient deriv(H)(inner(z,x)-y)*z, without a supplied gradient oracle.",
+      "lean_notes": "Actual Complete real Hilbert-space scope includes finite Euclidean source; arbitrary deterministic streams include stock-history features available before prediction/labels afterwards, without stock-law claim. No labels/residual/predictor/diameter bound; full definition/class contexts fixed.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_hasDerivAt"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_regret_fixed",
+      "title": "Fixed-step regret with terminal residual",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "Apply shared causal OGD to produced Huber global regularity/actual gradients, retaining the negative terminal distance.",
+      "math": "\\(R_T(u)\\le\\|x_0-u\\|^2/(2\\eta)+\\eta T(\\delta Z)^2/2-\\|x_T-u\\|^2/(2\\eta)\\)",
+      "intuition": "Apply shared causal OGD to produced Huber global regularity/actual gradients, retaining the negative terminal distance.",
+      "why": "Connects the actual supporting library declaration to Example 2.15 in the shared project.",
+      "position": "Library support or derived quantitative refinement of Orabona v10 Example 2.15, printed pages 15–16 / PDF pages 27–28; not a separately numbered source theorem.",
+      "proof_idea": "Actual global convexity/gradient produce RegularLoss fullSpace, selected projection identity gives the true update, and feature norms bound actual gradients before shared theorem_2_13_fixed.",
+      "lean_notes": "Eta>0,T>=0,delta>=0,Z>=0,finiteprefixfeatures; anyx0/u in unbounded fullspace. At T0 distances cancel;delta0/Z0 retained. Generic update identity anyrealeta separate. No desired stability/regret/regularity consumer or bounded domain.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_regular",
+        "BanditRL.OnlineHuber.huber_linear_gradient_bound",
+        "BanditRL.OnlineGradientDescent.theorem_2_13_fixed"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineHuber.huber_average_eventually",
+      "title": "One-sided eventual upper average regret",
+      "chapter": "online-huber",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "For each fixed comparator and positive epsilon, actual average regret is eventually below epsilon; only its numeric upper envelope is proved to tend0.",
+      "math": "\\(\\forall\\epsilon>0,\\quad R_T^{(T)}(u)/T<\\epsilon\\text{ eventually}\\)",
+      "intuition": "For each fixed comparator and positive epsilon, actual average regret is eventually below epsilon; only its numeric upper envelope is proved to tend0.",
+      "why": "Connects the actual supporting library declaration to Example 2.15 in the shared project.",
+      "position": "Library support or derived quantitative refinement of Orabona v10 Example 2.15, printed pages 15–16 / PDF pages 27–28; not a separately numbered source theorem.",
+      "proof_idea": "Actual fixed-step bound retaining the terminal residual→positive-horizon eta_T=1/sqrtT algebra/drop nonpositive residual→actual average upper bound, then numeric-envelope Tendsto0/positive eventual horizon give literal eventual regret<epsilon.",
+      "lean_notes": "Coefficient one is a valid specialization of the printed proportional step. Each T selects a separate constant-step run; its tuning uses neither comparator nor future loss. Only the envelope tends to zero. The cutoff can depend on fixed u and epsilon.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.huber_average_bound",
+        "BanditRL.OnlineHuber.huber_rate_tendsto"
+      ]
     }
   ]
 }

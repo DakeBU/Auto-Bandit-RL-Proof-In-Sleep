@@ -1,0 +1,269 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-HUBER-INTEGRATION-20261014",
+  "route": "online-learning / Chapter2 Huber linear prediction",
+  "frontier_cell": "online-huber",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10,21June2026",
+    "anchor": "Example2.15 printed15–16/PDF27–28; upstream fixed-step Theorem2.13",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate the complete historical Huber calculus, actual full-space OGD and one-sided average guarantee from PR135/165, preserving original tests and collateral obligations.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineHuber.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineHuber.hasDerivAt_ite_le",
+    "BanditRL.OnlineHuber.huber",
+    "BanditRL.OnlineHuber.huber_three_pieces",
+    "BanditRL.OnlineHuber.huber_zero",
+    "BanditRL.OnlineHuber.hasDerivAt_join",
+    "BanditRL.OnlineHuber.huber_hasDerivAt",
+    "BanditRL.OnlineHuber.huber_deriv_clamp",
+    "BanditRL.OnlineHuber.huber_convex",
+    "BanditRL.OnlineHuber.huber_deriv_bound",
+    "BanditRL.OnlineHuber.huber_deriv_source",
+    "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+    "BanditRL.OnlineHuber.huber_linear_convex",
+    "BanditRL.OnlineHuber.huber_linear_gradient_bound",
+    "BanditRL.OnlineHuber.fullSpace",
+    "BanditRL.OnlineHuber.linearLoss",
+    "BanditRL.OnlineHuber.project_fullSpace",
+    "BanditRL.OnlineHuber.huber_regular",
+    "BanditRL.OnlineHuber.huber_step",
+    "BanditRL.OnlineHuber.huber_regret_fixed",
+    "BanditRL.OnlineHuber.huber_average_bound",
+    "BanditRL.OnlineHuber.huber_rate_tendsto",
+    "BanditRL.OnlineHuber.huber_average_eventually"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Canonical OnlineGradientDescent Domain,RegularLoss,project,iterate,regret and theorem_2_13_fixed",
+      "Original PR135/165 and frozen-stack Huber source and full canary",
+      "Mathlib actual derivative gluing,convexity,inner-product gradient and square-root limits"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescent.theorem_2_13_fixed",
+      "BanditRL.OnlineGradientDescent.project_eq_of_variational",
+      "BanditRL.OnlineGradientDescent.iterate",
+      "BanditRL.OnlineGradientDescent.regret"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineHuber.hasDerivAt_ite_le",
+      "BanditRL.OnlineHuber.huber",
+      "BanditRL.OnlineHuber.huber_three_pieces",
+      "BanditRL.OnlineHuber.huber_zero",
+      "BanditRL.OnlineHuber.hasDerivAt_join",
+      "BanditRL.OnlineHuber.huber_hasDerivAt",
+      "BanditRL.OnlineHuber.huber_deriv_clamp",
+      "BanditRL.OnlineHuber.huber_convex",
+      "BanditRL.OnlineHuber.huber_deriv_bound",
+      "BanditRL.OnlineHuber.huber_deriv_source",
+      "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+      "BanditRL.OnlineHuber.huber_linear_convex",
+      "BanditRL.OnlineHuber.huber_linear_gradient_bound",
+      "BanditRL.OnlineHuber.fullSpace",
+      "BanditRL.OnlineHuber.linearLoss",
+      "BanditRL.OnlineHuber.project_fullSpace",
+      "BanditRL.OnlineHuber.huber_regular",
+      "BanditRL.OnlineHuber.huber_step",
+      "BanditRL.OnlineHuber.huber_regret_fixed",
+      "BanditRL.OnlineHuber.huber_average_bound",
+      "BanditRL.OnlineHuber.huber_rate_tendsto",
+      "BanditRL.OnlineHuber.huber_average_eventually"
+    ],
+    "known_consumers": [
+      "Fourteen original canaries consume seam calculus,feature gradients,convexity,actual update,residual regret and average guarantees",
+      "Five inherited scalar consumers prove H2(-3)=4,H2(-2)=2,H2(2)=2,H2(3)=4,H0(7)=0"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Preserve historical mathematical bytes and use the accepted shared OGD recurrence and parent guarantee; no separate book project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root",
+    "blind_decoder": "/root/batch12_blind_decoder",
+    "source_reviewer": "/root/batch12_source_reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The source uses finite Euclidean predictors; Lean treats complete real Hilbert spaces. Nonnegative threshold is source-implicit, and the valid zero-threshold extension is explicit. Arbitrary deterministic feature/label streams replace the illustrative stock history. The explicit constants and terminal residual are derived using the shared positive fixed-step OGD theorem. Coefficient-one eta_T=1/sqrt(T) selects a separate known-horizon run for each positive T. Only the numerical upper envelope tends to zero; actual signed average regret is eventually below each positive epsilon for each fixed comparator. One complete Huber module with three definitions and nineteen theorems, fourteen original canary proofs and five inherited scalar-value consumers. Fixed-step regret covers every natural horizon including zero and retains the negative terminal distance. The tuned average guarantee requires positive horizon. No bounded labels, residuals, predictors or diameter are assumed. No signed or absolute regret convergence to zero, real-limsup theorem, uniform comparator cutoff, anytime schedule, stochastic/financial performance, whole-chapter acceptance, full purification or Exposition Seal is established."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A concrete Huber loss instantiation of accepted shared OGD. No new cross-setting transport or certified conceptual bridge is established.",
+    "focus_targets": [
+      "online-huber"
+    ],
+    "visual_review": "Actual desktop/mobile formula proof,source card,notation and folded statements reviewed; complete source bodies remain linked. Candidate and deployed source pins are later gates.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one scoped route,one derived source card,five proof steps,four highlights,22 production declarations; sibling entries preserved",
+    "banditrlwiki": "no-change-with-reason: no Bandit/RL/Extended Topics endpoint changed",
+    "results_ledger": "no-change-with-reason: bounded example does not complete chapter/book",
+    "roadmap": "no-change-with-reason: no existing roadmap endpoint changes",
+    "website_surfaces": [
+      "Online Book Huber route",
+      "Shared declaration registry and exact Huber route regression guard",
+      "Source/provenance and retained obligations in research-wiki/integrations/ONLINE-CH2-HUBER-INTEGRATION-20261014",
+      "Contributor credit in research-wiki/integrations/ONLINE-CH2-HUBER-INTEGRATION-20261014/README.md"
+    ]
+  },
+  "truth_boundary": "One complete Huber module with three definitions and nineteen theorems, fourteen original canary proofs and five inherited scalar-value consumers. Fixed-step regret covers every natural horizon including zero and retains the negative terminal distance. The tuned average guarantee requires positive horizon. No bounded labels, residuals, predictors or diameter are assumed. No signed or absolute regret convergence to zero, real-limsup theorem, uniform comparator cutoff, anytime schedule, stochastic/financial performance, whole-chapter acceptance, full purification or Exposition Seal is established. The source uses finite Euclidean predictors; Lean treats complete real Hilbert spaces. Nonnegative threshold is source-implicit, and the valid zero-threshold extension is explicit. Arbitrary deterministic feature/label streams replace the illustrative stock history. The explicit constants and terminal residual are derived using the shared positive fixed-step OGD theorem. Coefficient-one eta_T=1/sqrt(T) selects a separate known-horizon run for each positive T. Only the numerical upper envelope tends to zero; actual signed average regret is eventually below each positive epsilon for each fixed comparator. Final packet/contributor checks,exact-head CI,merge,main/live and guarded cleanup remain separate.",
+  "verification": {
+    "focused_checks": [
+      "Combined library root and whole Tests passed,9232 jobs",
+      "41 selected declarations/ranges and actual direct dependencies checked,standard axioms only",
+      "5139 direct type/value occurrences;763 selection boundaries comprise5 same-module generated and758 outside-module",
+      "30 registry tests passed",
+      "Actual desktop/mobile rendering independently reviewed"
+    ],
+    "bandit_check": "Full combined library,Tests,graph export,placeholder scan and Python harness passed; exact logs and counts bound in review packet.",
+    "site_build": "Passed --lean-verified after actual Lean gate.",
+    "site_check": "Site,process-memory and staged-diff checks passed.",
+    "independent_review": "Distinct source-only extractor,source-first reviewer,source-blind decoder,actual-body/graph/render reviewer and whole-original scope reviewer. Final public packet review remains separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original authorship and provenance retained in immutable PR/commit history"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "All original production proof bytes,whole original canary plus five inherited values,602 historical rows and collateral obligations retained. Failed prefix guard and module-invocation attempt are preserved; source title and derived-card provenance repaired with independent review.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineHuber.lean",
+        "Tests/OnlineHuberCanary.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "retained-huber-calculus-fullspace-ogd-average"
+      ],
+      "expected_information_gain": "Required independent review actors,not competing proof search.",
+      "shared_verified_context_digest": "Pinned PDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack 8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Retained historical Huber implementation",
+      "selection_reason": "No parallel proof-route competition."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "One attributed derived card,five formula proof steps,four highlights,worked actual update and folded exact Lean statements reviewed. Full Exposition Seal not asserted.",
+      "source_expansion_nodes": [
+        "regret-fixed",
+        "no-regret-convention",
+        "loss-dependence",
+        "online-protocol",
+        "oco-regret",
+        "average-meaning",
+        "oco-definition",
+        "convex-set",
+        "function-domain",
+        "convex-function",
+        "convex-characterization",
+        "affine-composition",
+        "first-order-convex",
+        "optimality",
+        "optimality-sufficient",
+        "optimality-necessary",
+        "ogd",
+        "ogd-timing",
+        "projection",
+        "projection-optimality",
+        "projection-expansion",
+        "one-step",
+        "one-step-proof",
+        "ogd-varying-bound",
+        "ogd-constant-bound",
+        "divide-sum",
+        "varying-telescope",
+        "constant-telescope",
+        "unbounded-domain",
+        "terminal-term",
+        "varying-boundary",
+        "fixed-horizon-tuning",
+        "oracle-tuning-boundary",
+        "bounded-diameter-rate",
+        "huber-setup",
+        "huber-convex-claim",
+        "huber-loss",
+        "huber-threshold",
+        "huber-step",
+        "huber-gradient",
+        "huber-gradient-bound",
+        "huber-average",
+        "gap-delta",
+        "gap-huber-calculus",
+        "gap-explicit-gradient-bound",
+        "gap-horizon-constant",
+        "gap-average-deduction",
+        "gap-projection-existence"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineHuber.hasDerivAt_ite_le",
+        "BanditRL.OnlineHuber.huber",
+        "BanditRL.OnlineHuber.huber_three_pieces",
+        "BanditRL.OnlineHuber.huber_zero",
+        "BanditRL.OnlineHuber.hasDerivAt_join",
+        "BanditRL.OnlineHuber.huber_hasDerivAt",
+        "BanditRL.OnlineHuber.huber_deriv_clamp",
+        "BanditRL.OnlineHuber.huber_convex",
+        "BanditRL.OnlineHuber.huber_deriv_bound",
+        "BanditRL.OnlineHuber.huber_deriv_source",
+        "BanditRL.OnlineHuber.huber_linear_hasGradientAt",
+        "BanditRL.OnlineHuber.huber_linear_convex",
+        "BanditRL.OnlineHuber.huber_linear_gradient_bound",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineHuber.linearLoss",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineHuber.huber_regular",
+        "BanditRL.OnlineHuber.huber_step",
+        "BanditRL.OnlineHuber.huber_regret_fixed",
+        "BanditRL.OnlineHuber.huber_average_bound",
+        "BanditRL.OnlineHuber.huber_rate_tendsto",
+        "BanditRL.OnlineHuber.huber_average_eventually"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
