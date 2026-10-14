@@ -745,3 +745,4 @@ import BanditRLProof.OnlineGuessingComparison
 import BanditRLProof.OnlineHuber
 import BanditRLProof.OnlineGuessingSubgradient
 import BanditRLProof.OnlineSubgradientPolicy
+import BanditRLProof.OnlineGuessingSubgradientPolicy

@@ -1,0 +1,759 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CH2-GUESSING-OSD-POLICY-INTEGRATION-20261014",
+  "document_kind": "source-only-proof-topology",
+  "source_only_review": "accepted version2; Lean and reader semantics not certified by this topology",
+  "source_only_review_binding": {
+    "identifier": "batch15-independent-review/source/stageA-verdict-v2.json",
+    "sha256": "e2b943a289d83c0f4a05ee3ba464f52a3ed0fa3785f0b2dabd8196f1cbeffb48",
+    "availability": "private-maintenance-evidence; not a public repository file"
+  },
+  "original_topology_binding": {
+    "identifier": "batch15-source-only/proof-topology-v2.json",
+    "sha256": "9afcd4a0bc043268d4308d3d293b26eb599673c27d536ed10fd8156175a166b3",
+    "availability": "private-maintenance-evidence; not a public repository file"
+  },
+  "original_authoring_metadata": {
+    "status": "topology-repaired-pending-independent-re-review",
+    "version": "v2",
+    "implementation_independent": true
+  },
+  "nodes": [
+    {
+      "id": "S01",
+      "kind": "SOURCE_NODE",
+      "anchor": "Consider the following repeated guessing game",
+      "pdf_page_1based": 13,
+      "meaning": "Round timing and x,y in [0,1]."
+    },
+    {
+      "id": "S02",
+      "kind": "SOURCE_NODE",
+      "anchor": "let’s remove the assumption",
+      "pdf_page_1based": 14,
+      "meaning": "Arbitrary outcome sequence; deterministic pathwise regret."
+    },
+    {
+      "id": "S03",
+      "kind": "SOURCE_NODE",
+      "anchor": "single competitor",
+      "pdf_page_1based": 14,
+      "meaning": "Fixed comparator and general regret definition; algorithm does not know u."
+    },
+    {
+      "id": "S04",
+      "kind": "SOURCE_NODE",
+      "anchor": "no-regret",
+      "pdf_page_1based": 14,
+      "meaning": "Source no-regret convention and Remark1.1 suppressed loss dependence."
+    },
+    {
+      "id": "S05",
+      "kind": "SOURCE_NODE",
+      "anchor": "after observing",
+      "pdf_page_1based": 15,
+      "meaning": "Adversary may observe current learner choice; no stochastic assumption."
+    },
+    {
+      "id": "S06",
+      "kind": "SOURCE_NODE",
+      "anchor": "Receive some feedback",
+      "pdf_page_1based": 20,
+      "meaning": "General output/loss/feedback order and arbitrary-comparator regret."
+    },
+    {
+      "id": "S07",
+      "kind": "SOURCE_NODE",
+      "anchor": "Definition 2.2",
+      "pdf_page_1based": 21,
+      "meaning": "Convex set and effective-domain conventions."
+    },
+    {
+      "id": "S08",
+      "kind": "SOURCE_NODE",
+      "anchor": "Theorem 2.7",
+      "pdf_page_1based": 23,
+      "meaning": "Supporting inequality, cited Rockafellar25.1/Cor25.1.1; original differentiable branch only."
+    },
+    {
+      "id": "S09",
+      "kind": "SOURCE_NODE",
+      "anchor": "Theorem 2.8",
+      "pdf_page_1based": 23,
+      "meaning": "Constrained optimum iff variational inequality."
+    },
+    {
+      "id": "S10",
+      "kind": "SOURCE_NODE",
+      "anchor": "first assume",
+      "pdf_page_1based": 23,
+      "meaning": "Sufficiency proof uses Theorem2.7; not used by projection necessity branch."
+    },
+    {
+      "id": "S11",
+      "kind": "SOURCE_NODE",
+      "anchor": "Now, assume",
+      "pdf_page_1based": 23,
+      "meaning": "Necessity proof: feasible segment and negative derivative contradiction."
+    },
+    {
+      "id": "S12",
+      "kind": "SOURCE_NODE",
+      "anchor": "Algorithm 2.1",
+      "pdf_page_1based": 24,
+      "meaning": "Original differentiable algorithm and positivity standing condition."
+    },
+    {
+      "id": "S13",
+      "kind": "SOURCE_NODE",
+      "anchor": "Proposition 2.11",
+      "pdf_page_1based": 24,
+      "meaning": "Projection characterization and distance decrease statement; proof starts with Theorem2.8."
+    },
+    {
+      "id": "S14",
+      "kind": "SOURCE_NODE",
+      "anchor": "Therefore",
+      "pdf_page_1based": 25,
+      "meaning": "Projection proof squared-norm expansion."
+    },
+    {
+      "id": "S15",
+      "kind": "SOURCE_NODE",
+      "anchor": "Lemma 2.12",
+      "pdf_page_1based": 25,
+      "meaning": "Original differentiable one-step lemma and projection/support proof."
+    },
+    {
+      "id": "S16",
+      "kind": "SOURCE_NODE",
+      "anchor": "Theorem 2.13",
+      "pdf_page_1based": 25,
+      "meaning": "Two regret branches, full negative terminal terms."
+    },
+    {
+      "id": "S17",
+      "kind": "SOURCE_NODE",
+      "anchor": "have",
+      "pdf_page_1based": 26,
+      "meaning": "Divide and sum; weighted telescoping, monotonicity and diameter substitution."
+    },
+    {
+      "id": "S18",
+      "kind": "SOURCE_NODE",
+      "anchor": "In the same way",
+      "pdf_page_1based": 26,
+      "meaning": "Constant-step telescoping retaining initial distance and terminal term."
+    },
+    {
+      "id": "S19",
+      "kind": "SOURCE_NODE",
+      "anchor": "The last term",
+      "pdf_page_1based": 26,
+      "meaning": "Post-proof notes: unbounded constant-step regime, negative term, bounded domain for variable steps, fixed-horizon tuning."
+    },
+    {
+      "id": "S20",
+      "kind": "SOURCE_NODE",
+      "anchor": "optimal",
+      "pdf_page_1based": 27,
+      "meaning": "Future-dependent optimizer is rejected as unusable online."
+    },
+    {
+      "id": "S21",
+      "kind": "SOURCE_NODE",
+      "anchor": "norm of the gradients is bounded",
+      "pdf_page_1based": 27,
+      "meaning": "Known bounds D,L and constant eta=D/(L sqrt(T)); eq2.1."
+    },
+    {
+      "id": "S22",
+      "kind": "SOURCE_NODE",
+      "anchor": "Example 2.14",
+      "pdf_page_1based": 27,
+      "meaning": "Clamp projection formula only, as available source specialization."
+    },
+    {
+      "id": "S23",
+      "kind": "SOURCE_NODE",
+      "anchor": "Definition 2.18",
+      "pdf_page_1based": 28,
+      "meaning": "Proper function."
+    },
+    {
+      "id": "S24",
+      "kind": "SOURCE_NODE",
+      "anchor": "Definition 2.20",
+      "pdf_page_1based": 28,
+      "meaning": "Global supporting inequality definition."
+    },
+    {
+      "id": "S25",
+      "kind": "SOURCE_NODE",
+      "anchor": "subdifferentiable",
+      "pdf_page_1based": 29,
+      "meaning": "Subdifferential set/nonemptiness; nonconvex definition caveat."
+    },
+    {
+      "id": "S26",
+      "kind": "SOURCE_NODE",
+      "anchor": "Example 2.24",
+      "pdf_page_1based": 30,
+      "meaning": "Absolute-value subdifferential source precursor."
+    },
+    {
+      "id": "S27",
+      "kind": "SOURCE_NODE",
+      "anchor": "Theorem 2.28",
+      "pdf_page_1based": 30,
+      "meaning": "Affine pullback inclusion with direct defining-inequality proof; alternative elaboration only."
+    },
+    {
+      "id": "S28",
+      "kind": "SOURCE_NODE",
+      "anchor": "Analysis with Subgradients",
+      "pdf_page_1based": 31,
+      "meaning": "Explicit transfer from original gradient analysis to subgradients."
+    },
+    {
+      "id": "S29",
+      "kind": "SOURCE_NODE",
+      "anchor": "Lemma 2.31",
+      "pdf_page_1based": 31,
+      "meaning": "Subgradient one-step inequality."
+    },
+    {
+      "id": "S30",
+      "kind": "SOURCE_NODE",
+      "anchor": "Algorithm 2.2",
+      "pdf_page_1based": 32,
+      "meaning": "Entire require block, six lines, and immediately following paragraph."
+    },
+    {
+      "id": "S31",
+      "kind": "SOURCE_NODE",
+      "anchor": "Example 2.32",
+      "pdf_page_1based": 32,
+      "meaning": "Loss substitution, three full branches, O(sqrt T) optimal-rate claim."
+    },
+    {
+      "id": "G1",
+      "kind": "SOURCE_GAP",
+      "use_site": "S31",
+      "meaning": "Full absolute-loss subdifferential assertion lacks printed branch proof."
+    },
+    {
+      "id": "G2",
+      "kind": "SOURCE_GAP",
+      "use_site": "S13",
+      "meaning": "General projection existence and uniqueness asserted, no local proof."
+    },
+    {
+      "id": "G3",
+      "kind": "SOURCE_GAP",
+      "use_site": "S31",
+      "meaning": "Instance D=L=1 and concrete eta/constant substitution omitted."
+    },
+    {
+      "id": "G4",
+      "kind": "SOURCE_GAP",
+      "use_site": "S31",
+      "meaning": "Eventual upper-average quantifiers and arithmetic omitted."
+    },
+    {
+      "id": "G5",
+      "kind": "SOURCE_GAP",
+      "use_site": "S30",
+      "meaning": "No printed generalized causal policy interface or infinite-run construction."
+    },
+    {
+      "id": "G6",
+      "kind": "SOURCE_GAP",
+      "use_site": "S03",
+      "meaning": "Best-in-hindsight absolute-loss minimizer existence not supplied in example."
+    },
+    {
+      "id": "D1",
+      "kind": "DERIVED_REFINEMENT",
+      "meaning": "For each horizon T>=1, eta=1/sqrt(T), legal OSD run: fixed-comparator regret <=sqrt(T), with negative-terminal refinement."
+    },
+    {
+      "id": "D2",
+      "kind": "DERIVED_REFINEMENT",
+      "meaning": "Uniform eventual upper-average <=epsilon for family of horizon-tuned runs, no ordinary-limit existence asserted."
+    },
+    {
+      "id": "S16-F",
+      "kind": "SOURCE_BRANCH_OUTPUT",
+      "source_region_node": "S16",
+      "pdf_page_1based": 25,
+      "meaning": "constant-step initial-distance conclusion",
+      "formula": "R<=||u-x1||^2/(2 eta)+(eta/2) sum||g||^2-||x(T+1)-u||^2/(2 eta)",
+      "coverage_binding": "coverage-index-v2.json"
+    },
+    {
+      "id": "S16-V",
+      "kind": "SOURCE_BRANCH_OUTPUT",
+      "source_region_node": "S16",
+      "pdf_page_1based": 25,
+      "meaning": "nonincreasing-step diameter conclusion",
+      "formula": "R<=D^2/(2 eta_T)+sum(eta_t/2)||g_t||^2-||x(T+1)-u||^2/(2 eta_T)",
+      "coverage_binding": "coverage-index-v2.json"
+    },
+    {
+      "id": "S28-F",
+      "kind": "SOURCE_BRANCH_OUTPUT",
+      "source_region_node": "S28",
+      "pdf_page_1based": 31,
+      "meaning": "subgradient transfer of constant-step branch",
+      "formula": "Same S16-F expression with g_t in partial ell_t(x_t), supplied by S29 and constant-step telescoping.",
+      "coverage_binding": "coverage-index-v2.json"
+    },
+    {
+      "id": "S28-V",
+      "kind": "SOURCE_BRANCH_OUTPUT",
+      "source_region_node": "S28",
+      "pdf_page_1based": 31,
+      "meaning": "subgradient transfer of nonincreasing-step branch",
+      "formula": "Same S16-V expression with g_t in partial ell_t(x_t), supplied by S29, weighted telescoping, monotonicity and diameter.",
+      "coverage_binding": "coverage-index-v2.json"
+    }
+  ],
+  "edges": [
+    {
+      "from": "S08",
+      "to": "S10",
+      "consumer_use_site": "Thm2.8 sufficiency paragraph",
+      "premise_discharge": "Apply convex differentiable support at x*; assumed variational inequality supplies nonnegative inner product.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S11",
+      "to": "S13",
+      "consumer_use_site": "Prop2.11 proof opening on printed12",
+      "premise_discharge": "Squared-distance minimizer; convex feasible set; smooth convex quadratic.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S13",
+      "to": "S14",
+      "consumer_use_site": "Prop2.11 proof continuation printed13",
+      "premise_discharge": "Expand squared distance and use variational inequality plus nonnegative residual square.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S14",
+      "to": "S15",
+      "consumer_use_site": "Lemma2.12 proof",
+      "premise_discharge": "Projection point z=x_t-eta_t g_t and comparator u in V.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S08",
+      "to": "S15",
+      "consumer_use_site": "Lemma2.12 proof",
+      "premise_discharge": "Convex differentiable loss support at current x_t.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S15",
+      "to": "S17",
+      "consumer_use_site": "Thm2.13 proof",
+      "premise_discharge": "Positive eta permits division; sum one-step inequalities.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S17",
+      "to": "S16-V",
+      "consumer_use_site": "Thm2.13 first branch",
+      "premise_discharge": "Nonincreasing positive eta yields nonnegative difference coefficients; feasible x,u bound distances by D.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S15",
+      "to": "S18",
+      "consumer_use_site": "Thm2.13 constant-step proof",
+      "premise_discharge": "Common positive eta telescopes with exact initial and terminal distances.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S18",
+      "to": "S16-F",
+      "consumer_use_site": "Thm2.13 second branch",
+      "premise_discharge": "No diameter substitution required for this branch.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S16-F",
+      "to": "S21",
+      "consumer_use_site": "Printed15 tuning paragraph/eq2.1",
+      "premise_discharge": "Discard nonpositive terminal term; ||g_t||<=L and ||u-x_1||<=D; choose fixed-horizon positive minimizer.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S24",
+      "to": "S29",
+      "consumer_use_site": "Section2.2.2 transfer / Lemma2.31",
+      "premise_discharge": "Subgradient membership supplies support inequality for each u.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S14",
+      "to": "S29",
+      "consumer_use_site": "Section2.2.2 transfer of Lemma2.12",
+      "premise_discharge": "Projection estimate and same squared-norm algebra; no differentiability premise needed.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S01",
+      "to": "S31",
+      "consumer_use_site": "Example2.32 opening reference to guessing game",
+      "premise_discharge": "d=1, V=[0,1], outcomes in [0,1], observed after prediction.",
+      "type": "STANDING_CONTEXT"
+    },
+    {
+      "from": "S03",
+      "to": "S31",
+      "consumer_use_site": "Example2.32 regret assertion",
+      "premise_discharge": "Fixed comparator definition; no dynamic regret or expectation.",
+      "type": "STANDING_CONTEXT"
+    },
+    {
+      "from": "S30",
+      "to": "S31",
+      "consumer_use_site": "Example2.32 running OSD",
+      "premise_discharge": "Feasible initial point, actual projected update, legal subgradient at every round.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S28-F",
+      "to": "S31",
+      "consumer_use_site": "Example2.32 optimal-rate conclusion",
+      "premise_discharge": "Subgradient transfer permits use of Theorem2.13 and eq2.1 without differentiability.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S21",
+      "to": "S31",
+      "consumer_use_site": "Example2.32 optimal-rate conclusion",
+      "premise_discharge": "D=1,L=1 from game and branch formula; finite substitution is G3.",
+      "type": "ALGEBRAIC_SCHEMA_REUSE",
+      "premise_replacement": "The operational loss bound is S28-F (subgradients), not the differentiable S16-F. Only D,L,T tuning algebra from S21 is reused."
+    },
+    {
+      "from": "S31",
+      "to": "D1",
+      "consumer_use_site": "Derived C7, not printed example equation",
+      "premise_discharge": "T>=1; all three branches give |g_t|<=1; V diameter1; eta=1/sqrt(T).",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S28-F",
+      "to": "D1",
+      "consumer_use_site": "Derived C7",
+      "premise_discharge": "Actual recurrence and constant eta discharge telescoping conditions.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "D1",
+      "to": "D2",
+      "consumer_use_site": "Derived C7 epsilon argument",
+      "premise_discharge": "Positive horizon permits division; integer N>=max(1,epsilon^-2); quantify over T-specific run family.",
+      "type": "ALGEBRAIC_DEPENDENCY"
+    },
+    {
+      "from": "S16",
+      "to": "S16-F",
+      "type": "SOURCE_PROVENANCE",
+      "consumer_use_site": "Printed13/PDF25: constant-step initial-distance conclusion",
+      "premise_discharge": "Select this branch output only; parent document is not an AND premise over its distinct conclusions."
+    },
+    {
+      "from": "S16",
+      "to": "S16-V",
+      "type": "SOURCE_PROVENANCE",
+      "consumer_use_site": "Printed13/PDF25: nonincreasing-step diameter conclusion",
+      "premise_discharge": "Select this branch output only; parent document is not an AND premise over its distinct conclusions."
+    },
+    {
+      "from": "S28",
+      "to": "S28-F",
+      "type": "SOURCE_PROVENANCE",
+      "consumer_use_site": "Printed19/PDF31: subgradient transfer of constant-step branch",
+      "premise_discharge": "Select this branch output only; parent document is not an AND premise over its distinct conclusions."
+    },
+    {
+      "from": "S28",
+      "to": "S28-V",
+      "type": "SOURCE_PROVENANCE",
+      "consumer_use_site": "Printed19/PDF31: subgradient transfer of nonincreasing-step branch",
+      "premise_discharge": "Select this branch output only; parent document is not an AND premise over its distinct conclusions."
+    },
+    {
+      "from": "S29",
+      "to": "S28-F",
+      "type": "ALGEBRAIC_DEPENDENCY",
+      "consumer_use_site": "Section2.2.2 transfer of constant step branch",
+      "premise_discharge": "Divide the subgradient one-step inequality by positive eta_t and sum."
+    },
+    {
+      "from": "S18",
+      "to": "S28-F",
+      "type": "ALGEBRAIC_SCHEMA_REUSE",
+      "consumer_use_site": "Section2.2.2 transfer of constant step branch",
+      "premise_discharge": "Reuse only telescoping algebra with Lemma2.31 replacing Lemma2.12.",
+      "premise_replacement": {
+        "original_one_step": "S15",
+        "replacement_one_step": "S29",
+        "original_differentiability_imported": false,
+        "other_step_branch_required": false
+      }
+    },
+    {
+      "from": "S29",
+      "to": "S28-V",
+      "type": "ALGEBRAIC_DEPENDENCY",
+      "consumer_use_site": "Section2.2.2 transfer of nonincreasing step branch",
+      "premise_discharge": "Divide the subgradient one-step inequality by positive eta_t and sum."
+    },
+    {
+      "from": "S17",
+      "to": "S28-V",
+      "type": "ALGEBRAIC_SCHEMA_REUSE",
+      "consumer_use_site": "Section2.2.2 transfer of nonincreasing step branch",
+      "premise_discharge": "Reuse only telescoping algebra with Lemma2.31 replacing Lemma2.12.",
+      "premise_replacement": {
+        "original_one_step": "S15",
+        "replacement_one_step": "S29",
+        "original_differentiability_imported": false,
+        "other_step_branch_required": false
+      }
+    },
+    {
+      "from": "S02",
+      "to": "S31",
+      "type": "STANDING_CONTEXT",
+      "consumer_use_site": "Example2.32 reference to Chapter1 game",
+      "premise_discharge": "Outcomes arbitrary; source removed i.i.d. assumption. The regret guarantee is pathwise, not in expectation."
+    },
+    {
+      "from": "S05",
+      "to": "S31",
+      "type": "STANDING_CONTEXT",
+      "consumer_use_site": "Example2.32 reference to Chapter1 adversarial game",
+      "premise_discharge": "The adversary may select y_t after observing x_t. Learner still predicts before seeing y_t. No filtration or probability premise added."
+    },
+    {
+      "from": "S06",
+      "to": "S30",
+      "type": "STANDING_CONTEXT",
+      "consumer_use_site": "Algorithm2.2 lines2-4 within general online game",
+      "premise_discharge": "Output x_t before feedback; reveal y_t before selecting the subgradient and next iterate."
+    },
+    {
+      "from": "S06",
+      "to": "G5",
+      "type": "STANDING_CONTEXT",
+      "consumer_use_site": "Missing policy-interface obligation",
+      "premise_discharge": "Any subsequently constructed policy interface must preserve output/loss/feedback order. This edge does not assert that such interface is printed or proved."
+    },
+    {
+      "from": "S04",
+      "to": "D2",
+      "type": "STANDING_CONTEXT",
+      "consumer_use_site": "Derived eventual upper-average interpretation",
+      "premise_discharge": "Relate to fixed-comparator no-regret prose using only one-sided eventual bound/limsup. No ordinary limit existence or single infinite run follows."
+    }
+  ],
+  "logical_groups": [
+    {
+      "consumer": "S16",
+      "type": "DISTINCT_BRANCH_OUTPUTS",
+      "outputs": [
+        "S16-F",
+        "S16-V"
+      ],
+      "not_an_AND_result": true
+    },
+    {
+      "consumer": "S28",
+      "type": "DISTINCT_BRANCH_OUTPUTS",
+      "outputs": [
+        "S28-F",
+        "S28-V"
+      ],
+      "not_an_AND_result": true
+    },
+    {
+      "consumer": "S16-F",
+      "type": "AND",
+      "premises": [
+        "S18"
+      ]
+    },
+    {
+      "consumer": "S16-V",
+      "type": "AND",
+      "premises": [
+        "S17"
+      ]
+    },
+    {
+      "consumer": "S28-F",
+      "type": "AND",
+      "premises": [
+        "S29"
+      ],
+      "algebraic_schema": "S18",
+      "replacement": "S29 replaces S15; variable branch S17/S28-V not required."
+    },
+    {
+      "consumer": "S28-V",
+      "type": "AND",
+      "premises": [
+        "S29"
+      ],
+      "algebraic_schema": "S17",
+      "replacement": "S29 replaces S15; fixed branch S18/S28-F not required."
+    },
+    {
+      "consumer": "S21",
+      "type": "SELECTED_BRANCH",
+      "premises": [
+        "S16-F"
+      ],
+      "selection": "Constant-step initial-distance branch only."
+    },
+    {
+      "consumer": "S30",
+      "type": "ALGORITHM_WITH_STANDING_CONTEXT",
+      "standing_context": [
+        "S06"
+      ],
+      "definition": "Source algorithm requires feasible x1, positive steps and legal support/projection update."
+    },
+    {
+      "consumer": "S31",
+      "type": "AND_WITH_CONTEXT",
+      "premises": [
+        "S30",
+        "S28-F"
+      ],
+      "algebraic_schema": [
+        "S21"
+      ],
+      "standing_context": [
+        "S01",
+        "S02",
+        "S03",
+        "S05"
+      ],
+      "inherited_context_via_S30": [
+        "S06"
+      ],
+      "additional_instance_discharge": "D=L=1 and legal full subdifferential; no variable-step transfer required."
+    },
+    {
+      "consumer": "D1",
+      "type": "AND_WITH_CONTEXT",
+      "premises": [
+        "S31",
+        "S28-F"
+      ],
+      "standing_context_inherited_from": "S31",
+      "branch_selection": "Exact initial-distance constant-step branch, including signed terminal term."
+    },
+    {
+      "consumer": "D2",
+      "type": "AND_WITH_CONTEXT",
+      "premises": [
+        "D1"
+      ],
+      "standing_context": [
+        "S04"
+      ],
+      "quantifier_boundary": "For each horizon run separately; uniform eventual upper bound, not ordinary-limit existence."
+    },
+    {
+      "consumer": "G1",
+      "type": "OR",
+      "routes": [
+        {
+          "name": "direct global-subgradient definition verification",
+          "premises": [
+            "S24"
+          ]
+        },
+        {
+          "name": "source precursor plus translation in both directions",
+          "premises": [
+            "S26",
+            "S27"
+          ],
+          "missing": "Theorem2.28 is only an inclusion; reverse inclusion must be proved separately."
+        }
+      ],
+      "status": "Possible elaborations of omitted proof; source does not explicitly choose a route."
+    }
+  ],
+  "edge_semantics": {
+    "ALGEBRAIC_DEPENDENCY": "Mathematical ingredient of selected result.",
+    "STANDING_CONTEXT": "Source setting/timing/interpretation obligation; not an extra algebraic or probabilistic premise.",
+    "SOURCE_PROVENANCE": "Location or statement authorization; does not conjoin every branch in the document node.",
+    "ALGEBRAIC_SCHEMA_REUSE": "Reuse the specified manipulation/formula with explicitly replaced one-step premise. Do not import the original differentiability premises or alternative branch.",
+    "root_closure": "Follow result dependencies plus standing context. Provenance and algebraic-schema links retain source evidence, with substitutions recorded, rather than importing all premises of the source document."
+  },
+  "root_closures": {
+    "S31": {
+      "algebraic_branch": "S28-F",
+      "tuning_schema": "S21 from S16-F only",
+      "standing_nodes": [
+        "S01",
+        "S02",
+        "S03",
+        "S05",
+        "S06"
+      ],
+      "excluded_branch": [
+        "S28-V",
+        "S16-V"
+      ],
+      "reason": "Example optimal constant-rate consequence; variable-step theorem retained separately."
+    },
+    "D1": {
+      "inherits": "S31",
+      "algebraic_branch": "S28-F",
+      "excluded_branch": [
+        "S28-V",
+        "S16-V"
+      ],
+      "reason": "Sharp initial-distance/terminal refinement uses only fixed branch."
+    },
+    "D2": {
+      "inherits": "D1",
+      "additional_standing_nodes": [
+        "S04"
+      ],
+      "limit_existence_claim": false,
+      "single_horizon_free_policy_claim": false
+    }
+  },
+  "boundary": "This graph describes source proof and missing bridges. No edge certifies Lean compilation.",
+  "private_original_reference_resolution": {
+    "supersedes": {
+      "identifier": "batch15-source-only/proof-topology.json",
+      "sha256": "76798024dc0168ed9af4330e9efe47cec4fe418b85c4a76f605a1277e81be1ac",
+      "availability": "private-maintenance-evidence; not a public repository file"
+    },
+    "review_response": {
+      "identifier": "batch15-source-only/review-response-v2.json",
+      "sha256": "f012a560d7f7454e64645b0a964ba2ee9d7ad266397884d48d805965b8a90b6e",
+      "availability": "private-maintenance-evidence; not a public repository file"
+    },
+    "coverage-index-v2.json": {
+      "identifier": "batch15-source-only/coverage-index-v2.json",
+      "sha256": "932100fb283e31255afe3f121bdefdc2ac63fb98b415a8e61d3d0ff3de13c8cb",
+      "availability": "private-maintenance-evidence; not a public repository file"
+    }
+  }
+}

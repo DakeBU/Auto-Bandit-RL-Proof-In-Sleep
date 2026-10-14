@@ -5613,6 +5613,10 @@
         {
           "term": "Signed regret and prescribed horizon",
           "meaning": "R_T(u) is cumulative actual loss minus the fixed comparator loss. T>=1 determines one constant eta=1/sqrt(T) for that run, shared by all comparators. The eventual statement varies T across separately prescribed runs; it gives upper control, not signed convergence or an anytime schedule."
+        },
+        {
+          "term": "Finite-history support policies",
+          "meaning": "Fix a deterministic external policy p. After predicting X_t, it receives the complete past loss functions, the actual outputs through X_t, and the current whole loss f_t. Write g_t=p(t,f_<t,X_<=t,f_t), and L_T for global-support membership g_t in partial f_t(X_t) for every t<T. No comparator is an input. Prefix equality holds with the same p and initial state. It does not certify independence of their external selection from future information."
         }
       ],
       "algorithm": {
@@ -5634,7 +5638,7 @@
         ],
         "pseudocode": {
           "title": "Absolute-loss OSD for a known horizon",
-          "intro": "This is one canonical permitted selector. General history-dependent legal policies retain a separate review scope.",
+          "intro": "This is the canonical permitted selector. The history-policy cards below use the same projection with any fixed policy whose actual played supports are legal.",
           "formula_label": "Actual update",
           "math": "X_0=x_1\\in[0,1],\\quad\\eta=1/\\sqrt T,\\quad X_{t+1}=\\Pi_{[0,1]}(X_t-\\eta G(f_t,X_t))",
           "fallback": "Output, reveal the label, select its support and clamp the actual update.",
@@ -5650,9 +5654,9 @@
       },
       "teaching_route": [
         "BanditRL.OnlineGuessingSubgradient.example_2_32_subdifferential",
-        "BanditRL.OnlineGuessingSubgradient.loss_step_clamp",
         "BanditRL.OnlineGuessingSubgradient.example_2_32",
-        "BanditRL.OnlineGuessingSubgradient.example_2_32_average_eventually"
+        "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32",
+        "BanditRL.OnlineGuessingSubgradientPolicy.example_2_32_average_eventually"
       ],
       "source_theorems": [
         {
@@ -5686,7 +5690,7 @@
           "math": "\\(X_{t+1}=\\min\\{1,\\max\\{0,X_t-\\eta_tG(f_t,X_t)\\}\\}.\\)",
           "fallback": "After the label is revealed, the shared selector chooses a global support at the current point and the genuine nearest-point projection clamps its update.",
           "plain": "After the label is revealed, the shared selector chooses a global support at the current point and the genuine nearest-point projection clamps its update.",
-          "relationship": "This is the canonical-selector instantiation of Algorithm 2.2, with the interval projection identity supplied by Example 2.14. The source permits other legal support choices; their general history-policy family is outside this candidate.",
+          "relationship": "This is the canonical-selector instantiation of Algorithm2.2, using the interval projection identity of Example2.14. The history-policy specialization below preserves the actual projected recurrence while allowing any legal tie choice.",
           "contract": {
             "model": "Shared canonical selected-support update and actual nearest projection onto [0,1], applied at any real point and label.",
             "assumptions": "The algebraic clamp and prefix identities have no positivity or feasibility premise. The selected-norm helper retains a feasible current point.",
@@ -5697,7 +5701,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Canonical absolute-loss OSD",
-            "boundary": "Canonical update and strict-prefix identities. Performance appears in a separate quantitative card. The generic history-policy interface is covered at History-dependent OSD (online-osd-policy); the absolute-loss policy specialization remains separately owned by PR182."
+            "boundary": "Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
           },
           "statement_provenance": "derived-support"
         },
@@ -5720,7 +5724,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Canonical absolute-loss OSD",
-            "boundary": "This route integrates the canonical current-loss selector. The generic fixed deterministic finite-history policy interface is covered separately at History-dependent OSD (online-osd-policy). The absolute-loss history-policy specialization remains separately owned by PR182. Chapter, book and purification acceptance remain separate. The theorem compares against every fixed comparator; a separately defined attained best-hindsight minimum is not formalized in this module."
+            "boundary": "Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
           },
           "statement_provenance": "derived-instantiation"
         },
@@ -5743,14 +5747,60 @@
           "local_status": {
             "status": "compiled",
             "label": "Canonical absolute-loss OSD",
-            "boundary": "This route integrates the canonical current-loss selector. The generic fixed deterministic finite-history policy interface is covered separately at History-dependent OSD (online-osd-policy). The absolute-loss history-policy specialization remains separately owned by PR182. Chapter, book and purification acceptance remain separate. The theorem compares against every fixed comparator; a separately defined attained best-hindsight minimum is not formalized in this module."
+            "boundary": "Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "History policies: one run, every comparator",
+          "pages": "printed20/PDF32; fixed-rate transfer printed13-15,19",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(T>0,\\quad\\eta_T=1/\\sqrt T,\\quad\\mathcal L_T\\quad\\Longrightarrow\\quad\\forall u\\in[0,1],\\ R_T^{p,(T)}(u)\\le\\sqrt T.\\)",
+          "fallback": "Any history-dependent tie choices are allowed when they are legal at the actual played points. The all-support bound is proved from the shared absolute-loss support set.",
+          "plain": "Any history-dependent tie choices are allowed when they are legal at the actual played points. The all-support bound is proved from the shared absolute-loss support set.",
+          "relationship": "Example2.32 prints O(sqrt(T)). The numerical constant follows from the fixed-rate OSD transfer with diameter and selected-support bound both one. The explicit policy interface and eventual family consequence are library refinements.",
+          "contract": {
+            "model": "Scalar absolute loss f_t(x)=|x-y_t| on the whole real line, shared nearest projection onto [0,1], and a fixed deterministic policy p receiving finite past losses/outputs and the current whole loss.",
+            "assumptions": "T is a positive integer, X0 is feasible, all played labels lie in [0,1], and every actual selected g_t is an ambient global support at the actual X_t. No universal off-path OracleLaw or supplied norm/regret bound is required.",
+            "parameters": "Use eta_T=1/sqrt(T) throughout the actual T-round run. Policy and initialization are held fixed across comparators; Lean index0 is source round1.",
+            "regret": "Signed sum R_T^p(u)=sum_(t<T)(|X_t-y_t|-|u-y_t|), compared with each fixed u in [0,1]. Source permits labels chosen after seeing the current prediction; the formal result is deterministic for the resulting exogenous sequence.",
+            "guarantee": "The same played-legal T-tuned run satisfies R_T^p(u)<=sqrt(T) for every feasible u."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Played-legal absolute-loss policy",
+            "boundary": "Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
+          },
+          "statement_provenance": "derived-instantiation"
+        },
+        {
+          "label": "History-policy families: eventual upper average",
+          "pages": "printed20/PDF32; fixed-rate transfer printed13-15,19",
+          "pdf_page": 32,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\bigl[\\forall T>0,\\ \\mathcal L_T^{(T)}\\bigr]\\quad\\Longrightarrow\\quad\\forall\\varepsilon>0,\\ \\frac{R_T^{p,(T)}(u)}T<\\varepsilon\\quad\\text{eventually}.\\)",
+          "fallback": "Hold the policy, labels, initial point and comparator fixed, and apply the finite bound to each separately prescribed horizon.",
+          "plain": "Hold the policy, labels, initial point and comparator fixed, and apply the finite bound to each separately prescribed horizon.",
+          "relationship": "Example2.32 prints O(sqrt(T)). The numerical constant follows from the fixed-rate OSD transfer with diameter and selected-support bound both one. The explicit policy interface and eventual family consequence are library refinements.",
+          "contract": {
+            "model": "Scalar absolute loss f_t(x)=|x-y_t| on the whole real line, shared nearest projection onto [0,1], and a fixed deterministic policy p receiving finite past losses/outputs and the current whole loss.",
+            "assumptions": "Fixed policy p, globally feasible label sequence y, feasible X0 and comparator u, and epsilon>0. For every positive T the separately T-tuned run has legal played supports.",
+            "parameters": "The same p,y,X0 are used across the horizon family; eta_T=1/sqrt(T) can change early predictions when T changes.",
+            "regret": "Signed sum R_T^p(u)=sum_(t<T)(|X_t-y_t|-|u-y_t|), compared with each fixed u in [0,1]. Source permits labels chosen after seeing the current prediction; the formal result is deterministic for the resulting exogenous sequence.",
+            "guarantee": "Eventually in integer T, R_T^{p,(T)}(u)/T<epsilon. This is one-sided upper control; it is neither signed convergence nor an absolute-regret bound nor a single anytime trajectory."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Played-legal absolute-loss policy",
+            "boundary": "Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
+          },
+          "statement_provenance": "derived-instantiation"
         }
       ],
       "worked_example": {
-        "title": "Four rounds with alternating labels",
-        "intro": "Take labels 0,1,0,1, initial point1 and eta=1/2, which equals the prescribed rate for T=4.",
+        "title": "Canonical and history-sensitive absolute-loss runs",
+        "intro": "Take labels 0,1,0,1, initial point1 and eta=1/2, which equals the prescribed rate for T=4. The first three steps retain that canonical example. The policy examples below instead start at1/2 and use one fixed history-sensitive rule.",
         "steps": [
           {
             "title": "Follow the genuine recurrence",
@@ -5769,10 +5819,46 @@
             "detail": "The all-comparator theorem gives R4(u)<=2 for every u in [0,1]. It is an upper bound, distinct from the exact realized value above.",
             "math": "\\(R_4(u)\\le\\sqrt4=2.\\)",
             "fallback": "The original canaries also test nonzero legal tie supports, invalid supports, true clipping, strict-prefix equality and zero horizon."
+          },
+          {
+            "title": "Meet at the same kink with different histories",
+            "detail": "Use eta=1/2. Labels A start at0, labels B start at1, and both are1/2 thereafter. The common policy chooses the unique legal support off the kink; at a later kink it chooses+1 if the first loss at0 is0, otherwise-1. At time2 both predictions and current losses coincide, but the pasts select opposite supports.",
+            "math": "\\(\\begin{aligned}X^A_{0:4}&=(\\tfrac12,0,\\tfrac12,0,\\tfrac12),\\\\X^B_{0:4}&=(\\tfrac12,1,\\tfrac12,1,\\tfrac12),\\\\g^A_2&=1,\\qquad g^B_2=-1.\\end{aligned}\\)",
+            "fallback": "The two histories and all outputs are derived from the same actual recursive policy, rather than supplied as trajectories."
+          },
+          {
+            "title": "Keep the positive terminal distance",
+            "detail": "Against u=1/4, A has regret1/2 and B has regret0. A has selected-support energy4 and squared terminal distance1/16. The actual sharp fixed-rate bound evaluates to1.",
+            "math": "\\(R^A_4(\\tfrac14)=\\tfrac12,\\quad R^B_4(\\tfrac14)=0,\\quad\\sum_{t<4}|g^A_t|^2=4,\\quad\\mathrm{RHS}=\\tfrac1{16}+1-\\tfrac1{16}=1.\\)",
+            "fallback": "The negative terminal term remains present and nonzero; the bound1 is distinct from the realized regret1/2."
+          },
+          {
+            "title": "Read the same-run all-comparator guarantee",
+            "detail": "At T=4 the rate1/2 equals1/sqrt(T). Apply the new public theorem to the very A trajectory to obtain the uniform comparator bound2.",
+            "math": "\\(\\forall u\\in[0,1],\\ R^A_4(u)\\le\\sqrt4=2.\\)",
+            "fallback": "The exact realized comparator values, fixed-rate bound and tuned all-comparator bound are separate facts."
+          },
+          {
+            "title": "Distinguish played legality from an off-path law",
+            "detail": "The policy is legal for every played feasible absolute label. At the off-path loss f(x)=|x+1| and current point1/2, however, its rule reads f(0)=1 and chooses-1; the only global support there is+1.",
+            "math": "\\(p(0,\\varnothing,(\\tfrac12),|\\cdot+1|)=-1\\notin\\partial|\\cdot+1|(\\tfrac12)=\\{1\\}.\\)",
+            "fallback": "This disproves the optional universal OracleLaw while preserving legal feedback on the source-game runs."
+          },
+          {
+            "title": "Check identities beyond the performance hypotheses",
+            "detail": "Change labels and rates from time4 onward to-99: strict-prefix equality leaves the time4 output unchanged. Separately, zero step size from infeasible initial point2 still produces the actual clamp1 at the next output.",
+            "math": "\\(y_t^{\\prime}=\\eta_t^{\\prime}=-99\\ (t\\ge4),\\quad X_4^{\\prime}=X_4^A=\\tfrac12;\\qquad X_0=2,\\ \\eta_0=0\\Rightarrow X_1=1.\\)",
+            "fallback": "These are total recurrence identities. No source-game performance guarantee is asserted for invalid labels, negative rates or infeasible initialization."
+          },
+          {
+            "title": "Vary the prescribed horizon explicitly",
+            "detail": "Keep the common policy, infinite labelsA, initial point1/2 and comparator1/4 fixed. Played legality holds for every positive horizon, each using its own eta_T. The new eventual theorem gives the concrete upper threshold1/10.",
+            "math": "\\(\\frac{R_T^{p,(T)}(\\tfrac14)}T<\\tfrac1{10}\\quad\\text{eventually},\\qquad\\eta_T=1/\\sqrt T.\\)",
+            "fallback": "The assertion concerns a family of runs and only an upper inequality for signed average regret."
           }
         ],
         "takeaway": "The norm bound and telescoping argument are applied to the same actual selected-support trajectory.",
-        "boundary": "All 27 historical canary propositions are retained. The separate finite-history policy tests and guarantees remain outside this candidate."
+        "boundary": "All original canonical canaries and all47history-policy declarations are retained, including the six policy numerical/boundary subjects. Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
       },
       "proof_bridge": {
         "title": "From the full support set to square-root regret",
@@ -5807,9 +5893,21 @@
             "detail": "Divide the finite inequality by positive T. Since 1/sqrt(T) tends to zero, the signed average is eventually below every positive epsilon along the horizon-indexed family.",
             "math": "\\(\\frac{R_T^{(T)}(u)}T\\le\\frac1{\\sqrt T}\\longrightarrow0\\quad\\text{for the upper envelope}.\\)",
             "fallback": "Only the numerical envelope is asserted to converge to zero. The actual average may remain negative."
+          },
+          {
+            "title": "Use played-legal history choices",
+            "detail": "At each played point, legal membership in the full shifted support set gives |g_t|<=1. The actual policy output obeys the same shared clamp recurrence, so the existing fixed-rate proof applies to this very trajectory. No norm or regret inequality is supplied as a premise.",
+            "math": "\\(g_t\\in\\partial f_t(X_t)\\Rightarrow |g_t|\\le1,\\qquad X_{t+1}=\\min\\{1,\\max\\{0,X_t-\\eta_tg_t\\}\\}.\\)",
+            "fallback": "Legality is imposed only on the actual played path; arbitrary off-path queries need not be valid."
+          },
+          {
+            "title": "Apply the finite bound to a horizon family",
+            "detail": "Choose eta_T=1/sqrt(T) and use diameter1 and the selected-support bound1. For every positive horizon, assumed played legality enables the finite theorem. Divide by T and pass only the upper envelope to zero.",
+            "math": "\\(\\forall u\\in[0,1],\\ R_T^{p,(T)}(u)\\le\\sqrt T,\\qquad \\frac{R_T^{p,(T)}(u)}T\\le\\frac1{\\sqrt T}.\\)",
+            "fallback": "For the eventual theorem the policy, labels and initialization stay fixed, while each horizon prescribes a separate run."
           }
         ],
-        "boundary": "This route integrates the canonical current-loss selector. The generic fixed deterministic finite-history policy interface is covered separately at History-dependent OSD (online-osd-policy). The absolute-loss history-policy specialization remains separately owned by PR182. Chapter, book and purification acceptance remain separate. The all-comparator bound is formalized directly; attainment of a cumulative-loss minimum remains a separate interface."
+        "boundary": "Canonical and fixed deterministic finite-history absolute-loss policies are covered. Executable or randomized policy laws, independence of externally chosen policy/rates/initial state, an attained best-hindsight minimum, and chapter/book completion remain separate."
       }
     },
     {
