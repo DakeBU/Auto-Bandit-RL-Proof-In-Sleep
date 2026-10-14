@@ -1,0 +1,626 @@
+{
+  "schema": "source-topology-public-projection-v1",
+  "status": "source-only topology independently reviewed; bounded Lean mapping separately qualified",
+  "root_targets": {
+    "pathwise_regret_comparison": "S4",
+    "online_algorithm_performance_transfer": "S6",
+    "OLO_problem_definition": "S10"
+  },
+  "node_ids": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S10",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8",
+    "P9",
+    "P10",
+    "P11",
+    "C1",
+    "C2",
+    "G1",
+    "G2"
+  ],
+  "edges": [
+    {
+      "id": "E1",
+      "inputs": [
+        "P3",
+        "P4",
+        "P5"
+      ],
+      "output": "S1",
+      "logic": "AND",
+      "consumer_use_site": "First display of Section 2.3",
+      "premise_discharge": "Choose g_t in subdifferential at played x_t, specialize y=u, rearrange supporting inequality. Finite loss convention P1/P2 applies."
+    },
+    {
+      "id": "E2",
+      "inputs": [
+        "P8"
+      ],
+      "output": "S1",
+      "logic": "AND",
+      "consumer_use_site": "First display, differentiable specialization from Section 2.2.2",
+      "premise_discharge": "If gradient route selected, require the actual convexity/interior/differentiability conditions of P8; take g_t=gradient. Alternative to E1."
+    },
+    {
+      "id": "E3",
+      "inputs": [
+        "S1"
+      ],
+      "output": "S2",
+      "logic": "AND",
+      "consumer_use_site": "Summing-over-time sentence and second display",
+      "premise_discharge": "Fix a single arbitrary u in V and sum the per-round inequality over t=1,...,T. No expectation or event operation."
+    },
+    {
+      "id": "E4",
+      "inputs": [
+        "P7"
+      ],
+      "output": "S3",
+      "logic": "AND",
+      "consumer_use_site": "Linear (and convex) phrase in surrogate definition",
+      "premise_discharge": "Set affine constant b=0 and coefficient z=g_t. All g_t are finite real vectors."
+    },
+    {
+      "id": "E5",
+      "inputs": [
+        "S2",
+        "S3"
+      ],
+      "output": "S4",
+      "logic": "AND",
+      "consumer_use_site": "Third display",
+      "premise_discharge": "Use bilinearity: <g_t,x_t-u>=<g_t,x_t>-<g_t,u>; the same x_t,u and selected g_t occur throughout."
+    },
+    {
+      "id": "E6",
+      "inputs": [
+        "S4",
+        "P1"
+      ],
+      "output": "S5",
+      "logic": "AND",
+      "consumer_use_site": "First explanatory sentence",
+      "premise_discharge": "Recognize both finite sums as comparator regrets on their respective loss sequences, same actions."
+    },
+    {
+      "id": "E7",
+      "inputs": [
+        "S4",
+        "G1",
+        "G2"
+      ],
+      "output": "S6",
+      "logic": "AND",
+      "consumer_use_site": "Second explanatory sentence",
+      "premise_discharge": "Requires causal same-trajectory wrapper AND applicable uniform OLO performance bound; explicit interfaces omitted in source and retained as gaps."
+    },
+    {
+      "id": "E8",
+      "inputs": [
+        "P9"
+      ],
+      "output": "S7",
+      "logic": "BOUNDARY",
+      "consumer_use_site": "Not-always-optimal sentence with Example 2.14 citation",
+      "premise_discharge": "Boundary evidence only; not a premise of S1-S6."
+    },
+    {
+      "id": "E9",
+      "inputs": [
+        "P10"
+      ],
+      "output": "P9",
+      "logic": "BOUNDARY",
+      "consumer_use_site": "Example 2.14 says worse than first chapter",
+      "premise_discharge": "Source statements provide logarithmic versus square-root guarantee comparison; no new lower bound or every-method impossibility asserted."
+    },
+    {
+      "id": "E10",
+      "inputs": [
+        "S6",
+        "S7"
+      ],
+      "output": "S8",
+      "logic": "SCOPE",
+      "consumer_use_site": "Many-interesting-cases sentence",
+      "premise_discharge": "Qualitative claim constrained by preceding caveat. No numerical or minimax theorem discharged here."
+    },
+    {
+      "id": "E11",
+      "inputs": [
+        "S3",
+        "P1"
+      ],
+      "output": "S9",
+      "logic": "AND",
+      "consumer_use_site": "Final linear-regret display",
+      "premise_discharge": "Expand comparator regret of linear losses and split finite sum of differences."
+    },
+    {
+      "id": "E12",
+      "inputs": [
+        "S9"
+      ],
+      "output": "S10",
+      "logic": "DEFINITION",
+      "consumer_use_site": "Final sentence",
+      "premise_discharge": "Quantify over arbitrary real vector sequences and name OLO; no rate supplied."
+    },
+    {
+      "id": "E13",
+      "inputs": [
+        "P1",
+        "P2",
+        "P6",
+        "S3"
+      ],
+      "output": "G1",
+      "logic": "CONTEXT",
+      "consumer_use_site": "Transfer sentence",
+      "premise_discharge": "Source gives comparator independence and action-before-feedback order; explicit causal recursion remains unprinted."
+    },
+    {
+      "id": "E14",
+      "inputs": [
+        "S4",
+        "S10",
+        "P2"
+      ],
+      "output": "G2",
+      "logic": "CONTEXT",
+      "consumer_use_site": "Transfer sentence",
+      "premise_discharge": "Source supplies comparison and arbitrary-sequence scope; guarantee schema/admissibility requires explicit treatment."
+    },
+    {
+      "id": "E15",
+      "inputs": [
+        "C1"
+      ],
+      "output": "P8",
+      "logic": "CITATION",
+      "consumer_use_site": "Theorem 2.7 parenthetical attribution",
+      "premise_discharge": "External statement accepted here only as a pinned-book citation, not independently proved."
+    },
+    {
+      "id": "E16",
+      "inputs": [
+        "C2"
+      ],
+      "output": "P4",
+      "logic": "CITATION",
+      "consumer_use_site": "Interior subdifferentiability sentence",
+      "premise_discharge": "Interior restriction preserved; external citation not independently proved."
+    }
+  ],
+  "or_routes": [
+    {
+      "output": "S1",
+      "alternatives": [
+        "E1",
+        "E2"
+      ],
+      "reason": "Subgradient route and differentiable specialization are separately sufficient. Do not require both assumption sets."
+    }
+  ],
+  "and_routes": [
+    {
+      "output": "S4",
+      "inputs": [
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "output": "S6",
+      "inputs": [
+        "S4",
+        "G1",
+        "G2"
+      ]
+    }
+  ],
+  "no_other_source_alternatives_found": "No competing stochastic, confidence/event, telescoping, projection or minimax route occurs in bounded section.",
+  "review_questions": [
+    "Is every substantive Section 2.3 sentence/display/citation represented exactly once?",
+    "Are G1/G2 properly classified as unexpanded source bridges rather than false premises?",
+    "Does the source transfer require same actions and a causal subgradient-feedback wrapper?",
+    "Do the original game finite-loss convention and subgradient availability prevent infinite arithmetic and boundary-existence drift?",
+    "Is arbitrary-sequence uniformity maintained without claiming randomized oblivious-to-adaptive transfer?",
+    "Is Example 2.14 a limitation edge instead of a proof premise or universal impossibility theorem?"
+  ],
+  "inventory": {
+    "schema": "private-source-only-inventory-v1",
+    "status": "extracted-awaiting-independent-review",
+    "source": {
+      "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+      "author": "Francesco Orabona",
+      "revision": "arXiv:1912.13213v10",
+      "date": "2026-06-21",
+      "pdf_path": "private-historical-input:tmp/pdfs/orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+      "page_count": 328
+    },
+    "scope": {
+      "section": "2.3",
+      "printed_page": 22,
+      "pdf_page": 34,
+      "start_y": 273.2,
+      "end_y": 623.9,
+      "coordinates": "PDF points, top-left origin; sentence descriptions disambiguate adjacent lines"
+    },
+    "bounded_section_and_page_margin_regions": [
+      {
+        "id": "X0",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          106,
+          117
+        ],
+        "disposition": "EXCLUDED",
+        "content": "Running page number and chapter header.",
+        "reason": "Page furniture, no mathematical claim."
+      },
+      {
+        "id": "X1",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          118,
+          246
+        ],
+        "disposition": "EXCLUDED",
+        "content": "Remaining two unit-analysis paragraphs of Section 2.2.3, including unit-conversion formulas.",
+        "reason": "Precedes Section 2.3 and is not used by the reduction."
+      },
+      {
+        "id": "X2",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          273,
+          285
+        ],
+        "disposition": "EXCLUDED",
+        "content": "Section 2.3 heading.",
+        "reason": "Locator recorded as scope metadata, not a proof obligation."
+      },
+      {
+        "id": "S1",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          291,
+          326
+        ],
+        "disposition": "NODE",
+        "content": "Introductory recall and pointwise display: ell_t(x_t)-ell_t(u) <= <g_t,x_t-u>, for all u in V."
+      },
+      {
+        "id": "S2",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          335,
+          388
+        ],
+        "disposition": "NODE",
+        "content": "Summing-over-time sentence and second display: sum_t (ell_t(x_t)-ell_t(u)) <= sum_t <g_t,x_t-u>, for all u in V."
+      },
+      {
+        "id": "S3",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          395,
+          411
+        ],
+        "disposition": "NODE",
+        "content": "Define tilde ell_t(x)=<g_t,x>; these losses are linear and convex."
+      },
+      {
+        "id": "S4",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          419,
+          452
+        ],
+        "disposition": "NODE",
+        "content": "Third display compares original regret to sum_t (tilde ell_t(x_t)-tilde ell_t(u)), for all u in V."
+      },
+      {
+        "id": "S5",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          460,
+          483
+        ],
+        "disposition": "NODE",
+        "content": "First sentence of explanatory paragraph interprets the display as an upper bound on convex-loss regret by linear-loss regret."
+      },
+      {
+        "id": "S6",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          483,
+          510
+        ],
+        "disposition": "NODE",
+        "content": "Second sentence says algorithms dealing only with linear losses can through this reduction be used as OCO algorithms."
+      },
+      {
+        "id": "S7",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          510,
+          524
+        ],
+        "disposition": "NODE",
+        "content": "Third sentence cautions reduction is not always optimal and explicitly cites Example 2.14."
+      },
+      {
+        "id": "S8",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          524,
+          537
+        ],
+        "disposition": "NODE",
+        "content": "Fourth sentence says it allows construction of optimal OCO algorithms in many interesting cases. Qualitative scope assertion, no cases/rates listed here."
+      },
+      {
+        "id": "S9",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          537,
+          591
+        ],
+        "disposition": "NODE",
+        "content": "Final lead-in and fourth display define linear regret: sum_t <g_t,x_t> - sum_t <g_t,u>, for all u in V."
+      },
+      {
+        "id": "S10",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          598,
+          624
+        ],
+        "disposition": "NODE",
+        "content": "For arbitrary vector sequence g_1,...,g_T in R^d, the problem is named Online Linear Optimization."
+      },
+      {
+        "id": "X3",
+        "pdf_page": 34,
+        "printed_page": 22,
+        "y_range_points": [
+          653,
+          709
+        ],
+        "disposition": "EXCLUDED",
+        "content": "Section 2.4 heading and first history paragraph, including Shor (1964) and Rockafellar (1963).",
+        "reason": "Outside bounded section. Historical attribution is not a dependency of this reduction."
+      }
+    ],
+    "imported_source_prerequisites": [
+      {
+        "id": "P1",
+        "disposition": "NODE",
+        "pdf_page": 14,
+        "printed_page": 2,
+        "anchor": "General online-learning definition and following paragraph",
+        "content": "V subset R^d; real losses on V; comparator regret; algorithm does not know u; every fixed comparator.",
+        "role": "standing objects/quantifiers"
+      },
+      {
+        "id": "P2",
+        "disposition": "NODE",
+        "pdf_page": 20,
+        "printed_page": 8,
+        "anchor": "Section 2.1 general game and adversarial-loss paragraph",
+        "content": "Output x_t, pay ell_t(x_t), receive feedback; losses are adversarial, knowledge of future excluded.",
+        "role": "standing timing/feedback"
+      },
+      {
+        "id": "P3",
+        "disposition": "NODE",
+        "pdf_page": 28,
+        "printed_page": 16,
+        "anchor": "Definitions 2.18 and 2.20",
+        "content": "Proper functions never -infinity and finite somewhere; subgradient g at x satisfies f(y)>=f(x)+<g,y-x> for all y in R^d.",
+        "role": "supporting inequality definition"
+      },
+      {
+        "id": "P4",
+        "disposition": "NODE",
+        "pdf_page": 29,
+        "printed_page": 17,
+        "anchor": "First three paragraphs after Definition 2.20",
+        "content": "Subdifferential can have multiple elements; subdifferentiability means nonempty; domain of subdifferential contained in domain; existence in interior of domain of proper convex function.",
+        "role": "selection and finite-value context"
+      },
+      {
+        "id": "P5",
+        "disposition": "NODE",
+        "pdf_page": 31,
+        "printed_page": 19,
+        "anchor": "Section 2.2.2 first paragraph and recalled display",
+        "content": "The pointwise gradient inequality remains valid for any chosen subgradient. Differentiability can be replaced by subdifferentiability.",
+        "role": "direct source producer for S1"
+      },
+      {
+        "id": "P6",
+        "disposition": "NODE",
+        "pdf_page": 32,
+        "printed_page": 20,
+        "anchor": "Algorithm 2.2 lines 2-5",
+        "content": "Output feasible action, incur loss, choose g_t in subdifferential, update. Projection-specific premises not imported into generic reduction.",
+        "role": "feedback sequencing evidence"
+      },
+      {
+        "id": "P7",
+        "disposition": "NODE",
+        "pdf_page": 22,
+        "printed_page": 10,
+        "anchor": "Example 2.5",
+        "content": "Affine functions <z,x>+b are convex.",
+        "role": "linear surrogate convexity"
+      },
+      {
+        "id": "P8",
+        "disposition": "NODE",
+        "pdf_page": 23,
+        "printed_page": 11,
+        "anchor": "Theorem 2.7",
+        "content": "Convex f, x in interior domain, differentiable at x implies global supporting inequality using gradient.",
+        "role": "optional differentiable sufficient route"
+      },
+      {
+        "id": "P9",
+        "disposition": "NODE",
+        "pdf_page": 27,
+        "printed_page": 15,
+        "anchor": "Example 2.14",
+        "content": "Squared-loss guessing game on [0,1]; OGD tuned in preceding analysis yields O(sqrt(T)), worse than first chapter.",
+        "role": "explicit boundary citation"
+      },
+      {
+        "id": "P10",
+        "disposition": "NODE",
+        "pdf_page": 16,
+        "printed_page": 4,
+        "anchor": "Theorem 1.3 statement",
+        "content": "FTL guessing-game guarantee 4+4 ln T for arbitrary y_t in [0,1], x_1=0.5.",
+        "role": "comparison cited indirectly by Example 2.14, statement only"
+      },
+      {
+        "id": "P11",
+        "disposition": "NODE",
+        "pdf_page": 21,
+        "printed_page": 9,
+        "anchor": "OCO paragraph and convexity/domain definitions",
+        "content": "Convex losses designated OCO; V convex definition; extended-real domain and indicator conventions.",
+        "role": "terminology and finite-domain interpretation"
+      },
+      {
+        "id": "C1",
+        "disposition": "NODE",
+        "pdf_page": 23,
+        "printed_page": 11,
+        "anchor": "Citation in Theorem 2.7",
+        "content": "Rockafellar (1970), Theorem 25.1 and Corollary 25.1.1.",
+        "role": "external citation named by source, external original not independently audited"
+      },
+      {
+        "id": "C2",
+        "disposition": "NODE",
+        "pdf_page": 29,
+        "printed_page": 17,
+        "anchor": "Interior subdifferentiability paragraph and footnote",
+        "content": "Rockafellar (1970), Theorem 23.4; footnote says stronger relative-interior statement is not used.",
+        "role": "external citation named by source, external original not independently audited"
+      }
+    ],
+    "prerequisite_page_remainder_disposition": {
+      "disposition": "EXCLUDED",
+      "reason": "Only specifically anchored prerequisite statements are imported. Other regions on context pages are outside the bounded extraction; no whole-chapter or external-citation proof closure claimed."
+    },
+    "gaps": [
+      {
+        "id": "G1",
+        "type": "SOURCE_GAP",
+        "disposition": "NODE",
+        "use_site": "S6, PDF34/printed22, algorithm transfer sentence",
+        "description": "No formal wrapper or causal learner/feedback-oracle interface is printed. To make S6 executable, the same x_t must be produced from past linear feedback, then g_t obtained at x_t and passed to learner before next round.",
+        "classification": "implicit algorithmic construction, not source falsity",
+        "source_context": [
+          "P1",
+          "P2",
+          "P6",
+          "S3",
+          "S10"
+        ],
+        "status": "requires separately reviewed explicit elaboration; not silently filled"
+      },
+      {
+        "id": "G2",
+        "type": "SOURCE_GAP",
+        "disposition": "NODE",
+        "use_site": "S6, PDF34/printed22, algorithm transfer sentence",
+        "description": "Universal performance guarantee and admissibility of induced vectors are not written as a quantified theorem. Need an OLO guarantee valid on every induced sequence, with any norm/adversary/probability premises discharged before transferring the bound.",
+        "classification": "implicit guarantee substitution, not source falsity",
+        "source_context": [
+          "S4",
+          "S10",
+          "P1",
+          "P2"
+        ],
+        "status": "requires separately reviewed explicit elaboration; no randomized/oblivious-to-adaptive transfer assumed"
+      }
+    ],
+    "external_citation_boundary": "C1/C2 are inspected as citations printed in pinned book, not as independently read Rockafellar source proofs.",
+    "explicit_in_scope_citations": [
+      "P9: Example 2.14; no external bibliographic citation occurs in Section 2.3"
+    ]
+  },
+  "source_only_review": {
+    "verdict": "accepted-with-explicit-delta",
+    "receipt": {
+      "private_identifier": "batch16-independent-review/stageA-verdict-v1.json",
+      "sha256": "623626625348bf8faca380fcd0a90f19fe35bd0162cfaedf9ce7ba180fa84da0",
+      "availability": "retained private maintenance evidence; not a public repository file"
+    },
+    "source_coverage_interpretation": {
+      "node_count": 25,
+      "edge_count": 16,
+      "section_regions": "S1-S10 all included; X0-X3 correctly excluded with reasons",
+      "source_gap_nodes": [
+        "G1",
+        "G2"
+      ],
+      "OR_routes": "E1 chosen-support route OR E2 differentiable route; do not conjoin their regularity conditions",
+      "AND_routes": "sum comparison plus linear-surrogate identity; for algorithm transfer additionally same-trajectory construction and applicable universal guarantee",
+      "standing_edge_interpretation": "E1 premise_discharge explicitly invokes P1/P2 finite-loss convention. P4 is a context bundle: nonuniqueness/availability/domain facts are used; its interior-existence sufficient theorem is not an additional required premise once chosen g exists. P11 is contextual terminology, not an extra sufficient proof. These distinctions must survive any public normalization.",
+      "optional_topology_improvements": [
+        "Represent the already textual P1/P2 finite-loss standing link as a typed edge.",
+        "Split P4 interior-existence context from nonuniqueness/domain observations if graph consumers cannot retain edge premise_discharge prose."
+      ]
+    }
+  },
+  "private_source_bindings": {
+    "topology": {
+      "private_identifier": "batch16-source-extraction/topology.json",
+      "sha256": "6c2ecd6e07f4f15e7a8592d525ca48097f459cb235fb1f6c94d840d3cc5fdda5",
+      "availability": "retained private maintenance evidence; not a public repository file"
+    },
+    "inventory": {
+      "private_identifier": "batch16-source-extraction/inventory.json",
+      "sha256": "c6f50c3bd0906a4dc31ccc0593d7a3c087ed865ddafcd807bd44983a32ff3da7",
+      "availability": "retained private maintenance evidence; not a public repository file"
+    }
+  },
+  "unrestricted_source_anchor_accepted": false,
+  "compiled_lean_dependency_graph": false
+}

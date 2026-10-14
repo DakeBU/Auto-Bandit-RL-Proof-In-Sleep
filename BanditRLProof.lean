@@ -746,3 +746,4 @@ import BanditRLProof.OnlineHuber
 import BanditRLProof.OnlineGuessingSubgradient
 import BanditRLProof.OnlineSubgradientPolicy
 import BanditRLProof.OnlineGuessingSubgradientPolicy
+import BanditRLProof.OnlineLinearization

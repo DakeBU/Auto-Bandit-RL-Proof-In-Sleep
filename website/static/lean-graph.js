@@ -655,6 +655,12 @@
 
   const searchNodeFromEntry = (entry, payload) => {
     const [id, kind, storedStatus, shardIndex, storedLabel, storedSubtitle] = entry;
+    if (payload.schema_version === 3 &&
+        (!Array.isArray(payload.statuses) || !Number.isInteger(storedStatus) ||
+         storedStatus < 0 || storedStatus >= payload.statuses.length ||
+         typeof payload.statuses[storedStatus] !== "string" || !payload.statuses[storedStatus])) {
+      throw new Error("Invalid graph search status index or dictionary value");
+    }
     const status = payload.schema_version === 3 ? payload.statuses[storedStatus] : storedStatus;
     const shards = payload.shards;
     const identity = id.slice(id.indexOf(":") + 1);

@@ -1510,6 +1510,7 @@ def main() -> int:
         "online-osd",
         "online-guessing-osd",
         "online-osd-policy",
+        "online-linearization",
         "etc",
         "ucb",
         "oful",
