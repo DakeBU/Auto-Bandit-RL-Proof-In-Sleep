@@ -5328,6 +5328,374 @@
       "dependencies": [
         "BanditRL.OnlineOptimalStep.upperBound"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.unit_exponents",
+      "title": "The step dimension forced by the update",
+      "chapter": "online-unit-scaling",
+      "featured": true,
+      "teaching_order": 0,
+      "plain": "In an additive commutative group of unit exponents, consistency forces the step exponent to be twice the point exponent minus the loss exponent.",
+      "math": "H+(L-X)=X\\Longrightarrow H=2X-L",
+      "intuition": "In an additive commutative group of unit exponents, consistency forces the step exponent to be twice the point exponent minus the loss exponent.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Rearrange an additive commutative group equation. Interpreting exponents as dimensions is a separate modeling convention.",
+      "lean_notes": "An arbitrary additive commutative group and one consistency equation are sufficient. This algebraic model interprets units; it does not establish a universal non-dimensionless claim or select a numerical step.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.regret_unit_exponents",
+      "title": "Both coarse regret terms have loss dimension",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 1,
+      "plain": "The squared-distance over step and step times squared-gradient terms both carry the loss exponent.",
+      "math": "2X-(2X-L)=L,\\quad(2X-L)+2(L-X)=L",
+      "intuition": "The squared-distance over step and step times squared-gradient terms both carry the loss exponent.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Cancel the exponent sums in the same additive group model.",
+      "lean_notes": "An arbitrary additive commutative group suffices. These are two algebraic exponent identities, not a numerical regret inequality or a convergence theorem.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.inverse_loss",
+      "title": "Recover the original loss by inverse coordinate pullback",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 2,
+      "plain": "A positive coordinate scale has an inverse pullback, even for extended-real losses.",
+      "math": "f(c(c^{-1}y))=f(y)",
+      "intuition": "A positive coordinate scale has an inverse pullback, even for extended-real losses.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Cancel positive c and its reciprocal pointwise.",
+      "lean_notes": "The public statement retains a finite-dimensional real inner-product space and c>0. The inverse pullback identity is total for extended-real losses; no properness or finite-value premise is used.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.scaledLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+      "title": "Coordinate pullback preserves source properness",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 3,
+      "plain": "The transformed loss is nowhere bottom and inherits an explicit finite witness at x/c.",
+      "math": "f\\text{ proper}\\Longrightarrow f(c\\cdot)\\text{ proper}",
+      "intuition": "The transformed loss is nowhere bottom and inherits an explicit finite witness at x/c.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Transport the original finite witness through inverse scalar multiplication.",
+      "lean_notes": "SourceProper expands into nowhere bottom plus an explicit finite witness. c>0 gives an inverse coordinate for that witness. Retained finite dimension is not used by this body.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.scaledLoss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.subgradient_scaled",
+      "title": "Transport an actual global support",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 4,
+      "plain": "For a proper extended-real loss, a global support at the old-coordinate point yields a global support at the new-coordinate point.",
+      "math": "g\\in\\partial f(cy)\\Longrightarrow cg\\in\\partial(f(c\\cdot))(y)",
+      "intuition": "For a proper extended-real loss, a global support at the old-coordinate point yields a global support at the new-coordinate point.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Apply the shared affine subgradient inclusion to c times the identity and identify its scalar adjoint.",
+      "lean_notes": "This forward global-support inclusion assumes a proper extended-real loss. The retained c>0 premise is unused by its affine-chain proof and is not a necessary source condition. Finite dimension supplies the shared adjoint-based proof infrastructure.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.theorem_2_28"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.subdifferentiable_scaled",
+      "title": "Preserve full-space subdifferentiability",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 5,
+      "plain": "Whole-space properness and support existence both survive the positive coordinate change. The displayed formula shows the support-existence component under the full properness hypothesis.",
+      "math": "\\forall x,\\ \\partial f(x)\\ne\\varnothing\\Longrightarrow\\forall y,\\ \\partial(f(c\\cdot))(y)\\ne\\varnothing",
+      "intuition": "Whole-space properness and support existence both survive the positive coordinate change. The displayed formula shows the support-existence component under the full properness hypothesis.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Transport properness and choose a support at cy, then use support scaling.",
+      "lean_notes": "Whole-space subdifferentiability means properness and a global support at every point. With c>0 both components transport. The displayed support-existence formula is read under these full stated conditions.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+        "BanditRL.OnlineUnitScaling.subgradient_scaled"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.hasGradientAt_scaled",
+      "title": "The real gradient chain rule",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 6,
+      "plain": "A real differentiable loss has the scaled gradient under scalar composition; this calculus identity also allows zero or negative c.",
+      "math": "\\nabla_y f(cy)=c\\nabla_x f(cy)",
+      "intuition": "A real differentiable loss has the scaled gradient under scalar composition; this calculus identity also allows zero or negative c.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Compose the Frechet derivative with the continuous scalar map and identify the inner-product dual.",
+      "lean_notes": "For a finite-dimensional real inner-product space and every real c, a gradient at c times y gives the displayed gradient at y for composition. Zero and negative c are allowed. This calculus result is broader than the positive physical conversion example.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.gradient_scaled",
+      "title": "Identify the transformed gradient operator",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 7,
+      "plain": "Differentiability at cy identifies the actual mathlib gradient of the composed real function.",
+      "math": "\\operatorname{gradient}(f(c\\cdot))(y)=c\\operatorname{gradient}(f)(cy)",
+      "intuition": "Differentiability at cy identifies the actual mathlib gradient of the composed real function.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Apply the real gradient chain rule and gradient uniqueness.",
+      "lean_notes": "Differentiability at c times y and finite-dimensional inner-product structure identify the actual gradient. Every real c is allowed; differentiability is not inferred from the surrounding nonsmooth OSD setting.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.hasGradientAt_scaled"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.step_scaling",
+      "title": "Correctly scaled steps commute with coordinates",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 8,
+      "plain": "The new-coordinate step eta/c² preserves the same physical update for any supplied vector.",
+      "math": "c^{-1}(x-\\eta g)=c^{-1}x-(\\eta/c^2)(cg)",
+      "intuition": "The new-coordinate step eta/c² preserves the same physical update for any supplied vector.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Cancel the positive scalar denominator and distribute scalar multiplication.",
+      "lean_notes": "A finite-dimensional real inner-product space, c>0 and arbitrary real eta/points/vectors are retained. This is a one-step vector identity; no support legality or positive eta is assumed. Retained finite dimension is not used by this body.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.wrong_step_scaling",
+      "title": "An uncompensated step gives effective step c squared eta",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 9,
+      "plain": "One back-converted uncompensated step has physical step size c² eta.",
+      "math": "c(c^{-1}x-\\eta(cg))=x-c^2\\eta g",
+      "intuition": "One back-converted uncompensated step has physical step size c² eta.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Distribute scalar multiplication and cancel the coordinate inverse.",
+      "lean_notes": "The displayed vector identity uses c>0 and arbitrary eta/points/vectors. It identifies the effective multiplier, without asserting strict path separation or worse regret; retained finite dimension is not used by this body.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.scaled_eta_positive",
+      "title": "Positive steps stay admissible",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 10,
+      "plain": "At any natural index with a positive original step and positive scale, the transformed step is positive.",
+      "math": "c,\\eta_t>0\\Longrightarrow\\eta_t/c^2>0",
+      "intuition": "At any natural index with a positive original step and positive scale, the transformed step is positive.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "The positive square denominator preserves strict positivity.",
+      "lean_notes": "At each arbitrary natural index t, c>0 and eta(t)>0 suffice. The statement does not assume that t is a played round.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.history_scaling",
+      "title": "The entire actual history is preserved",
+      "chapter": "online-unit-scaling",
+      "featured": true,
+      "teaching_order": 11,
+      "plain": "Correct coordinate, loss, schedule and policy transport preserve every point in the actual shared finite history.",
+      "math": "H'_t(i)=c^{-1}H_t(i)\\quad(i\\in\\operatorname{Fin}(t+1))",
+      "intuition": "Correct coordinate, loss, schedule and policy transport preserve every point in the actual shared finite history.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Induct on the shared history_succ append, recover observed policy inputs, use full-space projection identity and the scaled step.",
+      "lean_notes": "In the shared whole space, c>0, transformed initial state, every transformed loss, divided schedule and explicitly transported same policy give equality of every entry in each Fin(t+1) history. Losses and schedules are otherwise arbitrary; no legality is inferred. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.inverse_loss",
+        "BanditRL.OnlineUnitScaling.step_scaling",
+        "BanditRL.OnlineSubgradientPolicy.history_succ",
+        "BanditRL.OnlineHuber.project_fullSpace"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.output_scaling",
+      "title": "Recover the same physical played point",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 12,
+      "plain": "The last element of each matched actual history is the same physical output in different units.",
+      "math": "x'_t=c^{-1}x_t",
+      "intuition": "The last element of each matched actual history is the same physical output in different units.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Evaluate the history equality at Fin.last.",
+      "lean_notes": "This is the last-entry consequence of the full paired-history equality. It refers to the explicitly transported same policy, not independently chosen supports. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.history_scaling"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.selected_scaling",
+      "title": "Transport actual policy feedback",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 13,
+      "plain": "The transformed policy selects c times the original selected vector on the matched actual run.",
+      "math": "g'_t=cg_t",
+      "intuition": "The transformed policy selects c times the original selected vector on the matched actual run.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Recover the original finite history and observed loss functions inside scaledPolicy.",
+      "lean_notes": "The vector identity follows after transforming all finite past loss functions, the entire history tuple and the current loss. It alone does not assert these vectors are legal subgradients. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.history_scaling",
+        "BanditRL.OnlineUnitScaling.inverse_loss"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.legal_feedback_scaling",
+      "title": "Preserve played-point legality",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 14,
+      "plain": "Proper losses and original played support legality give legality on the transformed actual trajectory.",
+      "math": "g_t\\in\\partial f_t(x_t)\\Longrightarrow g'_t\\in\\partial f'_t(x'_t)",
+      "intuition": "Proper losses and original played support legality give legality on the transformed actual trajectory.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Combine actual output and selected-vector correspondence with global support transport.",
+      "lean_notes": "Assume c>0, properness of each loss for t<T, and global-support legality at each actually played original point. The transported selections are legal at the corresponding transformed played points; no off-path oracle law is assumed. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.output_scaling",
+        "BanditRL.OnlineUnitScaling.selected_scaling",
+        "BanditRL.OnlineUnitScaling.subgradient_scaled"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.loss_value_scaling",
+      "title": "Played loss values are identical",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 15,
+      "plain": "Coordinate conversion leaves the actual played extended-real loss value unchanged.",
+      "math": "f'_t(x'_t)=f_t(x_t)",
+      "intuition": "Coordinate conversion leaves the actual played extended-real loss value unchanged.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Substitute the matched output and cancel c with its reciprocal.",
+      "lean_notes": "Under the explicit whole-space pairing and c>0, actual extended-real played values coincide, even when those values are infinite. No finite-performance claim follows from this identity alone. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.output_scaling"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.regret_scaling",
+      "title": "The same-run regret is invariant",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 16,
+      "plain": "The two finite sums of totalized EReal.toReal loss differences are equal at corresponding comparators. This identity assumes no properness, legal supports, finite values or positive rate; it alone supplies no finite-loss regret guarantee.",
+      "math": "R'_T(u/c)=R_T(u)",
+      "intuition": "The two finite sums of totalized EReal.toReal loss differences are equal at corresponding comparators. This identity assumes no properness, legal supports, finite values or positive rate; it alone supplies no finite-loss regret guarantee.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Match each actual played loss and comparator loss, then sum the identical converted differences.",
+      "lean_notes": "The compared expressions are finite sums of totalized EReal.toReal differences. No properness, support legality, finite losses or positive schedule is assumed. Finite-loss performance requires separate hypotheses ensuring values at both played points and comparator are finite. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.loss_value_scaling"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.wrong_step_output",
+      "title": "Identify the actual uncompensated run",
+      "chapter": "online-unit-scaling",
+      "featured": true,
+      "teaching_order": 17,
+      "plain": "Keeping the numerical new-coordinate step produces the original-coordinate algorithm actually rerun with effective schedule c² eta.",
+      "math": "cx'_t(\\eta)=x_t(c^2\\eta)",
+      "intuition": "Keeping the numerical new-coordinate step produces the original-coordinate algorithm actually rerun with effective schedule c² eta.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Apply output correspondence to the effective schedule and cancel its transformed schedule. Feedback is regenerated on that actual run.",
+      "lean_notes": "The right side is a fresh actual original-coordinate run with schedule c squared times eta and the same original policy. Feedback is recomputed on that rerun’s own history. This does not substitute old-run gradients along a changed trajectory. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.output_scaling"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.distance_square_scaling",
+      "title": "Squared distance is divided by c squared",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 18,
+      "plain": "Positive coordinate conversion scales every squared distance by the inverse square.",
+      "math": "\\|x/c-u/c\\|^2=\\|x-u\\|^2/c^2",
+      "intuition": "Positive coordinate conversion scales every squared distance by the inverse square.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Use norm of scalar multiplication and positivity of c.",
+      "lean_notes": "For arbitrary points and c>0, squared distance scales by the inverse square. Retained finite dimension is not used by this body; this is a geometric identity rather than a performance statement.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.energy_scaling",
+      "title": "Selected-vector energy is multiplied by c squared",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 19,
+      "plain": "The matched correctly scaled runs have squared selected-vector energy related by c².",
+      "math": "\\sum_{t<T}\\|g'_t\\|^2=c^2\\sum_{t<T}\\|g_t\\|^2",
+      "intuition": "The matched correctly scaled runs have squared selected-vector energy related by c².",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Apply actual selected-vector correspondence pointwise and distribute the constant over the finite sum.",
+      "lean_notes": "The selected-vector energies belong to matched compensated histories. No positivity of eta or support-legality premise is assumed; the identity does not compare energies from unrelated reruns. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.selected_scaling"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.upper_bound_scaling",
+      "title": "The numerical coarse bound is invariant",
+      "chapter": "online-unit-scaling",
+      "featured": false,
+      "teaching_order": 20,
+      "plain": "With positive c and eta, both terms of the shared scalar expression retain their numerical value after coordinate conversion.",
+      "math": "F_{A/c^2,c^2B}(\\eta/c^2)=F_{A,B}(\\eta)",
+      "intuition": "With positive c and eta, both terms of the shared scalar expression retain their numerical value after coordinate conversion.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Cancel the square scaling in each term of the existing upperBound definition.",
+      "lean_notes": "A and B are arbitrary fixed real coefficients. c>0 and eta>0 are retained public restrictions; eta positivity is not necessary for the corresponding totalized algebraic equality. No optimizer or future-energy prescription follows.",
+      "dependencies": [
+        "BanditRL.OnlineOptimalStep.upperBound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnitScaling.regret_fixed_scaled",
+      "title": "Retain the sharp actual regret guarantee",
+      "chapter": "online-unit-scaling",
+      "featured": true,
+      "teaching_order": 21,
+      "plain": "For positive eta and proper full-space subdifferentiable losses with legal played feedback, the transformed run satisfies the same sharp fixed-step bound.",
+      "math": "R'_T(u/c)\\le{\\|x_0-u\\|^2\\over2\\eta}+{\\eta\\over2}\\sum_{t<T}\\|g_t\\|^2-{\\|x_T-u\\|^2\\over2\\eta}",
+      "intuition": "For positive eta and proper full-space subdifferentiable losses with legal played feedback, the transformed run satisfies the same sharp fixed-step bound.",
+      "why": "Make the concrete source correspondence and the separately specified library contract precise.",
+      "position": "Orabona v10 Section 2.2.3, printed20-22/PDF32-34; source correspondence and separately identified library extension.",
+      "proof_idea": "Use actual regret invariance and the shared fixed-step theorem for the defined history recursion, retaining the negative terminal-distance term.",
+      "lean_notes": "Assume c>0, fixed eta>0, proper whole-space subdifferentiability for every t<T, and legal actual selected supports. These ensure finite played and comparator losses. The unchanged shared fixed-step theorem yields the displayed bound with its negative terminal-distance term. T=0 is allowed for fixed positive eta; it does not validate eta=1/sqrt(T) at zero. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart.",
+      "dependencies": [
+        "BanditRL.OnlineUnitScaling.regret_scaling",
+        "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+      ]
     }
   ]
 }

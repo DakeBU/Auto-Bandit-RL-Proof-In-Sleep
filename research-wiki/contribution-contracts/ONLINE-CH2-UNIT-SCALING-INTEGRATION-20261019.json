@@ -1,0 +1,211 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-UNIT-SCALING-INTEGRATION-20261019",
+  "route": "online-learning / Chapter2 whole-space coordinate-unit and same-policy history transport",
+  "frontier_cell": "online-unit-scaling",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026",
+    "anchor": "Francesco Orabona; Section2.2.3 Unit Analysis Bits, printed20-22/PDF32-34; sharp bound separately uses Theorem2.13 printed13-14/PDF25-26 and support transfer printed19/PDF31.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate the unchanged26-declaration module and complete36-declaration canary from PR153/186 with source-qualified reader and full historical retention.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineUnitScaling.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineUnitScaling.V",
+    "BanditRL.OnlineUnitScaling.scaledLoss",
+    "BanditRL.OnlineUnitScaling.scaledEta",
+    "BanditRL.OnlineUnitScaling.scaledPolicy",
+    "BanditRL.OnlineUnitScaling.unit_exponents",
+    "BanditRL.OnlineUnitScaling.regret_unit_exponents",
+    "BanditRL.OnlineUnitScaling.inverse_loss",
+    "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+    "BanditRL.OnlineUnitScaling.subgradient_scaled",
+    "BanditRL.OnlineUnitScaling.subdifferentiable_scaled",
+    "BanditRL.OnlineUnitScaling.hasGradientAt_scaled",
+    "BanditRL.OnlineUnitScaling.gradient_scaled",
+    "BanditRL.OnlineUnitScaling.step_scaling",
+    "BanditRL.OnlineUnitScaling.wrong_step_scaling",
+    "BanditRL.OnlineUnitScaling.scaled_eta_positive",
+    "BanditRL.OnlineUnitScaling.history_scaling",
+    "BanditRL.OnlineUnitScaling.output_scaling",
+    "BanditRL.OnlineUnitScaling.selected_scaling",
+    "BanditRL.OnlineUnitScaling.legal_feedback_scaling",
+    "BanditRL.OnlineUnitScaling.loss_value_scaling",
+    "BanditRL.OnlineUnitScaling.regret_scaling",
+    "BanditRL.OnlineUnitScaling.wrong_step_output",
+    "BanditRL.OnlineUnitScaling.distance_square_scaling",
+    "BanditRL.OnlineUnitScaling.energy_scaling",
+    "BanditRL.OnlineUnitScaling.upper_bound_scaling",
+    "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+  ],
+  "reuse_plan": {
+    "classification": "reuse",
+    "decision": "reuse_existing",
+    "searched_existing": [
+      "Current accepted main lacks OnlineUnitScaling; original153,186 and frozenTIP supply identical complete modules.",
+      "Reuse accepted Domain/project, history-dependent SupportPolicy, SourceProper and SourceSubdifferential, affine support transport and fixed regret bound."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineSubgradientPolicy.history",
+      "BanditRL.OnlineSubgradientPolicy.output",
+      "BanditRL.OnlineConvex.theorem_2_28",
+      "BanditRL.OnlineSubgradientPolicy.regret_fixed"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Complete36-declaration canary has61 actual direct value-containing edges to the production module.",
+      "history_scaling supports output_scaling and selected_scaling; legality transport is a separate branch.",
+      "regret_fixed_scaled composes actual paired-run, energy, distance and existing sharp regret results."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Preserve original exact modules; reuse accepted shared whole-space learner and full-history policy foundations within the same library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-blind-decoder",
+    "source_reviewer": "independent-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "This is a bounded library extension with explicit source deltas, not an unrestricted literal source Anchor or Chapter2/book closure. Positive coordinate scaling, whole space, fixed loss units and complete coupling of one chosen policy are explicit. Structural history and totalized regret identities do not supply legality or finiteness; the sharp regret theorem separately retains its positive rate, proper/support and legal-feedback premises and negative endpoint. No independent-policy equivalence, external-parameter independence, stochastic-law statement, universal strict path difference or universal worse regret is claimed. All463 inherited obligations and four new provenance gaps remain OPEN with original owners. Source topology is distinct from actual compiled dependencies. Purification and an Exposition Seal are not claimed."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The explicit same-policy transport is a bounded library theorem. This integration introduces no separately reviewed cross-setting conceptual bridge or certified functor.",
+    "focus_targets": [
+      "online-unit-scaling"
+    ],
+    "visual_review": "119 local desktop/mobile PNGs actually viewed by the independent source reviewer:105 original v11 images and14 exact v12 repair images. The integration actor separately exercised4source and22Lean disclosure controls perviewport and6graphsearch selections. Exact hashes and stage bindings are recorded in review-binding.json.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated:4source-linkedcards,22formula notes,4proofsteps,4workedsteps,4notationgroups preserving7original explanations and explicit complete-policy pseudocode;31owned Online routes",
+    "banditrlwiki": "updated: add bounded integration provenance and retained obligations in research-wiki/integrations/ONLINE-CH2-UNIT-SCALING-INTEGRATION-20261019; existing Bandit/RL/Extended Topics case and terminal data remain unchanged",
+    "results_ledger": "no-change-with-reason: no complete source Anchor, chapter/book or frontier milestone",
+    "roadmap": "no-change-with-reason: broader source and research obligations retain owners",
+    "website_surfaces": [
+      "Online Learning coordinate-unit reader and book navigation",
+      "Generated Lean module/declaration graph and exact source links",
+      "Existing algorithm-route allowlists and book registry expectations",
+      "Historical scope, source mapping and retained obligations in research-wiki/integrations/ONLINE-CH2-UNIT-SCALING-INTEGRATION-20261019",
+      "Original author/source attribution and integration contributor credit"
+    ]
+  },
+  "truth_boundary": "This is a bounded library extension with explicit source deltas, not an unrestricted literal source Anchor or Chapter2/book closure. Positive coordinate scaling, whole space, fixed loss units and complete coupling of one chosen policy are explicit. Structural history and totalized regret identities do not supply legality or finiteness; the sharp regret theorem separately retains its positive rate, proper/support and legal-feedback premises and negative endpoint. No independent-policy equivalence, external-parameter independence, stochastic-law statement, universal strict path difference or universal worse regret is claimed. All463 inherited obligations and four new provenance gaps remain OPEN with original owners. Source topology is distinct from actual compiled dependencies. Purification and an Exposition Seal are not claimed.",
+  "verification": {
+    "focused_checks": [
+      "Exact production/canary hashes preserved; focused build and combined BanditRLProof/Tests passed.",
+      "Actual imported62declarations/ranges/standardaxioms and all59prespecified proof-value pairs independently reviewed;4520type/valueedges,617selected-boundarynodes and3417moduleimports.",
+      "One real-scalar typeclass-instance path difference from private elaboration is explicitly recorded; frozen imported signature probe passed, no project-owned dependency changed."
+    ],
+    "bandit_check": "Full harness passed463Python tests with7environment skips. Subsequent reader-only schema repairs preserve Lean/harness inputs. Final all-file gate remains pending.",
+    "site_build": "Verified build passed after reviewed reader schema repairs; Lean and harness inputs unchanged.",
+    "site_check": "Local v12 build/sitecheck/process-memory/diff checks passed. Independent119-image review accepted repaired source header and pseudocode endpoints; root controls/search receipts are separate. Final complete22-file candidate checks and committed CI remain separate.",
+    "independent_review": "Distinct source-only extractor,blind decoder,source reviewer and whole-original/public-projection reviewer. Eight exact v7 scope/science files accepted by distinct scope and scientific reviewers. Final complete22-file candidate review remains separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original authorship retained in immutable Git/PR history and preservation records"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "The unchanged mathematical route had no proof-search failure; its source deltas were independently established from pinned source and signatures. Reader schema and layout repairs are publication implementation issues, not justification for a semantic delta. All original statements, proofs and obligations are retained. Failed private publication normalizer outputs remain preserved and ineligible for port.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineUnitScaling.lean",
+        "Tests/OnlineUnitScalingCanary.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "historical-whole-space-coordinate-policy-transport"
+      ],
+      "expected_information_gain": "One unchanged implementation with required independent source/blind/graph/scope reviews; no competing proof search or scheduler change.",
+      "shared_verified_context_digest": "Source PDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Explicit whole-space coordinate transport of one complete chosen policy.",
+      "selection_reason": "No parallel competing proof routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "The bounded v12 reader retains qualified source statements, full-policy coupling, all22 mathematical notes, exact Lean and remaining boundaries. Independent119-image review accepted local presentation. Purification and a full Exposition Seal are not asserted.",
+      "source_expansion_nodes": [
+        "N21.06",
+        "N21.10",
+        "N21.11",
+        "N22.02",
+        "N22.05"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineUnitScaling.V",
+        "BanditRL.OnlineUnitScaling.scaledLoss",
+        "BanditRL.OnlineUnitScaling.scaledEta",
+        "BanditRL.OnlineUnitScaling.scaledPolicy",
+        "BanditRL.OnlineUnitScaling.unit_exponents",
+        "BanditRL.OnlineUnitScaling.regret_unit_exponents",
+        "BanditRL.OnlineUnitScaling.inverse_loss",
+        "BanditRL.OnlineUnitScaling.proper_scaled_loss",
+        "BanditRL.OnlineUnitScaling.subgradient_scaled",
+        "BanditRL.OnlineUnitScaling.subdifferentiable_scaled",
+        "BanditRL.OnlineUnitScaling.hasGradientAt_scaled",
+        "BanditRL.OnlineUnitScaling.gradient_scaled",
+        "BanditRL.OnlineUnitScaling.step_scaling",
+        "BanditRL.OnlineUnitScaling.wrong_step_scaling",
+        "BanditRL.OnlineUnitScaling.scaled_eta_positive",
+        "BanditRL.OnlineUnitScaling.history_scaling",
+        "BanditRL.OnlineUnitScaling.output_scaling",
+        "BanditRL.OnlineUnitScaling.selected_scaling",
+        "BanditRL.OnlineUnitScaling.legal_feedback_scaling",
+        "BanditRL.OnlineUnitScaling.loss_value_scaling",
+        "BanditRL.OnlineUnitScaling.regret_scaling",
+        "BanditRL.OnlineUnitScaling.wrong_step_output",
+        "BanditRL.OnlineUnitScaling.distance_square_scaling",
+        "BanditRL.OnlineUnitScaling.energy_scaling",
+        "BanditRL.OnlineUnitScaling.upper_bound_scaling",
+        "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
