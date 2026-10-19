@@ -748,3 +748,4 @@ import BanditRLProof.OnlineSubgradientPolicy
 import BanditRLProof.OnlineGuessingSubgradientPolicy
 import BanditRLProof.OnlineLinearization
 import BanditRLProof.OnlineOptimalStep
+import BanditRLProof.OnlineUnitScaling

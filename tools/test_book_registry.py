@@ -308,7 +308,7 @@ class BookRegistryTests(unittest.TestCase):
                 bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
                 self.assertNotIn('chapters/online-', bandit_nav)
                 online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
-                self.assertEqual(30, online_nav.count('class="book-nav-link"'))
+                self.assertEqual(31, online_nav.count('class="book-nav-link"'))
                 self.assertNotIn('chapters/probability/', online_nav)
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
@@ -328,7 +328,7 @@ class BookRegistryTests(unittest.TestCase):
             self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
             self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
             online = site.teaching_chapters_for_book("online-learning", owned_only=True)
-            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability', 'online-subgradient-sum', 'online-subgradient-absolute', 'online-normal-cone', 'online-subgradient-max', 'online-hinge', 'online-affine-subgradient', 'online-lipschitz', 'online-convex-nonsmooth', 'online-osd', 'online-foundations', 'online-ftl-failure', 'online-guessing-ogd', 'online-huber', 'online-guessing-osd', 'online-osd-policy', 'online-linearization', 'online-optimal-step'},
+            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability', 'online-subgradient-sum', 'online-subgradient-absolute', 'online-normal-cone', 'online-subgradient-max', 'online-hinge', 'online-affine-subgradient', 'online-lipschitz', 'online-convex-nonsmooth', 'online-osd', 'online-foundations', 'online-ftl-failure', 'online-guessing-ogd', 'online-huber', 'online-guessing-osd', 'online-osd-policy', 'online-linearization', 'online-optimal-step', 'online-unit-scaling'},
                              {chapter["slug"] for chapter in online})
             shared = site.teaching_chapters_for_book("online-learning")
             self.assertIn("probability", {chapter["slug"] for chapter in shared})

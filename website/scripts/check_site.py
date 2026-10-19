@@ -1512,6 +1512,7 @@ def main() -> int:
         "online-osd-policy",
         "online-linearization",
         "online-optimal-step",
+        "online-unit-scaling",
         "etc",
         "ucb",
         "oful",

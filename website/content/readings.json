@@ -6604,6 +6604,242 @@
         "takeaway": "Fixed-coefficient minimization and recomputed trajectory energy are different quantities. This concrete two-step witness shows that identical losses can give different energies at different positive steps.",
         "boundary": "The witness is deterministic on the full real line. It establishes neither the source Chapter 5 impossibility/lower bound nor a complete regret optimization theorem. The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
       }
+    },
+    {
+      "slug": "online-unit-scaling",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section2.2.3 Unit Analysis Bits; Algorithm2.2 and earlier full Theorem2.13 supply context",
+        "pages": "printed20-22; PDF32-34",
+        "pdf_page": 33,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Coordinate scale and units",
+          "meaning": "Scale direction: Fix c>0, write x′=x/c and f′(y)=f(cy). Loss output units stay fixed. The concrete source uses c=1000; arbitrary positive c is a library generalization. Unit exponents: The additive-group model represents the ratio [eta]=[x]^2/[loss]. It does not assert eta is never dimensionless: the ratio cancels when [loss]=[x]^2."
+        },
+        {
+          "term": "Complete matched policy",
+          "meaning": "Matched history policy: The transformed policy maps every prior loss back by inverse composition, multiplies every history point by c, maps the current loss back, applies the same original policy, then multiplies its selected vector by c. This is an explicit coupling of full mathematical loss-function inputs, not equivalence of independently chosen supports. The policy type receives finite past loss functions, the whole iterate history and the current loss. It has no explicit future/comparator/horizon argument, but this does not prove independence from external parameters used to choose the policy, initialization or schedule. The transport theorems pair the same chosen original policy with its explicitly constructed counterpart."
+        },
+        {
+          "term": "Rounds, space and boundary cases",
+          "meaning": "Source rounds and whole space: Source rounds1 throughT correspond to Lean rounds0 throughT-1; Lean output T is the source terminal point x_(T+1). V is the whole finite-dimensional real inner-product space. No arbitrary-domain projection-transport theorem is claimed. Boundary cases: The gradient chain rule allows every real c, including0 and negative c. Inverse and path results retain c>0; the canary refutes inverse transport at0. The source eta=1/sqrt(T) requires T>0. The fixed-positive-rate library result also allows T=0. Retained but nonessential restrictions are disclosed per declaration."
+        },
+        {
+          "term": "Transport identities and sharp bounds",
+          "meaning": "Totalized identities and finite bounds: Loss-value and regret-transport equalities allow arbitrary extended-real losses. EReal.toReal maps infinities to a totalized real value; those equalities alone are not finite-loss performance claims. The sharp bound separately requires positive constant eta, whole-space proper/subdifferentiable losses and legal actual feedback. Two source displays: The printed21 unit sanity check uses the relaxed two-term bound. The earlier full Theorem2.13 and its subgradient proof transfer retain the negative terminal squared-distance term. The library sharp bound preserves it and is separately labeled."
+        }
+      ],
+      "algorithm": {
+        "title": "Pair two whole-space runs under a coordinate change",
+        "kind": "explicit library policy transport; source supplies the local calculation",
+        "steps": [
+          {
+            "title": "Pair loss and initial point",
+            "detail": "Hold the loss output unit fixed; transform every loss and the initial point.",
+            "math": "f'_t(y)=f_t(cy),\\quad x'_0=c^{-1}x_0",
+            "fallback": "Compose every loss with multiplication by c; divide the initial point by c."
+          },
+          {
+            "title": "Pair the schedule and complete policy",
+            "detail": "Use eta prime=eta/c squared and the explicitly transported same policy, including all finite past losses and points. The policy’s parameter selection may depend on external data; the theorem does not establish its independence.",
+            "math": "\\eta'_t=\\eta_t/c^2,\\quad g'_t=cg_t",
+            "fallback": "Divide the step by c squared and transport the same full policy; feedback scales by c on matched histories."
+          },
+          {
+            "title": "Compare actual histories",
+            "detail": "Induction through the shared history recursion proves every corresponding point matches; dropping the step compensation instead corresponds to a fresh original-coordinate run with rate c squared eta.",
+            "math": "x'_t=c^{-1}x_t,\\qquad cx'_t(\\eta)=x_t(c^2\\eta)",
+            "fallback": "Correct rates preserve physical outputs; unchanged numerical rates correspond to an actually rerun different schedule."
+          }
+        ],
+        "pseudocode": {
+          "title": "Transport one chosen full-history policy",
+          "intro": "Fix c>0, a whole-space initial point, an arbitrary real schedule and loss sequence, and one chosen policy p. Define the transformed policy on every supplied finite history. The path identity is structural; legality and positive-rate assumptions are needed separately for the regret bound.",
+          "formula_label": "Complete policy transport and paired updates",
+          "math": "p'_t(F',h',f')=c\\,p_t\\big((i\\mapsto F'_i(c^{-1}\\,\\cdot)),(i\\mapsto ch'_i),f'(c^{-1}\\,\\cdot)\\big),\\qquad y_{t+1}=y_t-\\frac{\\eta_t}{c^2}g'_t,\\qquad y_t=c^{-1}x_t",
+          "fallback": "Undo the coordinate change in every supplied past loss and the current loss, restore every supplied history point, including the current point, apply the same policy p, then multiply its answer by c. Divide the numerical step by c squared.",
+          "lines": [
+            "Choose c > 0, initial point x0, real schedule eta, losses f, and one policy p.",
+            "Set transformed loss f_prime[t](y) = f[t](c * y) and initial point y0 = x0 / c.",
+            "Set transformed schedule eta_prime[t] = eta[t] / c^2.",
+            "To evaluate p_prime at time t, supply past losses F_prime indexed by Fin t, the full iterate history h_prime indexed by Fin(t+1), and current loss q_prime:",
+            "  inverse-compose every F_prime[i] and q_prime with multiplication by 1/c;",
+            "  multiply every h_prime[i], including the current point, by c; apply the same p at time t to these restored inputs;",
+            "  multiply that selected vector by c and return it.",
+            "In each whole-space run at time t, output its current point, then receive its current whole loss, select feedback using its full supplied history, and update by its paired schedule.",
+            "The paired outputs satisfy y[t] = x[t] / c; legality is a separate transported property."
+          ],
+          "relationship": "This pseudocode explains the library definitions scaledLoss, scaledEta and scaledPolicy and the history_scaling theorem. It is an explicit coupling of one chosen policy, not an independent-selection theorem or a proof that policy parameters ignore future data. The source supplies the local coordinate calculation; the complete history transport is a library extension."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineUnitScaling.unit_exponents",
+        "BanditRL.OnlineUnitScaling.history_scaling",
+        "BanditRL.OnlineUnitScaling.wrong_step_output",
+        "BanditRL.OnlineUnitScaling.regret_fixed_scaled"
+      ],
+      "source_theorems": [
+        {
+          "label": "The source dimensional relation and relaxed bound",
+          "pages": "printed21/PDF33",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "[g]=[\\ell]/[x],\\quad[\\eta]=[x]^2/[\\ell];\\qquad R_T(u)\\le\\|u-x_1\\|^2/(2\\eta)+(\\eta/2)\\sum_{t=1}^T\\|g_t\\|^2",
+          "fallback": "The source matches units in the whole-space update, then checks both terms of the relaxed regret bound have the loss unit.",
+          "plain": "The source matches units in the whole-space update, then checks both terms of the relaxed regret bound have the loss unit.",
+          "relationship": "This is an attributed unnumbered source argument. The source says the rate is not unitless; the ratio admits cancellation when loss has squared-coordinate units. The additive-group model is a separate library specification. The displayed source sanity check omits the earlier nonpositive endpoint term.",
+          "contract": {
+            "model": "Deterministic whole-space online subgradient descent in the source finite-dimensional Euclidean setting.",
+            "assumptions": "Common coordinate unit and unchanged loss-output unit; legal supports and positive constant step for the preceding bound. Numeric losses at played points and comparator must be finite.",
+            "parameters": "A fixed comparator u; source rounds1 throughT. Factors2 and finite counting have no physical unit.",
+            "regret": "Comparator regret under the applicable loss and algorithm assumptions; dimensional consistency alone is not a numerical proof.",
+            "guarantee": "The printed ratio and equal units of the terms. No universal nonunitlessness, step-size optimum or trajectory theorem follows merely from units."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Qualified source passage",
+            "boundary": "This is a bounded library extension of the concrete whole-space source example, not a literal complete source Anchor. Positive invertible scale, transformed losses and the explicitly transported common policy are part of the library contract. Independent oracle selections, arbitrary projected domains, stochastic laws and universal path separation are not asserted."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "The concrete meter-to-kilometer calculation",
+          "pages": "printed21-22/PDF33-34",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "x'=x/1000,\\quad f'(y)=f(1000y),\\quad g'=1000g,\\quad\\eta'=\\eta/1000000",
+          "fallback": "At corresponding points, the gradient of the composed loss is multiplied by1000; compensating the learning rate requires division by one million.",
+          "plain": "At corresponding points, the gradient of the composed loss is multiplied by1000; compensating the learning rate requires division by one million.",
+          "relationship": "The example uses differentiability for its chain-rule line despite the enclosing subgradient setting. It provides a corresponding-point update calculation. A complete policy/history induction and arbitrary positive scale are library extensions. The source warning about changed paths is not universal strict separation.",
+          "contract": {
+            "model": "Unprojected real Euclidean coordinates; the same physical losses are represented by composition.",
+            "assumptions": "Positive conversion1000, corresponding current points, differentiability for the displayed gradients, loss output unit fixed. The illustrative1/sqrt(T) needsT>0.",
+            "parameters": "The source has eta=1/sqrt(T). Reusing that numerical eta makes the converted update use effective rate1000000eta.",
+            "regret": "No universal increase of regret is asserted by this local calculation.",
+            "guarantee": "Local chain rule, effective step multiplier and prescribed inverse-square compensation. After paths diverge, each run needs feedback at its own point."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Qualified source passage",
+            "boundary": "This is a bounded library extension of the concrete whole-space source example, not a literal complete source Anchor. Positive invertible scale, transformed losses and the explicitly transported common policy are part of the library contract. Independent oracle selections, arbitrary projected domains, stochastic laws and universal path separation are not asserted."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Library extension: the complete paired history",
+          "pages": "printed21/PDF33",
+          "pdf_page": 33,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "H'_t(i)=c^{-1}H_t(i)\\quad(i\\in\\operatorname{Fin}(t+1))",
+          "fallback": "The explicitly paired whole-space runs agree at every corresponding finite-history entry.",
+          "plain": "The explicitly paired whole-space runs agree at every corresponding finite-history entry.",
+          "relationship": "This is the unchanged library theorem history_scaling, extending the source local calculation by an actual induction and a fully specified policy transport.",
+          "contract": {
+            "model": "A finite-dimensional real inner-product space, the shared whole-space projection and finite-history support-policy type.",
+            "assumptions": "c>0; corresponding initial point; every loss composed with c; step schedule divided byc squared; the same chosen original policy is transported on its complete input history. No legal-support, positive-rate or finite-value premise is needed for this structural equality.",
+            "parameters": "Arbitrary natural t and i in Fin(t+1). The policy has no explicit future/horizon/comparator argument, but its external parameter independence is not proved.",
+            "regret": "Structural history equality alone is not a finite-loss performance bound.",
+            "guarantee": "Every paired entry and last output agree after coordinate conversion. No equivalence for independently selected policies or arbitrary projected domains."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Library result with delta",
+            "boundary": "This is a bounded library extension of the concrete whole-space source example, not a literal complete source Anchor. Positive invertible scale, transformed losses and the explicitly transported common policy are part of the library contract. Independent oracle selections, arbitrary projected domains, stochastic laws and universal path separation are not asserted."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Library extension: the sharp finite-regret bound",
+          "pages": "Theorem2.13, printed13-14/PDF25-26",
+          "pdf_page": 25,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "R'_T(u/c)\\le{\\|x_0-u\\|^2\\over2\\eta}+{\\eta\\over2}\\sum_{t<T}\\|g_t\\|^2-{\\|x_T-u\\|^2\\over2\\eta}",
+          "fallback": "The converted run satisfies the original sharp fixed-step bound, including its negative terminal-distance term.",
+          "plain": "The converted run satisfies the original sharp fixed-step bound, including its negative terminal-distance term.",
+          "relationship": "This library consequence uses the accepted shared actual-policy regret theorem. It is stronger than the relaxed dimensional sanity-check display and is labeled separately. Source anchors: Theorem2.13 printed13-14/PDF25-26; subgradient transfer printed19/PDF31; unit-analysis motivation printed20-22/PDF32-34.",
+          "contract": {
+            "model": "The same explicitly paired whole-space runs, constant original rate and any fixed comparator.",
+            "assumptions": "c>0 and eta>0. For each t<T, losses are proper and have a global support at every whole-space point, and the original selected vector is a legal support at the played point. These conditions ensure finite played and comparator losses.",
+            "parameters": "Lean rounds0 throughT-1; output T is the source terminal point x_(T+1). T=0 is allowed for the fixed positive rate.",
+            "regret": "The sum of real finite loss differences against the fixed comparator. The unrestricted totalized-toReal equality is a separate structural theorem.",
+            "guarantee": "The full inequality shown, with same-run selected energy and terminal residual. No future-energy optimizer, stochastic or anytime claim."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Library result with delta",
+            "boundary": "This is a bounded library extension of the concrete whole-space source example, not a literal complete source Anchor. Positive invertible scale, transformed losses and the explicitly transported common policy are part of the library contract. Independent oracle selections, arbitrary projected domains, stochastic laws and universal path separation are not asserted."
+          },
+          "statement_provenance": "derived-support"
+        }
+      ],
+      "proof_bridge": {
+        "title": "From local transport to a complete shared-policy run",
+        "summary": "The source calculation motivates the coordinate pairing. The library separately proves gradient/support transport, inducts over actual histories and reuses the accepted sharp regret theorem. Source topology and actual compiler dependencies remain distinct. Support transport is a separate legality branch. The structural history induction does not require or use support legality; the teaching order is not a claim that every step is a premise of the next.",
+        "steps": [
+          {
+            "title": "Transport a global support",
+            "detail": "For a proper extended-real loss, a global support at the old-coordinate point yields a global support at the new-coordinate point. This is the separate legality branch, not a prerequisite or proof dependency of the structural history equality.",
+            "math": "g\\in\\partial f(cy)\\Longrightarrow cg\\in\\partial(f(c\\cdot))(y)",
+            "fallback": "For a proper extended-real loss, a global support at the old-coordinate point yields a global support at the new-coordinate point. This is the separate legality branch, not a prerequisite or proof dependency of the structural history equality."
+          },
+          {
+            "title": "Preserve the entire finite history",
+            "detail": "The policy receives all prior loss functions, every history point and the current loss; inverse transformations recover its original inputs before its selected vector is multiplied byc.",
+            "math": "H'_t(i)=c^{-1}H_t(i)\\quad(i\\in\\operatorname{Fin}(t+1))",
+            "fallback": "The policy receives all prior loss functions, every history point and the current loss; inverse transformations recover its original inputs before its selected vector is multiplied byc."
+          },
+          {
+            "title": "Recompute the uncompensated rerun",
+            "detail": "The effective-schedule run evaluates its policy on its own actual history; no old-run gradients are reused after divergence.",
+            "math": "cx'_t(\\eta)=x_t(c^2\\eta)",
+            "fallback": "The effective-schedule run evaluates its policy on its own actual history; no old-run gradients are reused after divergence."
+          },
+          {
+            "title": "Retain the sharp residual",
+            "detail": "Under the full properness, support-existence, actual-legality and positive-rate conditions, reuse the same-run fixed-step theorem without discarding its terminal term.",
+            "math": "R'_T(u/c)\\le{\\|x_0-u\\|^2\\over2\\eta}+{\\eta\\over2}\\sum_{t<T}\\|g_t\\|^2-{\\|x_T-u\\|^2\\over2\\eta}",
+            "fallback": "Under the full properness, support-existence, actual-legality and positive-rate conditions, reuse the same-run fixed-step theorem without discarding its terminal term."
+          }
+        ],
+        "boundary": "This is a bounded library extension of the concrete whole-space source example, not a literal complete source Anchor. Positive invertible scale, transformed losses and the explicitly transported common policy are part of the library contract. Independent oracle selections, arbitrary projected domains, stochastic laws and universal path separation are not asserted."
+      },
+      "worked_example": {
+        "title": "A linear-loss run with explicit transformed feedback",
+        "intro": "On the real line take f_t(x)=x, initial0, constant rate1 and the policy that computes the current loss gradient at the last history point. Use c=1000 and comparator-2. The transformed comparator is-2/1000, paired with the original comparator-2.",
+        "steps": [
+          {
+            "title": "Evaluate the actual original feedback",
+            "detail": "The current-loss gradient and the unique global support are1. At one update the original output is-1.",
+            "math": "g_0=1,\\quad x_1=-1",
+            "fallback": "The current-loss gradient and the unique global support are1. At one update the original output is-1."
+          },
+          {
+            "title": "Compare compensated and uncompensated outputs",
+            "detail": "The compensated new-coordinate output is-1/1000; the uncompensated output is-1000. Their converted physical outputs are-1 and-1000000, a concrete strict mismatch.",
+            "math": "x'_1=-1/1000,\\quad x^{\\rm bad}_1=-1000;\\quad1000x'_1=-1,\\quad1000x^{\\rm bad}_1=-1000000",
+            "fallback": "The compensated new-coordinate output is-1/1000; the uncompensated output is-1000. Their converted physical outputs are-1 and-1000000, a concrete strict mismatch."
+          },
+          {
+            "title": "Evaluate the matched sharp bound",
+            "detail": "At horizon1, original regret at-2 and transformed regret at-2/1000 both equal2. Original selected energy is1 and terminal squared distance is1; the sharp upper bound is2.",
+            "math": "R'_1(-2/1000)=R_1(-2)=2,\\quad4/2+1/2-1/2=2",
+            "fallback": "At horizon1, original regret at-2 and transformed regret at-2/1000 both equal2. Original selected energy is1 and terminal squared distance is1; the sharp upper bound is2."
+          },
+          {
+            "title": "Keep boundary cases separate",
+            "detail": "At c=1 the corresponding output is unchanged; c=0 fails inverse transport. For fixed positive rate, T=0 gives empty regret and exact initial/terminal cancellation. The source1/sqrt(T) is not a positive rate atT=0 under totalized real division.",
+            "math": "R_0(u)=0,\\qquad1/\\sqrt0=0",
+            "fallback": "At c=1 the corresponding output is unchanged; c=0 fails inverse transport. For fixed positive rate, T=0 gives empty regret and exact initial/terminal cancellation. The source1/sqrt(T) is not a positive rate atT=0 under totalized real division."
+          }
+        ],
+        "takeaway": "The actual path witness demonstrates the role of inverse-square rate compensation, not a universal strict path change or worse regret. Structural equalities and finite-loss bounds have different hypotheses.",
+        "boundary": "Whole real line, one explicit chosen policy, fixed rate1 and specified loss. No arbitrary-domain, independent-policy, stochastic or source-gap completion claim."
+      }
     }
   ]
 }
