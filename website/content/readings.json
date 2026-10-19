@@ -6371,6 +6371,239 @@
         "takeaway": "The example derives a nontrivial universal linear guarantee before transporting it; it does not assume a regret bound just for its chosen feedback.",
         "boundary": "The numerical potential identity is universal in v and u only at T=2. The canonical-producer instance and invalid-future example have their own stated scope. This is a bounded deterministic library realization. Closed-domain and global support-availability premises are inherited interface restrictions, not necessary conditions of the source supporting inequality. The unrestricted source Anchor, randomized guarantees, independence of externally chosen policies, executable selectors, universal optimality, chapter/book completion and purification are not established here."
       }
+    },
+    {
+      "slug": "online-optimal-step",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10, 21 June 2026",
+        "sections": "Section 2.1, two unnumbered scalar step-size calculations and the future-gradient warning; printed15/PDF27, with printed13–16 context",
+        "pages": "printed p. 15; PDF p. 27",
+        "pdf_page": 27,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Fixed scalar coefficients",
+          "meaning": "F(A,B,eta)=A/(2 eta)+eta B/2 and S(A,B)=sqrt(A)/sqrt(B) are total real formulas. In each comparison, A and B stay fixed while eta ranges over positive real numbers. The function definitions alone assert no optimizer outside that domain."
+        },
+        {
+          "term": "Source notation and quantifiers",
+          "meaning": "R is the distance from one fixed comparator to the initial point; B is the squared-gradient-energy scalar of the fixed run. D is a diameter bound and G names the source L. For each fixed positive coefficient pair, the library compares every positive competitor eta. It does not assert one step simultaneously optimizes all comparators or recomputed trajectories."
+        },
+        {
+          "term": "Positive and zero regimes",
+          "meaning": "The gap and lower bound need A,B>=0 and eta>0. Positive attainment and uniqueness need A,B>0. Distance tuning needs R,B>0; diameter tuning needs finite D,G>0 and natural T>=1. These positivity restrictions are explicit library qualifications of the printed formulas. One-zero cases admit strict improvement; both-zero is constant. Totalized division at eta=0 and T=0 supplies no admissible algorithm step."
+        },
+        {
+          "term": "Energy and the sharper bound",
+          "meaning": "On an actual run the gradients depend on eta through the iterates, and the source also warns about unavailable future information. This calculation concerns the coarser two-term expression after dropping the nonpositive terminal-distance term. The full OGD theorem retains that term and its own hypotheses."
+        }
+      ],
+      "algorithm": {
+        "title": "Evaluate a scalar step from fixed positive inputs",
+        "kind": "scalar calculation, not a new source algorithm",
+        "steps": [
+          {
+            "title": "Fix the loose coefficients",
+            "detail": "Fix numerical D,G>0 and natural T>=1. Their validity as algorithmic bounds is a separate obligation.",
+            "math": "A=D^2,\\quad B=G^2T",
+            "fallback": "Fix numerical D,G>0 and natural T>=1. Their validity as algorithmic bounds is a separate obligation."
+          },
+          {
+            "title": "Calculate the admissible step",
+            "detail": "The public positivity assumptions keep the denominator positive.",
+            "math": "\\eta_*={D\\over G\\sqrt T}>0",
+            "fallback": "The public positivity assumptions keep the denominator positive."
+          },
+          {
+            "title": "Evaluate the scalar envelope",
+            "detail": "The scalar identity gives DG sqrt(T). An actual regret bound additionally requires the loss-to-envelope bridge and every hypothesis of the applicable OGD or OSD theorem.",
+            "math": "F(\\eta_*)=DG\\sqrt T",
+            "fallback": "The scalar identity gives DG sqrt(T). An actual regret bound additionally requires the loss-to-envelope bridge and every hypothesis of the applicable OGD or OSD theorem."
+          }
+        ],
+        "pseudocode": {
+          "title": "Exogenous scalar tuning",
+          "intro": "The source prints a tuning calculation. These instructions evaluate its nondegenerate scalar instance; they do not construct a future-informed learner.",
+          "formula_label": "Known-horizon loose-bound optimizer",
+          "math": "\\eta_*={D\\over G\\sqrt T}",
+          "fallback": "D/(G sqrt T) for D,G>0 and T≥1.",
+          "lines": [
+            "Fix positive finite numbers D,G and natural horizon T>=1.",
+            "Set A=D² and B=G²T; hold these numbers fixed during minimization.",
+            "Evaluate eta=D/(G sqrt(T)), which is positive.",
+            "Evaluate the scalar expression as DG sqrt(T).",
+            "For an algorithmic application, separately establish the actual loss, feasible-set, gradient/support, diameter, norm-bound and horizon premises and the loss-to-envelope comparison."
+          ],
+          "relationship": "Advance tuning requires the relevant bounds and horizon to be known and valid for the chosen run. This packet proves neither a uniform-in-eta gradient bound nor the complete regret application. The sharper theorem keeps its negative terminal residual."
+        }
+      },
+      "teaching_route": [
+        "BanditRL.OnlineOptimalStep.gap_identity",
+        "BanditRL.OnlineOptimalStep.source_argmin",
+        "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+        "BanditRL.OnlineOptimalStep.diameter_argmin"
+      ],
+      "source_theorems": [
+        {
+          "label": "The printed calculations and their warning",
+          "pages": "printed15/PDF27; context printed13–16",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\eta=R/\\sqrt{B},\\quad R\\sqrt{B};\\qquad\\eta^*=D/(L\\sqrt T),\\quad DL\\sqrt T.\\)",
+          "fallback": "The source prints the distance-energy rate and value, then the diameter-gradient-horizon rate and value.",
+          "plain": "The source minimizes a coarse expression and then warns that future gradients depend on the step itself. It next replaces distance and gradient energy by bounds to give the D/L/T calculation.",
+          "relationship": "These are two unnumbered source calculations. Equation (2.1) labels the resulting regret bound. The source does not display the minimization proof or enumerate zero cases. The square-completion proof below is the library route, not a reconstructed printed proof.",
+          "contract": {
+            "model": "Deterministic projected online gradient descent in the preceding source context, with one fixed comparator.",
+            "assumptions": "The preceding analysis uses a positive step and the source loss/domain assumptions. The second calculation uses bounded diameter and per-round gradient norm. Strict nonzero coefficient restrictions and zero-case analysis are not explicitly printed.",
+            "parameters": "R=||u-x1|| and B=sum of squared gradient norms are shorthand for the printed expression; source rounds are 1 through T. Gradients are those of the actual generated run.",
+            "regret": "The preceding bound is comparator regret. The printed optimization drops its nonpositive terminal-distance residual.",
+            "guarantee": "The source states the formulas shown and cautions that future gradients and their dependence on eta prevent interpreting the first one as a feasible online choice."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Source passage",
+            "boundary": "The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Fixed positive distance and energy: library minimum",
+          "pages": "Printed 15 / PDF 27",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\min_{\\eta>0}\\left({R^2\\over2\\eta}+{\\eta B\\over2}\\right)=R\\sqrt B,\\quad\\eta_*={R\\over\\sqrt B}",
+          "fallback": "For positive frozen distance R and energy B, the minimum is R sqrt B, attained at R/sqrt B.",
+          "plain": "With positive fixed R and B, the scalar expression attains R sqrt(B) at R/sqrt(B).",
+          "relationship": "A bounded scalar library statement corresponding to the printed calculation. Positivity is an explicit nondegenerate qualification; no full literal source Anchor or actual regret theorem is claimed.",
+          "contract": {
+            "model": "Scalar minimization of the coarse two-term bound after OGD analysis.",
+            "assumptions": "R>0 and B>0; A=R². Competing eta range over positive reals. These are explicit bounded-library premises, not a complete restatement of the source algorithm assumptions.",
+            "parameters": "All coefficients remain fixed throughout the universal comparison over positive eta. G renames the source L. There is no loss sequence, feasible domain, random experiment or learner argument in this scalar theorem.",
+            "regret": "Minimum of the coarse scalar expression only. The sharper endpoint term and actual regret application remain separate.",
+            "guarantee": "Attained minimum over every positive competitor step with the same fixed coefficients. Equality is unique in the positive-coefficient regime by the separate library theorem."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded scalar result",
+            "boundary": "The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
+          },
+          "statement_provenance": "derived-instantiation"
+        },
+        {
+          "label": "Fixed positive D/G/T: library minimum",
+          "pages": "Printed 15 / PDF 27",
+          "pdf_page": 27,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\min_{\\eta>0}\\left({D^2\\over2\\eta}+{\\eta G^2 T\\over2}\\right)=DG\\sqrt T,\\quad\\eta_*={D\\over G\\sqrt T}",
+          "fallback": "For positive D,G and T≥1, the loose bound is minimized at D/(G sqrt T), with value DG sqrt T.",
+          "plain": "With fixed D,G>0 and natural T>=1, the scalar envelope attains DG sqrt(T) at D/(G sqrt(T)).",
+          "relationship": "A bounded scalar library statement corresponding to the printed calculation. Positivity is an explicit nondegenerate qualification; no full literal source Anchor or actual regret theorem is claimed.",
+          "contract": {
+            "model": "Exogenous diameter/gradient/horizon scalar upper bound.",
+            "assumptions": "Finite real D>0 and G>0, natural T>=1; A=D² and B=G²T. Competing eta range over positive reals. Actual diameter/gradient-bound validity is not a premise or conclusion of this scalar signature.",
+            "parameters": "All coefficients remain fixed throughout the universal comparison over positive eta. G renames the source L. There is no loss sequence, feasible domain, random experiment or learner argument in this scalar theorem.",
+            "regret": "Minimum of the coarse scalar expression only. The sharper endpoint term and actual regret application remain separate.",
+            "guarantee": "Attained minimum over every positive competitor step with the same fixed coefficients. Equality is unique in the positive-coefficient regime by the separate library theorem."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Bounded scalar result",
+            "boundary": "The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
+          },
+          "statement_provenance": "derived-instantiation"
+        }
+      ],
+      "proof_bridge": {
+        "title": "The library square-completion proof",
+        "summary": "The source omits the optimization derivation. The library fills the scalar algebra with an exact square gap; the source graph and actual Lean dependencies remain separate.",
+        "steps": [
+          {
+            "title": "Exact square gap above the sharp scalar lower bound",
+            "detail": "For nonnegative frozen coefficients and a positive step, the exact excess is a nonnegative square quotient.",
+            "math": "F(\\eta)-\\sqrt A\\sqrt B=(\\sqrt A-\\eta\\sqrt B)^2/(2\\eta)",
+            "fallback": "For nonnegative frozen coefficients and a positive step, the exact excess is a nonnegative square quotient."
+          },
+          {
+            "title": "Attain the fixed positive-coefficient minimum",
+            "detail": "For A,B>0, the square-root ratio is positive and makes the square gap zero. The lower bound applies to every positive competing step with those same A,B.",
+            "math": "\\eta_*>0,\\quad F(\\eta_*)=\\sqrt{AB},\\quad\\forall\\eta>0,\\ F(\\eta_*)\\le F(\\eta)",
+            "fallback": "The square-root ratio is an attained universal minimum for the two coefficients held fixed."
+          },
+          {
+            "title": "Characterize equality",
+            "detail": "For A,B>0 and eta>0, equality forces the squared numerator to vanish. Since sqrt(B)>0, this gives exactly eta=sqrt(A)/sqrt(B).",
+            "math": "\\(F(A,B,\\eta)=F(A,B,\\eta_*)\\iff\\eta=\\eta_*,\\quad A,B,\\eta>0.\\)",
+            "fallback": "The optimal positive step is unique."
+          },
+          {
+            "title": "Optimize the exogenous diameter-gradient upper bound",
+            "detail": "Positive externally supplied D,G and horizon T determine the optimizer of the loose two-term bound.",
+            "math": "\\eta_*={D}/{(G\\sqrt T)},\\quad F(\\eta_*)=DG\\sqrt T\\quad(D,G>0,T\\ge1)",
+            "fallback": "Positive externally supplied D,G and horizon T determine the optimizer of the loose two-term bound."
+          },
+          {
+            "title": "Check zero boundaries",
+            "detail": "One zero coefficient gives strict improvements for every positive eta. T=0 is outside the positive-horizon formula; totalized division at eta=0 is not admissible. If A=B=0 the total scalar function is constant zero; every positive step attains that value. The strict-improvement theorems are not formal infimum-limit theorems.",
+            "math": "A=0<B:\\ \\eta\\mapsto\\eta/2;\\quad B=0<A:\\ \\eta\\mapsto2\\eta",
+            "fallback": "One zero coefficient gives strict improvements for every positive eta. T=0 is outside the positive-horizon formula; totalized division at eta=0 is not admissible."
+          }
+        ],
+        "boundary": "The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
+      },
+      "worked_example": {
+        "title": "Strict scalar minimum and a genuine future-energy warning",
+        "intro": "The examples instantiate the universal scalar results and then compute an actual projected-gradient trajectory with identical losses and initial point at two steps.",
+        "steps": [
+          {
+            "title": "A nonzero strict optimum",
+            "detail": "A=9, B=4 gives eta=3/2 and value 6; eta=1 costs 13/2. Equality holds only at the optimizer.",
+            "math": "F_{9,4}(3/2)=6<13/2=F_{9,4}(1)",
+            "fallback": "A=9, B=4 gives eta=3/2 and value 6; eta=1 costs 13/2. Equality holds only at the optimizer."
+          },
+          {
+            "title": "Exogenous horizon tuning",
+            "detail": "D=3,G=2,T=4 gives eta=3/4 and loose-bound value 12; T=1 is also tested.",
+            "math": "F_{9,16}(3/4)=12",
+            "fallback": "D=3,G=2,T=4 gives eta=3/4 and loose-bound value 12; T=1 is also tested."
+          },
+          {
+            "title": "One-zero coefficients never attain a positive minimum",
+            "detail": "With A=0,B=4, halving any positive step strictly improves the value. With A=9,B=0, doubling any positive step strictly improves it. Neither statement relies on eta=0.",
+            "math": "\\(F_{0,4}(\\eta/2)<F_{0,4}(\\eta),\\quad F_{9,0}(2\\eta)<F_{9,0}(\\eta),\\quad\\eta>0.\\)",
+            "fallback": "Strict improvement is available at another positive step in both one-zero regimes."
+          },
+          {
+            "title": "Separate total formulas from admissible steps",
+            "detail": "When both coefficients vanish, the algebraic expression is zero. Lean also evaluates division by zero, but F(9,0,0)=0 is outside the positive-step domain, while F(9,0,eta)>0 for every positive eta.",
+            "math": "\\(F_{0,0}(\\eta)=0;\\qquad F_{9,0}(0)=0<F_{9,0}(\\eta)\\quad(\\eta>0).\\)",
+            "fallback": "A totalized value at zero is not a permitted optimizer."
+          },
+          {
+            "title": "Actual same-loss OGD paths",
+            "detail": "On real unbounded V, initial x0=0 and every loss (x−1)²/2, actual projection and gradient give x1=eta, g0=−1, g1=eta−1. Canary x0,g0 are source x1,g1; canary x1,g1 are source x2,g2. The two-round energy is the same sum under this index shift.",
+            "math": "B_2(\\eta)=1+(\\eta-1)^2",
+            "fallback": "On real unbounded V, initial x0=0 and every loss (x−1)²/2, actual projection and gradient give x1=eta, g0=−1, g1=eta−1. Canary x0,g0 are source x1,g1; canary x1,g1 are source x2,g2. The two-round energy is the same sum under this index shift."
+          },
+          {
+            "title": "Energy varies when rerunning",
+            "detail": "The same loss sequence gives energy 1 at eta=1 and energy 2 at eta=2. This prevents treating the realized energy as a constant across runs.",
+            "math": "B_2(1)=1\\ne2=B_2(2)",
+            "fallback": "The same loss sequence gives energy 1 at eta=1 and energy 2 at eta=2. This prevents treating the realized energy as a constant across runs."
+          },
+          {
+            "title": "Zero horizon is inadmissible for the tuning theorem",
+            "detail": "At T=0 the totalized D/(G sqrt T) is zero, whereas every positive eta has a strictly better doubled step for A=9,B=0.",
+            "math": "T=0:\\quad D/(G\\sqrt T)=0;\\quad F_{9,0}(2\\eta)<F_{9,0}(\\eta)\\ (\\eta>0)",
+            "fallback": "At T=0 the totalized D/(G sqrt T) is zero, whereas every positive eta has a strictly better doubled step for A=9,B=0."
+          }
+        ],
+        "takeaway": "Fixed-coefficient minimization and recomputed trajectory energy are different quantities. This concrete two-step witness shows that identical losses can give different energies at different positive steps.",
+        "boundary": "The witness is deterministic on the full real line. It establishes neither the source Chapter 5 impossibility/lower bound nor a complete regret optimization theorem. The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
+      }
     }
   ]
 }
