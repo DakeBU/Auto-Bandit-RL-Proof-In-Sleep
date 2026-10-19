@@ -150,3 +150,4 @@ import Tests.OnlineGuessingSubgradientCanary
 import Tests.OnlineSubgradientPolicyCanary
 import Tests.OnlineGuessingSubgradientPolicyCanary
 import Tests.OnlineLinearizationCanary
+import Tests.OnlineOptimalStepCanary

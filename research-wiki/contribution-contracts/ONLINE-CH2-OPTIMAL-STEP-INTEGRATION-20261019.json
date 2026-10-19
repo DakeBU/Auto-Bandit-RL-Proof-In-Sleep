@@ -1,0 +1,218 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-OPTIMAL-STEP-INTEGRATION-20261019",
+  "route": "online-learning / Chapter2 fixed-coefficient scalar step-size minimization",
+  "frontier_cell": "online-optimal-step",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026",
+    "anchor": "Francesco Orabona; Section2.1, two unnumbered calculations and future/step-dependent gradient warning, printed15/PDF27; context printed13-16/PDF25-28",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged 13-declaration scalar module and complete 28-declaration canary from PR151/185, preserving fixed coefficients, explicit nondegenerate premises, zero regimes and historical obligations.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineOptimalStep.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineOptimalStep.upperBound",
+    "BanditRL.OnlineOptimalStep.optimalStep",
+    "BanditRL.OnlineOptimalStep.gap_identity",
+    "BanditRL.OnlineOptimalStep.lower_bound",
+    "BanditRL.OnlineOptimalStep.optimal_positive",
+    "BanditRL.OnlineOptimalStep.optimal_value",
+    "BanditRL.OnlineOptimalStep.optimal_unique",
+    "BanditRL.OnlineOptimalStep.source_argmin",
+    "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+    "BanditRL.OnlineOptimalStep.diameter_argmin",
+    "BanditRL.OnlineOptimalStep.zero_distance_decreases",
+    "BanditRL.OnlineOptimalStep.zero_energy_decreases",
+    "BanditRL.OnlineOptimalStep.zero_coefficients"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted main lacks OnlineOptimalStep; original151/185 and frozen stackTIP contain byte-identical module and complete canary.",
+      "Accepted OnlineGradientDescent Domain/project/step/iterate and prior LinearizationProbe.V supply shared actual-run semantics.",
+      "Pinned Mathlib square-root, positivity and real algebra declarations occur in the actual imported graph."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescent.iterate",
+      "BanditRL.OnlineGradientDescent.project_eq_of_variational",
+      "LinearizationProbe.V",
+      "Real.sq_sqrt",
+      "Real.sqrt_mul",
+      "Real.sqrt_sq"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "The complete 28-declaration canary has 24 actual value-containing edges to the scalar module.",
+      "distance_energy_argmin applies source_argmin; diameter_argmin applies distance_energy_argmin.",
+      "The actual two-round quadratic-loss canary reuses shared OGD iteration and projection."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Retain the reviewed historical implementation; reuse shared learner/domain foundations and compose scalar identities without restoring unrelated historical modules."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "formalizer",
+    "blind_decoder": "independent-blind-decoder",
+    "source_reviewer": "independent-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Square completion and frozen-coefficient tuning remain a scalar library mechanism. This integration proves no cross-setting transport or certified functor.",
+    "focus_targets": [
+      "online-optimal-step"
+    ],
+    "visual_review": "89 local desktop/mobile images independently reviewed. Disclosure controls and six graph search interactions were exercised separately by the integration actor, with their own receipts. Exact evidence in review-binding.json.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one bounded reader with3source-linkedcards,11formula notes,5proofsteps,7workedsteps and4notationentries;30owned Online routes",
+    "banditrlwiki": "no-change-with-reason: no Bandit/RL/Extended Topics terminal changed",
+    "results_ledger": "no-change-with-reason: scalar tuning does not complete source regret application, Chapter2 or the book",
+    "roadmap": "no-change-with-reason: full source Anchor and historical open obligations retain explicit owners",
+    "website_surfaces": [
+      "Online Learning scalar step-size reader and book navigation",
+      "Generated Lean module/declaration graph and exact source links",
+      "Two existing pseudocode allowlists and book registry expectation",
+      "Historical scope and retained obligations in research-wiki/integrations/ONLINE-CH2-OPTIMAL-STEP-INTEGRATION-20261019",
+      "Source attribution and contributor credit in integration README"
+    ]
+  },
+  "truth_boundary": "The Lean results optimize a fixed scalar expression over positive steps. Strictly positive coefficients are explicit restrictions of this library contract, not separately established source-wide assumptions. The unrestricted source Anchor and a complete regret application are not established by these scalar declarations. The source warning about future and step-dependent gradients, its negative terminal term, zero regimes and separate Chapter 5 lower-bound obligation remain visible. The imported graph is actual direct type/value evidence. Its boundary is relative to the selected declarations, not necessarily outside ABRL; broad module imports are inherited context, not theorem implications. Purification and an Exposition Seal are not claimed. Final exact candidate gates, CI, merge and accepted-main/live verification remain separate.",
+  "verification": {
+    "focused_checks": [
+      "Exact production/canary module hashes preserved; focused build passed9092jobs; combined BanditRLProof and Tests passed.",
+      "41actual imported declarations and source ranges,32prespecified proof-body pairs,standard-only41axioms and2826directtype/valueedges independently reviewed.",
+      "553selectedboundary constants include10ABRL/test-owned names;3410moduleimportedges reflect inherited canary context."
+    ],
+    "bandit_check": "Full harness passed:463Python tests run,7platform skips; combined Lean and exporter passed. Later three reader-label shortenings and retention metadata leave Lean/harness code unchanged. Final all-file candidate gate remains separate.",
+    "site_build": "Verified build and sitecheck passed for the11-file reader/code candidate after correcting an owned preview-directory lock and shortening three clipped status labels; full18-file scope additions do not change generator or reader inputs.",
+    "site_check": "Actual desktop/mobile rendered mathematics passed after label repair. Three source and11Lean disclosures pass keyboard controls; six actual graph search selections pass. Independent pixel review and exact input hashes are separately bound.",
+    "independent_review": "Distinct formalizer,blind decoder and source reviewer; separate source-only extraction/topology review and independent full-original scope reviewer. Seven exact public preservation/science files approved. Final complete21-file candidate review remains separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration and maintenance; original authorship retained in immutable Git/PR history and preservation records"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "The first website build hit an owned preview working-directory lock. The preview was relaunched outside generated output; unchanged Lean/harness success was preserved. Review metadata repairs restore authorship and byte representations, and three label shortenings repair mobile clipping. None is a refutation of source mathematics. Original statements, proofs and obligations remain retained. The environment event is resolved historical process evidence. The explicit scientific delta comes solely from independent source/signature review, not from that environment event.",
+      "promoted_fragments": [
+        "BanditRLProof/OnlineOptimalStep.lean",
+        "Tests/OnlineOptimalStepCanary.lean"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "fixed-coefficient-scalar-historical-integration"
+      ],
+      "expected_information_gain": "One existing implementation with required independent blind/source/topology/scope reviews; no competing proof-search routes or scheduler change.",
+      "shared_verified_context_digest": "Source PDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; frozen stack8045070bf1ee53c83778d04eb168f8ad6f728b59"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Exact square-gap algebra with fixed coefficients and strict positive-domain attainment.",
+      "selection_reason": "No parallel competing proof routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "The bounded reader retains source calculations, explicit library premises, proof formulas, exact Lean and remaining boundaries. No full source Anchor or Exposition Seal is asserted.",
+      "source_expansion_nodes": [
+        "N13.01",
+        "N13.02",
+        "N13.03",
+        "N13.04",
+        "N13.05",
+        "N13.06",
+        "N13.07",
+        "N13.08",
+        "N14.01",
+        "N14.02",
+        "N14.03",
+        "N14.04",
+        "N14.05",
+        "N14.06",
+        "N14.07",
+        "N14.08",
+        "N14.09",
+        "N14.10",
+        "N14.11",
+        "N14.C1",
+        "N15.01",
+        "N15.02",
+        "N15.03",
+        "N15.04",
+        "N15.05",
+        "N15.06",
+        "N15.07",
+        "N15.08",
+        "N15.09",
+        "N15.C1",
+        "N15.11",
+        "N16.01",
+        "N16.02",
+        "N16.03",
+        "N16.04"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineOptimalStep.upperBound",
+        "BanditRL.OnlineOptimalStep.optimalStep",
+        "BanditRL.OnlineOptimalStep.gap_identity",
+        "BanditRL.OnlineOptimalStep.lower_bound",
+        "BanditRL.OnlineOptimalStep.optimal_positive",
+        "BanditRL.OnlineOptimalStep.optimal_value",
+        "BanditRL.OnlineOptimalStep.optimal_unique",
+        "BanditRL.OnlineOptimalStep.source_argmin",
+        "BanditRL.OnlineOptimalStep.distance_energy_argmin",
+        "BanditRL.OnlineOptimalStep.diameter_argmin",
+        "BanditRL.OnlineOptimalStep.zero_distance_decreases",
+        "BanditRL.OnlineOptimalStep.zero_energy_decreases",
+        "BanditRL.OnlineOptimalStep.zero_coefficients"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

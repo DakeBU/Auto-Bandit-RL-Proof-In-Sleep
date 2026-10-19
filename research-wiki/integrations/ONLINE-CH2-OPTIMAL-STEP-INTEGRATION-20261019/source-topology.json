@@ -1,0 +1,668 @@
+{
+  "schema": "source-topology-v1",
+  "status": "bounded-source-only-topology-independently-reviewed; original-source-gaps-open",
+  "root_targets": [
+    "N15.02",
+    "N15.03",
+    "N15.07",
+    "N15.08"
+  ],
+  "node_ids": [
+    "N13.01",
+    "N13.02",
+    "N13.03",
+    "N13.04",
+    "N13.05",
+    "N13.06",
+    "N13.07",
+    "N13.08",
+    "N14.01",
+    "N14.02",
+    "N14.03",
+    "N14.04",
+    "N14.05",
+    "N14.06",
+    "N14.07",
+    "N14.08",
+    "N14.09",
+    "N14.10",
+    "N14.11",
+    "N14.C1",
+    "N15.01",
+    "N15.02",
+    "N15.03",
+    "N15.04",
+    "N15.05",
+    "N15.06",
+    "N15.07",
+    "N15.08",
+    "N15.09",
+    "N15.C1",
+    "N15.11",
+    "N16.01",
+    "N16.02",
+    "N16.03",
+    "N16.04"
+  ],
+  "edges": [
+    {
+      "id": "E1",
+      "inputs": [
+        "N13.01",
+        "N13.03",
+        "N13.04"
+      ],
+      "output": "N13.02",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Lemma2.12: invoke projection and convexity boundary leaves."
+    },
+    {
+      "id": "E2",
+      "inputs": [
+        "N13.02",
+        "N13.07"
+      ],
+      "output": "N14.01",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Divide by positive step and sum rounds1..T."
+    },
+    {
+      "id": "E3",
+      "inputs": [
+        "N14.01"
+      ],
+      "output": "N14.02",
+      "logic": "DIRECT",
+      "consumer_use_site_and_premise_discharge": "Reindex telescoping expression retaining terminalT+1."
+    },
+    {
+      "id": "E4",
+      "inputs": [
+        "N14.02",
+        "N13.05"
+      ],
+      "output": "N14.03",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "N13.05 supplies assumptions only: nonincreasing positive steps and feasible-domain diameter; never consumer conclusion."
+    },
+    {
+      "id": "E5",
+      "inputs": [
+        "N14.03"
+      ],
+      "output": "N14.04",
+      "logic": "DIRECT",
+      "consumer_use_site_and_premise_discharge": "Telescope reciprocal differences; retain negative terminal term."
+    },
+    {
+      "id": "E6",
+      "inputs": [
+        "N14.01",
+        "N13.06"
+      ],
+      "output": "N14.05",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "N13.06 supplies constant-positive-rate assumption only; no diameter replacement required."
+    },
+    {
+      "id": "E7",
+      "inputs": [
+        "N14.05",
+        "N14.08",
+        "N14.11"
+      ],
+      "output": "N15.01",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Discard nonpositive terminal term and form fixed-horizon scalar objective."
+    },
+    {
+      "id": "E8",
+      "inputs": [
+        "N15.01",
+        "G15.01"
+      ],
+      "output": "N15.02",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Asserted source optimizer with minimization/domain gap."
+    },
+    {
+      "id": "E9",
+      "inputs": [
+        "N15.02",
+        "G15.02"
+      ],
+      "output": "N15.03",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Conditional substitution constrained by endogenous-gradient warningN15.04."
+    },
+    {
+      "id": "E10",
+      "inputs": [
+        "N15.01",
+        "N15.06",
+        "G15.03",
+        "G15.04"
+      ],
+      "output": "N15.07",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Printed loose-bound relaxation and scalar argmin; gaps remain."
+    },
+    {
+      "id": "E11",
+      "inputs": [
+        "N15.07",
+        "G15.05"
+      ],
+      "output": "N15.08",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Substitute selected rate into loose bound."
+    },
+    {
+      "id": "E12",
+      "inputs": [
+        "N15.08",
+        "G15.06"
+      ],
+      "output": "N15.09",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Sublinear clause requires coefficient control as horizon grows."
+    },
+    {
+      "id": "E13",
+      "inputs": [
+        "N15.11",
+        "N16.01",
+        "N16.02",
+        "N16.03",
+        "N13.06"
+      ],
+      "output": "N16.04",
+      "logic": "AND",
+      "consumer_use_site_and_premise_discharge": "Separate boundary example using constant-rate theorem, not a second scalar minimization proof."
+    }
+  ],
+  "or_routes": [
+    {
+      "output": "diameter-based loose scalar bound",
+      "alternatives": [
+        {
+          "id": "printed-distance-route",
+          "inputs": [
+            "N15.01",
+            "N15.06",
+            "G15.03"
+          ]
+        },
+        {
+          "id": "optional-diameter-composition",
+          "inputs": [
+            "N14.04",
+            "constant eta_t=eta>0",
+            "per-round norm bound L",
+            "N14.08",
+            "coefficient relaxation bridge"
+          ]
+        }
+      ],
+      "logic": "OR",
+      "status": "Second route is source-supported optional composition, not a second printed proof; never conjoin distance and diameter proofs."
+    }
+  ],
+  "and_routes": "Inputs within each sufficient route are AND; alternative routes are OR. Warning/context edges are not proof prerequisites.",
+  "inventory": {
+    "status": "EXTRACTED_TOPOLOGY_PROPOSED_INDEPENDENT_REVIEW_PENDING",
+    "extractor_may_approve_own_topology": false,
+    "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "inventory": [
+      {
+        "id": "X13.01",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "top [0.21,0.15,0.86,0.24]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: trailing projection-proof paragraph/display predates the bounded extraction. Its cited result remains the explicit leaf N13.04; no full projection proof is claimed."
+      },
+      {
+        "id": "N13.01",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "[0.21,0.26,0.86,0.39]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: transition to one-iteration regret and Lemma 2.12. \\(V\\subseteq\\mathbb R^d\\) nonempty, closed, convex; \\(\\ell_t\\) convex and differentiable on an open set containing \\(V\\); \\(\\eta_t>0\\); \\(g_t=\\nabla\\ell_t(x_t)\\), \\(x_{t+1}=\\Pi_V(x_t-\\eta_tg_t)\\); conclusion for every \\(u\\in V\\)."
+      },
+      {
+        "id": "N13.02",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "same display",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: \\(\\eta_t(\\ell_t(x_t)-\\ell_t(u))\\le\\eta_t\\langle g_t,x_t-u\\rangle\\le\\frac12\\|x_t-u\\|_2^2-\\frac12\\|x_{t+1}-u\\|_2^2+\\frac{\\eta_t^2}{2}\\|g_t\\|_2^2\\)."
+      },
+      {
+        "id": "N13.03",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "[0.21,0.41,0.86,0.54]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: proof invokes Proposition 2.11 and Theorem 2.7; projection inequality, expansion with cross term \\(-2\\eta_t\\langle g_t,x_t-u\\rangle\\), then convexity and rearrangement give N13.02."
+      },
+      {
+        "id": "N13.04",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "citations in N13.03",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY_SOURCE_LEAF: Proposition 2.11 and Theorem 2.7, cited by source as the projection and convexity inputs. Complete statements/proofs are not extracted here."
+      },
+      {
+        "id": "N13.05",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "[0.21,0.56,0.86,0.73]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: Theorem 2.13. \\(V\\subseteq\\mathbb R^d\\) nonempty, closed, convex with \\(D:=\\sup_{x,y\\in V}\\|x-y\\|_2\\); arbitrary sequence \\(\\ell_1,\\ldots,\\ell_T\\) convex/differentiable on an open set containing \\(V\\); any \\(x_1\\in V\\); source prints \\(0<\\eta_{t+1}\\le\\eta_t\\), \\(t=1,\\ldots,T-1\\). For every \\(u\\in V\\), \\(\\operatorname{Reg}_T(u)\\le D^2/(2\\eta_T)+\\sum_{t=1}^T(\\eta_t/2)\\|g_t\\|_2^2-\\|x_{T+1}-u\\|_2^2/(2\\eta_T)\\)."
+      },
+      {
+        "id": "N13.06",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "[0.21,0.75,0.86,0.81]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: moreover, if \\(\\eta_t=\\eta\\) for all \\(t=1,\\ldots,T\\), then for every \\(u\\in V\\), \\(\\operatorname{Reg}_T(u)\\le R^2/(2\\eta)+\\eta S/2-\\|x_{T+1}-u\\|_2^2/(2\\eta)\\)."
+      },
+      {
+        "id": "N13.07",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "bottom [0.21,0.82,0.86,0.85]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: proof instruction to divide Lemma 2.12 by \\(\\eta_t\\) and sum over \\(t=1,\\ldots,T\\), continued on p.14."
+      },
+      {
+        "id": "N13.08",
+        "printed_page": 13,
+        "pdf_page_one_based": 25,
+        "region": "Algorithm 2.1 references",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY_SOURCE_LEAF: Algorithm 2.1 is the source algorithm referenced by the lemma and theorem. The recurrence and gradient definition needed here are visible in N13.01; its full earlier pseudocode is outside the packet."
+      },
+      {
+        "id": "N14.01",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "first display line [0.21,0.17,0.86,0.22]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: summed one-step inequality, \\(\\operatorname{Reg}_T(u)\\le\\sum_{t=1}^T[\\|x_t-u\\|_2^2/(2\\eta_t)-\\|x_{t+1}-u\\|_2^2/(2\\eta_t)]+\\sum_{t=1}^T\\eta_t\\|g_t\\|_2^2/2\\)."
+      },
+      {
+        "id": "N14.02",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "second line [0.24,0.22,0.86,0.26]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: summation rearrangement gives initial/terminal terms plus \\(\\sum_{t=1}^{T-1}(1/\\eta_{t+1}-1/\\eta_t)\\|x_{t+1}-u\\|_2^2/2\\), plus the gradient sum."
+      },
+      {
+        "id": "N14.03",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "third line [0.24,0.26,0.86,0.30]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: replace initial squared distance and weighted intermediate squared distances by \\(D^2\\). Source theorem's nonincreasing positive stepsizes make the reciprocal-difference coefficients nonnegative; domain membership/diameter supply the distance bounds. Terminal negative squared-distance term is retained."
+      },
+      {
+        "id": "N14.04",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "last two lines [0.24,0.30,0.86,0.38]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: reciprocal differences telescope to \\(D^2/(2\\eta_T)\\), giving the first Theorem 2.13 bound with the full negative endpoint term."
+      },
+      {
+        "id": "N14.05",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "constant-rate paragraph and display [0.21,0.39,0.86,0.49]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: constant \\(\\eta_t=\\eta\\) case directly telescopes the unweighted squared distances, producing \\(R^2/(2\\eta)-\\|x_{T+1}-u\\|_2^2/(2\\eta)+\\eta S/2\\). This retains initial distance instead of diameter."
+      },
+      {
+        "id": "N14.06",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "observation 1 [0.21,0.53,0.86,0.58]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / WARNING: squared-gradient terms reflect producing \\(x_t\\) before knowing \\(\\ell_t\\); source says they become nonpositive if the loss is observed first; cites Section 15.5.1. The latter claim is not established in this packet."
+      },
+      {
+        "id": "N14.07",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "observation 2 [0.21,0.58,0.86,0.62]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY: constant-rate bound holds even if \\(D=\\infty\\); its initial term depends on distance from \\(x_1\\) to the competitor \\(u\\)."
+      },
+      {
+        "id": "N14.08",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "observation 3 [0.21,0.62,0.86,0.65]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: last term in both bounds is nonpositive and usually discarded; source explicitly warns that some advanced proofs need it. This is the stated justification for the p.15 relaxed expression."
+      },
+      {
+        "id": "N14.09",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "observation 4 [0.21,0.65,0.86,0.74]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / WARNING: time-varying rates require control of \\(\\|x_t-u\\|_2^2\\); source uses bounded \\(V\\), notes this fails in many ML applications, cites Section 5.2 for OGD failure on unbounded domains with time-varying rates, and Chapter 3 for the different stochastic SGD situation. These cited claims remain unproved leaves here."
+      },
+      {
+        "id": "N14.10",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "observation 5 [0.21,0.74,0.86,0.79]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / MOTIVATION: regret analysis guides the choice of \\(\\eta_t\\); retain the author's justification requirement as prose, not an additional mathematical premise."
+      },
+      {
+        "id": "N14.11",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "final paragraph [0.21,0.80,0.86,0.85]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: choose a constant learning rate minimizing the bounds for a fixed number of iterations; sentence continues onto p.15."
+      },
+      {
+        "id": "N14.C1",
+        "printed_page": 14,
+        "pdf_page_one_based": 26,
+        "region": "references in N14.06/N14.09",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY_SOURCE_LEAF: Section 15.5.1, Section 5.2, Chapter 3. Their assertions are preserved as cited warnings, not imported as proved prerequisites of the scalar calculation."
+      },
+      {
+        "id": "N15.01",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "opening paragraph/display [0.21,0.15,0.86,0.21]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: minimize \\(R^2/(2\\eta)+\\eta S/2\\) with respect to \\(\\eta\\). The source does not print a separate feasible-set subscript here. Positive learning rates are inherited from the preceding analysis."
+      },
+      {
+        "id": "N15.02",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "following sentence [0.21,0.22,0.86,0.25]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: source asserts the optimal \\(\\eta=R/\\sqrt S\\). It supplies no derivative, square-completion, or AM–GM derivation."
+      },
+      {
+        "id": "N15.03",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "displayed result [0.40,0.27,0.64,0.32]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: source says this would give regret bound \\(R\\sqrt S\\)."
+      },
+      {
+        "id": "N15.04",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "warning paragraph [0.21,0.33,0.86,0.40]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / WARNING: using that stepsize requires all future gradients, which depend on \\(\\eta\\) itself, and the distance between the optimal solution and the initial point. An adversary can observe the chosen learning rates and select losses so that the chosen rate is no longer the correct one. Preserve both future-information and endogenous-gradient warnings."
+      },
+      {
+        "id": "N15.05",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "next paragraph, first half [0.21,0.41,0.86,0.45]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY: source calls this kind of rate impossible, citing a Chapter 5 lower bound, and says similar rates are possible with adaptive Section 4.2 and parameter-free Chapter 13 algorithms. Exact lower-bound quantifiers and alternative algorithm guarantees are outside this packet."
+      },
+      {
+        "id": "N15.06",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "paragraph second half [0.21,0.45,0.86,0.50]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / CONDITIONS: minimize a loose upper bound; assume gradient norms bounded by \\(L\\), explicitly \\(\\|g_t\\|_2\\le L\\); assume bounded diameter and upper-bound \\(R\\) by \\(D\\). Implicit range is every round \\(t=1,\\ldots,T\\), with the same \\(L\\)."
+      },
+      {
+        "id": "N15.07",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "minimization display [0.38,0.51,0.70,0.54]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: literal \\(\\eta^\\star=\\operatorname*{argmin}_{\\eta}\\{D^2/(2\\eta)+\\eta L^2T/2\\}=D/(L\\sqrt T)\\). The source writes a scalar `argmin` and no explicit positivity assumptions on \\(D,L\\) in this display."
+      },
+      {
+        "id": "N15.08",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "next prose/display [0.21,0.55,0.86,0.59]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE: resulting regret bound \\(DL\\sqrt T\\), numbered (2.1)."
+      },
+      {
+        "id": "N15.09",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "subsequent paragraph [0.21,0.60,0.86,0.63]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / ASYMPTOTIC BOUNDARY: source calls regret sublinear in time and promises Chapter 5 optimality up to constant multiplicative factors. The latter is an external source leaf, not proved on this page."
+      },
+      {
+        "id": "N15.C1",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "citations N15.05/N15.09",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY_SOURCE_LEAF: Chapter 5 lower bound/optimality, Section 4.2 adaptive algorithms, Chapter 13 parameter-free algorithms. These are context, not an AND requirement for the scalar inequality."
+      },
+      {
+        "id": "X15.10",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "Example 2.14 [0.21,0.65,0.86,0.76]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: application to the first chapter's guessing game, derivative \\(2(x-y_t)\\) on \\([0,1]\\), clipping projection, \\(O(\\sqrt T)\\) rate and Chapter 4 improvement. Not a premise or proof of the selected minimization. Kept in raw image/text for coverage and reader context."
+      },
+      {
+        "id": "N15.11",
+        "printed_page": 15,
+        "pdf_page_one_based": 27,
+        "region": "Example 2.15 opening [0.21,0.77,0.86,0.85]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY EXAMPLE: linear prediction \\(\\langle z_t,x_t\\rangle\\), \\(z_t\\in\\mathbb R^d\\), \\(V=\\mathbb R^d\\), Huber loss after observing \\(y_t\\). Included because the continuation shows that constant-rate reasoning need not assume bounded diameter. Not a proof dependency of N15.07."
+      },
+      {
+        "id": "N16.01",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Huber display [0.21,0.15,0.86,0.21]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY EXAMPLE: writing \\(r=\\langle z_t,x\\rangle-y_t\\) only as shorthand, source loss is \\(r^2/2\\) if \\(|r|\\le\\delta\\), else \\(\\delta(|r|-\\delta/2)\\)."
+      },
+      {
+        "id": "N16.02",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "paragraph after display [0.21,0.22,0.86,0.26]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY EXAMPLE: \\(\\delta\\) is the outlier threshold; use a constant learning rate \\(\\eta\\propto1/\\sqrt T\\). The coefficient of proportionality is not specified on this page."
+      },
+      {
+        "id": "N16.03",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "gradient display [0.21,0.27,0.86,0.31]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY EXAMPLE: gradient is \\(rz_t\\) if \\(|r|\\le\\delta\\), else \\(\\delta\\operatorname{sign}(r)z_t\\)."
+      },
+      {
+        "id": "N16.04",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "final example paragraph [0.21,0.31,0.86,0.36]",
+        "disposition": "NODE",
+        "content_and_reason": "NODE / BOUNDARY EXAMPLE: assume all \\(\\|z_t\\|_2\\) bounded, hence gradients bounded; cites Theorem 2.13 and says average performance approaches that of any fixed linear predictor. This uses fixed-comparator/initial-distance reasoning, not a finite diameter for \\(\\mathbb R^d\\)."
+      },
+      {
+        "id": "X16.05",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Section 2.2 heading/paragraph [0.21,0.39,0.86,0.50]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: nonsmooth convex losses, absolute/hinge-loss examples and replacing gradients by subgradients begin a new section, outside the differentiable-loss minimization target."
+      },
+      {
+        "id": "X16.06",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Section 2.2.1 introduction [0.21,0.53,0.86,0.56]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: transition to definitions for the next section."
+      },
+      {
+        "id": "X16.07",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Definition 2.16 [0.21,0.57,0.86,0.61]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: closed extended-real function definition, not a prerequisite of the selected scalar calculations."
+      },
+      {
+        "id": "X16.08",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "next paragraph/citation [0.21,0.61,0.86,0.65]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: equivalence with lower semicontinuity and Bauschke–Combettes Lemma 1.24 citation serve the next section."
+      },
+      {
+        "id": "X16.09",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Example 2.17 [0.21,0.65,0.86,0.67]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: closed indicator-function example belongs to next section."
+      },
+      {
+        "id": "X16.10",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Definition 2.18 [0.21,0.67,0.86,0.70]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: proper function definition belongs to next section."
+      },
+      {
+        "id": "X16.11",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "following paragraph [0.21,0.70,0.86,0.74]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: interest in convex proper functions belongs to next section."
+      },
+      {
+        "id": "X16.12",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Example 2.19 [0.21,0.74,0.86,0.76]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: proper indicator-function example belongs to next section."
+      },
+      {
+        "id": "X16.13",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "subgradient transition [0.21,0.77,0.86,0.79]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: introductory sentence for Definition 2.20."
+      },
+      {
+        "id": "X16.14",
+        "printed_page": 16,
+        "pdf_page_one_based": 28,
+        "region": "Definition 2.20/display [0.21,0.79,0.86,0.85]",
+        "disposition": "EXCLUDED",
+        "content_and_reason": "EXCLUDED: subgradient definition and its universal \\(y\\in\\mathbb R^d\\) inequality belong to the next section, not this gradient stepsize target."
+      }
+    ],
+    "source_gaps": [
+      {
+        "id": "G15.01",
+        "kind_and_use_site": "SOURCE_GAP at N15.02",
+        "missing_detail": "No proof of scalar optimality; no explicit \\(R>0,S>0\\) qualification; no treatment of zero coefficients; no explicit frozen-coefficient domain for the minimization."
+      },
+      {
+        "id": "G15.02",
+        "kind_and_use_site": "SOURCE_GAP at N15.03",
+        "missing_detail": "Substitution/attainment bridge and its nondegenerate-domain qualification are asserted, not displayed. It cannot erase the endogenous-gradient warning."
+      },
+      {
+        "id": "G15.03",
+        "kind_and_use_site": "SOURCE_GAP at N15.07, coefficient relaxation",
+        "missing_detail": "The paragraph gives \\(R\\le D\\) and \\(\\|g_t\\|\\le L\\), but does not display \\(S\\le TL^2\\) and the resulting scalar upper-bound inequality. Positivity of \\(\\eta\\) is needed to preserve directions."
+      },
+      {
+        "id": "G15.04",
+        "kind_and_use_site": "SOURCE_GAP at N15.07, argmin",
+        "missing_detail": "No derivation or explicit feasible domain for scalar argmin; no printed nonzero \\(D,L,T\\) restrictions or degenerate regime discussion."
+      },
+      {
+        "id": "G15.05",
+        "kind_and_use_site": "SOURCE_GAP at N15.08",
+        "missing_detail": "Substitution giving exactly \\(DL\\sqrt T\\) is asserted without displayed algebra."
+      },
+      {
+        "id": "G15.06",
+        "kind_and_use_site": "SOURCE_GAP at N15.09",
+        "missing_detail": "The sentence does not spell out that \\(D,L\\) must have suitable horizon-independent control for the sublinear-in-\\(T\\) reading."
+      },
+      {
+        "id": "G13.01",
+        "kind_and_use_site": "SOURCE_GAP / inherited-domain clarification",
+        "missing_detail": "Theorem 2.13 prints the monotonicity condition for \\(t=1,\\ldots,T-1\\); at \\(T=1\\) that condition alone is vacuous. Positivity of the actual learning rate is inherited from Lemma 2.12/algorithmic convention and division, and should be made explicit in any precise extracted scalar contract. This is a flag for review, not a source-invalidity verdict."
+      }
+    ],
+    "topology_document": "source-inventory-and-proposed-topology.md",
+    "note": "Structural extraction only. No semantic acceptance or completeness verdict."
+  },
+  "full_extraction_document": "source-extraction.md",
+  "source_only_review": {
+    "verdict": "accepted",
+    "binding": {
+      "private_identifier": "stage-a-source-topology-review.json",
+      "sha256": "dd2664cf3467415578773ea046408356e2ba688c63e0517e03e5e861cd8979d5",
+      "availability": "Exact original retained in private maintenance evidence; stable label is not a public file link."
+    },
+    "coverage": {
+      "inventory": 47,
+      "NODE": 35,
+      "EXCLUDED": 12,
+      "SOURCE_GAP": 7,
+      "in_scope_omissions_found": 0
+    },
+    "scope_qualifications": [
+      "N13.05 to N14.03 and N13.06 to N14.05 use assumptions only, never the consumer conclusion",
+      "Alternative source-supported composition is a proposal, not another printed p15 proof",
+      "G13.01 inherited positivity and all seven source gaps remain visible",
+      "This is not source-repair approval or any Lean semantic verdict"
+    ]
+  },
+  "source_gap_ledger_after_stage_d": {
+    "G15.01": "Positive frozen-coefficient minimization algebra supplied by B-level library; unrestricted formula/domain and algorithm interpretation not closed.",
+    "G15.02": "Positive fixed-coefficient value substitution supplied; no actual-regret/self-consistent-run application.",
+    "G15.03": "Loss-to-envelope coefficient relaxation not proved by this packet.",
+    "G15.04": "Positive D/G/T scalar optimizer supplied; literal unrestricted source argmin remains unapproved.",
+    "G15.05": "Positive scalar value DG sqrt(T) supplied; complete regret application remains separate.",
+    "G15.06": "Uniform horizon-asymptotic source conclusion not established by scalar packet.",
+    "G13.01": "Positive-step domain is explicit in scalar comparisons; original full OGD theorem/domain audit is not replaced."
+  },
+  "unrestricted_source_anchor_accepted": false,
+  "source_repair_approved": false,
+  "compiled_lean_dependency_graph": "Separate actual proof-value graph required for final candidate. This source/teaching topology is not that graph."
+}
