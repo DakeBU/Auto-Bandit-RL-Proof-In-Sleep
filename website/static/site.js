@@ -699,6 +699,7 @@
       if (fallback) fallback.setAttribute("aria-hidden", String(rendered));
     });
   };
+  document.addEventListener("reader-math-ready", () => revealRenderedMath(true));
   window.addEventListener("load", revealRenderedMath);
   [300, 1200].forEach((delay) => window.setTimeout(revealRenderedMath, delay));
   window.setTimeout(() => revealRenderedMath(true), 3200);
@@ -788,6 +789,7 @@
   window.addEventListener("resize", labelOverflowRegions);
   [300, 1200, 3200].forEach((delay) => window.setTimeout(labelOverflowRegions, delay));
   window.MathJax?.startup?.promise?.then(labelOverflowRegions);
+  document.addEventListener("reader-math-ready", labelOverflowRegions);
 
   const enhanceLeanCodeBlocks = () => {
     document.querySelectorAll("pre.lean-code").forEach((block, index) => {

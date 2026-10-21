@@ -218,3 +218,22 @@ and [Frontier](https://dakebu.github.io/Auto-Sampling-Theory-In-Sleep/example-ca
 BanditRLlib's graph model, theorem data, generated HTML, CSS, and JavaScript are
 independently implemented; no Samplinglib source, graph or theorem data,
 template, stylesheet, or prose is copied.
+
+## Mathematical prose
+
+Write inline formulas as `\(...\)` or `$...$`; reserve `\[...\]` and
+`$$...$$` for displayed equations. Keep an entire equation inside one pair
+of delimiters. Use code/preformatted blocks only for actual source, commands,
+and deliberate copyable TeX. The reader also recovers complete explicitly
+delimited formulas from legacy inline-code wrappers, without processing Lean
+code, source downloads or editable text areas.
+
+`math-reader.js` configures the shared MathJax startup and typesets newly added
+mathematical prose. The engine, TeX extensions and fonts are pinned to MathJax
+3.2.2 under `static/vendor/` and are published with the site; formula rendering
+does not require a third-party CDN. Preserve that directory when copying assets.
+
+After building, run `python website/scripts/test_math_browser.py --root SITE`.
+This Playwright gate blocks external network access, compiles all unique
+formulas, visits desktop/mobile reader pages, and checks delayed loading,
+inline formulas, live insertion and preservation of code/editor contents.

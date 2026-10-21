@@ -68,6 +68,12 @@ jobs:
             python3 website/scripts/check_site.py
           fi
 
+      - name: Check offline inline math and dynamic reader formulas
+        run: |
+          python3 -m pip install playwright==1.58.0
+          python3 -m playwright install --with-deps chromium
+          python3 website/scripts/test_math_browser.py --root website/_site --report math-browser-report.json
+
       - name: Upload the Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v4
