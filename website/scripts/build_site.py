@@ -903,7 +903,7 @@ def layout(
       options: {{ skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }}
     }};
   </script>
-  <script src="{root}/static/math-reader.js?v=20261021"></script>
+  <script src="{root}/static/math-reader.js?v=20261021-2"></script>
   <script defer src="{root}/static/vendor/mathjax@3.2.2/tex-mml-chtml.js"></script>"""
     extra_script_tags = "".join(
         f'\n  <script src="{root}/{html.escape(script)}?v={ASSET_VERSION}"></script>'
