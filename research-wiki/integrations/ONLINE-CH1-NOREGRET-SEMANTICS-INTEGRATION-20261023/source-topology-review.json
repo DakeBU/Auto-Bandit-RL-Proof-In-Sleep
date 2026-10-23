@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "review_id": "batch21-independent-source-topology-review-v2",
+  "reviewer": "/root/batch21_topology_reviewer",
+  "date": "2026-10-23",
+  "verdict": "ACCEPTED_WITH_EXPLICIT_SOURCE_GAPS",
+  "source_topology_reviewed": true,
+  "lifecycle_stage": "SOURCE_TOPOLOGY_REVIEWED",
+  "supersedes": {
+    "review": "review-v1.json",
+    "sha256": "60205418cfa7ae44f67813f2e58cdd83933db78236e36a3db466e2c2ed876a3a",
+    "effect": "R1 and R2 are closed for the v2 artifact hashes only. v1 remains an unchanged historical CHANGES_REQUIRED review."
+  },
+  "independence": {
+    "distinct_from_extractor_and_corrector": true,
+    "raw_source_rechecked": true,
+    "implementation_lean_read": false,
+    "other_review_verdicts_read": false,
+    "pr_description_read": false,
+    "blind_reports_read": false,
+    "semantic_review_v1_read": false,
+    "readerdraft_read": false,
+    "production_modified": false
+  },
+  "binding": {
+    "source_pdf": {
+      "path": "maintenance-evidence/batch19-source-extraction/source-pinned.pdf",
+      "revision": "arXiv:1912.13213v10",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    "source_contract": {
+      "path": "maintenance-evidence/batch21-source-review/source-contract.json",
+      "sha256": "fba458625eae303b000ad334aef888ec96edfe9cd44ced4bf4c2e674162893d9"
+    },
+    "inventory_mapping": {
+      "path": "maintenance-evidence/batch21-source-topology-v2/source-inventory-mapping.json",
+      "sha256": "94c312a23057196623a68fa7d3e266641b74aeec451d9cbcfb4b93f52cb8e612"
+    },
+    "topology": {
+      "path": "maintenance-evidence/batch21-source-topology-v2/source-topology.json",
+      "sha256": "881c42ce6f3563d2f42dd976cfbe863733040b54ddc09648ed537aeb12682d37"
+    },
+    "receipt": {
+      "path": "maintenance-evidence/batch21-source-topology-v2/receipt.json",
+      "sha256": "f0cd812387d53bd9d08e15cbca0c10519a46f50945f51b80d766b537e4dccea8"
+    }
+  },
+  "review_method": "Independent direct pdftotext extraction from the hash-pinned raw PDF and visual reinspection of PDF14 and PDF16 for both corrections, plus complete semantic comparison of v2 against the already independently source-reviewed v1 node/edge arrays, routes, mappings and exclusions. Receipt claims were checked against actual files rather than accepted on authority.",
+  "corrections": [
+    {
+      "id": "R1",
+      "status": "CLOSED",
+      "source_anchor": "Printed p2 / PDF14 general-regret definition and footnote 1",
+      "evidence": "GAP.W-loss-evaluability is a SOURCE_GAP in graph and mapping new_nodes, appears in source_gaps_retained, and points to C1.footnote1 by missing-specification edge. The node/edge explicitly leave evaluability undischarged for W, preserve ell_t:V->R, and do not impose W on the base V definition.",
+      "new_error_found": false
+    },
+    {
+      "id": "R2",
+      "status": "CLOSED",
+      "source_anchor": "Printed p4 / PDF16 paragraph immediately before Theorem 1.3",
+      "evidence": "The raw paragraph consists of exactly the two consecutive sentences described by source_region_splits. Its first upper-growth sentence maps to C1.log-upper-growth-claim as NODE. Its second minimax/lower-bound sentence remains precisely EXCLUDED under C1.log-necessity. The original whole mapping row is preserved exactly, and both subdivisions exhaust it without dropping the original ID.",
+      "edge_semantics": "The new source-claim-context edge to normalization provides context only. It expressly does not supply the omitted normalization calculation or ordinary-limit existence.",
+      "new_error_found": false
+    }
+  ],
+  "regression_checks": {
+    "source_pdf_hash_unchanged": true,
+    "source_contract_bytes_unchanged": true,
+    "v1_graph_bytes_unchanged": true,
+    "v1_mapping_bytes_unchanged": true,
+    "all_36_original_nodes_unchanged": true,
+    "all_37_original_edges_unchanged": true,
+    "source_routes_unchanged": true,
+    "alternative_routes_unchanged": true,
+    "forbidden_inferences_unchanged": true,
+    "all_52_original_inventory_ids_preserved_once": true,
+    "all_other_51_mapping_rows_unchanged": true,
+    "original_mixed_row_preserved_exactly": true,
+    "new_graph_nodes_match_mapping_new_nodes": true,
+    "unique_node_ids": true,
+    "no_dangling_edges": true,
+    "node_count": 38,
+    "edge_count": 39,
+    "explicit_source_gap_count": 5,
+    "meaning": "Structural checks establish preservation and referential integrity. The source-based judgment on R1/R2 comes from raw PDF reinspection."
+  },
+  "retained_source_judgments": [
+    "Ordinary printed lim is retained and distinguished from the prose upper-growth interpretation.",
+    "Every fixed comparator remains pointwise; no unasserted uniform threshold or expectation is introduced.",
+    "R_T(u) <= R_T^best is the correct comparator-order transfer direction.",
+    "The upper envelope gives eventual epsilon upper bounds but not ordinary-limit existence.",
+    "BTL induction and the FTL upper-bound proof remain AND routes; the proof summary is not an alternative OR route.",
+    "The loss-domain gap belongs only to the optional W extension, not the V case."
+  ],
+  "open_source_gaps": [
+    "GAP.mean-characterization-proof",
+    "GAP.no-regret-limit-convention",
+    "GAP.fixed-u-transfer-proof",
+    "GAP.log-over-horizon-proof",
+    "GAP.W-loss-evaluability"
+  ],
+  "exact_verified_scope": {
+    "primary": "Chapter 1 printed p2 / PDF14 general regret/no-regret definition, its fixed-comparator and loss-sequence context, Remark 1.1, and optional W footnote.",
+    "proof_context": "Printed pp1-6 / PDF13-18 game/FTL context, full Lemma 1.2 induction and Theorem 1.3 statement/proof/summary, with the separately labelled derived upper-growth connection.",
+    "exclusions": "The v1 exclusions remain valid, with C1.log-necessity now limited to the second sentence. Historical attribution remains Hannan (1957); excluding citation history from mathematical dependencies does not remove attribution.",
+    "full_book_coverage_claimed": false,
+    "full_chapter_completion_claimed": false,
+    "ordinary_limit_bridge_proved": false,
+    "lean_validation_claimed": false,
+    "semantic_roundtrip_claimed": false,
+    "reader_approval_claimed": false
+  },
+  "stage_meaning": "SOURCE_TOPOLOGY_REVIEWED holds for the bounded source graph and exact hashes in this report, including its explicit unresolved SOURCE_GAP nodes. It does not mean PROOF_SEALED, mathematical gap closure, full-book/global root closure, semantic acceptance, reader approval, merge or publication.",
+  "workspace": {
+    "canonical_source": "repository",
+    "branch": "main",
+    "commit": "3abffdcea4d7f96479d07f8d2b1d2be7ca1f6cd0",
+    "git_status": "clean",
+    "temporary_worktree_created": false
+  },
+  "remaining_required_corrections": [],
+  "public_projection": {
+    "original": {
+      "artifact": "batch21-topology-review/review-v2.json",
+      "sha256": "9ac60530b904d628e910c71107cb2ef6c67c22016d100e6026bedb8baf52d42e",
+      "availability": "Retained private maintenance evidence; a hash is not a public download URL."
+    },
+    "change": "Physical workspace prefixes replaced by logical repository or private-maintenance references. Mathematical payload and original verdicts retained. Original hashes refer to retained originals, not these projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

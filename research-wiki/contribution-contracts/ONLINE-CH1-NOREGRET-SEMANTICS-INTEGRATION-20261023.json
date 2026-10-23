@@ -1,0 +1,171 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-NOREGRET-SEMANTICS-INTEGRATION-20261023",
+  "route": "online-learning / Chapter1 no-regret semantics",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona; Chapter1 printed p2/PDF14 ordinary-limit definition and upper-growth prose; contextual Theorem1.3 printed pp4-6.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged3definitions,9theorems and15canary theorems fromPR192, preserving the conditional convergence premise and full original-scope evidence.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineNoRegretSemantics.lean",
+    "website/content/readings.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/declaration-boundaries.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.LimitNoRegret",
+    "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+    "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+    "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.potential",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.loss",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+    "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current-main no-regret and comparator declarations searched; original imported interfaces match accepted main.",
+      "Independent bounded canonicality search covered 846 library Lean files and 7871 pinned Mathlib files, followed by inspection of plausible candidates. No mandatory replacement or duplicate public declaration was found; optional local telescoping reuse remains recorded."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.NoRegret",
+      "BanditRL.OnlineLearning.comparatorRegret"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Conditional equivalence uses both direction lemmas; strict separation combines the upper-property proof and nonconvergence proof.",
+      "All12newproduction nodes lie in the union of the two endpoint VALUE closures; endpoints have actual canary consumers."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse shared regret and upper predicate. The separate literal predicate is demonstrably inequivalent without convergence. No per-book project or duplicated source definition is introduced."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch21-blind-decoder",
+    "source_reviewer": "independent-batch21-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The source ordinary lim display remains distinct from eventual upper control. The derived equivalence requires actual finite convergence for each fixed comparator; negative limits are allowed. Generic predicates describe one supplied trace, not an algorithm-level guarantee for all loss streams. The feasible zero learner and one fixed signed affine loss stream separate the predicates, with coefficients unbounded over time. No bounded-loss, squared-loss or meanPredict nonconvergence claim follows. The optional W extension requires losses evaluable on W. Chapter1/book completion, five historical OPEN artifact uses and branch retirement remain separate obligations."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Logical reconciliation and a fixed affine trace inside the existing online-learning setting; no certified cross-setting transport.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Independent local desktop/mobile pixel review accepted with explicit coverage: 135 images actually viewed, including all new declarations, six notes, new source card, horizontal formula extents and search panels. Only one inherited card sampled.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: six complete notes and one derived reconciliation card. Preserve all five existing teaching-preview entries and eleven prior cards; both new endpoints remain accessible as full note panels.",
+    "banditrlwiki": "updated: bounded source, semantic, dependency and retention records in research-wiki/integrations/ONLINE-CH1-NOREGRET-SEMANTICS-INTEGRATION-20261023",
+    "results_ledger": "no-change-with-reason: no complete chapter or unconditional ordinary-limit milestone achieved.",
+    "roadmap": "no-change-with-reason: later chapters and independent research obligations retain their owners.",
+    "website_surfaces": [
+      "Online foundations reader and chapter",
+      "Six formula notes",
+      "Shared Lean declaration graph",
+      "Three full definition-body disclosures"
+    ]
+  },
+  "truth_boundary": "The source ordinary lim display remains distinct from eventual upper control. The derived equivalence requires actual finite convergence for each fixed comparator; negative limits are allowed. Generic predicates describe one supplied trace, not an algorithm-level guarantee for all loss streams. The feasible zero learner and one fixed signed affine loss stream separate the predicates, with coefficients unbounded over time. No bounded-loss, squared-loss or meanPredict nonconvergence claim follows. The optional W extension requires losses evaluable on W. Chapter1/book completion, five historical OPEN artifact uses and branch retirement remain separate obligations.",
+  "verification": {
+    "focused_checks": [
+      "3331-job two-module focused build passed with original production/canary bytes.",
+      "27actual proposition identities,7definition identities and34standard axiom closures passed."
+    ],
+    "bandit_check": "The staged v2 candidate passed shared root9095jobs,Tests9249jobs,ProofGraphExport,placeholder scan and471tests with7environment skips. Subsequent changes only affect reader navigation and maintenance metadata; final committed-candidate verification remains pending.",
+    "site_build": "Actual --lean-verified site build passed on the v3 reader with exact Lean source carry-forward from the complete v2 gate; final committed-candidate gate remains separate.",
+    "site_check": "Site check, 26 declaration/module searches and independent rendered review passed for the bounded local increment.",
+    "independent_review": "Source, semantic, topology, bounded canonicality, public projection, five-entry reader capacity and rendered presentation accepted with explicit deltas. Original failed evidence is retained. Final committed-candidate, CI, main/live and original-scope disposition remain pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in Git and immutable PR evidence."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "No failed mathematical route; original production bytes reused unchanged.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "fixed-trace-limit-reconciliation"
+      ],
+      "expected_information_gain": "Single original route with required distinct source/blind/topology/reader reviews.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main 3abffdcea4d7f96479d07f8d2b1d2be7ca1f6cd0"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Finite-limit sign bridge, conditional equivalence, telescoping parity potential and distinct cofinal limits.",
+      "selection_reason": "No competing proof directions."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Bounded canonicality, exact generated disclosures and independent desktop/mobile pixel review accepted for this increment. Global purification and final Exposition Seal remain pending; the review does not reapprove all inherited cards.",
+      "source_expansion_nodes": [
+        "C1.no-regret",
+        "C1.no-regret-prose",
+        "GAP.no-regret-limit-convention"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.LimitNoRegret",
+        "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+        "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+        "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.potential",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.loss",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

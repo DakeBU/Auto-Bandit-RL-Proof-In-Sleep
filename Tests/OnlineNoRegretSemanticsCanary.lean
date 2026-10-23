@@ -1,0 +1,88 @@
+import BanditRLProof.OnlineNoRegretSemantics
+
+open Filter BanditRL.OnlineLearning
+
+namespace NoRegretSemanticsProbe
+
+/-- An actual affine stream with a feasible constant learner and negative comparator limits. -/
+noncomputable def linearLoss (_ : ℕ) (u : ℝ) : ℝ := u
+
+theorem linear_regret (u : ℝ) (T : ℕ) :
+    comparatorRegret linearLoss (fun _ => 0) u T = -(T : ℝ) * u := by
+  simp [comparatorRegret, linearLoss, nsmul_eq_mul]
+
+theorem linear_normalized (u : ℝ) (T : ℕ) (hT : 0 < T) :
+    comparatorRegret linearLoss (fun _ => 0) u T / T = -u := by
+  rw [linear_regret]
+  have h : (T : ℝ) ≠ 0 := by positivity
+  field_simp
+
+theorem linear_converges (u : ℝ) :
+    Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) u T / T)
+      atTop (nhds (-u)) := by
+  apply tendsto_const_nhds.congr'
+  filter_upwards [eventually_gt_atTop (0 : ℕ)] with T hT
+  exact (linear_normalized u T hT).symm
+
+theorem linear_literal :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) := by
+  intro u hu
+  exact ⟨-u, neg_nonpos.mpr hu.1, linear_converges u⟩
+
+theorem linear_upper :
+    NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) :=
+  limitNoRegret_implies_noRegret _ _ _ linear_literal
+
+theorem negative_limit_allowed :
+    Tendsto (fun T : ℕ => comparatorRegret linearLoss (fun _ => 0) 1 T / T)
+      atTop (nhds (-1)) ∧
+    NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ∧ (-1 : ℝ) ≤ 0 := by
+  refine ⟨linear_converges 1, linear_upper, ?_⟩
+  exact noRegret_limit_nonpos _ _ _ linear_upper 1 (by norm_num) (-1) (linear_converges 1)
+
+theorem iff_on_linear :
+    LimitNoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) ↔
+      NoRegret (Set.Icc (0 : ℝ) 1) linearLoss (fun _ => 0) :=
+  limitNoRegret_iff_noRegret_of_converges _ _ _ (fun u _ => ⟨-u, linear_converges u⟩)
+
+theorem actual_mean_upper :
+    NoRegret (Set.Icc (0 : ℝ) 1) (fun (_ : ℕ) x => x ^ 2)
+      (meanPredict (fun _ => 0)) := by
+  simpa using meanPredict_noRegret (fun _ => 0) (by intro t; norm_num)
+
+theorem actual_mean_negative_T2 :
+    comparatorRegret (fun (_ : ℕ) x => x ^ 2) (meanPredict (fun _ => 0)) 1 2 / 2 =
+      (-7 : ℝ) / 8 := by
+  norm_num [comparatorRegret, meanPredict, empiricalMean, Finset.sum_range_succ]
+
+theorem obstruction_feasible :
+    (0 : ℝ) ∈ Set.Icc 0 1 ∧ (1 : ℝ) ∈ Set.Icc 0 1 ∧
+      ∀ t : ℕ, (fun (_ : ℕ) => (0 : ℝ)) t ∈ Set.Icc 0 1 := by
+  norm_num
+
+theorem actual_signed_losses :
+    NoRegretCounterexample.loss 0 1 = 0 ∧
+    NoRegretCounterexample.loss 1 1 = 2 ∧
+    NoRegretCounterexample.loss 2 1 = -2 ∧
+    NoRegretCounterexample.loss 3 1 = 4 := by
+  norm_num [NoRegretCounterexample.loss, NoRegretCounterexample.potential]
+
+theorem zero_horizon :
+    comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 0 = 0 := by
+  rw [NoRegretCounterexample.regret_eq]
+  norm_num [NoRegretCounterexample.potential]
+
+theorem even_T2 :
+    comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 2 / 2 = -1 := by
+  simpa using NoRegretCounterexample.normalized_even 0
+
+theorem odd_T3 :
+    comparatorRegret NoRegretCounterexample.loss (fun _ => 0) 1 3 / 3 = 0 := by
+  simpa using NoRegretCounterexample.normalized_odd 1
+
+theorem same_process_strict :
+    NoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0) ∧
+      ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) NoRegretCounterexample.loss (fun _ => 0) :=
+  NoRegretCounterexample.strict_separation
+
+end NoRegretSemanticsProbe
