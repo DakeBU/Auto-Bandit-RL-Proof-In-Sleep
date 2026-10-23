@@ -444,6 +444,7 @@ def load_declaration_boundaries() -> list[dict[str, Any]]:
                 or not file.endswith(".lean")
                 or type(start) is not int or type(end) is not int
                 or start < 1 or end < start
+                or type(entry.get("include_definition_body", False)) is not bool
                 or not isinstance(entry.get("reason"), str) or not entry["reason"].strip()):
             raise ValueError("Invalid or duplicate declaration boundary")
         for key in ("file_sha256", "block_LF_sha256"):
@@ -477,7 +478,12 @@ def apply_declaration_boundaries(
             raise ValueError("Stale declaration boundary block: " + entry["full_name"])
         if any(line.strip() for line in visible_lines[end:next_line - 1]):
             raise ValueError("Declaration boundary skips source code: " + entry["full_name"])
-        declaration["statement"] = compact_statement(lines[start - 1:end], 0)
+        # Only reviewed, hash-bound public definition ranges may expose their
+        # complete body. The default signature scanner intentionally stops at :=.
+        declaration["statement"] = (
+            block if entry.get("include_definition_body", False)
+            else compact_statement(lines[start - 1:end], 0)
+        )
 
 
 def scan_module(path: Path, boundaries: list[dict[str, Any]] | None = None) -> dict[str, Any]:

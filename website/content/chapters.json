@@ -884,9 +884,9 @@
       "title": "Online Learning: foundations and Follow-the-Leader",
       "short_title": "Online foundations",
       "status": "compiled",
-      "summary": "Be-the-Leader, past-mean guessing bounds, the arbitrary-initial predictor and recursive state, explicit comparator domains, and finite IID information identities in the shared library.",
+      "summary": "Be-the-Leader and past-mean bounds, a recursive predictor state, comparator domains, finite IID information identities, and a derived logarithmic lower bound for randomized causal guessing in the shared library.",
       "audience": "Readers beginning Orabona Chapter 1; all declarations share the canonical Lean graph.",
-      "completion_definition": "Bounded integration of the Chapter 1 core and the arbitrary-initial predictor with its recursive mean/count state. Chapter 1 and the whole book remain incomplete; the mandatory proof-leaf total remains unknown.",
+      "completion_definition": "Bounded integration of the Chapter1 core, arbitrary-initial predictor/recursive state and quantitative derived lower support. Chapter1 and the whole book remain incomplete; the mandatory proof-leaf total remains unknown.",
       "completion_blockers": [
         "Full Chapter 1 source obligations remain separate from this core integration."
       ],
@@ -894,7 +894,8 @@
         "Distinguish the actual past-only prediction from a hindsight leader.",
         "Derive the logarithmic regret bound from actual mean updates.",
         "Distinguish arbitrary deterministic loss sequences from IID expectation guarantees.",
-        "Prove a recursive count/value state agrees with the strict-prefix predictor and isolate the half-initialization regret specialization."
+        "Prove a recursive count/value state agrees with the strict-prefix predictor and isolate the half-initialization regret specialization.",
+        "Explain how a correlated binary law yields one fixed sequence with logarithmic regret in expectation over an admissible randomized policy."
       ],
       "module_globs": [
         "BanditRLProof/OnlineLearningAsymptotic.lean",
@@ -906,14 +907,14 @@
         "BanditRLProof/OnlineLearningMean.lean",
         "BanditRLProof/OnlineLearningRegret.lean",
         "BanditRLProof/OnlineLearningStochastic.lean",
-        "BanditRLProof/OnlineLearningFTLState.lean"
+        "BanditRLProof/OnlineLearningFTLState.lean",
+        "BanditRLProof/OnlineGuessingLogLower.lean"
       ],
       "open_gaps": [
-        "The arbitrary-initial predictor and recursive exact-real state provide a bounded Chapter 1 interface. The ordinary-limit reconciliation, general-initial regret guarantees, general stochastic strategy classes, optimal-order lower bound and later modules remain separate. Chapter 1 and the book remain incomplete.",
+        "The library proves a finite-horizon lower bound for an explicitly measurable, globally interval-valued seed/history policy class. The source supplies neither this construction nor these constants; sharpness and an unrestricted formal minimax equivalence are not claimed.",
         "The printed ordinary-limit definition is not identified silently with the implemented eventual upper property.",
-        "Pointwise support and globally bounded finite-history policies are explicit restrictions; general stochastic strategy-class coverage is separate.",
-        "The source optimal-order lower-bound claim is not proved here. Exercises 1.1 and 1.2 and historical references are classified separately.",
-        "Exercises 1.1 and 1.2 remain optional/planned outside this bounded main-text integration. The mandatory proof-leaf total is unknown; the lower-bound/source audit and general-initial regret obligations remain unclosed here. Historical contributor acceptance is superseded only by the current manifest and gates."
+        "The arbitrary-initial predictor/recursive state does not supply general-initial upper-regret guarantees. General stochastic strategy-class coverage and later module audits remain separate.",
+        "Exercises1.1 and1.2 and historical references are classified separately. The mandatory proof-leaf total is unknown; Chapter1 and the whole book remain incomplete."
       ]
     },
     {
