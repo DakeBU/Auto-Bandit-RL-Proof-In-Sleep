@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T13:59:29+00:00",
+  "generated": "2026-10-23T17:36:26+00:00",
   "declarations": [
     {
       "kind": "def",
@@ -54552,6 +54552,70 @@
       "file": "BanditRLProof/OnlineGuessingOGD.lean",
       "line": 74,
       "statement": "theorem example_2_14 (y : \u2115 \u2192 \u211d) (x0 : \u211d) (hx0 : x0 \u2208 Icc (0 : \u211d) 1) (T : \u2115) (hT : 0 < T) (hy : \u2200 t < T, y t \u2208 Icc (0 : \u211d) 1) : \u2200 u \u2208 Icc (0 : \u211d) 1, regret unitInterval (1 / (2 * Real.sqrt T)) (fun t x => (x-y t)^2) x0 u T \u2264 2 * Real.sqrt T"
+    },
+    {
+      "kind": "def",
+      "name": "privateSeedPastInformation",
+      "full_name": "BanditRL.OnlineLearning.privateSeedPastInformation",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 9,
+      "statement": "def privateSeedPastInformation {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace Seed] (S : \u03a9 \u2192 Seed) (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (t : \u2115) : MeasurableSpace \u03a9"
+    },
+    {
+      "kind": "theorem",
+      "name": "independent_private_seed_pair",
+      "full_name": "BanditRL.OnlineLearning.independent_private_seed_pair",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 15,
+      "statement": "theorem independent_private_seed_pair {\u03a9 : Type u} {Seed : Type v} {\u03a7 : Type w} {\u0396 : Type z} [MeasurableSpace \u03a9] [MeasurableSpace Seed] [MeasurableSpace \u03a7] [MeasurableSpace \u0396] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (S : \u03a9 \u2192 Seed) (X : \u03a9 \u2192 \u03a7) (Y : \u03a9 \u2192 \u0396) (hS : Measurable S) (hX : Measurable X) (hY : Measurable Y) (hseed : IndepFun S (fun \u03c9 => (X \u03c9, Y \u03c9)) \u03bc) (hXY : IndepFun X Y \u03bc) : IndepFun (fun \u03c9 => (S \u03c9, X \u03c9)) Y \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "private_seed_past_independent",
+      "full_name": "BanditRL.OnlineLearning.private_seed_past_independent",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 38,
+      "statement": "theorem private_seed_past_independent {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (t : \u2115) : IndepFun (fun \u03c9 => (S \u03c9, fun i : (\u2191(Finset.range t) : Type) => Y i \u03c9)) (Y t) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "privateSeedPastInformation_monotone",
+      "full_name": "BanditRL.OnlineLearning.privateSeedPastInformation_monotone",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 60,
+      "statement": "theorem privateSeedPastInformation_monotone {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace Seed] (S : \u03a9 \u2192 Seed) (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) : Monotone (privateSeedPastInformation S Y)"
+    },
+    {
+      "kind": "theorem",
+      "name": "predictable_private_seed_independent",
+      "full_name": "BanditRL.OnlineLearning.predictable_private_seed_independent",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 78,
+      "statement": "theorem predictable_private_seed_independent {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (t : \u2115) (F : MeasurableSpace \u03a9) (hF : F \u2264 privateSeedPastInformation S Y t) (P : \u03a9 \u2192 \u211d) (hP : Measurable[F] P) : IndepFun P (Y t) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "randomized_history_policy_independent",
+      "full_name": "BanditRL.OnlineLearning.randomized_history_policy_independent",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 95,
+      "statement": "theorem randomized_history_policy_independent {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (policy : (t : \u2115) \u2192 (Seed \u00d7 ((\u2191(Finset.range t) : Type) \u2192 \u211d)) \u2192 \u211d) (hp : \u2200 t, Measurable (policy t)) (t : \u2115) : IndepFun (fun \u03c9 => policy t (S \u03c9, fun i => Y i \u03c9)) (Y t) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "predictable_private_seed_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 108,
+      "statement": "theorem predictable_private_seed_expectedFixed_excess {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (F : \u2115 \u2192 MeasurableSpace \u03a9) (hF : \u2200 t, F t \u2264 privateSeedPastInformation S Y t) (prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (hP : \u2200 t, Measurable[F t] (prediction t)) (hpb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, prediction t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : expectedFixedRegret \u03bc Y prediction T = (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (prediction t \u03c9 - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) \u2227 0 \u2264 expectedFixedRegret \u03bc Y prediction T"
+    },
+    {
+      "kind": "theorem",
+      "name": "randomized_history_policy_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "line": 143,
+      "statement": "theorem randomized_history_policy_expectedFixed_excess {\u03a9 : Type u} {Seed : Type v} [MeasurableSpace \u03a9] [MeasurableSpace Seed] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (S : \u03a9 \u2192 Seed) (hS : Measurable S) (hseed : IndepFun S (fun \u03c9 t => Y t \u03c9) \u03bc) (policy : (t : \u2115) \u2192 (Seed \u00d7 ((\u2191(Finset.range t) : Type) \u2192 \u211d)) \u2192 \u211d) (hp : \u2200 t, Measurable (policy t)) (hpb : \u2200 t s z, (\u2200 i, z i \u2208 Set.Icc (0 : \u211d) 1) \u2192 policy t (s, z) \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : expectedFixedRegret \u03bc Y (fun t \u03c9 => policy t (S \u03c9, fun i => Y i \u03c9)) T = (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (policy t (S \u03c9, fun i => Y i \u03c9) - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) \u2227 0 \u2264 expectedFixedRegret \u03bc Y (fun t \u03c9 => policy t (S \u03c9, fun i => Y i \u03c9)) T"
     },
     {
       "kind": "def",

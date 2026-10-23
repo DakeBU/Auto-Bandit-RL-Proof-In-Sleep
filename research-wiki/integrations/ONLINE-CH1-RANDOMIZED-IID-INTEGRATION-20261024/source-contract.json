@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "affiliation": "KAUST (bibliographic metadata; not a mathematical premise)",
+    "version": "arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "pdf": "maintenance-evidence/batch18-source-extraction/source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "section": "Chapter1, What is Online Learning?",
+    "printed_pages": [
+      1,
+      2
+    ],
+    "pdf_pages_1_based": [
+      13,
+      14
+    ],
+    "pdf_pages_0_based": [
+      12,
+      13
+    ]
+  },
+  "independence": {
+    "role": "source-only-extractor",
+    "status": "pending-independent-review",
+    "implementation_Lean_or_proofs_read": false,
+    "implementation_dependent_reviews_read": false,
+    "source_graph_self_approved": false,
+    "history_disclosure": "This agent previously extracted the same pages for batch23 and reviewed website pixels. For batch24 the raw PDF was hashed again, fresh pdftotext output and fresh Poppler page images were read. Only the earlier page inventory (not its topology or verdict) was reread and reused after exact-byte comparison. The new topology is reconstructed for this task. This is not a claim of zero prior chapter familiarity.",
+    "original_contract_treatment": "Only exact-head source-card-v2.json and contract-v2.md were inspected from PR195. They are untrusted scope proposals, not evidence that any theorem or proof is implemented or correct.",
+    "no_acceptance_authority": true
+  },
+  "repository_context": {
+    "canonicalMain": "f0540e74ad13efd830da994a75f0db23e8ee2417",
+    "originalPR": 195,
+    "originalHead": "372c9a6c138c50d7a5e08e91351238f231565219",
+    "originalBase": "b08f8312259ae10032b6318060e18911532d4610",
+    "canonical_worktree_clean_when_inspected": true,
+    "repository_mutations": false
+  },
+  "printed_contract": {
+    "objects": "Rounds t=1,...,T; target y_t in [0,1], prediction x_t in [0,1], then target revealed and loss (x_t-y_t)^2. In the IID discussion the targets have one fixed law on [0,1] chosen before play.",
+    "feedback": "Prediction is chosen before the current target is revealed; previous observations can inform a strategy. The displayed x_t notation does not imply a deterministic constant or independence by itself.",
+    "oracle": "If the distribution were known, predicting its mean every round has expected cumulative loss T sigma^2. This is an oracle benchmark, not an unknown-law algorithm.",
+    "optimality": "The author asserts that one cannot do better, and later that cumulative and average expected excess are nonnegative. No proof of this adaptive lower bound is printed here.",
+    "equation_1_1": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - T sigma^2",
+    "equation_1_2": "(1/T) E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2",
+    "expected_fixed_rewrite": "E[sum_{t=1}^T (x_t-Y_t)^2] - min_{u in [0,1]} E[sum_{t=1}^T (u-Y_t)^2]",
+    "quantifier_order": "One distribution is fixed before play. A fixed comparator u is a scalar held constant across rounds and sample outcomes; the minimum is outside expectation. Learner predictions may depend on strict-past observations. Positive finite T underlies the average formula.",
+    "success_criterion": "Cumulative excess grows sublinearly, equivalently average excess tends to zero as T tends to infinity. This is a criterion, not a proved achievement or rate.",
+    "randomization_scope": "No seed, tape, sigma field, filtration, randomization kernel, conditioning formula or expectation over private randomization is defined on these pages. The explicit expectation subscript lists target variables. A private-tape expectation requires a declared derived extension.",
+    "contextual_boundaries": [
+      "The arbitrary-sequence pathwise regret on page2 is distinct from minimum expected fixed loss.",
+      "The deterministic qualifier belongs to the removal-of-expectation transition, not a formal randomized IID model.",
+      "Pathwise regret may be signed; the printed nonnegativity assertion refers to the IID expected quantities.",
+      "Generic no-regret uses an ordinary limit for each fixed comparator, not a printed limsup, uniform-comparator theorem or convergence proof.",
+      "Footnote1 permits a larger action set W in some settings; it is not extra side information or an IID randomization theorem."
+    ]
+  },
+  "proposed_derived_contract": {
+    "authority": "Interpretation of the exact-head source contract only. No Lean headers were read; exact signature equivalence remains for separate semantic review.",
+    "ambient_model": "A probability space carrying measurable real target coordinates (Y_t) that are jointly independent, identically distributed, and almost surely in [0,1]. A measurable private tape S takes values in an arbitrary measurable space and is independent of the WHOLE target-process random element with its product sigma field.",
+    "information": "Use G_t = sigma(S, Y_s for s<t). Each prediction A_t is real and F_t-measurable for a sigma field F_t subordinate to G_t. The F_t family need not be monotone. G_t is monotone. No current/future target information or arbitrary side information is admitted.",
+    "concrete_policy": "At zero-based t, A_t = pi_t(S,(Y_0,...,Y_{t-1})); pi_t is jointly measurable on tape times finite history. For every seed and every history in [0,1]^t its output lies in [0,1]. Only actual histories must be legal almost surely.",
+    "derived_expected_endpoint": "For finite T, with m=E[Y_0], E[sum_{t<T}(A_t-Y_t)^2] - min_{u in [0,1]} E[sum_{t<T}(u-Y_t)^2] = sum_{t<T} E[(A_t-m)^2] >= 0.",
+    "endpoint_provenance": "The displayed identity here makes explicit the contract phrase exact cumulative literal expected-fixed excess identity. It is a proposed derived mathematical target, not a formula printed on pages1-2, and not a claim that an implementation has this exact signature.",
+    "expectation": "Expectation is over the joint tape/target probability law. No per-tape lower bound, pathwise nonnegative regret, or interchange of expectation and hindsight minimum follows.",
+    "time": "Source t=1,...,T maps to derived t=0,...,T-1. At t=0 the strict history is empty, but the first prediction may depend on S. T=0 finite identity is an empty-sum extension; it does not define the source average at zero.",
+    "exclusions": [
+      "No universal randomized-kernel representation.",
+      "No completed sigma fields or general AE-measurable factorization.",
+      "No universal side-information class.",
+      "No high-probability, pathwise or almost-sure regret guarantee.",
+      "No asymptotic success, no rate, and no successful unknown-law learner.",
+      "No implementation/proof acceptance or chapter completion."
+    ]
+  },
+  "assumption_delta_ledger": [
+    {
+      "item": "IID common interval law",
+      "classification": "same",
+      "detail": "Printed standing model; explicit joint independence must retain its full meaning."
+    },
+    {
+      "item": "Prediction before revelation",
+      "classification": "same",
+      "detail": "Printed move order; formal causal information relation is not printed."
+    },
+    {
+      "item": "Probability and moment formalization",
+      "classification": "mathematically-necessary",
+      "detail": "Measurability/integrability are required to interpret the expectation statements; must be derived where available, not inserted as proof conclusions."
+    },
+    {
+      "item": "Arbitrary measurable independent private tape",
+      "classification": "generalization",
+      "detail": "Contract extension; whole-process independence is explicit. It is not a literal printed premise."
+    },
+    {
+      "item": "Subordinate seed-plus-strict-past information",
+      "classification": "generalization",
+      "detail": "One precise class of causal randomized predictions, not a universal representation theorem."
+    },
+    {
+      "item": "Almost-sure support and legal-history-only feasibility",
+      "classification": "generalization",
+      "detail": "Formal probability-law interpretation and off-history generality; all required moments and actual feasibility remain obligations."
+    },
+    {
+      "item": "Finite exact squared-deviation identity",
+      "classification": "generalization",
+      "detail": "Derived identity strengthening the printed lower benchmark, absent from printed proof."
+    },
+    {
+      "item": "T=0",
+      "classification": "generalization",
+      "detail": "Disclosed empty-prefix extension only."
+    },
+    {
+      "item": "Source asymptotic criterion",
+      "classification": "unresolved",
+      "detail": "Finite identity/nonnegativity does not discharge success or normalization/convergence obligations."
+    }
+  ],
+  "source_gap_ids": [
+    "G-PROBABILITY-FOUNDATIONS",
+    "G-MEAN-FIXED-OPTIMUM",
+    "G-CAUSAL-OPTIMALITY",
+    "G-NORMALIZATION",
+    "G-PATHWISE-MINIMUM"
+  ],
+  "derived_extension_obligation_ids": [
+    "E-JOINT-REGROUPING",
+    "E-GENERATED-INFORMATION",
+    "E-POLICY-MEASURABILITY",
+    "E-AE-MOMENTS",
+    "E-CUMULATIVE-SQUARE-IDENTITY",
+    "E-LEGAL-HISTORY"
+  ],
+  "inputBindings": {
+    "original195-contract-v2.md": "e136f498b04eafbfe0b945670954c255a50ffefaa3c262a7631c86dc6daa89ae",
+    "original195-source-card-v2.json": "887cb30834b0993ba50d6ca72930ffbe839cdb0c9eae414cc95d1c77897baac6",
+    "page-013.png": "6aee151dd99e426d9379b3cd7c8a5ebaa7abd10b18349d3f06024cbca92d62d3",
+    "page-014.png": "fc92d15d52b5930548d678c7912560de2db2f35e49557184acd3841a6b45c0f2",
+    "raw-pdf13-printed1.txt": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+    "raw-pdf14-printed2.txt": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+    "pinnedPDF": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "reusedInventory": "76b8403a0bc15da71c771c14d415e50d7e7b96f610d40529bb900928e3668310"
+  },
+  "inputPaths": {
+    "pinnedPDF": "maintenance-evidence\\batch18-source-extraction\\source-pinned.pdf",
+    "reusedInventory": "maintenance-evidence\\batch23-source-extraction\\source-inventory-mapping.json"
+  },
+  "protocolBindings": {
+    "workspace/ABRL\\README.md": "b0e9b423d8353b6f1347ca9115842618990f3499a5de4e5352981933a50566bd",
+    "repository\\docs\\proof-digestion-protocol.md": "8a183dde41c2b58f5c6a6e2fa4158ccc64ad3e427b9349110d15141aed254492",
+    "repository\\docs\\theorem-publication-protocol.md": "71772f56444ba1e919aab9cc0d8caab3f0fb6b20887a12aa0f73001afd1c4385",
+    "local-runtime\\plugins\\cache\\openai-primary-runtime\\pdf\\26.1017.22136\\skills\\pdf\\SKILL.md": "5e14b4b8f944dc5e678ee703dfacf583010431d64d5d829902c5b2541f736c89"
+  },
+  "fresh_raw_comparison": {
+    "raw-pdf13-printed1.txt": {
+      "freshSHA256": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+      "priorSHA256": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+      "exactBytesEqual": true
+    },
+    "raw-pdf14-printed2.txt": {
+      "freshSHA256": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+      "priorSHA256": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+      "exactBytesEqual": true
+    }
+  },
+  "actual_pixel_coverage": [
+    "page-013.png",
+    "page-014.png"
+  ],
+  "pixel_method": "Fresh Poppler pdftoppm -f 13 -l 14 -scale-to 2000 -png; both full pages opened with tools.view_image. Formula order and footer/footnote checked against actual pixels.",
+  "public_projection": {
+    "original": {
+      "artifact": "batch24-source-extraction/source-contract.json",
+      "sha256": "f5f06afabd4a83c3840923e048956c9d735014872e041b64c1e0aebafa98c78c",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Mathematics and scoped original verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

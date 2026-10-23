@@ -1,0 +1,119 @@
+{
+  "schema": "private-tape-statement-map-v1",
+  "sourcePR": 195,
+  "sourceHead": "372c9a6c138c50d7a5e08e91351238f231565219",
+  "sourceBase": "b08f8312259ae10032b6318060e18911532d4610",
+  "integrationBase": "f0540e74ad13efd830da994a75f0db23e8ee2417",
+  "frozenSignatures": {
+    "artifact": "batch24-statement-seal-v2/statement-seal.json",
+    "sha256": "bd928641593aaff5b754aeeda84dbf2cc678522421863525f5a955d5034721a1",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "neutralPacket": {
+    "artifact": "batch24-statement-seal-v2/neutral-statements.lean",
+    "sha256": "93fd524faa37acf9208ef7e3cb198816048cfe3df25d422eaf9dbb5ccca10b2e",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "blindReconstruction": {
+    "artifact": "batch24-blind-decoding-v1/blind-decoding.json",
+    "sha256": "f72b5fed50aa743e071dbd4dd5ffc83c2cd08c4ec430a840e28832a3179caee1",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "headers": [
+    {
+      "id": "R001",
+      "name": "BanditRL.OnlineLearning.independent_private_seed_pair",
+      "header": "theorem independent_private_seed_pair\n    {Ω : Type u} {Seed : Type v} {Χ : Type w} {Ζ : Type z}\n    [MeasurableSpace Ω] [MeasurableSpace Seed] [MeasurableSpace Χ] [MeasurableSpace Ζ]\n    (μ : Measure Ω) [IsProbabilityMeasure μ]\n    (S : Ω → Seed) (X : Ω → Χ) (Y : Ω → Ζ)\n    (hS : Measurable S) (hX : Measurable X) (hY : Measurable Y)\n    (hseed : IndepFun S (fun ω => (X ω, Y ω)) μ) (hXY : IndepFun X Y μ) :\n    IndepFun (fun ω => (S ω, X ω)) Y μ",
+      "sha256": "f9ec680b30f764f1acf14c77ab765283cdd291d9621c299638444a45ecc4e6fb"
+    },
+    {
+      "id": "R002",
+      "name": "BanditRL.OnlineLearning.private_seed_past_independent",
+      "header": "theorem private_seed_past_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) :\n    IndepFun (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω)) (Y t) μ",
+      "sha256": "e7af8a315fcb7cc1ac7876da6b41122d34f3a293e6eadfcfa8616b5f2c55b923"
+    },
+    {
+      "id": "R003",
+      "name": "BanditRL.OnlineLearning.privateSeedPastInformation_monotone",
+      "header": "theorem privateSeedPastInformation_monotone\n    {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed]\n    (S : Ω → Seed) (Y : ℕ → Ω → ℝ) :\n    Monotone (privateSeedPastInformation S Y)",
+      "sha256": "5a876dd04c8ad83bcba823e316800ff15e35a41375987aa922787fc942b2ab54"
+    },
+    {
+      "id": "R004",
+      "name": "BanditRL.OnlineLearning.predictable_private_seed_independent",
+      "header": "theorem predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ) (hP : Measurable[F] P) :\n    IndepFun P (Y t) μ",
+      "sha256": "55b67294f53f45be0b469749242be5d659d2b3c3331a0db373bb5278160357aa"
+    },
+    {
+      "id": "R005",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_independent",
+      "header": "theorem randomized_history_policy_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t)) (t : ℕ) :\n    IndepFun (fun ω => policy t (S ω, fun i => Y i ω)) (Y t) μ",
+      "sha256": "8a7b8c1b065362f4b559237e4baeb05f09347e8d3fd37d61ca81c48b07994b5a"
+    },
+    {
+      "id": "R006",
+      "name": "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess",
+      "header": "theorem predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ) (hP : ∀ t, Measurable[F t] (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T",
+      "sha256": "877c1becd9403cd9bb1ad962983e72516455a79588955161f4c3b04efc763976"
+    },
+    {
+      "id": "R007",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "header": "theorem randomized_history_policy_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (policy t (S ω, fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T",
+      "sha256": "d319a3d64500d4dd72e869e7c258a95bb3932eaef8af93b309103f30b4cf3275"
+    }
+  ],
+  "definition": {
+    "name": "BanditRL.OnlineLearning.privateSeedPastInformation",
+    "kind": "Literal raw comap generated by seed and finite strict past; complete body disclosed."
+  },
+  "existingContextDefinitions": [
+    "expectedFixedMinimum",
+    "expectedFixedRegret"
+  ],
+  "inputBindings": {
+    "BanditRLProof/OnlineGuessingRandomizedIID.lean": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+    "Tests/OnlineGuessingRandomizedIIDCanary.lean": "6223f9ef63b02d3291204242633e09362ff5507a6301301ccb7a257ea57fb2a1",
+    "BanditRLProof.lean": "d436ed08eef1db1a87038fab8cdfbbe21468c6616cbf4cef092ae69095c29b14",
+    "Tests.lean": "7a261874754d857c4939b5a9dd96c1251f3f6b2c679c32b36ef09d1feea9863c",
+    "website/content/readings.json": "222259a17d4b037b951030c7f7cd9b800c77063e721eb1d7fa4be1a2e9ecb47b",
+    "website/content/highlights.json": "d7412244b3b168573b946303ca7baa36162f1015c5811a83147f9b1badc252f6",
+    "website/content/chapters.json": "a4bc424c59613f8f88922024237ad401d1a370505548c3fb1773c0c06eb8de74"
+  },
+  "actualImportedCheck": "55 standard axiom closures,7 literal proposition equalities with shared arbitrary universes and3 complete definition equalities passed against actual imports.",
+  "sealContinuation": "Original seal records compiled identity as pending at seal time. Immutable subsequent imported audit supplies that evidence; the historical seal is not rewritten.",
+  "importedAudit": {
+    "artifact": "batch24-imported-audit-v1/receipt.json",
+    "sha256": "9c49b91860718d7193a19d3ccc2150f364f8620fe6118fd9c4d6be4e6e6493aa",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "currentCandidateInputOverlay": {
+    "priorInputBindingsRetained": true,
+    "inputs": {
+      "BanditRLProof/OnlineGuessingRandomizedIID.lean": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+      "Tests/OnlineGuessingRandomizedIIDCanary.lean": "6223f9ef63b02d3291204242633e09362ff5507a6301301ccb7a257ea57fb2a1",
+      "BanditRLProof.lean": "d436ed08eef1db1a87038fab8cdfbbe21468c6616cbf4cef092ae69095c29b14",
+      "Tests.lean": "7a261874754d857c4939b5a9dd96c1251f3f6b2c679c32b36ef09d1feea9863c",
+      "website/content/readings.json": "b9682a45a4a45f2de874c37d125714432f76e3a72b9742e557a840b4cc46885c",
+      "website/content/highlights.json": "d7412244b3b168573b946303ca7baa36162f1015c5811a83147f9b1badc252f6",
+      "website/content/chapters.json": "a4bc424c59613f8f88922024237ad401d1a370505548c3fb1773c0c06eb8de74"
+    },
+    "readerDelta": [
+      {
+        "path": "online-foundations/source-card15/local_status",
+        "before": {
+          "status": "compiled",
+          "label": "Focused compilation passed; full acceptance pending",
+          "boundary": "This covers the specified whole-process-independent private tape and raw generated information. It does not represent every randomized kernel, arbitrary side information, completed sigma-fields or merely almost-everywhere predictable versions. It gives finite identities, without an asymptotic rate or ordinary-regret success claim. No expectation/minimum interchange is asserted. Source/semantic/body/binder review accepts this explicit extension. Combined project, rendered reader, CI and release acceptance remain pending."
+        },
+        "after": {
+          "status": "compiled",
+          "label": "Compiled and scientifically reviewed",
+          "boundary": "This covers the specified whole-process-independent private tape and raw generated information. It does not represent every randomized kernel, arbitrary side information, completed sigma-fields or merely almost-everywhere predictable versions. It gives finite identities, without an asymptotic rate or ordinary-regret success claim. No expectation/minimum interchange is asserted. Source/semantic/body/binder review accepts this explicit extension. The shared library, Tests and full harness passed. Local source-card, reader, module, formula and graph rendering was reviewed. Committed-candidate checks and release acceptance remain pending."
+        }
+      }
+    ],
+    "mathematicalStatementsUnchanged": true,
+    "scope": "Only source-card local status label and stage boundary changed. Prior mathematical statements,proofs,assumptions and bindings retained."
+  }
+}

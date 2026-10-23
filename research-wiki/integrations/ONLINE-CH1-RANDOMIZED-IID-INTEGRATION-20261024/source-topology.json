@@ -1,0 +1,1053 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "affiliation": "KAUST (bibliographic metadata; not a mathematical premise)",
+    "version": "arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "pdf": "maintenance-evidence/batch18-source-extraction/source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "section": "Chapter1, What is Online Learning?",
+    "printed_pages": [
+      1,
+      2
+    ],
+    "pdf_pages_1_based": [
+      13,
+      14
+    ],
+    "pdf_pages_0_based": [
+      12,
+      13
+    ]
+  },
+  "independence": {
+    "role": "source-only-extractor",
+    "status": "pending-independent-review",
+    "implementation_Lean_or_proofs_read": false,
+    "implementation_dependent_reviews_read": false,
+    "source_graph_self_approved": false,
+    "history_disclosure": "This agent previously extracted the same pages for batch23 and reviewed website pixels. For batch24 the raw PDF was hashed again, fresh pdftotext output and fresh Poppler page images were read. Only the earlier page inventory (not its topology or verdict) was reread and reused after exact-byte comparison. The new topology is reconstructed for this task. This is not a claim of zero prior chapter familiarity.",
+    "original_contract_treatment": "Only exact-head source-card-v2.json and contract-v2.md were inspected from PR195. They are untrusted scope proposals, not evidence that any theorem or proof is implemented or correct.",
+    "no_acceptance_authority": true
+  },
+  "source_graph": {
+    "nodes": [
+      {
+        "id": "N-ROUNDS",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-02"
+        ],
+        "statements": [
+          "Repeated guessing game; rounds t=1,...,T."
+        ]
+      },
+      {
+        "id": "N-SECRET-TARGET",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-03"
+        ],
+        "statements": [
+          "Adversary chooses y_t in[0,1] and keeps it secret."
+        ]
+      },
+      {
+        "id": "N-PREDICT",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-04"
+        ],
+        "statements": [
+          "Player chooses x_t in[0,1] before target revelation."
+        ]
+      },
+      {
+        "id": "N-FEEDBACK-LOSS",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-05"
+        ],
+        "statements": [
+          "Target revealed; player pays(x_t-y_t)^2."
+        ]
+      },
+      {
+        "id": "N-IID",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-07"
+        ],
+        "statements": [
+          "Targets are iid from a fixed distribution on[0,1] chosen at the beginning."
+        ]
+      },
+      {
+        "id": "N-ORACLE-MEAN",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-08"
+        ],
+        "statements": [
+          "Knowing the distribution permits predicting its mean each round at expected cost sigma²T, with sigma² its variance."
+        ]
+      },
+      {
+        "id": "N-CAUSAL-LOWER",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-09"
+        ],
+        "statements": [
+          "We cannot do better than that."
+        ]
+      },
+      {
+        "id": "N-UNKNOWN-LAW-BENCHMARK",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-10"
+        ],
+        "statements": [
+          "Distribution is unknown, so compare the strategy to the optimal one."
+        ]
+      },
+      {
+        "id": "N-EQ11",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-11"
+        ],
+        "statements": [
+          "Cumulative expected excess, equation(1.1)."
+        ],
+        "exact_formula": "\\mathbb E_{Y_1,\\ldots,Y_T}\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\sigma^2 T"
+      },
+      {
+        "id": "N-NORMALIZATION",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-12"
+        ],
+        "statements": [
+          "Equivalently, consider the average."
+        ]
+      },
+      {
+        "id": "N-EQ12",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-13"
+        ],
+        "statements": [
+          "Average expected excess, equation(1.2)."
+        ],
+        "exact_formula": "\\frac1T\\mathbb E_{Y_1,\\ldots,Y_T}\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\sigma^2"
+      },
+      {
+        "id": "N-NONNEGATIVE",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-14"
+        ],
+        "statements": [
+          "Both expected excess quantities are nonnegative."
+        ]
+      },
+      {
+        "id": "N-SUCCESS",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-16"
+        ],
+        "statements": [
+          "Successful means(1.1) sublinear, equivalently(1.2) tends to0 as T tends to infinity."
+        ]
+      },
+      {
+        "id": "N-AVERAGE-INTERPRETATION",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-17"
+        ],
+        "statements": [
+          "Average performance over rounds should approach optimal performance."
+        ]
+      },
+      {
+        "id": "N-EXPECTED-REWRITE",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P01-18",
+          "P02-01"
+        ],
+        "statements": [
+          "Minimizing Regret. Having arrived at a good measure of success...",
+          "Rewrite(1.1) equivalently using expected fixed-comparator minimum."
+        ]
+      },
+      {
+        "id": "N-EXPECTED-FIXED-MINIMUM",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-02"
+        ],
+        "statements": [
+          "Expected cumulative learner loss minus minimum expected cumulative fixed-action loss."
+        ],
+        "exact_formula": "\\mathbb E\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\min_{x\\in[0,1]}\\mathbb E\\!\\left[\\sum_{t=1}^{T}(x-Y_t)^2\\right]"
+      },
+      {
+        "id": "N-ARBITRARY-SEQUENCE",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-03"
+        ],
+        "statements": [
+          "Remove the data-generation assumption and consider arbitrary sequences y_t."
+        ]
+      },
+      {
+        "id": "N-DETERMINISTIC-TRANSITION",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-04"
+        ],
+        "statements": [
+          "If the algorithm is deterministic, remove expectation because no stochasticity remains."
+        ]
+      },
+      {
+        "id": "N-PATHWISE-REGRET",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-05"
+        ],
+        "statements": [
+          "Deterministic squared-loss best-fixed regret."
+        ],
+        "exact_formula": "\\operatorname{Regret}_T:=\\sum_{t=1}^{T}(x_t-y_t)^2-\\min_{x\\in[0,1]}\\sum_{t=1}^{T}(x-y_t)^2"
+      },
+      {
+        "id": "N-PATHWISE-INTERPRETATION",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-06"
+        ],
+        "statements": [
+          "Winning is sublinear regret; best single choice in hindsight defines the comparator meaning."
+        ]
+      },
+      {
+        "id": "N-SINGLE-COMPARATOR",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-08"
+        ],
+        "statements": [
+          "In iid case a single best prediction is optimal; for arbitrary sequences other comparator sequences could be considered, but a single comparator is chosen for this book's main exposition."
+        ]
+      },
+      {
+        "id": "N-GENERAL-MODEL",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-10"
+        ],
+        "statements": [
+          "Vector prediction x_t in feasible V subset R^d; loss ell_t:V→R; arbitrary fixed comparator u inV."
+        ]
+      },
+      {
+        "id": "N-GENERAL-REGRET",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-11"
+        ],
+        "statements": [
+          "Comparator-parameterized regret."
+        ],
+        "exact_formula": "\\operatorname{Regret}_T(u):=\\sum_{t=1}^{T}\\ell_t(x_t)-\\sum_{t=1}^{T}\\ell_t(u)"
+      },
+      {
+        "id": "N-COMPARATOR-INFORMATION",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-12"
+        ],
+        "statements": [
+          "Algorithm need not know u or corresponding regret to guarantee an upper bound."
+        ]
+      },
+      {
+        "id": "N-GENERAL-NOREGRET",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-13"
+        ],
+        "statements": [
+          "No-regret is at-most-sublinear regret for every fixed u; printed ordinary-limit inequality."
+        ],
+        "exact_formula": "\\text{for every fixed }u\\in V,\\quad\\lim_{T\\to\\infty}\\operatorname{Regret}_T(u)/T\\le0"
+      },
+      {
+        "id": "N-LOSS-DEPENDENCE",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-14"
+        ],
+        "statements": [
+          "Remark1.1: regret also depends on losses ell_1,...,ell_T; suppress this dependence."
+        ]
+      },
+      {
+        "id": "N-LARGER-ACTION-SET",
+        "kind": "PRINTED_SOURCE",
+        "inventory_ids": [
+          "P02-15"
+        ],
+        "statements": [
+          "Footnote1: some settings permit predictions in larger W superset V."
+        ]
+      },
+      {
+        "id": "G-PROBABILITY-FOUNDATIONS",
+        "kind": "SOURCE_GAP",
+        "statement": "The pages omit probability-space, measurability and integrability details needed to interpret expectations and random adaptive predictions. Unit-interval laws supply bounded-moment intuition, not a printed measure-theoretic proof.",
+        "consumer_inventory_ids": [
+          "P01-07",
+          "P01-08",
+          "P01-11",
+          "P01-13",
+          "P02-02"
+        ],
+        "status": "open",
+        "not_printed_step": true
+      },
+      {
+        "id": "G-MEAN-FIXED-OPTIMUM",
+        "kind": "SOURCE_GAP",
+        "statement": "No proof is printed that the population mean is in the action interval, attains the minimum of expected fixed-action cumulative loss, and has value T sigma^2. The expected-fixed minimum must be attained; no expectation/minimum interchange is licensed.",
+        "consumer_inventory_ids": [
+          "P01-08",
+          "P02-01",
+          "P02-02",
+          "P02-08"
+        ],
+        "status": "open",
+        "not_printed_step": true
+      },
+      {
+        "id": "G-CAUSAL-OPTIMALITY",
+        "kind": "SOURCE_GAP",
+        "statement": "The assertion that no strategy beats the variance and the subsequent nonnegativity assertion have no printed argument. The missing bridge must account for prediction before revelation, dependence on past observations, and the randomization model if one is added. Mere target IID does not make an arbitrary random prediction independent of the current target.",
+        "consumer_inventory_ids": [
+          "P01-09",
+          "P01-14",
+          "P02-08"
+        ],
+        "status": "open",
+        "not_printed_step": true
+      },
+      {
+        "id": "G-NORMALIZATION",
+        "kind": "SOURCE_GAP",
+        "statement": "The finite positive-horizon division identity and the equivalence of sublinear cumulative excess with average excess tending to zero are asserted, without an explicit proof. A finite lower bound alone supplies no successful strategy or convergence.",
+        "consumer_inventory_ids": [
+          "P01-12",
+          "P01-13",
+          "P01-16",
+          "P01-17"
+        ],
+        "status": "open",
+        "not_printed_step": true
+      },
+      {
+        "id": "G-PATHWISE-MINIMUM",
+        "kind": "SOURCE_GAP",
+        "statement": "The contextual pathwise squared-loss minimum is written without an attainment argument. It is a different object from minimum expected fixed loss; it is used already in the definition display, not only its later interpretation.",
+        "consumer_inventory_ids": [
+          "P02-05",
+          "P02-06"
+        ],
+        "status": "open",
+        "not_printed_step": true
+      }
+    ],
+    "routes": [
+      {
+        "id": "R-ORACLE",
+        "conclusion": "N-ORACLE-MEAN",
+        "operator": "AND",
+        "premises": [
+          "N-IID",
+          "N-PREDICT",
+          "N-FEEDBACK-LOSS",
+          "N-ROUNDS",
+          "G-PROBABILITY-FOUNDATIONS",
+          "G-MEAN-FIXED-OPTIMUM"
+        ],
+        "consumer_use_sites": [
+          "P01-08"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "Printed assertion, no displayed derivation.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-CAUSAL-LOWER",
+        "conclusion": "N-CAUSAL-LOWER",
+        "operator": "AND",
+        "premises": [
+          "N-IID",
+          "N-SECRET-TARGET",
+          "N-PREDICT",
+          "N-FEEDBACK-LOSS",
+          "N-ROUNDS",
+          "G-PROBABILITY-FOUNDATIONS",
+          "G-CAUSAL-OPTIMALITY"
+        ],
+        "consumer_use_sites": [
+          "P01-09"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "A causal lower bound needs the information bridge; choosing arbitrary random x_t would not suffice.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-EQ11",
+        "conclusion": "N-EQ11",
+        "operator": "AND",
+        "premises": [
+          "N-IID",
+          "N-FEEDBACK-LOSS",
+          "N-ROUNDS",
+          "G-PROBABILITY-FOUNDATIONS"
+        ],
+        "consumer_use_sites": [
+          "P01-11"
+        ],
+        "source_proof_status": "definition-with-well-definedness-gap",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-NORMALIZATION",
+        "conclusion": "N-NORMALIZATION",
+        "operator": "AND",
+        "premises": [
+          "N-EQ11",
+          "G-NORMALIZATION"
+        ],
+        "consumer_use_sites": [
+          "P01-12"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "Positive horizon needed for the source average.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-EQ12",
+        "conclusion": "N-EQ12",
+        "operator": "AND",
+        "premises": [
+          "N-EQ11",
+          "N-NORMALIZATION",
+          "G-PROBABILITY-FOUNDATIONS"
+        ],
+        "consumer_use_sites": [
+          "P01-13"
+        ],
+        "source_proof_status": "definition-with-well-definedness-gap",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-NONNEGATIVE",
+        "conclusion": "N-NONNEGATIVE",
+        "operator": "AND",
+        "premises": [
+          "N-CAUSAL-LOWER",
+          "N-EQ11",
+          "N-EQ12"
+        ],
+        "consumer_use_sites": [
+          "P01-14"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-SUCCESS",
+        "conclusion": "N-SUCCESS",
+        "operator": "AND",
+        "premises": [
+          "N-EQ11",
+          "N-EQ12",
+          "G-NORMALIZATION"
+        ],
+        "consumer_use_sites": [
+          "P01-16"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "Definition of success and asserted equivalence, not an achieved algorithm theorem.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-AVERAGE",
+        "conclusion": "N-AVERAGE-INTERPRETATION",
+        "operator": "AND",
+        "premises": [
+          "N-SUCCESS"
+        ],
+        "consumer_use_sites": [
+          "P01-17"
+        ],
+        "source_proof_status": "interpretation",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-EXPECTED-MINIMUM",
+        "conclusion": "N-EXPECTED-FIXED-MINIMUM",
+        "operator": "AND",
+        "premises": [
+          "N-IID",
+          "N-FEEDBACK-LOSS",
+          "N-ROUNDS",
+          "G-PROBABILITY-FOUNDATIONS",
+          "G-MEAN-FIXED-OPTIMUM"
+        ],
+        "consumer_use_sites": [
+          "P02-02"
+        ],
+        "source_proof_status": "definition-with-well-definedness-gap",
+        "note": "Min outside expectation and attained by one fixed feasible mean; no pathwise minimum.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-EXPECTED-REWRITE",
+        "conclusion": "N-EXPECTED-REWRITE",
+        "operator": "AND",
+        "premises": [
+          "N-EQ11",
+          "N-EXPECTED-FIXED-MINIMUM",
+          "G-MEAN-FIXED-OPTIMUM"
+        ],
+        "consumer_use_sites": [
+          "P01-18",
+          "P02-01"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "The paragraph carries across the page break.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-DETERMINISTIC",
+        "conclusion": "N-DETERMINISTIC-TRANSITION",
+        "operator": "AND",
+        "premises": [
+          "N-ARBITRARY-SEQUENCE"
+        ],
+        "consumer_use_sites": [
+          "P02-04"
+        ],
+        "source_proof_status": "context",
+        "note": "Determinism is an explicit premise of removing expectation, not a conclusion from arbitrary data alone.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-PATHWISE-DEFINITION",
+        "conclusion": "N-PATHWISE-REGRET",
+        "operator": "AND",
+        "premises": [
+          "N-ROUNDS",
+          "N-PREDICT",
+          "N-FEEDBACK-LOSS",
+          "N-DETERMINISTIC-TRANSITION",
+          "G-PATHWISE-MINIMUM"
+        ],
+        "consumer_use_sites": [
+          "P02-05"
+        ],
+        "source_proof_status": "definition-with-well-definedness-gap",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-PATHWISE-INTERPRETATION",
+        "conclusion": "N-PATHWISE-INTERPRETATION",
+        "operator": "AND",
+        "premises": [
+          "N-PATHWISE-REGRET"
+        ],
+        "consumer_use_sites": [
+          "P02-06"
+        ],
+        "source_proof_status": "context",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-SINGLE-COMPARATOR",
+        "conclusion": "N-SINGLE-COMPARATOR",
+        "operator": "AND",
+        "premises": [
+          "N-ORACLE-MEAN",
+          "N-CAUSAL-LOWER"
+        ],
+        "consumer_use_sites": [
+          "P02-08"
+        ],
+        "source_proof_status": "source-gap-retained",
+        "note": "IID optimality recollection has the same open source bridges. Arbitrary-sequence comparator choice is motivation, not an IID theorem.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-GENERAL-REGRET",
+        "conclusion": "N-GENERAL-REGRET",
+        "operator": "AND",
+        "premises": [
+          "N-GENERAL-MODEL"
+        ],
+        "consumer_use_sites": [
+          "P02-11"
+        ],
+        "source_proof_status": "definition",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-GENERAL-NOREGRET",
+        "conclusion": "N-GENERAL-NOREGRET",
+        "operator": "AND",
+        "premises": [
+          "N-GENERAL-REGRET",
+          "N-COMPARATOR-INFORMATION"
+        ],
+        "consumer_use_sites": [
+          "P02-13"
+        ],
+        "source_proof_status": "definition",
+        "note": "Literal ordinary-limit inequality. No existence proof, uniform comparator threshold or limsup substitution is asserted.",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      },
+      {
+        "id": "R-LOSS-DEPENDENCE",
+        "conclusion": "N-LOSS-DEPENDENCE",
+        "operator": "AND",
+        "premises": [
+          "N-GENERAL-REGRET"
+        ],
+        "consumer_use_sites": [
+          "P02-14"
+        ],
+        "source_proof_status": "notation",
+        "note": "",
+        "premise_discharge": "All listed premises are required jointly for this route. Open SOURCE_GAP inputs are retained, not discharged."
+      }
+    ],
+    "roots": [
+      "N-ORACLE-MEAN",
+      "N-CAUSAL-LOWER",
+      "N-EQ11",
+      "N-EQ12",
+      "N-NONNEGATIVE",
+      "N-EXPECTED-FIXED-MINIMUM",
+      "N-EXPECTED-REWRITE",
+      "N-SUCCESS",
+      "N-PATHWISE-REGRET",
+      "N-GENERAL-NOREGRET"
+    ],
+    "alternative_sufficient_routes": [],
+    "AND_OR_semantics": "Each route is a conjunction. Distinct sufficient routes to one target would be OR alternatives, but none are printed on these two pages. This graph does not invent alternative source proofs.",
+    "interpretation": "Routes annotate source assertions, definitions, context and retained missing obligations. A route marked source-gap-retained is not an author-supplied proof."
+  },
+  "derived_extension_obligation_graph": {
+    "nodes": [
+      {
+        "id": "A-TAPE",
+        "kind": "PROPOSED_DERIVED_PREMISE",
+        "statement": "Measurable S in an arbitrary measurable seed space, independent of the whole target-process random element, on the same probability space.",
+        "provenance": "original195-contract-v2.md; not a printed source definition"
+      },
+      {
+        "id": "A-IID",
+        "kind": "PROPOSED_DERIVED_PREMISE",
+        "statement": "Measurable jointly independent and identically distributed real targets, each almost surely in [0,1].",
+        "provenance": "original195-contract-v2.md; not a printed source definition"
+      },
+      {
+        "id": "A-INFORMATION",
+        "kind": "PROPOSED_DERIVED_PREMISE",
+        "statement": "G_t is generated by S and strict-past targets; F_t is a sub-sigma-field of G_t; A_t is F_t-measurable. No monotonicity of F is required.",
+        "provenance": "original195-contract-v2.md; not a printed source definition"
+      },
+      {
+        "id": "A-POLICY",
+        "kind": "PROPOSED_DERIVED_PREMISE",
+        "statement": "Jointly measurable policy pi_t of S and the finite strict history; output in [0,1] on the legal history cube for every seed.",
+        "provenance": "original195-contract-v2.md; not a printed source definition"
+      },
+      {
+        "id": "A-FEASIBILITY",
+        "kind": "PROPOSED_DERIVED_PREMISE",
+        "statement": "The actual predictable predictions are almost surely in [0,1]; finite horizon T, with disclosed T=0 extension.",
+        "provenance": "original195-contract-v2.md; not a printed source definition"
+      },
+      {
+        "id": "D-JOINT-INDEPENDENCE",
+        "kind": "PROPOSED_DERIVED_CONCLUSION",
+        "statement": "Independence of the private tape together with the entire strict past from the current target.",
+        "status": "unproved-in-this-packet",
+        "provenance": "Explicit interpretation of exact-head source contract; not inspected implementation"
+      },
+      {
+        "id": "D-GENERATED-MONOTONE",
+        "kind": "PROPOSED_DERIVED_CONCLUSION",
+        "statement": "The chosen generated information G_t = sigma(S, Y_s : s<t) is increasing in t.",
+        "status": "unproved-in-this-packet",
+        "provenance": "Explicit interpretation of exact-head source contract; not inspected implementation"
+      },
+      {
+        "id": "D-PREDICTABLE-INDEPENDENCE",
+        "kind": "PROPOSED_DERIVED_CONCLUSION",
+        "statement": "Every real prediction measurable with respect to F_t contained in G_t is independent of Y_t.",
+        "status": "unproved-in-this-packet",
+        "provenance": "Explicit interpretation of exact-head source contract; not inspected implementation"
+      },
+      {
+        "id": "D-CONCRETE-POLICY",
+        "kind": "PROPOSED_DERIVED_CONCLUSION",
+        "statement": "A jointly measurable policy of the tape and finite strict past yields a measurable G_t prediction and current-target independence.",
+        "status": "unproved-in-this-packet",
+        "provenance": "Explicit interpretation of exact-head source contract; not inspected implementation"
+      },
+      {
+        "id": "D-CUMULATIVE-EXCESS",
+        "kind": "PROPOSED_DERIVED_CONCLUSION",
+        "statement": "For the stated predictable feasible predictions, finite expected-fixed excess equals a sum of mean-squared deviations from the population mean and is nonnegative.",
+        "status": "unproved-in-this-packet",
+        "provenance": "Explicit interpretation of exact-head source contract; not inspected implementation"
+      },
+      {
+        "id": "D-POLICY-CUMULATIVE",
+        "kind": "PROPOSED_DERIVED_CONCLUSION",
+        "statement": "The concrete legal-history policy satisfies the same finite cumulative expected-fixed identity and nonnegativity.",
+        "status": "unproved-in-this-packet",
+        "provenance": "Explicit interpretation of exact-head source contract; not inspected implementation"
+      },
+      {
+        "id": "E-JOINT-REGROUPING",
+        "kind": "DERIVED_PROOF_OBLIGATION",
+        "statement": "Produce joint seed-plus-past/current independence from independence of S and the whole target process and joint independence of target coordinates. Coordinatewise seed/target independence alone is insufficient.",
+        "status": "open",
+        "consumers": [
+          "D-JOINT-INDEPENDENCE"
+        ],
+        "not_printed_step": true,
+        "boundary": "Missing obligation of the proposed extension, not a claim that the author owed this private-seed proof on pages1-2."
+      },
+      {
+        "id": "E-GENERATED-INFORMATION",
+        "kind": "DERIVED_PROOF_OBLIGATION",
+        "statement": "Establish the generated sigma-field containment/monotonicity and transfer independence to variables measurable in each subordinate F_t. Do not assume prediction-current independence as a theorem premise.",
+        "status": "open",
+        "consumers": [
+          "D-GENERATED-MONOTONE",
+          "D-PREDICTABLE-INDEPENDENCE"
+        ],
+        "not_printed_step": true,
+        "boundary": "Missing obligation of the proposed extension, not a claim that the author owed this private-seed proof on pages1-2."
+      },
+      {
+        "id": "E-POLICY-MEASURABILITY",
+        "kind": "DERIVED_PROOF_OBLIGATION",
+        "statement": "Establish measurability of the finite history map and jointly measurable tape/history policy composition in G_t. Separate measurability alone must not silently replace joint measurability.",
+        "status": "open",
+        "consumers": [
+          "D-CONCRETE-POLICY"
+        ],
+        "not_printed_step": true,
+        "boundary": "Missing obligation of the proposed extension, not a claim that the author owed this private-seed proof on pages1-2."
+      },
+      {
+        "id": "E-AE-MOMENTS",
+        "kind": "DERIVED_PROOF_OBLIGATION",
+        "statement": "From ambient measurability and almost-sure unit-interval feasibility, derive finite second moments and integrability for predictions, targets, squares and products required by the identity. No completion or AE-measurable factorization theorem is supplied by the source.",
+        "status": "open",
+        "consumers": [
+          "D-CUMULATIVE-EXCESS"
+        ],
+        "not_printed_step": true,
+        "boundary": "Missing obligation of the proposed extension, not a claim that the author owed this private-seed proof on pages1-2."
+      },
+      {
+        "id": "E-CUMULATIVE-SQUARE-IDENTITY",
+        "kind": "DERIVED_PROOF_OBLIGATION",
+        "statement": "Prove the one-round square expansion with vanishing mixed term using the produced current independence, then finite-sum expectation and the expected-fixed benchmark. Prove the sum is nonnegative. The source does not print this identity.",
+        "status": "open",
+        "consumers": [
+          "D-CUMULATIVE-EXCESS"
+        ],
+        "not_printed_step": true,
+        "boundary": "Missing obligation of the proposed extension, not a claim that the author owed this private-seed proof on pages1-2."
+      },
+      {
+        "id": "E-LEGAL-HISTORY",
+        "kind": "DERIVED_PROOF_OBLIGATION",
+        "statement": "Show that finitely many almost-sure target support events give a legal strict history almost surely, and use policy feasibility on that cube for every seed. This supplies feasibility of the actual prediction; arbitrary off-cube values are not source behavior.",
+        "status": "open",
+        "consumers": [
+          "D-POLICY-CUMULATIVE"
+        ],
+        "not_printed_step": true,
+        "boundary": "Missing obligation of the proposed extension, not a claim that the author owed this private-seed proof on pages1-2."
+      }
+    ],
+    "routes": [
+      {
+        "id": "ER-JOINT",
+        "conclusion": "D-JOINT-INDEPENDENCE",
+        "operator": "AND",
+        "premises": [
+          "A-TAPE",
+          "A-IID",
+          "E-JOINT-REGROUPING"
+        ],
+        "consumer_use_sites": [
+          {
+            "artifact": "original195-contract-v2.md",
+            "paragraph": 2
+          }
+        ],
+        "status": "proposed-obligation-route-not-source-proof",
+        "premise_discharge": "Hypotheses remain explicit; every E-* obligation remains open. No implementation evidence is used."
+      },
+      {
+        "id": "ER-MONOTONE",
+        "conclusion": "D-GENERATED-MONOTONE",
+        "operator": "AND",
+        "premises": [
+          "A-INFORMATION",
+          "E-GENERATED-INFORMATION"
+        ],
+        "consumer_use_sites": [
+          {
+            "artifact": "original195-contract-v2.md",
+            "paragraph": 2
+          }
+        ],
+        "status": "proposed-obligation-route-not-source-proof",
+        "premise_discharge": "Hypotheses remain explicit; every E-* obligation remains open. No implementation evidence is used."
+      },
+      {
+        "id": "ER-PREDICTABLE",
+        "conclusion": "D-PREDICTABLE-INDEPENDENCE",
+        "operator": "AND",
+        "premises": [
+          "D-JOINT-INDEPENDENCE",
+          "A-INFORMATION",
+          "E-GENERATED-INFORMATION"
+        ],
+        "consumer_use_sites": [
+          {
+            "artifact": "original195-contract-v2.md",
+            "paragraph": 2
+          }
+        ],
+        "status": "proposed-obligation-route-not-source-proof",
+        "premise_discharge": "Hypotheses remain explicit; every E-* obligation remains open. No implementation evidence is used."
+      },
+      {
+        "id": "ER-POLICY",
+        "conclusion": "D-CONCRETE-POLICY",
+        "operator": "AND",
+        "premises": [
+          "D-JOINT-INDEPENDENCE",
+          "A-POLICY",
+          "E-POLICY-MEASURABILITY"
+        ],
+        "consumer_use_sites": [
+          {
+            "artifact": "original195-contract-v2.md",
+            "paragraph": 2
+          }
+        ],
+        "status": "proposed-obligation-route-not-source-proof",
+        "premise_discharge": "Hypotheses remain explicit; every E-* obligation remains open. No implementation evidence is used."
+      },
+      {
+        "id": "ER-CUMULATIVE",
+        "conclusion": "D-CUMULATIVE-EXCESS",
+        "operator": "AND",
+        "premises": [
+          "D-PREDICTABLE-INDEPENDENCE",
+          "A-FEASIBILITY",
+          "A-IID",
+          "N-EXPECTED-FIXED-MINIMUM",
+          "E-AE-MOMENTS",
+          "E-CUMULATIVE-SQUARE-IDENTITY"
+        ],
+        "consumer_use_sites": [
+          {
+            "artifact": "original195-contract-v2.md",
+            "paragraph": 2
+          }
+        ],
+        "status": "proposed-obligation-route-not-source-proof",
+        "premise_discharge": "Hypotheses remain explicit; every E-* obligation remains open. No implementation evidence is used."
+      },
+      {
+        "id": "ER-POLICY-CUMULATIVE",
+        "conclusion": "D-POLICY-CUMULATIVE",
+        "operator": "AND",
+        "premises": [
+          "D-CONCRETE-POLICY",
+          "A-POLICY",
+          "A-IID",
+          "E-LEGAL-HISTORY",
+          "N-EXPECTED-FIXED-MINIMUM",
+          "E-AE-MOMENTS",
+          "E-CUMULATIVE-SQUARE-IDENTITY"
+        ],
+        "consumer_use_sites": [
+          {
+            "artifact": "original195-contract-v2.md",
+            "paragraph": 2
+          }
+        ],
+        "status": "proposed-obligation-route-not-source-proof",
+        "premise_discharge": "Hypotheses remain explicit; every E-* obligation remains open. No implementation evidence is used."
+      }
+    ],
+    "roots": [
+      "D-JOINT-INDEPENDENCE",
+      "D-GENERATED-MONOTONE",
+      "D-PREDICTABLE-INDEPENDENCE",
+      "D-CONCRETE-POLICY",
+      "D-CUMULATIVE-EXCESS",
+      "D-POLICY-CUMULATIVE"
+    ],
+    "boundary": "Separate contract-driven obligations, not the author source graph or a Lean dependency graph. Abstract subordinate-information endpoint and concrete policy endpoint are different conclusions, not alternative OR proofs of one already-established source theorem. No production helper names or proof terms were inspected.",
+    "monotonicity_boundary": "G_t monotonicity is a separate contract result. It is not an extra hypothesis on F_t and is not required to infer one-round independence from F_t containment."
+  },
+  "closure": {
+    "method": "Fresh recursive dependency traversal over the explicitly listed routes; unresolved gap union per root. Structural audit only, not independent mathematical acceptance.",
+    "root_gap_reachability": {
+      "N-ORACLE-MEAN": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-CAUSAL-LOWER": [
+        "G-CAUSAL-OPTIMALITY",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EQ11": [
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EQ12": [
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-NONNEGATIVE": [
+        "G-CAUSAL-OPTIMALITY",
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EXPECTED-FIXED-MINIMUM": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EXPECTED-REWRITE": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-SUCCESS": [
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-PATHWISE-REGRET": [
+        "G-PATHWISE-MINIMUM"
+      ],
+      "N-GENERAL-NOREGRET": [],
+      "D-JOINT-INDEPENDENCE": [
+        "E-JOINT-REGROUPING"
+      ],
+      "D-GENERATED-MONOTONE": [
+        "E-GENERATED-INFORMATION"
+      ],
+      "D-PREDICTABLE-INDEPENDENCE": [
+        "E-GENERATED-INFORMATION",
+        "E-JOINT-REGROUPING"
+      ],
+      "D-CONCRETE-POLICY": [
+        "E-JOINT-REGROUPING",
+        "E-POLICY-MEASURABILITY"
+      ],
+      "D-CUMULATIVE-EXCESS": [
+        "E-AE-MOMENTS",
+        "E-CUMULATIVE-SQUARE-IDENTITY",
+        "E-GENERATED-INFORMATION",
+        "E-JOINT-REGROUPING",
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "D-POLICY-CUMULATIVE": [
+        "E-AE-MOMENTS",
+        "E-CUMULATIVE-SQUARE-IDENTITY",
+        "E-JOINT-REGROUPING",
+        "E-LEGAL-HISTORY",
+        "E-POLICY-MEASURABILITY",
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ]
+    },
+    "all_source_gaps_open": [
+      "G-PROBABILITY-FOUNDATIONS",
+      "G-MEAN-FIXED-OPTIMUM",
+      "G-CAUSAL-OPTIMALITY",
+      "G-NORMALIZATION",
+      "G-PATHWISE-MINIMUM"
+    ],
+    "all_extension_obligations_open": [
+      "E-JOINT-REGROUPING",
+      "E-GENERATED-INFORMATION",
+      "E-POLICY-MEASURABILITY",
+      "E-AE-MOMENTS",
+      "E-CUMULATIVE-SQUARE-IDENTITY",
+      "E-LEGAL-HISTORY"
+    ],
+    "cycles": false,
+    "unknown_references": false
+  },
+  "nonclaims": [
+    "No source proof was completed here.",
+    "No original PR implementation/proof review occurred.",
+    "No seven-header count is treated as seven source theorems.",
+    "No private-seed conditional/measure argument is attributed as printed source.",
+    "No lower bound discharges the asymptotic success criterion."
+  ],
+  "inputBindings": {
+    "original195-contract-v2.md": "e136f498b04eafbfe0b945670954c255a50ffefaa3c262a7631c86dc6daa89ae",
+    "original195-source-card-v2.json": "887cb30834b0993ba50d6ca72930ffbe839cdb0c9eae414cc95d1c77897baac6",
+    "page-013.png": "6aee151dd99e426d9379b3cd7c8a5ebaa7abd10b18349d3f06024cbca92d62d3",
+    "page-014.png": "fc92d15d52b5930548d678c7912560de2db2f35e49557184acd3841a6b45c0f2",
+    "raw-pdf13-printed1.txt": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+    "raw-pdf14-printed2.txt": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+    "pinnedPDF": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "reusedInventory": "76b8403a0bc15da71c771c14d415e50d7e7b96f610d40529bb900928e3668310"
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch24-source-extraction/source-topology.json",
+      "sha256": "7903037e834cde0d82e049f1b6490c437f3480a7eb9d8abb9aaeb0ad28521491",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Mathematics and scoped original verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

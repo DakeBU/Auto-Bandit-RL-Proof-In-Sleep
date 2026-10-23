@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/batch23_source_reviewer",
+  "at": "2026-10-23T17:11:57.368176+00:00",
+  "stage": "independent-reader-revision-review",
+  "verdict": "accepted",
+  "required_corrections": [],
+  "inputBindings": {
+    "batch24-reader-draft-v1/draft.json": "b11809fd2c7be8ced642a934d8a0c46fc791bac9cdfd442700601b5a54a31cb9",
+    "batch24-reader-draft-v2/draft.json": "4ff08bab0207687082ce4d57b6e6c0a290454fb000eef7fbb9f7cca7aabd3fe3",
+    "batch24-reader-draft-v2/receipt.json": "33e806754ce28e2ff174bb5a14f54380e55b3e8d4af435bc5db016bde38c548f",
+    "batch24-source-review/reader-review-v1.json": "5e464660b7a0061ec7a41c747bdada8cea48fd7c3e1398bf426573f3ec22edbf",
+    "batch24-source-review/topology-review-v1.json": "8257cbecd4fcd38b0f56ccf51b76f122fd11b7aca2dbffcc18a617c6fe26805a",
+    "batch24-source-review/semantic-review-v1.json": "b9d4658618142dbbf73b7eb8bbfc61b79afe39b343b73be06f7a32610b917f7a",
+    "batch24-source-review/body-review-v1.json": "c0fea63e21fab293a171261231f49e21fbfb40f84d59f526e6dd74b848e0376d",
+    "batch24-source-review/binder-reuse-review-v1.json": "586ec4ad706d25bed76d3ec2a6a4b7fcf8935abadf6b741eaf3979186bcf159a",
+    "batch24-source-review/actual-direct-dependencies-v1.json": "3bb7e4966fb7e40db4cbe4bd217f729f5819d57b081f7a3dc16686162c097c9b",
+    "batch24-focused-build-v1/receipt.json": "e8fe2e2dc52f372145f91c2d875a9d51812fc9fd7ef2d12d00dbd27724458a97",
+    "batch24-imported-audit-v1/receipt.json": "9c49b91860718d7193a19d3ccc2150f364f8620fe6118fd9c4d6be4e6e6493aa",
+    "batch24-imported-audit-v1/actual-dependencies.json": "e258b49563d63a4a38c76247407047d3f292079bd1444d22e0d02011310c9036",
+    "batch24-imported-audit-v1/all-selected-axioms-v2.lean": "bbef2c327fb856b039d1769a247c814b68d4b557d09bf2fcafa27756e1e420bd",
+    "batch24-imported-audit-v1/all-selected-axioms-v2.lean.log": "3bad0f8624c253a07b691ed4abd84416a3d93e344f81be08956e249866ca665b",
+    "batch24-imported-audit-v1/fresh-blind-identities.lean": "15d7468b97e4bfc9d4b04e827737301a189e2f4ed58c988ef08a1f87c702cff2",
+    "batch24-imported-audit-v1/fresh-blind-identities.lean.log": "4af3869ab4c33064ec0eb1662fd57d847735534a36a9dd13a91e452cee0f452a",
+    "batch24-imported-audit-v1/imported-dependencies.lean": "f6a2264ece950784a50ce0238dd3c5662c862429a7c477b742421b27df300b10",
+    "batch24-imported-audit-v1/imported-dependencies.lean.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "batch24-statement-seal-v2/neutral-statements.lean": "93fd524faa37acf9208ef7e3cb198816048cfe3df25d422eaf9dbb5ccca10b2e"
+  },
+  "acceptedDraft": "batch24-reader-draft-v2/draft.json",
+  "acceptedDraftSHA256": "4ff08bab0207687082ce4d57b6e6c0a290454fb000eef7fbb9f7cca7aabd3fe3",
+  "actualProductionBindings": {
+    "BanditRLProof/OnlineGuessingRandomizedIID.lean": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+    "Tests/OnlineGuessingRandomizedIIDCanary.lean": "6223f9ef63b02d3291204242633e09362ff5507a6301301ccb7a257ea57fb2a1",
+    "BanditRLProof.lean": "d436ed08eef1db1a87038fab8cdfbbe21468c6616cbf4cef092ae69095c29b14",
+    "Tests.lean": "7a261874754d857c4939b5a9dd96c1251f3f6b2c679c32b36ef09d1feea9863c"
+  },
+  "correctionResults": [
+    {
+      "id": "RR1",
+      "verdict": "resolved-exactly",
+      "finding": "R001 plain text now states S independent of (X,Y) and X independent of Y before concluding joint (S,X) independence."
+    },
+    {
+      "id": "RR2",
+      "verdict": "resolved-exactly",
+      "finding": "R003 intuition, purpose and Lean notes now describe deterministic raw information inclusion and explicitly separate independence/excess hypotheses. It retains no ambient structure/measure assumptions and no monotonicity of the separate F family."
+    },
+    {
+      "id": "RR3",
+      "verdict": "resolved-exactly",
+      "finding": "Exact joint tape/target expectation sentence appears once at the new source-card model and each final excess note, explicitly excluding a fixed-tape conditional conclusion."
+    }
+  ],
+  "exactDiffVerification": "Independently applied every v1 review replacement/append to parsed v1 in memory and compared with v2. Equality holds after only at/status and supersedes/correctionReview/corrections version metadata updates. No other content change. V1 hash remains unchanged.",
+  "readerScope": "All seven new notes, the new source card, stochastic notation and final chapter gap are accepted as source-faithful descriptions of the explicitly derived finite private-tape model. Source attribution, minE order, raw information, whole-process versus pairwise independence, exact measurability versus AE support, legal-cube feasibility, no F monotonicity and finite/T=0 boundaries match sealed exact statements.",
+  "preservation": "The14 old source cards and5 teaching previews remain exact, as do all other reader fields except the already reviewed notation update and appended card. No historical card or proof-bridge wording was silently rewritten.",
+  "actualImportedAuditVerification": {
+    "receiptStatus": "actual-imported-axiom-literal-type-definition-and-dependency-audit-passed",
+    "inputAndLogHashesVerified": true,
+    "actualWorktreeFourSourceHashesVerified": true,
+    "axiomDeclarations": 55,
+    "axiomLogParsedIndependently": true,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "freshBlindLiteralTypeEqualities": 7,
+    "fullDefinitionEqualities": 3,
+    "freshNeutralBodyExactMatch": true,
+    "universeBoundary": "Explicit general shared universes on both sides, not universe0 specialization. Candidate theorems are imported, not copied/reproved in this audit.",
+    "graphNodes": 55,
+    "typeConstantSetMemberships": 852,
+    "valueConstantSetMemberships": 3395,
+    "graphSHA256": "e258b49563d63a4a38c76247407047d3f292079bd1444d22e0d02011310c9036",
+    "independentProbeOverlap": {
+      "commonSelectedDeclarations": 13,
+      "typeAndValueMembershipSetsIdentical": true
+    },
+    "dependencyFindings": [
+      "R002 uses iIndepFun.indepFun_finset and private-seed regrouping; no historical history_policy_independent edge is introduced.",
+      "R007 directly consumes R006; the concrete independence-only R005 is not its direct endpoint dependency.",
+      "R006 produces ambient measurability/L2/current independence then reuses existing expected-fixed minimum and cumulative square decomposition."
+    ],
+    "limits": "Direct compiled TYPE/VALUE sets, not a full transitive proof-graph closure or minimal dependency analysis. Standard-axiom and identity checks are focused evidence, not full project acceptance."
+  },
+  "statusReview": "Focused compilation passed and scoped science acceptance are accurately separated from pending combined project, rendered reader, CI and release gates. Imported audit strengthens binding evidence without silently changing the draft stage label.",
+  "remainingGates": [
+    "Complete shared library root, Tests and full harness acceptance",
+    "Actual generated-content and desktop/mobile/formula render review",
+    "CI, committed-source link and release/live gates as applicable",
+    "Whole-original source/scope disposition remains separate"
+  ],
+  "productionReaderAppliedByReviewer": false,
+  "draftMutated": false,
+  "productionMutated": false,
+  "renderedAcceptance": false,
+  "wholeOriginalAcceptance": false,
+  "combinedProjectAcceptance": false,
+  "releaseAcceptance": false,
+  "public_projection": {
+    "original": {
+      "artifact": "batch24-source-review/reader-review-v2.json",
+      "sha256": "3a410cd85e4c62139f71c5913e342e101be8fbf22d7e09bb450fb2a34fb7b5ec",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Mathematics and scoped original verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}
