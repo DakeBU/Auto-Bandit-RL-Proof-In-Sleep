@@ -884,9 +884,9 @@
       "title": "Online Learning: foundations and Follow-the-Leader",
       "short_title": "Online foundations",
       "status": "compiled",
-      "summary": "Be-the-Leader and past-mean bounds, a recursive predictor state, comparator domains, finite IID information identities, and a derived logarithmic lower bound for randomized causal guessing in the shared library.",
+      "summary": "Be-the-Leader and past-mean bounds, a recursive predictor state, comparator domains, finite IID information identities, and a derived logarithmic lower bound for randomized causal guessing in the shared library. Derived no-regret bridges distinguish upper control from ordinary convergence.",
       "audience": "Readers beginning Orabona Chapter 1; all declarations share the canonical Lean graph.",
-      "completion_definition": "Bounded integration of the Chapter1 core, arbitrary-initial predictor/recursive state and quantitative derived lower support. Chapter1 and the whole book remain incomplete; the mandatory proof-leaf total remains unknown.",
+      "completion_definition": "Bounded integration of the Chapter1 core, arbitrary-initial predictor/recursive state and quantitative derived lower support. Chapter1 and the whole book remain incomplete; the mandatory proof-leaf total remains unknown. The no-regret reconciliation preserves ordinary-limit existence as a separate requirement.",
       "completion_blockers": [
         "Full Chapter 1 source obligations remain separate from this core integration."
       ],
@@ -895,7 +895,8 @@
         "Derive the logarithmic regret bound from actual mean updates.",
         "Distinguish arbitrary deterministic loss sequences from IID expectation guarantees.",
         "Prove a recursive count/value state agrees with the strict-prefix predictor and isolate the half-initialization regret specialization.",
-        "Explain how a correlated binary law yields one fixed sequence with logarithmic regret in expectation over an admissible randomized policy."
+        "Explain how a correlated binary law yields one fixed sequence with logarithmic regret in expectation over an admissible randomized policy.",
+        "Distinguish eventual upper no-regret from ordinary finite-limit no-regret, and explain their conditional equivalence and affine separation example."
       ],
       "module_globs": [
         "BanditRLProof/OnlineLearningAsymptotic.lean",
@@ -908,11 +909,12 @@
         "BanditRLProof/OnlineLearningRegret.lean",
         "BanditRLProof/OnlineLearningStochastic.lean",
         "BanditRLProof/OnlineLearningFTLState.lean",
-        "BanditRLProof/OnlineGuessingLogLower.lean"
+        "BanditRLProof/OnlineGuessingLogLower.lean",
+        "BanditRLProof/OnlineNoRegretSemantics.lean"
       ],
       "open_gaps": [
         "The library proves a finite-horizon lower bound for an explicitly measurable, globally interval-valued seed/history policy class. The source supplies neither this construction nor these constants; sharpness and an unrestricted formal minimax equivalence are not claimed.",
-        "The printed ordinary-limit definition is not identified silently with the implemented eventual upper property.",
+        "The printed ordinary-limit display and eventual upper interpretation are separately reconciled. Equivalence requires actual finite convergence per comparator; no unconditional meanPredict limit producer or bounded-loss oscillation example is established.",
         "The arbitrary-initial predictor/recursive state does not supply general-initial upper-regret guarantees. General stochastic strategy-class coverage and later module audits remain separate.",
         "Exercises1.1 and1.2 and historical references are classified separately. The mandatory proof-leaf total is unknown; Chapter1 and the whole book remain incomplete."
       ]

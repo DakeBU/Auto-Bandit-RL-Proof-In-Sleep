@@ -5987,6 +5987,113 @@
       "dependencies": [
         "BanditRL.OnlineLearning.GuessingLower.randomized_harmonic_lower"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+      "title": "Positive cofinal subsequences rule out a real limit",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 54,
+      "plain": "Use actual normalized_even/normalized_odd identities and cofinality of both positive maps; ordinary real limit uniqueness would force -1=0.",
+      "math": "R_{2(n+1)}(1)/(2(n+1))=-1,\\quad R_{2n+1}(1)/(2n+1)=0\\quad\\Longrightarrow\\quad\\nexists a\\in\\mathbb R:\\ R_T(1)/T\\to a.",
+      "intuition": "An upper performance bound allows negative signed regret and does not force convergence.",
+      "why": "Identify exactly when an upper guarantee determines the sign of an existing limit and why convergence itself requires separate evidence.",
+      "position": "Derived reconciliation of the ordinary-limit display and eventual upper interpretation at Orabona v10 printed p.2/PDF p.14. These are library derivations, not separate printed theorems.",
+      "proof_idea": "Use actual normalized_even/normalized_odd identities and cofinality of both positive maps; ordinary real limit uniqueness would force -1=0.",
+      "lean_notes": "Generic bridges concern one supplied loss/prediction trace on an arbitrary carrier. Thresholds and finite limits may depend on each fixed comparator. The counterexample uses one fixed signed affine loss stream and the feasible constant-zero learner on [0,1]; coefficients are unbounded over time. It is not a squared-loss or meanPredict nonconvergence result. Source rounds1..T correspond to Lean0..T-1; both separating subsequences use positive horizons.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+      "title": "The actual fixed losses telescope",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 53,
+      "plain": "Finite range induction proves actual loss prefix sums; constant zero learner has cumulative loss0.",
+      "math": "\\sum_{t<T}(F(t+1)-F(t))u=F(T)u,\\quad R_T(u)=-F(T)u.",
+      "intuition": "An upper performance bound allows negative signed regret and does not force convergence.",
+      "why": "Identify exactly when an upper guarantee determines the sign of an existing limit and why convergence itself requires separate evidence.",
+      "position": "Derived reconciliation of the ordinary-limit display and eventual upper interpretation at Orabona v10 printed p.2/PDF p.14. These are library derivations, not separate printed theorems.",
+      "proof_idea": "Finite range induction proves actual loss prefix sums; constant zero learner has cumulative loss0.",
+      "lean_notes": "Generic bridges concern one supplied loss/prediction trace on an arbitrary carrier. Thresholds and finite limits may depend on each fixed comparator. The counterexample uses one fixed signed affine loss stream and the feasible constant-zero learner on [0,1]; coefficients are unbounded over time. It is not a squared-loss or meanPredict nonconvergence result. Source rounds1..T correspond to Lean0..T-1; both separating subsequences use positive horizons.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.NoRegretCounterexample.loss",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.potential",
+        "BanditRL.OnlineLearning.comparatorRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+      "title": "One feasible causal process separates the properties",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 55,
+      "plain": "Nonnegative F(T) and u>=0 give R_T(u)<=0. Literal limit existence would give a real limit at feasible comparator1, contradicting no_limit.",
+      "math": "\\operatorname{Upper}([0,1],\\ell,0)\\ \\wedge\\ \\neg\\operatorname{Literal}([0,1],\\ell,0).",
+      "intuition": "An upper performance bound allows negative signed regret and does not force convergence.",
+      "why": "Identify exactly when an upper guarantee determines the sign of an existing limit and why convergence itself requires separate evidence.",
+      "position": "Derived reconciliation of the ordinary-limit display and eventual upper interpretation at Orabona v10 printed p.2/PDF p.14. These are library derivations, not separate printed theorems.",
+      "proof_idea": "Nonnegative F(T) and u>=0 give R_T(u)<=0. Literal limit existence would give a real limit at feasible comparator1, contradicting no_limit.",
+      "lean_notes": "Generic bridges concern one supplied loss/prediction trace on an arbitrary carrier. Thresholds and finite limits may depend on each fixed comparator. The counterexample uses one fixed signed affine loss stream and the feasible constant-zero learner on [0,1]; coefficients are unbounded over time. It is not a squared-loss or meanPredict nonconvergence result. Source rounds1..T correspond to Lean0..T-1; both separating subsequences use positive horizons.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+        "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "title": "Equivalence keeps its finite convergence premise",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 52,
+      "plain": "Use the ordinary-to-upper implication; in the reverse direction choose each supplied actual real limit and apply the sign bridge.",
+      "math": "[\\forall u\\in V\\ \\exists a_u\\in\\mathbb R:\\ R_T(u)/T\\to a_u]\\quad\\Longrightarrow\\quad(\\operatorname{Literal}\\iff\\operatorname{Upper}).",
+      "intuition": "An upper performance bound allows negative signed regret and does not force convergence.",
+      "why": "Identify exactly when an upper guarantee determines the sign of an existing limit and why convergence itself requires separate evidence.",
+      "position": "Derived reconciliation of the ordinary-limit display and eventual upper interpretation at Orabona v10 printed p.2/PDF p.14. These are library derivations, not separate printed theorems.",
+      "proof_idea": "Use the ordinary-to-upper implication; in the reverse direction choose each supplied actual real limit and apply the sign bridge.",
+      "lean_notes": "Generic bridges concern one supplied loss/prediction trace on an arbitrary carrier. Thresholds and finite limits may depend on each fixed comparator. The counterexample uses one fixed signed affine loss stream and the feasible constant-zero learner on [0,1]; coefficients are unbounded over time. It is not a squared-loss or meanPredict nonconvergence result. Source rounds1..T correspond to Lean0..T-1; both separating subsequences use positive horizons.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+        "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "title": "Ordinary nonpositive limits give eventual upper control",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 51,
+      "plain": "For each u and positive epsilon, a_u<=0<epsilon; real tendsto_order gives the required eventual inequality.",
+      "math": "[\\forall u\\in V:\\ R_T(u)/T\\to a_u\\le0]\\quad\\Longrightarrow\\quad\\operatorname{Upper}(V,\\ell,x).",
+      "intuition": "An upper performance bound allows negative signed regret and does not force convergence.",
+      "why": "Identify exactly when an upper guarantee determines the sign of an existing limit and why convergence itself requires separate evidence.",
+      "position": "Derived reconciliation of the ordinary-limit display and eventual upper interpretation at Orabona v10 printed p.2/PDF p.14. These are library derivations, not separate printed theorems.",
+      "proof_idea": "For each u and positive epsilon, a_u<=0<epsilon; real tendsto_order gives the required eventual inequality.",
+      "lean_notes": "Generic bridges concern one supplied loss/prediction trace on an arbitrary carrier. Thresholds and finite limits may depend on each fixed comparator. The counterexample uses one fixed signed affine loss stream and the feasible constant-zero learner on [0,1]; coefficients are unbounded over time. It is not a squared-loss or meanPredict nonconvergence result. Source rounds1..T correspond to Lean0..T-1; both separating subsequences use positive horizons.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.LimitNoRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+      "title": "An existing normalized limit is nonpositive",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 50,
+      "plain": "Assume a>0; eventual upper control with epsilon=a/2 and le_of_tendsto gives a<=a/2, a contradiction.",
+      "math": "\\operatorname{Upper}(V,\\ell,x)\\ \\wedge\\ R_T(u)/T\\to a\\quad\\Longrightarrow\\quad a\\le0\\quad(u\\in V).",
+      "intuition": "An upper performance bound allows negative signed regret and does not force convergence.",
+      "why": "Identify exactly when an upper guarantee determines the sign of an existing limit and why convergence itself requires separate evidence.",
+      "position": "Derived reconciliation of the ordinary-limit display and eventual upper interpretation at Orabona v10 printed p.2/PDF p.14. These are library derivations, not separate printed theorems.",
+      "proof_idea": "Assume a>0; eventual upper control with epsilon=a/2 and le_of_tendsto gives a<=a/2, a contradiction.",
+      "lean_notes": "Generic bridges concern one supplied loss/prediction trace on an arbitrary carrier. Thresholds and finite limits may depend on each fixed comparator. The counterexample uses one fixed signed affine loss stream and the feasible constant-zero learner on [0,1]; coefficients are unbounded over time. It is not a squared-loss or meanPredict nonconvergence result. Source rounds1..T correspond to Lean0..T-1; both separating subsequences use positive horizons.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.NoRegret"
+      ]
     }
   ]
 }

@@ -1,0 +1,280 @@
+{
+  "schema": "no-regret-reconciliation-statement-map-v1",
+  "sourcePR": 192,
+  "sourceHead": "2aa08b9e1f5da4d0c7d7dcbe9ddeadd1fbfc34e3",
+  "sourceBase": "1737391d9867a420a9e4b9529d4d90e1bf79c93c",
+  "integrationBase": "3abffdcea4d7f96479d07f8d2b1d2be7ca1f6cd0",
+  "frozenSignatures": {
+    "artifact": "batch21-statement-input-binding-v1.json",
+    "sha256": "6a4c583b60584ee73ebf8df5145ebd63cc2502ebcb3f4db3b549580214481c4e",
+    "availability": "Retained private maintenance evidence; a hash is not a public download URL."
+  },
+  "neutralPacket": {
+    "artifact": "batch21-blind-input/neutral-packet-v1.lean",
+    "sha256": "556a297862d9b47f20ad9495fadc0973fff9713f6044c98c814560d1661e77c6",
+    "availability": "Retained private maintenance evidence; a hash is not a public download URL."
+  },
+  "blindReconstruction": {
+    "artifact": "batch21-blind-decoder/reconstruction-v1.json",
+    "sha256": "619dfdcfc83c2765d4d6e34baa86be5f25cf3886557c4713d9dfe57960ef6894",
+    "availability": "Retained private maintenance evidence; a hash is not a public download URL."
+  },
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineLearning.LimitNoRegret",
+      "kind": "definition",
+      "proof_or_definition_review": "Finite nonpositive real limit for each fixed comparator; literal definition on generalized trace carrier.",
+      "binder_classification": "SOURCE displayed lim under explicit finite-real reading; TYPING generic X and real losses; generalized carrier/trace delta.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.noRegret_limit_nonpos",
+      "kind": "theorem",
+      "proof_or_definition_review": "Positive proposed limit contradicted using upper control at a/2.",
+      "binder_classification": "hNR and hl are explicit inputs of derived conditional theorem; hu is comparator restriction; no existence producer.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "kind": "theorem",
+      "proof_or_definition_review": "Each nonpositive limit gives every positive eventual upper tolerance.",
+      "binder_classification": "hL unfolds to forall u in V exists finite a<=0 with actual convergence; no hidden bundle.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "kind": "theorem",
+      "proof_or_definition_review": "Equivalence uses actual per-comparator convergence and preceding implications.",
+      "binder_classification": "hc is explicit derived-theorem convergence assumption, not source standing premise; no unconditional equivalence.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.potential",
+      "kind": "definition",
+      "proof_or_definition_review": "Literal parity function H_T=T for even T and 0 otherwise.",
+      "binder_classification": "TYPING natural T and real cast; new derived construction, not source definition.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.loss",
+      "kind": "definition",
+      "proof_or_definition_review": "Literal exogenous linear time increment of potential.",
+      "binder_classification": "TYPING t and real x; no sign/boundedness/feedback premise; new construction.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.regret_eq",
+      "kind": "theorem",
+      "proof_or_definition_review": "Induction telescopes comparator losses; played losses are zero.",
+      "binder_classification": "All T and real u; no interval premise is needed for algebra.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.noRegret",
+      "kind": "theorem",
+      "proof_or_definition_review": "Nonnegative potential and u>=0 imply regret<=0 at every horizon.",
+      "binder_classification": "Interval membership enters unfolded predicate; no manufactured regret bound premise.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_even",
+      "kind": "theorem",
+      "proof_or_definition_review": "Positive even denominator cancels and yields -1.",
+      "binder_classification": "n arbitrary natural; 2(n+1)>0 internal proof.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.normalized_odd",
+      "kind": "theorem",
+      "proof_or_definition_review": "Odd potential vanishes and normalized value is zero.",
+      "binder_classification": "n arbitrary natural; positive odd horizon.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.no_limit",
+      "kind": "theorem",
+      "proof_or_definition_review": "Two cofinal parity subsequences have distinct constant limits.",
+      "binder_classification": "No external premise; no_limit is about u=1 only.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegretCounterexample.strict_separation",
+      "kind": "theorem",
+      "proof_or_definition_review": "Conjoins actual upper proof and contradiction at u=1.",
+      "binder_classification": "No external premise; same single trace/stream, not all algorithms.",
+      "verdict": "accepted-with-explicit-delta"
+    }
+  ],
+  "sevenSlots": [
+    {
+      "slot": "objects",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "General X and unconstrained supplied trace generalize source V subset R^d; loss defined on X supports well-typed W adaptation."
+    },
+    {
+      "slot": "quantifiers",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Pointwise fixed u retained; no uniform cutoff or generic strategy quantifier. Mean producer separately forall bounded y."
+    },
+    {
+      "slot": "assumptions",
+      "verdict": "accepted",
+      "finding": "Explicit conditional convergence and producer hypotheses retained in support theorem roles; no EXCESS source-premise smuggling found."
+    },
+    {
+      "slot": "conclusion",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Finite-real literal limit and eventual upper predicates remain separate; no unconditional limit producer."
+    },
+    {
+      "slot": "normalization",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Zero-based source-round shift; benign T=0 extension; exact initial1/2, squared coefficient1, envelope4+4logT."
+    },
+    {
+      "slot": "probability_feedback",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "Deterministic trace-level relationships; causal mean and fixed constant counterexample visible; no formal interactive probability model."
+    },
+    {
+      "slot": "boundary",
+      "verdict": "accepted-with-explicit-delta",
+      "finding": "New reconciliation/counterexample analysis, signed time-unbounded losses, finite-real convention, ordinary-limit gap retained."
+    }
+  ],
+  "reusedInterfaces": [
+    "BanditRL.OnlineLearning.meanPredict_noRegret",
+    "BanditRL.OnlineLearning.noRegret_of_vanishing_bound",
+    "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+  ],
+  "canaries": [
+    {
+      "name": "NoRegretSemanticsProbe.linear_regret",
+      "finding": "All real u and natural T; regret=-T*u; finite sum calculation.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.linear_normalized",
+      "finding": "All real u, T>0; normalization=-u. Positive-horizon premise retained.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.linear_converges",
+      "finding": "All real u; normalized sequence tends to -u using eventual positive horizons.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.linear_literal",
+      "finding": "On u in [0,1], actual -u convergence is finite and nonpositive.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.linear_upper",
+      "finding": "Uses literal-to-upper theorem on actual convergent fixture.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.negative_limit_allowed",
+      "finding": "u=1 has limit -1 and upper predicate; does not replace <=0 by =0.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.iff_on_linear",
+      "finding": "Supplies all actual convergence witnesses to conditional equivalence.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.actual_mean_upper",
+      "finding": "Invokes actual universal bounded-stream producer on y=0.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.actual_mean_negative_T2",
+      "finding": "Exact finite value -7/8 with squared losses; not an asymptotic claim.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.obstruction_feasible",
+      "finding": "Prediction0 and comparator1 belong to [0,1]; trace feasibility all t.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.actual_signed_losses",
+      "finding": "Exact four values 0,2,-2,4 at x=1; signed-loss boundary visible.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.zero_horizon",
+      "finding": "Empty-horizon regret zero; no asymptotic inference from totalized division.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.even_T2",
+      "finding": "Actual parity theorem specialization to normalized -1 at T=2.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.odd_T3",
+      "finding": "Actual parity theorem specialization to normalized 0 at T=3.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    },
+    {
+      "name": "NoRegretSemanticsProbe.same_process_strict",
+      "finding": "Direct test reuse of production separation; earns no new source theorem credit.",
+      "actual_identity_verified": true,
+      "verdict": "accepted"
+    }
+  ],
+  "testFixture": {
+    "name": "NoRegretSemanticsProbe.linearLoss",
+    "definition": "linearLoss t u = u",
+    "actual_definition_identity_verified": true
+  },
+  "inputBindings": {
+    "BanditRLProof.lean": "647f149fe1dac7c33da1018e2f3c16c6f27f75eb145f9825b1479241b978658f",
+    "Tests.lean": "da5a6fffff3616cc22ae60031436441b4c6c41560ad977c939b73df9e1eb6e34",
+    "BanditRLProof/OnlineNoRegretSemantics.lean": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+    "Tests/OnlineNoRegretSemanticsCanary.lean": "db2f8f85f4919f3f95fc7070339e19f7584140fdf2f1c13b729145c166e3005e",
+    "website/content/readings.json": "b6528f760e53079a08835f95787d3178822b0d500482a32eff4a18ca513c85b6",
+    "website/content/chapters.json": "f5685142d3d19925e7afb2130b56d90b2c23bf6b1edcd5168c735603076f8c14",
+    "website/content/highlights.json": "b1164932befacc627fd6e5eafaf747745d5f18cb0d2f5103c556396c8bdaabaa",
+    "BanditRLProof/OnlineLearningAsymptotic.lean": "0caf208525b1b3e91e378b0a74338c7c26e581fbd1514c7ac9427d4f7e6b03e0"
+  },
+  "actualImportedCheck": "27 proposition identities,7 definition identities and34 standard axiom closures passed. No source-gap closure follows merely from compilation.",
+  "sourceGapDisposition": [
+    {
+      "id": "GAP.fixed-u-transfer-proof",
+      "status": "source-elision-retained; implementation bridge supplied",
+      "producer": "meanPredict_noRegret using empiricalMean_minimizes and theorem_1_3"
+    },
+    {
+      "id": "GAP.log-over-horizon-proof",
+      "status": "source-elision-retained; implementation bridge supplied",
+      "producer": "meanPredict_noRegret using Real.tendsto_pow_log_div_mul_add_atTop"
+    },
+    {
+      "id": "GAP.no-regret-limit-convention",
+      "status": "open ordinary-limit existence/convention boundary; explicitly preserved",
+      "producer": null
+    }
+  ],
+  "sourceTopologyV2": {
+    "artifact": "batch21-topology-review/review-v2.json",
+    "sha256": "9ac60530b904d628e910c71107cb2ef6c67c22016d100e6026bedb8baf52d42e",
+    "availability": "Retained private maintenance evidence; a hash is not a public download URL."
+  }
+}
