@@ -1,0 +1,741 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "path": "maintenance-evidence\\batch18-source-extraction\\source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "author": "Francesco Orabona",
+    "work": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "requested_printed_pages": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "requested_pdf_pages_one_based": [
+      14,
+      15,
+      16,
+      17
+    ],
+    "requested_pdf_page_indices_zero_based": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "context_printed_pages": [
+      1,
+      6
+    ],
+    "context_reason": "Page 1 gives game/expectation context; page 6 completes the proof cut off on page 5."
+  },
+  "implementation_inspected": false,
+  "self_approval": false,
+  "nodes": [
+    {
+      "id": "N-EXPECTED",
+      "kind": "paragraph-display-citation",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P02-01"
+      ],
+      "statement": "Rewrite stochastic success measure as expectation of learner loss minus minimum expected fixed-comparator loss.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-PATHWISE-TRANSITION",
+      "kind": "paragraph",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P02-02"
+      ],
+      "statement": "Remove distributional assumption; consider arbitrary y sequence; deterministic algorithm removes stochastic expectation.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-REGRET",
+      "kind": "definition-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P02-03"
+      ],
+      "statement": "Pathwise squared regret against the best single choice in hindsight; winning means sublinear growth.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-GENERAL-REGRET",
+      "kind": "definition-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P02-06"
+      ],
+      "statement": "V subset R^d, predictions, real losses, arbitrary u; general comparator regret.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-NOREGRET",
+      "kind": "definition-paragraph",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P02-07"
+      ],
+      "statement": "Algorithm does not know u or its regret; no-regret defined by every fixed u and printed lim Regret_T(u)/T <=0.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-REMARK11",
+      "kind": "remark",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P02-08"
+      ],
+      "statement": "Regret also depends on all losses, suppressed in notation.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-ADVERSARY",
+      "kind": "paragraph",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P03-05"
+      ],
+      "statement": "Adversary may choose number after observing our choice and may act arbitrarily/adversarially.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-MEAN",
+      "kind": "statement-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P03-07"
+      ],
+      "statement": "Best hindsight constant equals empirical mean.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-CAUSAL-MOTIVATION",
+      "kind": "paragraph",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P03-08"
+      ],
+      "statement": "Cannot use final leader before future is known; track slowly changing past-optimal guess.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-FTL-GENERIC",
+      "kind": "definition-paragraph",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P03-09"
+      ],
+      "statement": "Strict-past empirical mean for t>=2; arbitrary first guess in [0,1]; definition/name FTL.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL",
+      "kind": "lemma",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-02"
+      ],
+      "statement": "General Be-the-Leader inequality with assumed prefix minimizers.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-BASE",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-03"
+      ],
+      "statement": "Induction on T; base l_1(xStar_1)<=l_1(xStar_1).",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-IH",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-04"
+      ],
+      "statement": "For T>=2 assume prefix T-1 inequality and aim for T inequality.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-CANCEL",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-05"
+      ],
+      "statement": "Cancel the identical T-th terms to obtain (1.3).",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-PREFIX",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-06"
+      ],
+      "statement": "Prefix online-leader losses <= prefix loss at xStar_(T-1).",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-MIN",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-07"
+      ],
+      "statement": "Prefix loss at xStar_(T-1) <= prefix loss at xStar_T by minimization and membership.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-STEP",
+      "kind": "proof-citation",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-08"
+      ],
+      "statement": "Transitivity yields (1.3) and concludes inductive step.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-THM13",
+      "kind": "theorem",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P04-11"
+      ],
+      "statement": "Arbitrary bounded outcomes, x_1=0.5, strict-past means, R_T<=4+4 ln T.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-FIGURE11",
+      "kind": "figure",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-01"
+      ],
+      "statement": "Step areas for harmonic sum bounded using reciprocal integral.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-BTL-APPLICATION",
+      "kind": "proof-citation",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-02"
+      ],
+      "statement": "Invoke BTL to upper bound regret.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-REGRET-REWRITE",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-03"
+      ],
+      "statement": "Replace actual x_t by xStar_(t-1), minimum by cumulative loss at xStar_T.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-STABILITY-SUM",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-04"
+      ],
+      "statement": "R_T <= sum_t[(xStar_(t-1)-y_t)^2-(xStar_t-y_t)^2].",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-INITIAL",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-05"
+      ],
+      "statement": "Initial excess <=0.5^2.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-FACTOR",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-06"
+      ],
+      "statement": "Expand squares and factor as (a+b-2y)(a-b).",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-LIPSCHITZ",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-07"
+      ],
+      "statement": "Product <= |a+b-2y||a-b| <= 2|a-b|.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-MEAN-SUBSTITUTE",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-08"
+      ],
+      "statement": "Substitute strict-past and current empirical means.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-MEAN-DIFFERENCE",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-09"
+      ],
+      "statement": "Separate y_t and combine coefficients 1/(t-1)-1/t.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-TRIANGLE",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-10"
+      ],
+      "statement": "Triangle inequality gives 2|sum_(i<t)y_i/[t(t-1)]|+2|y_t|/t.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-TAIL-POINTWISE",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-11"
+      ],
+      "statement": "Bound prefix sum and y_t to obtain <=2/t+2|y_t|/t<=4/t.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-TAIL-BOUND",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-12"
+      ],
+      "statement": "R_T<=0.25+4 sum_(t=2)^T 1/t.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-HARMONIC-REDUCTION",
+      "kind": "proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-13"
+      ],
+      "statement": "0.25+4 sum_(t=2)^T 1/t<=4 sum_(t=1)^T 1/t.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-INTEGRAL-MOTIVATION",
+      "kind": "paragraph",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "P05-14"
+      ],
+      "statement": "Integral comparison discussion begins; completes on printed p6.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-GAME",
+      "kind": "context-protocol",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "C01-01"
+      ],
+      "statement": "Outcome/prediction in [0,1], reveal after prediction, squared loss.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-IID-CONTEXT",
+      "kind": "context-paragraph-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "C01-02"
+      ],
+      "statement": "Population mean predicts optimally; expected benchmark sigma^2*T; expected excess nonnegative.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-HARMONIC-INTEGRAL",
+      "kind": "context-proof-display",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "C06-01"
+      ],
+      "statement": "H_T<=1+integral_2^(T+1) 1/(t-1) dt=1+ln T.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "N-FINAL-COMBINE",
+      "kind": "context-proof",
+      "provenance": "printed-source",
+      "inventory_ids": [
+        "C06-02"
+      ],
+      "statement": "Conclude theorem by combining harmonic estimate and regret bound.",
+      "status": "pending-independent-review"
+    },
+    {
+      "id": "G-MEAN-FEASIBILITY",
+      "kind": "SOURCE_GAP",
+      "provenance": "source-implicit-unproved-bridge",
+      "statement": "For positive t and y_i in [0,1], their empirical mean belongs to [0,1].",
+      "source_use_sites": [
+        "P03-07 scalar interval argmin display",
+        "P05-07 factor bound <=2",
+        "P05-02 BTL instantiation with V=[0,1]"
+      ],
+      "source_evidence": "No explicit proof is given. The bounded average assertion is implicit in identifying mean as interval argmin.",
+      "closure": "Requires independent bounded-sum/division derivation, recorded as derived library proof; not fabricated as a printed source argument.",
+      "status": "open-source-gap"
+    },
+    {
+      "id": "G-MEAN-OPTIMALITY",
+      "kind": "SOURCE_GAP",
+      "provenance": "source-asserted-without-proof",
+      "statement": "Positive-prefix empirical mean attains the interval squared-loss minimum. A full scalar-argmin library characterization also requires uniqueness, which is not separately stated as a printed theorem.",
+      "source_use_sites": [
+        "P03-07 argmin equality",
+        "P05-03 minimum-value rewrite",
+        "P05-02 BTL minimizer premise"
+      ],
+      "source_evidence": "The source says the argmin equality should be immediate but provides no derivation. It uses scalar argmin notation without a separate uniqueness statement or argument.",
+      "closure": "An independently proved complete minimizer characterization is required for a characterized library definition. Variance decomposition is a possible derived proof, not a printed source node.",
+      "status": "open-source-gap"
+    },
+    {
+      "id": "G-EXPECTED-BENCHMARK",
+      "kind": "SOURCE_GAP",
+      "provenance": "context-source-asserted-without-proof",
+      "statement": "Under p1 i.i.d. bounded distribution, population mean minimizes expected squared loss and minimum cumulative expected fixed loss is T times variance.",
+      "source_use_sites": [
+        "P02-01 rewrite of (1.1)"
+      ],
+      "source_evidence": "p1 asserts optimality and value without deriving the squared-loss decomposition.",
+      "closure": "Context-only source gap; does not feed the deterministic Theorem1.3 route.",
+      "status": "open-source-gap"
+    }
+  ],
+  "routes": [
+    {
+      "id": "R-EXPECTED",
+      "target": "N-EXPECTED",
+      "operator": "AND",
+      "premises": [
+        "N-IID-CONTEXT",
+        "G-EXPECTED-BENCHMARK"
+      ],
+      "consumer_use_site": "P02-01",
+      "premise_discharge": "i.i.d. bounded distribution belongs only to motivational expected-loss context."
+    },
+    {
+      "id": "R-PATHWISE",
+      "target": "N-REGRET",
+      "operator": "AND",
+      "premises": [
+        "N-GAME",
+        "N-PATHWISE-TRANSITION"
+      ],
+      "consumer_use_site": "P02-02/03",
+      "premise_discharge": "Definition change: arbitrary realized outcomes and deterministic rule. This is not a theorem commuting min and E."
+    },
+    {
+      "id": "R-MEAN",
+      "target": "N-MEAN",
+      "operator": "AND",
+      "premises": [
+        "N-GAME",
+        "G-MEAN-FEASIBILITY",
+        "G-MEAN-OPTIMALITY"
+      ],
+      "consumer_use_site": "P03-07",
+      "premise_discharge": "T>=1 and every y_i in [0,1]. The two source gaps remain open."
+    },
+    {
+      "id": "R-FTL",
+      "target": "N-FTL-GENERIC",
+      "operator": "AND",
+      "premises": [
+        "N-MEAN",
+        "N-CAUSAL-MOTIVATION"
+      ],
+      "consumer_use_site": "P03-09",
+      "premise_discharge": "Only positive prefixes t-1 for t>=2; first value chosen separately in [0,1]."
+    },
+    {
+      "id": "R-BTL-PREFIX",
+      "target": "N-BTL-PREFIX",
+      "operator": "AND",
+      "premises": [
+        "N-BTL-IH"
+      ],
+      "consumer_use_site": "P04-06",
+      "premise_discharge": "Inductive hypothesis invoked only at prefix T-1, T>=2."
+    },
+    {
+      "id": "R-BTL-MIN",
+      "target": "N-BTL-MIN",
+      "operator": "AND",
+      "premises": [],
+      "consumer_use_site": "P04-07",
+      "premise_discharge": "Direct source lemma hypotheses: xStar_(T-1) minimizes prefix cumulative loss and xStar_T belongs to V."
+    },
+    {
+      "id": "R-BTL-STEP",
+      "target": "N-BTL-STEP",
+      "operator": "AND",
+      "premises": [
+        "N-BTL-PREFIX",
+        "N-BTL-MIN",
+        "N-BTL-CANCEL"
+      ],
+      "consumer_use_site": "P04-08",
+      "premise_discharge": "Both inequalities are necessary for transitivity; cancellation recovers the full T inequality."
+    },
+    {
+      "id": "R-BTL-INDUCTION",
+      "target": "N-BTL",
+      "operator": "AND",
+      "premises": [
+        "N-BTL-BASE",
+        "N-BTL-STEP"
+      ],
+      "consumer_use_site": "P04-02 proof pp4",
+      "premise_discharge": "Induction schema discharges local IH in N-BTL-IH; this local assumption is not a new global theorem premise."
+    },
+    {
+      "id": "R-REWRITE",
+      "target": "N-REGRET-REWRITE",
+      "operator": "AND",
+      "premises": [
+        "N-REGRET",
+        "N-MEAN"
+      ],
+      "consumer_use_site": "P05-03",
+      "premise_discharge": "Theorem-local rule x_t=xStar_(t-1), including xStar_0=1/2. Mean characterization discharges minimum attainment."
+    },
+    {
+      "id": "R-BTL-APPLY",
+      "target": "N-BTL-APPLICATION",
+      "operator": "AND",
+      "premises": [
+        "N-BTL",
+        "N-MEAN"
+      ],
+      "consumer_use_site": "P05-02",
+      "premise_discharge": "Instantiate V=[0,1], l_t(u)=(u-y_t)^2, leaders empirical means. Mean gap supplies all prefix minimizer and membership obligations; they cannot be extra theorem binders."
+    },
+    {
+      "id": "R-STABILITY",
+      "target": "N-STABILITY-SUM",
+      "operator": "AND",
+      "premises": [
+        "N-REGRET-REWRITE",
+        "N-BTL-APPLICATION"
+      ],
+      "consumer_use_site": "P05-04",
+      "premise_discharge": "Subtract BTL inequality in the correct direction from learner cumulative loss; distribute sum subtraction."
+    },
+    {
+      "id": "R-INITIAL",
+      "target": "N-INITIAL",
+      "operator": "AND",
+      "premises": [
+        "N-MEAN"
+      ],
+      "consumer_use_site": "P05-05",
+      "premise_discharge": "Theorem-local xStar_0=1/2, xStar_1=y_1, y_1 in [0,1]; no arbitrary initial-value generalization."
+    },
+    {
+      "id": "R-FACTOR",
+      "target": "N-FACTOR",
+      "operator": "AND",
+      "premises": [],
+      "consumer_use_site": "P05-06",
+      "premise_discharge": "Real ring expansion for t>=2; a=xStar_(t-1), b=xStar_t."
+    },
+    {
+      "id": "R-LIPSCHITZ",
+      "target": "N-LIPSCHITZ",
+      "operator": "AND",
+      "premises": [
+        "N-FACTOR",
+        "G-MEAN-FEASIBILITY"
+      ],
+      "consumer_use_site": "P05-07",
+      "premise_discharge": "a,b,y_t in [0,1] entail |a+b-2y_t|<=2; absolute values are nonnegative."
+    },
+    {
+      "id": "R-SUBSTITUTE",
+      "target": "N-MEAN-SUBSTITUTE",
+      "operator": "AND",
+      "premises": [
+        "N-LIPSCHITZ",
+        "N-MEAN"
+      ],
+      "consumer_use_site": "P05-08",
+      "premise_discharge": "Positive prefix lengths t-1 and t; empirical-mean formula is applicable."
+    },
+    {
+      "id": "R-DIFFERENCE",
+      "target": "N-MEAN-DIFFERENCE",
+      "operator": "AND",
+      "premises": [
+        "N-MEAN-SUBSTITUTE"
+      ],
+      "consumer_use_site": "P05-09",
+      "premise_discharge": "Split sum_(i<=t) at y_t; denominators nonzero because t>=2."
+    },
+    {
+      "id": "R-TRIANGLE",
+      "target": "N-TRIANGLE",
+      "operator": "AND",
+      "premises": [
+        "N-MEAN-DIFFERENCE"
+      ],
+      "consumer_use_site": "P05-10",
+      "premise_discharge": "Use 1/(t-1)-1/t=1/[t(t-1)], triangle inequality, and t positive."
+    },
+    {
+      "id": "R-POINTWISE",
+      "target": "N-TAIL-POINTWISE",
+      "operator": "AND",
+      "premises": [
+        "N-TRIANGLE"
+      ],
+      "consumer_use_site": "P05-11",
+      "premise_discharge": "For i<t, 0<=y_i<=1, so |sum_(i<t)y_i|<=t-1; |y_t|<=1. These are source-used elementary interval side conditions."
+    },
+    {
+      "id": "R-TAIL",
+      "target": "N-TAIL-BOUND",
+      "operator": "AND",
+      "premises": [
+        "N-STABILITY-SUM",
+        "N-INITIAL",
+        "N-TAIL-POINTWISE"
+      ],
+      "consumer_use_site": "P05-12",
+      "premise_discharge": "Split sum into initial term and t=2,...,T; T>=1. Tail empty at T=1. Both initial and tail estimates are required."
+    },
+    {
+      "id": "R-HARMONIC-REDUCTION",
+      "target": "N-HARMONIC-REDUCTION",
+      "operator": "AND",
+      "premises": [
+        "N-TAIL-BOUND"
+      ],
+      "consumer_use_site": "P05-13",
+      "premise_discharge": "Use 1/4<=4 and first harmonic term 1; T>=1."
+    },
+    {
+      "id": "R-INTEGRAL-MOTIVATION",
+      "target": "N-INTEGRAL-MOTIVATION",
+      "operator": "AND",
+      "premises": [
+        "N-FIGURE11"
+      ],
+      "consumer_use_site": "P05-14 continued p6",
+      "premise_discharge": "Figure is explanatory evidence for geometric comparison, not a separate algebraic proof route."
+    },
+    {
+      "id": "R-INTEGRAL",
+      "target": "N-HARMONIC-INTEGRAL",
+      "operator": "AND",
+      "premises": [
+        "N-INTEGRAL-MOTIVATION"
+      ],
+      "consumer_use_site": "C06-01",
+      "premise_discharge": "Reciprocal shifted curve bounds bars for terms t>=2; separate first term 1. Integrate from2 toT+1 to get ln T. T>=1 includes zero-length integral at T=1."
+    },
+    {
+      "id": "R-COMBINE",
+      "target": "N-FINAL-COMBINE",
+      "operator": "AND",
+      "premises": [
+        "N-HARMONIC-REDUCTION",
+        "N-HARMONIC-INTEGRAL"
+      ],
+      "consumer_use_site": "C06-02",
+      "premise_discharge": "Multiply H_T<=1+ln T by positive 4, combine transitivity, expand 4(1+ln T)."
+    },
+    {
+      "id": "R-THM13",
+      "target": "N-THM13",
+      "operator": "AND",
+      "premises": [
+        "N-FINAL-COMBINE"
+      ],
+      "consumer_use_site": "P04-11 justified by p5 and p6",
+      "premise_discharge": "All use-sites share theorem assumptions; no stochastic/IID/minimax hypotheses enter."
+    }
+  ],
+  "logical_semantics": {
+    "routes": "A route is an AND-hyperedge unless explicitly typed otherwise; different sufficient routes to the same target would form OR alternatives.",
+    "or_routes": [],
+    "or_absence_reason": "Only one sufficient printed proof route is provided. BTL plus pointwise stability plus harmonic comparison are required jointly. BTL base/step are induction obligations, not alternative OR proofs.",
+    "induction": {
+      "lemma": "N-BTL",
+      "bound_variable": "T positive integer",
+      "local_hypothesis_node": "N-BTL-IH",
+      "discharged_by": "R-BTL-INDUCTION"
+    },
+    "not_proof_edges": [
+      "Definitions/motivations not consumed in target do not acquire invented proof dependencies.",
+      "Derived variance decomposition is not an alternate printed source route.",
+      "The expected-benchmark context is not a premise for pathwise Theorem1.3."
+    ]
+  },
+  "roots": [
+    "N-MEAN",
+    "N-REGRET",
+    "N-TAIL-BOUND",
+    "N-THM13"
+  ],
+  "source_gaps": [
+    "G-MEAN-FEASIBILITY",
+    "G-MEAN-OPTIMALITY",
+    "G-EXPECTED-BENCHMARK"
+  ],
+  "review_requirements": "Distinct reviewer must inspect raw PDF/renders and proposed graph, without implementation Lean or private extractor rationale. No source topology acceptance claimed.",
+  "public_projection": {
+    "original": {
+      "artifact": "batch22-source-extraction/source-topology.json",
+      "sha256": "495c625b4e2cb41a3edbe14dd7ca97b83d52906cba30ba3151870c3b8e88055a",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "change": "Physical prefixes replaced by logical locations. Original mathematical content and stage-specific verdicts retained. Original hashes bind retained originals, not projected bytes.",
+    "verifiedTitleOverlay": [
+      {
+        "field": "source.work",
+        "original": "A Modern Introduction to Online Learning",
+        "verified": "Online Learning: A Modern Introduction Using Convex Optimization"
+      }
+    ],
+    "titleEvidence": {
+      "artifact": "batch22-source-review/title-addendum-v1.json",
+      "sha256": "d5b8541a44015c0a1cb2cf616967600c746d6ff194cf86949cdd1fb0e5bc1144",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "review": "Independent public-projection review pending."
+  }
+}

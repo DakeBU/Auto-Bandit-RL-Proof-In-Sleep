@@ -753,3 +753,4 @@ import BanditRLProof.OnlineUnitScaling
 import BanditRLProof.OnlineGuessingLogLower
 
 import BanditRLProof.OnlineNoRegretSemantics
+import BanditRLProof.OnlineSquareMinimum

@@ -787,6 +787,11 @@
   };
   window.addEventListener("load", labelOverflowRegions);
   window.addEventListener("resize", labelOverflowRegions);
+  document.addEventListener("toggle", (event) => {
+    if (event.target instanceof HTMLDetailsElement && event.target.open) {
+      window.requestAnimationFrame(labelOverflowRegions);
+    }
+  }, true);
   [300, 1200, 3200].forEach((delay) => window.setTimeout(labelOverflowRegions, delay));
   window.MathJax?.startup?.promise?.then(labelOverflowRegions);
   document.addEventListener("reader-math-ready", labelOverflowRegions);

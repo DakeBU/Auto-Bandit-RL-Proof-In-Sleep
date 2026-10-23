@@ -1,0 +1,202 @@
+{
+  "stage": "post-seal-independent-body-and-bounded-canonicality-review",
+  "created_utc": "2026-10-23T10:18:33.381232+00:00",
+  "verdict": "accepted",
+  "candidate_head": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+  "candidate_state": "Candidate module and canary untracked; public roots modified. Reviewer changed no production file.",
+  "inputs": [
+    {
+      "path": "repository\\BanditRLProof\\OnlineSquareMinimum.lean",
+      "raw_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "lf_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "path": "repository\\Tests\\OnlineSquareMinimumCanary.lean",
+      "raw_sha256": "275e4c80fd8c8769293d810cc4e94ecc67d64f9f9c0f272f3e6c1340279ee881",
+      "lf_sha256": "275e4c80fd8c8769293d810cc4e94ecc67d64f9f9c0f272f3e6c1340279ee881"
+    },
+    {
+      "path": "repository\\BanditRLProof\\OnlineLearningMean.lean",
+      "raw_sha256": "155753914f0e09d7b0a8ec1ea55dd8b3d193df6500b4c60092ba7ccd3a295096",
+      "lf_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+      "worktree_dependency_lf_equal": true,
+      "pinned_main_blob_equal_after_lf": true
+    },
+    {
+      "path": "repository\\BanditRLProof\\OnlineLearningFTL.lean",
+      "raw_sha256": "bf506f1d23afe0f86168060904bc6a1409a457b265b9068503a1003d03a2736f",
+      "lf_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305",
+      "worktree_dependency_lf_equal": true,
+      "pinned_main_blob_equal_after_lf": true
+    },
+    {
+      "path": "repository\\BanditRLProof\\OnlineLearningRegret.lean",
+      "raw_sha256": "5f0922d4b8a38ca408900dd01370da1a610b8d9bdd5895ce69008e4153be4e2f",
+      "lf_sha256": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f",
+      "worktree_dependency_lf_equal": true,
+      "pinned_main_blob_equal_after_lf": true
+    },
+    {
+      "path": "repository\\BanditRLProof\\OnlineLearningFoundations.lean",
+      "raw_sha256": "1cc8586376b0e69907bf118c67c40f73a021957fb3363294131e234cc8a8b71f",
+      "lf_sha256": "1ddd99831395cf74993f7d52cdacd2b7d30c48458e4e2480e3229a56c797fe6a",
+      "worktree_dependency_lf_equal": true,
+      "pinned_main_blob_equal_after_lf": true
+    }
+  ],
+  "additional_inputs": {
+    "maintenance-evidence\\batch22-imported-audit-v1\\actual-dependencies.json": "770f3dbedfc4d2bf739bd70cd0ef0a2360fc996e6b973a6e041cc5d00f57d0f1",
+    "maintenance-evidence\\batch22-imported-audit-v1\\receipt.json": "726fadb3904d15c53b84f4ac815e68e9e9ad53a4e8f2b651ab2ef4582cc9d38d",
+    "repository\\.lake\\packages\\mathlib\\Mathlib\\NumberTheory\\Harmonic\\Bounds.lean": "92f1c8224c4353a057c306ea1b8f35ff51e02b82462916fcd5820491fce11db5"
+  },
+  "bodies_actually_read": {
+    "candidate": "Complete definition and six public proof bodies.",
+    "canary": "Two fixed stream definitions and all20theorem bodies.",
+    "project": "Entire Mean/FTL/Regret/Foundations files read; detailed dependency review limited to listed producers. Unrelated Regret no-regret body not newly source-accepted.",
+    "mathlib": "Full harmonic_le_one_add_log and supporting harmonic identity read. IsLeast.csInf_eq invocation and supplied IsLeast witness reviewed; no recursive audit of all order infrastructure or tactic kernels."
+  },
+  "definition_body": "Literal cumulative loss minus sInf interval objective image. No choice-selected optimizer, fallback branch, axiom, or hidden provider.",
+  "public_proofs": {
+    "guessing_prefix_minimum": "Split T=0 and simplify empty sums/mean. Otherwise derive positivity, pair empiricalMean_mem and global empiricalMean_minimizes. No assumed minimizing certificate.",
+    "squaredLoss_minimum_eq": "Construct IsLeast: image membership witnessed by the feasible mean, all lower comparisons by unpacking image witnesses. Apply IsLeast.csInf_eq. Attainment is established before infimum equality.",
+    "squaredBestRegret_eq_comparatorRegret": "Unfold both definitions and rewrite squaredLoss_minimum_eq. Honest representation adapter for arbitrary traces.",
+    "comparatorRegret_le_squaredBestRegret": "Rewrite representation; apply sub_le_sub_left to produced mean optimality. Correct subtraction direction and feasible comparator premise.",
+    "meanPredict_bestRegret_bound": "Rewrite best-regret identity for actual meanPredict; unfold comparatorRegret and apply theorem_1_3 with identical y,T,hT,hy. Adapter of existing rate, not new rate proof.",
+    "meanPredict_bestRegret_refined": "Same identity rewrite followed by existing meanPredict_regret_refined. Exact quarter and tail retained."
+  },
+  "source_gap_producers_and_reused_proofs": {
+    "empiricalMean_decomposition": "Derive nonzero real n and n*mean=sum. Expand square sums, substitute and ring. Positive n, arbitrary real sequence/comparator.",
+    "empiricalMean_minimizes": "Use decomposition and nonnegativity of n times squared displacement. Supplies G-MEAN-OPTIMALITY without new source premise.",
+    "empiricalMean_mem": "Bound sum between0 and n from every prefix hy; divide by positive n. Supplies G-MEAN-FEASIBILITY.",
+    "empiricalMean_unique": "Decomposition and no-worse loss force positive n times squared displacement<=0, hence displacement zero. Existing separate positive-horizon support, not new Q dependency.",
+    "lemma_1_2": "Induction, empty base, cancel equal last losses, restrict premises for IH, use previous minimizer at feasible final leader. Prefix-minimizer premises are honest here and internally discharged by FTL producers.",
+    "meanPredict_prefix": "Unfold literal prediction/mean and use finite-sum congruence for equal strict-past coordinates. Includes initial branch.",
+    "meanPredict_mem": "Initial half is feasible; other branch uses empiricalMean_mem.",
+    "empiricalMean_update": "Split last summand, discharge nonzero denominators, field algebra.",
+    "meanPredict_stability": "Initial branch uses loose4. Positive branch proves squared mean-target displacement<=1, substitutes recurrence, obtains coefficient2/d-1/d^2, proves it nonnegative, bounds product and relaxes to4/d. This is a different valid algebraic route from source factor/absolute/triangle steps.",
+    "theorem_1_3": "BTL instantiated on Set.univ using global mean minimization. Sum stability using restricted prefix hy, rewrite reciprocal sum as4*harmonicT, apply harmonic_le_one_add_log and combine by linarith. Does not separately preserve the quarter in this coarse proof.",
+    "meanPredict_initial_stability": "Unfold first prediction half and one-observation mean; y0*(1-y0)>=0 bounds actual first squared error by1/4.",
+    "meanPredict_regret_refined": "Exclude zero by hT, instantiate BTL on interval with derived mean feasibility/optimality, subtract leader losses, bound first term by1/4, shift stability indices for tail, split sum and normalize denominators t+2.",
+    "harmonic_le_one_add_log": "Read complete Mathlib proof: split zero, separate harmonic first term, use antitone sum-integral comparison on shifted reciprocal, translate integral and evaluate log. Supplies actual harmonic-integral dependency."
+  },
+  "canaries": [
+    {
+      "name": "alternating_mem",
+      "review": "Support of fixed varying endpoint stream."
+    },
+    {
+      "name": "quarters_mem",
+      "review": "Support of fixed varying interior stream."
+    },
+    {
+      "name": "empty_minimum",
+      "review": "T0 infimum equals0; extension without uniqueness."
+    },
+    {
+      "name": "empty_regret",
+      "review": "T0 representation equals0."
+    },
+    {
+      "name": "alternating_mean",
+      "review": "Direct two-point mean1/2."
+    },
+    {
+      "name": "alternating_minimum",
+      "review": "Literal infimum1/2 on distinct endpoints."
+    },
+    {
+      "name": "alternating_unique",
+      "review": "Existing uniqueness at positive horizon for arbitrary no-worse comparator, never T0."
+    },
+    {
+      "name": "actual_prediction_values",
+      "review": "Actual values half,0,half distinguish initial prediction and prefix leader."
+    },
+    {
+      "name": "actual_regret_one",
+      "review": "Exact first regret1/4 detects omitted boundary term."
+    },
+    {
+      "name": "actual_regret_two",
+      "review": "Actual two-round FTL regret3/4 distinguishes actual strategy from hindsight."
+    },
+    {
+      "name": "signed_alternating",
+      "review": "Fixed matching streams give-1/2, counterexample to accidental nonnegativity; no generic FTL/IID claim."
+    },
+    {
+      "name": "comparator_zero_order",
+      "review": "Endpoint order API wiring."
+    },
+    {
+      "name": "comparator_one_order",
+      "review": "Other endpoint order API wiring."
+    },
+    {
+      "name": "quarters_mean",
+      "review": "Nonbinary mean1/2."
+    },
+    {
+      "name": "quarters_minimum",
+      "review": "Nonbinary literal infimum1/8 checks scaling and nonendpoint data."
+    },
+    {
+      "name": "actual_bound",
+      "review": "Log endpoint API wiring atT2, not independent rate proof."
+    },
+    {
+      "name": "actual_refined",
+      "review": "TailT2 bound9/4 checks indexing."
+    },
+    {
+      "name": "actual_refined_one",
+      "review": "T1 empty tail leaves1/4."
+    },
+    {
+      "name": "actual_causality",
+      "review": "General strict-prefix invariance consumer of actual predictor."
+    },
+    {
+      "name": "actual_identity",
+      "review": "Actual strategy/horizon mean-comparator identity wiring."
+    }
+  ],
+  "canary_assessment": "Meaningful sign/boundary/scaling/strategy checks mixed with normal API wiring. Not20independent source-fidelity proofs.",
+  "source_route_deltas": [
+    "Source mean assertions filled by existing decomposition and bounded-sum proofs.",
+    "Stability implementation uses exact recurrence coefficient rather than literal source factor/absolute/triangle route.",
+    "Coarse FTL uses Set.univ BTL and uniform4/d; refined FTL uses interval BTL and explicitly separates initial1/4.",
+    "Mathlib supplies harmonic-integral bound."
+  ],
+  "fake_closure_checks": "No sorry, custom axiom, assumed theorem conclusion, project Prop bundle or convenience performance premise found. Wrapper-like new endpoints explicitly transport a new minimum-value interface to inspected existing rate producers.",
+  "bounded_canonicality": "One new interval minimum regret definition and six useful producer/representation/order/endpoint adapters reuse existing Mean/FTL/Regret and IsLeast.csInf_eq. No new generic minimization machinery. No exhaustive global duplicate or import-minimality claim.",
+  "required_corrections": [],
+  "documentation_requirements": [
+    "Preserve source/implementation route distinctions; no literal whole-source replay claim.",
+    "Credit six endpoints as derived representation/adapters, not six separately printed theorems."
+  ],
+  "compiled_graph_limits": "38selected nodes remain a selected TYPE/VALUE occurrence graph. This body review adds bounded manual proof-flow evidence through named producers; it does not turn the graph into full source topology or complete declaration closure.",
+  "validation": "No compiler rerun. Existing focused receipt is separately hash-bound; full root/Tests/harness gate remains separate.",
+  "limits": [
+    "No global purification",
+    "No complete graph closure",
+    "No full project gate",
+    "No whole PR/chapter/book acceptance",
+    "No merge/live acceptance"
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch22-source-review/body-review-v1.json",
+      "sha256": "5652bbbba71348caa329b85ac12a4a36ca264a809fedf6c4bfba4d25c7d5cfd4",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "change": "Physical prefixes replaced by logical locations. Original mathematical content and stage-specific verdicts retained. Original hashes bind retained originals, not projected bytes.",
+    "verifiedTitleOverlay": [],
+    "titleEvidence": {
+      "artifact": "batch22-source-review/title-addendum-v1.json",
+      "sha256": "d5b8541a44015c0a1cb2cf616967600c746d6ff194cf86949cdd1fb0e5bc1144",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "review": "Independent public-projection review pending."
+  }
+}

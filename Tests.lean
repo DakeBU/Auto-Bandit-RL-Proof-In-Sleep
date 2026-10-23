@@ -156,3 +156,4 @@ import Tests.OnlineUnitScalingCanary
 import Tests.OnlineGuessingLogLowerCanary
 
 import Tests.OnlineNoRegretSemanticsCanary
+import Tests.OnlineSquareMinimumCanary

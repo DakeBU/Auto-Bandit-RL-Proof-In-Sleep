@@ -6094,6 +6094,114 @@
       "dependencies": [
         "BanditRL.OnlineLearning.NoRegret"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "title": "Every feasible comparator is bounded by best-fixed regret",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 63,
+      "plain": "Subtracting a larger comparator loss gives a smaller regret, so the attained minimum produces the largest comparator regret.",
+      "math": "L_T(m_T)\\le L_T(u)\\quad\\Longrightarrow\\quad R_T(u)\\le R_T^{\\mathrm{best}}(x).",
+      "intuition": "The benchmark is an actual attained minimum over one fixed comparator.",
+      "why": "Connect the explicit best-fixed benchmark to the shared comparator-regret API without assuming a minimizing certificate.",
+      "position": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+      "proof_idea": "For feasible u, L_T(m_T)<=L_T(u). Subtract both sides from the same A_T(x), reversing their order. Then replace A_T(x)-L_T(m_T) by the best-fixed regret identity.",
+      "lean_notes": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.guessing_prefix_minimum",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "title": "The empirical mean attains the feasible minimum",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 60,
+      "plain": "Averaging feasible targets gives a feasible comparator, and every other comparator adds a nonnegative square to its loss.",
+      "math": "\\begin{aligned}m_T&=T^{-1}\\sum_{t<T}y_t,\\\\L_T(u)&=L_T(m_T)+T(u-m_T)^2\\quad(T>0),\\\\m_T&\\in[0,1],\\qquad L_T(m_T)\\le L_T(u)\\quad(u\\in[0,1]).\\end{aligned}",
+      "intuition": "The benchmark is an actual attained minimum over one fixed comparator.",
+      "why": "Connect the explicit best-fixed benchmark to the shared comparator-regret API without assuming a minimizing certificate.",
+      "position": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+      "proof_idea": "For T>0, averaging gives m_T in [0,1]. Expanding the squares and using sum_{t<T}(y_t-m_T)=0 gives L_T(u)=L_T(m_T)+T(u-m_T)^2, so L_T(m_T)<=L_T(u). At T=0, m_0=0 and every loss sum is0; every comparator is a minimizer.",
+      "lean_notes": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean_mem",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "title": "The logarithmic bound holds against the actual minimum",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 64,
+      "plain": "The existing guarantee for the past-mean predictor applies to the same empirical-mean comparator that attains the minimum.",
+      "math": "x_0=\\tfrac12,\\quad x_t=m_t\\ (t>0),\\qquad R_T^{\\mathrm{best}}(x)\\le4+4\\log T\\quad(T>0).",
+      "intuition": "The benchmark is an actual attained minimum over one fixed comparator.",
+      "why": "Connect the explicit best-fixed benchmark to the shared comparator-regret API without assuming a minimizing certificate.",
+      "position": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+      "proof_idea": "Use x_0=1/2 and x_t=m_t for t>0. Replace best-fixed regret by comparatorRegret at m_T, then apply the existing theorem_1_3 guarantee on exactly the same target prefix. No new performance premise or rate argument is introduced.",
+      "lean_notes": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.theorem_1_3"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "title": "Keep the initial quarter and exact later-round tail",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 65,
+      "plain": "The stronger existing past-mean bound retains the first-round quarter and the harmonic sum over source rounds2 throughT.",
+      "math": "R_T^{\\mathrm{best}}(x)\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s=\\tfrac14+\\sum_{t<T-1}\\frac4{t+2}\\quad(T>0).",
+      "intuition": "The benchmark is an actual attained minimum over one fixed comparator.",
+      "why": "Connect the explicit best-fixed benchmark to the shared comparator-regret API without assuming a minimizing certificate.",
+      "position": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+      "proof_idea": "Apply the same minimum identity to meanPredict_regret_refined. The initial prediction is1/2, so its squared error is at most1/4. The existing later-round stability analysis supplies the terms4/s for source rounds s=2,...,T. At T=1 the tail is empty.",
+      "lean_notes": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.meanPredict_regret_refined"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "title": "Best-fixed regret uses the produced empirical mean",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 62,
+      "plain": "Subtract the same attained minimum from the prediction loss to recover comparator regret at the empirical mean.",
+      "math": "R_T^{\\mathrm{best}}(x)=A_T(x)-L_T(m_T)=R_T(m_T).",
+      "intuition": "The benchmark is an actual attained minimum over one fixed comparator.",
+      "why": "Connect the explicit best-fixed benchmark to the shared comparator-regret API without assuming a minimizing certificate.",
+      "position": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+      "proof_idea": "Write A_T(x)=sum_{t<T}(x_t-y_t)^2. The minimum identity gives R_T^{best}(x)=A_T(x)-L_T(m_T). This is exactly the shared comparatorRegret for the same loss stream, prediction trace and horizon.",
+      "lean_notes": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+        "BanditRL.OnlineLearning.squaredBestRegret",
+        "BanditRL.OnlineLearning.comparatorRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "title": "The real infimum is the attained loss",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 61,
+      "plain": "The loss at the empirical mean is a member of the comparator-loss set and is no larger than any other member.",
+      "math": "\\inf\\{L_T(u):u\\in[0,1]\\}=L_T(m_T)=\\min_{u\\in[0,1]}L_T(u).",
+      "intuition": "The benchmark is an actual attained minimum over one fixed comparator.",
+      "why": "Connect the explicit best-fixed benchmark to the shared comparator-regret API without assuming a minimizing certificate.",
+      "position": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+      "proof_idea": "The preceding result supplies a feasible mean and all lower comparisons. Together they prove IsLeast for the image of [0,1] under L_T. Mathlib IsLeast.csInf_eq identifies its real infimum with L_T(m_T); no minimizer is assumed as an input.",
+      "lean_notes": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.guessing_prefix_minimum"
+      ]
     }
   ]
 }
