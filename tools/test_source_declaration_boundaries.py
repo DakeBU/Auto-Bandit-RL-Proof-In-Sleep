@@ -101,6 +101,33 @@ class SourceDeclarationBoundaryTests(unittest.TestCase):
         self.assertEqual(module, site.scan_module(self.file, []))
         self.assertEqual(module["declarations"][0]["statement"], site.compact_statement(self.SOURCE.splitlines(), 1))
 
+    def test_assignment_definition_exposes_exact_body_only_when_requested(self):
+        self.SOURCE = self.SOURCE.replace(
+            "def state (initial : Nat) : Nat → Nat\n  | 0 => initial\n  | t + 1 => state initial t + 1",
+            "def state (initial : Nat) (t : Nat) : Nat :=\n  match t with\n  | 0 => initial\n  | n + 1 => state initial n + 1",
+        )
+        self.file.write_bytes(self.SOURCE.encode())
+        self.entry.update(
+            end_line=5, file_sha256=hashlib.sha256(self.file.read_bytes()).hexdigest(),
+            block_LF_sha256=self.block_hash(5), include_definition_body=True,
+        )
+        before = site.scan_module(self.file, [])["declarations"]
+        self.configure()
+        after = site.scan_lean_tree()[0]["declarations"]
+        self.assertEqual(after[0]["statement"], "\n".join(self.SOURCE.splitlines()[1:5]))
+        self.assertNotIn("match", before[0]["statement"])
+        self.assertEqual(after[1], before[1])
+        self.entry.update(end_line=4, block_LF_sha256=self.block_hash(4))
+        self.configure()
+        with self.assertRaisesRegex(ValueError, "skips source code"):
+            site.scan_lean_tree()
+
+    def test_definition_body_flag_requires_boolean(self):
+        self.entry["include_definition_body"] = "true"
+        self.configure()
+        with self.assertRaisesRegex(ValueError, "Invalid"):
+            site.scan_lean_tree()
+
 
 if __name__ == "__main__":
     unittest.main()

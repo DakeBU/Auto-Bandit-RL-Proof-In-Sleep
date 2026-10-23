@@ -1,0 +1,751 @@
+{
+  "schema_version": "1.0",
+  "packet_id": "batch20-orabona-ch1-guessing-source-only",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "revision": "arXiv:1912.13213v10",
+    "cover_date": "21 Jun 2026",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "primary_scope": "Chapter 1, printed pages 1-7 / PDF pages 13-19, especially the unnumbered logarithmic-necessity assertion before Theorem 1.3 on printed page 4 / PDF page 16",
+    "supplementary_source": "Cover PDF page 1 and Hannan bibliographic entry printed page 304 / PDF page 316",
+    "page_numbering": "PDF pages are 1-based; printed page = PDF page - 12 in Chapter 1."
+  },
+  "actor": "/root/batch20_source_extractor",
+  "independence": {
+    "implementation_lean_read": false,
+    "old_semantic_verdicts_read": false,
+    "batch19_topology_read": false,
+    "prior_source_proof_reused": false,
+    "raw_source_used": true,
+    "self_review_accepted": false
+  },
+  "scope_policy": "Every substantive Chapter 1 region is classified below. Bibliography only follows the directly relevant Hannan attribution. Layout headers/page numbers are not mathematical regions.",
+  "coverage": {
+    "complete_visually_inspected_pdf_pages": [
+      1,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      316
+    ],
+    "text_only_boundary_pages": [
+      20,
+      21
+    ],
+    "full_book_lower_bound_search_claimed": false
+  },
+  "transcription_policy": "Key lower-bound paragraph is verbatim with whitespace normalized. Mathematical displays use ASCII variable names and sum notation, faithfully transcribed against rendered pages. Raw text and page PNGs preserve the primary source.",
+  "items": [
+    {
+      "id": "C1.game",
+      "disposition": "NODE",
+      "kind": "definition",
+      "anchor": {
+        "printed_page": 1,
+        "pdf_page": 13,
+        "region": "opening three bullets",
+        "render": "raw-page-013.png",
+        "text": "pdf-page-013.txt"
+      },
+      "transcription_or_faithful_content": "For t=1,...,T: adversary chooses y_t in [0,1] and keeps it secret; player chooses x_t in [0,1]; y_t is revealed and the loss is (x_t-y_t)^2.",
+      "source_status": "source-stated",
+      "notes": "Initial move order is secret outcome, then prediction, then full outcome revelation. No factor 1/2 in the loss."
+    },
+    {
+      "id": "C1.winning-transition",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 1,
+        "pdf_page": 13,
+        "region": "paragraph beginning Basically"
+      },
+      "reason": "Motivates the choice of winning condition without adding mathematical assumptions."
+    },
+    {
+      "id": "C1.iid-benchmark",
+      "disposition": "NODE",
+      "kind": "context-claim",
+      "anchor": {
+        "printed_page": 1,
+        "pdf_page": 13,
+        "region": "paragraph beginning Let us start",
+        "render": "raw-page-013.png",
+        "text": "pdf-page-013.txt"
+      },
+      "transcription_or_faithful_content": "Temporarily assume iid draws from a fixed distribution on [0,1], chosen at the beginning. Predicting its mean has expected total loss sigma^2 T and cannot be improved.",
+      "source_status": "source-stated",
+      "notes": "Illustrative stochastic benchmark only; not an assumption of the later adversarial theorem. Its mean-optimality calculation is not supplied."
+    },
+    {
+      "id": "C1.eq1.1",
+      "disposition": "NODE",
+      "kind": "definition",
+      "anchor": {
+        "printed_page": 1,
+        "pdf_page": 13,
+        "region": "display (1.1)",
+        "render": "raw-page-013.png",
+        "text": "pdf-page-013.txt"
+      },
+      "transcription_or_faithful_content": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2 T.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.eq1.2",
+      "disposition": "NODE",
+      "kind": "definition",
+      "anchor": {
+        "printed_page": 1,
+        "pdf_page": 13,
+        "region": "display (1.2)",
+        "render": "raw-page-013.png",
+        "text": "pdf-page-013.txt"
+      },
+      "transcription_or_faithful_content": "(1/T) E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.iid-success",
+      "disposition": "NODE",
+      "kind": "context-claim",
+      "anchor": {
+        "printed_page": 1,
+        "pdf_page": 13,
+        "region": "paragraph after (1.2)",
+        "render": "raw-page-013.png",
+        "text": "pdf-page-013.txt"
+      },
+      "transcription_or_faithful_content": "The quantities are nonnegative; sublinear growth of (1.1) is equivalent to (1.2) tending to zero as T tends to infinity.",
+      "source_status": "source-stated",
+      "notes": "Nonnegativity is said of this stochastic benchmark, not asserted here for every realized hindsight regret."
+    },
+    {
+      "id": "C1.iid-rewrite",
+      "disposition": "NODE",
+      "kind": "equation",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "first display",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "E[sum_{t=1}^T (x_t-Y_t)^2] - min_{x in [0,1]} E[sum_{t=1}^T (x-Y_t)^2].",
+      "source_status": "source-stated",
+      "notes": "The minimum is outside the expectation in this display. It must not be silently replaced by expected realized hindsight minimum."
+    },
+    {
+      "id": "C1.remove-iid",
+      "disposition": "NODE",
+      "kind": "model-transition",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "paragraph Now, the last step",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "Remove the assumption on how data are generated and consider any arbitrary sequence y_t. If the algorithm is deterministic, remove the expectation because there is no stochasticity anymore.",
+      "source_status": "source-stated",
+      "notes": "The text explicitly qualifies removing expectation by determinism. It does not give a full randomized-strategy lower-bound convention."
+    },
+    {
+      "id": "C1.regret",
+      "disposition": "NODE",
+      "kind": "definition",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "Regret_T display and following paragraph",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "Regret_T := sum_{t=1}^T (x_t-y_t)^2 - min_{x in [0,1]} sum_{t=1}^T (x-y_t)^2; success is sublinear growth in T. The comparator is one fixed best choice in hindsight.",
+      "source_status": "source-stated",
+      "notes": "Unnormalized cumulative regret. Full realized-sequence minimum, not minimum expected loss."
+    },
+    {
+      "id": "C1.metric-motivation",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "paragraph Our reasoning"
+      },
+      "reason": "Forward-looking motivation about convex optimization and machine learning; no proof dependency."
+    },
+    {
+      "id": "C1.fixed-comparator",
+      "disposition": "NODE",
+      "kind": "scope-boundary",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "paragraph Note that in the stochastic case",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "The single competitor is retained for most of the book; a sequence of competitors is considered in Chapter 14.",
+      "source_status": "source-stated",
+      "notes": "A dynamic-comparator target is not this guessing problem."
+    },
+    {
+      "id": "C1.general-regret",
+      "disposition": "NODE",
+      "kind": "definition",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "generalization paragraph and Regret_T(u) display",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "For V subset R^d, predictions x_t in V, losses ell_t:V->R and arbitrary fixed u in V, Regret_T(u):=sum_t ell_t(x_t)-sum_t ell_t(u).",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.no-regret",
+      "disposition": "NODE",
+      "kind": "definition",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "paragraph after Regret_T(u)",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "The algorithm does not know u or the corresponding regret to guarantee its bound. No-regret means for every fixed u in V, lim_{T->infinity} Regret_T(u)/T <= 0.",
+      "source_status": "source-stated",
+      "notes": "Transcribes the source use of lim without repairing it to limsup."
+    },
+    {
+      "id": "C1.remark1.1",
+      "disposition": "NODE",
+      "kind": "notation",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "Remark 1.1",
+        "render": "raw-page-014.png",
+        "text": "pdf-page-014.txt"
+      },
+      "transcription_or_faithful_content": "Regret also depends on ell_1,...,ell_T; this dependence is suppressed.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.footnote1",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 2,
+        "pdf_page": 14,
+        "region": "footnote 1"
+      },
+      "reason": "The general possibility of predictions in W strictly containing V is not invoked for the [0,1] guessing problem."
+    },
+    {
+      "id": "C1.applications",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "opening continuation through SGD paragraph"
+      },
+      "reason": "Applications to clicks, routing, games and stochastic optimization are motivation, not guessing-problem proof inputs."
+    },
+    {
+      "id": "C1.return-to-game",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "paragraph Let us now go back"
+      },
+      "reason": "Pedagogical transition, without new mathematical content."
+    },
+    {
+      "id": "C1.adaptive-adversary",
+      "disposition": "NODE",
+      "kind": "model-clarification",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "A Winning Strategy, first paragraph",
+        "render": "raw-page-015.png",
+        "text": "pdf-page-015.txt"
+      },
+      "transcription_or_faithful_content": "The game can be won also if the adversary picks its number after observing our choice; no assumption is made about how numbers are decided.",
+      "source_status": "source-stated",
+      "notes": "Strengthens the upper-bound adversary model beyond the opening secret-number protocol. It is not a formal specification of randomized lower-bound quantifiers."
+    },
+    {
+      "id": "C1.statistical-modeling-discussion",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "paragraph Now, the fact"
+      },
+      "reason": "Explains why statistical prediction intuition is inadequate under adversarial changes; no new lemma or proof step."
+    },
+    {
+      "id": "C1.mean-minimizer",
+      "disposition": "NODE",
+      "kind": "characterization",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "argmin display",
+        "render": "raw-page-015.png",
+        "text": "pdf-page-015.txt"
+      },
+      "transcription_or_faithful_content": "x_T^star := argmin_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 = (1/T) sum_{t=1}^T y_t.",
+      "source_status": "source-stated",
+      "notes": "The source calls this immediate and gives no derivation; for positive T the displayed average is the intended scalar minimizer, despite argmin being written as a scalar."
+    },
+    {
+      "id": "C1.causality",
+      "disposition": "NODE",
+      "kind": "information-constraint",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "paragraph Now, given that we do not know the future",
+        "render": "raw-page-015.png",
+        "text": "pdf-page-015.txt"
+      },
+      "transcription_or_faithful_content": "We cannot use x_T^star as each prediction because we do not know the future; the past is known, and the proposed strategy tracks the past minimizer.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.ftl-rule",
+      "disposition": "NODE",
+      "kind": "algorithm",
+      "anchor": {
+        "printed_page": 3,
+        "pdf_page": 15,
+        "region": "paragraph Hence, on each round",
+        "render": "raw-page-015.png",
+        "text": "pdf-page-015.txt"
+      },
+      "transcription_or_faithful_content": "For t>=2, x_t=x_{t-1}^star=(1/(t-1)) sum_{i=1}^{t-1} y_i; in the first round guess any number between 0 and 1. This is Follow-the-Leader (FTL).",
+      "source_status": "source-stated",
+      "notes": "The subsequent Theorem 1.3 fixes the initial choice to 0.5, unlike this broader description."
+    },
+    {
+      "id": "C1.proof-transition",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "first paragraph continued from page 3"
+      },
+      "reason": "Announces first-principles proof and a lemma; no additional obligation beyond Lemma 1.2."
+    },
+    {
+      "id": "C1.lemma1.2",
+      "disposition": "NODE",
+      "kind": "lemma",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "Lemma 1.2 statement",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "Let V subset R^d and ell_t:V->R be arbitrary. Assume x_t^star in argmin_{x in V} sum_{i=1}^t ell_i(x) exists. Then sum_{t=1}^T ell_t(x_t^star) <= sum_{t=1}^T ell_t(x_T^star).",
+      "source_status": "proved-in-source",
+      "notes": "Existence at every required prefix is an explicit premise. No convexity or probability premise."
+    },
+    {
+      "id": "C1.btl-base",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "Proof, base case",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "Induct on T. At T=1, ell_1(x_1^star) <= ell_1(x_1^star).",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.btl-cancel",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "inductive target and equation (1.3)",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "For T>=2, cancel equal final terms to reduce the target to sum_{t=1}^{T-1} ell_t(x_t^star) <= sum_{t=1}^{T-1} ell_t(x_T^star).",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.btl-ih",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "display after equation (1.3)",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "The induction hypothesis gives sum_{t=1}^{T-1} ell_t(x_t^star) <= sum_{t=1}^{T-1} ell_t(x_{T-1}^star).",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.btl-minimality",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "last display of Lemma 1.2 proof",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "sum_{t=1}^{T-1} ell_t(x_{T-1}^star) <= sum_{t=1}^{T-1} ell_t(x_T^star), because x_{T-1}^star minimizes prefix cumulative loss and x_T^star is in V.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.btl-chain",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "last sentence of Lemma 1.2 proof",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "Chain the induction hypothesis and prefix-minimality inequalities to prove (1.3), hence the lemma.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.btl-intuition",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "paragraph Basically, the above lemma"
+      },
+      "reason": "Informal interpretation of the lemma; does not add a dependency."
+    },
+    {
+      "id": "C1.log-necessity",
+      "disposition": "NODE",
+      "kind": "unproved-claim",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "paragraph immediately before Theorem 1.3",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "With this lemma, we can now prove that the regret will grow sublinearly; in particular, it will be at most logarithmic in time. Note that we will not prove that our strategy is minimax optimal, even if it is possible to show that the logarithmic dependence on time is unavoidable for this problem.",
+      "source_status": "asserted-without-proof",
+      "notes": "Exact prose transcription, normalizing line breaks only. No displayed lower bound, constants, horizon threshold, probability qualifier, or citation accompanies this claim."
+    },
+    {
+      "id": "C1.theorem1.3",
+      "disposition": "NODE",
+      "kind": "theorem",
+      "anchor": {
+        "printed_page": 4,
+        "pdf_page": 16,
+        "region": "Theorem 1.3",
+        "render": "raw-page-016.png",
+        "text": "pdf-page-016.txt"
+      },
+      "transcription_or_faithful_content": "Let y_1,...,y_T in [0,1] be arbitrary. Let x_t=x_{t-1}^star:=(1/(t-1)) sum_{i=1}^{t-1} y_i for t>=2 and x_1=x_0^star:=0.5. Then Regret_T=sum_{t=1}^T (x_t-y_t)^2-min_{x in [0,1]} sum_{t=1}^T (x-y_t)^2 <= 4+4 ln T.",
+      "source_status": "proved-in-source",
+      "notes": "Positive integer horizon is implicit in rounds, averaging and ln T. This is an upper bound for deterministic FTL, not a lower bound for all algorithms."
+    },
+    {
+      "id": "C1.figure1.1",
+      "disposition": "NODE",
+      "kind": "proof-figure",
+      "anchor": {
+        "printed_page": 5,
+        "pdf_page": 17,
+        "region": "Figure 1.1",
+        "render": "raw-page-017.png",
+        "text": "pdf-page-017.txt"
+      },
+      "transcription_or_faithful_content": "Upper bounding the sum with an integral. Plot compares 1/x and 1/(x-1) with gray rectangles.",
+      "source_status": "source-stated",
+      "notes": "Supports the upper harmonic-sum estimate, not a logarithmic lower bound."
+    },
+    {
+      "id": "C1.ftl-btl-reduction",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 5,
+        "pdf_page": 17,
+        "region": "first proof display",
+        "render": "raw-page-017.png",
+        "text": "pdf-page-017.txt"
+      },
+      "transcription_or_faithful_content": "Regret_T = sum_t (x_{t-1}^star-y_t)^2 - sum_t (x_T^star-y_t)^2 <= sum_t [(x_{t-1}^star-y_t)^2-(x_t^star-y_t)^2].",
+      "source_status": "source-stated",
+      "notes": "Uses the FTL rule, mean characterization, and Lemma 1.2 with squared losses."
+    },
+    {
+      "id": "C1.first-round",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 5,
+        "pdf_page": 17,
+        "region": "display For t=1",
+        "render": "raw-page-017.png",
+        "text": "pdf-page-017.txt"
+      },
+      "transcription_or_faithful_content": "(x_0^star-y_1)^2-(x_1^star-y_1)^2 <= 0.5^2.",
+      "source_status": "source-stated",
+      "notes": "Uses x_0^star=0.5, x_1^star=y_1, and y_1 in [0,1]."
+    },
+    {
+      "id": "C1.factor-difference",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 5,
+        "pdf_page": 17,
+        "region": "t>=2 display, first three lines",
+        "render": "raw-page-017.png",
+        "text": "pdf-page-017.txt"
+      },
+      "transcription_or_faithful_content": "(x_{t-1}^star-y_t)^2-(x_t^star-y_t)^2 = (x_{t-1}^star+x_t^star-2y_t)(x_{t-1}^star-x_t^star) <= |x_{t-1}^star+x_t^star-2y_t| |x_{t-1}^star-x_t^star| <= 2|x_{t-1}^star-x_t^star|.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.mean-movement",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 5,
+        "pdf_page": 17,
+        "region": "t>=2 display, remaining lines",
+        "render": "raw-page-017.png",
+        "text": "pdf-page-017.txt"
+      },
+      "transcription_or_faithful_content": "2|x_{t-1}^star-x_t^star| = 2|((1/(t-1))-(1/t)) sum_{i=1}^{t-1}y_i-y_t/t| <= 2|sum_{i=1}^{t-1}y_i/[t(t-1)]|+2|y_t|/t <= 2/t+2|y_t|/t <= 4/t.",
+      "source_status": "source-stated",
+      "notes": "This is an upper bound using bounded y_i and the triangle inequality, not a lower bound."
+    },
+    {
+      "id": "C1.harmonic-upper",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 5,
+        "pdf_page": 17,
+        "region": "display Hence, overall",
+        "render": "raw-page-017.png",
+        "text": "pdf-page-017.txt"
+      },
+      "transcription_or_faithful_content": "Regret_T <= 0.25 + 4 sum_{t=2}^T 1/t <= 4 sum_{t=1}^T 1/t.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.integral-upper",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "opening continuation and display",
+        "render": "raw-page-018.png",
+        "text": "pdf-page-018.txt"
+      },
+      "transcription_or_faithful_content": "sum_{t=1}^T 1/t <= 1 + integral_{2}^{T+1} 1/(t-1) dt = 1 + ln T.",
+      "source_status": "source-stated",
+      "notes": "The explanatory paragraph starts at the bottom of printed p5; Figure 1.1 supports the inequality."
+    },
+    {
+      "id": "C1.upper-conclude",
+      "disposition": "NODE",
+      "kind": "proof-step",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "Putting everything together",
+        "render": "raw-page-018.png",
+        "text": "pdf-page-018.txt"
+      },
+      "transcription_or_faithful_content": "Combining the regret harmonic-sum bound and the integral estimate gives Theorem 1.3.",
+      "source_status": "source-stated"
+    },
+    {
+      "id": "C1.upper-proof-summary",
+      "disposition": "NODE",
+      "kind": "proof-summary",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "paragraph Let us write in words",
+        "render": "raw-page-018.png",
+        "text": "pdf-page-018.txt"
+      },
+      "transcription_or_faithful_content": "Lemma 1.2 replaces the single best guess by prefix leaders; predicting x_{t-1}^star while |x_t^star-x_{t-1}^star| decays like 1/t gives sublinear total regret.",
+      "source_status": "source-stated",
+      "notes": "A paraphrase of the upper proof, not an independent alternative route."
+    },
+    {
+      "id": "C1.running-average",
+      "disposition": "NODE",
+      "kind": "algorithm-properties",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "paragraph There are a few things",
+        "render": "raw-page-018.png",
+        "text": "pdf-page-018.txt"
+      },
+      "transcription_or_faithful_content": "The strategy has no parameters to tune, needs only a running average summary rather than the complete past, and uses no gradients.",
+      "source_status": "source-stated",
+      "notes": "Qualitative algorithm claims; no separate complexity model or proof is supplied."
+    },
+    {
+      "id": "C1.training-test-discussion",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "paragraph Before going on"
+      },
+      "reason": "Discussion of overfitting and generalization terminology is outside the bounded mathematical target."
+    },
+    {
+      "id": "C1.forward-algorithms",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "paragraph In the next chapters"
+      },
+      "reason": "Forward pointer without theorem, proof step or specific cited dependency."
+    },
+    {
+      "id": "C1.history-origin",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 6,
+        "pdf_page": 18,
+        "region": "History Bits, two paragraphs"
+      },
+      "reason": "Savage (1951, 1954), Wald (1950), Milnor (1951) and their page references concern historical origin of regret. They are not evidence for the squared-loss lower-bound claim."
+    },
+    {
+      "id": "C1.history-randomization",
+      "disposition": "NODE",
+      "kind": "context-boundary",
+      "anchor": {
+        "printed_page": 7,
+        "pdf_page": 19,
+        "region": "History Bits continuation, first paragraph",
+        "render": "raw-page-019.png",
+        "text": "pdf-page-019.txt"
+      },
+      "transcription_or_faithful_content": "Hannan (1957) designed a randomized algorithm for zero-sum repeated games with a fixed loss matrix and vanishing expected average regret.",
+      "source_status": "source-stated",
+      "notes": "This historical statement is a different setting and does not specify the guessing-game minimax lower-bound probability semantics."
+    },
+    {
+      "id": "C1.hannan-attribution",
+      "disposition": "NODE",
+      "kind": "attribution",
+      "anchor": {
+        "printed_page": 7,
+        "pdf_page": 19,
+        "region": "sentence before Exercises",
+        "render": "raw-page-019.png",
+        "text": "pdf-page-019.txt"
+      },
+      "transcription_or_faithful_content": "The Be-the-Leader lemma (Lemma 1.2) is due to Hannan (1957).",
+      "source_status": "source-stated",
+      "notes": "Attribution of Lemma 1.2 only, not a citation for logarithmic necessity."
+    },
+    {
+      "id": "C1.exercise1.1",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 7,
+        "pdf_page": 19,
+        "region": "Problem 1.1 including Cauchy-Schwarz display"
+      },
+      "reason": "Vector squared-loss extension with bounded Euclidean outcomes and dimension-independent logarithmic upper bound is a separate exercise; not a lower-bound proof."
+    },
+    {
+      "id": "C1.exercise1.2",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 7,
+        "pdf_page": 19,
+        "region": "Problem 1.2"
+      },
+      "reason": "Absolute-loss median characterization changes the loss and is outside this squared-loss target."
+    },
+    {
+      "id": "C1.hannan-bibliography",
+      "disposition": "NODE",
+      "kind": "citation",
+      "anchor": {
+        "printed_page": 304,
+        "pdf_page": 316,
+        "region": "Hannan entry",
+        "render": "raw-page-316.png",
+        "text": "pdf-page-316.txt"
+      },
+      "transcription_or_faithful_content": "J. Hannan. Approximation to Bayes risk in repeated play. In Contributions to the Theory of Games, Volume III, pages 97-140. Princeton University Press, 1957.",
+      "source_status": "source-stated",
+      "notes": "Bibliographic metadata read in the pinned book. The external paper itself was not inspected and supplies no hidden proof edge."
+    },
+    {
+      "id": "C1.other-bibliography",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 304,
+        "pdf_page": 316,
+        "region": "all entries other than Hannan"
+      },
+      "reason": "Only the Hannan citation is followed for Lemma 1.2 attribution. Other entries on this page are outside the target."
+    },
+    {
+      "id": "C2.boundary",
+      "disposition": "EXCLUDED",
+      "anchor": {
+        "printed_page": 8,
+        "pdf_page": 20,
+        "region": "Chapter 2 begins, PDF pages 20-21 text spot-check"
+      },
+      "reason": "General OSD/OCO setup is outside the Chapter 1 source closure. Raw extracted text retained as boundary evidence, but no proof dependency is claimed."
+    }
+  ],
+  "review_status": "fresh-extraction-awaiting-distinct-topology-review",
+  "projection": {
+    "change": "Removed physical PDF storage path only; all source regions and source-only extraction status preserved.",
+    "original": {
+      "artifact": "batch20-source-extraction/source-inventory.json",
+      "sha256": "8a3b2db0392a49fc21cc435d58530d27734582da6dc89e19b8a299ae90c935f7",
+      "availability": "Retained private maintenance evidence; hash is not a public download URL."
+    },
+    "laterIndependentTopologyReview": {
+      "artifact": "batch20-source-review/topology-review-v1.json",
+      "sha256": "3843d389f066241c25e6f1fce2fbb0f32ab1de0feab812b501bda6289a1cc656",
+      "availability": "Retained private maintenance evidence; hash is not a public download URL."
+    }
+  }
+}

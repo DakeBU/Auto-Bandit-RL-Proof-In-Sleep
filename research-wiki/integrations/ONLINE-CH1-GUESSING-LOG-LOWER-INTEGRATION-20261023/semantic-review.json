@@ -1,0 +1,707 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "/root/batch20_source_reviewer",
+  "reviewed_at_utc": "2026-10-23T03:52:24.080907+00:00",
+  "verdict": "accepted-with-explicit-delta",
+  "verdict_scope": "Original derived support for unnumbered logarithmic necessity assertion; not exact source theorem/proof reproduction or a source repair.",
+  "exact_source_statement_equivalence": false,
+  "derived_support_semantics_accepted": true,
+  "independence": {
+    "distinct_from_formalizer_extractor_decoder": true,
+    "source_only_topology_sealed_before_semantic_inputs": true,
+    "prior_semantic_verdicts_read": false
+  },
+  "bindings": {
+    "topology_review_sha256": "3843d389f066241c25e6f1fce2fbb0f32ab1de0feab812b501bda6289a1cc656",
+    "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "source_inventory_sha256": "8a3b2db0392a49fc21cc435d58530d27734582da6dc89e19b8a299ae90c935f7",
+    "source_topology_sha256": "4e6861be9db1ec80916d041057fe36b3cf9250e0e86e82834030afa0cbd021ff",
+    "neutral_packet_path": "batch20-blind-input/neutral-statements-v1.json",
+    "neutral_packet_sha256": "fcda2db87718f1be0d919b0cf84ceed809164d51ae20c1684d6bead7279220c8",
+    "blind_reconstruction_sha256": "6ddd0509f9accce0b98db378cda422d87c26c7a8141eaa70c193aabe6f06457b",
+    "actual_lean_path": "BanditRLProof/OnlineGuessingLogLower.lean",
+    "actual_lean_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1"
+  },
+  "seven_slots": [
+    {
+      "slot": 1,
+      "name": "objects_and_spaces",
+      "source": "Scalar predictions and outcomes in [0,1]; full revealed past; static interval comparator.",
+      "lean": "Real predictions with pointwise interval terminal premise; Boolean vectors mapped to 0/1; measurable seeded policies on full newest-first Boolean histories.",
+      "delta": "Binary paths are valid restricted adversaries sufficient for a lower bound on the interval game. General interval-history learner restriction is a mathematical specialization; no named real-history/randomized-kernel representation theorem was audited.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "slot": 2,
+      "name": "quantifier_order",
+      "source": "Unavoidable logarithmic dependence without a displayed quantified lower theorem.",
+      "lean": "For every measurable seed space, probability law and measurable-section globally interval-valued policy, and every positive natural T, there exists one length-T Boolean vector with the expected regret bound.",
+      "delta": "Concrete finite-horizon completion, not a transcription. Witness depends on policy, law and T, never on the realized seed. No path hard for every policy, nor one infinite path hard at all horizons.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "slot": 3,
+      "name": "assumptions",
+      "source": "Interval actions/outcomes and causal play; positive horizon implicit. Lower randomization regularity unspecified.",
+      "lean": "MeasurableSpace Omega, IsProbabilityMeasure mu, each seed section measurable, every seed/history action in [0,1], T>0.",
+      "delta": "Measurability/probability specify the selected expected-regret contract. Pointwise global range matches valid actions in this explicit contract. No nonmeasurable or almost-everywhere-only policy equivalence is asserted. No concentration, variance or regret lower bound is a terminal premise.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "slot": 4,
+      "name": "conclusion_metric",
+      "source": "Cumulative squared learner loss minus minimum cumulative loss of one fixed hindsight comparator. Lower rate asserted in prose.",
+      "lean": "Same-path learner loss minus empirical-mean loss. binary_mean_minimizer and imported mean APIs establish feasible interval minimization for positive T.",
+      "delta": "Exact source regret metric on binary data, with a new finite expected-regret lower theorem. Not pseudo-regret, dynamic regret, loss alone or a surrogate. The source iid min outside expectation is not confused with realized hindsight regret.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "slot": 5,
+      "name": "constants_normalization",
+      "source": "No lower constant or offset. 4+4 ln T belongs exclusively to FTL upper theorem. No half-factor or horizon averaging.",
+      "lean": "H_(T+1)/6 and ln(T+2)/6, H_n=sum_(j=1)^n 1/j, T>0.",
+      "delta": "Original derived non-sharp constants and offsets, not source-printed values or exact minimax value. Their order supports logarithmic necessity. Source upper harmonic comparison is not used as a lower proof.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "slot": 6,
+      "name": "probability_feedback",
+      "source": "Full outcome revelation and causal decisions. Expectation removal qualified by determinism. Post-prediction adversary discussion concerns upper bound.",
+      "lean": "Seed plus strict-past outcomes determine actions. Finite path law is independent of learner/seed. Final fixed path lies outside seed integral. Integrability derived from measurable sections and absolute regret <=T.",
+      "delta": "Precise randomized expected-regret extension. No seed-dependent adverse path, high-probability/seedwise guarantee, bandit feedback or infinite filtration assertion. Finite sums and integral interchange suffice; no conditional-distribution axiom is needed for this statement.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "slot": 7,
+      "name": "boundary",
+      "source": "Lower proof and formal specification omitted; vector and absolute-loss exercises separate.",
+      "lean": "Finite positive horizon, Boolean adverse outcomes, pointwise bounded measurable seeded policies, static empirical comparator.",
+      "delta": "At T=0 regret is zero but proposed bounds positive, so positive horizon necessary. No sharp minimax, abstract-all-randomization representation, all-horizon hard path, whole-chapter completion or source-proof reproduction.",
+      "verdict": "accepted-with-explicit-delta"
+    }
+  ],
+  "terminal_binder_audit": [
+    {
+      "binder": "Omega, MeasurableSpace Omega, mu, IsProbabilityMeasure mu",
+      "class": "TYPING",
+      "reason": "Explicit derived expected-regret probability semantics, not source-explicit randomization."
+    },
+    {
+      "binder": "A: Omega -> List Bool -> real",
+      "class": "TYPING",
+      "reason": "Causal seeded binary-history policy representation."
+    },
+    {
+      "binder": "hA: each fixed-history seed section measurable",
+      "class": "TYPING",
+      "reason": "Regularity for the selected random-variable semantics. Must remain visible as explicit derived contract."
+    },
+    {
+      "binder": "hbound: all seed/history values in [0,1]",
+      "class": "SOURCE",
+      "reason": "Game valid-action range, pointwise globally in this representation."
+    },
+    {
+      "binder": "T: Nat and hT:0<T",
+      "class": "STANDING",
+      "reason": "Positive finite rounds implicit in source and necessary for new constants."
+    }
+  ],
+  "excess_terminal_binders": [],
+  "expanded_bundles": {
+    "IsProbabilityMeasure": "Total mass one.",
+    "Icc_0_1": "0 <= action and action <= 1.",
+    "Measurable": "Fixed-history policy is measurable as a seed-space random variable.",
+    "FiniteActionDistribution": "Nonnegative masses and total mass one; produced internally, not a final theorem premise."
+  },
+  "declaration_coverage": {
+    "count": 59,
+    "definitions": 11,
+    "theorems": 48,
+    "all_neutral_texts_match_actual": true,
+    "records": [
+      {
+        "name": "polyaNext",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathWeight",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryStream",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryValues",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "source-definition-or-characterization-specialization",
+        "mismatch_found": false,
+        "source_relation": "Source metric/model specialization on binary paths."
+      },
+      {
+        "name": "causalPredict",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "source-definition-or-characterization-specialization",
+        "mismatch_found": false,
+        "source_relation": "Source metric/model specialization on binary paths."
+      },
+      {
+        "name": "pathRegret",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "source-definition-or-characterization-specialization",
+        "mismatch_found": false,
+        "source_relation": "Source metric/model specialization on binary paths."
+      },
+      {
+        "name": "pathExpectation",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "prefixMeasure",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "probability_mem",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "branch_mass",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathWeight_nonneg",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "vectorConsEquiv",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "sum_vectors_succ",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "prefix_mass_one",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "prefix_distribution",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "prefixMeasure_probability",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_integral",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_congr",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_const",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_add",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_sub",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_const_mul",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_div",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_succ",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "heads_succ",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "heads_sq_succ",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_heads",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_heads_sq",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_next_variance",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "causalPredict_prefix",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binary_mean_minimizer",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "source-definition-or-characterization-specialization",
+        "mismatch_found": false,
+        "source_relation": "Source metric/model specialization on binary paths."
+      },
+      {
+        "name": "conditional_square_lower",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryStream_cons_prefix",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryStream_cons_last",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryValues_cons_prefix",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "causalPredict_history",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "causalPredict_cons_last",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathLearnerLoss",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "source-definition-or-characterization-specialization",
+        "mismatch_found": false,
+        "source_relation": "Source metric/model specialization on binary paths."
+      },
+      {
+        "name": "pathBestLoss",
+        "kind": "def",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "source-definition-or-characterization-specialization",
+        "mismatch_found": false,
+        "source_relation": "Source metric/model specialization on binary paths."
+      },
+      {
+        "name": "pathRegret_eq_losses",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathLearnerLoss_cons",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryValues_sum",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "binaryValues_sq",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathBestLoss_count",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_pathBestLoss",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathExpectation_mono",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_pathLearnerLoss_succ",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_pathLearnerLoss_step",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "variance_sum",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_pathLearnerLoss_lower",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "expected_pathRegret_lower",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathWeight_pos",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "square_loss_mem",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "square_loss_sum_mem",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathRegret_abs_le",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathRegret_measurable",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "pathRegret_integrable",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "derived-proof-infrastructure",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "randomized_harmonic_lower",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "original-derived-support-terminal",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      },
+      {
+        "name": "randomized_log_lower",
+        "kind": "theorem",
+        "neutral_text_matches_actual": true,
+        "decoder_reconstruction_reviewed": true,
+        "classification": "original-derived-support-terminal",
+        "mismatch_found": false,
+        "source_relation": "New construction or derived step; no claim this formula/proof appears in Chapter1."
+      }
+    ]
+  },
+  "mismatch_search": {
+    "policy_quantifier": "No drift within explicit seeded contract; broader abstract kernel representation not certified.",
+    "future_leak": "None: causalPredict reads indices i<t; reverse changes storage only.",
+    "comparator": "Same realized path, empirical mean, true interval minimizer.",
+    "hidden_proof_premise": "None in terminal signatures. Moments, loss inequality, normalization, comparator and integrability produced.",
+    "expectation_swap": "Witness fixed outside seed integral.",
+    "source_attribution": "Derived proof and constants already labeled in module header; preserve labeling.",
+    "source_repair": "None proposed or approved.",
+    "defaults": "False padding beyond finite horizon does not alter any counted loss.",
+    "zero_horizon": "Explicitly excluded and would falsify positive terminal thresholds."
+  },
+  "derived_proof_spine": [
+    "Normalize recursive finite path weights.",
+    "Count first/second moments give expected next variance (T+3)/(6(T+2)).",
+    "Completing square lower-bounds each causal policy loss without an optimality premise.",
+    "Same-path expected comparator loss is (T-1)/6; subtraction yields H_(T+1)/6.",
+    "Integrability permits finite weighted-sum and seed-integral exchange.",
+    "A normalized finite average above threshold supplies one fixed path above threshold.",
+    "log(n+1)<=H_n at n=T+1 supplies the logarithmic bound."
+  ],
+  "source_graph_disposition": {
+    "GAP.log-lower-proof": "Retain as source omission; derived Lean proof is a separate route.",
+    "GAP.log-lower-specification": "Retain as source under-specification; explicit delta supplies one contract.",
+    "source_edges_rewritten": false
+  },
+  "verification_limits": {
+    "compiler_run_by_reviewer": false,
+    "focused_build": "Parent reported two modules/3400 jobs passed; not used as source-fidelity evidence.",
+    "axiom_audit_certified": false,
+    "full_project_gate_certified": false,
+    "small_horizon_check": "batch20-source-review/independent-small-horizon-check.json (private evidence)",
+    "small_horizon_scope": "Exact rational T1..7 enumeration for p(h) only, not arbitrary-policy proof.",
+    "reader_merge_live_certified": false
+  },
+  "required_publication_conditions": [
+    "Preserve derived-support status adjacent to source claim.",
+    "Expose seeded measurable pointwise bounded policy, T>0, fixed path outside expectation and static cumulative squared-loss regret.",
+    "Constants H_(T+1)/6 and ln(T+2)/6 are derived, non-sharp, not printed in source.",
+    "Retain source gaps and separate derived proof topology.",
+    "No whole-chapter, exact minimax, all-randomization-representation or source-proof-reproduction claim."
+  ],
+  "required_code_corrections": [],
+  "projection": {
+    "change": "Replaced three local physical paths with repository or maintenance-relative references only; full semantic payload preserved.",
+    "original": {
+      "artifact": "batch20-source-review/semantic-review-v1.json",
+      "sha256": "936630350f28f67a0408ddd0ccde9f3f49e207aaac7c075829be100e81b9fb80",
+      "availability": "Retained private maintenance evidence; hash is not a public download URL."
+    },
+    "status": "Independent public-projection review pending."
+  }
+}

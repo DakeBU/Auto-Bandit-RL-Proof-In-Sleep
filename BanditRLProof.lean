@@ -750,3 +750,4 @@ import BanditRLProof.OnlineGuessingSubgradientPolicy
 import BanditRLProof.OnlineLinearization
 import BanditRLProof.OnlineOptimalStep
 import BanditRLProof.OnlineUnitScaling
+import BanditRLProof.OnlineGuessingLogLower
