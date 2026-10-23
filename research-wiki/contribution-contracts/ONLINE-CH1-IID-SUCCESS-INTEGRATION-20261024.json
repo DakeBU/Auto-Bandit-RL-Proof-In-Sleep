@@ -1,0 +1,169 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-IID-SUCCESS-INTEGRATION-20261024",
+  "route": "online-learning / Chapter1 IID stochastic success and mean learner",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona;Chapter1 printed pp1-2/PDF13-14 Eq1.1/1.2 and full Theorem1.3 proof printed pp4-6/PDF16-18.Algebraic,explicit private-seed and stochastic applications are declared derived results.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate byte-unchanged four production theorems and14canary theorems plus2canary definitions from originalPR196 in the shared Lean project.",
+  "affected_files": [
+    "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+    "BanditRLProof.lean",
+    "website/content/readings.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/declaration-boundaries.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+    "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+    "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+    "BanditRL.OnlineLearning.meanPredict_iid_success"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "12current-main/library/Mathlib searches including normalized_excess,expectedFixedRegret,meanPredict,theorem_1_3 and little-o/logarithmic-limit APIs.",
+      "Curated process memory and existing theorem cards;no external foundation import required."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.normalized_excess",
+      "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "BanditRL.OnlineLearning.theorem_1_3",
+      "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "BanditRL.OnlineLearning.meanPredict_mem",
+      "BanditRL.OnlineLearning.meanPredict_measurable",
+      "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+      "Asymptotics.isLittleO_iff_tendsto'",
+      "Real.tendsto_pow_log_div_mul_add_atTop",
+      "MeasureTheory.memLp_of_bounded"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.centered_total_sublinear_iff_average"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineLearning.randomized_history_policy_success_iff consumes the signed normalization adapter.",
+      "BanditRL.OnlineLearning.meanPredict_iid_success consumes the same adapter and meanPredict_expectedFixed_upper.",
+      "Canaries exercise persistent-policy failure,nonzero initial total,zero-horizon normalization and dependent negative excess."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse actual finite causal IID and attained expected-fixed benchmark producers;lift the existing pathwise bound and add an asymptotic composition with genuine shared consumers."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch25-blind-decoder",
+    "source_reviewer": "independent-batch25-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The generic adapter permits arbitrary signed totals and constants and uses eventual positive normalization,without a zero-horizon equality premise.The policy result characterizes success for a jointly measurable private-seed strict-history model:seed independent of the whole process,mutually independent common-law targets supported almost surely in[0,1],and feasibility for every seed on legal histories.It does not assert every policy succeeds or turn Cesaro expected squared-error convergence into individual-time L2 convergence.The actual learner starts at1/2 and averages the strict past,with no population mean or horizon input.Its expected-fixed upper bound permits dependent common-law targets;ordinary zero normalized expected excess and little-o additionally need IID.Minimum is taken after expectation over deterministic interval comparators,and attainment is proved.These are algebraic/derived stochastic applications,not four verbatim printed results.No general kernel/completed-information/AE-factorization,high-probability,almost-sure,minimax or chapter/book completion is claimed.Five historical missing-byte uses across two digests remain OPEN under original owners."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Finite-to-asymptotic composition within the same scalar square-loss setting;no certified cross-setting transport or functor supplied.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Actual1440/390reader capture:24desktop+55mobile images independently viewed, covering the new source card,4notes,changed notation/boundaries,4theorem disclosures and4complete contextual definitions, including horizontal formula sweeps. Fifteen old cards and5previews have exact DOM conservation, not a new full visual audit. Root separately reviewed7graph images. Committed links and release remain pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated:4notes and1derived card,preserving15priorcards,5teaching-route references and383priorhighlightoccurrences.",
+    "banditrlwiki": "updated:bounded source,semantic,body,dependency and retention evidence in research-wiki/integrations/ONLINE-CH1-IID-SUCCESS-INTEGRATION-20261024",
+    "results_ledger": "no-change-with-reason:bounded IID-success advance does not close Chapter1 or change the existing global milestone scope.",
+    "roadmap": "no-change-with-reason:general strategy representation and remaining book obligations retain their owners.",
+    "website_surfaces": [
+      "Online foundations reader and chapter",
+      "Four formula/proof notes",
+      "Shared Lean declaration graph;existing complete context-definition disclosures reused",
+      "Complete existing empiricalMean and meanPredict definition disclosures; prior expected-fixed definitions retained."
+    ]
+  },
+  "truth_boundary": "The generic adapter permits arbitrary signed totals and constants and uses eventual positive normalization,without a zero-horizon equality premise.The policy result characterizes success for a jointly measurable private-seed strict-history model:seed independent of the whole process,mutually independent common-law targets supported almost surely in[0,1],and feasibility for every seed on legal histories.It does not assert every policy succeeds or turn Cesaro expected squared-error convergence into individual-time L2 convergence.The actual learner starts at1/2 and averages the strict past,with no population mean or horizon input.Its expected-fixed upper bound permits dependent common-law targets;ordinary zero normalized expected excess and little-o additionally need IID.Minimum is taken after expectation over deterministic interval comparators,and attainment is proved.These are algebraic/derived stochastic applications,not four verbatim printed results.No general kernel/completed-information/AE-factorization,high-probability,almost-sure,minimax or chapter/book completion is claimed.Five historical missing-byte uses across two digests remain OPEN under original owners.",
+  "verification": {
+    "focused_checks": [
+      "Actual production/canary module build passed;source bytes exactly match original head.",
+      "20standard axiom closures;4fresh literal proposition equalities;4complete definition equalities;private/imported direct dependency graphs identical."
+    ],
+    "bandit_check": "Actual combined shared library root9099jobs, Tests9257jobs, ProofGraphExport, placeholder scan and full harness471tests passed with7skips. Lean input bytes are unchanged. Final exact committed candidate checks remain required.",
+    "site_build": "Actual --lean-verified build and site check passed for proposalv6 after two reviewed complete context-definition disclosures. Only public evidence records change in this successor; committed site rebuild remains required.",
+    "site_check": "Independent generated-content and all79actual desktop/mobile reader images accepted for bounded surfaces; all4complete context definitions and8theorem headers checked. Ten graph queries and7graph images separately accepted. Exact-commit source-link refresh and release validation remain pending.",
+    "independent_review": "Distinct source extractor, source-blind decoder, scientific source reviewer and original-scope reviewer accepted the bounded source, statement, proof, reader, projection and conservation stages. Generated and actual rendered successor reviews are accepted. Final metadata/scope, committed candidate, CI, main/live and whole-original disposition remain separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance;original authorship retained in Git and immutable PR evidence."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "failure_class NONE is scoped only to the four unchanged original production theorem proof routes: no such route failed or was repaired. It is not a claim that this maintenance run had no failures. Private probe assembly, reader-v1 publication text, public path scanning, native-manifest preparation and public-manifest review did fail; their typed IMPLEMENTATION_FAILED records, original errors, rejected proposals and repairs are retained in review-binding.json. Salvage was completed for those helpers: all original production/canary bytes, signatures, verified fragments, prior reports and historical obligations remain; no mathematical fragment was discarded. The independent source-facing verdict remains accepted-with-explicit-delta, and no implementation failure justifies a source repair. The incomplete first browser capture and two missing full context-definition displays are retained as further helper/publication IMPLEMENTATION_FAILED evidence; the original four theorem routes remain unchanged. The rejected prepared empiricalMean explanation is retained: its successor distinguishes empty-prefix minimum attainment from positive-prefix uniqueness. This publication wording repair changed no source theorem or proof.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "finite-causal-excess-to-stochastic-success-and-integrated-pathwise-upper"
+      ],
+      "expected_information_gain": "One original proof route with distinct independent source/blind/scientific/reader/scope checks.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17;main b4205fcf445d387f8226c0d763aac70afb189f98"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Finite excess identity;eventual positive normalization;integrated fixed-mean comparison;IID nonnegativity;logarithmic squeeze.",
+      "selection_reason": "No competing new proof search directions.The source topology preserves OR alternatives without claiming both implemented."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Bounded original proofs/reuse, revised reader text, public scientific projection, complete generated definitions and79actual reader pixels accepted. Global purification and final Exposition Seal remain pending; original scientific obligations retain their owners.",
+      "source_expansion_nodes": [
+        "Printed Eq1.1/1.2 success criterion",
+        "Full printed Theorem1.3 pathwise proof",
+        "Explicit derived private-seed criterion and actual mean-learner success"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+        "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+        "BanditRL.OnlineLearning.meanPredict_iid_success"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

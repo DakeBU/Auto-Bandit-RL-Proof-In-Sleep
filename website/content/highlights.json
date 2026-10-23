@@ -6470,6 +6470,82 @@
         "BanditRL.OnlineLearning.privateSeedPastInformation",
         "BanditRL.OnlineLearning.predictable_private_seed_expectedFixed_excess"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "title": "A centered total is sublinear exactly when its average excess vanishes",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 85,
+      "plain": "For any real total sequence A and real c, the signed residual A_T-Tc is o(T) exactly when A_T/T-c tends to zero.",
+      "math": "A_T-Tc=o(T)\\iff A_T/T-c\\longrightarrow0.",
+      "intuition": "Center the cumulative quantity, then normalize at positive horizons.",
+      "why": "One shared adapter connects both the policy criterion and the actual mean-learner guarantee to the source success definition.",
+      "position": "Shared algebraic extension of equations (1.1) and (1.2), with two production consumers.",
+      "proof_idea": "Use the Mathlib little-o quotient criterion and the existing normalization identity eventually for positive horizons.",
+      "lean_notes": "No sign, monotonicity, convergence hypothesis, A_0=0 or c=0 is assumed. The normalization identity need hold only eventually for T>0. This is an equivalence, not a claim that arbitrary totals converge. It is a standard asymptotic adapter, without a novelty claim.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.normalized_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "title": "A private-seed policy succeeds exactly when its average mean-square error vanishes",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 86,
+      "plain": "In the explicit causal private-seed model, expected-fixed excess is nonnegative at every horizon. Sublinear excess, average expected loss converging to the variance, and vanishing Cesaro mean squared deviation from the population mean are equivalent.",
+      "math": "\\mathcal E_T=o(T)\\iff A_T/T-v\\longrightarrow0\\iff T^{-1}\\sum_{t<T}\\mathbb E[(P_t-m)^2]\\longrightarrow0.",
+      "intuition": "The finite sum-of-squares identity translates the loss criterion into average estimation error.",
+      "why": "It states exactly when an admissible randomized policy succeeds.",
+      "position": "Derived private-seed specialization of the source stochastic-success discussion.",
+      "proof_idea": "The actual causal policy produces nonnegative excess and its finite sum-of-squares identity. Normalize that identity and apply the centered-total adapter.",
+      "lean_notes": "Fix one infinite process on a probability space. Each real target is measurable, has the law of the first target, and lies in [0,1] almost surely. Square integrability is derived from this support. The expected-fixed comparator chooses one deterministic u in [0,1] before taking expectation. Its infimum is attained at the population mean m and equals T times the variance v. For the policy criterion, the targets are jointly independent. A measurable private seed is independent of the whole target process. At every time, the policy is jointly measurable in the seed and strict finite history, and feasible for every seed on every legal unit-interval history. The process, seed and policy are fixed before all horizons. The theorem characterizes success rather than asserting that every such policy succeeds. Source rounds 1 through T correspond to Lean indices 0 through T-1. Division is total at T=0, but the normalization identity is used only at eventually positive horizons. Little-o controls signed magnitude; ordinary convergence of expected excess is separate from the adversarial eventual-upper NoRegret predicate. A persistent independent private bit has excess T/4 and fails the criterion. Vanishing Cesaro mean squared error does not assert individual-time L2 convergence. The policy criterion covers explicit jointly measurable private-tape/strict-history policies. Representation of general stochastic kernels, completed information and almost-everywhere factorization remains separate. These results concern expectations, without high-probability, almost-sure or minimax guarantees. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total remains unknown.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+        "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.normalized_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "title": "Integrate the sample-mean regret bound without an independence assumption",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 87,
+      "plain": "For every positive horizon, the actual half-initialized mean learner has expected-fixed excess at most 4+4 log T under bounded common-law targets, even when the observations are dependent.",
+      "math": "\\mathcal E_T(x)\\le4+4\\ln T\\quad(T\\ge1).",
+      "intuition": "Compare to the fixed population mean before integrating the pathwise regret bound.",
+      "why": "The deterministic source bound supplies an expected upper bound without a temporal independence premise.",
+      "position": "Derived application of Theorem 1.3 through the fixed-mean comparison route.",
+      "proof_idea": "The pathwise empirical minimum is at most fixed population-mean loss. Compare before integration, derive square integrability, then use expected fixed loss at the mean=Tv.",
+      "lean_notes": "Fix one infinite process on a probability space. Each real target is measurable, has the law of the first target, and lies in [0,1] almost surely. Square integrability is derived from this support. The expected-fixed comparator chooses one deterministic u in [0,1] before taking expectation. Its infimum is attained at the population mean m and equals T times the variance v. The actual learner starts at 1/2 and then averages exactly the strictly earlier observations. It takes no population mean, law or horizon as input. The expected upper bound requires only common marginal laws; the zero-limit conclusion additionally requires joint independence. Source rounds 1 through T correspond to Lean indices 0 through T-1. Division is total at T=0, but the normalization identity is used only at eventually positive horizons. Little-o controls signed magnitude; ordinary convergence of expected excess is separate from the adversarial eventual-upper NoRegret predicate. This theorem supplies an upper bound only. The repeated-target binary canary has two-round excess -1/4, so nonnegativity and zero-limit success cannot be inferred for dependent streams.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.theorem_1_3",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "title": "The sample-mean learner attains the stochastic benchmark under IID",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 88,
+      "plain": "For the actual learner starting at 1/2 and then using the strict-past empirical mean, normalized expected-fixed excess tends to zero under IID; total expected-fixed excess is o(T).",
+      "math": "0\\le\\mathcal E_T(x)/T\\le(4+4\\log T)/T\\quad(T>0),\\qquad\\mathcal E_T(x)/T\\longrightarrow0,\\quad\\mathcal E_T(x)=o(T).",
+      "intuition": "IID supplies the lower bound while the pathwise theorem supplies the upper envelope.",
+      "why": "It proves success for the actual unknown-law learner without assuming convergence.",
+      "position": "Derived stochastic consequence combining the source pathwise guarantee with the causal IID identity.",
+      "proof_idea": "Combine the actual IID causal nonnegative lower bound with the integrated upper. The logarithmic ratio vanishes; a squeeze gives the ordinary zero limit, and the same generic adapter gives little-o.",
+      "lean_notes": "Fix one infinite process on a probability space. Each real target is measurable, has the law of the first target, and lies in [0,1] almost surely. Square integrability is derived from this support. The expected-fixed comparator chooses one deterministic u in [0,1] before taking expectation. Its infimum is attained at the population mean m and equals T times the variance v. The actual learner starts at 1/2 and then averages exactly the strictly earlier observations. It takes no population mean, law or horizon as input. The expected upper bound requires only common marginal laws; the zero-limit conclusion additionally requires joint independence. Source rounds 1 through T correspond to Lean indices 0 through T-1. Division is total at T=0, but the normalization identity is used only at eventually positive horizons. Little-o controls signed magnitude; ordinary convergence of expected excess is separate from the adversarial eventual-upper NoRegret predicate. This conclusion requires joint independence and supplies no convergence premise. The fair IID canary has variance 1/4 and two-round excess 1/4 while its normalized expected excess converges to zero. The policy criterion covers explicit jointly measurable private-tape/strict-history policies. Representation of general stochastic kernels, completed information and almost-everywhere factorization remains separate. These results concern expectations, without high-probability, almost-sure or minimax guarantees. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total remains unknown.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average"
+      ]
     }
   ]
 }
