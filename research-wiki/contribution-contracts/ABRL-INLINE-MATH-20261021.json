@@ -1,0 +1,98 @@
+{
+  "schema_version": "2.0",
+  "id": "ABRL-INLINE-MATH-20261021",
+  "route": "website reader rendering",
+  "frontier_cell": "reader-infrastructure",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Shared inline math reader contract",
+    "version": "2026-10-21",
+    "anchor": "website/README.md#mathematical-prose",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
+  },
+  "target": "Render complete inline formulas consistently, including delayed and dynamic mathematical prose, with same-origin MathJax assets.",
+  "affected_files": [
+    "website/scripts/build_site.py",
+    "website/scripts/test_math_browser.py",
+    "website/static/math-reader.js",
+    "website/static/vendor/mathjax@3.2.2/README.md",
+    "website/static/vendor/mathjax@3.2.2/input/tex/extensions/mhchem.js"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Existing build_site.py MathJax template and math-statement fallbacks",
+      "Existing site.js delayed fallback/overflow handling",
+      "MathJax 3.2.2 bundled engine, TeX extensions and fonts"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Every generated reader page",
+      "Dynamic mathematical previews"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Retain the current mathematical sources and progressively render them with a shared local engine; no Lean or theorem contract changes."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "Codex",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "not-required: rendering infrastructure only",
+    "remaining_semantic_delta": "None. Mathematical statements, assumptions, proof and completion ledgers are unchanged."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Typesetting infrastructure changes no graph or mathematical mechanism.",
+    "focus_targets": [
+      "books/bandit/index.html",
+      "chapters/ucb/index.html",
+      "Dynamic reader prose"
+    ],
+    "visual_review": "Real Chromium, external requests blocked, desktop/mobile page samples; all unique formulas compiled without renderer errors.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: reader typesetting only; no mathematical or completion status change.",
+    "banditrlwiki": "no-change-with-reason: reader typesetting only; no mathematical or completion status change.",
+    "results_ledger": "no-change-with-reason: reader typesetting only; no mathematical or completion status change.",
+    "roadmap": "no-change-with-reason: reader typesetting only; no mathematical or completion status change.",
+    "website_surfaces": [
+      "All generated mathematical reader pages",
+      "Inline prose",
+      "Live mathematical previews"
+    ]
+  },
+  "truth_boundary": "Presentation only. No new theorem, source correction, independent semantic review or Lean gate success is claimed.",
+  "verification": {
+    "focused_checks": [
+      "node --check website/static/math-reader.js",
+      "Offline browser formula corpus and delayed/dynamic inline-math regression gate"
+    ],
+    "bandit_check": "Attempted: local dependency fetch is blocked by network sandbox; no new local Lean pass claimed. Unchanged Lean inputs are checked by the normal CI gate.",
+    "site_build": "python website/scripts/build_site.py (preview, without --lean-verified)",
+    "site_check": "python website/scripts/check_site.py --allow-unverified",
+    "independent_review": "Not required for rendering infrastructure; real browser regression gate added to CI."
+  },
+  "contributor": {
+    "name": "Codex",
+    "role": "Reader formula rendering requested by repository owner"
+  }
+}

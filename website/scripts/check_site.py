@@ -229,7 +229,7 @@ class LinkCollector(HTMLParser):
         for attr in ("href", "src"):
             if values.get(attr):
                 self.links.append((attr, values[attr]))
-        if "cdn.jsdelivr.net/npm/mathjax" in values.get("src", ""):
+        if "vendor/mathjax@3.2.2/tex-mml-chtml.js" in values.get("src", ""):
             self.mathjax_count += 1
         if tag == "a" and (
             ("/blob/" in values.get("href", "") and "/BanditRLProof" in values.get("href", ""))

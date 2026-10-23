@@ -71,7 +71,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20261011-math-2-0"
+ASSET_VERSION = "20261021-inline-math"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -240,6 +240,11 @@ def normalize_math_source(value: str) -> str:
     if "\\(" in source or "\\[" in source:
         return source
     return f"\\[{source}\\]"
+
+
+def render_inline_math(source: str) -> str:
+    """Keep mathematical notation in prose out of source-code containers."""
+    return '<span class="math-inline">\\(' + html.escape(source) + '\\)</span>'
 
 
 def render_math_statement(label: str, source: str, fallback: str) -> str:
@@ -967,7 +972,8 @@ def layout(
       options: {{ skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }}
     }};
   </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>"""
+  <script src="{root}/static/math-reader.js?v=20261021-2"></script>
+  <script defer src="{root}/static/vendor/mathjax@3.2.2/tex-mml-chtml.js"></script>"""
     extra_script_tags = "".join(
         f'\n  <script src="{root}/{html.escape(script)}?v={ASSET_VERSION}"></script>'
         for script in extra_scripts
@@ -1173,7 +1179,7 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         toc = [("book", book["title"])]
         if book["id"] == "bandit":
             body += f'''<section id="teaching-routes"><h2>Teaching routes · 01–10</h2><p>These ten curated routes keep their original numbering. They are not the textbook's chapter numbers and do not cover the entire book.</p>{render_book_map(page_path, teaching_chapters_for_book("bandit"), compact=True)}<p><a href="{href_from(page_path, 'learning/index.html#path')}">Choose a mathematical reading path</a></p></section>
-<section id="source-chapters"><h2>Source chapters · Part IV, 13–17</h2><p>Required main-text contracts have prior merged compilation evidence; optional notes and exercises are not all complete. This build's verification banner states the local gate status.</p><div class="callout warning">Chapter 17 retains explicit source corrections: Claim 17.6 uses <code>T_i ≤ n/2</code>; Theorem 17.4 uses <code>0 &lt; δ ≤ 1/32</code>, <code>c = 1/160</code> and <code>C = 64</code>.</div>{render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)}</section>
+<section id="source-chapters"><h2>Source chapters · Part IV, 13–17</h2><p>Required main-text contracts have prior merged compilation evidence; optional notes and exercises are not all complete. This build's verification banner states the local gate status.</p><div class="callout warning">Chapter 17 retains explicit source corrections: Claim 17.6 uses {render_inline_math('T_i ≤ n/2')}; Theorem 17.4 uses {render_inline_math('0 < δ ≤ 1/32')}, {render_inline_math('c = 1/160')} and {render_inline_math('C = 64')}.</div>{render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)}</section>
 <section id="extended-chapters"><h2>Beyond the core textbook</h2><p>This section used to mix a small set of “Extended Chapters” with BanditRLwiki. It is now only a navigation layer: classification, techniques, literature bounds and open problems have different truth contracts and live on separate pages.</p>
 <div class="card-grid">
 <article class="info-card"><p class="panel-kicker">Learn the landscape</p><h3><a href="{href_from(page_path, 'banditrlwiki/setting-atlas/index.html')}">Bandit Taxonomy</a></h3><p>Settings, objectives, methods, resource/oracle models and application bridges—including the full long-tail list and quantum bandits.</p></article>
@@ -2360,7 +2366,7 @@ def build_index(
   <p class="eyebrow">Chapter-by-chapter source spine · Chapters 13–17</p>
   <h2 id="textbook-spine-title">Part IV: Lower Bounds</h2>
   <p class="section-intro">Follow the proof technology from basic lower-bound ideas through information theory, minimax bounds, instance-dependent bounds, and high-probability bounds. Each chapter links its exact source scope to Lean declarations.</p>
-  <div class="callout warning"><strong>What completion means.</strong> The five recorded chapter contracts have prior merged compilation evidence; this build’s banner reports whether the gate was rerun, not the entire textbook or every exercise. Chapter 17 formalizes an explicitly corrected version: Claim 17.6 uses the event <code>T_i ≤ n/2</code>, and Theorem 17.4 assumes <code>0 &lt; δ ≤ 1/32</code>, with constants <code>c = 1/160</code> and <code>C = 64</code>. See the chapter pages for assumptions, source differences, and optional work.</div>
+  <div class="callout warning"><strong>What completion means.</strong> The five recorded chapter contracts have prior merged compilation evidence; this build’s banner reports whether the gate was rerun, not the entire textbook or every exercise. Chapter 17 formalizes an explicitly corrected version: Claim 17.6 uses the event {render_inline_math('T_i ≤ n/2')}, and Theorem 17.4 assumes {render_inline_math('0 < δ ≤ 1/32')}, with constants {render_inline_math('c = 1/160')} and {render_inline_math('C = 64')}. See the chapter pages for assumptions, source differences, and optional work.</div>
   {textbook_spine_map}
   <p><a class="button" href="{href_from(page_path, 'textbook-spine/index.html')}">Explore the five chapter routes</a></p>
 </section>
