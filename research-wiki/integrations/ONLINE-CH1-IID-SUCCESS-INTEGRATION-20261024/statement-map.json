@@ -1,0 +1,106 @@
+{
+  "schema": "iid-success-statement-map-v1",
+  "sourcePR": 196,
+  "sourceHead": "6b387a39e401cb1b90003fca6e49d3bdd9ce7a9a",
+  "sourceBase": "372c9a6c138c50d7a5e08e91351238f231565219",
+  "integrationBase": "b4205fcf445d387f8226c0d763aac70afb189f98",
+  "frozenSignatures": {
+    "artifact": "batch25-statement-seal-v1/statement-seal.json",
+    "sha256": "f5ad0a4123ad33e056ec3b5d0834f85cf443d5eb9a8f054eeda0089965de64cd",
+    "availability": "Private maintenance evidence retained by the maintainer;digest is not a public download URL."
+  },
+  "neutralPacket": {
+    "artifact": "batch25-statement-seal-v1/neutral-statements.txt",
+    "sha256": "8cb9101fddd4626e3f1652cf06f48a0f4d362a89052e92668f6130d5279e393e",
+    "availability": "Private maintenance evidence retained by the maintainer;digest is not a public download URL."
+  },
+  "blindReconstruction": {
+    "artifact": "batch25-blind-decoding-v1/decoding.json",
+    "sha256": "fc56c50e653644575118294cbc8e0bebc2220720da3ee5519b35c6d6a01e1a08",
+    "availability": "Private maintenance evidence retained by the maintainer;digest is not a public download URL."
+  },
+  "headers": [
+    {
+      "id": "S001",
+      "name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "header": "theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) :\n    (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔\n      Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "sha256": "a074d5fd7aaa72433486dc1073f383390500f4837866b0753505f5ea5989d6a5",
+      "startLine": 9
+    },
+    {
+      "id": "S002",
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "header": "theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) :\n    let prediction := fun t ω => policy t (S ω, fun i => Y i ω)\n    (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧\n      ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop]\n          (fun T : ℕ => (T : ℝ)) ↔\n        Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧\n      (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔\n        Tendsto (fun T => (∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "sha256": "afd0c1caf2160e402d5ca0bd77197a68428a2700e40ec3a20950bc98c3ad6b05",
+      "startLine": 25
+    },
+    {
+      "id": "S003",
+      "name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
+      "header": "theorem meanPredict_expectedFixed_upper {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) :\n    expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T ≤ 4 + 4 * Real.log T",
+      "sha256": "4debbbe12438d1f672fb654131322ccd0a539f84df9aefa7289afcf26b4b9b80",
+      "startLine": 64
+    },
+    {
+      "id": "S004",
+      "name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "header": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) :\n    Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n      (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop]\n        (fun T : ℕ => (T : ℝ))",
+      "sha256": "2541354f1e5afaf88e88bea7fa3be52ad9f5c683b80c31cce94944041537dfc9",
+      "startLine": 110
+    }
+  ],
+  "literalDefinitions": [
+    {
+      "name": "empiricalMean",
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "block": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa",
+      "startLine": 8,
+      "kind": "literal",
+      "sameAtSourceHeadAndAcceptedMain": true
+    },
+    {
+      "name": "meanPredict",
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "block": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4",
+      "startLine": 8,
+      "kind": "literal",
+      "sameAtSourceHeadAndAcceptedMain": true
+    },
+    {
+      "name": "expectedFixedMinimum",
+      "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "block": "noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n    Set.Icc (0 : ℝ) 1)",
+      "sha256": "e84088d5230d138eeec9e42bea665c80d095f97ba6c21ee8b5169579aa79cea0",
+      "startLine": 8,
+      "kind": "literal",
+      "sameAtSourceHeadAndAcceptedMain": true
+    },
+    {
+      "name": "expectedFixedRegret",
+      "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "block": "noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n    expectedFixedMinimum μ Y T",
+      "sha256": "1f5b703374b54b89c43cf53f5fa455ecb00e0db76ca5372390aff148a2e7ca3e",
+      "startLine": 13,
+      "kind": "literal",
+      "sameAtSourceHeadAndAcceptedMain": true
+    }
+  ],
+  "inputBindings": {
+    "BanditRLProof/OnlineGuessingIIDSuccess.lean": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b",
+    "Tests/OnlineGuessingIIDSuccessCanary.lean": "d437875e5e6c4fa75bf8f2b61f84d6e09e3de67409597f8809e80bae621a3651",
+    "BanditRLProof.lean": "ee38432826225eb43864418adf0f6d82b0dbc192a75438eda8577e9eb6f1a180",
+    "Tests.lean": "bb3c67a2671c3f6d72cb73e1f2e6a8a0207d825d505242aa70fcaf79677819de",
+    "website/content/readings.json": "a37e7f93a99361a8d395c1bc56f60524498bc500e0ce8af1e5b69debd2a9434f",
+    "website/content/chapters.json": "d8a4fcda1d416f5fcbc7cf63e7c999f9ecc4ceff1cef532616b6d4564f4ef492",
+    "website/content/highlights.json": "aac01579e402fe11023f3294720dfe2cf4bae4dce84e80bb5044ec463fdce02d"
+  },
+  "actualImportedCheck": "20standard axiom closures,4fresh literal proposition equalities and4complete definition equalities passed against actual candidate imports;private and imported direct graphs identical.",
+  "sealContinuation": "Original seal records compiled identity as pending at seal time.Later imported audit supplies that evidence;historical seal remains immutable.",
+  "importedAudit": {
+    "artifact": "batch25-imported-audit-v1/receipt.json",
+    "sha256": "29114590362abcd841bab00c124de0905352c037bb09c7641496918345216918",
+    "availability": "Private maintenance evidence retained by the maintainer;digest is not a public download URL."
+  }
+}

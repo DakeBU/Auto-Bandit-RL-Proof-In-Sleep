@@ -159,3 +159,4 @@ import Tests.OnlineNoRegretSemanticsCanary
 import Tests.OnlineSquareMinimumCanary
 import Tests.OnlineGuessingIIDBenchmarkCanary
 import Tests.OnlineGuessingRandomizedIIDCanary
+import Tests.OnlineGuessingIIDSuccessCanary

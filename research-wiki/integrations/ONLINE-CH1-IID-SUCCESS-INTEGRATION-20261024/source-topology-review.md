@@ -1,0 +1,41 @@
+# Batch25 independent source-topology review, stage 1
+
+Reviewer: `/root/batch25_source_reviewer`, distinct from the extractor, formalizer and blind decoder.
+Verdict: **accepted for the bounded source inventory and proposed source/application topology**. No blocking omission, reversed inequality, false mandatory conjunction of alternative routes, or silently discharged source gap was found. This is not a proof, semantic-roundtrip, publication, closure, merge or retirement verdict.
+
+## Evidence and isolation
+
+The reviewer actually viewed `page-013.png` through `page-018.png` individually using `view_image`. The pinned PDF at `../batch18-source-extraction/source-pinned.pdf` hashes to `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17`. Printed pages 1–6 are PDF pages 13–18. The review read the extraction README, both coverage formats, the complete topology JSON, derived obligations and receipt. Every receipt-listed output hash was recalculated and matched. The receipt's own SHA256 matched `receipt.sha256`.
+
+Only `actual-headers.json` and `literal-context.json` were read from the statement seal at this stage. No original implementation, proof body, old review/topology, sourcecard, PR prose, neutral packet or blind reconstruction was read. A preliminary memory-registry keyword search returned historical review pointers; no historical review was opened or used as mathematical evidence. Governance and domain instructions were read from the canonical repository. Its observed state was clean `main`, commit `b4205fcf445d387f8226c0d763aac70afb189f98`; no Git mutation was performed.
+
+## Independent page-by-page coverage check
+
+1. **Printed p1 / PDF13:** `P01-GAME` correctly preserves the secret observation, prediction, reveal order and [0,1] actions. `P01-IID`, `P01-ORACLE`, `P01-EQ11`, `P01-EQ12`, `P01-NONNEG` and `P01-SUCCESS` cover the entire stochastic argument. The two displayed expectations are centered total and centered average. Nonnegativity uses current-data independence, while the normalization equivalence itself is algebraic. `X01-MOTIVATION` excludes only motivation.
+2. **Printed p2 / PDF14:** `P02-FIXED` correctly places minimization outside expectation. `P02-DETREG` switches to the pathwise hindsight minimum. The comparator paragraph, general vector/loss setting, one-sided no-regret definition and Remark 1.1 are retained. The Chapter 14 reference and optional enlarged prediction domain are explicitly excluded, not silently imported into the four anchors. The printed limit <=0 is not upgraded to a zero limit.
+3. **Printed p3 / PDF15:** The adaptive adversary paragraph, finite-sample mean minimizer, stability motivation and strictly-past FTL rule all have nodes. The informal first action is arbitrary in [0,1]; this is distinguished from Theorem 1.3's exact 1/2. Applications, statistical-modeling motivation and first-principles announcement have justified exclusions. The empirical minimum identity is asserted without proof in the source and correctly retained as `GAP-MEAN-MIN`.
+4. **Printed p4 / PDF16:** The complete Lemma 1.2 induction is retained: T=1 reflexivity; T>=2 induction hypothesis; cancellation of identical final terms in Eq. (1.3); application of the induction hypothesis; the prefix minimizer inequality using feasibility of the terminal minimizer; transitivity and induction closure. Minima existence is a source premise, not an inferred theorem or convexity hypothesis. Theorem 1.3 includes positive horizon, arbitrary bounded path, exact historical average and x1=1/2. Its minimax exclusion is recorded in `P04-BOUNDARY`.
+5. **Printed p5 / PDF17:** The BTL subtraction direction is correct: subtracting the terminal fixed-leader loss is bounded above by subtracting the sum of current-leader losses. The first-round term is <=1/4. Every part of the t>=2 display is represented: square expansion/factorization, absolute product bound, unit-interval factor <=2, replacement by the two empirical means, reciprocal difference, split of the final observation, triangle inequality and <=4/t. Summation gives 1/4+4 sum(t=2..T)1/t <=4 sum(t=1..T)1/t. Figure 1.1 is illustrative source evidence, not an independent sufficient proof or mandatory premise.
+6. **Printed p6 / PDF18:** The continuation through integral from 2 to T+1 of 1/(t-1), its value log T, and the closing multiplication by 4 are retained. T=1 gives an empty tail and zero integral. The proof-summary paragraph is a restatement of this route. The practical discussion, statistical-learning contrast, future chapter pointer and both historical paragraphs/citation occurrences are explicitly excluded with scope reasons.
+
+The 37 printed nodes, 23 exclusions and four source-gap nodes cover the inspected bounded region. Grouped rows name all mathematical displays they contain. Typography is globally excluded. Historical citation occurrences are not mathematical inputs to this route.
+
+## Topology and root tracing
+
+- Eq. (1.1)/(1.2) success traces through `R-NORMALIZATION` and `GAP-NORMALIZATION`. The oracle and nonnegative excess separately retain `GAP-ORACLE` and `GAP-CAUSAL`; neither is assumed to have been proved by the printed prose.
+- Theorem 1.3 traces from `R-THM13` through `R-CLOSE`, `R-SUM`, `R-REGRET-BTL`, `R-FIRST-ROUND`, `R-STABILITY`, and `R-HARMONIC`. The empirical-mean minimizer gap and all Lemma 1.2 steps remain reachable. The induction hypothesis is locally discharged by induction, not a self-supporting final theorem premise.
+- The fixed initial value 1/2 and Lemma 1.2 minimizer existence are supplied in the route's explicit premise-discharge text. Reading only `all_of` and dropping that text would lose source premises. The accepted object is the full packet, not a bare unlabeled edge projection.
+- D1 is a signed algebraic extension. The T=0 division convention is irrelevant to `atTop` but does not make the source's positive-horizon identity true at zero.
+- D2 retains policy measurability, seed independence from the whole observation process, strict past only, integrability, causal-risk expansion, expected-fixed minimum characterization, all-T empty-sum handling and the Cesaro mean-squared-prediction criterion as derived obligations. It does not claim arbitrary policies succeed.
+- D3 has two sufficient proposed routes grouped by OR: compare pathwise with the fixed mean and integrate, or integrate the hindsight bound and use E[min] <= min E. These are not a single AND route. No exchange of expectation and minimum is asserted. The common-law identity needs no time independence. Its links to the printed IID discussion are source provenance; the application's premise-discharge text explicitly drops unused IID and must accompany any projection of these edges.
+- D4 uses an AND combination of IID causal lower bound, pathwise-derived upper bound, logarithmic envelope limit, squeeze and signed normalization. A merely dependent common-law stream does not supply its lower bound. The diagnostic constant Bernoulli stream indeed gives excess (1-T)/4 for T>=1, so an upper bound alone cannot prove the zero limit.
+
+## Accepted boundaries and remaining obligations
+
+The source omits finite-square minimizer derivation, expected fixed-oracle calculation, causal risk argument and formal normalization argument. All four are retained as gaps. D1–D4 are applications/extensions with additional proof obligations, not four named printed results. The expected-fixed infimum must be shown to be a genuine attained minimum under the theorem assumptions. No claimed implementation dependency, compilation result, theorem truth, high-probability/almost-sure success, minimax lower bound, publication completeness or repository closure follows from this review.
+
+Stage 1 was written and hash-sealed before the reviewer opened either the neutral statement packet or the blind decoding output. `stage1-seal.json` records the exact inputs and this report digest.
+
+
+---
+Public location projection of private evidence batch25-source-review-v1/stage1-source-topology.md. Original SHA256: `e76a2aae0d823ab1820c78d9cf276f21b1f9417ab080af5f04cdbb7f4163caec`. Physical paths alone are logicalized; original stage wording and limits remain unchanged. Later bounded status is recorded in review-binding.json.

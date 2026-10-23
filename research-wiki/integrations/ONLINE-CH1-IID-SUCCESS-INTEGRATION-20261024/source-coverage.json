@@ -1,0 +1,555 @@
+{
+  "status": "extractor-proposed-independent-review-pending",
+  "scope": {
+    "printed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pdf_pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ]
+  },
+  "inventory": [
+    {
+      "id": "P01-GAME",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Opening game and its three bullets: rounds t=1,...,T; adversary chooses y_t in [0,1] secretly; player chooses x_t in [0,1]; observation follows the prediction; loss is (x_t-y_t)^2. This is the information-order source."
+    },
+    {
+      "id": "X01-MOTIVATION",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Paragraph beginning “Basically”: motivates a winning condition but contributes no additional mathematical premise."
+    },
+    {
+      "id": "P01-IID",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Paragraph beginning “Let's start”: common fixed distribution on [0,1], independent identically distributed draws, distribution selected at the beginning and unknown to learner."
+    },
+    {
+      "id": "P01-ORACLE",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Same paragraph's claims: predicting the distribution mean each round gives expected total sigma^2 T and no admissible strategy does better. An explicit causal/measurable randomized policy model and the proof of this assertion are not printed."
+    },
+    {
+      "id": "P01-EQ11",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Equation (1.1): E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2 T. It is an expected centered total; the source's expectation subscript does not include an explicit auxiliary seed."
+    },
+    {
+      "id": "P01-EQ12",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Equation (1.2): (1/T) E[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2. Positive integer horizons are implicit."
+    },
+    {
+      "id": "P01-NONNEG",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Paragraph after (1.2), first assertion: both quantities are nonnegative. Depends on admissible information, not bounded outputs alone. The proof is omitted."
+    },
+    {
+      "id": "P01-SUCCESS",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 1,
+      "pdf_page": 13,
+      "content": "Remaining paragraph: success means the quantity in (1.1) grows sublinearly, equivalently (1.2) tends to zero. This is an equivalence of criteria, not a theorem asserting that every learner succeeds. Variance is the difficulty normalization."
+    },
+    {
+      "id": "P02-FIXED",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Opening rewrite display: E[sum (x_t-Y_t)^2] - min_{x in [0,1]} E[sum (x-Y_t)^2]. The minimum is OUTSIDE expectation. The fixed oracle comparator is a constant chosen to minimize expected cumulative loss."
+    },
+    {
+      "id": "P02-DETREG",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Next paragraph and displayed Regret_T: remove distribution assumptions and use arbitrary deterministic observations; for a deterministic algorithm define sum (x_t-y_t)^2 - min_x sum (x-y_t)^2 and require sublinear growth. Here minimum is pathwise, unlike P02-FIXED."
+    },
+    {
+      "id": "X02-JUSTIFY",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Paragraph beginning “Our reasoning”: motivation and future perspectives only."
+    },
+    {
+      "id": "P02-COMPARATOR",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Paragraph beginning “Note that”: fixed single best predictor versus comparator sequences; keeps fixed comparator as the present benchmark."
+    },
+    {
+      "id": "X02-CH14",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Chapter 14 forward reference in that paragraph: different comparator-sequence setting, not used by Theorem 1.3."
+    },
+    {
+      "id": "P02-GENERAL",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Generalization paragraph and Regret_T(u) display: V subset of R^d, predictions x_t in V, real losses ell_t:V->R, arbitrary fixed u in V, sum ell_t(x_t)-sum ell_t(u). Supplies the setting for Lemma 1.2."
+    },
+    {
+      "id": "P02-NOREGRET",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Paragraph after general regret: algorithm need not know u or its regret to guarantee a bound; for every fixed u, no-regret is “at most sublinear,” printed as lim Regret_T(u)/T <= 0. This signed one-sided condition must not be conflated with the zero-limit criterion in P01-SUCCESS."
+    },
+    {
+      "id": "P02-REMARK11",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Remark 1.1: regret also depends on the entire loss sequence; dependence suppressed in notation."
+    },
+    {
+      "id": "X02-FOOTNOTE1",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 2,
+      "pdf_page": 14,
+      "content": "Footnote allowing predictions in W superset V: optional alternative game; Theorem 1.3 uses [0,1] for both predictions and comparators."
+    },
+    {
+      "id": "X03-APPLICATIONS",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Continuation from page 2, three application bullets (clicks, network routing, repeated-game equilibrium), and SGD sentence: examples, not proof inputs."
+    },
+    {
+      "id": "X03-TRANSITION",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Paragraph returning to the simple number game: pedagogical framing only."
+    },
+    {
+      "id": "P03-ADVERSARY",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "“A Winning Strategy” paragraph: arbitrary data, even an adversary selecting its observation after seeing the learner prediction. This is a deterministic pathwise guarantee, not an independence assumption."
+    },
+    {
+      "id": "X03-STATMODEL",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Paragraph warning against statistical modeling of adversarial data: explanatory motivation, not a technical premise or proof step."
+    },
+    {
+      "id": "P03-MINIMIZER",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Best-in-hindsight paragraph and display: x*_T = argmin_{x in [0,1]} sum (x-y_t)^2 = (1/T)sum y_t. Existence, feasibility and the minimization identity are asserted, not proved."
+    },
+    {
+      "id": "P03-TRACK",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Paragraph following display: future optimizer unavailable, use optimum on past; stability of the leader is the proposed mechanism, not a distributional prediction."
+    },
+    {
+      "id": "P03-FTL",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Final full paragraph: t>=2 predicts x_t=x*_{t-1}=(1/(t-1))sum_{i=1}^{t-1} y_i; first round may be any [0,1] point in this informal proposal; names Follow-the-Leader. Theorem 1.3 later fixes x_1=1/2."
+    },
+    {
+      "id": "X03-FIRSTPRINCIPLES",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 3,
+      "pdf_page": 15,
+      "content": "Paragraph split over pages 3–4 announcing a first-principles proof and later general methods: no additional proof obligation."
+    },
+    {
+      "id": "P04-LEM12",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Lemma 1.2 statement/display: arbitrary real losses on V subset R^d and a minimizer x*_t in argmin_{x in V} sum_{i=1}^t ell_i(x) for every relevant t; sum_t ell_t(x*_t) <= sum_t ell_t(x*_T). No convexity, stochasticity or differentiability is assumed. Existence of each minimizer is an explicit lemma premise."
+    },
+    {
+      "id": "P04-BASE",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Induction proof's T=1 displayed reflexive inequality ell_1(x*_1)<=ell_1(x*_1)."
+    },
+    {
+      "id": "P04-IH",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "T>=2 induction hypothesis and displayed full-horizon goal, before (1.3). These are induction structure, not new public assumptions of the lemma."
+    },
+    {
+      "id": "P04-CANCEL13",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Equation (1.3) and its justification: cancel identical last terms; it suffices to compare sums to T-1 evaluated at x*_t versus x*_T."
+    },
+    {
+      "id": "P04-APPLYIH",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "First display after (1.3): sum_{t<T} ell_t(x*_t)<=sum_{t<T} ell_t(x*_{T-1}), by the induction hypothesis."
+    },
+    {
+      "id": "P04-PREFIXMIN",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Second display after (1.3): sum_{t<T}ell_t(x*_{T-1})<=sum_{t<T}ell_t(x*_T), by prefix minimization and feasibility x*_T in V."
+    },
+    {
+      "id": "P04-CHAIN",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Proof's closing sentence chains P04-APPLYIH and P04-PREFIXMIN to (1.3), restores the canceled term and closes induction."
+    },
+    {
+      "id": "X04-INTERPRET",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "“Basically” paragraph: interpretation of Be-the-Leader, no separate inequality."
+    },
+    {
+      "id": "P04-BOUNDARY",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Paragraph before Theorem 1.3: logarithmic upper bound will be proved; minimax optimality/unavoidable logarithmic dependence is explicitly not proved here."
+    },
+    {
+      "id": "P04-THM13",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 4,
+      "pdf_page": 16,
+      "content": "Theorem 1.3 full statement/display: arbitrary y_1,...,y_T in [0,1], strictly-past empirical mean for t>=2, x_1=x*_0=0.5; hindsight regret <=4+4 ln T. T is a positive integer horizon."
+    },
+    {
+      "id": "P05-FIG11",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "Figure 1.1, caption and the curves 1/x and 1/(x-1): graphical explanation of the harmonic-sum upper bound. It illustrates P06-INTEGRAL and is not an independent alternative proof of the theorem."
+    },
+    {
+      "id": "P05-BTL",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "Proof's first two-line display: replace the hindsight minimum by loss of x*_T, replace x_t by x*_{t-1}, then use Lemma 1.2 to obtain Regret_T <= sum_t [(x*_{t-1}-y_t)^2-(x*_t-y_t)^2]. The BTL subtraction direction matters."
+    },
+    {
+      "id": "P05-FIRST",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "t=1 paragraph/display: (x*_0-y_1)^2-(x*_1-y_1)^2<=0.5^2, using x*_0=1/2 and x*_1=y_1."
+    },
+    {
+      "id": "P05-FACTOR",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "t>=2 display lines 1–3: expand squares, factor (x*_{t-1}+x*_t-2y_t)(x*_{t-1}-x*_t), upper bound by absolute values, then by 2\\|x*_{t-1}-x*_t\\| using unit-interval feasibility."
+    },
+    {
+      "id": "P05-MEANSHIFT",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "Same display's next two lines: substitute both empirical means and rewrite their difference as (1/(t-1)-1/t)sum_{i<t}y_i - y_t/t."
+    },
+    {
+      "id": "P05-STABILITY",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "Final line of same display: triangle inequality, 1/(t(t-1)) factor, \\|sum_{i<t}y_i\\|<=t-1 and \\|y_t\\|<=1 yield difference of losses <=2/t+2\\|y_t\\|/t<=4/t."
+    },
+    {
+      "id": "P05-SUM",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "“Hence, overall” display: Regret_T <=0.25+4 sum_{t=2}^T 1/t <=4 sum_{t=1}^T1/t. Empty tail sum handles T=1."
+    },
+    {
+      "id": "P05-AREA",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 5,
+      "pdf_page": 17,
+      "content": "Last paragraph, continuing on p6: interpret harmonic sum as gray area and compare with a shifted reciprocal integral plus the first term."
+    },
+    {
+      "id": "P06-INTEGRAL",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Top continuation and display: sum_{t=1}^T1/t <=1+integral_2^{T+1}1/(t-1) dt =1+ln T. The T=1 integral is zero."
+    },
+    {
+      "id": "P06-CLOSE",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "“Putting everything together” closes Theorem 1.3 using P05-SUM and P06-INTEGRAL."
+    },
+    {
+      "id": "P06-SUMMARY",
+      "disposition": "NODE",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Proof-summary paragraph: BTL compares with leader sequence and successive leaders differ at rate 1/t, explaining sublinear regret. It restates the proved route, not a second sufficient route."
+    },
+    {
+      "id": "X06-PRACTICAL",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Parameter-free, one-stream, running-summary, computational efficiency and no-gradient paragraph: implementation commentary, not needed to prove the four target obligations."
+    },
+    {
+      "id": "X06-STATML",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Overfitting/generalization-gap distinction paragraph: contextual discussion only."
+    },
+    {
+      "id": "X06-FUTURE",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Future chapters/strict generalization paragraph: forward pointer, no theorem dependency."
+    },
+    {
+      "id": "X06-HISTORY1",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "First History Bits paragraph, including regret as a state/action utility gap and a worst-state minimization rule: historical decision-theory discussion, outside the present repeated-game theorem."
+    },
+    {
+      "id": "X06-SAVAGE1951-A",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Savage (1951), first occurrence: historical attribution, not a proof dependency."
+    },
+    {
+      "id": "X06-WALD1950-A",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Wald (1950), first occurrence: book reviewed historically, not a proof dependency."
+    },
+    {
+      "id": "X06-SAVAGE1951-B",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Savage (1951), second occurrence: historical definition attribution, not a proof dependency."
+    },
+    {
+      "id": "X06-SAVAGE1951-C",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Savage (1951), third occurrence: naming history, not a proof dependency."
+    },
+    {
+      "id": "X06-SAVAGE1954-A",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Savage (1954), p163: quotation on the term regret, not a proof dependency."
+    },
+    {
+      "id": "X06-MILNOR1951",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Milnor (1951): suggested name regret, not a proof dependency."
+    },
+    {
+      "id": "X06-HISTORY2",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Second History Bits paragraph: equivalence of historical utility formulations and originality discussion, outside repeated-game proof scope."
+    },
+    {
+      "id": "X06-WALD1950-B",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Wald (1950), second occurrence: historical utility normalization, not a proof dependency."
+    },
+    {
+      "id": "X06-WALD1950-C",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Wald (1950), third occurrence: equivalence discussion, not a proof dependency."
+    },
+    {
+      "id": "X06-SAVAGE1954-B",
+      "disposition": "EXCLUDED",
+      "kind": "PRINTED",
+      "printed_page": 6,
+      "pdf_page": 18,
+      "content": "Savage (1954), pp169–170: historical comparison, not a proof dependency."
+    },
+    {
+      "id": "GAP-MEAN-MIN",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "printed_page": null,
+      "pdf_page": null,
+      "content": "P03-MINIMIZER and P05-BTL use the finite-sample squared-loss minimization identity without proof. Needed expansion: sum_i(x-y_i)^2=sum_i(m-y_i)^2+T(x-m)^2, m in [0,1]."
+    },
+    {
+      "id": "GAP-ORACLE",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "printed_page": null,
+      "pdf_page": null,
+      "content": "P01-ORACLE and P02-FIXED omit the mean/variance expansion and proof of the expected fixed-comparator minimum. Marginal same-law boundedness suffices for this part."
+    },
+    {
+      "id": "GAP-CAUSAL",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "printed_page": null,
+      "pdf_page": null,
+      "content": "P01-ORACLE and P01-NONNEG omit a formal causal-information/independence argument. With IID data and a measurable predictor based on past observations and independent internal randomness, expected squared loss = variance + expected squared distance of prediction from the mean."
+    },
+    {
+      "id": "GAP-NORMALIZATION",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "printed_page": null,
+      "pdf_page": null,
+      "content": "P01-SUCCESS states an equivalence without formal asymptotic derivation: centered average equals centered total divided by positive T; signed total is o(T) iff that quotient tends to zero."
+    }
+  ],
+  "counts": {
+    "NODE": 41,
+    "EXCLUDED": 23
+  },
+  "source_gap_ids": [
+    "GAP-MEAN-MIN",
+    "GAP-ORACLE",
+    "GAP-CAUSAL",
+    "GAP-NORMALIZATION"
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch25-source-extraction/source-coverage.json",
+      "sha256": "f7673a7e501d6d19e7d7886192b6d8ea91af7e7aca830a16cd6eb230bd8678c7",
+      "availability": "Private maintenance evidence retained by the maintainer;digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Original scientific text, historical statuses and scoped verdicts are unchanged. Original hashes bind private originals,not projected bytes.",
+    "currentStatus": "See review-binding.json for later scoped evidence; earlier pending/false fields are immutable historical observations.",
+    "review": "Independent public projection review pending."
+  }
+}
