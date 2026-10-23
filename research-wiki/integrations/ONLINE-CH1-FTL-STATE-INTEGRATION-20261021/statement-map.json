@@ -1,0 +1,69 @@
+{
+  "head": "3e473465298ea1ea10b7771608497d34e558fbeb",
+  "acceptedMain": "d4d4bd7a4a341ac03ca8af642971334b2b7ef10a",
+  "productionSourceGitObject": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+  "productionSourceSha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+  "actualDefinitions": "noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then initial else empiricalMean y t\n\nnoncomputable def ftlMeanStep (state : ℕ × ℝ) (target : ℝ) : ℕ × ℝ :=\n  (state.1 + 1, state.2 + (target - state.2) / ((state.1 : ℝ) + 1))\n\nnoncomputable def ftlState (initial : ℝ) (y : ℕ → ℝ) : ℕ → ℕ × ℝ\n  | 0 => (0, initial)\n  | t + 1 => ftlMeanStep (ftlState initial y t) (y t)",
+  "actualHeaders": [
+    "theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ)\n    (h : ∀ i < t, y i = z i) :\n    ftlPredict initial y t = ftlPredict initial z t",
+    "theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :\n    ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1",
+    "theorem ftlPredict_half (y : ℕ → ℝ) (t : ℕ) :\n    ftlPredict ((1 : ℝ) / 2) y t = meanPredict y t",
+    "theorem ftlState_first (initial : ℝ) (y : ℕ → ℝ) :\n    ftlState initial y 1 = (1, y 0)",
+    "theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) :\n    ftlState initial y t = (t, ftlPredict initial y t)",
+    "theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ)\n    (h : ∀ i < t, y i = z i) :\n    ftlState initial y t = ftlState initial z t",
+    "theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) :\n    (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1",
+    "theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) :\n    ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t)"
+  ],
+  "existingMeanSameAsOriginal": true,
+  "newDeclarations": {
+    "definitions": 3,
+    "theorems": 8
+  },
+  "reusedMeanRecurrence": "empiricalMean_succ",
+  "neutralPacketSha256": "7575ef86636ab584f70f5f73634d14edf7273ad07545579177f79455e1b58374",
+  "boundary": "No general-initial regret terminal, fixed-bit memory, runtime or executable-real certificate; #203 remains separate.",
+  "schema": "bounded-ftl-state-statement-map-v1",
+  "declarations": [
+    "BanditRL.OnlineLearning.ftlPredict",
+    "BanditRL.OnlineLearning.ftlMeanStep",
+    "BanditRL.OnlineLearning.ftlState",
+    "BanditRL.OnlineLearning.ftlPredict_prefix",
+    "BanditRL.OnlineLearning.ftlPredict_mem",
+    "BanditRL.OnlineLearning.ftlPredict_half",
+    "BanditRL.OnlineLearning.ftlState_first",
+    "BanditRL.OnlineLearning.ftlState_eq_predict",
+    "BanditRL.OnlineLearning.ftlState_prefix",
+    "BanditRL.OnlineLearning.ftlState_mem",
+    "BanditRL.OnlineLearning.ftlState_half"
+  ],
+  "sourceReviewStatus": "accepted-with-explicit-delta; see semantic-review.json",
+  "statementSeal": {
+    "artifact": "batch19-intake/statement-seal-v1.json",
+    "sha256": "2650f42a119b6d60beac17fcdb14746e83c5fbfa2f3a19e7c1cdc465bfd2364a",
+    "availability": "maintenance evidence retained separately; hash is not a public download URL"
+  },
+  "blindReconstruction": {
+    "artifact": "batch19-blind-decoder/reconstruction.json",
+    "sha256": "d0a9b33402b43a7f0dfee66ea68f7a2208405b03e72b99ecefb6de65aa3d421e",
+    "availability": "maintenance evidence retained separately; hash is not a public download URL"
+  },
+  "newProductionCredit": {
+    "definitions": 3,
+    "proofs": 8,
+    "alreadyAcceptedRecurrence": "empiricalMean_succ"
+  },
+  "actualImportedGraphStatus": "24 actual compiled declarations,1979 direct type/value edges and16 prespecified VALUE pairs checked; source topology remains separate. See compiled-dependencies.json. Independent final graph review pending.",
+  "canarySource": {
+    "path": "Tests/OnlineLearningFTLStateCanary.lean",
+    "sha256": "f3b7883f5e1333c2138f4a4bca6e98eb0d601242952884d41010973ffdeaec05",
+    "theorems": [
+      "initial_and_first",
+      "varying_updates",
+      "current_target_after_prediction",
+      "feasibility_and_outside",
+      "half_state_regret",
+      "general_initial_not_quarter"
+    ],
+    "fixture": "probeTargets"
+  }
+}

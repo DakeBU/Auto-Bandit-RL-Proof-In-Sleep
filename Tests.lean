@@ -139,6 +139,7 @@ import Tests.OnlineConvexUncountabilityCanary
 import Tests.OnlineSubgradientDescentCanary
 import Tests.OnlineLearningChapterOneCanary
 import Tests.OnlineLearningFTLSharpCanary
+import Tests.OnlineLearningFTLStateCanary
 import Tests.OnlineLearningFoundationsCanary
 import Tests.OnlineLearningRegretDomainsCanary
 import Tests.OnlineFTLFailureCanary

@@ -1,0 +1,379 @@
+{
+  "verdict": "accepted-with-explicit-delta",
+  "semantic_roundtrip_status": "accepted",
+  "role_separation": "Reviewer is distinct from formalizer and source-blind decoder. Raw-source StageA sealed before implementation, original statement seal, decoder or root proposal was read.",
+  "stageA_review_sha256": "52a0221a3928802cbbca7456610170596215a36d7d6a589a36647027b837024c",
+  "accepted_main": "d4d4bd7a4a341ac03ca8af642971334b2b7ef10a",
+  "context_git_objects": {
+    "OnlineLearningMean.lean": "f2dc4d3a8250d60c5c375ca616ee6358e470f258",
+    "OnlineLearningFTL.lean": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b"
+  },
+  "claim_review": [
+    {
+      "id": "claim_01",
+      "declaration": "ftlPredict_prefix",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Common real initialization; two real streams; real predictions",
+        "quantifiers_order": "forall initial, then y, then z, then t",
+        "assumptions_regularity": "Only forall i<t, y(i)=z(i)",
+        "conclusion_metric": "Equality of predictions at time t",
+        "constants_normalization_asymptotics": "Exact equality, no constants or asymptotic claim; strict prefix excludes y(t)",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "t=0 is vacuous prefix agreement and equality of the same initial. Different initial values may differ at t=0. Does not establish causality if callers choose initial from future data."
+      },
+      "source_delta": "Derived extensionality theorem for the source-family formula; arbitrary real stream/initial ambient extension. Source does not print this theorem.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "h": "For every natural i<t, y(i)=z(i). An explicit antecedent of this B-level extensionality claim. It is not a source assumption of Theorem1.3, and is not exported as one. Source-Anchor SOURCE/STANDING/TYPING/RULED/EXCESS classification does not turn this canonical antecedent into a book premise.",
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Unfold predictor and empiricalMean; finite-sum congruence uses exactly h on range t. No assumed producer conclusion.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_02",
+      "declaration": "ftlPredict_mem",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real initialized predictor and closed real interval [0,1]",
+        "quantifiers_order": "forall initial, y, t; hi then hy",
+        "assumptions_regularity": "0<=initial<=1 and forall i<t, 0<=y(i)<=1",
+        "conclusion_metric": "Prediction belongs to [0,1]",
+        "constants_normalization_asymptotics": "Closed endpoints; no positivity assumption on t; no regret/loss bound",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "At zero conclusion is hi. Positive-time result uses bounded prefix and does not need initial numerically, but hi is legitimate for a unified all-time theorem."
+      },
+      "source_delta": "Derived feasibility of the page3 algorithm family on its source domain. Local-prefix bound is sufficient and weaker than global bounded-stream notation.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "hi": "SOURCE domain condition: 0<=initial and initial<=1, from the page3 arbitrary feasible first prediction. Necessary for the all-time conclusion at t=0.",
+        "hy": "SOURCE domain condition localized to all i<t: 0<=y(i) and y(i)<=1. No condition on current/future observations.",
+        "expansion": "Set.Icc membership expands to both inequalities; bounded forall expands to forall i, i<t -> membership. No project-owned assumption bundle.",
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Case split on t=0. Zero returns hi. Nonzero derives 0<t and applies accepted empiricalMean_mem to hy.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_03",
+      "declaration": "ftlPredict_half",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Two real-valued predictor presentations on real streams",
+        "quantifiers_order": "forall y, then t",
+        "assumptions_regularity": "No logical hypotheses",
+        "conclusion_metric": "ftlPredict(1/2,y,t)=meanPredict(y,t)",
+        "constants_normalization_asymptotics": "Exact 1/2, not a fitted parameter or prior; all natural t",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "Pure specialization identity, not interval membership for unrestricted y and not an optimality or regret theorem."
+      },
+      "source_delta": "Connects the broader page3 initialization family to Theorem1.3 half-initialized formula. Algebraic identity is a derived library adapter.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "logical_premises": [],
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "rfl is legitimate because this adapter identifies definitionally identical half-specialized formulas; no independent source-result credit.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_04",
+      "declaration": "ftlState_first",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Recursively constructed Nat x Real state",
+        "quantifiers_order": "forall initial, then y",
+        "assumptions_regularity": "No logical hypotheses",
+        "conclusion_metric": "State after one update is (1,y(0))",
+        "constants_normalization_asymptotics": "Fixed natural time1 and observation0; denominator1 cancels initial exactly",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "All real initial values are allowed, including values outside [0,1]. No interval or general-time result follows from this claim alone."
+      },
+      "source_delta": "Derived first-update fact for an operational representation absent as a printed source recurrence.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "logical_premises": [],
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Simplifies the actual recursive zero and successor equations plus arithmetic s+(v-s)/1=v. Not a closed-form state definition.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_05",
+      "declaration": "ftlState_eq_predict",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Recursive Nat x Real state and direct real-valued prefix predictor",
+        "quantifiers_order": "forall initial, then y, then t",
+        "assumptions_regularity": "No logical hypotheses",
+        "conclusion_metric": "Both coordinates equal (t,ftlPredict(initial,y,t))",
+        "constants_normalization_asymptotics": "All times; at0 pair(0,initial), at positive t pair(t,empiricalMean(y,t)); exact equality",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "Only the specified recursively reachable state. Does not characterize arbitrary externally supplied states, prove a running-time/bit-memory bound, or give regret."
+      },
+      "source_delta": "Derived operational-equivalence theorem filling the mathematical update/equivalence aspect of source running-summary prose. No literal printed recurrence claim.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "logical_premises": [],
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Induction on t. Base unfolds recursion/predictor. First successor invokes ftlState_first so arbitrary initial cancels. Remaining successor rewrites recursion and induction hypothesis, proves counter by rfl, and uses accepted empiricalMean_succ in reverse for scalar. Actual state is Nat recursion, not the asserted closed form.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_06",
+      "declaration": "ftlState_prefix",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Two recursive Nat x Real states with one shared initialization",
+        "quantifiers_order": "forall initial, then y, then z, then t",
+        "assumptions_regularity": "Only forall i<t, y(i)=z(i)",
+        "conclusion_metric": "Equality of entire states at time t",
+        "constants_normalization_asymptotics": "Exact equality of both coordinates; strict-prefix convention",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "At0 same initial is essential. No assertion that differing initial values agree at zero, or that a data-dependent initialization is a causal policy."
+      },
+      "source_delta": "Canonical prefix congruence derived from invariant and predictor congruence, supporting the source past-only interpretation.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "h": "For every natural i<t, y(i)=z(i). An explicit antecedent of this B-level extensionality claim. It is not a source assumption of Theorem1.3, and is not exported as one. Source-Anchor SOURCE/STANDING/TYPING/RULED/EXCESS classification does not turn this canonical antecedent into a book premise.",
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Rewrites both states with ftlState_eq_predict then applies ftlPredict_prefix. Genuine invariant consumer, not assumed state invariance.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_07",
+      "declaration": "ftlState_mem",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Second real coordinate of recursive state and interval [0,1]",
+        "quantifiers_order": "forall initial, y, t; hi then hy",
+        "assumptions_regularity": "0<=initial<=1 and forall i<t, 0<=y(i)<=1",
+        "conclusion_metric": "Second coordinate belongs to [0,1]",
+        "constants_normalization_asymptotics": "All times, closed endpoints. .2 is a projection; no constraint on natural counter",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "At0 needs initial feasibility; no current/future-label condition and no guarantee for arbitrary unreachable input states of ftlMeanStep."
+      },
+      "source_delta": "Derived reachable-state feasibility on source feasible domain, through the actual state-predictor identity.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "hi": "SOURCE domain condition: 0<=initial and initial<=1, from the page3 arbitrary feasible first prediction. Necessary for the all-time conclusion at t=0.",
+        "hy": "SOURCE domain condition localized to all i<t: 0<=y(i) and y(i)<=1. No condition on current/future observations.",
+        "expansion": "Set.Icc membership expands to both inequalities; bounded forall expands to forall i, i<t -> membership. No project-owned assumption bundle.",
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Rewrites state by invariant and applies predictor feasibility. No hidden postulated invariant.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    },
+    {
+      "id": "claim_08",
+      "declaration": "ftlState_half",
+      "classification": "B: canonical derived library interface; not a separately stated source theorem",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Half-initialized recursive state and existing source predictor",
+        "quantifiers_order": "forall y, then t",
+        "assumptions_regularity": "No logical hypotheses",
+        "conclusion_metric": "State equals (t,meanPredict(y,t))",
+        "constants_normalization_asymptotics": "Exact half initialization and all natural times",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "Identity alone is not a regret theorem. With existing bounded-prefix positive-horizon hypotheses it transports only half-trajectory guarantees. No arbitrary-initial 1/4 bound."
+      },
+      "source_delta": "Derived adapter to literal Theorem1.3 initialization; preserves existing half-only source boundary.",
+      "binder_audit": {
+        "typed_data": "initial:Real, y/z:Nat->Real, t:Nat are TYPING data, with unrestricted-real carrier explicitly a generalization beyond the feasible source game. No hidden project-owned Prop bundles/typeclass assumptions.",
+        "logical_premises": [],
+        "excess_source_anchor_premises": 0
+      },
+      "proof_body_review": "Combines invariant and half-specialization. Canaries consume it with the accepted refined regret theorem rather than assuming new general-initial regret.",
+      "decoder_match": "Exact, including ordered hypotheses and empty-time boundary"
+    }
+  ],
+  "definition_review": [
+    {
+      "declaration": "empiricalMean",
+      "role": "Existing A-level source-facing positive-prefix mean, context only",
+      "definition_kind": "literal arithmetic formula; positive-prefix minimizer characterization audited as a semantic unit",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Nat->Real stream, Nat prefix length, Real output",
+        "quantifiers_order": "y then n, universally available total function",
+        "assumptions_regularity": "No type-level restrictions; source minimizer interpretation requires n>0 and source interval requires bounded prefix",
+        "conclusion_metric": "sum of y(i), i<n, divided by cast n",
+        "constants_normalization_asymptotics": "Uniform arithmetic mean, zero-based indexing; at n=0 total real division gives0",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "Empty-prefix0 is an explicit ambient convention, not unique minimizer of empty cumulative loss. Not the initial prediction of half/general predictor."
+      },
+      "source_delta": "same on nonempty feasible source prefixes; generalization to real-valued streams; explicit empty-prefix totalization outside source characterization.",
+      "characterization_and_totalization": "No classical-choice fallback. Accepted empiricalMean_decomposition, empiricalMean_minimizes, empiricalMean_unique and empiricalMean_mem jointly establish positive-prefix unique feasible minimizer; no uniqueness at zero is claimed.",
+      "decoder_match": "Exact"
+    },
+    {
+      "declaration": "meanPredict",
+      "role": "Existing A-level source Theorem1.3 predictor, context only",
+      "definition_kind": "literal source formula on source domain, explicit ambient-real extension",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real stream, Nat time, Real prediction",
+        "quantifiers_order": "y then t",
+        "assumptions_regularity": "No type-level restrictions; source trajectory uses bounded labels",
+        "conclusion_metric": "1/2 at zero, empiricalMean of strict prefix at positive time",
+        "constants_normalization_asymptotics": "Source round=t+1; initial1/2 is not a pseudocount",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "No regret assertion at horizon0 from this definition; arbitrary real streams can produce predictions outside interval."
+      },
+      "source_delta": "same after source indexing translation on feasible game; unrestricted-real ambient extension.",
+      "characterization_and_totalization": "The zero branch is explicitly source initialization, not a fallback for a failed existence condition. No characterized-choice construction.",
+      "decoder_match": "Exact"
+    },
+    {
+      "declaration": "ftlPredict",
+      "role": "New A-level source-aligned algorithm-family definition on feasible game; ambient-real extension must be visible",
+      "definition_kind": "literal formula on source carrier, explicitly extended arithmetic definition",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real initial, real stream, Nat time, real prediction",
+        "quantifiers_order": "initial then y then t",
+        "assumptions_regularity": "No definition-level premises; source game restriction is initial and observed labels in[0,1]",
+        "conclusion_metric": "initial at zero and empiricalMean strict prefix at positive time",
+        "constants_normalization_asymptotics": "No pseudocount. Source round=t+1. Initial used only before any observation",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "Family parameter is fixed when comparing streams. This definition permits any real initial outside source game and does not certify data-dependent-initial causality."
+      },
+      "source_delta": "Source page3 allows arbitrary feasible first guess. This generalizes half predictor without generalizing literal Theorem1.3 regret statement.",
+      "characterization_and_totalization": "Zero branch directly matches allowed initial choice. Positive mean has accepted minimizer characterization. No hidden choice or invented failure branch.",
+      "decoder_match": "Exact"
+    },
+    {
+      "declaration": "ftlMeanStep",
+      "role": "New B-level derived canonical state-update interface",
+      "definition_kind": "literal specified update, not a literal source equation",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Any pair(k,s) in Nat x Real and target v in Real",
+        "quantifiers_order": "state then target",
+        "assumptions_regularity": "No premise; k+1 positive for every natural k",
+        "conclusion_metric": "(k+1, s+(v-s)/(k+1))",
+        "constants_normalization_asymptotics": "First update denominator1; exact real division; no clipping",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "An arbitrary input pair need not summarize past data. No standalone reachable-state predicate or interval preservation theorem is assumed. No finite precision or operation-cost guarantee."
+      },
+      "source_delta": "Derived recurrence makes page6 summary prose concrete. Source pages do not display it.",
+      "characterization_and_totalization": "Defined by arithmetic on its whole carrier, no default branch or choice. Reachable-state meaning is proved by ftlState_eq_predict, not presumed for every pair.",
+      "decoder_match": "Exact"
+    },
+    {
+      "declaration": "ftlState",
+      "role": "New B-level derived canonical operational representation with reviewed source correspondence",
+      "definition_kind": "literal Nat-recursive definition",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real initial, real stream, Nat time, Nat x Real state",
+        "quantifiers_order": "initial then y, returning function of t",
+        "assumptions_regularity": "No premises",
+        "conclusion_metric": "At0 pair(0,initial); successor applies ftlMeanStep to previous state and y(t)",
+        "constants_normalization_asymptotics": "State at t has processed exactly t observations; transition uses y(t), prediction at t does not",
+        "probability_feedback_filtration": "Deterministic exact-real statement. No probability space, filtration, stopping time, randomized choice or feedback-access guarantee. Strict-prefix observations support the source full-observation strategy once provided.",
+        "boundary_excluded": "Noncomputable exact reals and unbounded natural counter. Mathematical summary representation only; no executable-real runtime or fixed-bit memory theorem."
+      },
+      "source_delta": "Derived operational state realizes source running-average prose. It is not an additional source numbered algorithm or printed recursion.",
+      "characterization_and_totalization": "Nat recursion supplies a well-defined value without classical choice or conclusion-shaped definition. Its exact all-time relationship to the direct predictor is independently proved by induction.",
+      "decoder_match": "Exact"
+    }
+  ],
+  "indexing": "Lean time t counts observations already processed. Its prediction/state scalar is for source round t+1; Lean y(i) corresponds to source y_(i+1). All natural times include zero.",
+  "binder_audit_summary": {
+    "source_anchor_excess": 0,
+    "project_owned_assumption_bundles": 0,
+    "logic": "All conditional proof inputs are visible. Prefix equality belongs to the B-level comparison theorem; source feasibility inequalities remain domain assumptions. No produced recurrence, invariance, minimization, concentration or regret result appears as an extra public assumption."
+  },
+  "source_gap_crosswalk": [
+    {
+      "id": "gap-running-summary-equivalence",
+      "status": "mathematical exact-real update/equivalence discharged by this derived route",
+      "producer": "actual recursive ftlState + ftlState_first + accepted empiricalMean_succ + inductive ftlState_eq_predict",
+      "remaining": "Source omission stays recorded in source graph; no numeric memory, runtime, finite-precision or executable-state guarantee is discharged."
+    },
+    {
+      "id": "gap-mean-minimizer",
+      "status": "accepted existing substrate; not new batch19 credit",
+      "producer": "empiricalMean_decomposition, empiricalMean_minimizes, empiricalMean_unique, with empiricalMean_mem for source interval",
+      "remaining": "No unique empty-prefix minimizer; only positive prefixes."
+    },
+    {
+      "id": "gap-mean-range",
+      "status": "accepted existing substrate reused, not new source proof credit",
+      "producer": "empiricalMean_mem; used by ftlPredict_mem then ftlState_mem",
+      "remaining": "Requires positive prefix for empirical mean source semantics; initial feasibility handles zero predictor time."
+    },
+    {
+      "id": "gap-integral-comparison",
+      "status": "outside new state packet; accepted context theorem uses Mathlib harmonic bound",
+      "producer": "Existing theorem_1_3 uses harmonic_le_one_add_log",
+      "remaining": "No new analytic comparison proof or complete source-root audit is claimed by this state packet."
+    }
+  ],
+  "canary_review": [
+    {
+      "name": "initial_and_first",
+      "coverage": "Different time0 initial states; first update cancels both initial values."
+    },
+    {
+      "name": "varying_updates",
+      "coverage": "Nonconstant observations give exact means at times2 and3."
+    },
+    {
+      "name": "current_target_after_prediction",
+      "coverage": "Same strict prefix gives same state before a changed current target; next state differs."
+    },
+    {
+      "name": "feasibility_and_outside",
+      "coverage": "Feasible reachable state, infeasible initial2 at0, cancellation after first target."
+    },
+    {
+      "name": "half_state_regret",
+      "coverage": "Concrete T=2 half trajectory regret3/4 and transport of accepted refined bound. Not a new universal or arbitrary-initial regret proof."
+    },
+    {
+      "name": "general_initial_not_quarter",
+      "coverage": "Feasible initial1 against target0 has first loss1>1/4; prevents transferring the half-only first-round constant."
+    }
+  ],
+  "remaining_semantic_delta": [
+    "Explicit ambient-real generalization beyond initial/label interval source domain.",
+    "Zero-based count and empty-time conventions are explicit; no horizon-zero source regret claim.",
+    "Recurrence and state identity are derived exact-real library mathematics, absent as printed source formulas.",
+    "Same fixed initialization is required for prefix causality comparison.",
+    "Only half specialization transports existing quarter-initial/refined/source regret bounds.",
+    "No constant-bit memory, machine runtime, finite-precision or executable-real guarantee."
+  ],
+  "remaining_gates": [
+    "Exact port retains these frozen bodies/signatures or receives renewed review",
+    "Reader/metadata must expose the explicit deltas",
+    "Combined root/Tests/full harness and contribution/site checks",
+    "Whole-original disposition review",
+    "Exact-head PR CI, merge and postmerge/live verification"
+  ],
+  "schema": "bounded-ftl-state-semantic-projection-v1",
+  "projectionStatus": "faithful selected-field projection; independent review of this projection pending",
+  "originalReview": {
+    "artifact": "batch19-source-review/stageB-semantic-review.json",
+    "sha256": "3611848d0a70878b09fcd7519b881683d32526c5d6799f4820cca1b3e123b68e",
+    "availability": "maintenance evidence retained separately; hash is not a public download URL"
+  },
+  "sourceTopologyReview": {
+    "artifact": "batch19-source-review/stageA-topology-review.json",
+    "sha256": "52a0221a3928802cbbca7456610170596215a36d7d6a589a36647027b837024c",
+    "availability": "maintenance evidence retained separately; hash is not a public download URL"
+  },
+  "topologyInterpretation": "The extractor status is preserved verbatim in source-topology.json. The later Stage A review accepts the pinned topology with four explicit gaps. Source edges are not compiled Lean dependencies."
+}

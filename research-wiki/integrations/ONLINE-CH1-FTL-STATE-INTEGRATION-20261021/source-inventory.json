@@ -1,0 +1,499 @@
+{
+  "schema": "batch19-source-inventory-v1",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "scope_pdf_pages": [
+    15,
+    16,
+    17,
+    18
+  ],
+  "identity_pdf_pages": [
+    1
+  ],
+  "status": "extracted-not-independently-reviewed",
+  "items": [
+    {
+      "id": "cover-identity",
+      "pdf_page": 1,
+      "printed_page": null,
+      "region": "title, author, affiliation and arXiv margin",
+      "kind": "identity",
+      "meaning": "Title, Francesco Orabona, KAUST, arXiv:1912.13213v10, 21 Jun 2026",
+      "disposition": "EXCLUDED",
+      "reason": "Identity evidence only, no mathematical dependency."
+    },
+    {
+      "id": "p15-context",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "opening continuation paragraph",
+      "kind": "context",
+      "meaning": "Regret framework permits analysis without independent samples from a fixed distribution.",
+      "disposition": "EXCLUDED",
+      "reason": "Motivating paragraph begins on the previous uninspected page; no proof ingredient here."
+    },
+    {
+      "id": "p15-examples",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "three bullet items",
+      "kind": "examples",
+      "meaning": "Banner clicks; network routing; equilibrium of repeated games.",
+      "disposition": "EXCLUDED",
+      "reason": "Application examples outside the selected strategy and theorem."
+    },
+    {
+      "id": "p15-sgd",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "paragraph beginning As we will see",
+      "kind": "context",
+      "meaning": "Stochastic optimization/SGD application.",
+      "disposition": "EXCLUDED",
+      "reason": "Forward-looking application, no proof dependency."
+    },
+    {
+      "id": "p15-return",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "paragraph beginning Let us now go back",
+      "kind": "context",
+      "meaning": "Number-guessing toy example previews ingredients.",
+      "disposition": "EXCLUDED",
+      "reason": "Motivation, no mathematical obligation."
+    },
+    {
+      "id": "p15-adversary",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "A Winning Strategy paragraph",
+      "kind": "model",
+      "meaning": "Adversary may select its current number after observing the current prediction; no distributional mechanism restriction asserted.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p15-statistics",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "paragraph beginning Now, the fact",
+      "kind": "context",
+      "meaning": "Author argues statistical modeling is not a sufficient guarantee against arbitrary adversarial changes.",
+      "disposition": "EXCLUDED",
+      "reason": "Authorial motivation, not an impossibility theorem with a defined statistical-strategy class."
+    },
+    {
+      "id": "p15-objective",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "paragraph beginning Now, let us try",
+      "kind": "objective",
+      "meaning": "Seek regret sublinear in time regardless of adversarial choices; inspect best fixed number in hindsight.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p15-mean",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "single centered argmin display",
+      "kind": "definition-claim",
+      "meaning": "x*_T := argmin over x in [0,1] of sum (x-y_t)^2 = (1/T) sum y_t. Minimizer characterization asserted without derivation.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p15-tracking",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "paragraph beginning Now, given",
+      "kind": "rationale",
+      "meaning": "Cannot predict using future observations. Choose the best past action and track its stability, without assuming future resembles past.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p15-ftl",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "paragraph beginning Hence",
+      "kind": "algorithm",
+      "meaning": "For t>=2, x_t=x*_(t-1)=(1/(t-1)) sum_(i=1)^(t-1)y_i; first guess any number in [0,1]. Called FTL.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p15-p16-transition",
+      "pdf_page": 15,
+      "printed_page": 3,
+      "region": "last paragraph continuing at top of PDF16",
+      "kind": "context",
+      "meaning": "Prove the simple guarantee from first principles before later general methods.",
+      "disposition": "EXCLUDED",
+      "reason": "Organizational transition only; continuation on PDF16 is included in this disposition."
+    },
+    {
+      "id": "p16-btl-contract",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "Lemma 1.2 statement and displayed conclusion",
+      "kind": "lemma",
+      "meaning": "V subset R^d; arbitrary real-valued losses on V; attained minimizer x*_t of each prefix cumulative loss. Sum ell_t(x*_t) <= sum ell_t(x*_T).",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-base",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "Proof opening and base-case display",
+      "kind": "proof-step",
+      "meaning": "Induct on T, base T=1 is reflexive inequality.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-ih",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "paragraph after base through target display",
+      "kind": "proof-step",
+      "meaning": "For T>=2 assume the previous-horizon inequality; restate target for T.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-cancel",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "equation (1.3) and cancellation explanation",
+      "kind": "proof-step",
+      "meaning": "Equal t=T terms cancel, reducing to a prefix sum with comparator x*_T.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-prefix",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "display after Now observe and by induction hypothesis",
+      "kind": "proof-step",
+      "meaning": "Induction hypothesis bounds prefix changing-leader loss by prefix loss at x*_(T-1).",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-min",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "next display and because clause",
+      "kind": "proof-step",
+      "meaning": "Prefix minimizer property and x*_T in V compare prefix loss at x*_(T-1) with prefix loss at x*_T.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-close",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "Chaining these two inequalities clause",
+      "kind": "proof-step",
+      "meaning": "Transitivity proves (1.3), hence inductive target and lemma.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-btl-interpret",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "Basically paragraph",
+      "kind": "explanation",
+      "meaning": "Knowing future outcomes and adapting to them is interpreted as an advantage.",
+      "disposition": "EXCLUDED",
+      "reason": "Intuitive commentary, not an additional quantified theorem."
+    },
+    {
+      "id": "p16-log-preview",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "With this lemma paragraph first sentence",
+      "kind": "explanation",
+      "meaning": "Announces logarithmic upper-bound goal; supported by subsequent theorem.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p16-minimax-boundary",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "same paragraph remaining sentences",
+      "kind": "boundary",
+      "meaning": "Minimax optimality is explicitly not proved; logarithmic necessity asserted without proof.",
+      "disposition": "EXCLUDED",
+      "reason": "Lower bound/minimax result is expressly outside the proof."
+    },
+    {
+      "id": "p16-thm13",
+      "pdf_page": 16,
+      "printed_page": 4,
+      "region": "Theorem 1.3 complete statement and display",
+      "kind": "theorem",
+      "meaning": "Arbitrary y_1,...,y_T in [0,1]; past-mean predictions for t>=2, x_1=x*_0=0.5; total squared-loss regret against best fixed [0,1] action <=4+4 ln T.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-figure",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "Figure 1.1 graph and caption",
+      "kind": "proof-illustration",
+      "meaning": "Rectangular harmonic-sum area compared with 1/x and 1/(x-1); used by PDF17 bottom to PDF18 top.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-regret-rewrite",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "Proof opening, first equality of first display",
+      "kind": "proof-step",
+      "meaning": "Substitute algorithm outputs and final mean minimizer to rewrite regret as leader-lag loss minus final leader loss.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-btl-use",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "inequality in first proof display",
+      "kind": "proof-step",
+      "meaning": "Lemma 1.2 replaces final leader comparator sum with the smaller changing-leader comparator sum, upper bounding regret.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-initial",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "Now let us take paragraph and t=1 display",
+      "kind": "proof-step",
+      "meaning": "First loss difference <=0.5^2, using the theorem midpoint initialization and x*_1=y_1.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-expand",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "t>=2 display line1",
+      "kind": "proof-step",
+      "meaning": "Expand squared-loss difference and cancel y_t^2.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-factor",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display line2",
+      "kind": "proof-step",
+      "meaning": "Factor into (x*_(t-1)+x*_t-2y_t)(x*_(t-1)-x*_t).",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-abs",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display line3 first inequality",
+      "kind": "proof-step",
+      "meaning": "Bound signed product by product of absolute values.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-range",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display line3 second inequality",
+      "kind": "proof-step",
+      "meaning": "Bound first absolute factor by 2, using all three numbers in [0,1].",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-mean-sub",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display line4",
+      "kind": "proof-step",
+      "meaning": "Substitute prefix-mean formulas into 2 times the absolute leader difference.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-split",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display line5",
+      "kind": "proof-step",
+      "meaning": "Separate newest observation y_t/t from the preceding sum and subtract coefficients.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-triangle",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display last line first inequality",
+      "kind": "proof-step",
+      "meaning": "Use triangle inequality and coefficient identity 1/(t-1)-1/t=1/(t(t-1)).",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-prefix-bound",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display last line middle inequality",
+      "kind": "proof-step",
+      "meaning": "Bound absolute prefix sum by t-1, yielding 2/t+2|y_t|/t.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-later-bound",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "same display last inequality",
+      "kind": "proof-step",
+      "meaning": "Use |y_t|<=1 to obtain 4/t for t>=2.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-sum",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "Hence overall display first inequality",
+      "kind": "proof-step",
+      "meaning": "Sum first-round and later-round differences: regret <=0.25+4 sum_(t=2)^T 1/t.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-relax",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "Hence overall display second inequality",
+      "kind": "proof-step",
+      "meaning": "Relax first-round coefficient to get regret <=4 sum_(t=1)^T 1/t.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p17-p18-area",
+      "pdf_page": 17,
+      "printed_page": 5,
+      "region": "last paragraph continuing on PDF18 through So we have",
+      "kind": "proof-step",
+      "meaning": "Use Figure 1.1: harmonic rectangles bounded by 1 plus integral of 1/(t-1) from 2 to T+1.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-integral",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "first display inequality",
+      "kind": "proof-step",
+      "meaning": "H_T <= 1+integral_(2)^(T+1) 1/(t-1) dt.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-integral-eval",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "first display equality",
+      "kind": "proof-step",
+      "meaning": "Integral evaluates to ln T; obtain H_T<=1+ln T.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-close",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "Putting everything together sentence",
+      "kind": "proof-step",
+      "meaning": "Combine harmonic bound with factor 4 to finish Theorem 1.3.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-recap",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "Let us write in words paragraph",
+      "kind": "explanation",
+      "meaning": "BTL compares to changing leader sequence; lagging by one step and leader drift of order 1/t explain sublinear total regret. Qualitative recap, no asymptotic-equivalence assertion.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-no-parameters",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "There are a few things paragraph, first two sentences",
+      "kind": "algorithm-prose",
+      "meaning": "The strategy has no parameters to tune, e.g. learning rates or regularizers.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-validation",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "same paragraph, Note that tuning through best parameter",
+      "kind": "context",
+      "meaning": "Author says one online data stream cannot be replayed for validation-based tuning.",
+      "disposition": "EXCLUDED",
+      "reason": "Contextual setting commentary, not a formal impossibility theorem."
+    },
+    {
+      "id": "p18-memory",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "same paragraph, Also through running average",
+      "kind": "algorithm-prose",
+      "meaning": "No complete record of the past is needed; a summary through the running average suffices. No explicit state/update equation or memory model is given.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-efficiency",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "same paragraph, This gives and When we design sentences",
+      "kind": "algorithm-prose",
+      "meaning": "Calls the algorithm computationally efficient and these properties design goals; no operation-count or bit-cost theorem.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-gradients",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "same paragraph final sentence",
+      "kind": "algorithm-prose",
+      "meaning": "Algorithm does not use gradients; gradients are useful but not all of online learning.",
+      "disposition": "NODE"
+    },
+    {
+      "id": "p18-statistical-boundary",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "Before going on paragraph",
+      "kind": "context",
+      "meaning": "Author contrasts with classical train/test overfitting and generalization-gap concepts.",
+      "disposition": "EXCLUDED",
+      "reason": "Contextual prose not needed in theorem proof; no universal formal impossibility claim extracted."
+    },
+    {
+      "id": "p18-forward",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "In the next chapters paragraph",
+      "kind": "context",
+      "meaning": "A later algorithm will strictly generalize this example.",
+      "disposition": "EXCLUDED",
+      "reason": "Forward reference does not identify or prove that algorithm on selected pages."
+    },
+    {
+      "id": "p18-history1",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "History Bits first paragraph",
+      "kind": "history-citations",
+      "meaning": "Savage (1951), Wald (1950), Savage (1954 p163), Milnor (1951) and origins/naming of regret.",
+      "disposition": "EXCLUDED",
+      "reason": "Historical attribution outside bounded mathematical proof. Citations not verified beyond this page."
+    },
+    {
+      "id": "p18-history2",
+      "pdf_page": 18,
+      "printed_page": 6,
+      "region": "History Bits second paragraph",
+      "kind": "history-citations",
+      "meaning": "Wald (1950), Savage (1954 pp169–170); utility/regret historical comparison.",
+      "disposition": "EXCLUDED",
+      "reason": "Historical formulation comparison outside selected FTL theorem. Citations and equivalence not independently checked."
+    }
+  ],
+  "coverage_note": "Paragraphs spanning pages are assigned once with continuation noted. Page headers, page numbers and section headings are structural and not substantive. The sole algorithm is prose FTL; there is no numbered algorithm or recursive-state display in these pages."
+}
