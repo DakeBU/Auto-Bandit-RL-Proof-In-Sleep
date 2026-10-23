@@ -754,3 +754,4 @@ import BanditRLProof.OnlineGuessingLogLower
 
 import BanditRLProof.OnlineNoRegretSemantics
 import BanditRLProof.OnlineSquareMinimum
+import BanditRLProof.OnlineGuessingIIDBenchmark

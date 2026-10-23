@@ -5154,7 +5154,7 @@
         },
         {
           "term": "Stochastic benchmark",
-          "meaning": "Expected loss minus T times population variance differs from expected loss minus the random hindsight minimum. These core APIs use pointwise target support, and the finite-history policy lower bound bounds the policy on every real history tuple. The feasible population mean minimizes expected loss among all fixed real predictions."
+          "meaning": "Minimizing expected fixed loss differs from taking expectation of the pathwise hindsight minimum. The legacy core APIs use pointwise target support and globally bounded history policies. The expected-fixed benchmark adapters use almost-sure target support and feasibility only on legal history tuples; their causal excess endpoints cover deterministic measurable strict-history policies. Neither representation alone covers every randomized strategy or proves asymptotic success."
         },
         {
           "term": "Arbitrary initialization and the recursive state",
@@ -5493,6 +5493,29 @@
             "status": "compiled",
             "label": "Locally compiled minimum representation and FTL adapters",
             "boundary": "The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations. Independent source and reader reviews and the shared project gate passed for these bounded results. Rendered and release acceptance are tracked separately. Chapter1 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Expected fixed-comparator minimum and causal IID excess",
+          "pages": "printed pp. 1–2 / PDF pp. 13–14: population benchmark and normalized excess",
+          "pdf_page": 13,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{aligned}m&=\\mathbb E Y_0,\\qquad v=\\operatorname{Var}(Y_0),\\\\B_T&=\\min_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2=Tv,\\\\\\Delta_T(P)&=\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2-B_T,\\\\\\Delta_T(P)&=\\sum_{t<T}\\mathbb E(P_t-m)^2\\ge0,\\\\\\frac1T\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2-v&=\\frac{\\Delta_T(P)}T\\quad(T>0).\\end{aligned}",
+          "plain": "The source compares expected loss with one fixed prediction chosen before the outcomes are averaged. The population mean attains this benchmark. For the deterministic measurable strict-history policies formalized here, IID sampling yields the nonnegative excess identity.",
+          "fallback": "The minimum of expected fixed loss is T times population variance. For the stated causal policies, excess equals the sum of expected squared deviations from the population mean. Average excess divides this finite quantity by a positive horizon.",
+          "relationship": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+          "contract": {
+            "model": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness.",
+            "assumptions": "For the fixed minimum, common law suffices. Causal excess adapters additionally use mutual independence of observations. A history policy is measurable on its full real-history domain, and its output is required to lie in [0,1] on legal interval-valued histories. No bound is imposed on illegal histories. L2 and current-target independence are proved internally for these adapters.",
+            "parameters": "One common probability space; natural-indexed real observations. T=0 is included in the unnormalized formulas, without a uniqueness assertion. Normalization requires T>0.",
+            "regret": "The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+            "guarantee": "Bounded support supplies finite second moments. The fixed-comparator decomposition is Tv+T(u-m)^2. Integrating the interval bounds makes m feasible, and nonnegative squared bias makes Tv the actual least loss. For a strict-history policy, measurability and legal-history feasibility supply L2, while mutual independence makes its prediction independent of the current target. The shared square identity then gives expected loss equal to Tv plus the sum of expected squared prediction biases. Subtraction and positive-horizon normalization give the displayed formulas. The source omits these formal bridges; they are derived support, not a verbatim printed proof."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled and scientifically reviewed",
+            "boundary": "Independent source-topology, semantic, proof-body and binder/reuse reviews passed for these finite expected-fixed adapters and their deterministic measurable strict-history producers. The expected fixed minimum remains distinct from the expectation of a hindsight minimum. Randomized and general-filtration strategy coverage, asymptotic success and full Chapter 1 coverage remain open. The shared library, Tests and full harness passed. Bounded local reader, module, formula and graph rendering was reviewed. Committed-candidate checks and release acceptance remain pending. This is derived support, not a separately printed theorem or complete source proof."
           },
           "statement_provenance": "derived-support"
         }
