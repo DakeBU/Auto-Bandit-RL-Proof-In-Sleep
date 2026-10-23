@@ -1,0 +1,167 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-SQUARE-MINIMUM-INTEGRATION-20261023",
+  "route": "online-learning / Chapter1 square-loss attained minimum",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona; Chapter1 printed pp2-6/PDF14-18, guessing game, prefix leader and Theorem1.3 including harmonic closure.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged1definition,6derived theorems and20canary theorems fromPR193, producing the actual interval loss minimum and expressing existing actual-FTL regret bounds against it.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineSquareMinimum.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json",
+    "website/content/declaration-boundaries.json",
+    "website/static/site.css",
+    "website/static/site.js"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.squaredBestRegret",
+    "BanditRL.OnlineLearning.guessing_prefix_minimum",
+    "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+    "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+    "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+    "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+    "BanditRL.OnlineLearning.meanPredict_bestRegret_refined"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current main canonical memory, declaration registry and targeted library searches.",
+      "Mathlib candidate, paper and weapon indices plus targeted IsLeast/csInf and squared-loss searches."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.empiricalMean_mem",
+      "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "BanditRL.OnlineLearning.comparatorRegret",
+      "BanditRL.OnlineLearning.theorem_1_3",
+      "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "IsLeast.csInf_eq"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Actual leastness feeds the same-horizon regret identity and comparator order.",
+      "Both actual meanPredict performance adapters use the representation identity and existing bounds; all seven owned nodes have actual proof or canary consumers."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse canonical mean, FTL, regret and least-element producers; add only literal interval-minimum representation and adapters. No new choice-based optimizer or generic minimum infrastructure."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch22-blind-decoder",
+    "source_reviewer": "independent-batch22-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The six derived anchors share the same finite horizon and target prefix in [0,1]. The empirical mean is an attaining comparator; its loss is the minimum value. T=0 gives attainment and zero loss without uniqueness. Positive-horizon uniqueness is an existing separately proved interface. Generic trace identities assert neither causality nor prediction feasibility, and signed regret may be negative. The two bounds use actual meanPredict, initial1/2 and strict-past means, at positive T. The refined term is1/4 plus the sum over range(T-1) of4/(real t+2). No IID expectation/minimum interchange, ordinary regret limit, nonnegative excess-risk or chapter/book completion follows. Four missing-byte uses for two historical digests retain their original owners and OPEN statuses."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same trace and horizon represented against its produced interval minimum; no cross-setting transport.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Actual desktop/mobile source-card, six-note, seven-declaration and graph-search images reviewed. Source layout and disclosure keyboard-scroll defects were corrected and independently re-reviewed. Coverage is bound in review-binding.json; no global publication seal is implied.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: six full notes and one derived minimum card; prior12cards and all5existing previews preserved.",
+    "banditrlwiki": "updated: bounded source, semantic, body, dependency and retention records in research-wiki/integrations/ONLINE-CH1-SQUARE-MINIMUM-INTEGRATION-20261023",
+    "results_ledger": "no-change-with-reason: no whole-chapter or IID population benchmark completion.",
+    "roadmap": "no-change-with-reason: subsequent independent research obligations retain their owners.",
+    "website_surfaces": [
+      "Online foundations reader and chapter",
+      "Six formula notes",
+      "Shared Lean declaration graph",
+      "Full squaredBestRegret definition disclosure"
+    ]
+  },
+  "truth_boundary": "The six derived anchors share the same finite horizon and target prefix in [0,1]. The empirical mean is an attaining comparator; its loss is the minimum value. T=0 gives attainment and zero loss without uniqueness. Positive-horizon uniqueness is an existing separately proved interface. Generic trace identities assert neither causality nor prediction feasibility, and signed regret may be negative. The two bounds use actual meanPredict, initial1/2 and strict-past means, at positive T. The refined term is1/4 plus the sum over range(T-1) of4/(real t+2). No IID expectation/minimum interchange, ordinary regret limit, nonnegative excess-risk or chapter/book completion follows. Four missing-byte uses for two historical digests retain their original owners and OPEN statuses.",
+  "verification": {
+    "focused_checks": [
+      "3330-job focused build passed with exact original production/canary bytes.",
+      "26original proposition/6definition and6fresh proposition/4definition identities;38standard axiom closures passed."
+    ],
+    "bandit_check": "Shared library9096jobs, Tests9251jobs, ProofGraphExport and471harness tests passed (7platform skips) with the current unchanged Lean sources. Final committed gate remains separate.",
+    "site_build": "Actual --lean-verified site build passed for current source-card CSS and disclosure-toggle JavaScript repair with unchanged Lean inputs from the complete shared-project gate. Final committed-candidate gate remains separate.",
+    "site_check": "Site checks,16graph queries, actual source-card and note image reviews passed. Six mobile formulas have complete overlapping left/end image coverage and actual keyboard ArrowRight movement.",
+    "independent_review": "Source, blind semantics, body, binder/reuse, reader text, public projection, original conservation and generated indexes accepted within stated bounds. Source-card and note rendering re-reviews accepted after retained failures. Final local scope, committed candidate, CI, main/live and original-scope disposition remain separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in Git and immutable PR evidence."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "No failed mathematical route: original production/canary bytes remain unchanged. Execution failures and repairs remain explicitly classified and retained in review-binding.json; they do not justify the independently reviewed semantic delta.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "same-trace-square-minimum-representation"
+      ],
+      "expected_information_gain": "One bounded original route with required independent source/blind/semantic/body/reader and scope reviews.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main ea8490422293647ff7b789655bfd3266a64e0a5a"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Existing feasible empirical mean and global squared-loss minimum, IsLeast.csInf_eq, same-horizon loss subtraction, existing actual FTL bounds.",
+      "selection_reason": "No competing new mathematical proof routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Bounded body/canonicality, reader text, public projection, generated disclosures and actual local rendered review accepted for this increment. Global purification and final Exposition Seal remain pending; inherited scientific obligations retain their owners.",
+      "source_expansion_nodes": [
+        "Prefix mean feasibility",
+        "Prefix mean optimality",
+        "Expected population-loss benchmark remains outside scope"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.squaredBestRegret",
+        "BanditRL.OnlineLearning.guessing_prefix_minimum",
+        "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_refined"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

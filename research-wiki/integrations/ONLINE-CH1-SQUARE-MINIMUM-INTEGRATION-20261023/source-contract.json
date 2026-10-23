@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "path": "maintenance-evidence\\batch18-source-extraction\\source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "author": "Francesco Orabona",
+    "work": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "requested_printed_pages": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "requested_pdf_pages_one_based": [
+      14,
+      15,
+      16,
+      17
+    ],
+    "requested_pdf_page_indices_zero_based": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "context_printed_pages": [
+      1,
+      6
+    ],
+    "context_reason": "Page 1 gives game/expectation context; page 6 completes the proof cut off on page 5."
+  },
+  "implementation_inspected": false,
+  "contracts": [
+    {
+      "id": "C-GAME",
+      "kind": "literal",
+      "anchor": "printed p1 game and p3 A Winning Strategy",
+      "objects": "y_t and prediction x_t are real numbers in [0,1]; t=1,...,T",
+      "feedback": "y_t is revealed after x_t is chosen; p3 also allows adversary to choose y_t after observing x_t",
+      "stochasticity": "No distribution, independence, or oblivious-adversary assumption for Theorem 1.3",
+      "horizon": "Positive integer T, implicit in 1/T, round 1 and ln T; T=0 is not a printed theorem case"
+    },
+    {
+      "id": "C-REGRET",
+      "kind": "literal",
+      "anchor": "printed p2 second display",
+      "formula": "R_T(x,y) = sum(t=1..T,(x_t-y_t)^2) - min(u in [0,1],sum(t=1..T,(u-y_t)^2))",
+      "comparator": "One fixed scalar u for the entire realized outcome sequence, optimized in hindsight",
+      "sign": "Real signed difference; no nonnegativity assertion for this pathwise regret",
+      "quantifiers": "Definition is evaluable on arbitrary prediction/outcome traces; causal realizability is a separate algorithm property",
+      "not_equivalent_to": [
+        "Clipping regret below at zero",
+        "sum_t min_u (u-y_t)^2",
+        "min_u E[sum_t (u-Y_t)^2] inside a pathwise definition"
+      ]
+    },
+    {
+      "id": "C-EXPECTED",
+      "kind": "literal-context",
+      "anchor": "printed p2 first display and equation (1.1) p1",
+      "formula": "E[sum(t=1..T,(x_t-Y_t)^2)] - min(u in [0,1],E[sum(t=1..T,(u-Y_t)^2)])",
+      "scope": "I.i.d. distribution over [0,1] context on p1, with optimal constant prediction population mean",
+      "boundary": "The minimum is outside expectation; this is not E[pathwise regret]. Nonnegative claims on p1 concern the expected excess over variance, not arbitrary pathwise signed regret."
+    },
+    {
+      "id": "C-GENERAL",
+      "kind": "literal-context",
+      "anchor": "printed p2 general definition and Remark 1.1",
+      "formula": "Regret_T(u)=sum(t=1..T,l_t(x_t))-sum(t=1..T,l_t(u))",
+      "objects": "V subset R^d, x_t in V, l_t:V->R, arbitrary fixed u in V",
+      "no_regret": "For every fixed u in V, lim(T->infinity) Regret_T(u)/T <= 0 (printed as lim, not limsup)",
+      "boundary": "No change to limsup is attributed as literal source. Footnote permits prediction set W strictly containing V in some other settings."
+    },
+    {
+      "id": "C-MEAN",
+      "kind": "characterized",
+      "anchor": "printed p3 argmin display",
+      "formula": "xStar_T := argmin(u in [0,1],sum(t=1..T,(u-y_t)^2)) = (1/T)*sum(t=1..T,y_t)",
+      "quantifiers": "T positive integer; every y_t in [0,1]",
+      "source_assertion": "Printed as a scalar argmin equal to empirical mean, introduced as immediate. No calculation or attainment/uniqueness proof supplied.",
+      "required_characterization": "Mean belongs to [0,1], attains minimum, and is the unique minimizer for positive T.",
+      "gap_nodes": [
+        "G-MEAN-FEASIBILITY",
+        "G-MEAN-OPTIMALITY"
+      ],
+      "representation_boundary": "A minimum value represented by loss at the mean, an existential attained-minimum predicate, a chosen argmin, and variance-decomposition algebra are library representations/derivations, not additional literal displayed definitions."
+    },
+    {
+      "id": "C-FTL-GENERIC",
+      "kind": "literal",
+      "anchor": "printed p3 final complete paragraph",
+      "formula": "x_t=xStar_(t-1)=(1/(t-1))*sum(i=1..t-1,y_i) for t>=2; x_1 any number in [0,1]",
+      "semantics": "Strict past, not inclusive empirical mean. The xStar_t comparator sees y_t; actual prediction x_t does not."
+    },
+    {
+      "id": "C-BTL",
+      "kind": "literal",
+      "anchor": "printed p4 Lemma 1.2",
+      "assumptions": [
+        "V subset R^d",
+        "arbitrary l_t:V->R",
+        "for every t=1,...,T, xStar_t in argmin(u in V,sum(i=1..t,l_i(u)))"
+      ],
+      "formula": "sum(t=1..T,l_t(xStar_t)) <= sum(t=1..T,l_t(xStar_T))",
+      "boundary": "Existence of minimizers is a source assumption of this general lemma. It must be discharged when specializing to squared loss; not added as an extra premise to Theorem 1.3.",
+      "proof": "Induction on positive T with base 1 and equal final summands removed in inductive step."
+    },
+    {
+      "id": "C-THM13",
+      "kind": "literal",
+      "anchor": "printed p4 Theorem 1.3; proof p5 and opening p6",
+      "assumptions": [
+        "Positive integer T (source implicit)",
+        "y_1,...,y_T arbitrary real numbers in [0,1]",
+        "x_1=xStar_0=0.5",
+        "x_t=xStar_(t-1)=(1/(t-1))*sum(i=1..t-1,y_i) for t>=2"
+      ],
+      "formula": "R_T(x,y) <= 4 + 4*ln(T)",
+      "probability": "Deterministic pathwise, for every allowed outcome sequence. No expectation or high-probability event.",
+      "strategy": "Specific causal strategy, not arbitrary x trace. Universal trace theorem plus the stated strict-past formula supports adaptive adversary play.",
+      "constants": "Natural logarithm; exactly 4 + 4 ln T; no minimax-optimality theorem is proved here.",
+      "horizon_boundary": "Positive T only. An empty-sum T=0 definition or totalized real logarithm extension must be labeled an independent library extension."
+    },
+    {
+      "id": "C-TAIL",
+      "kind": "literal-intermediate-result",
+      "anchor": "printed p5 final full display",
+      "formula": "R_T(x,y) <= 0.25 + 4*sum(t=2..T,1/t) <= 4*sum(t=1..T,1/t)",
+      "assumptions": "Same assumptions as Theorem 1.3",
+      "initial": "Initial excess (xStar_0-y_1)^2-(xStar_1-y_1)^2 <= 0.5^2; xStar_1=y_1.",
+      "boundary": "At T=1 tail is empty and bound is 1/4. The 1/4 is not multiplied by T and tail starts at 2. Arbitrary initial x_1 does not inherit this constant."
+    }
+  ],
+  "derived_representations": [
+    {
+      "id": "D-MIN-VALUE",
+      "classification": "derived-library-representation",
+      "formula": "bestLoss_T(y)=sum(t=1..T,(mean_T(y)-y_t)^2)",
+      "obligation": "Prove the C-MEAN characterization before identifying this value with the printed min over [0,1]."
+    },
+    {
+      "id": "D-VARIANCE",
+      "classification": "derived-library-algebra",
+      "formula": "sum(t=1..T,(u-y_t)^2)=sum(t=1..T,(mean_T-y_t)^2)+T*(u-mean_T)^2",
+      "obligation": "Useful possible proof of C-MEAN; not printed on pp2-6 and not counted as source-route completion."
+    },
+    {
+      "id": "D-CAUSAL",
+      "classification": "derived-strategy-property",
+      "formula": "Equal strict-past histories imply equal x_t",
+      "obligation": "Follows from the explicit prediction formula, but no formal policy type/history-recursion theorem is printed."
+    },
+    {
+      "id": "D-ZERO",
+      "classification": "off-source-extension",
+      "formula": "Any T=0 conventions for mean, min value or regret",
+      "obligation": "Positive-horizon source contract must remain visible; no arbitrary default may be presented as the literal positive-horizon mean characterization."
+    }
+  ],
+  "statement_seal": "Source semantics only; no Lean signature inspected or sealed by this extractor.",
+  "public_projection": {
+    "original": {
+      "artifact": "batch22-source-extraction/source-contract.json",
+      "sha256": "c6fc6ec8886fec4874283d4d625e7a3dc222e0054296f904d400450d1d440353",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "change": "Physical prefixes replaced by logical locations. Original mathematical content and stage-specific verdicts retained. Original hashes bind retained originals, not projected bytes.",
+    "verifiedTitleOverlay": [
+      {
+        "field": "source.work",
+        "original": "A Modern Introduction to Online Learning",
+        "verified": "Online Learning: A Modern Introduction Using Convex Optimization"
+      }
+    ],
+    "titleEvidence": {
+      "artifact": "batch22-source-review/title-addendum-v1.json",
+      "sha256": "d5b8541a44015c0a1cb2cf616967600c746d6ff194cf86949cdd1fb0e5bc1144",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "review": "Independent public-projection review pending."
+  }
+}

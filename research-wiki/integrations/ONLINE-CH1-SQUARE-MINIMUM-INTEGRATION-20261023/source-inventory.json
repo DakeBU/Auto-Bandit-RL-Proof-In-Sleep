@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "path": "maintenance-evidence\\batch18-source-extraction\\source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "author": "Francesco Orabona",
+    "work": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "requested_printed_pages": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "requested_pdf_pages_one_based": [
+      14,
+      15,
+      16,
+      17
+    ],
+    "requested_pdf_page_indices_zero_based": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "context_printed_pages": [
+      1,
+      6
+    ],
+    "context_reason": "Page 1 gives game/expectation context; page 6 completes the proof cut off on page 5."
+  },
+  "coverage_rule": "Every substantive paragraph/display/definition/citation in requested pp2-5 has NODE or EXCLUDED(reason); multi-line proof display is split into mathematical moves. Context pp1/6 additions are marked C.",
+  "items": [
+    {
+      "id": "P02-01",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "opening continuation + first display + reference (1.1)",
+      "type": "paragraph-display-citation",
+      "content": "Rewrite stochastic success measure as expectation of learner loss minus minimum expected fixed-comparator loss.",
+      "disposition": "NODE",
+      "node_id": "N-EXPECTED"
+    },
+    {
+      "id": "P02-02",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "Now, the last step paragraph",
+      "type": "paragraph",
+      "content": "Remove distributional assumption; consider arbitrary y sequence; deterministic algorithm removes stochastic expectation.",
+      "disposition": "NODE",
+      "node_id": "N-PATHWISE-TRANSITION"
+    },
+    {
+      "id": "P02-03",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "second display + grows sublinearly paragraph",
+      "type": "definition-display",
+      "content": "Pathwise squared regret against the best single choice in hindsight; winning means sublinear growth.",
+      "disposition": "NODE",
+      "node_id": "N-REGRET"
+    },
+    {
+      "id": "P02-04",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "Our reasoning should provide paragraph",
+      "type": "paragraph",
+      "content": "Motivation from convex optimization and machine learning.",
+      "disposition": "EXCLUDED",
+      "reason": "Expository motivation, no bounded theorem dependency."
+    },
+    {
+      "id": "P02-05",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "Note that in the stochastic case paragraph",
+      "type": "paragraph-citation",
+      "content": "Fixed comparator vs comparator sequence and Chapter 14 cross-reference.",
+      "disposition": "EXCLUDED",
+      "reason": "Boundary motivation retained in contract; dynamic regret and Chapter 14 are outside bounded squared-loss theorem."
+    },
+    {
+      "id": "P02-06",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "Let us now generalize paragraph + third display",
+      "type": "definition-display",
+      "content": "V subset R^d, predictions, real losses, arbitrary u; general comparator regret.",
+      "disposition": "NODE",
+      "node_id": "N-GENERAL-REGRET"
+    },
+    {
+      "id": "P02-07",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "It is worth stressing paragraph",
+      "type": "definition-paragraph",
+      "content": "Algorithm does not know u or its regret; no-regret defined by every fixed u and printed lim Regret_T(u)/T <=0.",
+      "disposition": "NODE",
+      "node_id": "N-NOREGRET"
+    },
+    {
+      "id": "P02-08",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "Remark 1.1",
+      "type": "remark",
+      "content": "Regret also depends on all losses, suppressed in notation.",
+      "disposition": "NODE",
+      "node_id": "N-REMARK11"
+    },
+    {
+      "id": "P02-09",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "bottom paragraph continuing p3",
+      "type": "paragraph",
+      "content": "Framework reformulates machine learning/optimization problems.",
+      "disposition": "EXCLUDED",
+      "reason": "Expository scope paragraph continued in P03-01."
+    },
+    {
+      "id": "P02-10",
+      "printed_page": 2,
+      "pdf_page_one_based": 14,
+      "pdf_page_index_zero_based": 13,
+      "location": "footnote 1",
+      "type": "footnote",
+      "content": "Sometimes predictions can be in W strictly containing V.",
+      "disposition": "EXCLUDED",
+      "reason": "Other-setting extension; theorem here predicts and compares in [0,1]."
+    },
+    {
+      "id": "P03-01",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "opening continuation",
+      "type": "paragraph",
+      "content": "Non-i.i.d. data motivation and framework scope.",
+      "disposition": "EXCLUDED",
+      "reason": "Applications motivation, no theorem dependency."
+    },
+    {
+      "id": "P03-02",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "three bullets",
+      "type": "list",
+      "content": "Banner clicks; network routing; repeated-game equilibria.",
+      "disposition": "EXCLUDED",
+      "reason": "Application examples outside bounded task."
+    },
+    {
+      "id": "P03-03",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "As we will see paragraph",
+      "type": "paragraph",
+      "content": "Also analyze stochastic optimization such as SGD.",
+      "disposition": "EXCLUDED",
+      "reason": "Future application, no theorem dependency."
+    },
+    {
+      "id": "P03-04",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "Let us now go back paragraph",
+      "type": "paragraph",
+      "content": "Simple pedagogical number-guessing example.",
+      "disposition": "EXCLUDED",
+      "reason": "Narrative transition."
+    },
+    {
+      "id": "P03-05",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "A Winning Strategy paragraph",
+      "type": "paragraph",
+      "content": "Adversary may choose number after observing our choice and may act arbitrarily/adversarially.",
+      "disposition": "NODE",
+      "node_id": "N-ADVERSARY"
+    },
+    {
+      "id": "P03-06",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "Now, the fact paragraph",
+      "type": "paragraph",
+      "content": "Statistical-model motivation and warning about changing data generation.",
+      "disposition": "EXCLUDED",
+      "reason": "Heuristic motivation; no formal impossibility theorem asserted as a proved dependency."
+    },
+    {
+      "id": "P03-07",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "Now, let us try paragraph + argmin display",
+      "type": "statement-display",
+      "content": "Best hindsight constant equals empirical mean.",
+      "disposition": "NODE",
+      "node_id": "N-MEAN"
+    },
+    {
+      "id": "P03-08",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "Now, given that paragraph",
+      "type": "paragraph",
+      "content": "Cannot use final leader before future is known; track slowly changing past-optimal guess.",
+      "disposition": "NODE",
+      "node_id": "N-CAUSAL-MOTIVATION"
+    },
+    {
+      "id": "P03-09",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "Hence, on each round paragraph",
+      "type": "definition-paragraph",
+      "content": "Strict-past empirical mean for t>=2; arbitrary first guess in [0,1]; definition/name FTL.",
+      "disposition": "NODE",
+      "node_id": "N-FTL-GENERIC"
+    },
+    {
+      "id": "P03-10",
+      "printed_page": 3,
+      "pdf_page_one_based": 15,
+      "pdf_page_index_zero_based": 14,
+      "location": "last paragraph continuing p4",
+      "type": "paragraph",
+      "content": "Use first principles here and general methods in following chapters.",
+      "disposition": "EXCLUDED",
+      "reason": "Narrative proof transition, continues P04-01."
+    },
+    {
+      "id": "P04-01",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "opening continuation",
+      "type": "paragraph",
+      "content": "First-principles proof needs small lemma.",
+      "disposition": "EXCLUDED",
+      "reason": "Narrative transition; substantive lemma covered next."
+    },
+    {
+      "id": "P04-02",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "Lemma 1.2 statement and display",
+      "type": "lemma",
+      "content": "General Be-the-Leader inequality with assumed prefix minimizers.",
+      "disposition": "NODE",
+      "node_id": "N-BTL"
+    },
+    {
+      "id": "P04-03",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "Proof first sentence and base display",
+      "type": "proof-display",
+      "content": "Induction on T; base l_1(xStar_1)<=l_1(xStar_1).",
+      "disposition": "NODE",
+      "node_id": "N-BTL-BASE"
+    },
+    {
+      "id": "P04-04",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "which is trivially true through target display",
+      "type": "proof-display",
+      "content": "For T>=2 assume prefix T-1 inequality and aim for T inequality.",
+      "disposition": "NODE",
+      "node_id": "N-BTL-IH"
+    },
+    {
+      "id": "P04-05",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "This inequality through (1.3) and removal sentence",
+      "type": "proof-display",
+      "content": "Cancel the identical T-th terms to obtain (1.3).",
+      "disposition": "NODE",
+      "node_id": "N-BTL-CANCEL"
+    },
+    {
+      "id": "P04-06",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "Now observe display + by induction hypothesis",
+      "type": "proof-display",
+      "content": "Prefix online-leader losses <= prefix loss at xStar_(T-1).",
+      "disposition": "NODE",
+      "node_id": "N-BTL-PREFIX"
+    },
+    {
+      "id": "P04-07",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "and display + because explanation",
+      "type": "proof-display",
+      "content": "Prefix loss at xStar_(T-1) <= prefix loss at xStar_T by minimization and membership.",
+      "disposition": "NODE",
+      "node_id": "N-BTL-MIN"
+    },
+    {
+      "id": "P04-08",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "Chaining these two inequalities sentence",
+      "type": "proof-citation",
+      "content": "Transitivity yields (1.3) and concludes inductive step.",
+      "disposition": "NODE",
+      "node_id": "N-BTL-STEP"
+    },
+    {
+      "id": "P04-09",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "Basically paragraph",
+      "type": "paragraph",
+      "content": "Interpretation: knowing future/adapting helps.",
+      "disposition": "EXCLUDED",
+      "reason": "Interpretive prose, no separate sufficient proof route."
+    },
+    {
+      "id": "P04-10",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "With this lemma paragraph",
+      "type": "paragraph",
+      "content": "Logarithmic regret promised; minimax optimality not proved; log dependence said unavoidable.",
+      "disposition": "EXCLUDED",
+      "reason": "The bound is accounted by Theorem1.3. Minimax/lower-bound statement has no proof here and is outside bounded target; do not credit it."
+    },
+    {
+      "id": "P04-11",
+      "printed_page": 4,
+      "pdf_page_one_based": 16,
+      "pdf_page_index_zero_based": 15,
+      "location": "Theorem 1.3 full statement and display",
+      "type": "theorem",
+      "content": "Arbitrary bounded outcomes, x_1=0.5, strict-past means, R_T<=4+4 ln T.",
+      "disposition": "NODE",
+      "node_id": "N-THM13"
+    },
+    {
+      "id": "P05-01",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "Figure 1.1 and caption",
+      "type": "figure",
+      "content": "Step areas for harmonic sum bounded using reciprocal integral.",
+      "disposition": "NODE",
+      "node_id": "N-FIGURE11"
+    },
+    {
+      "id": "P05-02",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "Proof sentence citing Lemma 1.2",
+      "type": "proof-citation",
+      "content": "Invoke BTL to upper bound regret.",
+      "disposition": "NODE",
+      "node_id": "N-BTL-APPLICATION"
+    },
+    {
+      "id": "P05-03",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "first proof display equality",
+      "type": "proof-display",
+      "content": "Replace actual x_t by xStar_(t-1), minimum by cumulative loss at xStar_T.",
+      "disposition": "NODE",
+      "node_id": "N-REGRET-REWRITE"
+    },
+    {
+      "id": "P05-04",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "first proof display inequality",
+      "type": "proof-display",
+      "content": "R_T <= sum_t[(xStar_(t-1)-y_t)^2-(xStar_t-y_t)^2].",
+      "disposition": "NODE",
+      "node_id": "N-STABILITY-SUM"
+    },
+    {
+      "id": "P05-05",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "Now let us take paragraph and t=1 display",
+      "type": "proof-display",
+      "content": "Initial excess <=0.5^2.",
+      "disposition": "NODE",
+      "node_id": "N-INITIAL"
+    },
+    {
+      "id": "P05-06",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "For t>=2 first two displayed lines",
+      "type": "proof-display",
+      "content": "Expand squares and factor as (a+b-2y)(a-b).",
+      "disposition": "NODE",
+      "node_id": "N-FACTOR"
+    },
+    {
+      "id": "P05-07",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "third displayed line",
+      "type": "proof-display",
+      "content": "Product <= |a+b-2y||a-b| <= 2|a-b|.",
+      "disposition": "NODE",
+      "node_id": "N-LIPSCHITZ"
+    },
+    {
+      "id": "P05-08",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "fourth displayed line",
+      "type": "proof-display",
+      "content": "Substitute strict-past and current empirical means.",
+      "disposition": "NODE",
+      "node_id": "N-MEAN-SUBSTITUTE"
+    },
+    {
+      "id": "P05-09",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "fifth displayed line",
+      "type": "proof-display",
+      "content": "Separate y_t and combine coefficients 1/(t-1)-1/t.",
+      "disposition": "NODE",
+      "node_id": "N-MEAN-DIFFERENCE"
+    },
+    {
+      "id": "P05-10",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "sixth displayed line first inequality",
+      "type": "proof-display",
+      "content": "Triangle inequality gives 2|sum_(i<t)y_i/[t(t-1)]|+2|y_t|/t.",
+      "disposition": "NODE",
+      "node_id": "N-TRIANGLE"
+    },
+    {
+      "id": "P05-11",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "sixth displayed line last two inequalities",
+      "type": "proof-display",
+      "content": "Bound prefix sum and y_t to obtain <=2/t+2|y_t|/t<=4/t.",
+      "disposition": "NODE",
+      "node_id": "N-TAIL-POINTWISE"
+    },
+    {
+      "id": "P05-12",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "Hence overall display first inequality",
+      "type": "proof-display",
+      "content": "R_T<=0.25+4 sum_(t=2)^T 1/t.",
+      "disposition": "NODE",
+      "node_id": "N-TAIL-BOUND"
+    },
+    {
+      "id": "P05-13",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "Hence overall display second inequality",
+      "type": "proof-display",
+      "content": "0.25+4 sum_(t=2)^T 1/t<=4 sum_(t=1)^T 1/t.",
+      "disposition": "NODE",
+      "node_id": "N-HARMONIC-REDUCTION"
+    },
+    {
+      "id": "P05-14",
+      "printed_page": 5,
+      "pdf_page_one_based": 17,
+      "pdf_page_index_zero_based": 16,
+      "location": "last paragraph cut off after gray",
+      "type": "paragraph",
+      "content": "Integral comparison discussion begins; completes on printed p6.",
+      "disposition": "NODE",
+      "node_id": "N-INTEGRAL-MOTIVATION"
+    },
+    {
+      "id": "C01-01",
+      "printed_page": 1,
+      "pdf_page_one_based": 13,
+      "pdf_page_index_zero_based": 12,
+      "location": "game bullets",
+      "type": "context-protocol",
+      "content": "Outcome/prediction in [0,1], reveal after prediction, squared loss.",
+      "disposition": "NODE",
+      "node_id": "N-GAME"
+    },
+    {
+      "id": "C01-02",
+      "printed_page": 1,
+      "pdf_page_one_based": 13,
+      "pdf_page_index_zero_based": 12,
+      "location": "i.i.d. paragraph and equations1.1-1.2",
+      "type": "context-paragraph-display",
+      "content": "Population mean predicts optimally; expected benchmark sigma^2*T; expected excess nonnegative.",
+      "disposition": "NODE",
+      "node_id": "N-IID-CONTEXT"
+    },
+    {
+      "id": "C01-03",
+      "printed_page": 1,
+      "pdf_page_one_based": 13,
+      "pdf_page_index_zero_based": 12,
+      "location": "other p1 exposition",
+      "type": "paragraph",
+      "content": "Motivation and success/average discussion.",
+      "disposition": "EXCLUDED",
+      "reason": "Only game and expected-benchmark semantics needed from this context page."
+    },
+    {
+      "id": "C06-01",
+      "printed_page": 6,
+      "pdf_page_one_based": 18,
+      "pdf_page_index_zero_based": 17,
+      "location": "opening continuation and first display",
+      "type": "context-proof-display",
+      "content": "H_T<=1+integral_2^(T+1) 1/(t-1) dt=1+ln T.",
+      "disposition": "NODE",
+      "node_id": "N-HARMONIC-INTEGRAL"
+    },
+    {
+      "id": "C06-02",
+      "printed_page": 6,
+      "pdf_page_one_based": 18,
+      "pdf_page_index_zero_based": 17,
+      "location": "Putting everything together sentence",
+      "type": "context-proof",
+      "content": "Conclude theorem by combining harmonic estimate and regret bound.",
+      "disposition": "NODE",
+      "node_id": "N-FINAL-COMBINE"
+    },
+    {
+      "id": "C06-03",
+      "printed_page": 6,
+      "pdf_page_one_based": 18,
+      "pdf_page_index_zero_based": 17,
+      "location": "Let us write in words paragraph + Lemma1.2 reference",
+      "type": "context-summary-citation",
+      "content": "Summary of BTL and stability proof already inventoried.",
+      "disposition": "EXCLUDED",
+      "reason": "Duplicate explanatory summary, no additional proof route."
+    },
+    {
+      "id": "C06-04",
+      "printed_page": 6,
+      "pdf_page_one_based": 18,
+      "pdf_page_index_zero_based": 17,
+      "location": "remaining discussion before1.1",
+      "type": "paragraph",
+      "content": "Parameter-free/running-average/gradient-free discussion; ML distinctions and future algorithms.",
+      "disposition": "EXCLUDED",
+      "reason": "Context beyond proof closure and bounded source question."
+    },
+    {
+      "id": "C06-05",
+      "printed_page": 6,
+      "pdf_page_one_based": 18,
+      "pdf_page_index_zero_based": 17,
+      "location": "1.1 History Bits and citations",
+      "type": "context-citations",
+      "content": "Historical discussion with Savage1951/1954, Wald1950, Milnor1951.",
+      "disposition": "EXCLUDED",
+      "reason": "Historical references outside bounded mathematical source and not proof inputs."
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch22-source-extraction/source-inventory-mapping.json",
+      "sha256": "13d1faa6c10c9522cd8ebf13ef0143e62c6c2fa0b61e60e5929853ba6a316890",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "change": "Physical prefixes replaced by logical locations. Original mathematical content and stage-specific verdicts retained. Original hashes bind retained originals, not projected bytes.",
+    "verifiedTitleOverlay": [
+      {
+        "field": "source.work",
+        "original": "A Modern Introduction to Online Learning",
+        "verified": "Online Learning: A Modern Introduction Using Convex Optimization"
+      }
+    ],
+    "titleEvidence": {
+      "artifact": "batch22-source-review/title-addendum-v1.json",
+      "sha256": "d5b8541a44015c0a1cb2cf616967600c746d6ff194cf86949cdd1fb0e5bc1144",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "review": "Independent public-projection review pending."
+  }
+}

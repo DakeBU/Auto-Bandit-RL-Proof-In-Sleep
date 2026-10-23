@@ -1,0 +1,79 @@
+{
+  "stage": "independent-source-topology-review",
+  "created_utc": "2026-10-23T10:08:07.150230+00:00",
+  "reviewer": "batch22_source_reviewer",
+  "inputs": {
+    "maintenance-evidence\\batch22-source-review\\source-only-initial-v1.json": "e780d31e0d456b48b23babdd049f5636673fa470b35d6992b3c6892bfca2043c",
+    "maintenance-evidence\\batch22-source-extraction\\source-inventory-mapping.json": "13d1faa6c10c9522cd8ebf13ef0143e62c6c2fa0b61e60e5929853ba6a316890",
+    "maintenance-evidence\\batch22-source-extraction\\source-topology.json": "495c625b4e2cb41a3edbe14dd7ca97b83d52906cba30ba3151870c3b8e88055a"
+  },
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "implementation_lean_read_before_review": false,
+  "blind_reconstruction_read_before_review": false,
+  "verdict": "accepted-with-explicit-gaps",
+  "coverage": {
+    "requested_pages": "printed2-5/PDF14-17",
+    "context": "printed1,6/PDF13,18",
+    "judgment": "Every substantive region seen in independent visual pass is mapped to NODE or EXCLUDED with an appropriate bounded-scope reason. No omitted proof paragraph found. PDF18 is essential for logarithmic closure.",
+    "inventory_items": 53,
+    "substantive_omissions_found": []
+  },
+  "topology_checks": {
+    "edge_direction": "Correct: BTL subtracts a lower leader-loss sum from fixed-final-leader comparator loss, yielding an upper regret bound.",
+    "and_or": "One sufficient printed route. Initial loss AND tail stability AND harmonic comparison are needed. BTL base and step are induction obligations, not alternative OR proofs.",
+    "induction_scope": "N-BTL-IH is a local prefix assumption discharged by R-BTL-INDUCTION; no unsupported global induction hypothesis introduced.",
+    "premises": "Minimizer and membership from N-MEAN/G-MEAN-* discharge BTL instantiation; denominator positivity comes from t>=2; xStar0=1/2 is theorem-local; no hidden probability premise.",
+    "causality": "N-ADVERSARY records after-action adversary; R-REWRITE explicitly binds strict-past means. Pathwise universality is sufficient without IID or filtration.",
+    "expectation": "G-EXPECTED-BENCHMARK stays outside the deterministic route. No min/expectation interchange is justified or required."
+  },
+  "source_gaps": [
+    {
+      "id": "G-MEAN-FEASIBILITY",
+      "status": "explicit-source-omission",
+      "effect": "Positive-prefix mean interval membership needs derived proof."
+    },
+    {
+      "id": "G-MEAN-OPTIMALITY",
+      "status": "explicit-source-omission",
+      "effect": "Mean optimality asserted immediate; complete uniqueness characterization needs a derived proof, not attribution as printed proof."
+    },
+    {
+      "id": "G-EXPECTED-BENCHMARK",
+      "status": "explicit-context-omission",
+      "effect": "Population mean optimality and variance identity do not enter bounded deterministic theorem."
+    }
+  ],
+  "corrections": [],
+  "scope_limits": [
+    "No implementation proof verified in this stage.",
+    "No proof seal, full PR/chapter/book acceptance, merge acceptance, or live validation."
+  ],
+  "version": 2,
+  "supersedes": "topology-review-v1.json",
+  "adjudication": {
+    "withdrawn_finding": "C1-strict-harmonic-relaxation",
+    "reason": "Independent fresh 300 DPI render clearly shows <=, matching original inventory and topology. Earlier low-resolution visual reading lost the lower bar.",
+    "reviewer_error": true,
+    "source_files_changed": false,
+    "crop_path": "maintenance-evidence\\batch22-source-review\\harmonic-reinspection-017.png",
+    "crop_sha256": "cd40e52fa8a091ac7421a963a0bbde28a529fee7ed2dc4d4b005ae5f8aaeb077",
+    "command": "pdftoppm -f 17 -l 17 -r 300 -x 500 -y 2680 -W 1600 -H 200 -png source-pinned.pdf harmonic-reinspection",
+    "stage1_correction": "source-only-initial-v1.json p5-tail described strict relaxation. Read that as nonstrict relaxation. All other initial contracts remain unchanged."
+  },
+  "independence_note": "Initial complete topology review v1 occurred before Lean/reconstruction. This v2 only adjudicates the literal <= symbol against high-resolution raw-source rendering after semantic inspection; it changes no topology judgment on implementation grounds.",
+  "public_projection": {
+    "original": {
+      "artifact": "batch22-source-review/topology-review-v2.json",
+      "sha256": "fc8fc66fd68fc40763c57336c51e68ff350112af79d51d9cb9499f4b9617b171",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "change": "Physical prefixes replaced by logical locations. Original mathematical content and stage-specific verdicts retained. Original hashes bind retained originals, not projected bytes.",
+    "verifiedTitleOverlay": [],
+    "titleEvidence": {
+      "artifact": "batch22-source-review/title-addendum-v1.json",
+      "sha256": "d5b8541a44015c0a1cb2cf616967600c746d6ff194cf86949cdd1fb0e5bc1144",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "review": "Independent public-projection review pending."
+  }
+}

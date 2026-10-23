@@ -1,0 +1,299 @@
+{
+  "schema": "square-minimum-statement-map-v1",
+  "sourcePR": 193,
+  "sourceHead": "bf9f896cdfebb2b836dacb01f3d4b209466c2100",
+  "sourceBase": "2aa08b9e1f5da4d0c7d7dcbe9ddeadd1fbfc34e3",
+  "integrationBase": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+  "frozenSignatures": {
+    "artifact": "batch22-statement-input-binding-v1.json",
+    "sha256": "28922d45f41234ff4c28d67cdd30a562be6462b1c718e9c68abce2e0dae081a6",
+    "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+  },
+  "neutralPacket": {
+    "artifact": "batch22-blind-input/neutral-packet-v1.lean",
+    "sha256": "4f6a4560d8016546c168a1957f95975a1d43a6edebf6a3270bb9c7d72ae2943b",
+    "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+  },
+  "blindReconstruction": {
+    "artifact": "batch22-blind-decoder/reconstruction.json",
+    "sha256": "1beb9084bad51b20c145e84ee0df7291cb94d953d2a678e6e88516f45b831559",
+    "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+  },
+  "definitions": {
+    "D0": {
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "ref": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+      "name": "empiricalMean",
+      "fileSHA256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+      "declaration": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa"
+    },
+    "D1": {
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "ref": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+      "name": "meanPredict",
+      "fileSHA256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305",
+      "declaration": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4"
+    },
+    "D2": {
+      "path": "BanditRLProof/OnlineLearningRegret.lean",
+      "ref": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+      "name": "comparatorRegret",
+      "fileSHA256": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f",
+      "declaration": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "sha256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0"
+    },
+    "D3": {
+      "path": "BanditRLProof/OnlineSquareMinimum.lean",
+      "ref": "bf9f896cdfebb2b836dacb01f3d4b209466c2100",
+      "name": "squaredBestRegret",
+      "fileSHA256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "declaration": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "sha256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631"
+    }
+  },
+  "propositions": [
+    {
+      "id": "Q001",
+      "actual": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "header": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧\n      ∀ u ∈ Set.Icc (0 : ℝ) 1,\n        (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤\n          ∑ t ∈ Finset.range T, (u - y t)^2",
+      "headerSHA256": "27efce151ba1a343d0b8c8240a8b464424faded938790e29f3146673b9bca3ce",
+      "neutral": "def Q001 : Prop := ∀ (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1),\n        D0 y T ∈ Set.Icc (0 : ℝ) 1 ∧\n      ∀ u ∈ Set.Icc (0 : ℝ) 1,\n        (∑ t ∈ Finset.range T, (D0 y T - y t)^2) ≤\n          ∑ t ∈ Finset.range T, (u - y t)^2"
+    },
+    {
+      "id": "Q002",
+      "actual": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "header": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1) =\n        ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+      "headerSHA256": "6d76c3f2ebec9cd57489a152eccfb77aea022c74d62c1bd8b8c9d9e1e556392e",
+      "neutral": "def Q002 : Prop := ∀ (y : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1),\n        sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1) =\n        ∑ t ∈ Finset.range T, (D0 y T - y t)^2"
+    },
+    {
+      "id": "Q003",
+      "actual": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "header": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y prediction T =\n      comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+      "headerSHA256": "d0e99135a063cbf915aa7cd75ab1d22b96618f68e802cb06364e469f86cb65e0",
+      "neutral": "def Q003 : Prop := ∀ (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1),\n        D3 y prediction T =\n      D2 (fun t x => (x - y t)^2) prediction (D0 y T) T"
+    },
+    {
+      "id": "Q004",
+      "actual": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "header": "theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1)\n    (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) :\n    comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤\n      squaredBestRegret y prediction T",
+      "headerSHA256": "5c4ffc0347c55376ef5adf2156385c3771ea99ecdcbc0a913fcebc6c03bb9043",
+      "neutral": "def Q004 : Prop := ∀ (y prediction : ℕ → ℝ) (T : ℕ)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1)\n    (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1),\n        D2 (fun t x => (x - y t)^2) prediction u T ≤\n      D3 y prediction T"
+    },
+    {
+      "id": "Q005",
+      "actual": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "header": "theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T",
+      "headerSHA256": "c730d1b57dd25626494f6c52ca4735dc4549fc0920d4646c79d884649eb85bc1",
+      "neutral": "def Q005 : Prop := ∀ (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1),\n        D3 y (D1 y) T ≤ 4 + 4 * Real.log T"
+    },
+    {
+      "id": "Q006",
+      "actual": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "header": "theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (meanPredict y) T ≤\n      (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "headerSHA256": "7c153de88704702bb18ed2c1f8fa418ab4c05b2347dddc42859ba2ca988b4708",
+      "neutral": "def Q006 : Prop := ∀ (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1),\n        D3 y (D1 y) T ≤\n      (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)"
+    }
+  ],
+  "sevenSlotReview": [
+    {
+      "id": "D0",
+      "actual": "empiricalMean",
+      "verdict_or_kind": "literal-formula-with-explicit-domain-extension",
+      "slots": {
+        "objects_and_spaces": "Real sequence and natural length versus finite positive source sequence.",
+        "quantifiers_and_order": "Arguments y,n define the value, no chosen optimizer.",
+        "assumptions_regularity": "No constraints in formula; source uses bounded positive prefix.",
+        "conclusion_metric": "Same empirical mean for positive n.",
+        "constants_normalization_asymptotics": "Exactly sum/n.",
+        "probability_feedback_filtration_stopping": "Reads only prefix indices <n, deterministic.",
+        "boundary_excluded_regimes": "Lean n=0 gives 0; source does not define empty mean. Explicit bookkeeping extension, no unique optimizer claim."
+      }
+    },
+    {
+      "id": "D1",
+      "actual": "meanPredict",
+      "verdict_or_kind": "literal-source-strategy-on-source-domain",
+      "slots": {
+        "objects_and_spaces": "Real sequence and natural round.",
+        "quantifiers_and_order": "One fixed strategy for all horizons, not horizon-chosen.",
+        "assumptions_regularity": "Source interval outcomes only needed for feasibility and guarantee.",
+        "conclusion_metric": "Exactly initial half, then strict-past mean.",
+        "constants_normalization_asymptotics": "Source round t+1 = Lean t.",
+        "probability_feedback_filtration_stopping": "Coordinate-causal: y at indices >=t cannot affect prediction t. Adequate for full-information game, including after-action adversary.",
+        "boundary_excluded_regimes": "Unbounded outcomes remain definable but not covered by regret theorems."
+      }
+    },
+    {
+      "id": "D2",
+      "actual": "comparatorRegret",
+      "verdict_or_kind": "literal-algebraic-generalization",
+      "slots": {
+        "objects_and_spaces": "Arbitrary type X extends source Euclidean feasible action setting.",
+        "quantifiers_and_order": "One fixed u per horizon, arbitrary supplied trace.",
+        "assumptions_regularity": "No algorithm assumptions are part of this algebraic expression.",
+        "conclusion_metric": "Signed learner loss minus fixed-comparator loss.",
+        "constants_normalization_asymptotics": "Unnormalized cumulative sum, source 1..T becomes 0..T-1.",
+        "probability_feedback_filtration_stopping": "No causal guarantee for arbitrary trace.",
+        "boundary_excluded_regimes": "Empty sum zero and arbitrary type are explicit extensions."
+      }
+    },
+    {
+      "id": "D3",
+      "actual": "squaredBestRegret",
+      "verdict_or_kind": "literal-infimum-representation-with-characterization",
+      "slots": {
+        "objects_and_spaces": "Real traces, interval comparator [0,1].",
+        "quantifiers_and_order": "Infimum over one constant scalar, not per-round choices.",
+        "assumptions_regularity": "Definition all real y,p; source-domain identification uses hy.",
+        "conclusion_metric": "sInf value equals attained source minimum under Q001+Q002; not from sInf alone.",
+        "constants_normalization_asymptotics": "Coefficient-one square loss, no averaging.",
+        "probability_feedback_filtration_stopping": "Signed deterministic pathwise loss difference; not minimum expected loss.",
+        "boundary_excluded_regimes": "T=0 image {0}, regret0. Arbitrary real finite y also has compact-interval attained minimum mathematically, but this packet only proves mean representation under hy."
+      }
+    },
+    {
+      "id": "Q001",
+      "actual": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Bounded real outcome prefix and interval competitor match source.",
+        "quantifiers_and_order": "For every y,T and every interval u after prefix bound.",
+        "assumptions_regularity": "hy SOURCE; sequence/natural carrier TYPING. No minimizing certificate binder.",
+        "conclusion_metric": "Feasible mean with all minimizer comparisons. Does not itself state uniqueness.",
+        "constants_normalization_asymptotics": "Coefficient-one squares and sum/T.",
+        "probability_feedback_filtration_stopping": "Deterministic hindsight comparator, not online predictor.",
+        "boundary_excluded_regimes": "T=0 extends source: mean0 feasible and every comparator minimizes. Positive-T uniqueness supplied separately by existing empiricalMean_unique, not this Q."
+      }
+    },
+    {
+      "id": "Q002",
+      "actual": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Same objective image over closed interval.",
+        "quantifiers_and_order": "For each bounded y-prefix and T exact value identity.",
+        "assumptions_regularity": "Only hy; no assumed infimum attainment.",
+        "conclusion_metric": "Infimum equals feasible mean loss when read jointly with Q001.",
+        "constants_normalization_asymptotics": "No numerical change.",
+        "probability_feedback_filtration_stopping": "Deterministic minimum after observations, not min expected loss.",
+        "boundary_excluded_regimes": "Includes zero, correct empty-image-value {0}. Source positive-horizon formula extended explicitly."
+      }
+    },
+    {
+      "id": "Q003",
+      "actual": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Any real prediction trace and bounded outcomes.",
+        "quantifiers_and_order": "Universal trace, mean depends on horizon for hindsight comparison.",
+        "assumptions_regularity": "hy only; no feasibility or causality imposed on arbitrary trace.",
+        "conclusion_metric": "Exact benchmark representation, not algorithm performance.",
+        "constants_normalization_asymptotics": "Same loss normalization and indexing.",
+        "probability_feedback_filtration_stopping": "Arbitrary trace algebra extends source valid online traces without proving any new online guarantee.",
+        "boundary_excluded_regimes": "Zero extension and prediction-domain generalization are explicit."
+      }
+    },
+    {
+      "id": "Q004",
+      "actual": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Any real trace, bounded outcomes, fixed u in interval.",
+        "quantifiers_and_order": "All feasible comparators, no favorable existential comparator.",
+        "assumptions_regularity": "hy SOURCE although mathematically redundant for this inequality; hu SOURCE.",
+        "conclusion_metric": "Correct direction: comparator regret <= best-fixed regret.",
+        "constants_normalization_asymptotics": "No constants or normalization change.",
+        "probability_feedback_filtration_stopping": "Signed pathwise relation, not nonnegative regret assertion.",
+        "boundary_excluded_regimes": "Includes zero and arbitrary trace extension. Infeasible u excluded."
+      }
+    },
+    {
+      "id": "Q005",
+      "actual": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "verdict_or_kind": "accepted",
+      "slots": {
+        "objects_and_spaces": "Bounded scalar source game and actual D1.",
+        "quantifiers_and_order": "For every finite positive T and every bounded prefix; strategy fixed independently of T.",
+        "assumptions_regularity": "hT source horizon convention; hy source domain. No EXCESS helper premises.",
+        "conclusion_metric": "Actual causal FTL regret against attained fixed interval minimum.",
+        "constants_normalization_asymptotics": "Exactly 4+4 ln T.",
+        "probability_feedback_filtration_stopping": "Pathwise deterministic, covers any realized adaptive sequence. No independence/expectation/filtration premise needed.",
+        "boundary_excluded_regimes": "Positive T explicit; no zero-log claim. At T=1 bound4."
+      }
+    },
+    {
+      "id": "Q006",
+      "actual": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "verdict_or_kind": "accepted",
+      "slots": {
+        "objects_and_spaces": "Same actual D1 game and benchmark.",
+        "quantifiers_and_order": "Same positive finite horizon and arbitrary bounded prefix.",
+        "assumptions_regularity": "Only hT,hy. No stability certificate supplied as binder.",
+        "conclusion_metric": "Same signed regret upper bound as printed proof.",
+        "constants_normalization_asymptotics": "Exactly 1/4 + sum_{t=0}^{T-2} 4/(t+2) = 1/4+4 sum_{s=2}^T 1/s.",
+        "probability_feedback_filtration_stopping": "Deterministic actual strategy, not arbitrary prediction trace.",
+        "boundary_excluded_regimes": "T=1 empty tail leaves1/4; T=0 excluded. No off-by-one or missing boundary term."
+      }
+    }
+  ],
+  "remainingDeltas": [
+    "Q001-Q004 include valid empty-prefix extension beyond the printed positive-horizon presentation.",
+    "D2/D3/Q003/Q004 allow arbitrary supplied real traces or ambient types; only Q005/Q006 assert actual source-strategy guarantees.",
+    "The public minimum-value representation is not itself a new complete uniqueness theorem; retain separately named existing uniqueness support if advertising complete argmin characterization."
+  ],
+  "sourceGapDisposition": "Source feasibility and optimality omissions are identified; this review checks statements, not discharge by proof-body dependency traversal.",
+  "existingUniqueness": {
+    "ref": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+    "path": "BanditRLProof/OnlineLearningMean.lean",
+    "file_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+    "header": "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)\n    (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤\n      ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) :\n    u = empiricalMean y n",
+    "header_sha256": "7709fac9f1822b389152e830566ce9185c6de14168cf85acb8d9bdae2cbfe7ea",
+    "inspection": "Exact header extracted from current pinned Git object only; proof body not read. Outside the blind Q001-Q006 packet; not retroactively inserted into decoder output."
+  },
+  "inputBindings": {
+    "BanditRLProof.lean": "6078ac8a060db058d176d832ea84670351492c1d51983afdc833aa96f7be6159",
+    "Tests.lean": "06c55f50fb675008683b291e9a6d594202e9ac0e6f7beee50fc3b70146fcb1c4",
+    "BanditRLProof/OnlineSquareMinimum.lean": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+    "Tests/OnlineSquareMinimumCanary.lean": "275e4c80fd8c8769293d810cc4e94ecc67d64f9f9c0f272f3e6c1340279ee881",
+    "website/content/readings.json": "aebe969bc43fd538fd97d9cf3ded4cf75c10b68771c7f4a77590bffe54cf7b36",
+    "website/content/highlights.json": "4896d10ed8f42d1f0090dfa57ebbf6c967b27ff96e08bd7041276d51fc6db12d",
+    "website/content/chapters.json": "f78e6e187a88f82e2821fabd50ada4f7788abec56d103a831f260a19b09ed7f9"
+  },
+  "actualImportedCheck": "26 original proposition and6 definition identities;6 fresh neutral proposition and4 definition identities;38 standard axiom closures passed. Compilation does not itself establish source fidelity.",
+  "bodyReview": {
+    "artifact": "batch22-source-review/body-review-v1.json",
+    "sha256": "5652bbbba71348caa329b85ac12a4a36ca264a809fedf6c4bfba4d25c7d5cfd4",
+    "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+  },
+  "sourceRouteDeltas": [
+    "Source mean assertions filled by existing decomposition and bounded-sum proofs.",
+    "Stability implementation uses exact recurrence coefficient rather than literal source factor/absolute/triangle route.",
+    "Coarse FTL uses Set.univ BTL and uniform4/d; refined FTL uses interval BTL and explicitly separates initial1/4.",
+    "Mathlib supplies harmonic-integral bound."
+  ],
+  "currentCandidateInputOverlay": {
+    "priorInputBindingsRetained": true,
+    "inputs": {
+      "BanditRLProof.lean": "6078ac8a060db058d176d832ea84670351492c1d51983afdc833aa96f7be6159",
+      "Tests.lean": "06c55f50fb675008683b291e9a6d594202e9ac0e6f7beee50fc3b70146fcb1c4",
+      "BanditRLProof/OnlineSquareMinimum.lean": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "Tests/OnlineSquareMinimumCanary.lean": "275e4c80fd8c8769293d810cc4e94ecc67d64f9f9c0f272f3e6c1340279ee881",
+      "website/content/readings.json": "41a6bf2935e0b1b5147d0316316a2d2040f1bc2af43120bb266e0e08099a4649",
+      "website/content/highlights.json": "4896d10ed8f42d1f0090dfa57ebbf6c967b27ff96e08bd7041276d51fc6db12d",
+      "website/content/chapters.json": "f78e6e187a88f82e2821fabd50ada4f7788abec56d103a831f260a19b09ed7f9"
+    },
+    "readerDelta": {
+      "old": "Independent source/reader review and full project acceptance remain pending.",
+      "new": "Independent source and reader reviews and the shared project gate passed for these bounded results. Rendered and release acceptance are tracked separately."
+    },
+    "evidence": {
+      "artifact": "batch22-original-continuation-v3/receipt.json",
+      "sha256": "0256a7b904a00ffa3f17ba2c445bf7c378bc698cf7ff5cf45f1857bcac247216",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "mathematicalStatementsUnchanged": true
+  }
+}

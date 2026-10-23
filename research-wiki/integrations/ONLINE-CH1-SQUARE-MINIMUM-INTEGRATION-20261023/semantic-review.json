@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "stage": "independent-seven-slot-semantic-review",
+  "created_utc": "2026-10-23T10:10:47.709621+00:00",
+  "reviewer": "batch22_source_reviewer",
+  "formalizer": "root",
+  "blind_decoder": "batch22_blind_decoder",
+  "source_extractor": "batch22_source_extractor",
+  "verdict": "accepted-with-explicit-delta",
+  "scope": "Six minimum-representation/FTL adapter anchors and four definitions only. Not full unique-argmin theorem, whole PR/chapter/book, proof, merge, or deployment acceptance.",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "inputs": {
+    "batch22-statement-input-binding-v1.json": "28922d45f41234ff4c28d67cdd30a562be6462b1c718e9c68abce2e0dae081a6",
+    "batch22-blind-input/neutral-packet-v1.lean": "4f6a4560d8016546c168a1957f95975a1d43a6edebf6a3270bb9c7d72ae2943b",
+    "batch22-blind-decoder/reconstruction.json": "1beb9084bad51b20c145e84ee0df7291cb94d953d2a678e6e88516f45b831559",
+    "batch22-imported-audit-v1/receipt.json": "726fadb3904d15c53b84f4ac815e68e9e9ad53a4e8f2b651ab2ef4582cc9d38d",
+    "batch22-source-review/source-only-initial-v1.json": "e780d31e0d456b48b23babdd049f5636673fa470b35d6992b3c6892bfca2043c",
+    "batch22-source-review/topology-review-v2.json": "fc8fc66fd68fc40763c57336c51e68ff350112af79d51d9cb9499f4b9617b171"
+  },
+  "stage_order": "Rendered raw source -> source-only initial seal -> topology review v1 -> exact headers, neutral packet and fresh reconstruction -> high-resolution inequality adjudication v2. No proof bodies, old verdicts or extractor private rationale used.",
+  "binding_checks": {
+    "neutral_packet_hash_matches": true,
+    "reconstruction_hash_matches_requested": true,
+    "all_six_header_digests_match": true,
+    "all_four_definition_digests_match": true,
+    "imported_identity_receipt": "Fresh receipt reports six proposition/four definition identities pass. Receipt inspected as identity evidence only; source fidelity comes from this comparison. No compiler rerun by reviewer."
+  },
+  "declarations": [
+    {
+      "id": "D0",
+      "actual": "empiricalMean",
+      "verdict_or_kind": "literal-formula-with-explicit-domain-extension",
+      "slots": {
+        "objects_and_spaces": "Real sequence and natural length versus finite positive source sequence.",
+        "quantifiers_and_order": "Arguments y,n define the value, no chosen optimizer.",
+        "assumptions_regularity": "No constraints in formula; source uses bounded positive prefix.",
+        "conclusion_metric": "Same empirical mean for positive n.",
+        "constants_normalization_asymptotics": "Exactly sum/n.",
+        "probability_feedback_filtration_stopping": "Reads only prefix indices <n, deterministic.",
+        "boundary_excluded_regimes": "Lean n=0 gives 0; source does not define empty mean. Explicit bookkeeping extension, no unique optimizer claim."
+      }
+    },
+    {
+      "id": "D1",
+      "actual": "meanPredict",
+      "verdict_or_kind": "literal-source-strategy-on-source-domain",
+      "slots": {
+        "objects_and_spaces": "Real sequence and natural round.",
+        "quantifiers_and_order": "One fixed strategy for all horizons, not horizon-chosen.",
+        "assumptions_regularity": "Source interval outcomes only needed for feasibility and guarantee.",
+        "conclusion_metric": "Exactly initial half, then strict-past mean.",
+        "constants_normalization_asymptotics": "Source round t+1 = Lean t.",
+        "probability_feedback_filtration_stopping": "Coordinate-causal: y at indices >=t cannot affect prediction t. Adequate for full-information game, including after-action adversary.",
+        "boundary_excluded_regimes": "Unbounded outcomes remain definable but not covered by regret theorems."
+      }
+    },
+    {
+      "id": "D2",
+      "actual": "comparatorRegret",
+      "verdict_or_kind": "literal-algebraic-generalization",
+      "slots": {
+        "objects_and_spaces": "Arbitrary type X extends source Euclidean feasible action setting.",
+        "quantifiers_and_order": "One fixed u per horizon, arbitrary supplied trace.",
+        "assumptions_regularity": "No algorithm assumptions are part of this algebraic expression.",
+        "conclusion_metric": "Signed learner loss minus fixed-comparator loss.",
+        "constants_normalization_asymptotics": "Unnormalized cumulative sum, source 1..T becomes 0..T-1.",
+        "probability_feedback_filtration_stopping": "No causal guarantee for arbitrary trace.",
+        "boundary_excluded_regimes": "Empty sum zero and arbitrary type are explicit extensions."
+      }
+    },
+    {
+      "id": "D3",
+      "actual": "squaredBestRegret",
+      "verdict_or_kind": "literal-infimum-representation-with-characterization",
+      "slots": {
+        "objects_and_spaces": "Real traces, interval comparator [0,1].",
+        "quantifiers_and_order": "Infimum over one constant scalar, not per-round choices.",
+        "assumptions_regularity": "Definition all real y,p; source-domain identification uses hy.",
+        "conclusion_metric": "sInf value equals attained source minimum under Q001+Q002; not from sInf alone.",
+        "constants_normalization_asymptotics": "Coefficient-one square loss, no averaging.",
+        "probability_feedback_filtration_stopping": "Signed deterministic pathwise loss difference; not minimum expected loss.",
+        "boundary_excluded_regimes": "T=0 image {0}, regret0. Arbitrary real finite y also has compact-interval attained minimum mathematically, but this packet only proves mean representation under hy."
+      }
+    },
+    {
+      "id": "Q001",
+      "actual": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Bounded real outcome prefix and interval competitor match source.",
+        "quantifiers_and_order": "For every y,T and every interval u after prefix bound.",
+        "assumptions_regularity": "hy SOURCE; sequence/natural carrier TYPING. No minimizing certificate binder.",
+        "conclusion_metric": "Feasible mean with all minimizer comparisons. Does not itself state uniqueness.",
+        "constants_normalization_asymptotics": "Coefficient-one squares and sum/T.",
+        "probability_feedback_filtration_stopping": "Deterministic hindsight comparator, not online predictor.",
+        "boundary_excluded_regimes": "T=0 extends source: mean0 feasible and every comparator minimizes. Positive-T uniqueness supplied separately by existing empiricalMean_unique, not this Q."
+      }
+    },
+    {
+      "id": "Q002",
+      "actual": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Same objective image over closed interval.",
+        "quantifiers_and_order": "For each bounded y-prefix and T exact value identity.",
+        "assumptions_regularity": "Only hy; no assumed infimum attainment.",
+        "conclusion_metric": "Infimum equals feasible mean loss when read jointly with Q001.",
+        "constants_normalization_asymptotics": "No numerical change.",
+        "probability_feedback_filtration_stopping": "Deterministic minimum after observations, not min expected loss.",
+        "boundary_excluded_regimes": "Includes zero, correct empty-image-value {0}. Source positive-horizon formula extended explicitly."
+      }
+    },
+    {
+      "id": "Q003",
+      "actual": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Any real prediction trace and bounded outcomes.",
+        "quantifiers_and_order": "Universal trace, mean depends on horizon for hindsight comparison.",
+        "assumptions_regularity": "hy only; no feasibility or causality imposed on arbitrary trace.",
+        "conclusion_metric": "Exact benchmark representation, not algorithm performance.",
+        "constants_normalization_asymptotics": "Same loss normalization and indexing.",
+        "probability_feedback_filtration_stopping": "Arbitrary trace algebra extends source valid online traces without proving any new online guarantee.",
+        "boundary_excluded_regimes": "Zero extension and prediction-domain generalization are explicit."
+      }
+    },
+    {
+      "id": "Q004",
+      "actual": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "verdict_or_kind": "accepted-with-explicit-delta",
+      "slots": {
+        "objects_and_spaces": "Any real trace, bounded outcomes, fixed u in interval.",
+        "quantifiers_and_order": "All feasible comparators, no favorable existential comparator.",
+        "assumptions_regularity": "hy SOURCE although mathematically redundant for this inequality; hu SOURCE.",
+        "conclusion_metric": "Correct direction: comparator regret <= best-fixed regret.",
+        "constants_normalization_asymptotics": "No constants or normalization change.",
+        "probability_feedback_filtration_stopping": "Signed pathwise relation, not nonnegative regret assertion.",
+        "boundary_excluded_regimes": "Includes zero and arbitrary trace extension. Infeasible u excluded."
+      }
+    },
+    {
+      "id": "Q005",
+      "actual": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "verdict_or_kind": "accepted",
+      "slots": {
+        "objects_and_spaces": "Bounded scalar source game and actual D1.",
+        "quantifiers_and_order": "For every finite positive T and every bounded prefix; strategy fixed independently of T.",
+        "assumptions_regularity": "hT source horizon convention; hy source domain. No EXCESS helper premises.",
+        "conclusion_metric": "Actual causal FTL regret against attained fixed interval minimum.",
+        "constants_normalization_asymptotics": "Exactly 4+4 ln T.",
+        "probability_feedback_filtration_stopping": "Pathwise deterministic, covers any realized adaptive sequence. No independence/expectation/filtration premise needed.",
+        "boundary_excluded_regimes": "Positive T explicit; no zero-log claim. At T=1 bound4."
+      }
+    },
+    {
+      "id": "Q006",
+      "actual": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "verdict_or_kind": "accepted",
+      "slots": {
+        "objects_and_spaces": "Same actual D1 game and benchmark.",
+        "quantifiers_and_order": "Same positive finite horizon and arbitrary bounded prefix.",
+        "assumptions_regularity": "Only hT,hy. No stability certificate supplied as binder.",
+        "conclusion_metric": "Same signed regret upper bound as printed proof.",
+        "constants_normalization_asymptotics": "Exactly 1/4 + sum_{t=0}^{T-2} 4/(t+2) = 1/4+4 sum_{s=2}^T 1/s.",
+        "probability_feedback_filtration_stopping": "Deterministic actual strategy, not arbitrary prediction trace.",
+        "boundary_excluded_regimes": "T=1 empty tail leaves1/4; T=0 excluded. No off-by-one or missing boundary term."
+      }
+    }
+  ],
+  "critical_checks": {
+    "attainment": "Q001 supplies a feasible mean with lower comparisons against every image member; Q002 identifies sInf. Together they establish actual minimum on bounded prefixes, including empty prefix. sInf symbol alone never used as attainment evidence.",
+    "uniqueness": "Not encoded by Q001/Q002. Existing separately named positive-horizon empiricalMean_unique provides reusable uniqueness. Combining it with Q001 yields the expected unique interval minimizer for T>0. No uniqueness at T=0 and no new uniqueness theorem credited to these six anchors.",
+    "signedness": "D3 can be -1/2 for fixed y=(0,1),prediction=(0,1),T=2. This is an algebraic fixed-trace example, not the D1 learner.",
+    "actual_strategy": "Q005/Q006 substitute D1 y, whose formula uses y_0..y_(t-1) only; Q003/Q004 generic traces do not establish performance or causality.",
+    "expected_minimum": "No expectation in packet. E[min hindsight loss] and min E[fixed loss] remain distinct obligations.",
+    "definition_totality": "D0 and D3 are literal formulas, not choice-based optimizer definitions. Their wider/empty domain is disclosed. No hidden default branch is being called a unique source optimizer."
+  },
+  "supplemental_existing_uniqueness": {
+    "ref": "ea8490422293647ff7b789655bfd3266a64e0a5a",
+    "path": "BanditRLProof/OnlineLearningMean.lean",
+    "file_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+    "header": "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ)\n    (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤\n      ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) :\n    u = empiricalMean y n",
+    "header_sha256": "7709fac9f1822b389152e830566ce9185c6de14168cf85acb8d9bdae2cbfe7ea",
+    "inspection": "Exact header extracted from current pinned Git object only; proof body not read. Outside the blind Q001-Q006 packet; not retroactively inserted into decoder output."
+  },
+  "remaining_deltas": [
+    "Q001-Q004 include valid empty-prefix extension beyond the printed positive-horizon presentation.",
+    "D2/D3/Q003/Q004 allow arbitrary supplied real traces or ambient types; only Q005/Q006 assert actual source-strategy guarantees.",
+    "The public minimum-value representation is not itself a new complete uniqueness theorem; retain separately named existing uniqueness support if advertising complete argmin characterization."
+  ],
+  "source_gap_status": "Source feasibility and optimality omissions are identified; this review checks statements, not discharge by proof-body dependency traversal.",
+  "not_claimed": [
+    "Source expected benchmark closure",
+    "Source ordinary-limit no-regret closure",
+    "Global chapter/book completeness",
+    "Full project gate",
+    "Proof seal",
+    "Merge or live publication"
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch22-source-review/semantic-review-v1.json",
+      "sha256": "2a885aa40d63e0460a5f28561718dfbd4c55f6af1464d2aaf1a617fb275afe4c",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "change": "Physical prefixes replaced by logical locations. Original mathematical content and stage-specific verdicts retained. Original hashes bind retained originals, not projected bytes.",
+    "verifiedTitleOverlay": [],
+    "titleEvidence": {
+      "artifact": "batch22-source-review/title-addendum-v1.json",
+      "sha256": "d5b8541a44015c0a1cb2cf616967600c746d6ff194cf86949cdd1fb0e5bc1144",
+      "availability": "Retained private maintenance evidence; the digest is not a public download URL."
+    },
+    "review": "Independent public-projection review pending."
+  }
+}

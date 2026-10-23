@@ -5146,7 +5146,7 @@
       "notation": [
         {
           "term": "Prediction, prefix leader and initialization",
-          "meaning": "Source round t+1 is Lean index t. The prediction p0 is 1/2; for t>0, pt is the mean of exactly t past targets. The prefix leader an averages the first n targets and includes the current target when n=t+1. The literal mean a0 is zero by total real division. It is not the first prediction. Empirical minimizer characterization and the logarithmic bounds require positive horizons."
+          "meaning": "Source round t+1 is Lean index t. The prediction p0 is 1/2; for t>0, pt is the mean of exactly t past targets. The prefix leader an averages the first n targets and includes the current target when n=t+1. The literal mean a0 is zero by total real division. It is not the first prediction. Uniqueness of the empirical minimizer and the logarithmic bounds require positive horizons. Minimum attainment extends to the empty prefix without uniqueness."
         },
         {
           "term": "Signed comparator regret",
@@ -5470,6 +5470,29 @@
             "status": "compiled",
             "label": "Locally compiled derived reconciliation",
             "boundary": "The fixed-trace equivalence requires actual finite convergence. The counterexample has unbounded signed affine losses and proves neither bounded-loss separation nor failure of meanPredict convergence. Fixed-comparator upper control alone is not uniform control over a horizon-dependent best comparator. Source/reader acceptance, complete project gates and main/live release are separate; Chapter1 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "The attained square-loss minimum and best-fixed regret",
+          "pages": "printed pp.2-6 / PDF pp.14-18: minimum, empirical mean, Theorem1.3 and harmonic proof continuation",
+          "pdf_page": 14,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{aligned}L_T(u)&=\\sum_{t<T}(u-y_t)^2,\\qquad m_T=T^{-1}\\sum_{t<T}y_t,\\\\B_T&=\\min_{u\\in[0,1]}L_T(u)=L_T(m_T),\\\\A_T(x)&=\\sum_{t<T}(x_t-y_t)^2,\\\\R_T^{\\mathrm{best}}(x)&=A_T(x)-B_T=R_T(m_T),\\\\R_T(u)&\\le R_T^{\\mathrm{best}}(x)\\quad(u\\in[0,1]),\\\\x_0&=\\tfrac12,\\qquad x_t=m_t\\quad(t>0),\\\\R_T^{\\mathrm{best}}(x)&\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s\\quad(T>0),\\\\R_T^{\\mathrm{best}}(x)&\\le4+4\\log T\\quad(T>0).\\end{aligned}",
+          "plain": "The comparator is one scalar held fixed across the observed prefix. For positive T, the empirical mean minimizes its loss. The library produces this feasible minimizer, identifies the actual minimum value, and expresses the existing past-mean regret guarantees against it.",
+          "fallback": "Best-fixed regret equals prediction loss minus squared loss at the empirical mean. Every feasible comparator regret is at most this signed best-fixed regret. The initially one-half past-mean strategy satisfies both the refined quarter-plus-tail guarantee and the logarithmic guarantee for positive horizons.",
+          "relationship": "Derived minimum-value representation and adapters for Orabona v10, printed pp.2-6 / PDF pp.14-18. Theorem1.3 is on printed p.4, the refined bound on p.5, and its harmonic-integral continuation on p.6. These six results are not six separately printed theorems.",
+          "contract": {
+            "model": "Let y_t lie in [0,1] for t<T, let L_T(u)=sum_{t<T}(u-y_t)^2, and let m_T be the empirical mean. The source uses rounds1..T; Lean uses indices0..T-1. The source game predicts before the current target is revealed. Algebraic identities accept arbitrary real prediction traces; the performance endpoints use the explicit strict-past mean strategy.",
+            "assumptions": "Only targets on the prefix t<T must lie in [0,1]. The order comparison also requires u in [0,1]. No minimizer, stability inequality, regret bound, probability law or convergence hypothesis is supplied as a new theorem premise. Positive T is required for both performance endpoints.",
+            "parameters": "Source round s corresponds to Lean index s-1. For positive T, m_T averages exactly T targets. Lean sets m_0=0 by total real division; at T=0 all loss sums vanish and minimizers are not unique. The refined tail has denominators2,...,T and is empty at T=1.",
+            "regret": "R_T^{best} is a signed pathwise loss difference, with the minimum taken after observing the whole prefix. For a fixed alternating0/1 prediction stream and a fixed matching target stream, the two-round regret is -1/2. This is compatible with all definitions. Taking expectation of this hindsight minimum is different from minimizing expected fixed-comparator loss.",
+            "guarantee": "For T>0, feasibility of the mean and the identity L_T(u)=L_T(m_T)+T(u-m_T)^2 prove that m_T attains the interval minimum. Its loss is therefore the least element of the comparator-loss image, so IsLeast.csInf_eq identifies sInf with L_T(m_T). Substitution gives R_T^{best}(x)=R_T(m_T), and subtracting L_T(m_T)<=L_T(u) gives R_T(u)<=R_T^{best}(x). Apply the existing theorem_1_3 and meanPredict_regret_refined to the same strict-past prediction trace. The source analysis keeps the first-round1/4 and later terms4/s; the harmonic-integral step continues on printed p.6. The new adapters do not re-prove a different rate."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Locally compiled minimum representation and FTL adapters",
+            "boundary": "The representation and order identities allow any supplied real prediction trace. They do not assert feasibility or causality of that trace. The two performance bounds use the actual strict-past mean predictor, initially1/2, and require T>0. The T=0 representation is an explicit empty-prefix extension, with no uniqueness claim. Signed regret can be negative. The minimum of expected fixed loss and its causal IID variance benchmark are separate obligations. Independent source and reader reviews and the shared project gate passed for these bounded results. Rendered and release acceptance are tracked separately. Chapter1 and the book remain incomplete."
           },
           "statement_provenance": "derived-support"
         }
