@@ -1,0 +1,377 @@
+{
+  "schema": "batch19-source-topology-v1",
+  "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "status": "proposed-extractor-output-not-approved",
+  "source_node_ids": [
+    "p15-adversary",
+    "p15-objective",
+    "p15-mean",
+    "p15-tracking",
+    "p15-ftl",
+    "p16-btl-contract",
+    "p16-btl-base",
+    "p16-btl-ih",
+    "p16-btl-cancel",
+    "p16-btl-prefix",
+    "p16-btl-min",
+    "p16-btl-close",
+    "p16-log-preview",
+    "p16-thm13",
+    "p17-figure",
+    "p17-regret-rewrite",
+    "p17-btl-use",
+    "p17-initial",
+    "p17-expand",
+    "p17-factor",
+    "p17-abs",
+    "p17-range",
+    "p17-mean-sub",
+    "p17-split",
+    "p17-triangle",
+    "p17-prefix-bound",
+    "p17-later-bound",
+    "p17-sum",
+    "p17-relax",
+    "p17-p18-area",
+    "p18-integral",
+    "p18-integral-eval",
+    "p18-close",
+    "p18-recap",
+    "p18-no-parameters",
+    "p18-memory",
+    "p18-efficiency",
+    "p18-gradients"
+  ],
+  "source_gaps": [
+    {
+      "id": "gap-mean-minimizer",
+      "kind": "SOURCE_GAP",
+      "use_site": "PDF15 argmin display and PDF17 first proof display",
+      "description": "Mean minimizing cumulative squared loss over [0,1] is asserted as immediate; no proof or uniqueness argument is provided on selected pages.",
+      "status": "omitted-source-bridge"
+    },
+    {
+      "id": "gap-mean-range",
+      "kind": "SOURCE_GAP",
+      "use_site": "PDF17 factor bound <=2 and BTL specialization to [0,1]",
+      "description": "Nonempty prefix mean belongs to [0,1]. Needed to discharge membership, but its proof is not written on selected pages.",
+      "status": "implicit-source-bridge"
+    },
+    {
+      "id": "gap-integral-comparison",
+      "kind": "SOURCE_GAP",
+      "use_site": "PDF17 Figure1.1 and PDF18 harmonic bound",
+      "description": "The graphic/prose asserts the area comparison. An analytic per-interval inequality and summation proof are omitted.",
+      "status": "illustrated-source-bridge"
+    },
+    {
+      "id": "gap-running-summary-equivalence",
+      "kind": "SOURCE_GAP",
+      "use_site": "PDF18 running-average summary paragraph",
+      "description": "The source asserts that a running-average summary suffices without storing the whole past. The prefix-mean definition alone does not supply a realizable summary update or establish its equivalence to the full-history average. That update/equivalence argument is omitted; no recurrence formula or computational cost is asserted by this gap node.",
+      "status": "omitted-source-bridge"
+    }
+  ],
+  "edges": [
+    {
+      "inputs": [
+        "gap-mean-minimizer",
+        "gap-mean-range"
+      ],
+      "target": "p15-mean",
+      "logic": "AND",
+      "consumer_use_site": "PDF15 mean identity",
+      "premise_discharge": "Nonempty prefix; all observations in [0,1]. Source asserts the result but leaves its proof unwritten."
+    },
+    {
+      "inputs": [
+        "p16-btl-contract",
+        "p16-btl-base",
+        "p16-btl-ih",
+        "p16-btl-cancel",
+        "p16-btl-prefix",
+        "p16-btl-min"
+      ],
+      "target": "p16-btl-close",
+      "logic": "AND",
+      "consumer_use_site": "PDF16 induction conclusion",
+      "premise_discharge": "At each induction step, x*_T is in V by chosen minimizer membership and x*_(T-1) minimizes prefix loss. Base T=1 supplied explicitly."
+    },
+    {
+      "inputs": [
+        "p16-btl-ih"
+      ],
+      "target": "p16-btl-prefix",
+      "logic": "AND",
+      "consumer_use_site": "PDF16 by induction hypothesis",
+      "premise_discharge": "T>=2 provides positive prefix horizon T-1."
+    },
+    {
+      "inputs": [
+        "p16-btl-contract"
+      ],
+      "target": "p16-btl-min",
+      "logic": "AND",
+      "consumer_use_site": "PDF16 minimizer inequality",
+      "premise_discharge": "Cumulative prefix minimizer exists by lemma assumption; chosen current minimizer belongs to V."
+    },
+    {
+      "inputs": [
+        "p15-mean",
+        "p16-thm13"
+      ],
+      "target": "p17-regret-rewrite",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 first equality",
+      "premise_discharge": "Use the theorem-specific x*_0=0.5 and past-mean algorithm; final comparator is the asserted minimizing mean."
+    },
+    {
+      "inputs": [
+        "p17-regret-rewrite",
+        "p16-btl-close",
+        "gap-mean-range"
+      ],
+      "target": "p17-btl-use",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 first inequality",
+      "premise_discharge": "Specialize V=[0,1], d=1, ell_t(x)=(x-y_t)^2. Mean identity provides each minimizer; membership uses implicit range bridge. Subtracting BTL inequality reverses comparator contribution."
+    },
+    {
+      "inputs": [
+        "p16-thm13",
+        "p15-mean"
+      ],
+      "target": "p17-initial",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 t=1 bound",
+      "premise_discharge": "x*_0=0.5, x*_1=y_1, y_1 in [0,1]. Initial difference is (0.5-y_1)^2<=0.25."
+    },
+    {
+      "inputs": [
+        "p16-thm13"
+      ],
+      "target": "p17-expand",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 t>=2 calculation line1",
+      "premise_discharge": "t>=2, real arithmetic and squared-loss definition."
+    },
+    {
+      "inputs": [
+        "p17-expand"
+      ],
+      "target": "p17-factor",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 line2",
+      "premise_discharge": "Polynomial factorization."
+    },
+    {
+      "inputs": [
+        "p17-factor"
+      ],
+      "target": "p17-abs",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 line3",
+      "premise_discharge": "Real product <= its absolute value."
+    },
+    {
+      "inputs": [
+        "p17-abs",
+        "gap-mean-range",
+        "p16-thm13"
+      ],
+      "target": "p17-range",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 line3 final inequality",
+      "premise_discharge": "Both prefix means and y_t lie in [0,1], hence absolute first factor <=2."
+    },
+    {
+      "inputs": [
+        "p17-range",
+        "p15-mean"
+      ],
+      "target": "p17-mean-sub",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 line4",
+      "premise_discharge": "t>=2 makes both prefix means nonempty."
+    },
+    {
+      "inputs": [
+        "p17-mean-sub"
+      ],
+      "target": "p17-split",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 line5",
+      "premise_discharge": "Finite-sum last-element split; t and t-1 nonzero."
+    },
+    {
+      "inputs": [
+        "p17-split"
+      ],
+      "target": "p17-triangle",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 last line first inequality",
+      "premise_discharge": "Triangle inequality and positive-denominator coefficient identity."
+    },
+    {
+      "inputs": [
+        "p17-triangle",
+        "p16-thm13"
+      ],
+      "target": "p17-prefix-bound",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 last line middle inequality",
+      "premise_discharge": "Each of t-1 prior observations is in [0,1], so absolute sum <=t-1; t>=2."
+    },
+    {
+      "inputs": [
+        "p17-prefix-bound",
+        "p16-thm13"
+      ],
+      "target": "p17-later-bound",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 last line final inequality",
+      "premise_discharge": "Current y_t in [0,1], hence |y_t|<=1."
+    },
+    {
+      "inputs": [
+        "p17-btl-use",
+        "p17-initial",
+        "p17-later-bound"
+      ],
+      "target": "p17-sum",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 Hence overall",
+      "premise_discharge": "Split sum into round1 and rounds2..T; for T=1 latter range is empty. Both time regions are needed, not OR alternatives."
+    },
+    {
+      "inputs": [
+        "p17-sum"
+      ],
+      "target": "p17-relax",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 second overall inequality",
+      "premise_discharge": "T>=1 and 0.25<=4."
+    },
+    {
+      "inputs": [
+        "p17-figure",
+        "gap-integral-comparison"
+      ],
+      "target": "p17-p18-area",
+      "logic": "AND",
+      "consumer_use_site": "PDF17 last paragraph to PDF18 opening",
+      "premise_discharge": "Illustrated decreasing reciprocal comparison, with unit first rectangle separated."
+    },
+    {
+      "inputs": [
+        "p17-p18-area"
+      ],
+      "target": "p18-integral",
+      "logic": "AND",
+      "consumer_use_site": "PDF18 first displayed inequality",
+      "premise_discharge": "T>=1; zero-length integral and empty tail at T=1."
+    },
+    {
+      "inputs": [
+        "p18-integral"
+      ],
+      "target": "p18-integral-eval",
+      "logic": "AND",
+      "consumer_use_site": "PDF18 displayed equality",
+      "premise_discharge": "Integrand 1/(t-1) on [2,T+1]; antiderivative ln(t-1), endpoints positive."
+    },
+    {
+      "inputs": [
+        "p17-relax",
+        "p18-integral-eval"
+      ],
+      "target": "p18-close",
+      "logic": "AND",
+      "consumer_use_site": "PDF18 proof-ending sentence",
+      "premise_discharge": "Multiply harmonic upper bound by positive 4, obtaining exactly 4+4 ln T."
+    },
+    {
+      "inputs": [
+        "p17-btl-use",
+        "p17-later-bound",
+        "p18-close"
+      ],
+      "target": "p18-recap",
+      "logic": "AND",
+      "consumer_use_site": "PDF18 proof recap",
+      "premise_discharge": "Explanatory summary of preceding proved inequalities, no additional exact asymptotic claim."
+    },
+    {
+      "inputs": [
+        "p15-ftl",
+        "gap-running-summary-equivalence"
+      ],
+      "target": "p18-memory",
+      "logic": "AND",
+      "consumer_use_site": "PDF18 memory prose",
+      "premise_discharge": "Source connects past-mean rule with a sufficient summary of the past. Its omitted update/equivalence bridge remains undischarged; no operational recursion or computational model is supplied in the selected source."
+    },
+    {
+      "inputs": [
+        "p18-memory"
+      ],
+      "target": "p18-efficiency",
+      "logic": "AND",
+      "consumer_use_site": "PDF18 This gives sentence",
+      "premise_discharge": "This is the author stated efficiency rationale; no quantitative complexity bound is discharged."
+    }
+  ],
+  "roots": [
+    {
+      "id": "lemma-1.2",
+      "statement": "p16-btl-contract",
+      "proof_completion": "p16-btl-close"
+    },
+    {
+      "id": "theorem-1.3",
+      "statement": "p16-thm13",
+      "proof_completion": "p18-close"
+    }
+  ],
+  "or_routes": [],
+  "or_explanation": "No alternative sufficient source proofs appear in the scoped pages. First/later-round bounds form AND inputs. Figure and integral formula belong to one route.",
+  "excluded_ids": [
+    "cover-identity",
+    "p15-context",
+    "p15-examples",
+    "p15-sgd",
+    "p15-return",
+    "p15-statistics",
+    "p15-p16-transition",
+    "p16-btl-interpret",
+    "p16-minimax-boundary",
+    "p18-validation",
+    "p18-statistical-boundary",
+    "p18-forward",
+    "p18-history1",
+    "p18-history2"
+  ],
+  "prose_only": [
+    "p15-adversary",
+    "p15-objective",
+    "p15-tracking",
+    "p15-ftl",
+    "p16-log-preview",
+    "p18-no-parameters",
+    "p18-memory",
+    "p18-efficiency",
+    "p18-gradients"
+  ],
+  "derived_not_source_nodes": [
+    "Recursive average update",
+    "Recursive prediction update",
+    "State initialization API",
+    "Arbitrary-first-prediction extension of Theorem1.3",
+    "Constant-memory or bit-complexity theorem"
+  ],
+  "independent_review": {
+    "required": true,
+    "status": "pending",
+    "extractor_cannot_approve": true
+  }
+}

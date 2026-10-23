@@ -731,6 +731,7 @@ import BanditRLProof.OnlineConvexUncountability
 import BanditRLProof.OnlineSubgradientDescent
 import BanditRLProof.OnlineLearningAsymptotic
 import BanditRLProof.OnlineLearningFTL
+import BanditRLProof.OnlineLearningFTLState
 import BanditRLProof.OnlineLearningFoundations
 import BanditRLProof.OnlineLearningHistory
 import BanditRLProof.OnlineLearningIID

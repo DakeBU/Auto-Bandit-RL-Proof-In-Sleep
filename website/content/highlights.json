@@ -5696,6 +5696,171 @@
         "BanditRL.OnlineUnitScaling.regret_scaling",
         "BanditRL.OnlineSubgradientPolicy.regret_fixed"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.empiricalMean_succ",
+      "title": "Empirical mean: every successor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 20,
+      "plain": "At zero the identity is y0 = 0 + y0. At positive t, split the finite sum at t and clear the positive denominators t and t+1; elementary algebra proves the update.",
+      "math": "\\bar y_{t+1}=\\bar y_t+\\frac{y_t-\\bar y_t}{t+1}",
+      "intuition": "At zero the identity is y0 = 0 + y0. At positive t, split the finite sum at t and clear the positive denominators t and t+1; elementary algebra proves the update.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "At zero the identity is y0 = 0 + y0. At positive t, split the finite sum at t and clear the positive denominators t and t+1; elementary algebra proves the update.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "title": "General initial prediction: strict past",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 21,
+      "plain": "With the same fixed initial c, time 0 returns c; at positive time equality of all previous labels makes the finite sums and their means equal.",
+      "math": "(\\forall i<t,\\ y_i=z_i)\\Rightarrow p_c^y(t)=p_c^z(t)",
+      "intuition": "With the same fixed initial c, time 0 returns c; at positive time equality of all previous labels makes the finite sums and their means equal.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "With the same fixed initial c, time 0 returns c; at positive time equality of all previous labels makes the finite sums and their means equal.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.empiricalMean"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_mem",
+      "title": "General initial prediction: feasibility",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 22,
+      "plain": "At zero use the assumed feasible initial value; at positive time apply the existing finite-prefix empirical-mean feasibility producer.",
+      "math": "c\\in[0,1],\\ (\\forall i<t,\\ y_i\\in[0,1])\\Rightarrow p_c(t)\\in[0,1]",
+      "intuition": "At zero use the assumed feasible initial value; at positive time apply the existing finite-prefix empirical-mean feasibility producer.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "At zero use the assumed feasible initial value; at positive time apply the existing finite-prefix empirical-mean feasibility producer.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.empiricalMean_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_half",
+      "title": "Exact half-initial predictor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 23,
+      "plain": "The two piecewise definitions agree at every time, including zero. This is the exact special case used by Theorem1.3; it does not extend the quarter bound to arbitrary c.",
+      "math": "p_{1/2}(t)=\\operatorname{meanPredict}(y,t)",
+      "intuition": "The two piecewise definitions agree at every time, including zero. This is the exact special case used by Theorem1.3; it does not extend the quarter bound to arbitrary c.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "The two piecewise definitions agree at every time, including zero. This is the exact special case used by Theorem1.3; it does not extend the quarter bound to arbitrary c.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.meanPredict"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_first",
+      "title": "First update cancels the initial value",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 24,
+      "plain": "Insert (0,c) into the local update: its real denominator is1 and c+(y0-c)=y0. No boundedness premise is needed for this algebraic identity.",
+      "math": "S_c(1)=(1,y_0)",
+      "intuition": "Insert (0,c) into the local update: its real denominator is1 and c+(y0-c)=y0. No boundedness premise is needed for this algebraic identity.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "Insert (0,c) into the local update: its real denominator is1 and c+(y0-c)=y0. No boundedness premise is needed for this algebraic identity.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState",
+        "BanditRL.OnlineLearning.ftlMeanStep"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "title": "Recursive state equals the past-mean predictor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 25,
+      "plain": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+      "math": "S_c(t)=(t,p_c(t))",
+      "intuition": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "The all-time mean successor identity has positive real denominator t+1. At t=0 the empty empirical mean is0 but the actual prediction is c. The first recursive update cancels c and gives (1,y0). For t>0 induction and the proved mean successor identity give the complete state identity. Existing decomposition, minimization and uniqueness prove the positive-prefix mean is the actual hindsight squared-loss leader; interval feasibility makes it an admissible comparator. The prediction uses the previous prefix, rather than an argmin or state oracle.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState",
+        "BanditRL.OnlineLearning.ftlMeanStep",
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.ftlState_first",
+        "BanditRL.OnlineLearning.empiricalMean_succ"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_prefix",
+      "title": "The whole state uses the strict prefix",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 26,
+      "plain": "Rewrite both actual recursive states using the proved state identity, then apply strict-prefix predictor equality. Both the count and value agree before the current target is observed.",
+      "math": "(\\forall i<t,\\ y_i=z_i)\\Rightarrow S_c^y(t)=S_c^z(t)",
+      "intuition": "Rewrite both actual recursive states using the proved state identity, then apply strict-prefix predictor equality. Both the count and value agree before the current target is observed.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "Rewrite both actual recursive states using the proved state identity, then apply strict-prefix predictor equality. Both the count and value agree before the current target is observed.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlPredict_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_mem",
+      "title": "The actual state predicts inside the interval",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 27,
+      "plain": "Rewrite the actual state by the proved identity and use predictor feasibility. Initial 2 at time 0 is an ambient outside-domain counterexample, rather than a source-feasible test.",
+      "math": "c\\in[0,1],\\ (\\forall i<t,\\ y_i\\in[0,1])\\Rightarrow S_c(t)_2\\in[0,1]",
+      "intuition": "Rewrite the actual state by the proved identity and use predictor feasibility. Initial 2 at time 0 is an ambient outside-domain counterexample, rather than a source-feasible test.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "Rewrite the actual state by the proved identity and use predictor feasibility. Initial 2 at time 0 is an ambient outside-domain counterexample, rather than a source-feasible test.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlPredict_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlState_half",
+      "title": "The half-state is the existing regret trajectory",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 28,
+      "plain": "Compose the recursive-state identity and exact half-predictor identity. This identifies the same trajectory at every time; the canary calls the prior refined regret theorem after this rewrite.",
+      "math": "S_{1/2}(t)=(t,\\operatorname{meanPredict}(y,t))",
+      "intuition": "Compose the recursive-state identity and exact half-predictor identity. This identifies the same trajectory at every time; the canary calls the prior refined regret theorem after this rewrite.",
+      "why": "Expose the running-average invariant and the precise initialization, prefix and feasibility interfaces.",
+      "position": "Orabona arXiv:1912.13213v10, printed p.3 / PDF15 and printed p.6 / PDF18; derived library interfaces, not numbered source theorems.",
+      "proof_idea": "Compose the recursive-state identity and exact half-predictor identity. This identifies the same trajectory at every time; the canary calls the prior refined regret theorem after this rewrite.",
+      "lean_notes": "Fix the same initial c before observing targets. Lean time t counts the strict past y0,...,y(t-1). The identities hold for real c and targets; feasibility requires c and only that strict prefix in [0,1]. The source permits any feasible first prediction and describes a running average. The explicit recursion and its equivalence proof are library derivations. The state uses an unbounded natural count and an exact real value, with no fixed-bit memory, extracted executable or runtime guarantee. The prior quarter/refined regret bounds transfer at c=1/2; no general-c rate is proved by this package.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlPredict_half",
+        "BanditRL.OnlineLearning.meanPredict"
+      ]
     }
   ]
 }

@@ -1,0 +1,189 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-FTL-STATE-INTEGRATION-20261021",
+  "route": "online-learning / Chapter 1 recursive Follow-the-Leader state",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona; Chapter 1 printed pages 3-6 / PDF pages 15-18. Arbitrary feasible initialization on page 3; Theorem 1.3 retains half initialization; summary prose on page 6.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged three definitions, eight proofs and six canaries from PR189, with explicit derived recurrence, existing Mean reuse and complete original-scope retention.",
+  "affected_files": [
+    "BanditRLProof/OnlineLearningFTLState.lean",
+    "website/content/declaration-boundaries.json",
+    "website/scripts/build_site.py",
+    "BanditRLProof.lean",
+    "website/content/readings.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.ftlPredict",
+    "BanditRL.OnlineLearning.ftlMeanStep",
+    "BanditRL.OnlineLearning.ftlState",
+    "BanditRL.OnlineLearning.ftlPredict_prefix",
+    "BanditRL.OnlineLearning.ftlPredict_mem",
+    "BanditRL.OnlineLearning.ftlPredict_half",
+    "BanditRL.OnlineLearning.ftlState_first",
+    "BanditRL.OnlineLearning.ftlState_eq_predict",
+    "BanditRL.OnlineLearning.ftlState_prefix",
+    "BanditRL.OnlineLearning.ftlState_mem",
+    "BanditRL.OnlineLearning.ftlState_half"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted main and original PR189 exact files compared; current Mean is byte-identical to original.",
+      "Private search-memory, declaration inventory, local and upstream searches retained with intake."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.empiricalMean",
+      "BanditRL.OnlineLearning.empiricalMean_succ",
+      "BanditRL.OnlineLearning.empiricalMean_mem",
+      "BanditRL.OnlineLearning.meanPredict"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.ftlPredict",
+      "BanditRL.OnlineLearning.ftlMeanStep",
+      "BanditRL.OnlineLearning.ftlState",
+      "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "BanditRL.OnlineLearning.ftlPredict_mem",
+      "BanditRL.OnlineLearning.ftlPredict_half",
+      "BanditRL.OnlineLearning.ftlState_first",
+      "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "BanditRL.OnlineLearning.ftlState_prefix",
+      "BanditRL.OnlineLearning.ftlState_mem",
+      "BanditRL.OnlineLearning.ftlState_half"
+    ],
+    "known_consumers": [
+      "ftlState_eq_predict uses the existing empiricalMean_succ recurrence.",
+      "ftlState_prefix, ftlState_mem and ftlState_half consume the invariant; six canaries exercise initialization, updates and regret boundaries."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the same library and accepted mean substrate. Preserve the original recursive producer and prove its invariant rather than duplicate the closed-form predictor as state."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-blind-decoder",
+    "source_reviewer": "independent-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "A bounded exact-real state interface with explicit source deltas. The source permits a feasible arbitrary first prediction, while Theorem 1.3 fixes one half. The recursive update and its equivalence are derived library results, not eight printed book theorems. Prefix congruence compares one fixed initialization and strict past observations. Feasibility requires the initial value and past labels in [0,1]. No arbitrary-initial regret theorem, constant-bit memory, machine runtime or executable-real guarantee is supplied. Chapter and book obligations, PR203 and 18 historical artifact-hash use sites remain separate and open. No original PR closure or branch retirement follows from this packet."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A concrete exact-real state representation and invariant; no separately certified cross-setting bridge or functor is introduced.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Current renderer reader/module images and graph detail images independently accepted; all11 declarations plus module found through24desktop/mobile search interactions. No deployed acceptance claimed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: recursive state family, nine notes and induction proof bridge in the existing foundations reader",
+    "banditrlwiki": "updated: bounded science and retained provenance in research-wiki/integrations/ONLINE-CH1-FTL-STATE-INTEGRATION-20261021",
+    "results_ledger": "no-change-with-reason: no chapter, full source Anchor or frontier milestone completed",
+    "roadmap": "no-change-with-reason: broader Chapter 1 and PR203 obligations retain their owners",
+    "website_surfaces": [
+      "Online foundations reader and chapter route",
+      "Nine formula notes and complete recursive definition disclosure",
+      "Shared generated Lean module/declaration graph",
+      "Bounded provenance packet and original author attribution"
+    ]
+  },
+  "truth_boundary": "A bounded exact-real state interface with explicit source deltas. The source permits a feasible arbitrary first prediction, while Theorem 1.3 fixes one half. The recursive update and its equivalence are derived library results, not eight printed book theorems. Prefix congruence compares one fixed initialization and strict past observations. Feasibility requires the initial value and past labels in [0,1]. No arbitrary-initial regret theorem, constant-bit memory, machine runtime or executable-real guarantee is supplied. Chapter and book obligations, PR203 and 18 historical artifact-hash use sites remain separate and open. No original PR closure or branch retirement follows from this packet.",
+  "verification": {
+    "focused_checks": [
+      "3329-job focused Lean build passed; exact original production/canary hashes retained.",
+      "Six source-range regressions passed; all10825 existing declaration objects preserved,11 new nodes,zero placeholders.",
+      "Independent source review accepted exact signatures and proof bodies; private18-declaration axiom audit uses only standard axioms.",
+      "Combined library9093jobs and Tests9245jobs passed;24 actual imported type/axiom checks,19 proposition identities and16 prespecified VALUE pairs passed."
+    ],
+    "bandit_check": "Current-main full harness passed469tests with7environment skips.",
+    "site_build": "Current-main --lean-verified build passed after fresh combined Lean and full harness.",
+    "site_check": "Current-main verified build/sitecheck passed; offline772unique-formula gate across69pages passed with external network blocked.97fresh reader/module captures and4graph-detail captures independently reviewed;24search interactions passed.",
+    "independent_review": "Science-v2, scope-v3 and current-main final-integration-v1 accepted bounded mathematics,24-node compiled graph,860row retention and16publication-object mapping. This metadata-only successor preserves those payloads."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in Git/PR history and immutable provenance"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "Unchanged historical implementation with no new proof-search failure. Historical failed variants are preserved, not discarded.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "historical-recursive-ftl-state"
+      ],
+      "expected_information_gain": "One unchanged proof route with required independent source/blind/scope review, not competing proof search.",
+      "shared_verified_context_digest": "Source PDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; current integration base 18a57fac8b986b8c97ce22a56693c084e61a8253"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Recursive mean/count state with induction on observation count.",
+      "selection_reason": "No competing parallel proof routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Local mathematical text, actual current-renderer images and graph interactions accepted. Local purification audit found no residue or duplicate semantics. Exposition seal and post-merge PURIFIED status remain pending exact remote source links/main/live acceptance.",
+      "source_expansion_nodes": [
+        "p15-mean",
+        "p15-ftl",
+        "p16-thm13",
+        "p18-memory",
+        "gap-running-summary-equivalence"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.ftlMeanStep",
+        "BanditRL.OnlineLearning.ftlState",
+        "BanditRL.OnlineLearning.ftlPredict_prefix",
+        "BanditRL.OnlineLearning.ftlPredict_mem",
+        "BanditRL.OnlineLearning.ftlPredict_half",
+        "BanditRL.OnlineLearning.ftlState_first",
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlState_prefix",
+        "BanditRL.OnlineLearning.ftlState_mem",
+        "BanditRL.OnlineLearning.ftlState_half"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
