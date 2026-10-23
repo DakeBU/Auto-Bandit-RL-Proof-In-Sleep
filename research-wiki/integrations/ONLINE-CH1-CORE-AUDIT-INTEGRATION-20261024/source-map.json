@@ -1,0 +1,1807 @@
+{
+  "sourcePDFSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10, 21 June 2026",
+    "anchor": "Francesco Orabona; Chapter 1 printed pp.1-6 / PDF pp.13-18, especially Lemma 1.2 and squared-loss motivation. One numbered source lemma and eleven generic, derived, regularity or arithmetic APIs; roles remain individually classified.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "main": "4f09957dbdc79a64609c74d96c42a663f4d5caa9",
+  "originalBase": "6b387a39e401cb1b90003fca6e49d3bdd9ce7a9a",
+  "originalHead": "4ca57025a2cdc4f4ba0d5cc2423b55786b0a7afe",
+  "reuseOnly": true,
+  "newBlindReviewPerformed": false,
+  "priorAcceptedPacket": "research-wiki/integrations/ONLINE-CH1-CORE-INTEGRATION-20261014",
+  "reuseReason": "The exact five complete H production files equal the Batch9 source-first/topology/blind/semantic/body-reviewed inputs and current main. All 12 exact signatures, seven-slot comparisons and binder/body dispositions carry with their explicit source-relative deltas. Original B-to-H changes are module comments only.",
+  "productionFiles": {
+    "BanditRLProof/OnlineLearningFoundations.lean": {
+      "originalBaseGitSHA256": "481947faa24af8a1fc5bb239fed7c364bd411467d591fa169167a5ba2189948a",
+      "historicalBaseCRLFSHA256": "e23ebdca2f7ce21a16173c93390fd24d16ba36e403c9d084233f7480e75408b8",
+      "originalHeadAndCurrentMainGitSHA256": "1ddd99831395cf74993f7d52cdacd2b7d30c48458e4e2480e3229a56c797fe6a",
+      "sameAsBatch9": true,
+      "onlyOriginalBaseToHeadChange": "one module-level source qualification comment",
+      "headGitBlob": "f683946bfa8c0635417839951cf4298826793a02"
+    },
+    "BanditRLProof/OnlineLearningStochastic.lean": {
+      "originalBaseGitSHA256": "a5b2f605b1e72dc8a08cd50c74afd87e14f68852e0f0715db923ec842633f9b9",
+      "historicalBaseCRLFSHA256": "0242481022883958afef677654fadd3f6e37b381f3fe463e3605f3eb0542f2bd",
+      "originalHeadAndCurrentMainGitSHA256": "a0ffa008fccedf285d6cddb5e6cba0e68b0a38e42f4f224aa792521b238b4e12",
+      "sameAsBatch9": true,
+      "onlyOriginalBaseToHeadChange": "one module-level source qualification comment",
+      "headGitBlob": "b99631ce371dfcce8f39453fd825d418adffab22"
+    },
+    "BanditRLProof/OnlineLearningInformation.lean": {
+      "originalBaseGitSHA256": "f05918f23bc9314bf3a69715b68112086a1052fc602f7fdffc72b8edabe63d8c",
+      "historicalBaseCRLFSHA256": "72bef017a43c293d0d3c449707e4a0e058f4655c2483b54c3120d7b41c98135a",
+      "originalHeadAndCurrentMainGitSHA256": "ad8021e71529dbddfd1668ea26b62106f151779b5a857ee39d5a6c67ab0fbb19",
+      "sameAsBatch9": true,
+      "onlyOriginalBaseToHeadChange": "one module-level source qualification comment",
+      "headGitBlob": "9c5659c7b53120dc1b424627104b96568e5a2080"
+    },
+    "BanditRLProof/OnlineLearningIID.lean": {
+      "originalBaseGitSHA256": "a0abfd6628b3667622e4d8b7ec368598766e9ab34111784eff029715f0ff5d84",
+      "historicalBaseCRLFSHA256": "92af24e6a2c2b1054503492b2bad97cd17ccea2217439f6d2f8a7bedb0de3d5e",
+      "originalHeadAndCurrentMainGitSHA256": "397b7139671a4dd309941be0c04ef800da45bbf7c51404991d5c9a038e837378",
+      "sameAsBatch9": true,
+      "onlyOriginalBaseToHeadChange": "one module-level source qualification comment",
+      "headGitBlob": "757aa0c20c3e997d55c8c327cbd015455c033b9c"
+    },
+    "BanditRLProof/OnlineLearningHistory.lean": {
+      "originalBaseGitSHA256": "cadb098810c024a7ac372db6a3de3e0e60721499bf3d1aacd82b0132dfb21453",
+      "historicalBaseCRLFSHA256": "3412177ab7dd0ac0e350d8fde7f91e61640d55743d1f17d15c62a65dd4492fc7",
+      "originalHeadAndCurrentMainGitSHA256": "7adbeb4472db77bd2bc85bed897d9b1e6aa113c90b2f00eabc39d7b2ca50988f",
+      "sameAsBatch9": true,
+      "onlyOriginalBaseToHeadChange": "one module-level source qualification comment",
+      "headGitBlob": "33cf32f3aee8a43227e6bc548bea392e5f0d5578"
+    }
+  },
+  "declarations": [
+    {
+      "target": "A001",
+      "name": "BanditRL.OnlineLearning.lemma_1_2",
+      "neutralName": "T01",
+      "sourceRole": "numbered-source-anchor",
+      "sourceTopologyAnchors": [
+        "N26"
+      ],
+      "signatureSHA256": "e87a9e3d0823f50c666d2f290d9a82acea7259a846b0d4698f6bcd339fa6cc0d",
+      "bodyReview": "Actual induction, prefix restriction, terminal-summand cancellation and minimizer comparison. Both hmem and hmin used; neither supplied conclusion nor stronger regularity.",
+      "binderGroups": [
+        {
+          "binders": [
+            "X",
+            "V",
+            "loss",
+            "leader",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hmem"
+          ],
+          "classification": "SOURCE",
+          "reason": "For all 0<n<=T selected prefix minimizer is feasible."
+        },
+        {
+          "binders": [
+            "hmin"
+          ],
+          "classification": "SOURCE",
+          "reason": "For all 0<n<=T and every u in V the selected prefix loss is minimal."
+        }
+      ],
+      "semanticDelta": "Arbitrary ambient type and total loss generalize Euclidean source; T=0 empty-sum extension. Positive-horizon source specializes faithfully.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Universally quantified deterministic inequality",
+          "actual_evidence": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)\n    (leader : ℕ → X) (T : ℕ)\n    (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V)\n    (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V,\n      (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) :\n    (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤\n      ∑ t ∈ Finset.range T, loss t (leader T)",
+          "comparison": "match",
+          "source_note": "Arbitrary ambient type and total loss generalize Euclidean source; T=0 empty-sum extension. Positive-horizon source specializes faithfully."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit X : Type u₁",
+            "V : Set X",
+            "loss : ℕ → X → ℝ",
+            "leader : ℕ → X",
+            "T : ℕ",
+            "first assume ∀ n : ℕ, 0<n → n≤T → leader n∈V",
+            "then assume ∀ n : ℕ, 0<n → n≤T → ∀ u : X, u∈V → prefix-minimization inequality",
+            "then conclude the displayed sum inequality"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "Every leader n with 1≤n≤T belongs to V. For each such n, it minimizes the n-term cumulative loss over every u∈V: Σ_{t<n} loss t (leader n) ≤ Σ_{t<n} loss t u.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "X",
+                "V",
+                "loss",
+                "leader",
+                "T"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hmem"
+              ],
+              "classification": "SOURCE",
+              "reason": "For all 0<n<=T selected prefix minimizer is feasible."
+            },
+            {
+              "binders": [
+                "hmin"
+              ],
+              "classification": "SOURCE",
+              "reason": "For all 0<n<=T and every u in V the selected prefix loss is minimal."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "Under those two assumptions,\n\\[\n\\sum_{t=0}^{T-1}\\ell_t(\\mathrm{leader}_{t+1})\n\\le\n\\sum_{t=0}^{T-1}\\ell_t(\\mathrm{leader}_{T}).\n\\]",
+          "actual_evidence": "Actual induction, prefix restriction, terminal-summand cancellation and minimizer comparison. Both hmem and hmin used; neither supplied conclusion nor stronger regularity.",
+          "comparison": "match",
+          "source_note": "Arbitrary ambient type and total loss generalize Euclidean source; T=0 empty-sum extension. Positive-horizon source specializes faithfully."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "The minimizer leader n uses the n losses indexed 0,…,n−1. The left side evaluates leader(t+1) on loss t. Both sums have T terms. At T=0 the premises are vacuous and the conclusion is 0≤0.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "No probability, topology, measurable structure, or causal restriction. In particular leader(t+1) is a minimizer including the current loss t.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "Existence of the indicated minimizing leaders is assumed, not concluded. No membership of leader 0 is required. No assertion is made for n>T, no uniqueness is required, and the conclusion is not a bound on the losses of leader t.",
+          "comparison": "match",
+          "source_note": "Accepted for stated numbered-source-anchor with recorded source correspondence and boundary. Arbitrary ambient type and total loss generalize Euclidean source; T=0 empty-sum extension. Positive-horizon source specializes faithfully."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 8,
+      "currentLine": 12
+    },
+    {
+      "target": "A002",
+      "name": "BanditRL.OnlineLearning.expected_square_decomposition",
+      "neutralName": "T09",
+      "sourceRole": "conditional-library-probability-identity",
+      "sourceTopologyAnchors": [
+        "N06",
+        "G01"
+      ],
+      "signatureSHA256": "5552d13ee2b6d4fa27509f36f2ebd5655575205f293d8b11ecfd1e7f6d0a68bd",
+      "bodyReview": "Variance const-sub identity and integrability of differences produce squared-bias decomposition.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "u"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "EXCESS",
+          "reason": "L2 input is a legitimate generalized square-identity condition, but source bounded setting should derive it rather than add it to an exact source endpoint."
+        }
+      ],
+      "semanticDelta": "Single deterministic real comparator, generic L2 variable, no support or strategy-class conclusion.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Exact population square-loss decomposition",
+          "actual_evidence": "theorem expected_square_decomposition {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ) (hY : MemLp Y 2 μ) (u : ℝ) :\n    (∫ ω, (u - Y ω)^2 ∂μ) = variance Y μ + (u - ∫ ω, Y ω ∂μ)^2",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : Ω → ℝ",
+            "assume MemLp Y 2 μ",
+            "then ∀ u : ℝ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "μ has total mass 1. Y belongs to MemLp at exponent 2: it is μ-almost-everywhere strongly measurable with finite L² seminorm. On this probability space this supplies the required finite first and second moments.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "u"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "EXCESS",
+              "reason": "L2 input is a legitimate generalized square-identity condition, but source bounded setting should derive it rather than add it to an exact source endpoint."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "Set \\(m=\\int Y\\,d\\mu\\) and \\(v=\\operatorname{Var}_\\mu(Y)\\). Then, for every real constant u,\n\\[\n\\int (u-Y)^2\\,d\\mu=v+(u-m)^2.\n\\]",
+          "actual_evidence": "Variance const-sub identity and integrability of differences produce squared-bias decomposition.",
+          "comparison": "match",
+          "source_note": "Single deterministic real comparator, generic L2 variable, no support or strategy-class conclusion."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "No time index or finite-prefix normalization. The coefficient of the squared bias is 1 because μ is a probability measure.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "An identity of real integrals for a square-integrable real random variable. It assumes no independence or additional source of randomness; u is deterministic.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "MemLp is the actual hypothesis, not the stronger literal requirement Measurable Y. No boundedness or distributional form is required. The statement is not an almost-sure equality of random variables or a concentration bound.",
+          "comparison": "match",
+          "source_note": "Accepted conditional library property; any EXCESS-relative-to-source premise may not be retained in promotion as complete source endpoint. Single deterministic real comparator, generic L2 variable, no support or strategy-class conclusion."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 9,
+      "currentLine": 13
+    },
+    {
+      "target": "A003",
+      "name": "BanditRL.OnlineLearning.independent_prediction_square",
+      "neutralName": "T10",
+      "sourceRole": "conditional-library-probability-identity",
+      "sourceTopologyAnchors": [
+        "N06",
+        "G01"
+      ],
+      "signatureSHA256": "90a2ed35bb5e8933fd8714dd530b17fe4f6c1799e004025f719e429550728e30",
+      "bodyReview": "Variance difference formula, independent covariance zero, two integrals of differences and algebra.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "P",
+            "Y"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hP",
+            "hY"
+          ],
+          "classification": "EXCESS",
+          "reason": "Explicit L2 conditions; legitimate identity inputs and derived by bounded consumers."
+        },
+        {
+          "binders": [
+            "h"
+          ],
+          "classification": "EXCESS",
+          "reason": "Current prediction/target independence is a dependency to be derived from online iid information, not a free source endpoint assumption."
+        }
+      ],
+      "semanticDelta": "No causal strategy produced here; T19/T25 discharge independence in concrete consumers.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Exact expected square-loss decomposition for two independent random variables",
+          "actual_evidence": "theorem independent_prediction_square {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (P Y : Ω → ℝ)\n    (hP : MemLp P 2 μ) (hY : MemLp Y 2 μ) (h : IndepFun P Y μ) :\n    (∫ ω, (P ω - Y ω)^2 ∂μ) =\n      (∫ ω, (P ω - ∫ ω, Y ω ∂μ)^2 ∂μ) + variance Y μ",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "P : Ω → ℝ",
+            "Y : Ω → ℝ",
+            "assume MemLp P 2 μ",
+            "then assume MemLp Y 2 μ",
+            "then assume IndepFun P Y μ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "μ is a probability measure. Both P and Y are μ-almost-everywhere strongly measurable and square-integrable. P and Y are independent under μ.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "P",
+                "Y"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hP",
+                "hY"
+              ],
+              "classification": "EXCESS",
+              "reason": "Explicit L2 conditions; legitimate identity inputs and derived by bounded consumers."
+            },
+            {
+              "binders": [
+                "h"
+              ],
+              "classification": "EXCESS",
+              "reason": "Current prediction/target independence is a dependency to be derived from online iid information, not a free source endpoint assumption."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "With \\(m=\\int Y\\,d\\mu\\),\n\\[\n\\int(P-Y)^2\\,d\\mu\n=\n\\int(P-m)^2\\,d\\mu+\\operatorname{Var}_\\mu(Y).\n\\]",
+          "actual_evidence": "Variance difference formula, independent covariance zero, two integrals of differences and algebra.",
+          "comparison": "match",
+          "source_note": "No causal strategy produced here; T19/T25 discharge independence in concrete consumers."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "Unnormalized probability integrals. The first term on the right remains the expected square around m, not merely (E[P]−m)².",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "Independence of the two functions is an explicit assumption. P can be random; unlike u in T09 it need not be a constant.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "No assertion of conditional independence, identical distributions, boundedness, or a pathwise identity. The result cannot be read as applying to an arbitrary dependent P without the independence premise.",
+          "comparison": "match",
+          "source_note": "Accepted conditional library property; any EXCESS-relative-to-source premise may not be retained in promotion as complete source endpoint. No causal strategy produced here; T19/T25 discharge independence in concrete consumers."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 23,
+      "currentLine": 27
+    },
+    {
+      "target": "A004",
+      "name": "BanditRL.OnlineLearning.meanPredict_independent",
+      "neutralName": "T19",
+      "sourceRole": "derived-information-producer",
+      "sourceTopologyAnchors": [
+        "N06",
+        "N25",
+        "G01"
+      ],
+      "signatureSHA256": "f19faddc226d573348654715dc2499db35b1d40c659ef69ef330e8c51e5fd39d",
+      "bodyReview": "Initial constant independent; later independence of past sum/current target, compose division and identity.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        }
+      ],
+      "semanticDelta": "Actual strict-past mean predictor; no supplied current independence, no same law or support needed.",
+      "priorVerdict": "accepted",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Independence of the concrete strict-past prediction and current observation",
+          "actual_evidence": "theorem meanPredict_independent {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ) :\n    IndepFun (fun ω => meanPredict (fun i => Y i ω) t) (Y t) μ",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then assume iIndepFun Y μ",
+            "then ∀ t : ℕ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "Every Y_t is measurable on the given measurable space. The entire indexed family (Y_t) is independent under the probability measure μ, in the joint indexed sense of iIndepFun, not merely pairwise independence.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "t"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            },
+            {
+              "binders": [
+                "hind"
+              ],
+              "classification": "SOURCE",
+              "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "Define \\(P_t(\\omega)=p_t(i\\mapsto Y_i(\\omega))\\). Then for every natural t,\n\\[\nP_t\\ \\text{and}\\ Y_t\\quad\\text{are independent under }\\mu.\n\\]",
+          "actual_evidence": "Initial constant independent; later independence of past sum/current target, compose division and identity.",
+          "comparison": "match",
+          "source_note": "Actual strict-past mean predictor; no supplied current independence, no same law or support needed."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "P₀ is the constant 1/2. For t>0, P_t is the arithmetic mean of Y₀,…,Y_{t−1}, with normalization t.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "An independence assertion about random variables at each t. The strict-past dependence and the independent-family hypothesis explain the information separation.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "No identical-distribution assumption, pointwise range bound, or L² condition is present. Does not assert that predictions at different times are mutually independent, or that every causal process is independent of current data without the family-independence premise.",
+          "comparison": "match",
+          "source_note": "Accepted for stated derived-information-producer with recorded source correspondence and boundary. Actual strict-past mean predictor; no supplied current independence, no same law or support needed."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 9,
+      "currentLine": 13
+    },
+    {
+      "target": "A005",
+      "name": "BanditRL.OnlineLearning.meanPredict_measurable",
+      "neutralName": "T20",
+      "sourceRole": "derived-measurability-producer",
+      "sourceTopologyAnchors": [
+        "N25"
+      ],
+      "signatureSHA256": "6894d9c71e95e3097e596ddfb2219a1bbdcade1fd14655e4c5cb8778eda51ee9",
+      "bodyReview": "Unfold initial branch/arithmetic mean and use measurable finite arithmetic.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "Y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        }
+      ],
+      "semanticDelta": "No probability measure/independence/support needed.",
+      "priorVerdict": "accepted",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Measurability of the concrete prediction",
+          "actual_evidence": "theorem meanPredict_measurable {Ω : Type*} [MeasurableSpace Ω]\n    (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (t : ℕ) :\n    Measurable (fun ω => meanPredict (fun i => Y i ω) t)",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then ∀ t : ℕ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "Every coordinate Y_t is measurable. There is no measure μ parameter and no probability-measure instance.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "Y",
+                "t"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "For every natural t,\n\\[\n\\omega\\longmapsto p_t(i\\mapsto Y_i(\\omega))\n\\quad\\text{is measurable}.\n\\]",
+          "actual_evidence": "Unfold initial branch/arithmetic mean and use measurable finite arithmetic.",
+          "comparison": "match",
+          "source_note": "No probability measure/independence/support needed."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "Includes the constant t=0 case and finite-prefix average at positive t.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "A statement of actual measurability relative to the supplied measurable space on Ω and the standard measurable structure on ℝ.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "No independence, integrability, boundedness, probability law, or filtration is assumed or concluded. This statement must not be weakened in transcription to only almost-everywhere measurability.",
+          "comparison": "match",
+          "source_note": "Accepted for stated derived-measurability-producer with recorded source correspondence and boundary. No probability measure/independence/support needed."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 9,
+      "currentLine": 13
+    },
+    {
+      "target": "A006",
+      "name": "BanditRL.OnlineLearning.meanPredict_memLp",
+      "neutralName": "T21",
+      "sourceRole": "restricted-integrability-producer",
+      "sourceTopologyAnchors": [
+        "N25",
+        "G01"
+      ],
+      "signatureSHA256": "d29e939005da654bf8181894f8d7e9665e6019b367b9cf5ea6a0041dbdef3c5b",
+      "bodyReview": "T20 and actual feasibility T12, pointwise-to-eventual support, memLp_of_bounded.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        }
+      ],
+      "semanticDelta": "Pointwise support restriction explicit; proves L2 instead of passing it to final identity.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Square integrability of the concrete prediction",
+          "actual_evidence": "theorem meanPredict_memLp {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ) :\n    MemLp (fun ω => meanPredict (fun i => Y i ω) t) 2 μ",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then assume ∀ t : ℕ, ∀ ω : Ω, Y t ω∈[0,1]",
+            "then ∀ t : ℕ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "μ is a probability measure. All Y_t are measurable. The [0,1] range condition is pointwise for every t and every ω.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "t"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            },
+            {
+              "binders": [
+                "hb"
+              ],
+              "classification": "EXCESS",
+              "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "For every natural t, with \\(P_t(\\omega)=p_t(i\\mapsto Y_i(\\omega))\\),\n\\[\nP_t\\in\\operatorname{MemLp}(2,\\mu).\n\\]\nThus P_t is μ-almost-everywhere strongly measurable and has finite L² seminorm.",
+          "actual_evidence": "T20 and actual feasibility T12, pointwise-to-eventual support, memLp_of_bounded.",
+          "comparison": "match",
+          "source_note": "Pointwise support restriction explicit; proves L2 instead of passing it to final identity."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "Applies to every t, including t=0. The prediction mean at positive t uses exactly the previous t observations.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "No independence or identical-distribution assumption is needed. The global range assumption is stronger than an almost-sure boundedness assumption and is preserved literally.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "The conclusion is membership in L², not an explicit numeric L² norm formula or a claim of independence or convergence.",
+          "comparison": "match",
+          "source_note": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor. Pointwise support restriction explicit; proves L2 instead of passing it to final identity."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 16,
+      "currentLine": 20
+    },
+    {
+      "target": "A007",
+      "name": "BanditRL.OnlineLearning.iid_meanPredict_excess",
+      "neutralName": "T22",
+      "sourceRole": "restricted-mean-learner-stochastic-result",
+      "sourceTopologyAnchors": [
+        "N07",
+        "N06",
+        "G01"
+      ],
+      "signatureSHA256": "59be69303a68e0a30f6b437dee0c553e0fce2cec18350bf8734251d4600e490f",
+      "bodyReview": "Derive target/predictor L2, integrate finite sum, T10 with T19 independence, transport mean/variance by identical distribution and sum.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hlaw"
+          ],
+          "classification": "SOURCE",
+          "reason": "Each target has same distribution as Y0, matching identical-law part of iid."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        }
+      ],
+      "semanticDelta": "Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Exact expected cumulative square-loss decomposition",
+          "actual_evidence": "theorem iid_meanPredict_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) -\n      T * variance (Y 0) μ =\n        ∑ t ∈ Finset.range T,\n          ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then assume iIndepFun Y μ",
+            "then assume ∀ t : ℕ, IdentDistrib (Y t) (Y 0) μ μ",
+            "then assume ∀ t : ℕ, ∀ ω : Ω, Y t ω∈[0,1]",
+            "then ∀ T : ℕ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "The coordinates are measurable, jointly independent as an indexed family, and each Y_t has the same distribution as Y₀ under μ. They lie in [0,1] for all t and all ω. μ is a probability measure.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "T"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            },
+            {
+              "binders": [
+                "hind"
+              ],
+              "classification": "SOURCE",
+              "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+            },
+            {
+              "binders": [
+                "hlaw"
+              ],
+              "classification": "SOURCE",
+              "reason": "Each target has same distribution as Y0, matching identical-law part of iid."
+            },
+            {
+              "binders": [
+                "hb"
+              ],
+              "classification": "EXCESS",
+              "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "Let \\(P_t(\\omega)=p_t(i\\mapsto Y_i(\\omega))\\), \\(m=\\int Y_0\\,d\\mu\\), and \\(v=\\operatorname{Var}_\\mu(Y_0)\\). For every natural horizon T,\n\\[\n\\int\\left[\\sum_{t=0}^{T-1}(P_t-Y_t)^2\\right]\\,d\\mu\n-Tv\n=\n\\sum_{t=0}^{T-1}\\int(P_t-m)^2\\,d\\mu.\n\\]",
+          "actual_evidence": "Derive target/predictor L2, integrate finite sum, T10 with T19 independence, transport mean/variance by identical distribution and sum.",
+          "comparison": "match",
+          "source_note": "Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "No division by T occurs. The left integral encloses the entire finite cumulative sum; the right side is a finite sum of expected squares. T is coerced to ℝ in Tv. At T=0 both sides are 0.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "The same deterministic population mean m and variance v of Y₀ are used at every round. The identical-distribution assumption supplies the common law. This is a numerical expectation identity, with all data conditions preceding ∀T.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "It is not a samplewise identity, not an identity involving the empirical final mean a_T, and not a regret bound against a sample-dependent optimum. No high-probability statement, convergence, O(log T) estimate, or O(1/T) normalization is stated.",
+          "comparison": "match",
+          "source_note": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor. Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 25,
+      "currentLine": 29
+    },
+    {
+      "target": "A008",
+      "name": "BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg",
+      "neutralName": "T23",
+      "sourceRole": "restricted-mean-learner-stochastic-result",
+      "sourceTopologyAnchors": [
+        "N09",
+        "G01"
+      ],
+      "signatureSHA256": "c54acdba53e11c2e150f566a1cb371155618a1d111b4c5bd79bdccd99bc5ff04",
+      "bodyReview": "Rewrite T22; nonnegative integrals of squares and finite-sum nonnegativity.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hlaw"
+          ],
+          "classification": "SOURCE",
+          "reason": "Each target has same distribution as Y0, matching identical-law part of iid."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        }
+      ],
+      "semanticDelta": "Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Nonnegative expected excess cumulative square loss above the common variance baseline",
+          "actual_evidence": "theorem iid_meanPredict_excess_nonneg {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    0 ≤ (∫ ω, ∑ t ∈ Finset.range T, (meanPredict (fun i => Y i ω) t - Y t ω)^2 ∂μ) -\n      T * variance (Y 0) μ",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then assume iIndepFun Y μ",
+            "then assume ∀ t : ℕ, IdentDistrib (Y t) (Y 0) μ μ",
+            "then assume ∀ t : ℕ, ∀ ω : Ω, Y t ω∈[0,1]",
+            "then ∀ T : ℕ"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "The same full assumptions as T22: probability measure, measurable indexed family, joint indexed independence, identical law to Y₀ for each coordinate, and pointwise [0,1] range at every t and ω.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "T"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            },
+            {
+              "binders": [
+                "hind"
+              ],
+              "classification": "SOURCE",
+              "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+            },
+            {
+              "binders": [
+                "hlaw"
+              ],
+              "classification": "SOURCE",
+              "reason": "Each target has same distribution as Y0, matching identical-law part of iid."
+            },
+            {
+              "binders": [
+                "hb"
+              ],
+              "classification": "EXCESS",
+              "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "With \\(P_t(\\omega)=p_t(i\\mapsto Y_i(\\omega))\\) and \\(v=\\operatorname{Var}_\\mu(Y_0)\\),\n\\[\n0\\le \\int\\left[\\sum_{t=0}^{T-1}(P_t-Y_t)^2\\right]\\,d\\mu-Tv\n\\quad\\text{for every }T\\in\\mathbb N.\n\\]",
+          "actual_evidence": "Rewrite T22; nonnegative integrals of squares and finite-sum nonnegativity.",
+          "comparison": "match",
+          "source_note": "Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "This is an unnormalized cumulative expectation minus T times a single common variance. At T=0 the quantity equals 0.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "An expectation-level lower bound, not a random-variable inequality.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "Does not say realized cumulative loss is always at least Tv, and gives no upper bound or asymptotic convergence. The variance here is of Y₀, using identical distributions; dropping that assumption changes the premise set.",
+          "comparison": "match",
+          "source_note": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor. Specific strict-past mean learner, pointwise support, finite exact identity/nonnegativity including T=0; no arbitrary-strategy or asymptotic success theorem."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 52,
+      "currentLine": 56
+    },
+    {
+      "target": "A009",
+      "name": "BanditRL.OnlineLearning.source_mean_optimal",
+      "neutralName": "T24",
+      "sourceRole": "restricted-population-mean-optimality",
+      "sourceTopologyAnchors": [
+        "N06",
+        "G01"
+      ],
+      "signatureSHA256": "463d7a5658fbf3c335f46e2918a0bb5046e906de13785dfe0a32f571192e433b",
+      "bodyReview": "Boundedness yields L2 and L1, integral bounds give [0,1] mean, T09 at mean and arbitrary u gives variance optimum.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Measurable random-variable convention."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise support is stronger than a.e. support on arbitrary Omega; restricted API only."
+        }
+      ],
+      "semanticDelta": "One distribution, deterministic comparator all real u, not cumulative arbitrary strategy optimality.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Population mean feasibility and square-loss optimality",
+          "actual_evidence": "theorem source_mean_optimal {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : Ω → ℝ)\n    (hY : Measurable Y) (hb : ∀ ω, Y ω ∈ Set.Icc (0 : ℝ) 1) :\n    (∫ ω, Y ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n    (∫ ω, ((∫ ω, Y ω ∂μ) - Y ω)^2 ∂μ) = variance Y μ ∧\n    ∀ u : ℝ, variance Y μ ≤ ∫ ω, (u - Y ω)^2 ∂μ",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : Ω → ℝ",
+            "assume Measurable Y",
+            "then assume ∀ ω : Ω, Y ω∈[0,1]",
+            "then conclude A ∧ (B ∧ ∀ u : ℝ, C(u))"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "Y is measurable and lies in [0,1] at every ω, on a probability space.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Measurable random-variable convention."
+            },
+            {
+              "binders": [
+                "hb"
+              ],
+              "classification": "EXCESS",
+              "reason": "Pointwise support is stronger than a.e. support on arbitrary Omega; restricted API only."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "Set \\(m=\\int Y\\,d\\mu\\), \\(v=\\operatorname{Var}_\\mu(Y)\\). The conclusion is the conjunction, in this order,\n\\[\nm\\in[0,1],\n\\qquad\n\\int(m-Y)^2\\,d\\mu=v,\n\\qquad\n\\forall u\\in\\mathbb R,\\quad v\\le\\int(u-Y)^2\\,d\\mu.\n\\]\nOnly the third conjunct has the additional universal real comparator binder.",
+          "actual_evidence": "Boundedness yields L2 and L1, integral bounds give [0,1] mean, T09 at mean and arbitrary u gives variance optimum.",
+          "comparison": "match",
+          "source_note": "One distribution, deterministic comparator all real u, not cumulative arbitrary strategy optimality."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "No time or horizon parameter and no prefix averages. The mean is the population integral, not Q01.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "Pointwise boundedness plus actual measurability are the supplied premises. No independence assumption is needed.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "The minimization ranges over all real constants, not merely u∈[0,1]. The statement does not assert uniqueness or optimality among arbitrary random predictors that can observe Y. It does not replace the pointwise boundedness premise by an almost-sure one.",
+          "comparison": "match",
+          "source_note": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor. One distribution, deterministic comparator all real u, not cumulative arbitrary strategy optimality."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 63,
+      "currentLine": 67
+    },
+    {
+      "target": "A010",
+      "name": "BanditRL.OnlineLearning.history_policy_independent",
+      "neutralName": "T25",
+      "sourceRole": "derived-deterministic-history-information",
+      "sourceTopologyAnchors": [
+        "N06",
+        "G01"
+      ],
+      "signatureSHA256": "40b381592e2e290aa1183176520de1eb2c398cd906b89b9dd440b141bb4e8fa5",
+      "bodyReview": "Independence of disjoint coordinate finsets, measurable policy/projection composition.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t",
+            "policy"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hp"
+          ],
+          "classification": "STANDING",
+          "reason": "Measurable deterministic history policy regularity; policy type itself excludes private random seed/current target."
+        }
+      ],
+      "semanticDelta": "Finite strict-past deterministic measurable policies only; no randomized kernel or completed-information completeness.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Independence for every measurable policy on the finite strict past",
+          "actual_evidence": "theorem history_policy_independent {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (t : ℕ)\n    (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy) :\n    IndepFun (fun ω => policy (fun i => Y i ω)) (Y t) μ",
+          "comparison": "match",
+          "source_note": "Finite strict-past deterministic measurable policies only; no randomized kernel or completed-information completeness."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then assume iIndepFun Y μ",
+            "then ∀ t : ℕ",
+            "then ∀ policy : (↥(Finset.range t) → ℝ) → ℝ",
+            "then assume Measurable policy"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "All coordinates Y_t are measurable and jointly independent as an indexed family under the probability measure μ. For the selected t, policy is a measurable real-valued function on the finite product of real inputs indexed by {0,…,t−1}.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "t",
+                "policy"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            },
+            {
+              "binders": [
+                "hind"
+              ],
+              "classification": "SOURCE",
+              "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+            },
+            {
+              "binders": [
+                "hp"
+              ],
+              "classification": "STANDING",
+              "reason": "Measurable deterministic history policy regularity; policy type itself excludes private random seed/current target."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "Let \\(I_t=\\{i\\in\\mathbb N:i<t\\}\\), understood as the subtype \\(\\uparrow(\\mathrm{Finset.range}\\ t)\\), and define\n\\[\nH_t(\\omega)=(Y_i(\\omega))_{i\\in I_t},\n\\qquad A_t(\\omega)=\\mathrm{policy}(H_t(\\omega)).\n\\]\nThen A_t and Y_t are independent under μ.",
+          "actual_evidence": "Independence of disjoint coordinate finsets, measurable policy/projection composition.",
+          "comparison": "match",
+          "source_note": "Finite strict-past deterministic measurable policies only; no randomized kernel or completed-information completeness."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "The subtype input supplies exactly t ordered time coordinates. The coercion ↑i in the Lean expression extracts the underlying natural index. No averaging or normalization is imposed by this theorem. At t=0 the input space has a unique empty vector, so A₀ is constant.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "Measurable policy uses the standard product measurable structure on the finite real function space. The chosen policy is a deterministic map applied only to the strict-past vector. ∀t ∀policy appears after the family assumptions; each pair satisfies the independence conclusion.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "No identical-distribution, boundedness, continuity, or L² hypothesis on policy or Y. Does not cover a policy receiving Y_t, future values, arbitrary extra randomization, or an unspecified larger information set. It does not assert joint independence of the collection of all policy outputs.",
+          "comparison": "match",
+          "source_note": "Accepted for stated derived-deterministic-history-information with recorded source correspondence and boundary. Finite strict-past deterministic measurable policies only; no randomized kernel or completed-information completeness."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 8,
+      "currentLine": 12
+    },
+    {
+      "target": "A011",
+      "name": "BanditRL.OnlineLearning.history_policy_loss_ge_variance",
+      "neutralName": "T26",
+      "sourceRole": "restricted-deterministic-history-lower-bound",
+      "sourceTopologyAnchors": [
+        "N06",
+        "G01"
+      ],
+      "signatureSHA256": "2bbd39cadcc05282bca48975a503fa0d6d6100f5f139cfd32d9614396a00aa74",
+      "bodyReview": "Compose measurable policy, derive predictor/target L2 from bounds, T10 with actual T25 independence, nonnegative centered prediction square.",
+      "binderGroups": [
+        {
+          "binders": [
+            "Ω",
+            "MeasurableSpace Ω",
+            "μ"
+          ],
+          "classification": "TYPING",
+          "reason": "Probability-space carrier and measure typing."
+        },
+        {
+          "binders": [
+            "IsProbabilityMeasure μ"
+          ],
+          "classification": "SOURCE",
+          "reason": "The source fixed distribution is a probability law."
+        },
+        {
+          "binders": [
+            "Y",
+            "t",
+            "policy"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hY"
+          ],
+          "classification": "STANDING",
+          "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+        },
+        {
+          "binders": [
+            "hind"
+          ],
+          "classification": "SOURCE",
+          "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+        },
+        {
+          "binders": [
+            "hb"
+          ],
+          "classification": "EXCESS",
+          "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+        },
+        {
+          "binders": [
+            "hp"
+          ],
+          "classification": "STANDING",
+          "reason": "Measurable deterministic history policy."
+        },
+        {
+          "binders": [
+            "hpb"
+          ],
+          "classification": "EXCESS",
+          "reason": "All real history tuples must produce [0,1], stronger than feasibility only on legal histories."
+        }
+      ],
+      "semanticDelta": "Single current variance lower bound; no identical-law premise or common-variance cumulative endpoint; stronger pointwise/global-history restrictions.",
+      "priorVerdict": "accepted-with-explicit-delta",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Expected square-loss lower bound for any globally bounded measurable finite-past policy",
+          "actual_evidence": "theorem history_policy_loss_ge_variance {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (hb : ∀ t ω, Y t ω ∈ Set.Icc (0 : ℝ) 1) (t : ℕ)\n    (policy : ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : Measurable policy)\n    (hpb : ∀ z, policy z ∈ Set.Icc (0 : ℝ) 1) :\n    variance (Y t) μ ≤ ∫ ω, (policy (fun i => Y i ω) - Y t ω)^2 ∂μ",
+          "comparison": "match",
+          "source_note": "Single current variance lower bound; no identical-law premise or common-variance cumulative endpoint; stronger pointwise/global-history restrictions."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "implicit Ω : Type u₁",
+            "instance MeasurableSpace Ω",
+            "μ : Measure Ω",
+            "instance IsProbabilityMeasure μ",
+            "Y : ℕ → Ω → ℝ",
+            "assume ∀ t : ℕ, Measurable (Y t)",
+            "then assume iIndepFun Y μ",
+            "then assume ∀ t : ℕ, ∀ ω : Ω, Y t ω∈[0,1]",
+            "then ∀ t : ℕ",
+            "then ∀ policy : (↥(Finset.range t) → ℝ) → ℝ",
+            "then assume Measurable policy",
+            "then assume ∀ z : ↥(Finset.range t) → ℝ, policy z∈[0,1]"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "μ is a probability measure. All Y_t are measurable and jointly independent, and Y_t(ω)∈[0,1] for all t and ω. For the selected time t, policy is measurable and takes values in [0,1] for every real input vector z, not only for possible observed prefixes or for z∈[0,1]^t.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "Ω",
+                "MeasurableSpace Ω",
+                "μ"
+              ],
+              "classification": "TYPING",
+              "reason": "Probability-space carrier and measure typing."
+            },
+            {
+              "binders": [
+                "IsProbabilityMeasure μ"
+              ],
+              "classification": "SOURCE",
+              "reason": "The source fixed distribution is a probability law."
+            },
+            {
+              "binders": [
+                "Y",
+                "t",
+                "policy"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hY"
+              ],
+              "classification": "STANDING",
+              "reason": "Random-variable measurability is a source-implicit regularity convention; explicit all-time premise is broader in index extent than finite consumers need."
+            },
+            {
+              "binders": [
+                "hind"
+              ],
+              "classification": "SOURCE",
+              "reason": "Joint independence from source iid assumption; no identical-law premise needed in independence-only interfaces."
+            },
+            {
+              "binders": [
+                "hb"
+              ],
+              "classification": "EXCESS",
+              "reason": "Pointwise unit-interval support on every sample point is stronger than distributional/a.e. support on a generic probability space; accepted only as disclosed restricted helper input, not exact source support."
+            },
+            {
+              "binders": [
+                "hp"
+              ],
+              "classification": "STANDING",
+              "reason": "Measurable deterministic history policy."
+            },
+            {
+              "binders": [
+                "hpb"
+              ],
+              "classification": "EXCESS",
+              "reason": "All real history tuples must produce [0,1], stronger than feasibility only on legal histories."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "With \\(I_t=\\{i\\in\\mathbb N:i<t\\}\\) and \\(A_t(\\omega)=\\mathrm{policy}((Y_i(\\omega))_{i\\in I_t})\\),\n\\[\n\\operatorname{Var}_\\mu(Y_t)\n\\le\n\\int(A_t-Y_t)^2\\,d\\mu.\n\\]",
+          "actual_evidence": "Compose measurable policy, derive predictor/target L2 from bounds, T10 with actual T25 independence, nonnegative centered prediction square.",
+          "comparison": "match",
+          "source_note": "Single current variance lower bound; no identical-law premise or common-variance cumulative endpoint; stronger pointwise/global-history restrictions."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "A one-round bound for every chosen time and policy. The input has exactly t strict-past coordinates, including an empty vector at t=0. No division by t or T and no cumulative sum.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "No identical-distribution assumption. The lower bound uses the variance of the current Y_t, which may vary with t. Measurability and the full-domain [0,1] condition are policy hypotheses. The policy is a fixed measurable map, with no additional random-seed input in the displayed type.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "Does not assert a samplewise lower bound, attainment, uniqueness, a cumulative bound, or optimality among predictors allowed to inspect Y_t. The statement is universal over admissible policy maps, not a simultaneous sample-event claim over an uncountable policy class. Almost-sure output bounds or bounds only on reachable inputs are not the literal hypothesis.",
+          "comparison": "match",
+          "source_note": "Accepted restricted library/source-correspondence component, not unrestricted a.e.-support source Anchor. Single current variance lower bound; no identical-law premise or common-variance cumulative endpoint; stronger pointwise/global-history restrictions."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 19,
+      "currentLine": 23
+    },
+    {
+      "target": "A012",
+      "name": "BanditRL.OnlineLearning.normalized_excess",
+      "neutralName": "T27",
+      "sourceRole": "derived-normalization-identity",
+      "sourceTopologyAnchors": [
+        "N07",
+        "N08"
+      ],
+      "signatureSHA256": "0b4900a9c7b826254353d3b4e0ba435f8df192e75c435fd1f8b4348fe26c7568",
+      "bodyReview": "Nonzero cast T then field arithmetic.",
+      "binderGroups": [
+        {
+          "binders": [
+            "total",
+            "variance",
+            "T"
+          ],
+          "classification": "TYPING",
+          "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+        },
+        {
+          "binders": [
+            "hT"
+          ],
+          "classification": "TYPING",
+          "reason": "Positive horizon required for source division."
+        }
+      ],
+      "semanticDelta": "Exact relation between scalar totals/averages; variance binder is any real scalar, no probability/asymptotic content.",
+      "priorVerdict": "accepted",
+      "sevenSlotComparisonReused": {
+        "objects_and_spaces": {
+          "blind_evidence": "Deterministic scalar normalization identity",
+          "actual_evidence": "theorem normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) :\n    total / T - variance = (total - T * variance) / T",
+          "comparison": "match",
+          "source_note": "Source objects or explicitly derived objects preserved; see source role and anchor mapping."
+        },
+        "quantifiers_and_order": {
+          "blind_evidence": [
+            "total : ℝ",
+            "variance : ℝ",
+            "T : ℕ",
+            "assume 0<T"
+          ],
+          "actual_evidence": "Frozen elaborated type and grouped binder audit attached.",
+          "comparison": "match",
+          "source_note": "Every-prefix BTL, per-fixed-comparator eventual thresholds, and strict finite-history order preserved; derived/restricted quantifiers are not promoted to broader source scope."
+        },
+        "assumptions_and_regularity": {
+          "blind_evidence": "T>0. The real numbers named total and variance are otherwise arbitrary.",
+          "actual_evidence": [
+            {
+              "binders": [
+                "total",
+                "variance",
+                "T"
+              ],
+              "classification": "TYPING",
+              "reason": "Objects/carriers/indices; generalizations and index rebase are disclosed in report."
+            },
+            {
+              "binders": [
+                "hT"
+              ],
+              "classification": "TYPING",
+              "reason": "Positive horizon required for source division."
+            }
+          ],
+          "comparison": "match",
+          "source_note": "Atomic SOURCE/STANDING/TYPING/EXCESS ledger retained. No RULED correction. Restricted API/conditional helper inputs cannot become exact source Anchor premises."
+        },
+        "conclusion_and_metric": {
+          "blind_evidence": "\\[\n\\frac{\\mathrm{total}}{T}-\\mathrm{variance}\n=\n\\frac{\\mathrm{total}-T\\,\\mathrm{variance}}{T}.\n\\]",
+          "actual_evidence": "Nonzero cast T then field arithmetic.",
+          "comparison": "match",
+          "source_note": "Exact relation between scalar totals/averages; variance binder is any real scalar, no probability/asymptotic content."
+        },
+        "constants_normalization_asymptotics": {
+          "blind_evidence": "Each T in arithmetic is coerced to ℝ. Positivity ensures the denominator is nonzero. The left side is average total minus variance; the right side is cumulative excess divided by T.",
+          "comparison": "match",
+          "source_note": "Source round t+1 equals Lean t. Literal constants and displayed refined tail preserved; empty-prefix arithmetic convention and ordinary-limit delta remain explicit."
+        },
+        "probability_feedback_information": {
+          "blind_evidence": "Pure real algebra. The binder name variance imposes no probability semantics or nonnegativity, and total need not be an integral or sum.",
+          "comparison": "match",
+          "source_note": "No deterministic/probability-mode swap. IID, current-target independence, measurability, pointwise support and deterministic history scope preserved exactly where present."
+        },
+        "boundary_and_excluded_regimes": {
+          "blind_evidence": "No new probability or regret theorem follows merely from the names. T=0 is not covered; in totalized real arithmetic the two displayed sides at zero need not agree for arbitrary variance.",
+          "comparison": "match",
+          "source_note": "Accepted for stated derived-normalization-identity with recorded source correspondence and boundary. Exact relation between scalar totals/averages; variance binder is any real scalar, no probability/asymptotic content."
+        }
+      },
+      "reuseVerdict": "exact accepted evidence reusable with original explicit delta",
+      "historicalLine": 38,
+      "currentLine": 42
+    }
+  ],
+  "truthBoundary": "This is an audit, reader and test integration for twelve existing APIs, not twelve new production or printed theorems. Lemma 1.2 keeps supplied feasible minimizers for every positive prefix; its arbitrary carrier and empty-horizon extension are explicit. Generic L2 identities and supplied-independence consumers remain distinct from actual strict-past independence producers. Legacy indexed mean/history APIs retain pointwise target support for every time and outcome. The separate source_mean_optimal API concerns one measurable variable and every outcome, with no time quantifier; its optimum compares all real constants. The history loss bound retains policy feasibility on every real history tuple, including illegal histories, and uses the current-round variance without a same-law premise. Finite identities, nonnegativity and positive-horizon scalar normalization do not claim convergence. Later accepted almost-sure/legal-history and asymptotic results remain separate. General strategy representation, completed-information and AE-factorization obligations, the unknown mandatory proof-leaf total, Chapter 1 and whole-book completion remain outside this audit. Eight historical missing-byte literal uses across three digests, with one overlapping structured use, retain their original owners and OPEN status. Full purification and Exposition Seal remain pending."
+}

@@ -3777,7 +3777,7 @@
       "why": "The actual learner produces this finite expected IID identity; it is a derived explanation of Eq(1.1), not another numbered theorem.",
       "position": "Orabona v10 Chapter 1, printed page 1.",
       "proof_idea": "Derive L2 and actual strict-past prediction independence. Integrate the finite sum; apply the independent square identity at each time. Identical laws replace the current mean/variance by those ofY0, and cancel T·Var(Y0). Each residual square integral is nonnegative.",
-      "lean_notes": "Assume a probability space, measurable Y_t, joint independence of the whole target family, and IdentDistrib(Y_t,Y_0) for every t. Every target lies in [0,1] at every sample point. This pointwise support is stronger than almost-sure support. The source motivates the population-variance benchmark. The displayed finite decomposition is a library derivation for this actual learner, not a second numbered source theorem or a stochastic convergence result. Identical laws identify the current means and variances. No expectation/minimum interchange is claimed. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate.",
+      "lean_notes": "Exact old premises: probability, ∀t measurable Yt, joint independence, ∀t IdentDistrib(Yt,Y0), and ∀tω Ytω∈[0,1] POINTWISE. Same infinite process and actual x0=1/2/strict-past mean throughout; no unknown-law/future/horizon input. The pointwise support is a stronger API limitation; later AE producers are separate. T0 is the empty-sum extension. This finite identity alone does not prove success or a convergence rate. The fixed mean benchmark is outside expectation; no expected hindsight minimum swap. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: integral_finset_sum, IdentDistrib.integral_eq and IdentDistrib.variance_eq; actual shared independent_prediction_square, meanPredict_independent and meanPredict_memLp.",
       "dependencies": [
         "BanditRL.OnlineLearning.independent_prediction_square",
         "BanditRL.OnlineLearning.meanPredict",
@@ -3797,7 +3797,7 @@
       "why": "Be-the-Leader is a proof tool comparing supplied current-prefix hindsight minimizers with the final leader. A causal learner and its performance require the separate FTL chain.",
       "position": "Orabona v10 Chapter 1, printed page 4.",
       "proof_idea": "Source loss ell_(t+1) is Lean loss t; source x*_n is leader n. Lean diagonal uses leader(t+1) over rangeT; the fixed comparison uses leaderT. T1 has identical sides. Existing induction cancels the final summand, applies the previous prefix inequality, then uses prefix argmin with the feasible next/final leader. For EVERY positive prefix n<=T, supplied leader n lies in V and minimizes the prefix sum against EVERY u in V. Both membership and prefix argmin are premises; minimizer existence is not constructed. For T>0 this data implies V inhabited; T0 is a vacuous empty-sum extension with no condition on leader0.",
-      "lean_notes": "Lemma 1.2 is retained with supplied feasible prefix minimizers on an arbitrary ambient type, explicitly generalizing the source Euclidean setting. Their existence is not proved for arbitrary losses. Zero horizon is an empty-sum extension. Both prefix feasibility and prefix argmin are supplied. The complete canaries include strict inequalities and counterexamples when either requirement is removed. This integrates the original Chapter 1 core. It does not complete Chapter 1 or the book. The ordinary-limit reconciliation, arbitrary-initial FTL state family, general stochastic strategy classes, optimal-order lower bound and later modules remain separate. FoundationsProbe has seven validation theorems: prefix minimization, the instantiated comparison, strict values -2 < 0, zero and one horizons, and reversals after omitting optimality or feasibility. The latter uses an ambient loss extension at leaders outside V; it is not a valid V-only source game. These current-prefix hindsight leaders differ from the strict-past learner in the two-target example.",
+      "lean_notes": "The source uses a subset V of real Euclidean space and losses defined on V. Lean permits any ambient type X and total real loss functions; restricting them to V recovers the source. For every positive prefix n <= T, leader n must belong to V and minimize the prefix loss against every u in V. These minimizers are supplied; their existence is not proved. No geometry or probability assumption is needed. The leader includes the current loss, so it is a hindsight object rather than a strict-past FTL prediction. At T = 0 the conclusion is the empty-sum extension; T = 1 has identical sides. Seven named tests include changing feasible minimizers with strict inequality -2 < 0, a feasible nonoptimal sequence reversing the comparison, and an ambient-domain sequence showing why membership is necessary. The last sequence is not admissible when source losses are defined only on V. The earlier foundation-only package historically revalidated one existing source lemma and adds validation proofs, not new book results. Theorem 1.3 and the causal FTL chain are separate. At that earlier package/head, nine main-relative contributor gaps were retained. The historical acceptance and seven tests remain preserved. At the original PR197 head, the separate five-module audit had not been merged or published. Those five production modules now match the accepted shared library. Chapter 1 as a whole remains incomplete. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown.",
       "dependencies": []
     },
     {
@@ -6546,6 +6546,170 @@
         "BanditRL.OnlineLearning.meanPredict_expectedFixed_upper",
         "BanditRL.OnlineLearning.centered_total_sublinear_iff_average"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.expected_square_decomposition",
+      "title": "The fixed squared-loss identity holds for every real comparator",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 89,
+      "plain": "Expand the square around the expectation. Integrability of the square and the mean follows from L2; the centered first moment vanishes.",
+      "math": "\\mathbb E(u-Y)^2=\\operatorname{Var}(Y)+(u-\\mathbb EY)^2.",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Expand the square around the expectation. Integrability of the square and the mean follows from L2; the centered first moment vanishes.",
+      "lean_notes": "Probability space, real Y with MemLp Y 2 and arbitrary u∈ℝ; no boundedness or independence assumption. Comparator u=2 has loss5/2 for the positive-variance fair target. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: variance_eq_sub, variance_const_sub and integral_sub.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.independent_prediction_square",
+      "title": "Independent random predictions: the consumer identity",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 90,
+      "plain": "Apply the variance-of-difference formula to L2 P,Y. Given independence makes covariance zero; subtracting the target mean leaves its variance unchanged.",
+      "math": "P\\perp Y\\ \\Longrightarrow\\ \\mathbb E(P-Y)^2=\\mathbb E(P-\\mathbb EY)^2+\\operatorname{Var}(Y).",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Apply the variance-of-difference formula to L2 P,Y. Given independence makes covariance zero; subtracting the target mean leaves its variance unchanged.",
+      "lean_notes": "Both real variables are L2 and their independence is a premise. This consumer does not establish that P is a causal algorithm; the separate mean/history producers do. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: variance_sub, IndepFun.covariance_eq_zero, variance_sub_const, variance_eq_sub and integral_sub.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_independent",
+      "title": "The real sample-mean prediction is independent of the current target",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 91,
+      "plain": "At zero the actual prediction is constant. Otherwise, joint independence separates the strict-past coordinate sum from the current target; measurable division preserves independence.",
+      "math": "x_0=\\tfrac12,\\quad x_t=t^{-1}\\sum_{i<t}Y_i\\ (t>0),\\qquad x_t\\perp Y_t.",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "At zero the actual prediction is constant. Otherwise, joint independence separates the strict-past coordinate sum from the current target; measurable division preserves independence.",
+      "lean_notes": "One infinite measurable jointly independent target family on a probability space, every natural time t. No same-law or boundedness premise. The learner receives no population mean, law or horizon. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: iIndepFun.indepFun_sum_range_succ, IndepFun.comp and indepFun_const_left.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_measurable",
+      "title": "Measurability of the actual sample-mean learner",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 92,
+      "plain": "The fixed initial branch is measurable. Each later branch is a finite sum of measurable targets divided by a fixed real scalar.",
+      "math": "x_t(\\omega)=\\begin{cases}\\tfrac12&t=0,\\\\t^{-1}\\sum_{i<t}Y_i(\\omega)&t>0.\\end{cases}",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "The fixed initial branch is measurable. Each later branch is a finite sum of measurable targets divided by a fixed real scalar.",
+      "lean_notes": "Coordinate measurability only; no measure, probability, independence, same-law or support hypothesis. This is derived regularity, not a performance result. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual proof unfolds meanPredict/empiricalMean and derives measurability of the finite sums with fun_prop.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_memLp",
+      "title": "Legacy pointwise support implies square integrability",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 93,
+      "plain": "Feasibility of every actual finite mean and its initial half bounds x_t between0 and1 at every sample point. Measurability and this bound yield L2 on a probability space.",
+      "math": "(\\forall i,\\omega,\\ Y_i(\\omega)\\in[0,1])\\ \\Longrightarrow\\ x_t\\in L^2.",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Feasibility of every actual finite mean and its initial half bounds x_t between0 and1 at every sample point. Measurability and this bound yield L2 on a probability space.",
+      "lean_notes": "The exact legacy hypothesis is ∀iω, not AE support. It is a stronger API limitation; no independence or identical-law assumption is needed. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: memLp_of_bounded and Filter.Eventually.of_forall; actual shared meanPredict_measurable and meanPredict_mem.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_measurable",
+        "BanditRL.OnlineLearning.meanPredict_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.iid_meanPredict_excess_nonneg",
+      "title": "Legacy IID excess is nonnegative for this actual learner",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 94,
+      "plain": "Rewrite with the actual learner finite excess identity and sum the nonnegative integrals of squared estimation errors.",
+      "math": "0\\le\\mathbb E\\sum_{t<T}(x_t-Y_t)^2-T\\operatorname{Var}(Y_0).",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Rewrite with the actual learner finite excess identity and sum the nonnegative integrals of squared estimation errors.",
+      "lean_notes": "Same infinite measurable, jointly independent, identically distributed process with ∀iω unit support. T0 gives zero. Expected nonnegativity is not a pathwise claim or an asymptotic rate. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: Finset.sum_nonneg and integral_nonneg, after actual shared iid_meanPredict_excess.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.iid_meanPredict_excess"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.source_mean_optimal",
+      "title": "The population mean is feasible and attains the fixed benchmark",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 95,
+      "plain": "Integrate the pointwise unit bounds to get mean feasibility. Substitute u=m in the generic square identity for attainment; its nonnegative extra square proves optimality for every real constant.",
+      "math": "m=\\mathbb EY\\in[0,1],\\quad\\mathbb E(m-Y)^2=\\operatorname{Var}(Y)\\le\\mathbb E(u-Y)^2\\quad(\\forall u\\in\\mathbb R).",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Integrate the pointwise unit bounds to get mean feasibility. Substitute u=m in the generic square identity for attainment; its nonnegative extra square proves optimality for every real constant.",
+      "lean_notes": "Measurable pointwise-unit real Y on a probability space; no IID premise for this single-variable statement. The population mean is law dependent and used only as an analysis comparator, never as the unknown-law learner input. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: memLp_of_bounded, integral_mono, integral_nonneg and integrable_const; shared expected_square_decomposition.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expected_square_decomposition"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.history_policy_independent",
+      "title": "A genuine scalar history policy is independent of the current target",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 96,
+      "plain": "Joint coordinate independence separates range t from the singleton{t}. Compose the strict-past tuple with the given measurable scalar policy and select the current singleton coordinate.",
+      "math": "P_t=\\pi_t(Y_{<t}),\\qquad P_t\\perp Y_t.",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Joint coordinate independence separates range t from the singleton{t}. Compose the strict-past tuple with the given measurable scalar policy and select the current singleton coordinate.",
+      "lean_notes": "Any measurable policy ((↑range t)→ℝ)→ℝ, with measurable jointly independent targets and probability. No L2, support, identical-law or global policy bound is required here. Deterministic history composition does not represent every stochastic kernel. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: iIndepFun.indepFun_finset, IndepFun.comp and measurable_pi_apply.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.history_policy_loss_ge_variance",
+      "title": "Legacy history loss is at least the current-round variance",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 97,
+      "plain": "Measurability and the two global unit bounds derive L2 for prediction and current target. The actual history-independence producer feeds the square identity; discard only the nonnegative mean-error integral.",
+      "math": "\\operatorname{Var}(Y_t)\\le\\mathbb E\\bigl(\\pi_t(Y_{<t})-Y_t\\bigr)^2.",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Measurability and the two global unit bounds derive L2 for prediction and current target. The actual history-independence producer feeds the square identity; discard only the nonnegative mean-error integral.",
+      "lean_notes": "Exact stronger API: ∀iω target support and ∀z policy output in[0,1], including illegal history tuples. NO same-law premise; the benchmark is Var(Yt), not Var(Y0) without common law. Full randomized/completed-information source coverage remains required. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual Mathlib facts: measurable_pi_lambda, memLp_of_bounded and integral_nonneg; shared history_policy_independent and independent_prediction_square.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.history_policy_independent",
+        "BanditRL.OnlineLearning.independent_prediction_square"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.normalized_excess",
+      "title": "Positive-horizon normalization is scalar arithmetic",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 98,
+      "plain": "Positive natural T has nonzero real coercion. Clear the denominator and use distributivity.",
+      "math": "A/T-v=(A-Tv)/T\\quad(T>0).",
+      "intuition": "Read the exact assumptions before applying the shared proof.",
+      "why": "Publish the existing core proof with a source-qualified explanation and its actual API boundary.",
+      "position": "Orabona v10, 2026-06-21: Lemma1.2 is printed p.4 / PDF p.16, while the IID squared-loss motivation and Eq(1.1)/(1.2) are printed p.1 / PDF p.13. The initial-half strict-past mean learner is printed pp.3–4 / PDF pp.15–16. Source rounds1..T map to Lean0..T−1. One numbered lemma and eleven generic/derived/regularity/arithmetic APIs are represented here; these are not twelve numbered source results.",
+      "proof_idea": "Positive natural T has nonzero real coercion. Clear the denominator and use distributivity.",
+      "lean_notes": "Arbitrary real total A and variance parameter v, only T>0. It supplies no probability, algorithm, sign, convergence or rate. At T0 the left side is−v, the right side0, as the v=1/4 canary verifies. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual proof uses nonzero real coercion from T>0, field_simp and ring; no probabilistic convergence fact.",
+      "dependencies": []
     }
   ]
 }

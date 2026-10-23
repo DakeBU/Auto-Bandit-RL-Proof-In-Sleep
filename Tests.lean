@@ -160,3 +160,4 @@ import Tests.OnlineSquareMinimumCanary
 import Tests.OnlineGuessingIIDBenchmarkCanary
 import Tests.OnlineGuessingRandomizedIIDCanary
 import Tests.OnlineGuessingIIDSuccessCanary
+import Tests.OnlineLearningCoreAuditCanary
