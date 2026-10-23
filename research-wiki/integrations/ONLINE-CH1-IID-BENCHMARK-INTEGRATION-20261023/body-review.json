@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "reviewer_actor": "/root/batch23_source_reviewer",
+  "formalizer_or_root_actor": false,
+  "review_stage_authorization": "Separate parent authorization received after topology-review-v2 was saved.",
+  "inputBindings": {
+    "batch18-source-extraction/source-pinned.pdf": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "batch23-source-extraction-v2/source-topology.json": "ad30060a00387ee6d9a61367700fb576a32d8235a8aa975a0ed2e6b95c22f8ed",
+    "batch23-source-review/topology-review-v2.json": "dce32bc329268554cecdbdb87a90e880fb2e5f247e75916f1c80efa750a01262",
+    "batch23-blind-input/neutral-packet-v1.lean": "f37838dfcd42cff6f24399657e566bdc7a2682d817b94d9d748207f32809a052",
+    "batch23-blind-decoder/reconstruction.json": "60286b42a9dc48e25a2ad87e003a281f2f826d9716ae3f0e98ea9d50be729641",
+    "batch23-statement-input-binding-v1.json": "53b106e06cf4afcce8d5a1ce637239fa95bec6b5addf00ed12ff03d73b45b4f3",
+    "batch23-reuse-and-binder-audit-v2.json": "9b05aa99468403bf31550aee17968259bdf9606ca2f1930bdb56e0d9f7576422",
+    "batch23-imported-audit-v2/receipt.json": "ff7e6c379736706a5068cb3d3d26d1c5f70ba95147c4ee149a34cfa79278c8d4",
+    "batch23-imported-audit-v1/actual-dependencies.json": "6b49bec8bb5c212e6179b83c8e0245638b51387cab10ff4b3efd8be1987eed7e",
+    "batch23-focused-build-v1/receipt.json": "07e3b97d23a3cbf4b1dc9523c73f251ff1467e057cd5f67d2e08f762960f3275",
+    "batch23-source-review/review-evidence-verification-v1.json": "1731477fc797780ddbba514a34953e04cedc8bdc96dd2d93f9ddd937388d5906",
+    "repository/BanditRLProof/OnlineGuessingIIDBenchmark.lean": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+    "repository/Tests/OnlineGuessingIIDBenchmarkCanary.lean": "fd83e21326c383f75fed34d544ddb91b9bef264525023a4463c76caa539c9a5d"
+  },
+  "extended_binding_document": "review-evidence-verification-v1.json binds all inspected upstream module bytes, complete probe/log inputs and declaration line maps.",
+  "worktree": {
+    "path": "repository",
+    "head": "523b7341edb6e824bd371566a61f4b082dfc4ad9",
+    "branch": "codex/online-iid-benchmark-integration-20261023",
+    "dirty": "Modified BanditRLProof.lean and Tests.lean; untracked candidate and canary. Preserved without changes.",
+    "candidate_origin": "b08f8312259ae10032b6318060e18911532d4610"
+  },
+  "production_edits": false,
+  "required_corrections": [],
+  "boundary": {
+    "reader_review": false,
+    "whole_original_scope_accepted": false,
+    "source_package_complete": false,
+    "chapter_complete": false,
+    "combined_root_Tests_harness_accepted": false,
+    "merge_or_deployment_accepted": false
+  },
+  "review_id": "batch23-body-review-v1",
+  "verdict": "accepted-scoped-actual-proof-bodies",
+  "body_inspection": [
+    {
+      "id": "Q001",
+      "mechanism": "memLp_of_bounded derives target L2 from AE support and measurability. Constant-minus-target square integrability licenses integral_finset_sum. expected_square_decomposition plus IdentDistrib integral/variance equality yields common terms and finite sum.",
+      "hidden_goal_premise": false
+    },
+    {
+      "id": "Q002",
+      "mechanism": "Integrability of Y0, integral_nonneg_of_ae and integral_mono_ae against1 prove mean in[0,1]. Explicit population mean witness establishes value-set membership; Q001 and nonnegative T times squared bias prove lower bound.",
+      "hidden_goal_premise": false
+    },
+    {
+      "id": "Q003",
+      "mechanism": "Unfold D2 and apply actual Q002 IsLeast.csInf_eq. No unproved infimum attainment certificate, conditional fallback or assumed optimum.",
+      "hidden_goal_premise": false
+    },
+    {
+      "id": "Q004",
+      "mechanism": "L2 outcome from support, input predictor L2; integrable squared differences and finite sum. independent_prediction_square uses covariance zero from actual IndepFun and L2. IdentDistrib transports current mean/variance. Q004 is the intentional consumer layer.",
+      "hidden_goal_premise": false,
+      "explicit_consumer_premises": [
+        "hP",
+        "hInd"
+      ]
+    },
+    {
+      "id": "Q005",
+      "mechanism": "ae_all_iff intersects countably many target support events. Composed measurable history policy plus legal-tuple hpb gives AE output bound, then L2. history_policy_independent derives current independence from disjoint range t and singleton t through iIndepFun.indepFun_finset and measurable composition. Q003+Q004 give identity; squares/integrals/finite sums give nonnegativity.",
+      "hidden_goal_premise": false,
+      "upstream_legacy_bound_used": false
+    },
+    {
+      "id": "Q006",
+      "mechanism": "AE-all event plus meanPredict_mem on the actual strict prefix gives prediction feasibility, with meanPredict_measurable supplying measurability. meanPredict_independent splits t0 constant independence and positive-time strict-prefix sum/current independence, then measurable division. Q003+Q004 give identity/nonnegativity.",
+      "hidden_goal_premise": false,
+      "upstream_pointwise_memLp_used": false
+    },
+    {
+      "id": "Q007",
+      "mechanism": "Q002 gives mean feasibility. Q003 and Q001 evaluated at population mean cancel exactly. No independent-target premise or estimated-mean algorithm used.",
+      "hidden_goal_premise": false
+    },
+    {
+      "id": "Q008",
+      "mechanism": "Unfold D3, rewrite Q003, invoke normalized_excess with hT. No causal producer, convergence theorem or rate is invoked. hind/hp/hpb are unused contextual binders and the build log confirms this.",
+      "hidden_goal_premise": false
+    }
+  ],
+  "inspected_upstream_bodies": [
+    {
+      "file": "OnlineLearningStochastic.lean",
+      "names": [
+        "expected_square_decomposition",
+        "independent_prediction_square"
+      ],
+      "assessment": "Uses variance expansions, integral subtraction and covariance-zero theorem with explicit L2/independence."
+    },
+    {
+      "file": "OnlineLearningHistory.lean",
+      "names": [
+        "history_policy_independent",
+        "normalized_excess"
+      ],
+      "assessment": "Disjoint tuple independence plus measurable composition; positive scalar normalization. Legacy history_policy_loss_ge_variance with stronger pointwise/global bound is inspected and not used by Q005."
+    },
+    {
+      "file": "OnlineLearningInformation.lean",
+      "names": [
+        "meanPredict_independent"
+      ],
+      "assessment": "Actual initial-half/strict-prefix mean independence producer, with no supplied current-independence premise."
+    },
+    {
+      "file": "OnlineLearningIID.lean",
+      "names": [
+        "meanPredict_measurable"
+      ],
+      "assessment": "Unfolds actual meanPredict/empiricalMean; old pointwise meanPredict_memLp/iid_meanPredict_excess not used in candidate AE route."
+    },
+    {
+      "file": "OnlineLearningFTL.lean",
+      "names": [
+        "meanPredict",
+        "meanPredict_mem",
+        "meanPredict_prefix"
+      ],
+      "assessment": "Initial1/2, strict-past prefix, feasible empirical mean. Other adjacent-source theorem bodies read incidentally are not accepted by this review."
+    },
+    {
+      "file": "OnlineLearningMean.lean",
+      "names": [
+        "empiricalMean",
+        "empiricalMean_mem"
+      ],
+      "assessment": "Positive finite arithmetic mean belongs to interval from prefix bounds."
+    },
+    {
+      "file": "OnlineSquareMinimum.lean",
+      "names": [
+        "squaredLoss_minimum_eq",
+        "guessing_prefix_minimum"
+      ],
+      "assessment": "Actual pathwise mean witness and IsLeast are used for Bernoulli contrast canary only."
+    }
+  ],
+  "compiled_evidence": {
+    "focused_build": {
+      "jobs": 3431,
+      "exitCode": 0,
+      "verification": "Exact source/log hashes and success line independently verified, not a reviewer rerun.",
+      "scope": "Candidate and canary modules only"
+    },
+    "axioms": {
+      "declarations": 53,
+      "union": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "sorryAx_found": false
+    },
+    "identities": {
+      "original_actual_propositions": 36,
+      "original_neutral_propositions": 8,
+      "original_definition_identities": 9,
+      "fresh_blind_propositions": 8,
+      "fresh_blind_definitions": 4,
+      "inspection": "Inspected actual rfl examples and matched unchanged header/definition bytes."
+    },
+    "probe_failure": {
+      "retained": true,
+      "classification": "probe-universe-binding-failure",
+      "assessment": "v1 left universe parameters independently inferred and eight proposition equalities failed. Exact diff changes only binding namespace universe u and explicit .{u} annotations in examples, with declaration/neutral blocks unchanged. v2 uses rfl against actual imported theorem types; target not changed."
+    },
+    "graph": {
+      "nodes": 53,
+      "edges": 4198,
+      "semantics": "Direct TYPE/VALUE constant occurrence in selected compiled declarations.",
+      "independent_check": "Formalizer occurrence arrays equal actual graph arrays. Producer calls appear in VALUE dependencies, agreeing with inspected bodies.",
+      "limits": "Not an exhaustive shared-project graph, not source proof-flow, not a proof of binder usage from mere occurrence and not enough to establish source correspondence alone."
+    }
+  },
+  "canary_assessment": [
+    {
+      "name": "support_is_not_pointwise",
+      "purpose": "Real-coordinate infinite product contains the all-2 path, proving AE support is strictly weaker than all-sample-point support.",
+      "meaningful": true
+    },
+    {
+      "name": "lastPolicy_not_globally_bounded",
+      "purpose": "Last-coordinate policy is measurable and legal on legal histories but returns2 on an illegal real tuple. Detects accidental global feasibility strengthening.",
+      "meaningful": true
+    },
+    {
+      "name": "repeated_target_fixed_minimum",
+      "purpose": "Same-law repeated Y0 retains fixed expected minimum T/4 without mutual independence.",
+      "meaningful": true
+    },
+    {
+      "name": "empty_minimum",
+      "purpose": "T0 expected minimum convention0.",
+      "meaningful": true
+    },
+    {
+      "name": "actual_mean_attainment",
+      "purpose": "Concrete IsLeast value1/2 for two Bernoulli rounds tests attainment rather than a bare numeric rewrite.",
+      "meaningful": true
+    },
+    {
+      "name": "min_and_expectation_do_not_commute",
+      "purpose": "Two-round E hindsight min1/4 < min E loss1/2, using separately established pathwise minimizer.",
+      "meaningful": true
+    },
+    {
+      "name": "meanPredict_two_round_excess",
+      "purpose": "Actual strict-past predictor expected excess1/4, distinct from oracle.",
+      "meaningful": true
+    },
+    {
+      "name": "current_target_cheating_negative",
+      "purpose": "Illegal anticipatory supplied process has excess-1/2; total definition has no universal nonnegativity.",
+      "meaningful": true
+    },
+    {
+      "name": "constant_known_mean_zero",
+      "purpose": "Known mean oracle zero excess, not zero expected loss.",
+      "meaningful": true
+    },
+    {
+      "name": "actual_history_independent/actual_history_nonnegative/actual_history_normalization",
+      "purpose": "Concrete last-observation legal causal producer exercises independence and source-domain normalization.",
+      "meaningful": true
+    }
+  ],
+  "limits": [
+    "No new production theorem was compiled by this reviewer; existing exact-hash fresh receipts and logs were verified.",
+    "No unsupported probability assumption or hidden conclusion premise found in scoped proof bodies.",
+    "No claim that imported older modules or the entire original requested chapter scope are newly accepted."
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch23-source-review/body-review-v1.json",
+      "sha256": "a60a47715fff31a5584c7cf8b48294a4ef94d147dc4fcd718339f76d2a4418fe",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical prefixes become logical locations; source mathematics and original stage verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

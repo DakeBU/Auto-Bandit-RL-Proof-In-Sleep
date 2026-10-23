@@ -1,0 +1,326 @@
+{
+  "schema": "iid-expected-fixed-statement-map-v1",
+  "sourcePR": 194,
+  "sourceHead": "b08f8312259ae10032b6318060e18911532d4610",
+  "sourceBase": "bf9f896cdfebb2b836dacb01f3d4b209466c2100",
+  "integrationBase": "523b7341edb6e824bd371566a61f4b082dfc4ad9",
+  "frozenSignatures": {
+    "artifact": "batch23-statement-input-binding-v1.json",
+    "sha256": "53b106e06cf4afcce8d5a1ce637239fa95bec6b5addf00ed12ff03d73b45b4f3",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "neutralPacket": {
+    "artifact": "batch23-blind-input/neutral-packet-v1.lean",
+    "sha256": "f37838dfcd42cff6f24399657e566bdc7a2682d817b94d9d748207f32809a052",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "blindReconstruction": {
+    "artifact": "batch23-blind-decoder/reconstruction.json",
+    "sha256": "60286b42a9dc48e25a2ad87e003a281f2f826d9716ae3f0e98ea9d50be729641",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "definitions": {
+    "D0": {
+      "path": "BanditRLProof/OnlineLearningMean.lean",
+      "ref": "523b7341edb6e824bd371566a61f4b082dfc4ad9",
+      "name": "empiricalMean",
+      "fileSHA256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+      "declaration": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa"
+    },
+    "D1": {
+      "path": "BanditRLProof/OnlineLearningFTL.lean",
+      "ref": "523b7341edb6e824bd371566a61f4b082dfc4ad9",
+      "name": "meanPredict",
+      "fileSHA256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305",
+      "declaration": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4"
+    },
+    "D2": {
+      "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "ref": "b08f8312259ae10032b6318060e18911532d4610",
+      "name": "expectedFixedMinimum",
+      "fileSHA256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "declaration": "noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n    Set.Icc (0 : ℝ) 1)",
+      "sha256": "e84088d5230d138eeec9e42bea665c80d095f97ba6c21ee8b5169579aa79cea0"
+    },
+    "D3": {
+      "path": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "ref": "b08f8312259ae10032b6318060e18911532d4610",
+      "name": "expectedFixedRegret",
+      "fileSHA256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "declaration": "noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n    expectedFixedMinimum μ Y T",
+      "sha256": "1f5b703374b54b89c43cf53f5fa455ecb00e0db76ca5372390aff148a2e7ca3e"
+    }
+  },
+  "propositions": [
+    {
+      "id": "Q001",
+      "actual": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "header": "theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) :\n    (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) =\n      (T : ℝ) * variance (Y 0) μ +\n        (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2",
+      "headerSHA256": "f679b2010d544ad15ff9daf274f33401be2404b58bfeafba5d12482e322a6e9b",
+      "neutral": "def Q001 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ),\n        (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) =\n      (T : ℝ) * variance (Y 0) μ +\n        (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2"
+    },
+    {
+      "id": "Q002",
+      "actual": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+      "header": "theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n      IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n        Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)",
+      "headerSHA256": "f28c10b0be9d9e9f1217c36845d24c9fc9702547a350125c3701b22108bcd399",
+      "neutral": "def Q002 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ),\n        (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n      IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n        Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)"
+    },
+    {
+      "id": "Q003",
+      "actual": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "header": "theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ",
+      "headerSHA256": "e0cd18c8e4a8b49f47d43629b0fdbfde2cc7844cff99b8bab5ef8ec39fa0931d",
+      "neutral": "def Q003 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ),\n        D2 μ Y T = (T : ℝ) * variance (Y 0) μ"
+    },
+    {
+      "id": "Q004",
+      "actual": "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+      "header": "theorem iid_cumulative_prediction_decomposition {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, MemLp (prediction t) 2 μ)\n    (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ) :\n    (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n      (T : ℝ) * variance (Y 0) μ =\n        ∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ",
+      "headerSHA256": "9ae0591dd2194fa4bd49e1e75debab9da390d8a08498f6ae51a9c9b9e757683c",
+      "neutral": "def Q004 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, MemLp (prediction t) 2 μ)\n    (hInd : ∀ t, IndepFun (prediction t) (Y t) μ) (T : ℕ),\n        (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n      (T : ℝ) * variance (Y 0) μ =\n        ∑ t ∈ Finset.range T,\n          ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ"
+    },
+    {
+      "id": "Q005",
+      "actual": "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+      "header": "theorem history_policy_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (policy t (fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T",
+      "headerSHA256": "408d90557c38bf7a56dfbedf8dd4a29ba1b6f82709ee0ebc3c3c170c2e45d003",
+      "neutral": "def Q005 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ),\n        D3 μ Y (fun t ω => policy t (fun i => Y i ω)) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (policy t (fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ D3 μ Y (fun t ω => policy t (fun i => Y i ω)) T"
+    },
+    {
+      "id": "Q006",
+      "actual": "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+      "header": "theorem meanPredict_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ) (T : ℕ) :\n    expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (meanPredict (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T",
+      "headerSHA256": "f3db89612c65d05ab2699f45ff83d332f648db02fa2d2e717366c1f832298a28",
+      "neutral": "def Q006 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ) (T : ℕ),\n        D3 μ Y (fun t ω => D1 (fun i => Y i ω) t) T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (D1 (fun i => Y i ω) t - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ D3 μ Y (fun t ω => D1 (fun i => Y i ω) t) T"
+    },
+    {
+      "id": "Q007",
+      "actual": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+      "header": "theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n      expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0",
+      "headerSHA256": "142dc336d159094c8948b1645d6dee29994634567d70a9535cec4248f930b726",
+      "neutral": "def Q007 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ),\n        (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧\n      D3 μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0"
+    },
+    {
+      "id": "Q008",
+      "actual": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+      "header": "theorem history_policy_normalized_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t z ∈ Set.Icc (0 : ℝ) 1)\n    (T : ℕ) (hT : 0 < T) :\n    (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) /\n        (T : ℝ) - variance (Y 0) μ =\n      expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)",
+      "headerSHA256": "fb575d2e0e5eb5d71368e3a790ec5426e42effd2cb1cd6efb66d971582679bbd",
+      "neutral": "def Q008 : Prop := ∀ {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ)\n    (hp : ∀ t, Measurable (policy t))\n    (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) →\n      policy t z ∈ Set.Icc (0 : ℝ) 1)\n    (T : ℕ) (hT : 0 < T),\n        (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) /\n        (T : ℝ) - variance (Y 0) μ =\n      D3 μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)"
+    }
+  ],
+  "sevenSlotReview": [
+    {
+      "slot": "objects_spaces",
+      "result": "pass-with-explicit-representation",
+      "assessment": "Source scalar predictions/outcomes in[0,1] are real RVs on arbitrary measurable Omega with probability mu and AE interval support. D2 comparator remains a deterministic real constant. Q005 policy has finite strict-history tuple domain. General vector V-regret context is not represented by these eight claims and is not claimed covered."
+    },
+    {
+      "slot": "quantifier_order",
+      "result": "pass",
+      "assessment": "One law and one deterministic comparator across all times/outcomes. Natural source round t+1 maps to Lean t. All Y/hY/hlaw/hb conditions quantify globally over N, although each conclusion uses range T; this is an infinite-stream representation, not claimed equivalent to every arbitrary finite-only input without extension. Q005/8 policy is supplied before horizon, uses exactly coordinates i<t, and no current target is passed."
+    },
+    {
+      "slot": "assumptions",
+      "result": "pass-with-classified-deltas",
+      "assessment": "Probability/measurability formalize implicit random-variable regularity. Same marginal law alone suffices Q001-3/7; independence is removed where unnecessary, a supported generalization. Q004's L2 and pair independence are explicit consumer premises. Q005/6 produce them from source IID and deterministic measurable legal-history behavior. Q008 retains unused source-context hind/hp/hpb. No lower-bound/minimizer/cross-term identity/convergence is assumed."
+    },
+    {
+      "slot": "conclusions",
+      "result": "pass-scoped",
+      "assessment": "Q001 gives fixed-loss bias-variance identity; Q002 actual feasible mean and least value; Q003 infimum equals T variance; Q004 independent random-prediction identity; Q005/6 deterministic causal producer identity and nonnegativity; Q007 oracle zero excess; Q008 finite normalization. These are derived support facts for the source assertions, not eight newly printed source theorems."
+    },
+    {
+      "slot": "constants_normalization_horizons",
+      "result": "pass",
+      "assessment": "Exactly T terms indexed0..T-1, variance multiplied by real T, comparator interval[0,1]. meanPredict starts1/2 then divides strict-prefix sum by t. Only Q008 excludes T0. Q008 subtracts variance outside loss/T. T0 extension is explicit in other claims; no uniqueness at T0. No changed constants or erased boundary terms."
+    },
+    {
+      "slot": "probability_adaptivity",
+      "result": "pass-bounded-policy-class",
+      "assessment": "Minimum stays outside expectation. Q004 permits any L2 prediction independent of current Y, without asserting it is causal. Q005/6 are actual deterministic causal constructions. No private random seed, random kernel, external-information or completed-filtration class is represented. Known population mean is an oracle comparison, not an unknown-law learner."
+    },
+    {
+      "slot": "boundaries",
+      "result": "pass-with-retained-gaps",
+      "assessment": "Total Lean integral/sInf definitions on arbitrary inputs do not promise ordinary finite expectations, attainment, or nonnegativity. Source-domain theorem hypotheses supply those meanings. AE support is not pointwise; policy feasibility is legal-tuples only, though measurability is on the full real-tuple domain. Finite normalization is not natural-sequence convergence, little-o, a rate or uniform comparator no-regret."
+    }
+  ],
+  "declarationReview": [
+    {
+      "id": "D0",
+      "result": "pass",
+      "interpretation": "Total finite arithmetic mean. Empty-prefix value0 is explicit extension; no interval feasibility for arbitrary real input."
+    },
+    {
+      "id": "D1",
+      "result": "pass-derived-existing-algorithm",
+      "interpretation": "Initial1/2 then strict-past mean. Not defined on source pp1-2, retained only as an explicitly derived existing-library instantiation."
+    },
+    {
+      "id": "D2",
+      "result": "pass-total-expression-plus-domain-characterization",
+      "interpretation": "Real sInf of image of[0,1] under expected cumulative fixed loss; neither pathwise min nor adaptive comparator. Q002 supplies IsLeast and witness mean before Q003 uses csInf_eq."
+    },
+    {
+      "id": "D3",
+      "result": "pass-total-expression",
+      "interpretation": "Expected supplied prediction loss minus D2. No causality/range/sign encoded in definition. Cheating canary gives negative value."
+    },
+    {
+      "id": "Q001",
+      "result": "pass-derived-support",
+      "source": [
+        "P01-08",
+        "P02-02"
+      ],
+      "delta": "No joint independence and arbitrary u are valid algebraic generalizations. L2 is produced from measurable AE support."
+    },
+    {
+      "id": "Q002",
+      "result": "pass-derived-source-domain-attainment",
+      "source": [
+        "P01-08",
+        "P02-02"
+      ],
+      "delta": "Feasibility plus least objective value is stronger than a bare numeric infimum. Actual proof names population mean witness. No uniqueness asserted."
+    },
+    {
+      "id": "Q003",
+      "result": "pass-derived-source-domain-characterization",
+      "source": [
+        "P02-01",
+        "P02-02"
+      ],
+      "delta": "sInf representation becomes actual minimum value via Q002; no assumed minimizer or default-value certificate."
+    },
+    {
+      "id": "Q004",
+      "result": "pass-library-consumer-only",
+      "source": [
+        "P01-09",
+        "P01-14"
+      ],
+      "delta": "hP/hInd restrict arbitrary supplied prediction, not a complete source causal class. Its source use is through Q005/6 which discharge those premises."
+    },
+    {
+      "id": "Q005",
+      "result": "pass-deterministic-history-subset",
+      "source": [
+        "P01-02",
+        "P01-03",
+        "P01-04",
+        "P01-05",
+        "P01-09",
+        "P01-14"
+      ],
+      "delta": "Global measurable history functions with feasible outputs on legal tuples, AE outcomes. Explicit subclass excludes seeds/randomized/general-filtration strategies."
+    },
+    {
+      "id": "Q006",
+      "result": "pass-existing-mean-policy-instance",
+      "source": [
+        "P01-09",
+        "P01-14"
+      ],
+      "delta": "Algorithm-specific derived instance outside literal pp1-2 definitions. No sample-mean consistency or convergence imported from its name."
+    },
+    {
+      "id": "Q007",
+      "result": "pass-oracle-benchmark",
+      "source": [
+        "P01-08",
+        "P01-09",
+        "P02-02"
+      ],
+      "delta": "Known population mean attains benchmark. Zero excess does not mean zero loss and is not an unknown-law algorithm."
+    },
+    {
+      "id": "Q008",
+      "result": "pass-finite-identity-only",
+      "source": [
+        "P01-11",
+        "P01-12",
+        "P01-13"
+      ],
+      "not_discharged": [
+        "P01-16",
+        "P01-17",
+        "P02-13"
+      ],
+      "delta": "Positive natural T essential. Boundaries explicitly state no asymptotic claim. hind/hp/hpb retained but not needed for algebraic equality."
+    }
+  ],
+  "sourceGapDisposition": [
+    {
+      "id": "G-PROBABILITY-FOUNDATIONS",
+      "status": "discharged-for-scoped-representation",
+      "evidence": "Q001/4 derive outcome L2 from AE support plus measurability, prediction L2 is input only to Q004, and Q005/6 produce it; finite square losses integrable before integral_finset_sum.",
+      "retained": "Randomized/kernel/general-filtration policy probability infrastructure."
+    },
+    {
+      "id": "G-MEAN-FIXED-OPTIMUM",
+      "status": "discharged-for-scoped-expected-fixed-benchmark",
+      "evidence": "Q001 deterministic bias-variance; Q002 bounded expectation and mean witness; Q003 IsLeast.csInf_eq; Q007 attained zero excess."
+    },
+    {
+      "id": "G-CAUSAL-OPTIMALITY",
+      "status": "partially-discharged",
+      "evidence": "Q005/Q006 actual finite deterministic history and mean policies supply independence/L2 internally and prove nonnegative expected-fixed excess.",
+      "retained": "All randomized policies, private seeds and completed-filtration representations; source informal policy class not exhausted."
+    },
+    {
+      "id": "G-NORMALIZATION",
+      "status": "partially-discharged",
+      "evidence": "Q008 proves positive finite-horizon normalization.",
+      "retained": "Actual natural-sequence convergence/sublinearity criterion equivalence, successful learner rate/convergence, and general fixed-u ordinary-limit no-regret context."
+    },
+    {
+      "id": "G-PATHWISE-MINIMUM",
+      "status": "not-claimed-discharged-by-candidate",
+      "evidence": "Existing square-minimum theorem is used only in a contrast canary. It is not the same benchmark and is not a new closure claim of this package."
+    }
+  ],
+  "inputBindings": {
+    "BanditRLProof.lean": "24e251af48138cff3f226c56d6aada32c01d9c2a1a17068ded358dbef3e2228a",
+    "Tests.lean": "052060c8c100f0e634ac5cb5b0efa9157686879931163678f8040b110b55bfa9",
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+    "Tests/OnlineGuessingIIDBenchmarkCanary.lean": "fd83e21326c383f75fed34d544ddb91b9bef264525023a4463c76caa539c9a5d",
+    "website/content/readings.json": "a31b7e9fe547fdb0e0f27eb7dc66b1cad2f8899ab1483068ec9f67ef8417a2d0",
+    "website/content/highlights.json": "2aea872d902e483b57acb8fa143cfc5c57ad64c6bc9c850d8a0d1d429c1b0964",
+    "website/content/chapters.json": "466adc70823d37055ae941adecca7e7ce9e5836ed3703ffb79b887ecc3290e8e"
+  },
+  "actualImportedCheck": "53 standard axiom closures;36 actual proposition,8 original neutral and9 original definition identities;8 fresh proposition and4 fresh definition identities passed. Focused compilation is separate from source fidelity.",
+  "definitionOwnership": "D0 empiricalMean andD1 meanPredict are existing context; onlyD2 expectedFixedMinimum andD3 expectedFixedRegret are new definitions.",
+  "currentCandidateInputOverlay": {
+    "priorInputBindingsRetained": true,
+    "inputs": {
+      "BanditRLProof.lean": "24e251af48138cff3f226c56d6aada32c01d9c2a1a17068ded358dbef3e2228a",
+      "Tests.lean": "052060c8c100f0e634ac5cb5b0efa9157686879931163678f8040b110b55bfa9",
+      "BanditRLProof/OnlineGuessingIIDBenchmark.lean": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "Tests/OnlineGuessingIIDBenchmarkCanary.lean": "fd83e21326c383f75fed34d544ddb91b9bef264525023a4463c76caa539c9a5d",
+      "website/content/readings.json": "f74ff627222d580bd068d7e1f3592d08d580e590166ac4a1f5a5312a8ecf8d11",
+      "website/content/highlights.json": "2aea872d902e483b57acb8fa143cfc5c57ad64c6bc9c850d8a0d1d429c1b0964",
+      "website/content/chapters.json": "466adc70823d37055ae941adecca7e7ce9e5836ed3703ffb79b887ecc3290e8e"
+    },
+    "readerDelta": [
+      {
+        "path": "online-foundations/source-card14/local_status",
+        "before": {
+          "status": "compiled",
+          "label": "Focused compilation and scoped scientific review passed",
+          "boundary": "Independent source-topology, semantic, proof-body and binder/reuse reviews passed for these finite expected-fixed adapters and their deterministic measurable strict-history producers. The expected fixed minimum remains distinct from the expectation of a hindsight minimum. Randomized and general-filtration strategy coverage, asymptotic success and full Chapter 1 coverage remain open. The focused two-module build passed; shared-project, rendered and release acceptance are pending. This is derived support, not a separately printed theorem or complete source proof."
+        },
+        "after": {
+          "status": "compiled",
+          "label": "Compiled and scientifically reviewed",
+          "boundary": "Independent source-topology, semantic, proof-body and binder/reuse reviews passed for these finite expected-fixed adapters and their deterministic measurable strict-history producers. The expected fixed minimum remains distinct from the expectation of a hindsight minimum. Randomized and general-filtration strategy coverage, asymptotic success and full Chapter 1 coverage remain open. The shared library, Tests and full harness passed. Bounded local reader, module, formula and graph rendering was reviewed. Committed-candidate checks and release acceptance remain pending. This is derived support, not a separately printed theorem or complete source proof."
+        }
+      }
+    ],
+    "mathematicalStatementsUnchanged": true,
+    "scope": "Only source-card local status label and stage boundary changed; scientific statements,math,proofs,assumptions and previous bindings retained."
+  }
+}

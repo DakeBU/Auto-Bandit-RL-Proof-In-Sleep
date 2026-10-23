@@ -1,0 +1,175 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-IID-BENCHMARK-INTEGRATION-20261023",
+  "route": "online-learning / Chapter1 expected fixed benchmark",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona; Chapter1 printed pp1-2/PDF13-14, guessing-game population benchmark and finite normalized excess. Existing meanPredict is a derived specialization, not an algorithm specified on these pages.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged2definitions,8derived finite theorems and28canary theorems fromPR194, producing expected fixed loss minimum and excess identities for actual deterministic strict-history policies.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/chapters.json",
+    "website/content/declaration-boundaries.json",
+    "website/static/site.css"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.expectedFixedMinimum",
+    "BanditRL.OnlineLearning.expectedFixedRegret",
+    "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+    "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+    "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+    "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+    "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+    "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+    "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+    "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Canonical memory/declaration registry and targeted current-library search;12 logged retrieval commands.",
+      "Mathlib candidate, paper and weapon indices plus bounded IsLeast/csInf, integrability and squared-loss searches."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.expected_square_decomposition",
+      "BanditRL.OnlineLearning.independent_prediction_square",
+      "BanditRL.OnlineLearning.history_policy_independent",
+      "BanditRL.OnlineLearning.meanPredict_independent",
+      "BanditRL.OnlineLearning.meanPredict_measurable",
+      "BanditRL.OnlineLearning.meanPredict_mem",
+      "BanditRL.OnlineLearning.normalized_excess",
+      "MeasureTheory.memLp_of_bounded",
+      "IsLeast.csInf_eq"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "The literal expectedFixedMinimum feeds the regret definition, causal excess and normalization.",
+      "Actual history and meanPredict producers instantiate the L2/independence consumer. Canary tests cover signed cheating, AE support, legal-history bounds and expected-versus-hindsight minima."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse canonical variance and causal-independence producers; add literal expected-fixed benchmark and finite adapters in the shared library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch23-blind-decoder",
+    "source_reviewer": "independent-batch23-source-reviewer",
+    "verdict": "accepted",
+    "remaining_semantic_delta": "Accepted only for the explicitly scoped derived targets, as independently reviewed. No source statement is repaired on the basis of an implementation failure. A probability space, measurable natural-indexed real observations with common law and AE support in[0,1] produce the attained expected fixed minimum Tv. All-time input hypotheses are explicit. Independence is unnecessary for this fixed minimum or known-law constant mean. Causal excess additionally uses mutual independence and deterministic measurable strict-history policies, feasible on legal histories only. Their L2/current-target independence are produced internally; Q004 separately assumes these consumer premises. Q006 uses existing half-initialized past-mean prediction. Q008 requires positive T, retains unused policy-context premises and proves finite normalization only. T=0 extensions belong to unnormalized results without uniqueness. No expectation/minimum interchange, arbitrary-prediction nonnegativity, general randomized/filtration coverage, asymptotic or whole-chapter acceptance is claimed. Twelve missing historical hash uses across seven digests remain OPEN with original owners/statuses."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A population benchmark and deterministic causal adapters within the same square-loss setting, with no certified cross-setting transport.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Actual1440and390px images reviewed:63new-reader frames,15mobile formula frames,30module declaration frames and8graph frames. Graph long-path wrapping repaired and full desktop detail scrolling verified. Exact evidence and bounded carry-forward are in review-binding.json; committed source links and release acceptance remain separate.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated:8full notes and1derived card, with all13existing cards5previews and368existing highlights retained.",
+    "banditrlwiki": "updated: bounded source, semantic, body, dependency and retention packet in research-wiki/integrations/ONLINE-CH1-IID-BENCHMARK-INTEGRATION-20261023",
+    "results_ledger": "no-change-with-reason: finite benchmark adapters do not complete Chapter1 or asymptotic success.",
+    "roadmap": "no-change-with-reason: randomized/general-filtration and subsequent research retain their owners.",
+    "website_surfaces": [
+      "Online foundations reader and chapter",
+      "Eight formula/proof notes",
+      "Shared Lean declaration graph",
+      "Complete two-definition disclosures"
+    ]
+  },
+  "truth_boundary": "A probability space, measurable natural-indexed real observations with common law and AE support in[0,1] produce the attained expected fixed minimum Tv. All-time input hypotheses are explicit. Independence is unnecessary for this fixed minimum or known-law constant mean. Causal excess additionally uses mutual independence and deterministic measurable strict-history policies, feasible on legal histories only. Their L2/current-target independence are produced internally; Q004 separately assumes these consumer premises. Q006 uses existing half-initialized past-mean prediction. Q008 requires positive T, retains unused policy-context premises and proves finite normalization only. T=0 extensions belong to unnormalized results without uniqueness. No expectation/minimum interchange, arbitrary-prediction nonnegativity, general randomized/filtration coverage, asymptotic or whole-chapter acceptance is claimed. Twelve missing historical hash uses across seven digests remain OPEN with original owners/statuses.",
+  "verification": {
+    "focused_checks": [
+      "3431-job focused build with exact original code and canary passed.",
+      "53standard axiom closures;36actual proposition8original neutral9definition identities and8fresh proposition4definition identities passed."
+    ],
+    "bandit_check": "Complete shared library root9097jobs,Tests9253jobs and full harness471tests passed;7fixture tests skipped. Exact Lean inputs preserved through selector-only CSS fix. Final committed candidate rerun remains required.",
+    "site_build": "Actual --lean-verified build and site checks passed for proposalv6, carrying unchanged full Lean inputs from combined gatev1.",
+    "site_check": "22graph queries and bounded actual reader,module,formula andgraph pixels passed. Final status text and committed source links need bounded recheck.",
+    "independent_review": "Source-only extraction, blind semantics, body,binder,reuse,reader text, public projection, original conservation, generated indexes and actual reader/module/formula pixels accepted within stated scopes. Final metadata, committed candidate, CI, main/live and original-scope disposition remain separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in Git and immutable PR evidence."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "IMPLEMENTATION_FAILED",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Preserved all prior failed probes, reader drafts and original source/proof bytes. Reverified and reused the three passing original audit probes; corrected only the fresh common-universe probe. Reader corrections are versioned and independently accepted. No verified mathematical fragment was discarded. The native manifest enum/required-flag mismatch is separately retained and corrected without changing science.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "literal-expected-fixed-minimum-and-causal-iid-excess"
+      ],
+      "expected_information_gain": "One original bounded route with distinct independent source/blind/semantic/body/reader and scope checks.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main 523b7341edb6e824bd371566a61f4b082dfc4ad9"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "AE bounded moments; common-law bias/variance; feasible mean and IsLeast; strict-history independence and L2; finite square-sum excess and normalization.",
+      "selection_reason": "No competing new mathematical proof routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Bounded body/canonicality, reader text, public projection, generated disclosures and actual local rendered review accepted for this increment. Global purification and final Exposition Seal remain pending; inherited scientific obligations retain their owners.",
+      "source_expansion_nodes": [
+        "Attained expected fixed benchmark",
+        "Deterministic causal nonnegative excess",
+        "Positive-horizon finite normalization"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.expectedFixedMinimum",
+        "BanditRL.OnlineLearning.expectedFixedRegret",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+        "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+        "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+        "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+        "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

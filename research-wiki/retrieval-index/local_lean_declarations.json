@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T10:34:13+00:00",
+  "generated": "2026-10-23T13:59:29+00:00",
   "declarations": [
     {
       "kind": "def",
@@ -53928,6 +53928,86 @@
       "file": "BanditRLProof/OnlineGuessingComparison.lean",
       "line": 46,
       "statement": "theorem guessing_vs_mean_unbounded (C : \u211d) (N : \u2115) : \u2203 n : \u2115, N < n \u2227 C < regret unitInterval (1/(2*Real.sqrt (((2*n)^2 : \u2115) : \u211d))) (fun _ x => (x-0)^2) 1 0 ((2*n)^2) - (\u2211 t \u2208 range ((2*n)^2), (BanditRL.OnlineLearning.meanPredict (fun _ : \u2115 => (0 : \u211d)) t)^2)"
+    },
+    {
+      "kind": "def",
+      "name": "expectedFixedMinimum",
+      "full_name": "BanditRL.OnlineLearning.expectedFixedMinimum",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 8,
+      "statement": "noncomputable def expectedFixedMinimum {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (T : \u2115) : \u211d"
+    },
+    {
+      "kind": "def",
+      "name": "expectedFixedRegret",
+      "full_name": "BanditRL.OnlineLearning.expectedFixedRegret",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 13,
+      "statement": "noncomputable def expectedFixedRegret {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) (Y prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (T : \u2115) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "expected_fixed_prefix_decomposition",
+      "full_name": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 19,
+      "statement": "theorem expected_fixed_prefix_decomposition {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) (u : \u211d) : (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (u - Y t \u03c9)^2 \u2202\u03bc) = (T : \u211d) * variance (Y 0) \u03bc + (T : \u211d) * (u - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2"
+    },
+    {
+      "kind": "theorem",
+      "name": "expected_fixed_prefix_minimum",
+      "full_name": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 41,
+      "statement": "theorem expected_fixed_prefix_minimum {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : (\u222b \u03c9, Y 0 \u03c9 \u2202\u03bc) \u2208 Set.Icc (0 : \u211d) 1 \u2227 IsLeast ((fun u : \u211d => \u222b \u03c9, \u2211 t \u2208 Finset.range T, (u - Y t \u03c9)^2 \u2202\u03bc) '' Set.Icc (0 : \u211d) 1) ((T : \u211d) * variance (Y 0) \u03bc)"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedFixedMinimum_eq_variance",
+      "full_name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 69,
+      "statement": "theorem expectedFixedMinimum_eq_variance {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : expectedFixedMinimum \u03bc Y T = (T : \u211d) * variance (Y 0) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "iid_cumulative_prediction_decomposition",
+      "full_name": "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 79,
+      "statement": "theorem iid_cumulative_prediction_decomposition {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (prediction : \u2115 \u2192 \u03a9 \u2192 \u211d) (hP : \u2200 t, MemLp (prediction t) 2 \u03bc) (hInd : \u2200 t, IndepFun (prediction t) (Y t) \u03bc) (T : \u2115) : (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (prediction t \u03c9 - Y t \u03c9)^2 \u2202\u03bc) - (T : \u211d) * variance (Y 0) \u03bc = \u2211 t \u2208 Finset.range T, \u222b \u03c9, (prediction t \u03c9 - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "history_policy_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 105,
+      "statement": "theorem history_policy_expectedFixed_excess {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (policy : (t : \u2115) \u2192 ((\u2191(Finset.range t) : Type) \u2192 \u211d) \u2192 \u211d) (hp : \u2200 t, Measurable (policy t)) (hpb : \u2200 t z, (\u2200 i, z i \u2208 Set.Icc (0 : \u211d) 1) \u2192 policy t z \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : expectedFixedRegret \u03bc Y (fun t \u03c9 => policy t (fun i => Y i \u03c9)) T = (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (policy t (fun i => Y i \u03c9) - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) \u2227 0 \u2264 expectedFixedRegret \u03bc Y (fun t \u03c9 => policy t (fun i => Y i \u03c9)) T"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanPredict_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 137,
+      "statement": "theorem meanPredict_expectedFixed_excess {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (T : \u2115) : expectedFixedRegret \u03bc Y (fun t \u03c9 => meanPredict (fun i => Y i \u03c9) t) T = (\u2211 t \u2208 Finset.range T, \u222b \u03c9, (meanPredict (fun i => Y i \u03c9) t - \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc)^2 \u2202\u03bc) \u2227 0 \u2264 expectedFixedRegret \u03bc Y (fun t \u03c9 => meanPredict (fun i => Y i \u03c9) t) T"
+    },
+    {
+      "kind": "theorem",
+      "name": "constant_mean_expectedFixed_excess_zero",
+      "full_name": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 166,
+      "statement": "theorem constant_mean_expectedFixed_excess_zero {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) : (\u222b \u03c9, Y 0 \u03c9 \u2202\u03bc) \u2208 Set.Icc (0 : \u211d) 1 \u2227 expectedFixedRegret \u03bc Y (fun _ _ => \u222b \u03c9, Y 0 \u03c9 \u2202\u03bc) T = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "history_policy_normalized_expectedFixed_excess",
+      "full_name": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "line": 180,
+      "statement": "theorem history_policy_normalized_expectedFixed_excess {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] (Y : \u2115 \u2192 \u03a9 \u2192 \u211d) (hY : \u2200 t, Measurable (Y t)) (hlaw : \u2200 t, IdentDistrib (Y t) (Y 0) \u03bc \u03bc) (hb : \u2200 t, \u2200\u1d50 \u03c9 \u2202\u03bc, Y t \u03c9 \u2208 Set.Icc (0 : \u211d) 1) (hind : iIndepFun Y \u03bc) (policy : (t : \u2115) \u2192 ((\u2191(Finset.range t) : Type) \u2192 \u211d) \u2192 \u211d) (hp : \u2200 t, Measurable (policy t)) (hpb : \u2200 t z, (\u2200 i, z i \u2208 Set.Icc (0 : \u211d) 1) \u2192 policy t z \u2208 Set.Icc (0 : \u211d) 1) (T : \u2115) (hT : 0 < T) : (\u222b \u03c9, \u2211 t \u2208 Finset.range T, (policy t (fun i => Y i \u03c9) - Y t \u03c9)^2 \u2202\u03bc) / (T : \u211d) - variance (Y 0) \u03bc = expectedFixedRegret \u03bc Y (fun t \u03c9 => policy t (fun i => Y i \u03c9)) T / (T : \u211d)"
     },
     {
       "kind": "def",

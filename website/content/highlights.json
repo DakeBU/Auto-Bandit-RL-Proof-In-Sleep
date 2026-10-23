@@ -6202,6 +6202,151 @@
       "dependencies": [
         "BanditRL.OnlineLearning.guessing_prefix_minimum"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "title": "Separate variance from fixed-comparator bias",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 66,
+      "plain": "For any fixed real u, the expected prefix loss separates into common variance and squared bias. Mutual independence is unnecessary.",
+      "math": "\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2=Tv+T(u-m)^2.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Almost-sure interval support and measurability give each observation a finite second moment. The difference from the constant u is square-integrable, so expectation distributes over the finite sum. Apply expected_square_decomposition to each term and use identical law to replace each mean and variance by m and v. Summing the identical expression gives the formula.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. The scalar u is arbitrary real in this algebraic identity. It need not lie in the feasible comparator interval. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expected_square_decomposition"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+      "title": "Produce a feasible mean and its attained minimum",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 67,
+      "plain": "The population mean is a feasible fixed comparator and attains the least expected cumulative loss.",
+      "math": "m\\in[0,1],\\qquad Tv=\\min_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Integrate the almost-sure inequalities 0 ≤ Y_0 ≤ 1 to obtain 0 ≤ m ≤ 1. At u=m the bias term in the prefix decomposition vanishes. For every other feasible u, the extra term T(u-m)^2 is nonnegative. The value Tv belongs to the comparator-loss image and is below every image value, giving actual IsLeast.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. At T=0 every fixed comparator has zero loss; no unique minimizer is claimed. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "title": "Identify the literal infimum with the attained value",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 68,
+      "plain": "The real infimum used by expectedFixedMinimum equals the attained variance benchmark.",
+      "math": "B_T:=\\inf_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2=Tv.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Unfold the definition of expectedFixedMinimum. The preceding theorem supplies the actual least element of its image set. Apply IsLeast.csInf_eq to identify the infimum with Tv. No minimizing certificate is added as a theorem premise.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. The total Lean definition accepts arbitrary measures and functions. Its ordinary finite-expectation and attained-minimum interpretation here uses the stated probability, measurability, common-law and support hypotheses. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expected_fixed_prefix_minimum"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+      "title": "Sum the independent-prediction square identity",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 69,
+      "plain": "An intermediate library consumer sums the square-loss decomposition for square-integrable predictions independent of their current targets.",
+      "math": "\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2-Tv=\\sum_{t<T}\\mathbb E(P_t-m)^2.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Target support gives its second moment. Together with the supplied L2 prediction, this makes each squared loss integrable. Distribute expectation over the finite sum and apply independent_prediction_square at each round. Common law aligns all means and variances. Sum the variance terms and subtract Tv.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. This intermediate result assumes each prediction is L2 and independent of its current target. It does not itself produce causality. The next two adapters establish those premises for actual policies. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.independent_prediction_square"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.history_policy_expectedFixed_excess",
+      "title": "Derive nonnegative excess for legal strict-history policies",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 70,
+      "plain": "For IID observations, a deterministic measurable policy using only the finite strict past has nonnegative expected fixed-comparator excess.",
+      "math": "\\Delta_T:=\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2-B_T=\\sum_{t<T}\\mathbb E(P_t-m)^2\\ge0.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Intersect the countably many almost-sure support events. Every observed finite history is then legal, so the policy feasibility premise bounds its output on that event. Measurability and this bound supply L2. The existing history_policy_independent theorem derives independence from the current target using mutual independence of the observation family. Apply the cumulative decomposition and the attained benchmark identity. Each remaining expected square is nonnegative.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. The policy is bounded only on legal interval-valued history tuples. No bound on all real tuples is imposed. The policy has no additional private-seed argument; unrestricted randomized or general filtration policies remain separate. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+        "BanditRL.OnlineLearning.history_policy_independent"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.meanPredict_expectedFixed_excess",
+      "title": "Apply the benchmark to the actual past-mean predictor",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 71,
+      "plain": "The existing half-initialized strict-past mean predictor satisfies the expected excess identity under IID interval-valued observations.",
+      "math": "P_0=\\tfrac12,\\quad P_t=\\frac1t\\sum_{s<t}Y_s\\ (t>0),\\qquad\\Delta_T=\\sum_{t<T}\\mathbb E(P_t-m)^2\\ge0.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "On the joint almost-sure support event, meanPredict_mem gives feasibility. Existing measurability supplies a genuine random prediction, and boundedness yields L2. Existing meanPredict_independent derives current-target independence from the strict-past construction and mutually independent observations. Substitute these producers into the cumulative square identity and replace the fixed minimum by Tv.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. The predictor is already defined elsewhere in the accepted library; pp. 1–2 do not specify this algorithm. This is a derived specialization, with no convergence rate or asymptotic success claim. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+        "BanditRL.OnlineLearning.meanPredict_mem",
+        "BanditRL.OnlineLearning.meanPredict_measurable",
+        "BanditRL.OnlineLearning.meanPredict_independent"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+      "title": "Locate the known-distribution oracle benchmark",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 72,
+      "plain": "Predicting the population mean at every round attains exactly the expected fixed-comparator benchmark.",
+      "math": "m\\in[0,1],\\qquad\\Delta_T(P_t\\equiv m)=0.",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Use the feasible-mean result. The prefix decomposition at u=m gives expected loss Tv, while expectedFixedMinimum_eq_variance gives the same benchmark Tv. Subtract to obtain zero. Identical law is sufficient; mutual independence is not needed for this constant predictor comparison.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. T=0 is an explicit empty-prefix extension; it does not assert uniqueness. The population mean depends on the unknown distribution. This is the known-law oracle from the source prose, not an algorithm supplied with information unavailable to the learner. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+      "title": "Relate cumulative and average excess at positive horizons",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 73,
+      "plain": "For each positive finite horizon, average excess is cumulative expected fixed-comparator excess divided by T.",
+      "math": "\\frac1T\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2-v=\\frac{\\Delta_T}{T}\\qquad(T>0).",
+      "intuition": "A fixed population benchmark lets the expected square loss expose the remaining prediction error.",
+      "why": "Connect the literal benchmark to the existing variance and causal-independence primitives.",
+      "position": "Derived support for the guessing-game benchmark on Orabona v10, printed pp. 1–2 / PDF pp. 13–14. The eight declarations are not eight separately printed theorems.",
+      "proof_idea": "Unfold expectedFixedRegret and replace expectedFixedMinimum by Tv. Apply the shared normalized_excess algebraic identity, using positive T to justify the nonzero denominator. The policy independence, measurability and legal-feasibility premises retain the policy context but are not needed by this final algebraic step.",
+      "lean_notes": "Use a probability measure, measurable observations with one common law, and almost-sure support in [0,1]. Write m = E[Y_0] and v = Var(Y_0). Source round t+1 is Lean index t. The fixed comparator u is chosen once, outside expectation. This normalization theorem requires T>0. At T=0, total real division would make the left side -v and the right side 0, so no general zero-horizon extension is claimed. No statement about a limit follows from this finite equality alone. The source success criterion and any proof that a particular learner achieves it remain distinct. The expected fixed benchmark differs from the expected hindsight minimum. Nonnegativity needs the causal producer assumptions; arbitrary supplied predictions may have negative excess. These finite identities do not prove sublinear excess, an ordinary regret limit, or coverage of every randomized or filtration-adapted strategy.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.normalized_excess"
+      ]
     }
   ]
 }

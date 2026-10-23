@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "affiliation": "KAUST",
+    "version": "arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "pdf": "maintenance-evidence/batch18-source-extraction/source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "section": "Chapter1, What is Online Learning?",
+    "printed_pages": [
+      1,
+      2
+    ],
+    "pdf_pages_1_based": [
+      13,
+      14
+    ],
+    "pdf_pages_0_based": [
+      12,
+      13
+    ]
+  },
+  "independence": {
+    "status": "pending-independent-review",
+    "role": "source-only-extractor",
+    "implementation_read": false,
+    "PR194_read": false,
+    "prior_acceptance_verdicts_read_for_this_extraction": false,
+    "prior_Lean_topology_read": false,
+    "source_graph_self_approved": false,
+    "restriction": "Graph constructed freshly from pinned raw PDF13–14 text and actual pixels. Cover PDF1 used only for metadata. Governance protocols consulted; no implementation declarations/proofs or historical acceptance verdicts used to construct topology.",
+    "history_disclosure": "Same agent previously performed batch22 extraction and visual reviews in this thread; this is a fresh bounded extraction, not a claim that the agent has no prior chapter familiarity. No prior packet/topology was read or copied for batch23."
+  },
+  "inputBindings": {
+    "metadata-001.png": "42cb1f8faa360ff8c2df0aa87fd5e5ee90d7b7a97f2542bd3cd622feb17d5eb7",
+    "page-013.png": "8944aa43adcbf90fcae51515cdc43ca1ac1eadca4a0a9328d267dfd22cb7c240",
+    "page-014.png": "ae178e35023d2c66068881ce2b3d03b555eb5cb259b34c0efbf67a91d2c27e96",
+    "raw-pdf01-cover.txt": "3a5bec6f3917b5c566e06135f1fa90018b1033dadc7b6bc5ccf6b27a3c73d69d",
+    "raw-pdf13-printed1.txt": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+    "raw-pdf14-printed2.txt": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9"
+  },
+  "pixel_coverage": [
+    {
+      "file": "page-013.png",
+      "pdf_page": 13,
+      "printed_page": 1,
+      "dpi": 180,
+      "actually_viewed": true,
+      "tool": "tools.view_image",
+      "detail": "original"
+    },
+    {
+      "file": "page-014.png",
+      "pdf_page": 14,
+      "printed_page": 2,
+      "dpi": 180,
+      "actually_viewed": true,
+      "tool": "tools.view_image",
+      "detail": "original"
+    },
+    {
+      "file": "metadata-001.png",
+      "pdf_page": 1,
+      "role": "cover metadata only",
+      "dpi": 120,
+      "actually_viewed": true,
+      "tool": "tools.view_image",
+      "detail": "original"
+    }
+  ],
+  "render_warnings": "Cover render reported missing display-font aliases Symbol/ArialUnicode; actual cover pixels readable. No formula render failure observed in pp1–2.",
+  "scope": "iid unit-interval guessing, expected-fixed comparator minimum, population mean/variance benchmark, causal expected excess and normalized criterion, with every other substantive item on printed1–2 explicitly classified.",
+  "contracts": [
+    {
+      "id": "C-IID-GAME",
+      "source_anchors": [
+        "P01-02",
+        "P01-03",
+        "P01-04",
+        "P01-05",
+        "P01-07"
+      ],
+      "level": "literal-prose-model",
+      "statement": "For rounds t=1,...,T the adversary chooses y_t in[0,1] secretly; the player chooses x_t in[0,1]; then y_t is revealed and loss(x_t-y_t)^2 is paid. In the stochastic simplification Y_t are iid from one fixed distribution on[0,1], chosen at game start.",
+      "quantifiers": "Any fixed distribution on[0,1]; positive finite integer T implicit in the averaged display. Player predicts before observing current target. The source does not formalize policy class, sigma algebra or external seed.",
+      "limits": "Unknown distribution is fixed, not reselected adaptively each round. The initial general game allows arbitrary targets, but the iid assertions do not extend to arbitrary/adversarial targets."
+    },
+    {
+      "id": "C-ORACLE-MEAN",
+      "source_anchors": [
+        "P01-08",
+        "P01-09"
+      ],
+      "level": "literal-prose-assertion",
+      "statement": "If the distribution were known, predicting its population mean each round incurs expected cumulative loss sigma²T, and the player cannot do better.",
+      "notation": "Let m=E[Y_1] and sigma²=Var(Y_1) denote analyst notation for the source's mean and variance; m is not introduced as a printed symbol on these pages.",
+      "quantifiers": "One fixed deterministic population mean at every round; causal strategy lower-bound interpretation is relative to game information. No pointwise, high-probability or realized-path optimality is stated.",
+      "source_gaps": [
+        "G-PROBABILITY-FOUNDATIONS",
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-CAUSAL-OPTIMALITY"
+      ],
+      "limits": "This is a known-distribution oracle benchmark, not an algorithm supplied to the unknown-distribution learner; no empirical-mean algorithm is specified on pp1–2."
+    },
+    {
+      "id": "C-EXPECTED-FIXED-MINIMUM",
+      "source_anchors": [
+        "P02-01",
+        "P02-02"
+      ],
+      "level": "literal-display-rewrite",
+      "formula": "E[sum_{t=1}^T (x_t-Y_t)^2] - min_{x in[0,1]} E[sum_{t=1}^T (x-Y_t)^2]",
+      "equivalent_to": "Equation(1.1): E[sum_{t=1}^T (x_t-Y_t)^2] - sigma²T.",
+      "order": "min_x E[sum loss(x,Y_t)], with one deterministic x held fixed across all rounds and all outcomes. Expectation averages the iid targets; x_t may depend on previous revealed targets under the game.",
+      "source_gaps": [
+        "G-PROBABILITY-FOUNDATIONS",
+        "G-MEAN-FIXED-OPTIMUM"
+      ],
+      "limits": "Not E[min_x sum loss], not sum_t min_x E[loss] as a printed formula, and not minimization over history-dependent strategies. Mean attainment is asserted via surrounding prose; an sInf/IsLeast representation or uniqueness theorem is not printed."
+    },
+    {
+      "id": "C-EXPECTED-EXCESS",
+      "source_anchors": [
+        "P01-11",
+        "P01-13",
+        "P01-14"
+      ],
+      "level": "literal-display-and-prose-assertion",
+      "formula_1_1": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma²T",
+      "formula_1_2": "(1/T) E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma²",
+      "statement": "Both quantities are asserted nonnegative.",
+      "expectation_scope": "Printed expectation subscripts name Y_1,...,Y_T. An independent randomized learner seed and integration over it are not explicitly provided.",
+      "source_gaps": [
+        "G-PROBABILITY-FOUNDATIONS",
+        "G-CAUSAL-OPTIMALITY",
+        "G-NORMALIZATION"
+      ],
+      "limits": "Causal/nonanticipating prediction is essential to the stated game interpretation. Mere iid targets and arbitrary correlated prediction variables do not justify nonnegativity. Pathwise best-fixed regret need not be nonnegative."
+    },
+    {
+      "id": "C-NORMALIZED-CRITERION",
+      "source_anchors": [
+        "P01-12",
+        "P01-16",
+        "P01-17"
+      ],
+      "level": "literal-success-criterion-not-achievement",
+      "statement": "Call a strategy successful if(1.1) grows sublinearly with time, equivalently if(1.2) tends to0 as T tends to infinity. On average across rounds the algorithm approaches optimal performance.",
+      "analyst_reading": "Writing Delta_T for(1.1), normalized excess is Delta_T/T for T>0; success means Delta_T/T→0.",
+      "source_gaps": [
+        "G-NORMALIZATION"
+      ],
+      "limits": "No specific learner is proved to satisfy this condition and no rate is provided here. No almost-sure convergence, per-round convergence, finite-horizon uniform guarantee or stopping-time assertion is printed. T=0 normalization is unspecified."
+    },
+    {
+      "id": "C-DETERMINISTIC-TRANSITION",
+      "source_anchors": [
+        "P02-03",
+        "P02-04",
+        "P02-05",
+        "P02-06",
+        "P02-08"
+      ],
+      "level": "literal-definition-and-model-change",
+      "formula": "Regret_T := sum_{t=1}^T(x_t-y_t)^2 - min_{x in[0,1]}sum_{t=1}^T(x-y_t)^2",
+      "statement": "Remove assumptions on data generation and consider arbitrary y_t sequences. If the algorithm is deterministic, remove expectation; winning is sublinear regret against the best single choice in hindsight.",
+      "limits": "This is a definitional/model transition, not a theorem exchanging expectation and minimum. For randomized algorithms the page does not specify the expectation convention. Fixed-comparator expected loss and pathwise minimum are different benchmarks.",
+      "source_gaps": [
+        "G-PATHWISE-MINIMUM"
+      ]
+    },
+    {
+      "id": "C-GENERAL-NOREGRET-CONTEXT",
+      "source_anchors": [
+        "P02-10",
+        "P02-11",
+        "P02-12",
+        "P02-13",
+        "P02-14",
+        "P02-15"
+      ],
+      "level": "literal-context-boundary",
+      "formula": "Regret_T(u):=sum_{t=1}^T ell_t(x_t)-sum_{t=1}^T ell_t(u); for every fixed u in V, lim_{T→∞} Regret_T(u)/T <=0.",
+      "statement": "V subset R^d, losses ell_t:V→R; comparator u fixed. The algorithm does not know u or corresponding regret to guarantee a bound. Remark1.1 suppresses loss-sequence dependence. Footnote1 permits predictions in a larger W in some cases.",
+      "limits": "This ordinary-limit inequality for signed generic comparator regret is distinct from the stochastic nonnegative excess tending to0. The source does not provide a limsup, absolute-regret, nonnegative-regret or eventual-epsilon equivalence here; no such conversion is added."
+    }
+  ],
+  "source_gaps": [
+    {
+      "id": "G-PROBABILITY-FOUNDATIONS",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-07",
+        "P01-08",
+        "P01-11",
+        "P01-13",
+        "P02-02"
+      ],
+      "claim": "Well-defined probability, measurability and finite expectation infrastructure is omitted.",
+      "missing": "A common probability space/law, measurable observations/predictions, and justification that bounded[0,1] squared losses and their finite sums are integrable. The informal interval game supplies boundedness but not a formal construction.",
+      "not_an_extra_public_premise": "Integrability should be supplied from the source model, not imported as a desired loss identity or lower-bound premise.",
+      "resolution": "unproved-in-extracted-pages"
+    },
+    {
+      "id": "G-MEAN-FIXED-OPTIMUM",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-08",
+        "P01-09",
+        "P02-02"
+      ],
+      "claim": "Population mean is feasible and attains the minimum expected fixed-comparator loss sigma²T.",
+      "missing": "The source gives no proof of m in[0,1], expected square at m equals variance, or E sum(x-Y_t)^2>=sigma²T with equality at m. The deterministic bias/variance calculation and finite-sum expectation accounting are omitted.",
+      "not_printed": "No displayed squared-loss decomposition, minimizer uniqueness proof, sInf/IsLeast identity, or library implementation route is present.",
+      "resolution": "unproved-in-extracted-pages"
+    },
+    {
+      "id": "G-CAUSAL-OPTIMALITY",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-09",
+        "P01-14"
+      ],
+      "claim": "No admissible causal player beats the mean benchmark in expectation; excess is nonnegative.",
+      "missing": "A formal admissible information/policy class and proof connecting prediction-before-reveal plus iid sampling to the lower bound. Strict-past measurability, independence/conditional-expectation cancellation and extension to a private random seed are not developed.",
+      "not_printed": "The identity Delta_T=sum E[(x_t-m)^2] is a possible derived explanation, not a displayed/source-proved statement on these pages. No seed measurability or seed-target independence assumptions are printed.",
+      "resolution": "unproved-and-policy-scope-not-formalized"
+    },
+    {
+      "id": "G-NORMALIZATION",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-12",
+        "P01-13",
+        "P01-16"
+      ],
+      "claim": "Average excess equals cumulative excess divided byT, so sublinearity and normalized convergence are equivalent.",
+      "missing": "Routine positive-T algebra and a precise sequence-level meaning of sublinearity are not proved. The source uses the equivalence informally and supplies no T=0 convention.",
+      "resolution": "routine-bridge-not-proved-in-source"
+    },
+    {
+      "id": "G-PATHWISE-MINIMUM",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P02-05",
+        "P02-06"
+      ],
+      "claim": "The hindsight minimum in the deterministic definition is attained by a best fixed action.",
+      "missing": "No minimizer/existence proof is given on pp1–2. This contextual source gap is separate from the population-mean expected minimum and not discharged using unread adjacent pages.",
+      "resolution": "unproved-in-extracted-pages"
+    }
+  ],
+  "assumption_delta_ledger": [
+    {
+      "slot": "probability law",
+      "classification": "same",
+      "detail": "IID fixed distribution on[0,1] chosen at game start."
+    },
+    {
+      "slot": "causality",
+      "classification": "source-implicit",
+      "detail": "Game order implies player lacks current target. Formal filtration/strict-past policy type absent."
+    },
+    {
+      "slot": "measurability/integrability",
+      "classification": "mathematically-necessary",
+      "detail": "Finite expectations need formal measurable RVs; bounded source losses should discharge integrability. No implementation bundle evaluated."
+    },
+    {
+      "slot": "randomized policies",
+      "classification": "unresolved",
+      "detail": "No private-seed law, independence or averaging convention specified. Do not silently claim all randomized/adaptive policies."
+    },
+    {
+      "slot": "support",
+      "classification": "source-implicit",
+      "detail": "Sampling distribution over[0,1] supplies the range/support. Source does not distinguish pointwise from almost-sure real-RV representations or impose all-null-history behavior."
+    },
+    {
+      "slot": "mean feasibility/minimum attainment",
+      "classification": "unresolved",
+      "detail": "Required to justify printed oracle and min-E benchmark, asserted without proof."
+    },
+    {
+      "slot": "T=0",
+      "classification": "unresolved",
+      "detail": "Averaged display uses1/T; no zero-horizon convention or off-source extension supplied."
+    },
+    {
+      "slot": "population vs empirical mean",
+      "classification": "same",
+      "detail": "Only population mean benchmark here; empirical-prefix learner and sample-mean minimizer not provided in this extract."
+    },
+    {
+      "slot": "ordinary limit",
+      "classification": "same",
+      "detail": "Stochastic success is normalized excess→0. Generic comparator no-regret separately prints ordinary lim<=0; do not substitute limsup or claim the criteria interchangeable."
+    }
+  ],
+  "not_source_claims": [
+    "No displayed causal excess decomposition sum E[(x_t-m)^2].",
+    "No empirical-mean algorithm or convergence rate proof.",
+    "No uniqueness theorem, complete strategy-class construction or randomized minimax theorem.",
+    "No min/E interchange and no nonnegativity claim for pathwise regret.",
+    "No Lean signature, library route or proof-term topology is extracted."
+  ],
+  "production_edits": false,
+  "public_projection": {
+    "original": {
+      "artifact": "batch23-source-extraction-v2/source-contract.json",
+      "sha256": "8169f726a1e9a0d880ae55c85faf3acc2858e01c3bca8a8d7dd75d5b58916366",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical prefixes become logical locations; source mathematics and original stage verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

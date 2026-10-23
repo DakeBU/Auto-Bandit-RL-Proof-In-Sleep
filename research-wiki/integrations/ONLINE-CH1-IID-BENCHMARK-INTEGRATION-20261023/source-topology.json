@@ -1,0 +1,766 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "affiliation": "KAUST",
+    "version": "arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "pdf": "maintenance-evidence/batch18-source-extraction/source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "section": "Chapter1, What is Online Learning?",
+    "printed_pages": [
+      1,
+      2
+    ],
+    "pdf_pages_1_based": [
+      13,
+      14
+    ],
+    "pdf_pages_0_based": [
+      12,
+      13
+    ]
+  },
+  "independence": {
+    "status": "pending-independent-review",
+    "role": "source-only-extractor",
+    "implementation_read": false,
+    "PR194_read": false,
+    "prior_acceptance_verdicts_read_for_this_extraction": false,
+    "prior_Lean_topology_read": false,
+    "source_graph_self_approved": false,
+    "restriction": "Graph constructed freshly from pinned raw PDF13–14 text and actual pixels. Cover PDF1 used only for metadata. Governance protocols consulted; no implementation declarations/proofs or historical acceptance verdicts used to construct topology.",
+    "history_disclosure": "Same agent previously performed batch22 extraction and visual reviews in this thread; this is a fresh bounded extraction, not a claim that the agent has no prior chapter familiarity. No prior packet/topology was read or copied for batch23."
+  },
+  "graph_kind": "source-only assertion/definition topology with explicit missing-proof obligations",
+  "not_implementation_graph": true,
+  "legend": {
+    "NODE": "Printed statement, definition, display, remark or scope qualifier.",
+    "SOURCE_GAP": "A necessary bridge or formalization boundary omitted in these pages; proposed audit obligation, not a printed author proof.",
+    "AND": "All named inputs belong to one indicated support/definition route; relation specifies whether this is a proof obligation, definition, interpretation or model change.",
+    "OR": "Reserved for alternative sufficient proofs. None are printed in this scope.",
+    "nonproof_edges": "Model changes and definitions do not establish theorem implications."
+  },
+  "nodes": [
+    {
+      "id": "N-ROUNDS",
+      "kind": "game-definition",
+      "inventory_ids": [
+        "P01-02"
+      ],
+      "statement": "Repeated guessing game; rounds t=1,...,T.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-SECRET-TARGET",
+      "kind": "game-rule",
+      "inventory_ids": [
+        "P01-03"
+      ],
+      "statement": "Adversary chooses y_t in[0,1] and keeps it secret.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-PREDICT",
+      "kind": "game-rule",
+      "inventory_ids": [
+        "P01-04"
+      ],
+      "statement": "Player chooses x_t in[0,1] before target revelation.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-FEEDBACK-LOSS",
+      "kind": "game-rule",
+      "inventory_ids": [
+        "P01-05"
+      ],
+      "statement": "Target revealed; player pays(x_t-y_t)^2.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-IID",
+      "kind": "standing-stochastic-model",
+      "inventory_ids": [
+        "P01-07"
+      ],
+      "statement": "Targets are iid from a fixed distribution on[0,1] chosen at the beginning.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-ORACLE-MEAN",
+      "kind": "asserted-oracle-performance",
+      "inventory_ids": [
+        "P01-08"
+      ],
+      "statement": "Knowing the distribution permits predicting its mean each round at expected cost sigma²T, with sigma² its variance.",
+      "status": "asserted-without-printed-proof",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-CAUSAL-LOWER",
+      "kind": "asserted-optimality",
+      "inventory_ids": [
+        "P01-09"
+      ],
+      "statement": "We cannot do better than that.",
+      "status": "asserted-without-printed-proof",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-UNKNOWN-LAW-BENCHMARK",
+      "kind": "benchmark-motivation",
+      "inventory_ids": [
+        "P01-10"
+      ],
+      "statement": "Distribution is unknown, so compare the strategy to the optimal one.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-EQ11",
+      "kind": "numbered-display",
+      "inventory_ids": [
+        "P01-11"
+      ],
+      "statement": "Cumulative expected excess, equation(1.1).",
+      "formula": "\\mathbb E_{Y_1,\\ldots,Y_T}\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\sigma^2 T",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-NORMALIZATION",
+      "kind": "asserted-equivalence",
+      "inventory_ids": [
+        "P01-12"
+      ],
+      "statement": "Equivalently, consider the average.",
+      "status": "asserted-without-printed-proof",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-EQ12",
+      "kind": "numbered-display",
+      "inventory_ids": [
+        "P01-13"
+      ],
+      "statement": "Average expected excess, equation(1.2).",
+      "formula": "\\frac1T\\mathbb E_{Y_1,\\ldots,Y_T}\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\sigma^2",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-NONNEGATIVE",
+      "kind": "asserted-sign",
+      "inventory_ids": [
+        "P01-14"
+      ],
+      "statement": "Both expected excess quantities are nonnegative.",
+      "status": "asserted-without-printed-proof",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-SUCCESS",
+      "kind": "success-criterion",
+      "inventory_ids": [
+        "P01-16"
+      ],
+      "statement": "Successful means(1.1) sublinear, equivalently(1.2) tends to0 as T tends to infinity.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-AVERAGE-INTERPRETATION",
+      "kind": "interpretation",
+      "inventory_ids": [
+        "P01-17"
+      ],
+      "statement": "Average performance over rounds should approach optimal performance.",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-EXPECTED-REWRITE",
+      "kind": "cross-page-section-opening",
+      "inventory_ids": [
+        "P01-18",
+        "P02-01"
+      ],
+      "statement": "Minimizing Regret. Having arrived at a good measure of success...",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-EXPECTED-FIXED-MINIMUM",
+      "kind": "unnumbered-display",
+      "inventory_ids": [
+        "P02-02"
+      ],
+      "statement": "Expected cumulative learner loss minus minimum expected cumulative fixed-action loss.",
+      "formula": "\\mathbb E\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\min_{x\\in[0,1]}\\mathbb E\\!\\left[\\sum_{t=1}^{T}(x-Y_t)^2\\right]",
+      "status": "source-statement-or-definition",
+      "scope": "primary-iid-route"
+    },
+    {
+      "id": "N-ARBITRARY-SEQUENCE",
+      "kind": "model-transition",
+      "inventory_ids": [
+        "P02-03"
+      ],
+      "statement": "Remove the data-generation assumption and consider arbitrary sequences y_t.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-DETERMINISTIC-TRANSITION",
+      "kind": "deterministic-qualifier",
+      "inventory_ids": [
+        "P02-04"
+      ],
+      "statement": "If the algorithm is deterministic, remove expectation because no stochasticity remains.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-PATHWISE-REGRET",
+      "kind": "unnumbered-definition-display",
+      "inventory_ids": [
+        "P02-05"
+      ],
+      "statement": "Deterministic squared-loss best-fixed regret.",
+      "formula": "\\operatorname{Regret}_T:=\\sum_{t=1}^{T}(x_t-y_t)^2-\\min_{x\\in[0,1]}\\sum_{t=1}^{T}(x-y_t)^2",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-PATHWISE-INTERPRETATION",
+      "kind": "criterion-and-interpretation",
+      "inventory_ids": [
+        "P02-06"
+      ],
+      "statement": "Winning is sublinear regret; best single choice in hindsight defines the comparator meaning.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-SINGLE-COMPARATOR",
+      "kind": "comparator-scope-discussion",
+      "inventory_ids": [
+        "P02-08"
+      ],
+      "statement": "In iid case a single best prediction is optimal; for arbitrary sequences other comparator sequences could be considered, but a single comparator is chosen for this book's main exposition.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-GENERAL-MODEL",
+      "kind": "general-model-definition",
+      "inventory_ids": [
+        "P02-10"
+      ],
+      "statement": "Vector prediction x_t in feasible V subset R^d; loss ell_t:V→R; arbitrary fixed comparator u inV.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-GENERAL-REGRET",
+      "kind": "unnumbered-definition-display",
+      "inventory_ids": [
+        "P02-11"
+      ],
+      "statement": "Comparator-parameterized regret.",
+      "formula": "\\operatorname{Regret}_T(u):=\\sum_{t=1}^{T}\\ell_t(x_t)-\\sum_{t=1}^{T}\\ell_t(u)",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-COMPARATOR-INFORMATION",
+      "kind": "algorithm-information-qualifier",
+      "inventory_ids": [
+        "P02-12"
+      ],
+      "statement": "Algorithm need not know u or corresponding regret to guarantee an upper bound.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-GENERAL-NOREGRET",
+      "kind": "definition-and-inline-display",
+      "inventory_ids": [
+        "P02-13"
+      ],
+      "statement": "No-regret is at-most-sublinear regret for every fixed u; printed ordinary-limit inequality.",
+      "formula": "\\text{for every fixed }u\\in V,\\quad\\lim_{T\\to\\infty}\\operatorname{Regret}_T(u)/T\\le0",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-LOSS-DEPENDENCE",
+      "kind": "numbered-remark",
+      "inventory_ids": [
+        "P02-14"
+      ],
+      "statement": "Remark1.1: regret also depends on losses ell_1,...,ell_T; suppress this dependence.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "N-LARGER-ACTION-SET",
+      "kind": "footnote",
+      "inventory_ids": [
+        "P02-15"
+      ],
+      "statement": "Footnote1: some settings permit predictions in larger W superset V.",
+      "status": "source-statement-or-definition",
+      "scope": "contextual-model-boundary"
+    },
+    {
+      "id": "G-PROBABILITY-FOUNDATIONS",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-07",
+        "P01-08",
+        "P01-11",
+        "P01-13",
+        "P02-02"
+      ],
+      "claim": "Well-defined probability, measurability and finite expectation infrastructure is omitted.",
+      "missing": "A common probability space/law, measurable observations/predictions, and justification that bounded[0,1] squared losses and their finite sums are integrable. The informal interval game supplies boundedness but not a formal construction.",
+      "not_an_extra_public_premise": "Integrability should be supplied from the source model, not imported as a desired loss identity or lower-bound premise.",
+      "resolution": "unproved-in-extracted-pages"
+    },
+    {
+      "id": "G-MEAN-FIXED-OPTIMUM",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-08",
+        "P01-09",
+        "P02-02"
+      ],
+      "claim": "Population mean is feasible and attains the minimum expected fixed-comparator loss sigma²T.",
+      "missing": "The source gives no proof of m in[0,1], expected square at m equals variance, or E sum(x-Y_t)^2>=sigma²T with equality at m. The deterministic bias/variance calculation and finite-sum expectation accounting are omitted.",
+      "not_printed": "No displayed squared-loss decomposition, minimizer uniqueness proof, sInf/IsLeast identity, or library implementation route is present.",
+      "resolution": "unproved-in-extracted-pages"
+    },
+    {
+      "id": "G-CAUSAL-OPTIMALITY",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-09",
+        "P01-14"
+      ],
+      "claim": "No admissible causal player beats the mean benchmark in expectation; excess is nonnegative.",
+      "missing": "A formal admissible information/policy class and proof connecting prediction-before-reveal plus iid sampling to the lower bound. Strict-past measurability, independence/conditional-expectation cancellation and extension to a private random seed are not developed.",
+      "not_printed": "The identity Delta_T=sum E[(x_t-m)^2] is a possible derived explanation, not a displayed/source-proved statement on these pages. No seed measurability or seed-target independence assumptions are printed.",
+      "resolution": "unproved-and-policy-scope-not-formalized"
+    },
+    {
+      "id": "G-NORMALIZATION",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P01-12",
+        "P01-13",
+        "P01-16"
+      ],
+      "claim": "Average excess equals cumulative excess divided byT, so sublinearity and normalized convergence are equivalent.",
+      "missing": "Routine positive-T algebra and a precise sequence-level meaning of sublinearity are not proved. The source uses the equivalence informally and supplies no T=0 convention.",
+      "resolution": "routine-bridge-not-proved-in-source"
+    },
+    {
+      "id": "G-PATHWISE-MINIMUM",
+      "kind": "SOURCE_GAP",
+      "use_sites": [
+        "P02-05",
+        "P02-06"
+      ],
+      "claim": "The hindsight minimum in the deterministic definition is attained by a best fixed action.",
+      "missing": "No minimizer/existence proof is given on pp1–2. This contextual source gap is separate from the population-mean expected minimum and not discharged using unread adjacent pages.",
+      "resolution": "unproved-in-extracted-pages"
+    }
+  ],
+  "routes": [
+    {
+      "id": "R-ORACLE",
+      "target": "N-ORACLE-MEAN",
+      "operator": "AND",
+      "inputs": [
+        "N-IID",
+        "N-PREDICT",
+        "G-PROBABILITY-FOUNDATIONS",
+        "G-MEAN-FIXED-OPTIMUM"
+      ],
+      "consumer_use_sites": [
+        "P01-08"
+      ],
+      "relation": "assertion-support-audit",
+      "conditional_premise_discharge": "Fixed law and interval domain are printed; feasibility of its mean and expected squared-loss evaluation are not proved. Gap nodes are missing obligations, not assumptions asserted by the author.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-CAUSAL",
+      "target": "N-CAUSAL-LOWER",
+      "operator": "AND",
+      "inputs": [
+        "N-ROUNDS",
+        "N-SECRET-TARGET",
+        "N-PREDICT",
+        "N-FEEDBACK-LOSS",
+        "N-IID",
+        "G-PROBABILITY-FOUNDATIONS",
+        "G-CAUSAL-OPTIMALITY"
+      ],
+      "consumer_use_sites": [
+        "P01-09"
+      ],
+      "relation": "assertion-support-audit",
+      "conditional_premise_discharge": "Prediction precedes reveal. IID sampling is printed. Measurability/nonanticipating strategy semantics and a lower-bound proof are not discharged. No independent-seed extension is silently included.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-EXCESS-DEFINITION",
+      "target": "N-EQ11",
+      "operator": "AND",
+      "inputs": [
+        "N-UNKNOWN-LAW-BENCHMARK",
+        "N-ORACLE-MEAN"
+      ],
+      "consumer_use_sites": [
+        "P01-10",
+        "P01-11"
+      ],
+      "relation": "definition-context",
+      "conditional_premise_discharge": "Source chooses benchmark sigma²T. Its optimality/attainment is represented separately, not assumed proven by this definition.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-NORMALIZED-DEFINITION",
+      "target": "N-EQ12",
+      "operator": "AND",
+      "inputs": [
+        "N-EQ11"
+      ],
+      "consumer_use_sites": [
+        "P01-12",
+        "P01-13"
+      ],
+      "relation": "definition-context",
+      "conditional_premise_discharge": "Source prints normalized expression. Equivalence to division of the cumulative expression is a separate G-NORMALIZATION obligation.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-NORMALIZATION",
+      "target": "N-NORMALIZATION",
+      "operator": "AND",
+      "inputs": [
+        "N-EQ11",
+        "N-EQ12",
+        "G-NORMALIZATION"
+      ],
+      "consumer_use_sites": [
+        "P01-12",
+        "P01-13"
+      ],
+      "relation": "asserted-equivalence-audit",
+      "conditional_premise_discharge": "Positive T implicit in1/T. No T0 extension or detailed algebra is printed.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-NONNEGATIVE",
+      "target": "N-NONNEGATIVE",
+      "operator": "AND",
+      "inputs": [
+        "N-CAUSAL-LOWER",
+        "N-EQ11",
+        "N-EQ12",
+        "N-NORMALIZATION"
+      ],
+      "consumer_use_sites": [
+        "P01-14"
+      ],
+      "relation": "assertion-support-audit",
+      "conditional_premise_discharge": "For positiveT divide cumulative nonnegativity byT. This audit route inherits unresolved G-CAUSAL-OPTIMALITY and G-NORMALIZATION; the source supplies no proof.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-EXPECTED-MIN-REWRITE",
+      "target": "N-EXPECTED-REWRITE",
+      "operator": "AND",
+      "inputs": [
+        "N-EQ11",
+        "N-EXPECTED-FIXED-MINIMUM",
+        "N-IID",
+        "G-PROBABILITY-FOUNDATIONS",
+        "G-MEAN-FIXED-OPTIMUM"
+      ],
+      "consumer_use_sites": [
+        "P01-18",
+        "P02-01",
+        "P02-02"
+      ],
+      "relation": "asserted-equivalence-audit",
+      "conditional_premise_discharge": "Need min_{x in[0,1]} E sum(x-Y_t)^2=sigma²T with mean feasible. Comparator is deterministic fixedx. No interchange of min andE occurs or is licensed.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-SUCCESS",
+      "target": "N-SUCCESS",
+      "operator": "AND",
+      "inputs": [
+        "N-EQ11",
+        "N-EQ12",
+        "N-NORMALIZATION"
+      ],
+      "consumer_use_sites": [
+        "P01-16"
+      ],
+      "relation": "criterion-equivalence-not-achievement",
+      "conditional_premise_discharge": "Sublinearity is read as cumulative excess/T→0. This defines success; it does not derive success from nonnegativity or iid sampling.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-AVERAGE-INTERPRETATION",
+      "target": "N-AVERAGE-INTERPRETATION",
+      "operator": "AND",
+      "inputs": [
+        "N-SUCCESS",
+        "N-EQ12"
+      ],
+      "consumer_use_sites": [
+        "P01-17"
+      ],
+      "relation": "interpretation",
+      "conditional_premise_discharge": "Average expected loss approaches sigma² when criterion holds; no per-round or almost-sure result follows.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-DETERMINISTIC-TRANSITION",
+      "target": "N-DETERMINISTIC-TRANSITION",
+      "operator": "AND",
+      "inputs": [
+        "N-ARBITRARY-SEQUENCE"
+      ],
+      "consumer_use_sites": [
+        "P02-03",
+        "P02-04"
+      ],
+      "relation": "model-change-not-theorem",
+      "conditional_premise_discharge": "Fixed arbitrary sequence and deterministic algorithm remove sampling/algorithm randomness. This is not a claim for randomized learners.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-PATHWISE-DEFINITION",
+      "target": "N-PATHWISE-REGRET",
+      "operator": "AND",
+      "inputs": [
+        "N-DETERMINISTIC-TRANSITION",
+        "N-ROUNDS",
+        "N-FEEDBACK-LOSS",
+        "N-PREDICT",
+        "G-PATHWISE-MINIMUM"
+      ],
+      "consumer_use_sites": [
+        "P02-05"
+      ],
+      "relation": "new-definition-not-min-expectation-exchange",
+      "conditional_premise_discharge": "Minimize realized cumulative loss over one fixedx. Source does not equate expectation of this quantity with(1.1). The P02-05 minimum also requires the open G-PATHWISE-MINIMUM attainment/well-definedness audit obligation. The printed display remains a definition; this edge does not supply its omitted proof.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-PATHWISE-INTERPRETATION",
+      "target": "N-PATHWISE-INTERPRETATION",
+      "operator": "AND",
+      "inputs": [
+        "N-PATHWISE-REGRET",
+        "G-PATHWISE-MINIMUM"
+      ],
+      "consumer_use_sites": [
+        "P02-06"
+      ],
+      "relation": "best-choice-attainment-audit",
+      "conditional_premise_discharge": "The definition uses a minimum; existence/attainment is not shown on these pages. The source then prescribes sublinear growth, not a proved algorithmic rate.",
+      "source_proof_status": "source-gap-retained"
+    },
+    {
+      "id": "R-SINGLE-COMPARATOR",
+      "target": "N-SINGLE-COMPARATOR",
+      "operator": "AND",
+      "inputs": [
+        "N-ORACLE-MEAN",
+        "N-PATHWISE-REGRET"
+      ],
+      "consumer_use_sites": [
+        "P02-08"
+      ],
+      "relation": "scope-motivation",
+      "conditional_premise_discharge": "Stochastic oracle is one prediction; deterministic choice of comparator class is an explanatory design choice. No reduction between dynamic and static regret is proved.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-GENERAL-DEFINITION",
+      "target": "N-GENERAL-REGRET",
+      "operator": "AND",
+      "inputs": [
+        "N-GENERAL-MODEL"
+      ],
+      "consumer_use_sites": [
+        "P02-11"
+      ],
+      "relation": "definition",
+      "conditional_premise_discharge": "x_t andu inV, losses evaluated there. No probability mode or sign restriction.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-GENERAL-CRITERION",
+      "target": "N-GENERAL-NOREGRET",
+      "operator": "AND",
+      "inputs": [
+        "N-GENERAL-REGRET",
+        "N-COMPARATOR-INFORMATION"
+      ],
+      "consumer_use_sites": [
+        "P02-12",
+        "P02-13"
+      ],
+      "relation": "definition-and-information-boundary",
+      "conditional_premise_discharge": "Every fixedu before ordinary limit; no proof that an algorithm attains it, and no source conversion to limsup or eventual upper-epsilon semantics.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-LOSS-DEPENDENCE",
+      "target": "N-LOSS-DEPENDENCE",
+      "operator": "AND",
+      "inputs": [
+        "N-GENERAL-REGRET"
+      ],
+      "consumer_use_sites": [
+        "P02-14"
+      ],
+      "relation": "notation-remark",
+      "conditional_premise_discharge": "Loss sequence dependence suppressed, not absent.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    },
+    {
+      "id": "R-LARGER-ACTIONS",
+      "target": "N-LARGER-ACTION-SET",
+      "operator": "AND",
+      "inputs": [
+        "N-GENERAL-MODEL"
+      ],
+      "consumer_use_sites": [
+        "P02-15"
+      ],
+      "relation": "optional-model-extension-not-AND-premise",
+      "conditional_premise_discharge": "Footnote describes some cases; it is not a required premise of the scalar iid game or a second sufficient proof route.",
+      "source_proof_status": "definition-or-reading-context-not-a-proof-certificate"
+    }
+  ],
+  "alternative_routes": [],
+  "or_routes_printed": 0,
+  "root_targets": [
+    "N-ORACLE-MEAN",
+    "N-CAUSAL-LOWER",
+    "N-EXPECTED-REWRITE",
+    "N-NONNEGATIVE",
+    "N-SUCCESS"
+  ],
+  "context_roots": [
+    "N-PATHWISE-REGRET",
+    "N-PATHWISE-INTERPRETATION",
+    "N-GENERAL-NOREGRET",
+    "N-LARGER-ACTION-SET"
+  ],
+  "forbidden_edges": [
+    {
+      "from": "N-EXPECTED-FIXED-MINIMUM",
+      "to": "N-PATHWISE-REGRET",
+      "reason": "No expectation/minimum interchange or equality of stochastic and hindsight benchmarks."
+    },
+    {
+      "from": "N-NONNEGATIVE",
+      "to": "N-PATHWISE-REGRET",
+      "reason": "Expected excess nonnegativity does not assert pathwise regret nonnegativity."
+    },
+    {
+      "from": "N-IID",
+      "to": "N-SUCCESS",
+      "reason": "Source does not prove a learner attains the normalized criterion."
+    },
+    {
+      "from": "N-GENERAL-NOREGRET",
+      "to": "N-SUCCESS",
+      "reason": "Generic signed ordinary-limit<=0 and iid nonnegative normalized excess→0 have different objects/hypotheses; no unconditional equivalence."
+    }
+  ],
+  "closure": {
+    "status": "open-source-gaps",
+    "open_gap_ids": [
+      "G-PROBABILITY-FOUNDATIONS",
+      "G-MEAN-FIXED-OPTIMUM",
+      "G-CAUSAL-OPTIMALITY",
+      "G-NORMALIZATION",
+      "G-PATHWISE-MINIMUM"
+    ],
+    "explanation": "This extract contains asserted benchmark/optimality/sign/equivalence claims and definitions, not their full proofs. Five gap nodes remain explicit. Distinct topology reviewer must assess before implementation review.",
+    "root_gap_reachability": {
+      "N-ORACLE-MEAN": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-CAUSAL-LOWER": [
+        "G-CAUSAL-OPTIMALITY",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EXPECTED-REWRITE": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-NONNEGATIVE": [
+        "G-CAUSAL-OPTIMALITY",
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-SUCCESS": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-PATHWISE-REGRET": [
+        "G-PATHWISE-MINIMUM"
+      ],
+      "N-PATHWISE-INTERPRETATION": [
+        "G-PATHWISE-MINIMUM"
+      ],
+      "N-GENERAL-NOREGRET": [],
+      "N-LARGER-ACTION-SET": []
+    }
+  },
+  "revision": 2,
+  "supersedes": {
+    "path": "batch23-source-extraction/source-topology.json",
+    "sha256": "4bcc795c2190921d50ba47f719b371bf7dd79b72ea0d65ad8faadc84fe499c89"
+  },
+  "correction_review": {
+    "path": "batch23-source-review/topology-review-v1.json",
+    "sha256": "ec51203fee8992b3dfc1fc7b7d122eac2d0d7039254aec9a15dd3e3a29016558",
+    "finding_ids": [
+      "TR1",
+      "TR2"
+    ]
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch23-source-extraction-v2/source-topology.json",
+      "sha256": "ad30060a00387ee6d9a61367700fb576a32d8235a8aa975a0ed2e6b95c22f8ed",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical prefixes become logical locations; source mathematics and original stage verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}
