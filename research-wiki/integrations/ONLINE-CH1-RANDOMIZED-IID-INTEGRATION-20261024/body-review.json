@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/batch23_source_reviewer",
+  "at": "2026-10-23T17:00:34.543784+00:00",
+  "originalPR": 195,
+  "originalHead": "372c9a6c138c50d7a5e08e91351238f231565219",
+  "acceptedComparisonMain": "f0540e74ad13efd830da994a75f0db23e8ee2417",
+  "inputBindings": {
+    "batch24-source-review/topology-review-v1.json": "8257cbecd4fcd38b0f56ccf51b76f122fd11b7aca2dbffcc18a617c6fe26805a",
+    "batch24-source-extraction/source-contract.json": "f5f06afabd4a83c3840923e048956c9d735014872e041b64c1e0aebafa98c78c",
+    "batch24-source-extraction/source-inventory-mapping.json": "57155fda6532eed653e367fe306ab520d3107c5060b1bdcd62e4068b349b1094",
+    "batch24-source-extraction/source-topology.json": "7903037e834cde0d82e049f1b6490c437f3480a7eb9d8abb9aaeb0ad28521491",
+    "batch24-statement-seal-v2/statement-seal.json": "bd928641593aaff5b754aeeda84dbf2cc678522421863525f5a955d5034721a1",
+    "batch24-statement-seal-v2/actual-module.lean": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+    "batch24-statement-seal-v2/neutral-statements.lean": "93fd524faa37acf9208ef7e3cb198816048cfe3df25d422eaf9dbb5ccca10b2e",
+    "batch24-blind-decoding-v1/blind-decoding.json": "f72b5fed50aa743e071dbd4dd5ffc83c2cd08c4ec430a840e28832a3179caee1",
+    "batch24-actual-proof-probe-v2/receipt.json": "8bd3cdd79044852bfd51ecec95bfccb331560bd3ff681f8694f218202c510c8f",
+    "batch24-actual-proof-probe-v2/Probe.lean": "8a91ab4eba77a713af9484154c68530ef60ece6bd1ade9fc7078e6108f55d3f7",
+    "batch24-actual-proof-probe-v5/receipt.json": "5e3c784631117180eec46810fd55c23ab947f979d4b5069d1d91c80f7140848a",
+    "batch24-actual-proof-probe-v5/Probe.lean": "ac6e7e599535ad763c39e89f9fd6f0aa42c67b4fe9064f98180a3f8827b5e382",
+    "batch24-actual-proof-probe-v5/stdout.log": "8f095c36fcf22b317aa6b2a3cc73b50f35c9f4c68d6d0282eeeb2e52da11b58b",
+    "batch24-original-canary-probe-v1/receipt.json": "e40c02ac2adb123de94c9cf8cbba59e5e5427faf66961882319d8367b10b6f1d",
+    "batch24-original-canary-probe-v1/preparation.json": "b13839feb04b7e7bec3fb0c48895518035a2d828f902d6b54f8bb24763bffcff",
+    "batch24-original-canary-probe-v1/original-canary.lean": "6223f9ef63b02d3291204242633e09362ff5507a6301301ccb7a257ea57fb2a1",
+    "batch24-original-canary-probe-v1/axiom-verification.json": "2ddd38a368b8bdd445f9e331dafcbf97f62443a292ec82d3ce81b4a44641ce80",
+    "batch24-original-canary-probe-v1/stdout.log": "652bb0b1a8fb070dc3ccf07862eddcd2cca44042e5589848c8ceb789a97a5959",
+    "batch24-reuse-search-v1/receipt.json": "06da1bdc3bf31ce987b031692112e0ba3b4549bc20a4065858b7619205ef1257",
+    "batch24-source-review/IndependentDependencies-v1.lean": "b98363d33460c036204a2502e59acaf132312ea2c11a541c4e890a7e6af04077",
+    "batch24-source-review/actual-direct-dependencies-v1.json": "3bb7e4966fb7e40db4cbe4bd217f729f5819d57b081f7a3dc16686162c097c9b",
+    "batch24-actual-proof-probe-v1/receipt.json": "66ffc04fdae295c4f9dcd2147a980cdaac8ffb1eeb6ba66c01eb628a481a2c24",
+    "batch24-actual-proof-probe-v3/receipt.json": "e08000587b6d38750b19de9b00898874d746cd625baafd03cef7a44ec242a5c5",
+    "batch24-actual-proof-probe-v4/receipt.json": "8b540e9b28133da62df554d85164043206a76229d2728b20f90174a7064b464c"
+  },
+  "required_corrections": [],
+  "sourceTopologySealedBeforeImplementation": true,
+  "wholeOriginalAcceptance": false,
+  "combinedProjectAcceptance": false,
+  "readerAcceptance": false,
+  "releaseAcceptance": false,
+  "productionEdits": false,
+  "remoteMutations": false,
+  "stage": "independent-actual-body-review",
+  "verdict": "accepted",
+  "acceptedScope": "Exact sealed production bodies, selected upstream proof routes and original meaningful canaries; focused compilation only.",
+  "bodyFindings": [
+    {
+      "id": "R001",
+      "finding": "Derives S independent of X by projection, characterizes independence via product pushforward laws, transports through measurable product associativity, and combines the joint seed/pair factorization with X/Y factorization. Arbitrary measurable codomains are supported under finite probability pushforwards; no pairwise-only shortcut."
+    },
+    {
+      "id": "R002",
+      "finding": "Builds measurable finite history. iIndepFun.indepFun_finset separates range t and singleton t, then evaluation projects current coordinate. Measurable extraction of (past,current) from the entire target map transports seed independence. R001 supplies joint seed-past/current independence."
+    },
+    {
+      "id": "R003",
+      "finding": "Measurable restriction of later history to earlier indices yields comap inclusion; no probabilistic input or F monotonicity premise."
+    },
+    {
+      "id": "R004",
+      "finding": "Uses R002 to get independence of generated sigma fields, then hP.comap_le and hF to shrink the left field. No prediction-current independence is in the signature, and no unproved factorization representation is used."
+    },
+    {
+      "id": "R005",
+      "finding": "Composes R002 with the actual jointly measurable policy. Its unrestricted real output is appropriate for an independence-only result."
+    },
+    {
+      "id": "R006",
+      "finding": "First proves G_t lies in the ambient measurable structure using seed/history measurability. Derives ambient prediction measurability from hP/hF; derives L2 via MeasureTheory.memLp_of_bounded and AE feasibility; derives current independence via R004. Unfolds expectedFixedRegret, rewrites the attained fixed minimum via the existing theorem, applies cumulative square decomposition, then proves nonnegativity by integral and finite-sum nonnegativity."
+    },
+    {
+      "id": "R007",
+      "finding": "Combines countably many AE target support events (valid for natural indices), uses each legal finite history and every-seed feasibility, and proves policy composition measurable in the literal comap. Instantiates R006 at F_t=G_t with reflexive containment. This actual route does not call R005."
+    }
+  ],
+  "upstreamReview": [
+    "Existing expected_fixed_prefix_decomposition derives target L2 and integrability, then common-law mean/variance substitutions.",
+    "Existing expected_fixed_prefix_minimum proves feasible mean and actual IsLeast by square nonnegativity; expectedFixedMinimum_eq_variance uses IsLeast.csInf_eq. No optimization certificate is hidden in the endpoint premises.",
+    "Existing iid_cumulative_prediction_decomposition is an independence/L2 consumer. Its independent_prediction_square upstream proof uses variance subtraction and zero covariance from independence, with explicit integrability. New R006 produces both consumer premises.",
+    "Read critical mathlib product-law, disjoint finite-coordinate independence, sub-sigma-field restriction, and AE bounded Lp interfaces. These library results discharge named proof obligations, not source author proofs."
+  ],
+  "compiledEvidence": {
+    "actualSource": "Byte-identical to original PR195 module at 372c9a6c. All seven sealed header hashes checked.",
+    "actualBodyProbe": "v2 and v5 exit0; exact original production text preserved, with additional Mathlib import and neutral/identity checks.",
+    "reviewerProbe": "Private IndependentDependencies-v1.lean independently compiled with exit0 under existing research-ol1 runtime. Original production text is included unchanged after import Lean.",
+    "axioms": "All 48 named new production/canary closures in the canary log independently parsed as subsets of propext, Classical.choice, Quot.sound. No sorry/admit in sealed production.",
+    "warnings": "Nonfatal class-valued definition reducibility warning and neutral proposition unused-hypothesis warnings are preserved; no gate acceptance inferred from their absence or presence."
+  },
+  "canaryFindings": [
+    "Exact original canary SHA6223f9ef63b02d3291204242633e09362ff5507a6301301ccb7a257ea57fb2a1; direct receipt exit0 and bound logs checked.",
+    "Product of nondegenerate fair-coin seed and infinite IID target law produces actual seed/whole-process independence, target mean1/2 and variance1/4.",
+    "Seeded policy uses tape at time0 and the previous target thereafter; it is legal but not bounded on off-cube histories. Both abstract and concrete endpoints apply.",
+    "Empty excess equals0; exact two-round excess equals1/2, not merely a syntactic restatement of the theorem.",
+    "Current target at time0 is not measurable in private information, by nonzero variance.",
+    "Four-atom XOR example has target-target and both seed-coordinate independence yet fails joint seed-past/current independence and whole-pair seed independence. It catches the pairwise pitfall."
+  ],
+  "gapDischargeBoundary": "The exact declared finite private-tape model supplies joint regrouping, raw information, measurable policy, AE moments, cumulative identity and legal-history proof bridges. The printed author proof remains absent; source-level universal strategy interpretation, normalization/asymptotic and other chapter obligations are not thereby closed.",
+  "public_projection": {
+    "original": {
+      "artifact": "batch24-source-review/body-review-v1.json",
+      "sha256": "c0fea63e21fab293a171261231f49e21fbfb40f84d59f526e6dd74b848e0376d",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Mathematics and scoped original verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

@@ -5154,7 +5154,7 @@
         },
         {
           "term": "Stochastic benchmark",
-          "meaning": "Minimizing expected fixed loss differs from taking expectation of the pathwise hindsight minimum. The legacy core APIs use pointwise target support and globally bounded history policies. The expected-fixed benchmark adapters use almost-sure target support and feasibility only on legal history tuples; their causal excess endpoints cover deterministic measurable strict-history policies. Neither representation alone covers every randomized strategy or proves asymptotic success."
+          "meaning": "Minimizing expected fixed loss differs from taking expectation of the pathwise hindsight minimum. Legacy core APIs use pointwise support and globally bounded history policies; expected-fixed adapters use almost-sure support and legal-history feasibility. Finite excess now also covers a whole-process-independent private tape and exactly measurable subordinate raw information. It does not establish representation of every randomized strategy or asymptotic success."
         },
         {
           "term": "Arbitrary initialization and the recursive state",
@@ -5516,6 +5516,29 @@
             "status": "compiled",
             "label": "Compiled and scientifically reviewed",
             "boundary": "Independent source-topology, semantic, proof-body and binder/reuse reviews passed for these finite expected-fixed adapters and their deterministic measurable strict-history producers. The expected fixed minimum remains distinct from the expectation of a hindsight minimum. Randomized and general-filtration strategy coverage, asymptotic success and full Chapter 1 coverage remain open. The shared library, Tests and full harness passed. Bounded local reader, module, formula and graph rendering was reviewed. Committed-candidate checks and release acceptance remain pending. This is derived support, not a separately printed theorem or complete source proof."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Private tape, strict-past information and finite IID excess",
+          "pages": "printed pp. 1–2 / PDF pp. 13–14: finite expected benchmark, with a derived private-tape extension",
+          "pdf_page": 13,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{aligned}S&\\perp(Y_t)_{t\\ge0},\\qquad\\mathcal G_t=\\sigma(S,(Y_s)_{s<t}),\\\\\\mathcal F_t&\\le\\mathcal G_t,\\quad P_t\\text{ is }\\mathcal F_t\\text{-measurable},\\\\B_T&=\\inf_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2=Tv,\\\\\\Delta_T&=\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2-B_T\\\\&=\\sum_{t<T}\\mathbb E(P_t-m)^2\\ge0.\\end{aligned}",
+          "plain": "The printed source gives a population-variance benchmark for causal guessing. This extension supplies an explicit information model: a private tape independent of the entire IID target process, together with the strict past. Feasible predictions measurable in subordinate information satisfy the finite excess identity.",
+          "fallback": "Join one whole-process-independent private tape to the strict past. Exact measurable feasible predictions in that information are independent of their current targets; their expected excess is the sum of expected squared deviations from the population mean.",
+          "relationship": "Derived private-tape extension of the finite expected guessing-game benchmark in Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), printed pp. 1–2 / PDF pp. 13–14. Those pages do not give a private-seed or sigma-field theorem or proof.",
+          "contract": {
+            "model": "Work on a probability space with measurable real targets Y_t and a measurable private tape S. The target family is mutually independent, and S is independent of the entire target sequence as one random element. Independence from each coordinate separately is insufficient. Lean t corresponds to source round t+1. For the excess endpoints additionally assume all targets have the law of Y_0 and lie in [0,1] almost surely. Write m = E[Y_0], v = Var(Y_0), B_T = inf over u in [0,1] of E sum_{t<T}(u-Y_t)^2, and Delta_T = E sum_{t<T}(P_t-Y_t)^2 - B_T. Here the existing minimum theorem gives B_T = Tv. All time-indexed assumptions hold for every natural t; T=0 is included. Every expectation in this private-tape extension is taken over the joint law of the tape and target process. No conclusion conditional on a fixed tape value is asserted.",
+            "assumptions": "For the excess formula require common target law, mutual target independence, almost-sure interval support, whole-process seed independence, and exact F_t-measurability with F_t ≤ G_t and almost-sure prediction feasibility. F_t need not be monotone. Alternatively use jointly measurable seed/history policies feasible for every seed only on legal histories. G_t itself is increasing without stochastic assumptions.",
+            "parameters": "Arbitrary probability and seed measurable spaces; one tape S may encode all private randomness used by this model. Raw comap-generated information, no completion. All time-indexed hypotheses quantify over natural time. T=0 gives an empty sum; at the first round a policy may use the seed.",
+            "regret": "This covers the specified whole-process-independent private tape and raw generated information. It does not represent every randomized kernel, arbitrary side information, completed sigma-fields or merely almost-everywhere predictable versions. It gives finite identities, without an asymptotic rate or ordinary-regret success claim. No expectation/minimum interchange is asserted.",
+            "guarantee": "Project mutual target independence to the finite past and current coordinate. Project whole-process tape independence to the same joint block and regroup product laws to obtain independence of (S,past) and the current target. Restrict this independence to the actual prediction information. Ambient measurability and almost-sure feasibility produce L2. The accepted cumulative square decomposition gives expected loss Tv plus the finite sum of expected squared deviations from m; the fixed minimum equals Tv, yielding the displayed identity and nonnegativity. For a concrete policy, a countable almost-sure legal-history event supplies feasibility and the generating map supplies exact measurability."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled and scientifically reviewed",
+            "boundary": "This covers the specified whole-process-independent private tape and raw generated information. It does not represent every randomized kernel, arbitrary side information, completed sigma-fields or merely almost-everywhere predictable versions. It gives finite identities, without an asymptotic rate or ordinary-regret success claim. No expectation/minimum interchange is asserted. Source/semantic/body/binder review accepts this explicit extension. The shared library, Tests and full harness passed. Local source-card, reader, module, formula and graph rendering was reviewed. Committed-candidate checks and release acceptance remain pending."
           },
           "statement_provenance": "derived-support"
         }

@@ -1,0 +1,734 @@
+{
+  "schema_version": 1,
+  "status": "pending-independent-review",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "affiliation": "KAUST (bibliographic metadata; not a mathematical premise)",
+    "version": "arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "pdf": "maintenance-evidence/batch18-source-extraction/source-pinned.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "section": "Chapter1, What is Online Learning?",
+    "printed_pages": [
+      1,
+      2
+    ],
+    "pdf_pages_1_based": [
+      13,
+      14
+    ],
+    "pdf_pages_0_based": [
+      12,
+      13
+    ]
+  },
+  "independence": {
+    "role": "source-only-extractor",
+    "status": "pending-independent-review",
+    "implementation_Lean_or_proofs_read": false,
+    "implementation_dependent_reviews_read": false,
+    "source_graph_self_approved": false,
+    "history_disclosure": "This agent previously extracted the same pages for batch23 and reviewed website pixels. For batch24 the raw PDF was hashed again, fresh pdftotext output and fresh Poppler page images were read. Only the earlier page inventory (not its topology or verdict) was reread and reused after exact-byte comparison. The new topology is reconstructed for this task. This is not a claim of zero prior chapter familiarity.",
+    "original_contract_treatment": "Only exact-head source-card-v2.json and contract-v2.md were inspected from PR195. They are untrusted scope proposals, not evidence that any theorem or proof is implemented or correct.",
+    "no_acceptance_authority": true
+  },
+  "coverage": {
+    "items": 37,
+    "node_items": 28,
+    "excluded_items": 9,
+    "unique_printed_nodes": 27,
+    "source_gap_nodes": 5,
+    "display_ids": [
+      "P01-11",
+      "P01-13",
+      "P02-02",
+      "P02-05",
+      "P02-11",
+      "P02-13"
+    ],
+    "citations": "Internal equations1.1/1.2 and Chapter14 forward reference only. No external proof citation closes the lower benchmark.",
+    "line_numbering": "1-based physical lines in fresh pdftotext-layout output; page pixels determine formula order."
+  },
+  "items": [
+    {
+      "id": "P01-01",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        1,
+        3
+      ],
+      "kind": "chapter-heading",
+      "summary": "Chapter1: What is Online Learning?",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Bibliographic section label, not a mathematical obligation."
+    },
+    {
+      "id": "P01-02",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        7,
+        8
+      ],
+      "kind": "game-definition",
+      "summary": "Repeated guessing game; rounds t=1,...,T.",
+      "disposition": "NODE",
+      "node_id": "N-ROUNDS"
+    },
+    {
+      "id": "P01-03",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        10,
+        10
+      ],
+      "kind": "game-rule",
+      "summary": "Adversary chooses y_t in[0,1] and keeps it secret.",
+      "disposition": "NODE",
+      "node_id": "N-SECRET-TARGET"
+    },
+    {
+      "id": "P01-04",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        11,
+        11
+      ],
+      "kind": "game-rule",
+      "summary": "Player chooses x_t in[0,1] before target revelation.",
+      "disposition": "NODE",
+      "node_id": "N-PREDICT"
+    },
+    {
+      "id": "P01-05",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        12,
+        12
+      ],
+      "kind": "game-rule",
+      "summary": "Target revealed; player pays(x_t-y_t)^2.",
+      "disposition": "NODE",
+      "node_id": "N-FEEDBACK-LOSS"
+    },
+    {
+      "id": "P01-06",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        14,
+        16
+      ],
+      "kind": "motivation",
+      "summary": "Need a winning condition for precise guessing.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Motivational text introduces the definitions; contains no substantive mathematical inference."
+    },
+    {
+      "id": "P01-07",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        17,
+        20
+      ],
+      "kind": "standing-stochastic-model",
+      "summary": "Targets are iid from a fixed distribution on[0,1] chosen at the beginning.",
+      "disposition": "NODE",
+      "node_id": "N-IID"
+    },
+    {
+      "id": "P01-08",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        20,
+        21
+      ],
+      "kind": "asserted-oracle-performance",
+      "summary": "Knowing the distribution permits predicting its mean each round at expected cost sigma²T, with sigma² its variance.",
+      "disposition": "NODE",
+      "node_id": "N-ORACLE-MEAN"
+    },
+    {
+      "id": "P01-09",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        22,
+        22
+      ],
+      "kind": "asserted-optimality",
+      "summary": "We cannot do better than that.",
+      "disposition": "NODE",
+      "node_id": "N-CAUSAL-LOWER"
+    },
+    {
+      "id": "P01-10",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        22,
+        24
+      ],
+      "kind": "benchmark-motivation",
+      "summary": "Distribution is unknown, so compare the strategy to the optimal one.",
+      "disposition": "NODE",
+      "node_id": "N-UNKNOWN-LAW-BENCHMARK"
+    },
+    {
+      "id": "P01-11",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        25,
+        29
+      ],
+      "kind": "numbered-display",
+      "summary": "Cumulative expected excess, equation(1.1).",
+      "disposition": "NODE",
+      "node_id": "N-EQ11",
+      "exact_formula": "\\mathbb E_{Y_1,\\ldots,Y_T}\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\sigma^2 T"
+    },
+    {
+      "id": "P01-12",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        31,
+        31
+      ],
+      "kind": "asserted-equivalence",
+      "summary": "Equivalently, consider the average.",
+      "disposition": "NODE",
+      "node_id": "N-NORMALIZATION"
+    },
+    {
+      "id": "P01-13",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        32,
+        36
+      ],
+      "kind": "numbered-display",
+      "summary": "Average expected excess, equation(1.2).",
+      "disposition": "NODE",
+      "node_id": "N-EQ12",
+      "exact_formula": "\\frac1T\\mathbb E_{Y_1,\\ldots,Y_T}\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\sigma^2"
+    },
+    {
+      "id": "P01-14",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        38,
+        38
+      ],
+      "kind": "asserted-sign",
+      "summary": "Both expected excess quantities are nonnegative.",
+      "disposition": "NODE",
+      "node_id": "N-NONNEGATIVE"
+    },
+    {
+      "id": "P01-15",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        38,
+        41
+      ],
+      "kind": "metric-motivation",
+      "summary": "Variance adjusts for the difficulty of the distribution; this is a reasonable but not sole metric.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Qualitative metric motivation, not an additional theorem or inequality. Nonnegativity at its opening is separately mapped P01-14."
+    },
+    {
+      "id": "P01-16",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        41,
+        43
+      ],
+      "kind": "success-criterion",
+      "summary": "Successful means(1.1) sublinear, equivalently(1.2) tends to0 as T tends to infinity.",
+      "disposition": "NODE",
+      "node_id": "N-SUCCESS"
+    },
+    {
+      "id": "P01-17",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        43,
+        45
+      ],
+      "kind": "interpretation",
+      "summary": "Average performance over rounds should approach optimal performance.",
+      "disposition": "NODE",
+      "node_id": "N-AVERAGE-INTERPRETATION"
+    },
+    {
+      "id": "P01-18",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        46,
+        46
+      ],
+      "kind": "cross-page-section-opening",
+      "summary": "Minimizing Regret. Having arrived at a good measure of success...",
+      "disposition": "NODE",
+      "node_id": "N-EXPECTED-REWRITE",
+      "continues_at": "P02-01"
+    },
+    {
+      "id": "P01-19",
+      "printed_page": 1,
+      "pdf_page_1_based": 13,
+      "raw_text_file": "raw-pdf13-printed1.txt",
+      "text_lines": [
+        48,
+        49
+      ],
+      "kind": "page-furniture",
+      "summary": "Footer1 and page break.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Page furniture."
+    },
+    {
+      "id": "P02-00",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        1,
+        1
+      ],
+      "kind": "page-furniture",
+      "summary": "Running header and printed page2.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Page furniture."
+    },
+    {
+      "id": "P02-01",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        3,
+        3
+      ],
+      "kind": "rewrite-paragraph",
+      "summary": "Rewrite(1.1) equivalently using expected fixed-comparator minimum.",
+      "disposition": "NODE",
+      "node_id": "N-EXPECTED-REWRITE",
+      "continues_from": "P01-18",
+      "internal_reference": "Equation(1.1), P01-11"
+    },
+    {
+      "id": "P02-02",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        4,
+        8
+      ],
+      "kind": "unnumbered-display",
+      "summary": "Expected cumulative learner loss minus minimum expected cumulative fixed-action loss.",
+      "disposition": "NODE",
+      "node_id": "N-EXPECTED-FIXED-MINIMUM",
+      "exact_formula": "\\mathbb E\\!\\left[\\sum_{t=1}^{T}(x_t-Y_t)^2\\right]-\\min_{x\\in[0,1]}\\mathbb E\\!\\left[\\sum_{t=1}^{T}(x-Y_t)^2\\right]",
+      "critical_order": "minimum outside expectation; comparator x fixed across rounds and outcomes"
+    },
+    {
+      "id": "P02-03",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        10,
+        11
+      ],
+      "kind": "model-transition",
+      "summary": "Remove the data-generation assumption and consider arbitrary sequences y_t.",
+      "disposition": "NODE",
+      "node_id": "N-ARBITRARY-SEQUENCE"
+    },
+    {
+      "id": "P02-04",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        11,
+        13
+      ],
+      "kind": "deterministic-qualifier",
+      "summary": "If the algorithm is deterministic, remove expectation because no stochasticity remains.",
+      "disposition": "NODE",
+      "node_id": "N-DETERMINISTIC-TRANSITION"
+    },
+    {
+      "id": "P02-05",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        14,
+        19
+      ],
+      "kind": "unnumbered-definition-display",
+      "summary": "Deterministic squared-loss best-fixed regret.",
+      "disposition": "NODE",
+      "node_id": "N-PATHWISE-REGRET",
+      "exact_formula": "\\operatorname{Regret}_T:=\\sum_{t=1}^{T}(x_t-y_t)^2-\\min_{x\\in[0,1]}\\sum_{t=1}^{T}(x-y_t)^2"
+    },
+    {
+      "id": "P02-06",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        21,
+        23
+      ],
+      "kind": "criterion-and-interpretation",
+      "summary": "Winning is sublinear regret; best single choice in hindsight defines the comparator meaning.",
+      "disposition": "NODE",
+      "node_id": "N-PATHWISE-INTERPRETATION"
+    },
+    {
+      "id": "P02-07",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        24,
+        26
+      ],
+      "kind": "future-motivation",
+      "summary": "Later convex optimization and machine-learning perspectives justify this metric.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Future motivation, not a source proof or cited result supplied here."
+    },
+    {
+      "id": "P02-08",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        27,
+        32
+      ],
+      "kind": "comparator-scope-discussion",
+      "summary": "In iid case a single best prediction is optimal; for arbitrary sequences other comparator sequences could be considered, but a single comparator is chosen for this book's main exposition.",
+      "disposition": "NODE",
+      "node_id": "N-SINGLE-COMPARATOR"
+    },
+    {
+      "id": "P02-09",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        32,
+        32
+      ],
+      "kind": "chapter-citation",
+      "summary": "Chapter14 treats a sequence of competitors.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Explicit out-of-scope forward citation; not a dependency proving the present expected-fixed benchmark or criterion.",
+      "citation": "Chapter14"
+    },
+    {
+      "id": "P02-10",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        33,
+        39
+      ],
+      "kind": "general-model-definition",
+      "summary": "Vector prediction x_t in feasible V subset R^d; loss ell_t:V→R; arbitrary fixed comparator u inV.",
+      "disposition": "NODE",
+      "node_id": "N-GENERAL-MODEL"
+    },
+    {
+      "id": "P02-11",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        40,
+        44
+      ],
+      "kind": "unnumbered-definition-display",
+      "summary": "Comparator-parameterized regret.",
+      "disposition": "NODE",
+      "node_id": "N-GENERAL-REGRET",
+      "exact_formula": "\\operatorname{Regret}_T(u):=\\sum_{t=1}^{T}\\ell_t(x_t)-\\sum_{t=1}^{T}\\ell_t(u)"
+    },
+    {
+      "id": "P02-12",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        46,
+        47
+      ],
+      "kind": "algorithm-information-qualifier",
+      "summary": "Algorithm need not know u or corresponding regret to guarantee an upper bound.",
+      "disposition": "NODE",
+      "node_id": "N-COMPARATOR-INFORMATION"
+    },
+    {
+      "id": "P02-13",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        47,
+        49
+      ],
+      "kind": "definition-and-inline-display",
+      "summary": "No-regret is at-most-sublinear regret for every fixed u; printed ordinary-limit inequality.",
+      "disposition": "NODE",
+      "node_id": "N-GENERAL-NOREGRET",
+      "exact_formula": "\\text{for every fixed }u\\in V,\\quad\\lim_{T\\to\\infty}\\operatorname{Regret}_T(u)/T\\le0",
+      "critical_order": "Each fixed comparator u precedes the limit; no uniformity over u, limsup convention or ordinary-limit existence proof supplied."
+    },
+    {
+      "id": "P02-14",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        50,
+        51
+      ],
+      "kind": "numbered-remark",
+      "summary": "Remark1.1: regret also depends on losses ell_1,...,ell_T; suppress this dependence.",
+      "disposition": "NODE",
+      "node_id": "N-LOSS-DEPENDENCE"
+    },
+    {
+      "id": "P02-15",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        53,
+        54
+      ],
+      "kind": "footnote",
+      "summary": "Footnote1: some settings permit predictions in larger W superset V.",
+      "disposition": "NODE",
+      "node_id": "N-LARGER-ACTION-SET",
+      "boundary": "Loss evaluation outsideV must be made meaningful in such extensions; no such model is developed here."
+    },
+    {
+      "id": "P02-16",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        52,
+        52
+      ],
+      "kind": "unfinished-transition",
+      "summary": "Framework allows reformulation of different... (continued beyond scope).",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Incomplete forward transition without a closed mathematical claim on these pages. No adjacent page imported to prove the scoped iid benchmark."
+    },
+    {
+      "id": "P02-17",
+      "printed_page": 2,
+      "pdf_page_1_based": 14,
+      "raw_text_file": "raw-pdf14-printed2.txt",
+      "text_lines": [
+        55,
+        55
+      ],
+      "kind": "page-furniture",
+      "summary": "Page break.",
+      "disposition": "EXCLUDED",
+      "exclusion_reason": "Page furniture."
+    }
+  ],
+  "source_gap_inventory": [
+    {
+      "id": "G-PROBABILITY-FOUNDATIONS",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "statement": "The pages omit probability-space, measurability and integrability details needed to interpret expectations and random adaptive predictions. Unit-interval laws supply bounded-moment intuition, not a printed measure-theoretic proof.",
+      "consumer_inventory_ids": [
+        "P01-07",
+        "P01-08",
+        "P01-11",
+        "P01-13",
+        "P02-02"
+      ]
+    },
+    {
+      "id": "G-MEAN-FIXED-OPTIMUM",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "statement": "No proof is printed that the population mean is in the action interval, attains the minimum of expected fixed-action cumulative loss, and has value T sigma^2. The expected-fixed minimum must be attained; no expectation/minimum interchange is licensed.",
+      "consumer_inventory_ids": [
+        "P01-08",
+        "P02-01",
+        "P02-02",
+        "P02-08"
+      ]
+    },
+    {
+      "id": "G-CAUSAL-OPTIMALITY",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "statement": "The assertion that no strategy beats the variance and the subsequent nonnegativity assertion have no printed argument. The missing bridge must account for prediction before revelation, dependence on past observations, and the randomization model if one is added. Mere target IID does not make an arbitrary random prediction independent of the current target.",
+      "consumer_inventory_ids": [
+        "P01-09",
+        "P01-14",
+        "P02-08"
+      ]
+    },
+    {
+      "id": "G-NORMALIZATION",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "statement": "The finite positive-horizon division identity and the equivalence of sublinear cumulative excess with average excess tending to zero are asserted, without an explicit proof. A finite lower bound alone supplies no successful strategy or convergence.",
+      "consumer_inventory_ids": [
+        "P01-12",
+        "P01-13",
+        "P01-16",
+        "P01-17"
+      ]
+    },
+    {
+      "id": "G-PATHWISE-MINIMUM",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "statement": "The contextual pathwise squared-loss minimum is written without an attainment argument. It is a different object from minimum expected fixed loss; it is used already in the definition display, not only its later interpretation.",
+      "consumer_inventory_ids": [
+        "P02-05",
+        "P02-06"
+      ]
+    }
+  ],
+  "extension_obligation_inventory": [
+    {
+      "id": "E-JOINT-REGROUPING",
+      "disposition": "NODE",
+      "kind": "DERIVED_PROOF_OBLIGATION",
+      "statement": "Produce joint seed-plus-past/current independence from independence of S and the whole target process and joint independence of target coordinates. Coordinatewise seed/target independence alone is insufficient.",
+      "consumers": [
+        "D-JOINT-INDEPENDENCE"
+      ]
+    },
+    {
+      "id": "E-GENERATED-INFORMATION",
+      "disposition": "NODE",
+      "kind": "DERIVED_PROOF_OBLIGATION",
+      "statement": "Establish the generated sigma-field containment/monotonicity and transfer independence to variables measurable in each subordinate F_t. Do not assume prediction-current independence as a theorem premise.",
+      "consumers": [
+        "D-GENERATED-MONOTONE",
+        "D-PREDICTABLE-INDEPENDENCE"
+      ]
+    },
+    {
+      "id": "E-POLICY-MEASURABILITY",
+      "disposition": "NODE",
+      "kind": "DERIVED_PROOF_OBLIGATION",
+      "statement": "Establish measurability of the finite history map and jointly measurable tape/history policy composition in G_t. Separate measurability alone must not silently replace joint measurability.",
+      "consumers": [
+        "D-CONCRETE-POLICY"
+      ]
+    },
+    {
+      "id": "E-AE-MOMENTS",
+      "disposition": "NODE",
+      "kind": "DERIVED_PROOF_OBLIGATION",
+      "statement": "From ambient measurability and almost-sure unit-interval feasibility, derive finite second moments and integrability for predictions, targets, squares and products required by the identity. No completion or AE-measurable factorization theorem is supplied by the source.",
+      "consumers": [
+        "D-CUMULATIVE-EXCESS"
+      ]
+    },
+    {
+      "id": "E-CUMULATIVE-SQUARE-IDENTITY",
+      "disposition": "NODE",
+      "kind": "DERIVED_PROOF_OBLIGATION",
+      "statement": "Prove the one-round square expansion with vanishing mixed term using the produced current independence, then finite-sum expectation and the expected-fixed benchmark. Prove the sum is nonnegative. The source does not print this identity.",
+      "consumers": [
+        "D-CUMULATIVE-EXCESS"
+      ]
+    },
+    {
+      "id": "E-LEGAL-HISTORY",
+      "disposition": "NODE",
+      "kind": "DERIVED_PROOF_OBLIGATION",
+      "statement": "Show that finitely many almost-sure target support events give a legal strict history almost surely, and use policy feasibility on that cube for every seed. This supplies feasibility of the actual prediction; arbitrary off-cube values are not source behavior.",
+      "consumers": [
+        "D-POLICY-CUMULATIVE"
+      ]
+    }
+  ],
+  "reuse_statement": "Only the page item inventory and source bibliographic fields were reused. Both fresh raw texts match prior bytes exactly and both fresh full-page renders were inspected. Neither prior source topology nor final topology verdict was read for batch24.",
+  "fresh_raw_comparison": {
+    "raw-pdf13-printed1.txt": {
+      "freshSHA256": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+      "priorSHA256": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+      "exactBytesEqual": true
+    },
+    "raw-pdf14-printed2.txt": {
+      "freshSHA256": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+      "priorSHA256": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+      "exactBytesEqual": true
+    }
+  },
+  "inputBindings": {
+    "original195-contract-v2.md": "e136f498b04eafbfe0b945670954c255a50ffefaa3c262a7631c86dc6daa89ae",
+    "original195-source-card-v2.json": "887cb30834b0993ba50d6ca72930ffbe839cdb0c9eae414cc95d1c77897baac6",
+    "page-013.png": "6aee151dd99e426d9379b3cd7c8a5ebaa7abd10b18349d3f06024cbca92d62d3",
+    "page-014.png": "fc92d15d52b5930548d678c7912560de2db2f35e49557184acd3841a6b45c0f2",
+    "raw-pdf13-printed1.txt": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+    "raw-pdf14-printed2.txt": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+    "pinnedPDF": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "reusedInventory": "76b8403a0bc15da71c771c14d415e50d7e7b96f610d40529bb900928e3668310"
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch24-source-extraction/source-inventory-mapping.json",
+      "sha256": "57155fda6532eed653e367fe306ab520d3107c5060b1bdcd62e4068b349b1094",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Mathematics and scoped original verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}

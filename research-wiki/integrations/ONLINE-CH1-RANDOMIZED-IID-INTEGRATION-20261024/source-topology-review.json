@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/batch23_source_reviewer",
+  "at": "2026-10-23T16:53:03.734742+00:00",
+  "stage": "independent-source-topology-before-implementation",
+  "verdict": "accepted",
+  "required_corrections": [],
+  "inputBindings": {
+    "batch24-source-extraction/receipt.json": "9e8c688fac111b25059f2635d24cf2c67f732264c2f5f387bb87744660b8c1d9",
+    "batch24-source-extraction/source-contract.json": "f5f06afabd4a83c3840923e048956c9d735014872e041b64c1e0aebafa98c78c",
+    "batch24-source-extraction/source-inventory-mapping.json": "57155fda6532eed653e367fe306ab520d3107c5060b1bdcd62e4068b349b1094",
+    "batch24-source-extraction/source-topology.json": "7903037e834cde0d82e049f1b6490c437f3480a7eb9d8abb9aaeb0ad28521491",
+    "batch24-source-extraction/original195-contract-v2.md": "e136f498b04eafbfe0b945670954c255a50ffefaa3c262a7631c86dc6daa89ae",
+    "batch24-source-extraction/original195-source-card-v2.json": "887cb30834b0993ba50d6ca72930ffbe839cdb0c9eae414cc95d1c77897baac6",
+    "batch24-source-extraction/raw-pdf13-printed1.txt": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+    "batch24-source-extraction/raw-pdf14-printed2.txt": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9",
+    "batch24-source-extraction/page-013.png": "6aee151dd99e426d9379b3cd7c8a5ebaa7abd10b18349d3f06024cbca92d62d3",
+    "batch24-source-extraction/page-014.png": "fc92d15d52b5930548d678c7912560de2db2f35e49557184acd3841a6b45c0f2",
+    "batch18-source-extraction/source-pinned.pdf": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "batch24-source-review/independent-pdf13-text.txt": "571d318ae70cd432e9ad0a3f900d67112bf8e042a44282cb0a0ecd083dd402d4",
+    "batch24-source-review/independent-pdf14-text.txt": "34ec03d5b72cacfcf39dbed53308ab8cee2ac40779c9bbd091d7b68a378703b9"
+  },
+  "originalPR": 195,
+  "originalHead": "372c9a6c138c50d7a5e08e91351238f231565219",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv1912.13213v10",
+    "printedPages": [
+      1,
+      2
+    ],
+    "pdfPages": [
+      13,
+      14
+    ]
+  },
+  "independence": {
+    "implementationLeanReadForBatch24": false,
+    "implementationProofsReadForBatch24": false,
+    "implementationDependentReviewsReadForBatch24": false,
+    "blindDecodingReadBeforeSeal": false,
+    "proposedSourceContractUsedAsImplementationEvidence": false,
+    "historyDisclosure": "This reviewer has prior batch23 familiarity with these same source pages and its deterministic IID benchmark. For batch24 only raw pinned PDF/text/pixels, the extractor source-facing packet and the original PR195 source-facing contract/card were inspected before this verdict. This is staged independence, not a claim of zero prior source familiarity."
+  },
+  "actuallyViewedImages": [
+    "batch24-source-extraction/page-013.png",
+    "batch24-source-extraction/page-014.png"
+  ],
+  "exactPixels": {
+    "batch24-source-extraction/page-013.png": {
+      "sha256": "6aee151dd99e426d9379b3cd7c8a5ebaa7abd10b18349d3f06024cbca92d62d3",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "coverage": "Entire page, including displays, cross-page opening, running furniture and footnote where present; opened with tools.view_image."
+    },
+    "batch24-source-extraction/page-014.png": {
+      "sha256": "fc92d15d52b5930548d678c7912560de2db2f35e49557184acd3841a6b45c0f2",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "coverage": "Entire page, including displays, cross-page opening, running furniture and footnote where present; opened with tools.view_image."
+    }
+  },
+  "independentChecks": {
+    "pinnedPdfHash": "passed",
+    "allReceiptOutputHashes": "passed",
+    "independentPdftotextLayoutBytes": "Both pages independently extracted from pinned PDF and exactly equal the supplied raw-text bytes.",
+    "inventoryItems": 37,
+    "mappedItems": 28,
+    "excludedItems": 9,
+    "uniquePrintedNodes": 27,
+    "openSourceGaps": 5,
+    "sourceANDRoutes": 17,
+    "derivedExtensionObligations": 6,
+    "derivedExtensionRoutes": 6,
+    "unknownReferences": false,
+    "cycles": false,
+    "rootGapReachabilityRecomputedExactly": true,
+    "allMappedPrintedNodesRepresented": true
+  },
+  "coverageFindings": [
+    {
+      "region": "Printed1 game rules and IID paragraph",
+      "finding": "The rounds, secret interval target, interval action before reveal, squared loss, one distribution fixed before play, known-law mean oracle, cannot-do-better assertion and unknown-law motivation are all mapped. The displayed x_t does not by itself certify independence or determinism."
+    },
+    {
+      "region": "Printed1 equations1.1/1.2 and remaining paragraph",
+      "finding": "Both displayed expected excess quantities, finite normalization, their nonnegativity assertion, sublinear-versus-average-zero success equivalence and intended optimal-performance interpretation are present. Motivation is explicitly excluded rather than counted as a theorem."
+    },
+    {
+      "region": "Printed1 bottom to printed2 first display",
+      "finding": "Cross-page rewrite is preserved. Minimum is outside expectation; the scalar comparator is fixed across rounds and outcomes. Attainment and feasible population mean remain a source gap. No E[min] interchange is licensed."
+    },
+    {
+      "region": "Printed2 arbitrary-sequence transition and regret",
+      "finding": "Arbitrary data, explicit deterministic qualifier for dropping expectation, best single hindsight comparator, pathwise minimum and its attainment gap are retained. The contextual transition is not a probability-preserving equality of the two benchmark notions."
+    },
+    {
+      "region": "Printed2 comparator discussion and general model",
+      "finding": "The single-versus-moving comparator discussion, Chapter14 citation, vector feasible domain and loss, fixed-u regret, comparator-information qualifier, pointwise-in-u ordinary-limit definition and Remark1.1 are mapped or explicitly excluded as reference context."
+    },
+    {
+      "region": "Printed2 footnote and page ending",
+      "finding": "Footnote1 larger action set W is retained with the need to define losses there. It is not a side-information allowance. Unfinished forward transition and page furniture have explicit exclusions."
+    }
+  ],
+  "topologyFindings": [
+    "The 17 author-source routes are conjunctions annotated as definitions, interpretations or assertions with open gaps. No invented OR proof replaces a required premise. There are no competing printed sufficient routes on these pages.",
+    "R-DETERMINISTIC is contextual: its conclusion itself retains the if-deterministic qualifier. It does not infer learner determinism from arbitrary data. General no-regret has no gap-reachability entries because it is a literal definition, not an established convergence theorem.",
+    "The five source-gap nodes remain open. In particular R-PATHWISE-DEFINITION includes G-PATHWISE-MINIMUM, and R-NONNEGATIVE retains the causal and normalization gaps recursively. No graph closure is obtained from an asserted source sentence.",
+    "Private tape, joint process independence, generated sigma fields and subordinate measurable predictions are a separate proposed extension. No seed or sigma-field construction is printed on these pages; the printed expectation subscript lists the targets. Extension expectations must include the joint tape/target law.",
+    "Whole-process independence of the tape plus joint target independence is essential to produce joint tape-and-past/current independence. Coordinatewise seed independence or pairwise target statements cannot substitute silently. The packet keeps this as E-JOINT-REGROUPING.",
+    "The generated G_t is increasing, while the subordinate family F_t need not be increasing. One-round prediction independence uses containment and measurability, not monotonicity of F. The monotonicity conclusion is separate.",
+    "Joint policy measurability, finite-history composition, actual almost-sure legal histories and moment/integrability production remain explicit derived obligations. Feasibility on legal cubes for every seed is not a bound on arbitrary off-cube histories.",
+    "Abstract predictable and concrete policy cumulative endpoints are distinct conclusions, not alternative OR proofs of one already-complete printed theorem. Reuse of the expected-fixed source node retains its probability and attained-minimum gaps until later independent proof review."
+  ],
+  "specificGaps": {
+    "source": [
+      "G-PROBABILITY-FOUNDATIONS",
+      "G-MEAN-FIXED-OPTIMUM",
+      "G-CAUSAL-OPTIMALITY",
+      "G-NORMALIZATION",
+      "G-PATHWISE-MINIMUM"
+    ],
+    "derived": [
+      "E-JOINT-REGROUPING",
+      "E-GENERATED-INFORMATION",
+      "E-POLICY-MEASURABILITY",
+      "E-AE-MOMENTS",
+      "E-CUMULATIVE-SQUARE-IDENTITY",
+      "E-LEGAL-HISTORY"
+    ],
+    "rootReachability": {
+      "N-ORACLE-MEAN": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-CAUSAL-LOWER": [
+        "G-CAUSAL-OPTIMALITY",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EQ11": [
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EQ12": [
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-NONNEGATIVE": [
+        "G-CAUSAL-OPTIMALITY",
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EXPECTED-FIXED-MINIMUM": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-EXPECTED-REWRITE": [
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-SUCCESS": [
+        "G-NORMALIZATION",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "N-PATHWISE-REGRET": [
+        "G-PATHWISE-MINIMUM"
+      ],
+      "N-GENERAL-NOREGRET": [],
+      "D-JOINT-INDEPENDENCE": [
+        "E-JOINT-REGROUPING"
+      ],
+      "D-GENERATED-MONOTONE": [
+        "E-GENERATED-INFORMATION"
+      ],
+      "D-PREDICTABLE-INDEPENDENCE": [
+        "E-GENERATED-INFORMATION",
+        "E-JOINT-REGROUPING"
+      ],
+      "D-CONCRETE-POLICY": [
+        "E-JOINT-REGROUPING",
+        "E-POLICY-MEASURABILITY"
+      ],
+      "D-CUMULATIVE-EXCESS": [
+        "E-AE-MOMENTS",
+        "E-CUMULATIVE-SQUARE-IDENTITY",
+        "E-GENERATED-INFORMATION",
+        "E-JOINT-REGROUPING",
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ],
+      "D-POLICY-CUMULATIVE": [
+        "E-AE-MOMENTS",
+        "E-CUMULATIVE-SQUARE-IDENTITY",
+        "E-JOINT-REGROUPING",
+        "E-LEGAL-HISTORY",
+        "E-POLICY-MEASURABILITY",
+        "G-MEAN-FIXED-OPTIMUM",
+        "G-PROBABILITY-FOUNDATIONS"
+      ]
+    },
+    "dischargeStatus": "None discharged by this topology review. Later implementation may discharge a declared derived subset, but must not claim it supplies a printed author proof."
+  },
+  "semanticStageRequirements": [
+    "Compare all seven semantic slots against the sealed exact declarations and fresh blind reconstruction after this verdict is saved.",
+    "Check literal generated-information definition, recursive binders, whole-process seed independence, probability-space hypotheses, measurable target/history/policy maps, a.s. versus pointwise feasibility, and actual producer versus assumed independence.",
+    "Verify derived cumulative square identity and finite nonnegativity without importing a proof conclusion as a premise. Distinguish type and value dependencies from historical guessed reuse edges.",
+    "Retain T=0 as an empty-prefix extension only. Source average needs positive horizon. Finite lower bound or natural normalization gives neither the asymptotic equivalence proof nor successful learner convergence.",
+    "Keep no universal kernel representation, no sigma-field completion/AE factorization, no arbitrary side information, no conditional-per-seed/pathwise/high-probability claim and no whole-chapter/book completion."
+  ],
+  "historicalProposalNote": "The exact original195 contract contains historical operational statuses in its final paragraph. Those are preserved proposal provenance, not current repository/PR or release claims and not mathematical evidence.",
+  "repositoryMutations": false,
+  "remoteMutations": false,
+  "implementationAcceptance": false,
+  "wholeSourceAcceptance": false,
+  "public_projection": {
+    "original": {
+      "artifact": "batch24-source-review/topology-review-v1.json",
+      "sha256": "8257cbecd4fcd38b0f56ccf51b76f122fd11b7aca2dbffcc18a617c6fe26805a",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Only physical locations become logical locations. Mathematics and scoped original verdicts are unchanged. Original hashes bind private originals, not projected bytes.",
+    "review": "Independent public-projection review pending."
+  }
+}
