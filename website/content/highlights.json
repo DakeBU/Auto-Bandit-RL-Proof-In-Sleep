@@ -7007,6 +7007,80 @@
       "teaching_order": 144,
       "title": "Literal no-regret under empirical-mean convergence",
       "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+        "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges",
+        "BanditRL.OnlineLearning.empiricalMean_mem"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "lean_notes": "D1 assumes only y:N->R and every y_t in [0,1]. The forward implication does not assume empirical-mean convergence. Comparator limits may depend on u. Both endpoints 0 and 1 are included. The reverse implication reuses meanPredict_limitNoRegret_of_mean_converges. There is no stochastic or uniform-in-comparator threshold claim.",
+      "math": "\\bigl(\\forall u\\in[0,1],\\ \\exists a\\le0:\\ R_T(u)/T\\to a\\bigr)\\ \\Longleftrightarrow\\ \\exists m\\in[0,1]:\\bar y_T\\to m.",
+      "plain": "For every observation stream in [0,1], the actual FTL predictor has a finite nonpositive normalized-regret limit at every fixed comparator in [0,1] exactly when the empirical means converge.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). Printed page 2 / PDF 14 displays ordinary-limit no-regret; printed page 4 / PDF 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF 18 discusses sublinear regret. These four results are derived consequences and an explicit counterexample, not printed theorems. Printed round t+1 is Lean time t. The upper-epsilon NoRegret predicate and finite ordinary-limit LimitNoRegret predicate remain distinct.",
+      "proof_idea": "Use the proposed comparator limits at 0 and 1 and the existing fixed-regret criterion. They give limits for M_T squared and (1-M_T) squared. Their difference plus one, divided by two, equals M_T. Eventual interval membership places the limit in [0,1]. Conversely, empirical-mean convergence yields every comparator limit -(u-m)^2 through the existing FTL producer.",
+      "teaching_order": 150,
+      "title": "Literal FTL no-regret iff the empirical mean converges",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.dyadicObservation"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.dyadicObservation_unit",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "lean_notes": "D2 has no external range premise. The public theorem states interval membership; the stronger binary assertion is a private proof ingredient. The recursive parent is floor((t-1)/2) at positive index t, not floor(t/2).",
+      "math": "d_0=0,\\qquad d_{n+1}=1-d_{\\lfloor n/2\\rfloor},\\qquad d_t\\in[0,1].",
+      "plain": "The fixed sequence d_0=0 and d_(n+1)=1-d_(floor(n/2)) always lies in [0,1]. Its definition does not depend on a learner or horizon.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). Printed page 2 / PDF 14 displays ordinary-limit no-regret; printed page 4 / PDF 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF 18 discusses sublinear regret. These four results are derived consequences and an explicit counterexample, not printed theorems. Printed round t+1 is Lean time t. The upper-epsilon NoRegret predicate and finite ordinary-limit LimitNoRegret predicate remain distinct.",
+      "proof_idea": "Strong induction applies to the strictly smaller parent floor(n/2). The base value is zero; taking one minus a binary value exchanges zero and one. Both outcomes belong to the closed unit interval.",
+      "teaching_order": 151,
+      "title": "One explicit feasible dyadic observation stream",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.dyadicObservation"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "lean_notes": "D3 concerns prefix lengths, not the last included index. Natural subtraction is used, with positive denominators proved before cancellation. The high sequence begins at horizon 3 and the low at horizon 1. Both converge along n tending to infinity; no convergence of the full empirical mean is asserted.",
+      "math": "\\bar d_{4^{n+1}-1}\\to\\frac23,\\qquad\\bar d_{2\\cdot4^n-1}\\to\\frac13.",
+      "plain": "The same empirical means tend to 2/3 along horizons 4^(n+1)-1 and to 1/3 along horizons 2*4^n-1.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). Printed page 2 / PDF 14 displays ordinary-limit no-regret; printed page 4 / PDF 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF 18 discusses sublinear regret. These four results are derived consequences and an explicit counterexample, not printed theorems. Printed round t+1 is Lean time t. The upper-epsilon NoRegret predicate and finite ordinary-limit LimitNoRegret predicate remain distinct.",
+      "proof_idea": "The two children at 2k+1 and 2k+2 both equal 1-d_k. Pairing them gives S_(2n+1)=2n-2S_n. Induction yields exact high and low prefix counts. The high mean is exactly 2/3; the low mean is 1/3 minus 1/(3(2*4^n-1)). The two positive natural horizons diverge, so the latter correction tends to zero.",
+      "teaching_order": 152,
+      "title": "Two distinct empirical-mean subsequence limits",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.dyadicObservation_unit",
+        "BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences",
+        "BanditRL.OnlineLearning.meanPredict_noRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+      "intuition": "Sublinear upper regret does not by itself produce an ordinary fixed-comparator limit.",
+      "lean_notes": "D4 keeps fixed-comparator signed regret separate from regret against the best constant comparator in [0,1]. The best-regret zero limit uses both a proved nonnegative FTL gap and the logarithmic upper bound. It is not inferred from an upper bound alone. The predictor uses only strict past observations, initialized at one half. The failure is nonexistence of any finite real comparator-zero limit, not merely failure of limit zero.",
+      "math": "\\mathrm{UpperNoRegret}(p,d),\\quad R_T^{\\mathrm{best}}/T\\to0,\\quad\\nexists a\\in\\mathbb R:R_T(0)/T\\to a,\\quad\\neg\\mathrm{LimitNoRegret}(p,d).",
+      "plain": "On this one bounded stream, the actual FTL predictor has upper-epsilon no-regret and normalized interval-best regret tending to zero, while normalized regret against comparator zero has no finite ordinary limit.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). Printed page 2 / PDF 14 displays ordinary-limit no-regret; printed page 4 / PDF 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF 18 discusses sublinear regret. These four results are derived consequences and an explicit counterexample, not printed theorems. Printed round t+1 is Lean time t. The upper-epsilon NoRegret predicate and finite ordinary-limit LimitNoRegret predicate remain distinct.",
+      "proof_idea": "Apply the existing actual-FTL upper guarantee and best-regret zero-limit theorem to the proved unit-valued stream. If normalized regret against zero had finite limit a, the existing criterion would force M_T squared to tend to -a. Composition with the two cofinal subsequences forces -a=4/9 and -a=1/9, a contradiction. Since zero is a feasible comparator, LimitNoRegret also fails.",
+      "teaching_order": 153,
+      "title": "Bounded actual FTL separates upper and ordinary no-regret",
+      "why": "Reconcile the literal source definition with its actual bounded FTL guarantee."
     }
   ]
 }

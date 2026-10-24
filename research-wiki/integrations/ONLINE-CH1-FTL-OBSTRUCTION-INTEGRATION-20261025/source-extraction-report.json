@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "review_role": "independent_source_extractor",
+  "source": {
+    "path": "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "work": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10 (2026-06-21, version supplied by task; identity pinned by hash)",
+    "pdf_pages": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "printed_pages": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "inspection": "Reuses v1 extractor visual inspection of all five complete 120-dpi page images. No new page views performed for v2. Original pixels and hashes remain under batch31-source-extraction-v1/raw and in the predecessor extraction report. Exact bibliographic title correction is attributed to independent review C1; extractor did not newly inspect PDF page 1."
+  },
+  "sealed_candidate": {
+    "path": "maintenance-evidence/batch31-blind-packet-v1/statements.txt",
+    "sha256": "5d8f472e3241fb282f1165293986ad36441be320e5bc6546590391437bf431ce"
+  },
+  "scope_limits": {
+    "allowed_mathematical_inputs": [
+      "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "maintenance-evidence/batch31-blind-packet-v1/statements.txt"
+    ],
+    "inspected_pages_only": true,
+    "implementation_lean_inspected": false,
+    "proof_bodies_inspected": false,
+    "original_audits_inspected": false,
+    "repair_verdicts_inspected": false,
+    "other_agents_private_rationale_inspected": false,
+    "source_repair_approval": false,
+    "topology_approved": false,
+    "independent_review_required": true,
+    "not_claimed": [
+      "full book coverage",
+      "candidate proof correctness",
+      "Lean implementation dependency graph",
+      "source repair acceptance",
+      "PROOF_SEALED",
+      "merge readiness"
+    ],
+    "method": "Source-only page inventory and topology; supplied candidate public signatures used solely to bound relevance and binder audit. No new mathematical proof or Lean code authored."
+  },
+  "status": "SOURCE_EXTRACTION_V2_COMPLETE_AWAITING_DISTINCT_BOUNDED_DIFF_REVIEW",
+  "verified_input_hashes": true,
+  "definition_audit": [
+    {
+      "name": "comparatorRegret",
+      "kind": "literal",
+      "classification": "SOURCE_FORMULA_WITH_REINDEXING_AND_CARRIER_GENERALIZATION",
+      "source": [
+        "S14-comparator",
+        "S14-game"
+      ],
+      "audit": "0-based range T replaces source 1..T via ell_candidate(t)=ell_source(t+1). Arbitrary type X generalizes V subset R^d. Formula does not itself enforce prediction membership in V. At T=0 both sums vanish.",
+      "binders": [
+        {
+          "input": "X",
+          "class": "TYPING",
+          "delta": "generalization beyond source Euclidean carrier"
+        },
+        {
+          "input": "loss,prediction,u,T",
+          "class": "TYPING",
+          "delta": "source object types, 0-based indexing; feasibility enforced at use sites if source games claimed"
+        }
+      ]
+    },
+    {
+      "name": "NoRegret",
+      "kind": "literal",
+      "classification": "NONLITERAL_TO_PRINTED_ORDINARY_LIMIT",
+      "source": [
+        "S14-no-regret"
+      ],
+      "audit": "For each fixed u in V and positive epsilon, eventually regret/T<=epsilon. This only encodes upper-asymptotic behavior, with no existence of a finite real limit. Printed display says lim, while prose says at most sublinear. Preserve this delta without approving a textual repair.",
+      "binders": [
+        {
+          "input": "V,loss,prediction",
+          "class": "TYPING",
+          "delta": "ambient carrier generalized"
+        },
+        {
+          "input": "u in V,epsilon>0,eventual T",
+          "class": "SOURCE",
+          "delta": "fixed comparator matches source; epsilon/eventual formulation is a reinterpretation of at-most-sublinear, not literal ordinary-limit statement"
+        }
+      ]
+    },
+    {
+      "name": "empiricalMean",
+      "kind": "literal",
+      "classification": "SOURCE_POSITIVE_PREFIX_FORMULA_WITH_ZERO_EXTENSION",
+      "source": [
+        "S15-minimizer"
+      ],
+      "audit": "For n>0 arithmetic mean agrees after reindexing. At n=0 Lean division gives 0. Source never asserts mean argmin uniqueness at empty horizon; this extension cannot be sold as such characterization.",
+      "binders": [
+        {
+          "input": "y,n",
+          "class": "TYPING",
+          "delta": "[0,1] only at use sites; n=0 extension"
+        }
+      ]
+    },
+    {
+      "name": "meanPredict",
+      "kind": "literal",
+      "classification": "MATCHES_THEOREM13_ALGORITHM_AFTER_REINDEXING",
+      "source": [
+        "S15-FTL",
+        "S16-thm13"
+      ],
+      "audit": "Candidate t=0 uses 1/2, matching source x_1=0.5, and t>0 uses mean of prior t observations. Broader p15 algorithm permits any first prediction, whereas candidate correctly specializes Theorem 1.3.",
+      "binders": [
+        {
+          "input": "y,t",
+          "class": "TYPING",
+          "delta": "legal y range provided by theorem hy or dyadic range result"
+        }
+      ]
+    },
+    {
+      "name": "squaredBestRegret",
+      "kind": "literal",
+      "classification": "MIN_TO_INF_REPRESENTATION_OBLIGATION",
+      "source": [
+        "S14-best-regret",
+        "S15-minimizer"
+      ],
+      "audit": "Uses sInf of loss image over [0,1], where source uses min. Need nonempty bounded-below image and attained minimum equivalence; squared losses provide relevant structure but no implementation proof inspected. Source mean characterization is only for legal y and positive T; at T=0 image is {0}, with all comparators minimizers.",
+      "binders": [
+        {
+          "input": "y,prediction,T",
+          "class": "TYPING",
+          "delta": "definition permits all real sequences; source theorem uses [0,1] observations and feasible mean predictions"
+        }
+      ]
+    },
+    {
+      "name": "LimitNoRegret",
+      "kind": "literal",
+      "classification": "ENCODES_ORDINARY_FINITE_LIMIT_READING",
+      "source": [
+        "S14-no-regret"
+      ],
+      "audit": "For every fixed u in V, exists finite a<=0 with regret/T tending to a. Encodes literal ordinary-real-limit reading. Does not assert uniform convergence in u, convergence of worst-comparator regret, or probability mode.",
+      "binders": [
+        {
+          "input": "V,loss,prediction",
+          "class": "TYPING",
+          "delta": "same carrier generalization"
+        },
+        {
+          "input": "u in V",
+          "class": "SOURCE",
+          "delta": "fixed comparator quantifier"
+        },
+        {
+          "input": "exists a<=0,Tendsto",
+          "class": "SOURCE",
+          "delta": "expansion of printed ordinary finite real limit; no repair approval"
+        }
+      ]
+    },
+    {
+      "name": "dyadicObservation",
+      "kind": "literal",
+      "classification": "CANDIDATE_ORIGINAL_DEFINITION_ABSENT_SOURCE",
+      "source": [],
+      "audit": "Candidate recurrence d(0)=0, d(n+1)=1-d(floor(n/2)); no printed counterpart on inspected pages. Cannot label SOURCE or RULED. Termination proof is supplied as part of sealed definition but not an implementation theorem body reviewed here.",
+      "binders": [
+        {
+          "input": "n",
+          "class": "TYPING",
+          "delta": "natural index"
+        }
+      ]
+    }
+  ],
+  "candidate_binder_audit": [
+    {
+      "name": "meanPredict_limitNoRegret_iff_mean_converges",
+      "source_anchor_status": "DERIVED_NOT_PRINTED",
+      "binders": [
+        {
+          "input": "y:N->R",
+          "class": "TYPING"
+        },
+        {
+          "input": "hy:forall t,y t in [0,1]",
+          "class": "SOURCE",
+          "scope": "same legal-observation restriction as source Theorem 1.3, extended to infinite stream; does not make candidate iff a printed theorem"
+        }
+      ],
+      "logical_expansion": "No hidden project-owned bundles beyond supplied definitions. Left forall u in [0,1], exists a<=0 with ordinary Tendsto; right exists m in [0,1] with empiricalMean Tendsto.",
+      "excess_detected_from_signature": []
+    },
+    {
+      "name": "dyadicObservation_unit",
+      "source_anchor_status": "DERIVED_NOT_PRINTED",
+      "binders": [
+        {
+          "input": "forall t:N",
+          "class": "TYPING"
+        }
+      ],
+      "logical_expansion": "All indices map to [0,1]; no external premise.",
+      "excess_detected_from_signature": []
+    },
+    {
+      "name": "dyadic_empiricalMean_subsequences",
+      "source_anchor_status": "DERIVED_NOT_PRINTED",
+      "binders": [],
+      "logical_expansion": "Conjunction of two finite-real sequential limits; natural powers and truncated natural subtraction; no probabilistic claim.",
+      "excess_detected_from_signature": []
+    },
+    {
+      "name": "dyadic_meanPredict_obstruction",
+      "source_anchor_status": "DERIVED_NOT_PRINTED",
+      "binders": [],
+      "logical_expansion": "Conjunction of eventual-upper NoRegret, exact-zero best-regret limit, nonexistence of any finite comparator-0 limit, and failure of ordinary-limit NoRegret.",
+      "excess_detected_from_signature": []
+    }
+  ],
+  "principal_findings": [
+    "The four candidates are absent as theorems and proofs on the inspected source pages. They are candidate-derived obligations.",
+    "The source contains an ordinary lim no-regret display but only a finite upper-regret bound proof. No ordinary-limit existence derivation is printed.",
+    "Theorem 1.3's 4+4 ln T controls best-comparator regret from above. Neither an exact-zero normalized limit nor arbitrary-comparator ordinary-limit existence follows from that upper bound alone.",
+    "Dyadic recurrence, subsequence counts/limits, mean-convergence equivalence and obstruction are not source statements in this bounded packet.",
+    "No EXCESS hypothesis found in the four supplied signatures after expanding all supplied project definitions. This bounded observation does not certify source equivalence or proof correctness.",
+    "Mean/argmin characterization needs positive prefix length and legal observations; T=0 extensions are explicit and cannot imply source uniqueness."
+  ],
+  "standing_assumptions": [
+    {
+      "id": "A-domain",
+      "content": "Source general game V subset R^d, x_t in V, ell_t:V->R, fixed u in V; prediction superset W is only a footnoted variant.",
+      "anchors": [
+        "S14-game",
+        "S14-footnote"
+      ]
+    },
+    {
+      "id": "A-sequence",
+      "content": "Scalar game observations y_t in [0,1]; arbitrary pathwise stream; adversary may observe current prediction before choosing y_t; no i.i.d., filtration or event premise.",
+      "anchors": [
+        "S15-adversary",
+        "P-thm13"
+      ]
+    },
+    {
+      "id": "A-feedback",
+      "content": "Past y_i are known when predicting; meanPredict uses only prior observations. The generic loss-observation protocol is not fully specified on these pages and is not invented.",
+      "anchors": [
+        "S15-FTL"
+      ]
+    },
+    {
+      "id": "A-index",
+      "content": "Source uses t=1..T and positive T; sealed definitions use t=0..T-1 and permit T=0. Infinite sequences are natural extensions needed for limits, not additional stochastic assumptions.",
+      "anchors": [
+        "S14-comparator",
+        "S16-thm13"
+      ]
+    }
+  ],
+  "required_next_step": "Distinct source-only reviewer receives raw pages and this proposed graph, without implementation Lean or extractor private rationale; no self-approval.",
+  "artifact_paths": [
+    "source-coverage.json",
+    "source-proof-graph.json",
+    "source-extraction-report.json"
+  ],
+  "raw_evidence_hashes": [
+    {
+      "path": "maintenance-evidence\\batch31-source-extraction-v1\\raw\\page-014.png",
+      "sha256": "1f8f34992584490b76afabd7c0fecda1c41bf4fb4f42349b4fc486b26d82c11b"
+    },
+    {
+      "path": "maintenance-evidence\\batch31-source-extraction-v1\\raw\\page-015.png",
+      "sha256": "c212ebdefda8ceb442a90b168f779046b9a6a96a1f86d02c124b14a71e3fe5dd"
+    },
+    {
+      "path": "maintenance-evidence\\batch31-source-extraction-v1\\raw\\page-016.png",
+      "sha256": "b49474e1cbd73e2f04a9027b11d24e55337f86832adadb7f9a852c57e7d647f2"
+    },
+    {
+      "path": "maintenance-evidence\\batch31-source-extraction-v1\\raw\\page-017.png",
+      "sha256": "34e55b6b71a91395b880ab5a9aa1d6d30b04fcc248a60cc10772bfd359165017"
+    },
+    {
+      "path": "maintenance-evidence\\batch31-source-extraction-v1\\raw\\page-018.png",
+      "sha256": "c4f26bc59e2012e73733c4e75bf7cc581af6c0322d7ea4dffeb5979cb0c6f45c"
+    },
+    {
+      "path": "maintenance-evidence\\batch31-source-extraction-v1\\raw\\pages14-18.txt",
+      "sha256": "18cce57f0f92aa5aed09a46036d5f6f8caaee015740675b13235df210e01dedc"
+    }
+  ],
+  "structural_validation": {
+    "json_parsed": true,
+    "references_resolve": true,
+    "unique_node_ids": true,
+    "all_node_reference_fields_checked": true,
+    "coverage_regions_unchanged": true,
+    "derived_obligations_unchanged": true,
+    "definition_audit_deltas_preserved": true,
+    "v1_raw_evidence_hashes_reverified": true,
+    "not_a_completeness_verdict": true
+  },
+  "successor_provenance": {
+    "revision": "v2",
+    "predecessor_directory": "maintenance-evidence/batch31-source-extraction-v1",
+    "predecessor_sha256": {
+      "source-coverage.json": "6a5538ab8955a18d23346d34f7aa2b6c4606015930fd2f59bba84a302f63fb18",
+      "source-proof-graph.json": "1492fe1cf19baed438eed3571efd96b94f7aba29dd827c41daa2ccdc9998ae33",
+      "source-extraction-report.json": "c9fdb6676f31af1831c9aef2eb8ff6e8c10ed7700f2cbc0a00ff228a4413d073"
+    },
+    "correction_source": {
+      "path": "maintenance-evidence/batch31-source-review-v1/review.json",
+      "sha256": "8114ca9862ec1bc9f07662b36430198e8277677d373e22fc52514f7ddc78ac1c",
+      "used_sections": [
+        "concrete_successor_edits",
+        "required_corrections C1-C4"
+      ]
+    },
+    "status": "PROPOSED_SUCCESSOR_AWAITING_DISTINCT_REVIEW",
+    "self_approved": false,
+    "implementation_inspected": false,
+    "new_pixel_views_performed": false
+  },
+  "successor_correction_disposition": [
+    {
+      "id": "C1",
+      "status": "APPLIED",
+      "detail": "Exact reviewed title applied consistently to all three records."
+    },
+    {
+      "id": "C2",
+      "status": "APPLIED_OPEN_BRIDGES_RETAINED",
+      "detail": "E-minimizer, G-mean-range, E-BTL-instantiate, E-integral, E-BTL-close and G-limit-existence corrected as instructed. No gap discharged."
+    },
+    {
+      "id": "C3",
+      "status": "RETAINED",
+      "detail": "All four candidate results remain unprinted derived obligations. Eventual-upper NoRegret, finite-real LimitNoRegret, generic carrier/feasibility, T=0 totalization, and min/sInf deltas remain explicit. No source-repair approval."
+    },
+    {
+      "id": "C4",
+      "status": "DEFERRED_TO_PROOF_ACCEPTANCE",
+      "detail": "Later proof implementation must discharge new candidate and characterization obligations internally without adding public hypotheses. Source graph edits do not discharge this duty or accept proof bodies."
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch31-source-extraction-v2/source-extraction-report.json",
+      "sha256": "1f3dd493d0f7e10c05d2aea1fe7c8acba7beb8db2126ddd3e35c08b014ffae18",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Physical path prefixes replaced by distinct logical locations with collision checks. Mathematical contents, historical values, verdicts and statuses unchanged. Original digests bind private originals, not projected bytes.",
+    "currentStatus": "review-binding.json records later scoped evidence; historical pending fields retain their original meaning."
+  }
+}

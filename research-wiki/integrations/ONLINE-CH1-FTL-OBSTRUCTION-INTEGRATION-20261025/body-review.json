@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "role": "independent_existing_proof_body_reviewer",
+  "stage": "static_mathematical_and_source_code_audit_before_fresh_compilation",
+  "verdict": "accepted-with-explicit-delta",
+  "verdict_meaning": "All 13 original production declarations and all 11 original canaries pass independent static mathematical/body review against the seals and accepted-main shared definitions. No proof repair is requested from this review. Acceptance is limited to the inspected proof logic: fresh Lean compilation, kernel axiom/dependency evidence and combined project gates remain pending. The stage1 source deltas remain explicit and no historical source repair is approved.",
+  "fresh_compilation_accepted": false,
+  "proof_sealed": false,
+  "source_repair_approved": false,
+  "original_head": "a03f304522ed30ee34d43b38bd67deffbbf3b08f",
+  "accepted_main": {
+    "path": "canonical-repository",
+    "branch": "main",
+    "commit": "1ced10e7f3094e883f29e225d01759be1e041eb4",
+    "status_short_verified": "clean"
+  },
+  "inputs": {
+    "production": {
+      "path": "maintenance-evidence/batch31-intake-v1/BanditRLProof__OnlineFTLOscillation.lean",
+      "sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6"
+    },
+    "canaries": {
+      "path": "maintenance-evidence/batch31-intake-v1/Tests__OnlineFTLOscillationCanary.lean",
+      "sha256": "36f4c45645620545830268023f04757ea8dfdd9a8b9a2fe45409ee2202146f67"
+    },
+    "statement_seal": {
+      "path": "maintenance-evidence/batch31-preport-statement-seal-v1.json",
+      "sha256": "6351e2c705b1929bfb91726281853129d3298746e6725d1405e6bc6b9203c3b8",
+      "use": "Binding only, not an acceptance verdict."
+    },
+    "reuse_queue": {
+      "path": "maintenance-evidence/batch31-preport-reuse-audit-v1.json",
+      "sha256": "d67099fa7be5423f876b095bb61663efadf8dec80b934e2fd69b407d4c7787b0",
+      "use": "Audit queue only; declaration coverage, seals and mathematics independently checked."
+    },
+    "source_review": {
+      "path": "maintenance-evidence/batch31-source-review-v2/review.json",
+      "sha256": "f2d2ced0a728df802c64745779103e18c278c77bb9f5bb97f90ec3461932e7cf"
+    },
+    "source_graph_fixed": {
+      "path": "maintenance-evidence/batch31-source-extraction-v2/source-proof-graph.json",
+      "sha256": "47a53e97790d8f96643d609d1b53dc6500577255fb1cacb4537a802cf1148240"
+    }
+  },
+  "exact_seal_checks": {
+    "four_public_theorem_headers": "Exact text and SHA256 match the four frozen statement-seal headers, independently extracted from the original production body file.",
+    "seven_definitions": "Exact frozen definition text and SHA256 match the new dyadic definition and the six accepted-main definitions. New code imports shared definitions rather than redefining them.",
+    "theorem_header_sha256": {
+      "meanPredict_limitNoRegret_iff_mean_converges": "8d6d763677b8ef19752d7bb2756af8bda141369a50b17dd0f4849597fa242569",
+      "dyadicObservation_unit": "706589b7d4e43173a8f8b2ac6055adc70b5ad33cbe8c420ca5a6adec711b2720",
+      "dyadic_empiricalMean_subsequences": "f906aef8dd5d95b45828e660817de3470b4db5ca222c8135b2e53262235d1fd6",
+      "dyadic_meanPredict_obstruction": "9313ad8b661729e133ca5d68db7a514ceb42545b440eeed98045a4c4a956f05c"
+    },
+    "counts": {
+      "production_public_definitions": 1,
+      "production_public_theorems": 4,
+      "production_private_helpers": 8,
+      "canary_theorems": 11
+    },
+    "excess_binders": [],
+    "new_axiom_or_placeholder_tokens": "No sorry, admit, axiom or unsafe tokens in either frozen original source file. This is a source-code check, not a compiler-backed transitive axiom export."
+  },
+  "production_declarations": [
+    {
+      "name": "dyadicObservation",
+      "line": 8,
+      "role": "public_original_construction",
+      "disposition": "static-accepted",
+      "direct_dependencies": [],
+      "finding": "At successor n+1 the recursive index n/2 is strictly smaller, including n=0; natural division and omega termination obligation are mathematically valid. The total recurrence gives d0=0 and pairs d(2k+1)=d(2k+2)=1-dk. No horizon or predictor parameter is hidden in the observation sequence."
+    },
+    {
+      "name": "meanPredict_limitNoRegret_iff_mean_converges",
+      "line": 16,
+      "role": "public_derived_anchor_not_printed",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "meanPredict_fixedRegret_limit_iff",
+        "empiricalMean_mem",
+        "meanPredict_limitNoRegret_of_mean_converges"
+      ],
+      "finding": "Forward uses endpoint limits a0,a1 to get M_T^2 -> -a0 and (1-M_T)^2 -> -a1. Their difference plus1 divided by2 equals M_T identically, so m=(-a0+a1+1)/2. Eventual [0,1] mean membership gives m in [0,1]. Reverse obtains all real-comparator limits -(u-m)^2 from the existing producer and then LimitNoRegret. It does not assume empirical mean convergence in the forward direction. Endpoint sign facts and hmUnit are logically redundant in these body branches, not hidden assumptions or proof defects."
+    },
+    {
+      "name": "dyadicObservation_binary",
+      "line": 43,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadicObservation"
+      ],
+      "finding": "Strong induction uses n/2<n+1. Complement maps0 to1 and1 to0; base0 is exact. Supplies interval proof without assuming range."
+    },
+    {
+      "name": "dyadicObservation_unit",
+      "line": 57,
+      "role": "public_derived_anchor_not_printed",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadicObservation_binary"
+      ],
+      "finding": "Both binary values lie in the closed interval. No probability or asymptotic qualification is introduced."
+    },
+    {
+      "name": "dyadic_pair",
+      "line": 65,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadicObservation"
+      ],
+      "finding": "The parent indices (2k)/2 and (2k+1)/2 both equal k in natural arithmetic; second successor is normalized before unfolding."
+    },
+    {
+      "name": "dyadic_prefix_pair",
+      "line": 75,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadic_pair",
+        "dyadicObservation"
+      ],
+      "finding": "Writing S(n)=sum_{t<n}d_t, induction appends exactly positions2n+1 and2n+2 and yields S(2n+1)=2n-2S(n). Base n=0 reads S(1)=d0=0."
+    },
+    {
+      "name": "dyadic_high_count",
+      "line": 90,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadic_prefix_pair"
+      ],
+      "finding": "Base exponent0 uses empty horizon4^0-1=0. Successor identity4^(n+1)-1=2(2(4^n-1)+1)+1 is valid because4^n>=1. Applying the prefix recurrence twice gives S(4^n-1)=(2/3)(4^n-1). Nat.cast_sub is guarded by hp."
+    },
+    {
+      "name": "dyadic_low_count",
+      "line": 105,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadic_prefix_pair",
+        "dyadic_high_count"
+      ],
+      "finding": "For4^n>=1, 2*4^n-1=2(4^n-1)+1. Prefix recurrence yields S(2*4^n-1)=(2/3)(4^n-1), including n=0 and horizon1."
+    },
+    {
+      "name": "dyadic_high_mean",
+      "line": 114,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "empiricalMean",
+        "dyadic_high_count"
+      ],
+      "finding": "Uses exponent n+1 so the horizon is at least3. Proves real denominator nonzero before cancellation, obtaining exactly2/3 for every n."
+    },
+    {
+      "name": "dyadic_low_mean",
+      "line": 129,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "empiricalMean",
+        "dyadic_low_count"
+      ],
+      "finding": "Horizon2*4^n-1>=1, natural-subtraction casts are justified, and the real denominator is nonzero. Division gives1/3-(1/3)/(2*4^n-1), yielding0 at n=0 rather than an erroneous constant1/3."
+    },
+    {
+      "name": "dyadic_horizons_tendsto",
+      "line": 145,
+      "role": "private_internal_provider",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "Mathlib.tendsto_pow_atTop_atTop_of_one_lt"
+      ],
+      "finding": "Uses4^n -> infinity in naturals; threshold b+1 guarantees both truncated-subtraction horizons eventually exceed b. Both cofinality proofs include the subtraction offset."
+    },
+    {
+      "name": "dyadic_empiricalMean_subsequences",
+      "line": 161,
+      "role": "public_derived_anchor_not_printed",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadic_high_mean",
+        "dyadic_low_mean",
+        "dyadic_horizons_tendsto",
+        "Mathlib.tendsto_natCast_atTop_atTop",
+        "Mathlib.tendsto_inv_atTop_zero"
+      ],
+      "finding": "High mean is the exact constant2/3. Low horizon diverges as a real number, so its reciprocal tends to0; substituting the exact low-mean formula gives1/3. This proves both conjuncts, not one selected route."
+    },
+    {
+      "name": "dyadic_meanPredict_obstruction",
+      "line": 185,
+      "role": "public_derived_anchor_not_printed",
+      "disposition": "static-accepted",
+      "direct_dependencies": [
+        "dyadicObservation_unit",
+        "meanPredict_fixedRegret_limit_iff",
+        "dyadic_empiricalMean_subsequences",
+        "dyadic_horizons_tendsto",
+        "meanPredict_noRegret",
+        "meanPredict_bestRegret_average_tendsto_zero"
+      ],
+      "finding": "Assuming a finite comparator0 regret limit a, shared equivalence forces M_T^2 -> -a. Composition with the two cofinal horizons gives -a=4/9 and -a=1/9, contradiction. This correctly uses the squared limits rather than blindly inferring square nonconvergence from mean nonconvergence. The first two conjuncts reuse actual same-predictor producers. The last conjunct extracts the comparator0 limit from LimitNoRegret and contradicts hn; it does not depend on the new all-comparator equivalence. All four conjuncts use exactly meanPredict dyadicObservation."
+    }
+  ],
+  "shared_dependency_audit": {
+    "hash_convention": "Hashes below are exact accepted HEAD Git blob bytes. Read working files matched those bytes after LF normalization; CRLF-only differences occurred in Asymptotic and Foundations.",
+    "git_file_sha256": {
+      "BanditRLProof/OnlineFTLLimitSemantics.lean": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+      "BanditRLProof/OnlineLearningAsymptotic.lean": "0caf208525b1b3e91e378b0a74338c7c26e581fbd1514c7ac9427d4f7e6b03e0",
+      "BanditRLProof/OnlineLearningMean.lean": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+      "BanditRLProof/OnlineSquareMinimum.lean": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+      "BanditRLProof/OnlineLearningFTL.lean": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305",
+      "BanditRLProof/OnlineNoRegretSemantics.lean": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+      "BanditRLProof/OnlineLearningFoundations.lean": "1ddd99831395cf74993f7d52cdacd2b7d30c48458e4e2480e3229a56c797fe6a",
+      "BanditRLProof/OnlineLearningRegret.lean": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f"
+    },
+    "actual_transitive_spine": [
+      "empiricalMean_decomposition -> empiricalMean_minimizes; empiricalMean_mem supplies feasibility; empiricalMean_unique proves positive-prefix uniqueness when needed for characterization.",
+      "empiricalMean_mem + empiricalMean_minimizes -> guessing_prefix_minimum -> squaredLoss_minimum_eq -> squaredBestRegret_eq_comparatorRegret. T=0 handled separately as an empty objective, not unique argmin.",
+      "lemma_1_2 + empiricalMean_minimizes + meanPredict_stability + harmonic_le_one_add_log -> theorem_1_3 -> meanPredict_bestRegret_bound.",
+      "empiricalMean_minimizes + induction with the same meanPredict -> meanPredict_bestLoss_nonneg. This is the additional lower-control ingredient missing from the printed upper bound alone.",
+      "meanPredict_bestLoss_nonneg + squaredBestRegret_eq_comparatorRegret + meanPredict_bestRegret_bound + real log/T limits -> meanPredict_bestRegret_average_tendsto_zero by squeeze.",
+      "empiricalMean_decomposition -> meanPredict_comparator_decomposition. Together with best-regret/T ->0, minimum equivalence and eventual T>0 this gives meanPredict_fixedRegret_limit_iff.",
+      "meanPredict_fixedRegret_limit_iff + continuity of squared distance -> meanPredict_limitNoRegret_of_mean_converges, with actual limit -(u-m)^2<=0.",
+      "theorem_1_3 + empiricalMean_minimizes + log/T limit -> meanPredict_noRegret through noRegret_of_vanishing_bound; producer assumptions are discharged internally."
+    ],
+    "source_to_implementation_crosswalk": [
+      {
+        "source_gap": "G-minimizer-bridge",
+        "implementation_producers": [
+          "empiricalMean_decomposition",
+          "empiricalMean_minimizes",
+          "empiricalMean_unique",
+          "guessing_prefix_minimum",
+          "squaredLoss_minimum_eq"
+        ],
+        "finding": "Actual accepted-main proof bodies supply square completion, feasible minimization and min/sInf representation. Uniqueness is separately proved for positive prefixes but is not needed as a theorem premise or a classical-choice mechanism in this candidate."
+      },
+      {
+        "source_gap": "G-mean-range",
+        "implementation_producers": [
+          "empiricalMean_mem",
+          "meanPredict_mem"
+        ],
+        "finding": "Range is derived from bounded observations and positive prefixes; t=0 predictor is1/2. It is not assumed as an additional candidate binder."
+      },
+      {
+        "source_gap": "G-asymptotic-upper",
+        "implementation_producers": [
+          "meanPredict_noRegret",
+          "meanPredict_bestRegret_average_tendsto_zero"
+        ],
+        "finding": "The bodies explicitly use reciprocal/logarithmic limits. The second producer adds a true lower bound and is stronger than an upper-bound-only argument."
+      },
+      {
+        "source_gap": "G-prior-Eq1.1",
+        "implementation_producers": [],
+        "finding": "Outside inspected source window and unused in the pathwise implementation route."
+      },
+      {
+        "source_gap": "G-limit-existence",
+        "implementation_producers": [],
+        "finding": "Not discharged universally. Candidate D4 establishes a counterexample to ordinary-limit existence for actual squared-loss FTL. No source repair approval is inferred."
+      }
+    ],
+    "implementation_route_difference": "Shared theorem_1_3 instantiates BTL on Set.univ using global squared-loss minimization and bounds stability through the exact mean-update algebra. The source graph uses feasible-set BTL and the printed factor/triangle chain. These are distinct valid routes; interval-minimum equivalence is supplied afterward by OnlineSquareMinimum. No stage1 source graph edits were made.",
+    "nondependencies": "The imported NoRegretCounterexample affine-loss example is not used by any inspected candidate proof. D4 does not use D1; it directly uses comparator0 nonconvergence. Declaration uniqueness/causality producer existence is contextual validation, not a claim every such declaration appears in compiled proof terms.",
+    "evidence_limit": "Dependencies here are established by reading actual proof bodies, including named producers and their logical uses. They are not a fresh compiler-exported proof-term dependency graph; tactic-generated fine dependencies and transitive axiom closure remain to be exported."
+  },
+  "canary_declarations": [
+    {
+      "name": "dyadic_unit_and_prefix",
+      "line": 7,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadicObservation_unit",
+        "dyadicObservation"
+      ],
+      "finding": "Range theorem plus direct recurrence evaluation gives0,1,1,0."
+    },
+    {
+      "name": "actual_causal_predictions",
+      "line": 14,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "meanPredict",
+        "empiricalMean",
+        "dyadicObservation"
+      ],
+      "finding": "Direct finite sums give predictions1/2,0,1/2,2/3 at t=0,1,2,3, each using only prior observations."
+    },
+    {
+      "name": "actual_signed_regrets",
+      "line": 21,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "squaredBestRegret_eq_comparatorRegret",
+        "dyadicObservation_unit",
+        "comparatorRegret",
+        "meanPredict",
+        "empiricalMean",
+        "dyadicObservation"
+      ],
+      "finding": "Rewrites actual feasible minimum using proved range, including T=0. Exact rational values independently confirmed: best regrets0,1/4,3/4,5/6 for T=0..3; normalized regret against0 at T=3 is-1/6."
+    },
+    {
+      "name": "all_comparator_iff_instantiated",
+      "line": 33,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "meanPredict_limitNoRegret_iff_mean_converges",
+        "dyadicObservation_unit"
+      ],
+      "finding": "Exact specialization with produced boundedness; a smoke canary, not an independent theorem proof."
+    },
+    {
+      "name": "no_feasible_mean_limit",
+      "line": 39,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_meanPredict_obstruction",
+        "all_comparator_iff_instantiated"
+      ],
+      "finding": "A hypothetical feasible mean limit implies LimitNoRegret via iff, contradicting D4. No cycle: production D4 itself does not depend on this canary or D1."
+    },
+    {
+      "name": "two_actual_mean_subsequences",
+      "line": 44,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_empiricalMean_subsequences"
+      ],
+      "finding": "Exact theorem-instantiation canary preserving both horizons and limits."
+    },
+    {
+      "name": "obstruction_instantiated",
+      "line": 51,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_meanPredict_obstruction"
+      ],
+      "finding": "Exact four-conjunct integration canary, not additional independent evidence for mathematical truth."
+    },
+    {
+      "name": "upper_noRegret_on_actual_stream",
+      "line": 63,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_meanPredict_obstruction"
+      ],
+      "finding": "Correct first-conjunct projection; retains eventual-upper metric."
+    },
+    {
+      "name": "actual_best_average_zero",
+      "line": 68,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_meanPredict_obstruction"
+      ],
+      "finding": "Correct second-conjunct projection for feasible-best normalized regret."
+    },
+    {
+      "name": "fixed_zero_has_no_ordinary_limit",
+      "line": 73,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_meanPredict_obstruction"
+      ],
+      "finding": "Correct third-conjunct projection: nonexistence of any finite real limit for comparator0."
+    },
+    {
+      "name": "literal_limit_noRegret_fails",
+      "line": 79,
+      "disposition": "static-accepted",
+      "dependencies": [
+        "dyadic_meanPredict_obstruction"
+      ],
+      "finding": "Correct fourth-conjunct projection; does not negate eventual-upper NoRegret."
+    }
+  ],
+  "independent_numerical_checks": {
+    "method": "Python fractions.Fraction, directly implementing the mathematical recurrence, exact prefix sums, actual past-average predictions and feasible quadratic minimum at the in-range empirical mean. Independent from Lean tactic reduction.",
+    "observations_first_eight": [
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "predictions_first_four": [
+      "1/2",
+      "0",
+      "1/2",
+      "2/3"
+    ],
+    "horizon_rows": [
+      {
+        "T": 0,
+        "learner_loss": "0",
+        "best_loss": "0",
+        "best_regret": "0",
+        "fixed0_normalized": "0"
+      },
+      {
+        "T": 1,
+        "learner_loss": "1/4",
+        "best_loss": "0",
+        "best_regret": "1/4",
+        "fixed0_normalized": "1/4"
+      },
+      {
+        "T": 2,
+        "learner_loss": "5/4",
+        "best_loss": "1/2",
+        "best_regret": "3/4",
+        "fixed0_normalized": "1/8"
+      },
+      {
+        "T": 3,
+        "learner_loss": "3/2",
+        "best_loss": "2/3",
+        "best_regret": "5/6",
+        "fixed0_normalized": "-1/6"
+      }
+    ],
+    "additional_finite_sanity_checks": "S(2n+1)=2n-2S(n) checked for n=0..59; exact high and low means checked for n=0..6.",
+    "limit": "Finite rational checks validate canary numerics and catch offsets; they do not replace infinite induction or limit proofs."
+  },
+  "purification_and_scope": {
+    "all_eight_private_helpers_reachable": true,
+    "private_helpers_are_source_anchors": false,
+    "new_public_theorems_claim_printed_origin": false,
+    "same_predictor_confirmed": true,
+    "horizon_dependent_learner_substitution": false,
+    "duplicate_shared_definitions_introduced": false,
+    "finding": "The eight private helpers support binary range or the exact counting/cofinality spine. None is dead in this module. Several canaries intentionally repeat or project public declarations; they are integration smoke tests, not additional source-formalization credit. No body-level repair or public-signature change is requested."
+  },
+  "remaining_evidence_gates": [
+    "Compile the exact frozen production and canary files against the pinned accepted-main shared project in the isolated worktree. Verify LF-normalized identity if Git changes line endings.",
+    "Obtain compiler-backed axiom/dependency evidence for all new public and private production declarations and all canaries, ruling out sorryAx or unexpected axioms. Standard Lean foundational axioms must be distinguished from new assumptions.",
+    "Verify public root and Tests imports, then run required combined project root, Tests and full harness checks. Focused compilation alone is not final acceptance.",
+    "Carry stage1 source/derived, ordinary-limit/eventual-upper, zero-horizon and feasible-best/fixed-comparator deltas into reader and contribution records.",
+    "Complete publication/contributor/site/graph/purification gates appropriate to any later merge or live claim. No such status is certified here."
+  ],
+  "product_edits": false,
+  "remote_actions": false,
+  "public_projection": {
+    "original": {
+      "artifact": "batch31-body-review-v1/review.json",
+      "sha256": "eba728eee2348e597f1377acbf69d02f07725c1cede57f2f6215cfaa4e84aa0c",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Physical path prefixes replaced by distinct logical locations with collision checks. Mathematical contents, historical values, verdicts and statuses unchanged. Original digests bind private originals, not projected bytes.",
+    "currentStatus": "review-binding.json records later scoped evidence; historical pending fields retain their original meaning."
+  }
+}

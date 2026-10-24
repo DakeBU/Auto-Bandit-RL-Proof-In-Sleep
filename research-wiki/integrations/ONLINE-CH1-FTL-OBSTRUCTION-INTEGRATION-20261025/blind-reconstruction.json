@@ -1,0 +1,169 @@
+{
+  "report_type": "source_blind_mathematical_reconstruction",
+  "schema_version": 1,
+  "input": {
+    "path": "maintenance-evidence/batch31-blind-packet-v1/statements.txt",
+    "sha256": "5d8f472e3241fb282f1165293986ad36441be320e5bc6546590391437bf431ce",
+    "expected_hash_matched": true
+  },
+  "evidence_boundary": {
+    "read_evidence": [
+      "The exact definitions and theorem signatures in statements.txt, including its displayed recursive termination annotation."
+    ],
+    "not_consulted": [
+      "Other repository files",
+      "Source documents or source identity",
+      "Earlier reports",
+      "Theorem proof bodies",
+      "Network sources"
+    ],
+    "not_performed": [
+      "Compilation",
+      "Proof verification",
+      "Comparison with an external mathematical source"
+    ],
+    "interpretation_status": "This report reconstructs the mathematical content asserted by the packet. It does not certify theorem truth, proof completeness, or source fidelity.",
+    "theorem_count": 4,
+    "definition_count": 7
+  },
+  "shared_conventions": {
+    "indices_and_coercions": "All time and horizon indices are natural numbers starting at 0. In a real-valued quotient, a natural denominator is coerced to the real number with that value. The range sum at horizon T runs from 0 through T-1 and is empty for T=0.",
+    "real_division": "Lean real division is total: division by 0 equals 0. Thus normalized regrets and empirical means at horizon 0 are defined, rather than left undefined.",
+    "convergence": "Tendsto f atTop (nhds a) means ordinary convergence of the real-valued sequence as its natural index tends to infinity, to the finite real number a. Eventual inequalities disregard finitely many initial indices.",
+    "probability_and_feedback": "There are no probability spaces, expectations, almost-sure qualifications, high-probability guarantees, random draws, or randomized policies in these signatures. Functions are deterministic mathematical sequences. meanPredict at time t uses only observations with indices less than t; the packet specifies no separate feedback or information-access model.",
+    "rates": "No theorem signature supplies a finite-horizon inequality, an explicit convergence rate, a logarithmic constant, or a threshold uniform across comparators."
+  },
+  "notation": {
+    "R": "R_T(u) = sum_{t=0}^{T-1} loss(t,p_t) - sum_{t=0}^{T-1} loss(t,u).",
+    "M": "M_n(y) = (sum_{t=0}^{n-1} y_t)/n with the packet's total-division convention.",
+    "p": "p_t(y) = 1/2 for t=0 and M_t(y) for t>0.",
+    "B": "B_T(y,p) = sum_{t=0}^{T-1}(p_t-y_t)^2 - inf_{u in [0,1]} sum_{t=0}^{T-1}(u-y_t)^2.",
+    "d": "d denotes dyadicObservation."
+  },
+  "definitions": [
+    {
+      "target": "comparatorRegret",
+      "parameters_and_assumptions": "An arbitrary type X, arbitrary loss: N -> X -> R, arbitrary prediction: N -> X, fixed comparator u in X, and horizon T in N. There are no boundedness, convexity, measurability, or feasibility assumptions.",
+      "quantifiers": "The definition takes these as parameters; u is one fixed action used on every term of the comparator sum.",
+      "latex": "R_T(u):=\\sum_{t=0}^{T-1}\\ell_t(p_t)-\\sum_{t=0}^{T-1}\\ell_t(u).",
+      "reconstruction": "Cumulative prediction loss minus cumulative loss of the same comparator u over exactly the first T rounds.",
+      "boundaries": "R_0(u)=0. The definition contains no infimum over comparators and does not assert nonnegativity."
+    },
+    {
+      "target": "NoRegret",
+      "parameters_and_assumptions": "An arbitrary type X, any comparator set V subset X, loss: N -> X -> R, and prediction: N -> X. Membership of predictions in V is not assumed.",
+      "quantifiers": "For every u in V and every real epsilon>0, there exists a natural threshold N, allowed to depend on u and epsilon and the fixed sequences, such that every natural T>=N satisfies R_T(u)/T<=epsilon.",
+      "latex": "\\operatorname{NoRegret}(V,\\ell,p)\\iff\\forall u\\in V\\;\\forall\\varepsilon>0\\;\\exists N\\in\\mathbb N\\;\\forall T\\ge N,\\quad R_T(u)/T\\le\\varepsilon.",
+      "reconstruction": "Every fixed comparator has eventually arbitrarily small upper normalized regret.",
+      "boundaries": "This is a one-sided eventual upper condition, not convergence of R_T(u)/T to 0 or to any finite real number. Negative values and nonconvergence are permitted. No uniform threshold over V is specified. V empty makes the condition vacuous. At T=0 the quotient equals 0."
+    },
+    {
+      "target": "empiricalMean",
+      "parameters_and_assumptions": "An arbitrary real-valued sequence y and a natural n. No boundedness assumption is part of the definition.",
+      "quantifiers": "The definition takes y and n as parameters.",
+      "latex": "M_n(y):=\\frac{1}{n}\\sum_{t=0}^{n-1}y_t,\\qquad M_0(y)=0\\text{ under total division}.",
+      "reconstruction": "The average of the first n observations, excluding y_n.",
+      "boundaries": "The zero-horizon value is 0. The usual arithmetic average interpretation uses n>0."
+    },
+    {
+      "target": "meanPredict",
+      "parameters_and_assumptions": "An arbitrary real-valued sequence y and a natural time t.",
+      "quantifiers": "The definition takes y and t as parameters.",
+      "latex": "p_t(y):=\\begin{cases}\\frac12,&t=0,\\\\M_t(y),&t>0.\\end{cases}",
+      "reconstruction": "Predict one half initially; thereafter predict the empirical average of all observations strictly before the current time.",
+      "boundaries": "The initial value is 1/2, not M_0(y)=0. At t=1 the prediction is y_0. If y takes values in [0,1], these predictions also lie in [0,1], but this bound is not an assumption in the definition."
+    },
+    {
+      "target": "squaredBestRegret",
+      "parameters_and_assumptions": "Arbitrary real-valued sequences y and prediction, and natural horizon T. Comparators are restricted to the closed interval [0,1]; the two sequences are not restricted by this definition.",
+      "quantifiers": "The comparator objective is minimized in value separately at each horizon over fixed real actions u in [0,1]. A comparator action is constant across the T terms, and the infimum is taken after those terms are summed.",
+      "latex": "B_T(y,p):=\\sum_{t=0}^{T-1}(p_t-y_t)^2-\\inf\\left\\{\\sum_{t=0}^{T-1}(u-y_t)^2:u\\in[0,1]\\right\\}.",
+      "reconstruction": "Cumulative squared loss of the predictions minus the infimum of cumulative squared losses achieved by one constant comparator from [0,1].",
+      "boundaries": "The exact Lean object is the real sInf of the image set of objective values. That set is nonempty and bounded below by 0; the finite quadratic objective is continuous on [0,1], so its infimum is attained. B_0=0 because the image is {0}. Regret need not be nonnegative, since a time-varying prediction can outperform every fixed comparator."
+    },
+    {
+      "target": "LimitNoRegret",
+      "parameters_and_assumptions": "An arbitrary type X, comparator set V subset X, loss sequence, and prediction sequence. Predictions need not belong to V.",
+      "quantifiers": "For every u in V, there exists a finite real number a, allowed to depend on u, such that a<=0 and R_T(u)/T converges to a as T tends to infinity.",
+      "latex": "\\operatorname{LimitNoRegret}(V,\\ell,p)\\iff\\forall u\\in V\\;\\exists a\\in\\mathbb R,\\quad a\\le0\\ \\land\\ \\lim_{T\\to\\infty}\\frac{R_T(u)}{T}=a.",
+      "reconstruction": "Each fixed comparator's normalized regret has an ordinary finite limit, and that limit is nonpositive.",
+      "boundaries": "A common limit across comparators is not required. A limit of 0 specifically is not required. Divergence to minus infinity does not satisfy the finite-limit requirement. V empty gives a vacuous condition. This condition implies NoRegret by the definitions; the converse is not imposed."
+    },
+    {
+      "target": "dyadicObservation",
+      "parameters_and_assumptions": "A total recursively specified sequence d: N -> R, with no input sequence or probabilistic parameter.",
+      "quantifiers": "d_0=0; for every natural n, d_{n+1}=1-d_{floor(n/2)}.",
+      "latex": "d_0:=0,\\qquad d_{n+1}:=1-d_{\\lfloor n/2\\rfloor}\\quad(n\\in\\mathbb N).",
+      "reconstruction": "The initial value is zero; each subsequent value is one minus an earlier value indexed by natural division by two.",
+      "boundaries": "For a positive index t the predecessor index is floor((t-1)/2), not floor(t/2). The recursive quotient n/2 is natural-number division, whereas the resulting observation values are real. The displayed termination annotation is not independently verified here."
+    }
+  ],
+  "theorems": [
+    {
+      "target": "meanPredict_limitNoRegret_iff_mean_converges",
+      "objects": "An arbitrary sequence y: N -> R, its empirical mean M, causal mean predictor p, comparator interval [0,1], and squared loss ell_t(x)=(x-y_t)^2.",
+      "assumptions": [
+        "For every natural t, 0<=y_t<=1."
+      ],
+      "quantifiers": "Universally in every sequence y satisfying the bound: the statement on the left quantifies over every comparator u in [0,1] and then permits its own finite nonpositive limit a(u). The statement on the right asserts existence of one m in [0,1] to which M_n(y) converges.",
+      "latex": "\\left[\\forall u\\in[0,1]\\;\\exists a_u\\in\\mathbb R,\\ a_u\\le0\\ \\land\\ \\lim_{T\\to\\infty}\\frac{\\sum_{t<T}(p_t(y)-y_t)^2-\\sum_{t<T}(u-y_t)^2}{T}=a_u\\right]\\iff\\left[\\exists m\\in[0,1],\\ \\lim_{n\\to\\infty}M_n(y)=m\\right].",
+      "conclusion": "For every bounded observation sequence of the stated type, the mean predictor has finite nonpositive normalized-regret limits against all fixed interval comparators if and only if the observation empirical means converge.",
+      "constants_and_asymptotics": "The interval is exactly [0,1], the initialization exactly 1/2, and limits are ordinary finite real limits. No limit formula for a_u and no rate is included.",
+      "boundary_analysis": "Both interval endpoints are included. No convergence of individual observations y_t is assumed. This is an equivalence for LimitNoRegret, not a claim that NoRegret alone forces empirical-mean convergence.",
+      "probability_feedback": "Deterministic universal statement over bounded sequences. Prediction uses observations strictly before t. No stochastic or feedback assumption is stated."
+    },
+    {
+      "target": "dyadicObservation_unit",
+      "objects": "The specific recursively defined observation sequence d.",
+      "assumptions": [],
+      "quantifiers": "For every natural t, including t=0.",
+      "latex": "\\forall t\\in\\mathbb N,\\qquad 0\\le d_t\\le1.",
+      "conclusion": "Every dyadic observation belongs to the closed unit interval.",
+      "constants_and_asymptotics": "Exact bounds 0 and 1; no asymptotic qualification.",
+      "boundary_analysis": "The signature asserts interval membership, not explicitly the stronger two-point membership d_t in {0,1}. There are no additional hypotheses.",
+      "probability_feedback": "A deterministic bound on one fixed sequence."
+    },
+    {
+      "target": "dyadic_empiricalMean_subsequences",
+      "objects": "Empirical means of d at two natural-valued horizon sequences.",
+      "assumptions": [],
+      "quantifiers": "A conjunction of two convergence assertions as the natural index n tends to infinity.",
+      "latex": "\\lim_{n\\to\\infty}M_{4^{n+1}-1}(d)=\\frac23\\quad\\land\\quad\\lim_{n\\to\\infty}M_{2\\cdot4^n-1}(d)=\\frac13.",
+      "conclusion": "The empirical mean has limit 2/3 along horizons 4^(n+1)-1 and limit 1/3 along horizons 2*4^n-1.",
+      "constants_and_asymptotics": "The bases, exponent offsets, multipliers, subtraction by 1, and limits 2/3 and 1/3 are exact. No error bounds or convergence rates are asserted.",
+      "boundary_analysis": "Subtraction in the horizon expressions is natural subtraction, truncated at 0. Here the minuends are always at least 4 and 2 respectively, so truncation never changes the ordinary integer differences. The sequences start at horizons 3 and 1 when n=0 and both tend to infinity. These are counts of included observations, so the last included observation has index one less than the displayed horizon. The distinct subsequential limits imply the full empirical-mean sequence has no ordinary limit, a consequence rather than a separate displayed conjunct.",
+      "probability_feedback": "Deterministic subsequential limits for one fixed sequence."
+    },
+    {
+      "target": "dyadic_meanPredict_obstruction",
+      "objects": "The sequence d, predictor p_t=p_t(d), squared loss ell_t(x)=(x-d_t)^2, comparator interval [0,1], comparator regret R_T(u), and best fixed-comparator regret B_T(d,p).",
+      "assumptions": [],
+      "quantifiers": "Four simultaneous assertions: (1) for every u in [0,1] and epsilon>0, R_T(u)/T<=epsilon eventually; (2) B_T/T converges to 0; (3) there is no finite real a to which R_T(0)/T converges; (4) LimitNoRegret fails for this same problem.",
+      "latex": "\\operatorname{NoRegret}([0,1],\\ell,p)\\ \\land\\ \\lim_{T\\to\\infty}\\frac{B_T(d,p)}{T}=0\\ \\land\\ \\neg\\exists a\\in\\mathbb R,\\ \\lim_{T\\to\\infty}\\frac{R_T(0)}{T}=a\\ \\land\\ \\neg\\operatorname{LimitNoRegret}([0,1],\\ell,p).",
+      "conclusion": "The mean predictor has eventual upper no-regret against every fixed comparator, and its normalized best fixed-comparator regret converges to zero, yet normalized regret against the particular comparator 0 has no finite ordinary limit. Consequently this predictor fails the finite-limit formulation LimitNoRegret.",
+      "constants_and_asymptotics": "The witness comparator is exactly 0, an included endpoint of [0,1]. The best-regret limit is exactly 0. The nonexistence assertion excludes every finite real limit, not only nonpositive limits. No explicit subsequential values of comparator regret, rates, or finite-horizon constants are given.",
+      "boundary_analysis": "Best-comparator normalized regret and normalized regret against the fixed comparator 0 are distinct sequences, so their different convergence behavior is not contradictory. Negation of existence of a real limit does not by itself specify an extended-real limit or a particular oscillation pattern. The initial normalized values at T=0 equal 0 by total division and do not affect any limiting or eventual statement. All four conjuncts concern this one specified deterministic example.",
+      "probability_feedback": "There is no probabilistic qualification and no expectation hidden in the regret. The mean predictor uses only preceding observations."
+    }
+  ],
+  "cross_statement_analysis": {
+    "central_distinction": "NoRegret controls only the eventual upper normalized regret for each comparator. LimitNoRegret additionally requires an ordinary finite limit for each comparator. The obstruction explicitly separates the two conditions even while normalized regret relative to the best constant interval comparator converges to zero.",
+    "logical_dependencies_without_proof_check": "The unit-interval assertion makes d eligible for the bounded-sequence equivalence. The two distinct empirical-mean subsequential limits entail failure of empirical-mean convergence and hence, using the asserted equivalence, failure of LimitNoRegret. Independently, the displayed failure of finite-limit convergence for comparator 0 entails failure of LimitNoRegret because 0 belongs to [0,1]. These are signature-level logical relationships, not proof validation.",
+    "claims_not_in_packet": [
+      "No external source identity or theorem numbering is established.",
+      "No finite-horizon regret rate is asserted.",
+      "No proof-term or implementation audit is performed.",
+      "No universal fixed-comparator convergence is inferred from best-comparator convergence.",
+      "No online feedback protocol, stochastic data model, or uniformity over all comparator thresholds is added."
+    ]
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch31-blind-reconstruction-v1/reconstruction.json",
+      "sha256": "a484fa24bbd7681b6714123fb16be063dbcdc9744eaf143c64f76936c236cf5b",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Physical path prefixes replaced by distinct logical locations with collision checks. Mathematical contents, historical values, verdicts and statuses unchanged. Original digests bind private originals, not projected bytes.",
+    "currentStatus": "review-binding.json records later scoped evidence; historical pending fields retain their original meaning."
+  }
+}
