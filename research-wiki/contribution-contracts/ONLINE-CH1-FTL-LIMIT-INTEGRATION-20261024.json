@@ -1,0 +1,164 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-FTL-LIMIT-INTEGRATION-20261024",
+  "route": "online-learning / Chapter1 actual FTL ordinary-limit semantics",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 2 / PDF page 14 defines signed regret and displays an ordinary-limit criterion; printed page 4 / PDF page 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF page 18 discusses sublinear best regret. These five results are derived library consequences and semantic reconciliation, not five printed theorems. Printed round t+1 corresponds to Lean time t. The existing upper-epsilon NoRegret predicate remains distinct from the literal LimitNoRegret predicate.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate unchanged five original PR201 production theorems and the complete canary, comprising one definition and twelve theorems, in the shared Lean project.",
+  "affected_files": [
+    "BanditRLProof/OnlineFTLLimitSemantics.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/declaration-boundaries.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+    "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+    "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+    "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+    "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current shared declaration/reference catalogs for meanPredict, empiricalMean and squaredBestRegret; pinned Mathlib logarithm/cast and ordinary-limit ingredients. Five actual retrieval jobs are recorded."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "BanditRL.OnlineLearning.empiricalMean_decomposition",
+      "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "Real.tendsto_pow_log_div_mul_add_atTop",
+      "Filter.Tendsto.sub"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+      "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+      "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+      "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges"
+    ],
+    "known_consumers": [
+      "The best-regret limit consumes the actual nonnegative gap; the fixed-comparator criterion consumes that limit and the decomposition.",
+      "The final conditional ordinary-limit theorem consumes the criterion. Complete binary canaries consume all five endpoints."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the same initial-half strict-past meanPredict and empirical-mean minimizer. Finite-horizon induction, exact square decomposition and ordinary-limit calculus provide substantive shared steps without duplicating definitions or creating a separate library."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch30-blind-decoder",
+    "source_reviewer": "independent-batch30-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Five derived results concern the actual initial-half, strict-past squared-loss FTL predictor. The first two are algebraic results for arbitrary real observation streams; they do not assert unit-game feasibility for those streams. The three limit results require one infinite stream with every observation in [0,1]. The fixed-comparator criterion is an equivalence of limits, not an assertion that either limit exists. The final result explicitly assumes empirical-mean convergence; its limit is an analysis parameter and never a learner input. A bounded oscillating-mean actual-FTL obstruction and the all-comparator converse remain separate source-reconciliation obligations. No probabilistic guarantee or nonnegative-regret assertion for arbitrary algorithms is proved. The original sixteen Chapter 1 source objects and unknown required proof total are retained. Other Chapter 1 and Chapter 2 obligations, unenumerated Chapters 3–16 and required appendices remain separate; no chapter or book completion is established."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "These five results refine the existing squared-loss FTL setting; no cross-setting transport or certified functor is established.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Twelve actual graph searches and 24 images at widths 1440 and 390 were inspected. Imported direct TYPE/VALUE edges remain distinct from source topology and conceptual overlays. The five actual-FTL endpoints and complete literal context definitions are disclosed; no conceptual relation is promoted to a compiled proof edge.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: five notes and one derived support card; all20prior source cards,409ordered highlights and5teaching references retained.",
+    "banditrlwiki": "updated: source, semantic, body, dependency and retention packet at research-wiki/integrations/ONLINE-CH1-FTL-LIMIT-INTEGRATION-20261024",
+    "results_ledger": "no-change-with-reason: bounded derived results do not close Chapter1 or a global milestone.",
+    "roadmap": "no-change-with-reason: bounded oscillating-mean obstruction, all-comparator converse and remaining chapter/book obligations keep their original scope and owners.",
+    "website_surfaces": [
+      "Online foundations chapter and source reader",
+      "Five formula/proof notes",
+      "Shared Lean declaration graph and five contextual definitions"
+    ]
+  },
+  "truth_boundary": "Five derived results concern the actual initial-half, strict-past squared-loss FTL predictor. The first two are algebraic results for arbitrary real observation streams; they do not assert unit-game feasibility for those streams. The three limit results require one infinite stream with every observation in [0,1]. The fixed-comparator criterion is an equivalence of limits, not an assertion that either limit exists. The final result explicitly assumes empirical-mean convergence; its limit is an analysis parameter and never a learner input. A bounded oscillating-mean actual-FTL obstruction and the all-comparator converse remain separate source-reconciliation obligations. No probabilistic guarantee or nonnegative-regret assertion for arbitrary algorithms is proved. The original sixteen Chapter 1 source objects and unknown required proof total are retained. Other Chapter 1 and Chapter 2 obligations, unenumerated Chapters 3–16 and required appendices remain separate; no chapter or book completion is established.",
+  "verification": {
+    "focused_checks": [
+      "Original production and complete canary remain byte-exact. Imported audit passed five full public type identities, five literal definition equalities, 38 standard-axiom checks and 16 required direct VALUE pairs. Shared library and Tests builds passed 9103 and 9266 jobs."
+    ],
+    "bandit_check": "Actual full gate v4 passed shared library root, Tests, ProofGraphExport, placeholder scan and 475 tests with 7 skips on the 26-path candidate, with unchanged input hashes.",
+    "site_build": "Actual site gate v1 build --lean-verified and site checker passed after full gate v4, with unchanged candidate inputs.",
+    "site_check": "Actual captures contain 84 reader images and 24 graph detail images at widths 1440 and 390. Independent visual review covers all images. Actual DOM checks compare all five literal context definitions to hash-bound source blocks and disclose all five public statements. Existing twenty source cards and 77 panels remain preserved, with one new derived card and five new panels.",
+    "independent_review": "Distinct source, blind, scientific and scope actors accepted the bounded five derived actual-FTL contracts, original proof bodies, reader exposition, literal disclosures and old-content conservation. Local Exposition and purification cover this contribution only. Final metadata review, exact committed contributor/CI, main/live and whole-original disposition remain separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship preserved in Git and immutable PR history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "NONE refers only to byte-exact revalidation of final original proofs. Original failed attempts, all498paths and2OPENhistorical hash uses remain retained. Current environment, index, reader and line-ending diagnostic failures are separately classified and preserved; no mathematical route is retired.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "actual-FTL-minimizer-induction-square-decomposition-best-regret-squeeze-ordinary-limit"
+      ],
+      "expected_information_gain": "One original proof route with distinct source/blind/body/scope reviewers.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main e3df4659fb20d9fab12cd139e98ae5e57438f9a5"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Minimizer induction for nonnegative actual gap; empirical-mean square decomposition; squeeze using existing upper bound; ordinary-limit subtraction equivalence; explicit mean-convergence consequence.",
+      "selection_reason": "No parallel competing proof-search directions; source topology alternatives are not asserted implementations."
+    },
+    "reader_backpressure": {
+      "purification_status": "purified",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Bounded local Exposition and purification for five derived actual-FTL algebraic and ordinary-limit contracts: review-binding.json /localExpositionSeal. No chapter/book completion, repository-wide optimization, main acceptance or live release is claimed.",
+      "source_expansion_nodes": [
+        "Printed signed regret, ordinary-limit display and Theorem1.3 squared-loss FTL upper bound",
+        "Five derived actual FTL algebraic and ordinary-limit contracts with explicit boundedness and convergence assumptions"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+        "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+        "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

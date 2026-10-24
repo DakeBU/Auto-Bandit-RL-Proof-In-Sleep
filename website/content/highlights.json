@@ -6918,6 +6918,95 @@
       "teaching_order": 134,
       "title": "One realized process and every-horizon IID excess",
       "why": "Connect a specified randomized decision law to its causal process and exact probabilistic endpoint."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean_minimizes"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "lean_notes": "For every real stream y and natural horizon T, including zero, compare the actual cumulative loss of p_0=1/2 and p_t=the mean of observations strictly before t with the squared loss at the horizon empirical mean. No boundedness, convergence or nonnegative-regret premise is assumed. The proof uses empiricalMean_minimizes and induction on the horizon. For an unrestricted stream, the algebraic predictor need not lie in [0,1]. This result concerns this particular FTL process, not arbitrary predictors.",
+      "math": "\\Phi_T=\\sum_{t<T}(\\bar y_T-y_t)^2\\le\\sum_{t<T}(p_t-y_t)^2,\\quad R_T(\\bar y_T)\\ge0.",
+      "plain": "For the actual squared-loss FTL predictor, cumulative loss is at least the squared loss of the horizon empirical mean, for every real observation stream and every horizon.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 2 / PDF page 14 defines signed regret and displays an ordinary-limit criterion; printed page 4 / PDF page 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF page 18 discusses sublinear best regret. These five results are derived library consequences and semantic reconciliation, not five printed theorems. Printed round t+1 corresponds to Lean time t. The existing upper-epsilon NoRegret predicate remains distinct from the literal LimitNoRegret predicate.",
+      "proof_idea": "Write Phi_T for the squared loss at the horizon empirical mean. The old leader minimizes the length-T prefix. Thus Phi_(T+1) is at most Phi_T plus the actual next loss. Induction from the empty prefix gives Phi_T at most the actual cumulative FTL loss.",
+      "teaching_order": 140,
+      "title": "A lower bound for the actual FTL loss gap",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean_decomposition"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "lean_notes": "For any real stream y, fixed real comparator u and natural horizon T, signed fixed regret equals regret against the horizon empirical mean minus T times the squared distance from u to that mean. The proof uses empiricalMean_decomposition at positive horizons and empty sums at zero. No interval feasibility or limit premise is required, and the minus sign is essential.",
+      "math": "R_T(u)=R_T(\\bar y_T)-T(u-\\bar y_T)^2\\quad(T\\ge0).",
+      "plain": "Signed regret against any fixed real comparator is the empirical-mean regret minus the horizon times a squared distance.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 2 / PDF page 14 defines signed regret and displays an ordinary-limit criterion; printed page 4 / PDF page 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF page 18 discusses sublinear best regret. These five results are derived library consequences and semantic reconciliation, not five printed theorems. Printed round t+1 corresponds to Lean time t. The existing upper-epsilon NoRegret predicate remains distinct from the literal LimitNoRegret predicate.",
+      "proof_idea": "For positive T, expand squared comparator loss around the empirical mean using the existing exact decomposition. Subtract this from the same cumulative prediction loss. At T=0, all sums vanish. This retains the exact negative squared-distance term.",
+      "teaching_order": 141,
+      "title": "Exact signed fixed-comparator decomposition",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_bestLoss_nonneg",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_bound"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "lean_notes": "Assume every observation of one infinite stream belongs to [0,1]. Its horizon empirical mean realizes the interval minimum when T is positive. The first endpoint proves a nonnegative actual FTL gap, while meanPredict_bestRegret_bound supplies the bound 4+4 log T. Divide at positive horizons and use squeeze_zero with the logarithm-over-horizon limit. The conclusion is the ordinary real limit zero for interval-best regret divided by T. At T=0 Lean uses total division; no cancellation at zero is used.",
+      "math": "0\\le R_T^{\\mathrm{best}}\\le4+4\\log T\\quad(T\\ge1),\\qquad R_T^{\\mathrm{best}}/T\\longrightarrow0.",
+      "plain": "When every observation lies in [0,1], the actual best-comparator regret divided by the horizon converges to zero.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 2 / PDF page 14 defines signed regret and displays an ordinary-limit criterion; printed page 4 / PDF page 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF page 18 discusses sublinear best regret. These five results are derived library consequences and semantic reconciliation, not five printed theorems. Printed round t+1 corresponds to Lean time t. The existing upper-epsilon NoRegret predicate remains distinct from the literal LimitNoRegret predicate.",
+      "proof_idea": "Use the empirical mean to identify the interval-best comparator. The nonnegative gap and the existing bound 4+4 log T squeeze normalized best regret between zero and a quantity tending to zero.",
+      "teaching_order": 142,
+      "title": "The actual best-comparator average tends to zero",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_comparator_decomposition",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "lean_notes": "For the same all-time unit-valued stream and arbitrary fixed real u and a, normalized signed comparator regret tends to a if and only if squared distance from u to the horizon empirical mean tends to -a. Divide the exact decomposition only eventually, at positive horizons, and subtract the zero limit of normalized best regret in both directions. No empirical-mean convergence or unconditional existence of a fixed-comparator limit is asserted.",
+      "math": "\\frac{R_T(u)}{T}\\longrightarrow a\\quad\\Longleftrightarrow\\quad(u-\\bar y_T)^2\\longrightarrow-a.",
+      "plain": "For unit observations, a fixed-comparator regret limit exists with value a exactly when the squared distance from that comparator to the empirical mean converges to -a.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 2 / PDF page 14 defines signed regret and displays an ordinary-limit criterion; printed page 4 / PDF page 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF page 18 discusses sublinear best regret. These five results are derived library consequences and semantic reconciliation, not five printed theorems. Printed round t+1 corresponds to Lean time t. The existing upper-epsilon NoRegret predicate remains distinct from the literal LimitNoRegret predicate.",
+      "proof_idea": "At positive horizons, normalized fixed regret equals normalized best regret minus squared distance from the comparator to the empirical mean. The first term tends to zero. Subtract limits in each direction to prove the equivalence.",
+      "teaching_order": 143,
+      "title": "The fixed-comparator ordinary-limit criterion",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges",
+      "intuition": "The horizon mean separates signed fixed regret from the actual best-comparator gap.",
+      "lean_notes": "In addition to all-time unit observations, explicitly assume empiricalMean y tends to a real m. For every real comparator u, continuity of subtraction and squaring and the previous equivalence give normalized regret limit -(u-m)^2. This limit can be strictly negative. Restricting to u in [0,1] gives the literal comparatorwise finite, nonpositive ordinary-limit predicate. The limit m is not supplied to the predictor. The full alternating-binary canary separately proves its own empirical-mean limit 1/2 and obtains limits -1/4 at u=0 and zero at u=1/2; it does not supply the pending oscillating-mean obstruction.",
+      "math": "\\bar y_T\\longrightarrow m\\quad\\Longrightarrow\\quad\\forall u\\in\\mathbb R:\\ \\frac{R_T(u)}{T}\\longrightarrow-(u-m)^2\\le0.",
+      "plain": "If the empirical mean of a unit-valued stream converges to m, every fixed-comparator normalized regret converges to the explicit nonpositive value -(u-m)^2.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 2 / PDF page 14 defines signed regret and displays an ordinary-limit criterion; printed page 4 / PDF page 16 gives Theorem 1.3 for squared-loss FTL; printed page 6 / PDF page 18 discusses sublinear best regret. These five results are derived library consequences and semantic reconciliation, not five printed theorems. Printed round t+1 corresponds to Lean time t. The existing upper-epsilon NoRegret predicate remains distinct from the literal LimitNoRegret predicate.",
+      "proof_idea": "Use the assumed empirical-mean convergence and continuity of the square to obtain the squared-distance limit. Apply the equivalence to get -(u-m)^2 for each real comparator. Nonpositivity then supplies the literal unit-comparator LimitNoRegret witness.",
+      "teaching_order": 144,
+      "title": "Literal no-regret under empirical-mean convergence",
+      "why": "Identify precisely which ordinary-limit conclusion follows for the same causal FTL strategy."
     }
   ]
 }
