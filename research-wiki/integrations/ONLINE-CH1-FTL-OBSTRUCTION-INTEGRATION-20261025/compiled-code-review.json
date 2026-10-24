@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "review_role": "independent_source_and_existing_body_reviewer",
+  "stage": "compiled_code_level_acceptance",
+  "verdict": "accepted",
+  "verdict_scope": "Accept the exact original Batch31 production module and complete canary module at code/body level on the pinned accepted-main base, using prior independent semantic/body review plus the verified fresh focused build, combined library/Tests builds, public-value and literal-definition witnesses, and compiled dependency/axiom export. No production proof repair or statement change was made. This does not accept source repair, full harness, reader/publication, merge, chapter completion, or live deployment.",
+  "semantic_source_verdict_retained": "accepted-with-explicit-delta",
+  "source_repair_approved": false,
+  "merge_accepted": false,
+  "goal_or_chapter_closed": false,
+  "checkouts": {
+    "source": "integration-worktree",
+    "branch": "codex/online-ftl-obstruction-integration-20261025",
+    "validation": "validation-worktree",
+    "base_commit_both_verified": "1ced10e7f3094e883f29e225d01759be1e041eb4",
+    "original_head": "a03f304522ed30ee34d43b38bd67deffbbf3b08f",
+    "observed_state": "Both checkouts have exactly the five named code integration files staged, with no unstaged difference at inspection. These staged changes are not a new committed/merged main revision. Worktrees remain present."
+  },
+  "input_receipts": {
+    "focused": {
+      "path": "maintenance-evidence/batch31-focused-build-v1/receipt.json",
+      "sha256": "b98a478104b9fd40dfb47b8fc184d99e392ecde584c93479351b7f3668e4205e"
+    },
+    "imported_audit": {
+      "path": "maintenance-evidence/batch31-imported-audit-v3/receipt.json",
+      "sha256": "70707d7330ac9aed76d769199eeab7b80cd8233fbb1149b0dc8c88a340bdbde7"
+    },
+    "combined": {
+      "path": "maintenance-evidence/batch31-combined-lean-v1/receipt.json",
+      "sha256": "6c0a25f1fc0ff088e03121a0c41190310c8ed0ef818578b8df2a0a3419968ab7"
+    },
+    "prior_source_review": {
+      "path": "maintenance-evidence/batch31-source-review-v2/review.json",
+      "sha256": "f2d2ced0a728df802c64745779103e18c278c77bb9f5bb97f90ec3461932e7cf"
+    },
+    "prior_body_review": {
+      "path": "maintenance-evidence/batch31-body-review-v1/review.json",
+      "sha256": "eba728eee2348e597f1377acbf69d02f07725c1cede57f2f6215cfaa4e84aa0c"
+    }
+  },
+  "five_file_identity_audit": {
+    "working_sha256_in_both_checkouts": {
+      "BanditRLProof/OnlineFTLOscillation.lean": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+      "Tests/OnlineFTLOscillationCanary.lean": "36f4c45645620545830268023f04757ea8dfdd9a8b9a2fe45409ee2202146f67",
+      "BanditRLProof.lean": "65ad39b4b0a7addf65df7216c1cbdcea45b082c6d3107cc49e7c59766b45e8b2",
+      "Tests.lean": "a89e8c3a095c0bfe4576a0b80661a442c96ae84ffaca2a865fbda3a492056b5c",
+      ".gitattributes": "e6c52cc8da83183265821c62290e6eda2d10ac09060a732115b5bc7dab58808d"
+    },
+    "all_three_receipt_bindings_equal": true,
+    "all_working_hashes_recomputed_equal_receipts": true,
+    "staged_index_comparison": "All five index contents equal working contents after LF normalization. Four raw index hashes also equal working hashes. BanditRLProof.lean has staged SHA256 ff03e8e0ae23e8881c9387f4428d490dafc4c077e872c17beb26747af2b374d4 because Git normalizes CRLF; its LF-normalized bytes are identical in both checkouts.",
+    "original_production_and_canary_bytes_preserved": true,
+    "private_proof_bodies_preserved": true,
+    "public_header_and_definition_seals": "Exact four theorem headers and seven definition seals independently checked in prior body review; unchanged full module bytes carry those results forward. Four compiled whole-value witnesses and seven literal-definition equality theorems further verify the imported interfaces.",
+    "full_diff_review": "Exactly two new original files, one import appended to each public root, and .gitattributes LF rules for the two new modules. Five files, 305 insertions. No deleted code, rewritten shared definitions, extra assumption bundle, or public-header modification.",
+    "git_diff_cached_check": "passed"
+  },
+  "build_evidence": [
+    {
+      "scope": "focused production and canary",
+      "command": "lake build BanditRLProof.OnlineFTLOscillation Tests.OnlineFTLOscillationCanary",
+      "exit_code": 0,
+      "jobs": 3334,
+      "log": "batch31-focused-build-v1/build.log",
+      "sha256": "b3d8723ec0854a6390bb20051474ef4a14614d8cb1328aefc1c57db56eaccfb9",
+      "observed": "Log records Built for both new modules and successful completion. Existing FTL unused-variable warning is nonfatal."
+    },
+    {
+      "scope": "combined library root",
+      "command": "lake build BanditRLProof",
+      "exit_code": 0,
+      "jobs": 9104,
+      "log": "batch31-combined-lean-v1/BanditRLProof.log",
+      "sha256": "71ded36fc9441dac093a7edfe8c41e4f383914bd6f877e84cebd73d072fb55c1",
+      "observed": "Log records Built new module and public root, followed by successful completion. Replayed existing warnings do not constitute errors."
+    },
+    {
+      "scope": "combined Tests root",
+      "command": "lake build Tests",
+      "exit_code": 0,
+      "jobs": 9268,
+      "log": "batch31-combined-lean-v1/Tests.log",
+      "sha256": "591cd0ff25191fb396df63002097ab6e304110ae26456d05a1dbdd6e59ff6ab5",
+      "observed": "Log records Tests completion with 9268 jobs; complete log hash independently checked against receipt."
+    }
+  ],
+  "audit_attempt_history": {
+    "v1": "OriginalPublicValues.lean succeeded with exit0 and 28 named axiom outputs. The independently generated recursive dyadic definition was not definitionally equal by rfl; LiteralDefinitions.lean failed exit1. The failed literal log includes sorryAx for that failed probe theorem and is retained as failed evidence, never accepted production evidence. Graph was not successfully executed in v1.",
+    "v2": "Reused the unchanged successful public probe/output from v1. Replaced only the recursive literal equality proof with function extensionality and strong induction, using the same decreasing parent index; all seven literal identities then succeeded with exit0 and no sorryAx. Graph probe failed exit1 because matches was a reserved token.",
+    "v3": "Reused the exact v1 public probe/output via v2, and exact successful v2 literal probe/output. Only the graph probe was newly executed: matches was renamed to candidates, with no other source-text change from v2, and it exited0 producing actual-dependencies.json. v3 is an assembled verified evidence set, not a rerun of all three commands.",
+    "reuse_bytes_verified": true,
+    "failed_attempts_retained": true,
+    "production_changed_to_fix_audit": false,
+    "failure_classification": "Audit-probe implementation failures, not negative mathematics or production theorem failures.",
+    "ignored_historical_claims": "original-compiled-audit.json supplies the 19 prespecified VALUE pairs only. Its historical counts, body-repair statements and native-reader checks are not current acceptance evidence. Current counts are independently recomputed from the new graph/logs."
+  },
+  "imported_value_and_literal_evidence": {
+    "whole_public_value_witnesses": 4,
+    "named_axiom_outputs_public_log": 28,
+    "named_axiom_outputs_literal_log": 7,
+    "total_named_axiom_outputs": 35,
+    "public_probe_sha256": "4fa8933c0de75fc102a0764467a2e750cb4561ed6c5630c5cf803da8a0e9ff79",
+    "public_output_sha256": "542ae2392950a1748ea3758917a5b0c948585ef5526b36b04741f8dcc4bd6d09",
+    "literal_probe_sha256": "e18c1e5a0e607fca2a064dcb9ffafe480bed97b32f462e7d18fa91d3058a588c",
+    "literal_output_sha256": "6e467002341019b98432f3e5228836abe25cbd066afbad3bf87a31e064dbe120",
+    "literal_identity_note": "Six nonrecursive identities are rfl; the recursive identity is proved extensionally by strong induction. Semantic function equality is certified without claiming the separately generated well-founded recursive functions are definitionally identical.",
+    "axioms_allowed_and_observed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "sorryAx_in_accepted_outputs": false,
+    "unexpected_axiom_in_accepted_outputs": false
+  },
+  "compiled_graph_audit": {
+    "path": "maintenance-evidence/batch31-imported-audit-v3/actual-dependencies.json",
+    "sha256": "aeac2ae47dc06a7ef7c0fe080b6d433c20a5a16969bf747701b03e450839f48b",
+    "probe_sha256": "afdfc83235ed63ca958db2541241e0f1feccac3939d56658c8d92f1ddfc40ede",
+    "lean_version": "4.29.1",
+    "selected_nodes_verified": 36,
+    "direct_coalesced_edges_verified": 3611,
+    "transitive_axiom_closures_checked": 36,
+    "all_selected_values_present": true,
+    "prespecified_VALUE_pairs_verified": 19,
+    "missing_VALUE_pairs": [],
+    "private_helpers_reachable_from_public_theorem_values": 8,
+    "scope": "All 13 production declarations, all 11 canaries, six shared definitions other than the new dyadic definition, and six shared proof parents. Every selected node has an actual imported value and transitive axiom closure restricted to the three standard foundational axioms.",
+    "private_resolution": "Each of the eight private user names resolves uniquely in the imported environment through privateToUserName?. Their actual compiled names and value dependencies are exported, and all eight are reachable through VALUE dependencies from public theorem roots.",
+    "graph_semantics": "Edges run from a consumer declaration to a directly mentioned constant, opposite the ingredient-to-consumer display orientation used by the source proof graph. Dependencies are set membership, not occurrence counts. If a constant occurs in both type and value, the exporter keeps one kind=type edge with also_in_value=true; otherwise value-only constants use kind=value. The 19 checks used each node's actual value_dependency_user_names, so TYPE-only mention cannot pass as VALUE use.",
+    "not_claimed": "This is not the complete transitive dependency graph, the complete source proof graph, a chapter coverage count, or evidence that every constant is a substantive mathematical ingredient. Transitive axioms are collected separately per selected node. The extraction utility's unsafe IO main introspects the environment and is not an added theorem axiom or unsafe production proof."
+  },
+  "declaration_disposition": {
+    "scope": "Every disposition in batch31-body-review-v1 is carried forward at unchanged exact source bytes and now supported by successful compilation plus compiled value/axiom evidence.",
+    "public_definition": {
+      "dyadicObservation": "accepted_at_code_level; original witness construction, not printed source definition"
+    },
+    "public_theorems": {
+      "meanPredict_limitNoRegret_iff_mean_converges": "accepted_at_code_level; both directions preserve finite ordinary-limit semantics",
+      "dyadicObservation_unit": "accepted_at_code_level; range derived internally",
+      "dyadic_empiricalMean_subsequences": "accepted_at_code_level; exact horizons and both limits preserved",
+      "dyadic_meanPredict_obstruction": "accepted_at_code_level; all four conjuncts concern the same actual mean predictor"
+    },
+    "private_helpers": {
+      "dyadicObservation_binary": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_pair": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_prefix_pair": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_high_count": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_low_count": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_high_mean": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_low_mean": "accepted; compiled and VALUE-reachable internal provider",
+      "dyadic_horizons_tendsto": "accepted; compiled and VALUE-reachable internal provider"
+    },
+    "canaries": {
+      "dyadic_unit_and_prefix": "accepted",
+      "actual_causal_predictions": "accepted",
+      "actual_signed_regrets": "accepted",
+      "all_comparator_iff_instantiated": "accepted",
+      "no_feasible_mean_limit": "accepted",
+      "two_actual_mean_subsequences": "accepted",
+      "obstruction_instantiated": "accepted",
+      "upper_noRegret_on_actual_stream": "accepted",
+      "actual_best_average_zero": "accepted",
+      "fixed_zero_has_no_ordinary_limit": "accepted",
+      "literal_limit_noRegret_fails": "accepted"
+    },
+    "semantic_boundaries": "All four public results remain derived unprinted claims. Eventual-upper NoRegret is distinct from ordinary finite LimitNoRegret. Feasible-best normalized regret converges to zero while fixed-zero comparator regret has no ordinary limit. Source gaps and implementation bridges retain the crosswalk in the prior body review; the stage1 source graph stays fixed and historical source repair remains unapproved."
+  },
+  "remaining_gates": [
+    "Reader/exposition acceptance and exact original-scope preservation of noncode artifacts are separate from this code review.",
+    "Full harness gate, contributor contract and any required global consistency checks have not been accepted by this review.",
+    "Source/Lean graph publication, boundary ledgers, progress views and purification status must preserve the reviewed semantic distinctions and evidence scope.",
+    "Site build/check and any use of lean-verified status require correct linkage to this verified unchanged-input Lean evidence and applicable publication policy.",
+    "CI status, PR-visible final diff, merge into intended main, canonical checkout synchronization and deployed/live verification remain separate later gates. Neither staged checkout is proof of any of those states."
+  ],
+  "review_actions": "Read-only inspection and verification of receipts, complete small logs/probes, combined-log terminal evidence, file and log hashes, staged diffs, and parsed graph. No product edits, remote actions or extra approval/reviewer chain.",
+  "public_projection": {
+    "original": {
+      "artifact": "batch31-code-acceptance-v1/review.json",
+      "sha256": "388075bb89ae9991860fab8fa7db25b3f4048bf9c6a752f304dcf6c6b8bd0e81",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Physical path prefixes replaced by distinct logical locations with collision checks. Mathematical contents, historical values, verdicts and statuses unchanged. Original digests bind private originals, not projected bytes.",
+    "currentStatus": "review-binding.json records later scoped evidence; historical pending fields retain their original meaning."
+  }
+}

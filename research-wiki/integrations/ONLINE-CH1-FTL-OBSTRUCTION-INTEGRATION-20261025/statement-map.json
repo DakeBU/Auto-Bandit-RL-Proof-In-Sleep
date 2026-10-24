@@ -1,0 +1,124 @@
+{
+  "sourcePR": 202,
+  "sourceBase": "224927197e78e1330c4c93e84f9c69388d3027a7",
+  "sourceHead": "a03f304522ed30ee34d43b38bd67deffbbf3b08f",
+  "integrationBase": "1ced10e7f3094e883f29e225d01759be1e041eb4",
+  "sealedTargets": [
+    {
+      "id": "D1",
+      "name": "meanPredict_limitNoRegret_iff_mean_converges",
+      "header": "theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔\n      ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)",
+      "sha256": "8d6d763677b8ef19752d7bb2756af8bda141369a50b17dd0f4849597fa242569",
+      "repositoryNormalizedStatementHash": "f5f7c19e4558ed9c406cc50676605a5ae1559a67869ee9642a7b2f84c4532e88"
+    },
+    {
+      "id": "D2",
+      "name": "dyadicObservation_unit",
+      "header": "theorem dyadicObservation_unit :\n    ∀ t, dyadicObservation t ∈ Set.Icc (0 : ℝ) 1",
+      "sha256": "706589b7d4e43173a8f8b2ac6055adc70b5ad33cbe8c420ca5a6adec711b2720",
+      "repositoryNormalizedStatementHash": "6df5ff8b09810d455703e9dbf326b43da78a3aea36c243ce8aabaad68cf12c64"
+    },
+    {
+      "id": "D3",
+      "name": "dyadic_empiricalMean_subsequences",
+      "header": "theorem dyadic_empiricalMean_subsequences :\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))\n      atTop (nhds ((2 : ℝ) / 3)) ∧\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))\n      atTop (nhds ((1 : ℝ) / 3))",
+      "sha256": "f906aef8dd5d95b45828e660817de3470b4db5ca222c8135b2e53262235d1fd6",
+      "repositoryNormalizedStatementHash": "397d0f921ca26f72d3d93f21dde7ae294939bf6b625c39ea29e3756744e4c3de"
+    },
+    {
+      "id": "D4",
+      "name": "dyadic_meanPredict_obstruction",
+      "header": "theorem dyadic_meanPredict_obstruction :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation) ∧\n    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧\n    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation)",
+      "sha256": "9313ad8b661729e133ca5d68db7a514ceb42545b440eeed98045a4c4a956f05c",
+      "repositoryNormalizedStatementHash": "ff24eefc87da8732c13c81c288f44b5cf03c14836121d98c177ac3dc464df288"
+    }
+  ],
+  "literalDefinitions": [
+    {
+      "name": "comparatorRegret",
+      "text": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "sha256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0",
+      "owningFile": "BanditRLProof/OnlineLearningRegret.lean",
+      "new": false
+    },
+    {
+      "name": "NoRegret",
+      "text": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,\n    comparatorRegret loss prediction u T / T ≤ ε",
+      "sha256": "74cc9b68372abfdf1426cf24a9f65d5fa045243e1917fb902c97f42d2cadaf18",
+      "owningFile": "BanditRLProof/OnlineLearningRegret.lean",
+      "new": false
+    },
+    {
+      "name": "empiricalMean",
+      "text": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa",
+      "owningFile": "BanditRLProof/OnlineLearningMean.lean",
+      "new": false
+    },
+    {
+      "name": "meanPredict",
+      "text": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4",
+      "owningFile": "BanditRLProof/OnlineLearningFTL.lean",
+      "new": false
+    },
+    {
+      "name": "squaredBestRegret",
+      "text": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "sha256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631",
+      "owningFile": "BanditRLProof/OnlineSquareMinimum.lean",
+      "new": false
+    },
+    {
+      "name": "LimitNoRegret",
+      "text": "def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧\n    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)",
+      "sha256": "ffd6329f61b345de7ebc373f497184297edb32db5d66bf2f4c0dd485b27f10a0",
+      "owningFile": "BanditRLProof/OnlineNoRegretSemantics.lean",
+      "new": false
+    },
+    {
+      "name": "dyadicObservation",
+      "text": "noncomputable def dyadicObservation : ℕ → ℝ\n  | 0 => 0\n  | n + 1 => 1 - dyadicObservation (n / 2)\ntermination_by n => n\ndecreasing_by omega",
+      "sha256": "2b6fb7ba7424eb4285519d143c80fbc03a2b410841bca489a76019511e02f938",
+      "owningFile": "BanditRLProof/OnlineFTLOscillation.lean",
+      "new": true
+    }
+  ],
+  "neutralPacket": {
+    "artifact": "batch31-blind-packet-v1/statements.txt",
+    "sha256": "5d8f472e3241fb282f1165293986ad36441be320e5bc6546590391437bf431ce",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "originalProductionAndCanary": {
+    "BanditRLProof/OnlineFTLOscillation.lean": {
+      "file": "BanditRLProof__OnlineFTLOscillation.lean",
+      "bytes": 8888,
+      "sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+      "gitBlob": "eae8b45a57cec3ad96204dbe1bbb682e8182705e"
+    },
+    "Tests/OnlineFTLOscillationCanary.lean": {
+      "file": "Tests__OnlineFTLOscillationCanary.lean",
+      "bytes": 4050,
+      "sha256": "36f4c45645620545830268023f04757ea8dfdd9a8b9a2fe45409ee2202146f67",
+      "gitBlob": "44918c3f276d1e149c3e29eacee5a30983896c49"
+    }
+  },
+  "candidateBindings": {
+    "BanditRLProof/OnlineFTLOscillation.lean": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6",
+    "Tests/OnlineFTLOscillationCanary.lean": "36f4c45645620545830268023f04757ea8dfdd9a8b9a2fe45409ee2202146f67",
+    "BanditRLProof.lean": "65ad39b4b0a7addf65df7216c1cbdcea45b082c6d3107cc49e7c59766b45e8b2",
+    "Tests.lean": "a89e8c3a095c0bfe4576a0b80661a442c96ae84ffaca2a865fbda3a492056b5c",
+    ".gitattributes": "e6c52cc8da83183265821c62290e6eda2d10ac09060a732115b5bc7dab58808d",
+    "website/content/chapters.json": "abb93a9ac070e33cbffe950a59ed5f66ebfd686570e67920f6988b5fa8375634",
+    "website/content/highlights.json": "2cb776a856ef8c52f01da771626ab6d1e3c1a2131b16498c21a302f74eaf5dc4",
+    "website/content/readings.json": "bd04e338969b75913488d9b33d341cd442a0ea50579e91ac2805ef58afe3041c",
+    "website/static/site.css": "0d59f11726ec40a307c1510b81622ecf86a78217a721db4ebce9944674c83df6"
+  },
+  "actualImportedAudit": {
+    "artifact": "batch31-imported-audit-v3/receipt.json",
+    "sha256": "70707d7330ac9aed76d769199eeab7b80cd8233fbb1149b0dc8c88a340bdbde7",
+    "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+  },
+  "actualChecks": "Four full public type witnesses,seven literal-definition equalities,35 named standard-only axiom outputs,36 graph axiom closures and19 required VALUE pairs passed. Two nonproduction audit failures were retained; successful unchanged public/literal outputs were reused in v3, while the graph export was freshly run. Production statements and all proof bodies remain byte-exact.",
+  "consumerBoundary": "D1 uses comparator endpoints0 and1 and the existing fixed-regret limit criterion. D4 uses unit range, two cofinal subsequences and the accepted best-regret/upper guarantee. D4 does not depend on D1. Eleven complete canary theorems include numerical evaluations and theorem projections; projections earn no independent theorem-proof credit."
+}

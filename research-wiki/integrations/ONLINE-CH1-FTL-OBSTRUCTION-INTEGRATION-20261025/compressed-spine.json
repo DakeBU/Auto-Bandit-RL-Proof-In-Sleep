@@ -1,0 +1,96 @@
+{
+  "status": "purified-within-bounded-contribution",
+  "scope": "Four derived public theorem endpoints,one literal definition,eight private implementation helpers. No chapter completion or new printed theorem attribution.",
+  "moves": [
+    {
+      "id": "endpoint-converse",
+      "meaning": "Limits of M_T^2 and (1-M_T)^2 reconstruct M_T; eventual unit support places its limit in [0,1]. Reverse direction reuses the existing mean-convergence producer.",
+      "public": [
+        "meanPredict_limitNoRegret_iff_mean_converges"
+      ],
+      "private": [],
+      "reuses": [
+        "meanPredict_fixedRegret_limit_iff",
+        "empiricalMean_mem",
+        "meanPredict_limitNoRegret_of_mean_converges"
+      ]
+    },
+    {
+      "id": "dyadic-feasibility",
+      "meaning": "A strictly smaller half-index supports strong induction; one-minus swaps zero and one, proving unit support.",
+      "public": [
+        "dyadicObservation",
+        "dyadicObservation_unit"
+      ],
+      "private": [
+        "dyadicObservation_binary"
+      ],
+      "reuses": []
+    },
+    {
+      "id": "paired-prefix-counts",
+      "meaning": "Equal paired children give S(2n+1)=2n-2S(n); induction yields exact high and low counts and means.",
+      "public": [],
+      "private": [
+        "dyadic_pair",
+        "dyadic_prefix_pair",
+        "dyadic_high_count",
+        "dyadic_low_count",
+        "dyadic_high_mean",
+        "dyadic_low_mean"
+      ],
+      "reuses": []
+    },
+    {
+      "id": "cofinal-two-limits",
+      "meaning": "Positive horizon sequences4^(n+1)-1 and2*4^n-1 both diverge. The high means equal2/3 and the low correction tends to zero, giving1/3.",
+      "public": [
+        "dyadic_empiricalMean_subsequences"
+      ],
+      "private": [
+        "dyadic_horizons_tendsto"
+      ],
+      "reuses": [
+        "empiricalMean"
+      ]
+    },
+    {
+      "id": "same-predictor-obstruction",
+      "meaning": "Retain actual FTL upper no-regret and best-regret/T→0. Any finite fixed-zero limit would force the squared empirical means to have both limits4/9 and1/9. Zero is feasible, so ordinary-limit no-regret fails.",
+      "public": [
+        "dyadic_meanPredict_obstruction"
+      ],
+      "private": [],
+      "reuses": [
+        "dyadicObservation_unit",
+        "dyadic_empiricalMean_subsequences",
+        "meanPredict_noRegret",
+        "meanPredict_bestRegret_average_tendsto_zero",
+        "meanPredict_fixedRegret_limit_iff"
+      ]
+    }
+  ],
+  "drillDown": {
+    "source": "source-proof-graph.json",
+    "sourceCoverage": "source-coverage.json",
+    "lean": "compiled-dependencies.json",
+    "literalStatements": "statement-map.json",
+    "proofBodies": "body-review.json",
+    "compilerAudit": "compiled-code-review.json"
+  },
+  "purificationEvidence": "Independent compiled code review verifies all eight helpers reachable, no production statement/body changes, and the compressed route agrees with actual dependencies. Independent public scientific review and local rendered Exposition accepted the bounded spine. Source graph gaps remain explicit; no global optimality or chapter closure is asserted.",
+  "functorStatus": "none-found-with-reason",
+  "functorReason": "Same scalar squared-loss FTL setting; no new cross-setting transport, certified functor or conceptual-to-formal promotion.",
+  "reviewEvidence": [
+    {
+      "artifact": "batch31-public-scientific-review-v2/review.json",
+      "sha256": "f874d66b7732fb367452ed9a27c9f53308aae5e9ff85c8ab2304b039d6b6ae67",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    {
+      "artifact": "batch31-reader-pixel-review-v1/review.json",
+      "sha256": "6c04bc429f6fd40c695a3cb0bafaf3881a0d7ad1db77219733a25376f3532211",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    }
+  ]
+}

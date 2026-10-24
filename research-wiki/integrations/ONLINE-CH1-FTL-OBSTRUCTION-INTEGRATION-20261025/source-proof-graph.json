@@ -1,0 +1,646 @@
+{
+  "schema_version": 1,
+  "review_role": "independent_source_extractor",
+  "source": {
+    "path": "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "work": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10 (2026-06-21, version supplied by task; identity pinned by hash)",
+    "pdf_pages": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "printed_pages": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "inspection": "Reuses v1 extractor visual inspection of all five complete 120-dpi page images. No new page views performed for v2. Original pixels and hashes remain under batch31-source-extraction-v1/raw and in the predecessor extraction report. Exact bibliographic title correction is attributed to independent review C1; extractor did not newly inspect PDF page 1."
+  },
+  "sealed_candidate": {
+    "path": "maintenance-evidence/batch31-blind-packet-v1/statements.txt",
+    "sha256": "5d8f472e3241fb282f1165293986ad36441be320e5bc6546590391437bf431ce"
+  },
+  "scope_limits": {
+    "allowed_mathematical_inputs": [
+      "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+      "maintenance-evidence/batch31-blind-packet-v1/statements.txt"
+    ],
+    "inspected_pages_only": true,
+    "implementation_lean_inspected": false,
+    "proof_bodies_inspected": false,
+    "original_audits_inspected": false,
+    "repair_verdicts_inspected": false,
+    "other_agents_private_rationale_inspected": false,
+    "source_repair_approval": false,
+    "topology_approved": false,
+    "independent_review_required": true,
+    "not_claimed": [
+      "full book coverage",
+      "candidate proof correctness",
+      "Lean implementation dependency graph",
+      "source repair acceptance",
+      "PROOF_SEALED",
+      "merge readiness"
+    ],
+    "method": "Source-only page inventory and topology; supplied candidate public signatures used solely to bound relevance and binder audit. No new mathematical proof or Lean code authored."
+  },
+  "nodes": [
+    {
+      "id": "S14-expectation",
+      "kind": "source_motivation",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-expectation",
+      "content": "Expected cumulative squared loss minus minimum expected cumulative loss; continuation relies on Eq. (1.1) and setting on preceding uninspected page."
+    },
+    {
+      "id": "S14-pathwise",
+      "kind": "source_standing",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-pathwise",
+      "content": "Allow arbitrary y_t; for a deterministic algorithm no expectation remains."
+    },
+    {
+      "id": "S14-best-regret",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-best-regret",
+      "content": "Regret_T = sum_{t=1}^T (x_t-y_t)^2 - min_{x in [0,1]} sum_{t=1}^T (x-y_t)^2. Described as growing sublinearly with T."
+    },
+    {
+      "id": "S14-fixed-comparator",
+      "kind": "source_standing",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-fixed-comparator",
+      "content": "A fixed comparator is the main convention; comparator sequences are postponed to Chapter 14."
+    },
+    {
+      "id": "S14-game",
+      "kind": "source_standing",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-game",
+      "content": "V subset R^d; predictions x_t in V; losses ell_t: V -> R; arbitrary fixed comparator u in V."
+    },
+    {
+      "id": "S14-comparator",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-comparator",
+      "content": "Regret_T(u) = sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u)."
+    },
+    {
+      "id": "S14-no-regret",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-no-regret",
+      "content": "Algorithm does not know u or corresponding regret. No-regret described as at most sublinear and displayed as lim_{T->infinity} Regret_T(u)/T <= 0 for every fixed u in V. Display uses ordinary lim, not limsup."
+    },
+    {
+      "id": "S14-remark",
+      "kind": "source_notation",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-remark",
+      "content": "Regret dependence on ell_1,...,ell_T suppressed in notation."
+    },
+    {
+      "id": "S14-footnote",
+      "kind": "source_boundary",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S14-footnote",
+      "content": "Some games allow predictions in a set W strictly containing V; this is a qualified variant, not a universal standing relaxation."
+    },
+    {
+      "id": "S15-adversary",
+      "kind": "source_standing",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S15-adversary",
+      "content": "Adversary may choose y_t after seeing prediction x_t; no probabilistic generation assumption. Results apply pathwise to arbitrary legal sequences."
+    },
+    {
+      "id": "S15-minimizer",
+      "kind": "source_characterization",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S15-minimizer",
+      "content": "For positive T and y_t in [0,1], source identifies best constant squared-loss prediction as x_T^star=(1/T) sum_{t=1}^T y_t in argmin over [0,1]. Claimed immediate, without an explicit square-completion proof."
+    },
+    {
+      "id": "S15-tracking",
+      "kind": "source_proof_explanation",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S15-tracking",
+      "content": "Tracking stability is the stated reason the past empirical minimizer can work, not a prediction that future resembles past."
+    },
+    {
+      "id": "S15-FTL",
+      "kind": "source_algorithm",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S15-FTL",
+      "content": "x_t=x_{t-1}^star=(1/(t-1)) sum_{i=1}^{t-1} y_i for t>=2; first prediction may be any member of [0,1]. Called Follow-the-Leader."
+    },
+    {
+      "id": "S16-BTL",
+      "kind": "source_theorem",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-BTL",
+      "content": "V subset R^d; arbitrary ell_t:V->R; existence of x_t^star in argmin_{x in V} sum_{i=1}^t ell_i(x). Conclusion sum_{t=1}^T ell_t(x_t^star) <= sum_{t=1}^T ell_t(x_T^star)."
+    },
+    {
+      "id": "S16-base",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-base",
+      "content": "Base T=1: ell_1(x_1^star)<=ell_1(x_1^star)."
+    },
+    {
+      "id": "S16-IH",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-IH",
+      "content": "At T>=2 assume BTL at T-1; target BTL at T."
+    },
+    {
+      "id": "S16-cancel",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-cancel",
+      "content": "Cancel identical final summands to reduce target to sum_{t=1}^{T-1} ell_t(x_t^star)<=sum_{t=1}^{T-1} ell_t(x_T^star)."
+    },
+    {
+      "id": "S16-IH-use",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-IH-use",
+      "content": "sum_{t=1}^{T-1} ell_t(x_t^star)<=sum_{t=1}^{T-1} ell_t(x_{T-1}^star)."
+    },
+    {
+      "id": "S16-optimality",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-optimality",
+      "content": "Prefix minimizer x_{T-1}^star has no greater prefix loss than feasible x_T^star."
+    },
+    {
+      "id": "S16-chain",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-chain",
+      "content": "Transitivity gives Eq. (1.3), hence induction step and lemma."
+    },
+    {
+      "id": "S16-optimality-boundary",
+      "kind": "source_boundary",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-optimality-boundary",
+      "content": "Regret will be at most logarithmic; minimax optimality/logarithmic necessity is explicitly not proved."
+    },
+    {
+      "id": "S16-thm13",
+      "kind": "source_theorem",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-thm13",
+      "content": "For arbitrary y_1,...,y_T in [0,1], x_t=mean of past for t>=2 and x_1=x_0^star=0.5, Regret_T<=4+4 ln T. Horizon is positive in source's 1,...,T convention; no T=0 logarithmic claim."
+    },
+    {
+      "id": "S17-figure",
+      "kind": "source_figure",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-figure",
+      "content": "Gray unit-width rectangles for reciprocal sum, curves 1/x and 1/(x-1), support harmonic-sum integral comparison."
+    },
+    {
+      "id": "S17-BTL-use",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-BTL-use",
+      "content": "Replace hindsight minimum by loss at x_T^star and predictions by x_{t-1}^star, then BTL gives Regret_T<=sum_t[(x_{t-1}^star-y_t)^2-(x_t^star-y_t)^2]."
+    },
+    {
+      "id": "S17-first",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-first",
+      "content": "(x_0^star-y_1)^2-(x_1^star-y_1)^2<=0.5^2."
+    },
+    {
+      "id": "S17-factor",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-factor",
+      "content": "Difference of squares expands/factors as (x_{t-1}^star+x_t^star-2y_t)(x_{t-1}^star-x_t^star), <=2|x_{t-1}^star-x_t^star| using [0,1] membership."
+    },
+    {
+      "id": "S17-mean-difference",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-mean-difference",
+      "content": "Substitute means and isolate the new y_t: 2 | (1/(t-1)-1/t) sum_{i<t} y_i - y_t/t |."
+    },
+    {
+      "id": "S17-stability",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-stability",
+      "content": "Triangle inequality and y_i in [0,1] give 2|mean_{t-1}-mean_t| <= 2/t+2|y_t|/t <=4/t."
+    },
+    {
+      "id": "S17-sum",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-sum",
+      "content": "Combine first-round and later bounds: Regret_T<=0.25+4 sum_{t=2}^T 1/t <=4 sum_{t=1}^T 1/t."
+    },
+    {
+      "id": "S17-integral-intro",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S17-integral-intro",
+      "content": "Connect reciprocal sum to Figure 1.1's gray area."
+    },
+    {
+      "id": "S18-harmonic",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S18-harmonic",
+      "content": "sum_{t=1}^T 1/t <=1+integral_2^{T+1} 1/(t-1) dt =1+ln T; stated with Figure 1.1 visual justification."
+    },
+    {
+      "id": "S18-close",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S18-close",
+      "content": "Combine harmonic bound with regret <=4 harmonic sum to finish Theorem 1.3."
+    },
+    {
+      "id": "S18-summary",
+      "kind": "source_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S18-summary",
+      "content": "Source proof summary: BTL substitutes cumulative minimizer sequence, while adjacent means approach one another at 1/t scale, yielding sublinear upper regret."
+    },
+    {
+      "id": "S18-operational",
+      "kind": "source_algorithm_comment",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S18-operational",
+      "content": "Algorithm has no tuning parameters, can retain running-average summary, and uses no gradients; single data stream. No extra theorem premise."
+    },
+    {
+      "id": "P-BTL",
+      "kind": "source_premises",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-BTL",
+      "content": "Lemma 1.2 premises only: V, ell, feasible cumulative minimizers at all prefixes."
+    },
+    {
+      "id": "P-thm13",
+      "kind": "source_premises",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-S16-thm13",
+      "content": "Theorem 1.3 premises only: T>=1 implicitly, arbitrary y_i in [0,1], mean-past algorithm, x_1=0.5."
+    },
+    {
+      "id": "G-prior-Eq1.1",
+      "kind": "SOURCE_GAP",
+      "origin": "UNINSPECTED_SOURCE_BOUNDARY",
+      "content": "The opening equivalence to Eq. (1.1) depends on preceding page; not reconstructed from memory. Not needed for pathwise theorem route.",
+      "use_site": "S14-expectation"
+    },
+    {
+      "id": "G-minimizer-bridge",
+      "kind": "SOURCE_GAP",
+      "origin": "UNEXPANDED_SOURCE_ASSERTION",
+      "content": "Source asserts the mean is squared-loss argmin, but omits square-completion/existence/uniqueness derivation. Positivity T>0 and interval membership are needed; no source uniqueness at T=0.",
+      "use_site": "S15-minimizer"
+    },
+    {
+      "id": "G-mean-range",
+      "kind": "SOURCE_GAP",
+      "origin": "IMPLICIT_SOURCE_BRIDGE",
+      "content": "Convex-average membership x_t^star in [0,1] is used in factor bound and feasibility. No separate proof is printed; derive from y_i in [0,1] and positive prefix length.",
+      "use_site": "S17-factor",
+      "required_inputs": [
+        "P-thm13"
+      ],
+      "local_scope": "For each integer prefix 1<=t<=T, prove (1/t) sum_{i=1}^t y_i in [0,1] from y_i in [0,1]. This is the literal arithmetic expression in S15-minimizer, not an invocation of its still-open optimality characterization.",
+      "consumers": [
+        "S15-minimizer",
+        "S17-BTL-use",
+        "S17-factor"
+      ]
+    },
+    {
+      "id": "G-asymptotic-upper",
+      "kind": "SOURCE_GAP",
+      "origin": "UNEXPANDED_SOURCE_ASYMPTOTIC_STEP",
+      "content": "Passage (4+4 ln T)/T -> 0 is asserted as sublinearity, not separately derived. This yields eventual upper bounds, not existence of an ordinary regret/T limit.",
+      "use_site": "S18-summary"
+    },
+    {
+      "id": "G-limit-existence",
+      "kind": "SOURCE_GAP",
+      "origin": "MISSING_SOURCE_BRIDGE",
+      "content": "No bridge in these pages proves existence of an ordinary limit for each comparator regret/T from the finite upper bound. Do not interpret the word sublinear as providing that missing existence.",
+      "use_site": "S14-no-regret",
+      "note": "This is an unsupported ordinary-limit inference, potentially false. It is not a universally provable missing lemma and no repair approval is asserted."
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "E-BTL-IH",
+      "logic": "AND",
+      "inputs": [
+        "S16-IH"
+      ],
+      "output": "S16-IH-use",
+      "consumer_use_site": "p16 proof by induction hypothesis",
+      "conditional_premises_discharged": "Inductive hypothesis supplies prefix inequality at T-1."
+    },
+    {
+      "id": "E-BTL-opt",
+      "logic": "AND",
+      "inputs": [
+        "P-BTL"
+      ],
+      "output": "S16-optimality",
+      "consumer_use_site": "p16 because paragraph",
+      "conditional_premises_discharged": "Uses stated prefix minimizer property and x_T^star in V; these are source premises, not derived regret inequalities."
+    },
+    {
+      "id": "E-BTL-chain",
+      "logic": "AND",
+      "inputs": [
+        "S16-IH-use",
+        "S16-optimality",
+        "S16-cancel"
+      ],
+      "output": "S16-chain",
+      "consumer_use_site": "p16 final proof sentence",
+      "conditional_premises_discharged": "Both inequalities are necessary; transitivity and last-summand cancellation."
+    },
+    {
+      "id": "E-BTL-close",
+      "logic": "AND",
+      "inputs": [
+        "S16-base",
+        "S16-chain"
+      ],
+      "output": "S16-BTL",
+      "consumer_use_site": "p16 entire induction",
+      "conditional_premises_discharged": "Induction discharges the locally assumed S16-IH at arbitrary T>=2, together with the base T=1. E-BTL-opt references premise fields P-BTL only, not the theorem conclusion."
+    },
+    {
+      "id": "E-minimizer",
+      "logic": "AND",
+      "inputs": [
+        "P-thm13",
+        "G-minimizer-bridge",
+        "G-mean-range"
+      ],
+      "output": "S15-minimizer",
+      "consumer_use_site": "p15 argmin display",
+      "conditional_premises_discharged": "For each prefix 1<=t<=T, the observation bounds come from the premise-only P-thm13 node. Feasible membership and the minimizer characterization are open obligations G-mean-range and G-minimizer-bridge, not already proved facts. S14-pathwise is contextual motivation, not a substitute for interval bounds."
+    },
+    {
+      "id": "E-BTL-instantiate",
+      "logic": "AND",
+      "inputs": [
+        "S16-BTL",
+        "S15-minimizer",
+        "S15-FTL",
+        "S14-best-regret",
+        "G-mean-range"
+      ],
+      "output": "S17-BTL-use",
+      "consumer_use_site": "p17 first display",
+      "conditional_premises_discharged": "Specialize V=[0,1], ell_t(x)=(x-y_t)^2; mean characterization supplies minimizer premise for all nonempty prefixes."
+    },
+    {
+      "id": "E-first",
+      "logic": "AND",
+      "inputs": [
+        "P-thm13",
+        "S15-minimizer"
+      ],
+      "output": "S17-first",
+      "consumer_use_site": "p17 t=1 display",
+      "conditional_premises_discharged": "Uses initial value 0.5, y_1 in [0,1], and x_1^star=y_1. Only statement premise fields of S16-thm13 are used."
+    },
+    {
+      "id": "E-factor",
+      "logic": "AND",
+      "inputs": [
+        "P-thm13",
+        "G-mean-range"
+      ],
+      "output": "S17-factor",
+      "consumer_use_site": "p17 third line of t>=2 calculation",
+      "conditional_premises_discharged": "t>=2, y_t and adjacent positive-prefix means in [0,1]."
+    },
+    {
+      "id": "E-means",
+      "logic": "AND",
+      "inputs": [
+        "S15-minimizer",
+        "S17-factor"
+      ],
+      "output": "S17-mean-difference",
+      "consumer_use_site": "p17 middle equality lines",
+      "conditional_premises_discharged": "t>=2 makes t and t-1 positive."
+    },
+    {
+      "id": "E-stability",
+      "logic": "AND",
+      "inputs": [
+        "S17-mean-difference",
+        "P-thm13"
+      ],
+      "output": "S17-stability",
+      "consumer_use_site": "p17 last calculation line",
+      "conditional_premises_discharged": "Uses triangle inequality and sum_{i<t} y_i <=t-1 plus |y_t|<=1, from statement assumptions."
+    },
+    {
+      "id": "E-sum",
+      "logic": "AND",
+      "inputs": [
+        "S17-BTL-use",
+        "S17-first",
+        "S17-stability"
+      ],
+      "output": "S17-sum",
+      "consumer_use_site": "p17 Hence overall display",
+      "conditional_premises_discharged": "Partition t=1 versus 2..T; T=1 later sum empty; T>=1 permits 0.25<=4."
+    },
+    {
+      "id": "E-integral",
+      "logic": "AND",
+      "inputs": [
+        "S17-figure",
+        "S17-integral-intro",
+        "P-thm13"
+      ],
+      "output": "S18-harmonic",
+      "consumer_use_site": "p18 first paragraph/display",
+      "conditional_premises_discharged": "Positive T; decreasing reciprocal curve majorizes shifted rectangles. Elementary integral evaluation is stated in source."
+    },
+    {
+      "id": "E-thm-close",
+      "logic": "AND",
+      "inputs": [
+        "S17-sum",
+        "S18-harmonic"
+      ],
+      "output": "S18-close",
+      "consumer_use_site": "p18 Putting everything together",
+      "conditional_premises_discharged": "Multiply harmonic bound by 4."
+    },
+    {
+      "id": "E-thm-root",
+      "logic": "AND",
+      "inputs": [
+        "S18-close"
+      ],
+      "output": "S16-thm13",
+      "consumer_use_site": "Theorem 1.3 conclusion",
+      "conditional_premises_discharged": "Only conclusion field is output; statement assumptions are separate logical inputs."
+    },
+    {
+      "id": "E-upper-asymptotic",
+      "logic": "AND",
+      "inputs": [
+        "S16-thm13",
+        "G-asymptotic-upper"
+      ],
+      "output": "S18-summary",
+      "consumer_use_site": "p18 proof summary",
+      "conditional_premises_discharged": "Would yield upper-sublinear comparison; does not discharge G-limit-existence."
+    }
+  ],
+  "source_roots": [
+    "S16-BTL",
+    "S16-thm13"
+  ],
+  "candidate_derived_obligations": [
+    {
+      "id": "D-mean-limit-iff",
+      "candidate": "meanPredict_limitNoRegret_iff_mean_converges",
+      "origin": "SEALED_CANDIDATE_ONLY",
+      "status": "DERIVED_OBLIGATION_NOT_PRINTED",
+      "required": [
+        "Both directions of equivalence, with existence of finite ordinary limits for every fixed u in [0,1].",
+        "A nontrivial asymptotic control sufficient to relate comparator regret/T to empirical mean is required; the printed upper bound alone does not establish it.",
+        "Forward direction must extract one common empirical-mean limit in [0,1] from comparator-limit hypotheses; reverse direction must supply all comparator limits and nonpositivity."
+      ],
+      "source_support": [
+        "S14-comparator",
+        "S14-no-regret",
+        "S15-minimizer",
+        "S15-FTL",
+        "S16-thm13"
+      ],
+      "missing_source_bridges": [
+        "G-limit-existence"
+      ],
+      "candidate_logic": "AND of forward and reverse implications, not two alternative sufficient OR routes"
+    },
+    {
+      "id": "D-dyadic-unit",
+      "candidate": "dyadicObservation_unit",
+      "origin": "SEALED_CANDIDATE_ONLY",
+      "status": "DERIVED_OBLIGATION_NOT_PRINTED",
+      "required": [
+        "Show the candidate recursive sequence lies in [0,1] for every natural index; source has no dyadic sequence or induction for it."
+      ],
+      "source_support": [
+        "P-thm13"
+      ],
+      "missing_source_bridges": [],
+      "candidate_logic": "One universal range obligation; no printed source proof."
+    },
+    {
+      "id": "D-dyadic-limits",
+      "candidate": "dyadic_empiricalMean_subsequences",
+      "origin": "SEALED_CANDIDATE_ONLY",
+      "status": "DERIVED_OBLIGATION_NOT_PRINTED",
+      "required": [
+        "Derive counting/mean formulas from the candidate recurrence, not from an asserted source theorem.",
+        "Prove mean at 4^(n+1)-1 tends to 2/3 and mean at 2*4^n-1 tends to 1/3.",
+        "When using these as an obstruction to a full-sequence limit, establish the index maps tend to infinity."
+      ],
+      "source_support": [],
+      "missing_source_bridges": [],
+      "candidate_logic": "AND of two subsequence limits; neither is an OR alternative."
+    },
+    {
+      "id": "D-obstruction",
+      "candidate": "dyadic_meanPredict_obstruction",
+      "origin": "SEALED_CANDIDATE_ONLY",
+      "status": "DERIVED_OBLIGATION_NOT_PRINTED",
+      "required": [
+        "Establish eventual upper-bound NoRegret for every comparator.",
+        "Establish squaredBestRegret/T tends to exactly 0; a lower/asymptotic control is required in addition to Theorem 1.3's upper bound.",
+        "Establish that comparator u=0 regret/T has no finite real limit.",
+        "Establish failure of LimitNoRegret; cannot infer this solely from generic NoRegret or its negation.",
+        "Any use of dyadic subsequences requires their proved values and cofinal indices."
+      ],
+      "source_support": [
+        "S14-best-regret",
+        "S14-comparator",
+        "S16-thm13",
+        "G-asymptotic-upper"
+      ],
+      "missing_source_bridges": [
+        "G-limit-existence"
+      ],
+      "candidate_logic": "AND of all four stated conclusions; source gives no complete route."
+    }
+  ],
+  "topology_conventions": {
+    "direction": "inputs -> consumer/output",
+    "premises": "P-BTL and P-thm13 represent premise fields only, avoiding cycles through the proved conclusion.",
+    "AND": "All dependencies of a printed route are jointly required; induction base and step are AND.",
+    "OR": "No alternative sufficient proof routes are printed within inspected pages. No OR routes asserted.",
+    "source_and_candidate_separation": "Derived-obligation lists are missing obligations, not reconstructed source proofs or accepted implementation routes."
+  },
+  "unclosed_source_paths": [
+    "S14-expectation <- G-prior-Eq1.1",
+    "S15-minimizer <- G-minimizer-bridge",
+    "S17-factor <- G-mean-range",
+    "S18-summary <- G-asymptotic-upper",
+    "S14-no-regret ordinary-limit existence <- G-limit-existence"
+  ],
+  "successor_provenance": {
+    "revision": "v2",
+    "predecessor_directory": "maintenance-evidence/batch31-source-extraction-v1",
+    "predecessor_sha256": {
+      "source-coverage.json": "6a5538ab8955a18d23346d34f7aa2b6c4606015930fd2f59bba84a302f63fb18",
+      "source-proof-graph.json": "1492fe1cf19baed438eed3571efd96b94f7aba29dd827c41daa2ccdc9998ae33",
+      "source-extraction-report.json": "c9fdb6676f31af1831c9aef2eb8ff6e8c10ed7700f2cbc0a00ff228a4413d073"
+    },
+    "correction_source": {
+      "path": "maintenance-evidence/batch31-source-review-v1/review.json",
+      "sha256": "8114ca9862ec1bc9f07662b36430198e8277677d373e22fc52514f7ddc78ac1c",
+      "used_sections": [
+        "concrete_successor_edits",
+        "required_corrections C1-C4"
+      ]
+    },
+    "status": "PROPOSED_SUCCESSOR_AWAITING_DISTINCT_REVIEW",
+    "self_approved": false,
+    "implementation_inspected": false,
+    "new_pixel_views_performed": false
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch31-source-extraction-v2/source-proof-graph.json",
+      "sha256": "47a53e97790d8f96643d609d1b53dc6500577255fb1cacb4537a802cf1148240",
+      "availability": "Private maintenance evidence retained by the maintainer; digest is not a public download URL."
+    },
+    "change": "Physical path prefixes replaced by distinct logical locations with collision checks. Mathematical contents, historical values, verdicts and statuses unchanged. Original digests bind private originals, not projected bytes.",
+    "currentStatus": "review-binding.json records later scoped evidence; historical pending fields retain their original meaning."
+  }
+}
