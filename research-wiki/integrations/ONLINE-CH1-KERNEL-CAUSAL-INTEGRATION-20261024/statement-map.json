@@ -1,0 +1,115 @@
+{
+  "sourcePR": 200,
+  "sourceBase": "4db37e090143760d99b9aedd026a72fa0f1f09ac",
+  "sourceHead": "71c73d727e0a19ed68751994c3b1319aa9c3d756",
+  "integrationBase": "216d75ec77bafa6a8897b7f3a491897cfb272bcc",
+  "sealedTargets": [
+    {
+      "name": "kernel_sampler_family_exists",
+      "neutralName": "T1",
+      "lean": "theorem kernel_sampler_family_exists\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :\n    ∃ f : KernelDecisionSampler,\n      (∀ t, Measurable (Function.uncurry (f t))) ∧\n      ∀ t h, (volume : Measure I).map (f t h) = κ t h",
+      "signatureSHA256": "92e62cf28d0887f787147b153972c16cbf08f1f53a5882201bc8666ed2cdb138"
+    },
+    {
+      "name": "kernel_sampler_causal_process",
+      "neutralName": "T2",
+      "lean": "theorem kernel_sampler_causal_process\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t))) :\n    (∀ t, Measurable (kernelCausalPolicy f t)) ∧\n    (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),\n      kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =\n        kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧\n    ∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),\n      (∀ i, i ≤ t → ω.1 i = ω'.1 i) →\n      (∀ i, i < t → ω.2 i = ω'.2 i) →\n      kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω'",
+      "signatureSHA256": "8dc148f624372e7dde3dc869420ee63bd82c1e6f2b3d55df2e569c97c6384884"
+    },
+    {
+      "name": "kernel_sampler_joint_law",
+      "neutralName": "T3",
+      "lean": "theorem kernel_sampler_joint_law\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))\n    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)\n    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :\n    (kernelGameLaw ν).map (fun ω =>\n      (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =\n      (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t",
+      "signatureSHA256": "893d5a871dd8436160ba5bfbe9d0fb471330db6e3c03b5ede588651a215a2eb7"
+    },
+    {
+      "name": "kernel_sampler_conditional_law",
+      "neutralName": "T4",
+      "lean": "theorem kernel_sampler_conditional_law\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)]\n    (f : KernelDecisionSampler) (hf : ∀ t, Measurable (Function.uncurry (f t)))\n    (hκ : ∀ t h, (volume : Measure I).map (f t h) = κ t h)\n    (ν : ProbabilityMeasure (ℕ → ℝ)) (t : ℕ) :\n    condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν)\n      =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t",
+      "signatureSHA256": "58c17a5b89f437cea0a32bfae8386557f38d0f8ddd886e9f5441c3b2fe75e859"
+    },
+    {
+      "name": "causal_kernel_realization_and_expectedFixed_excess",
+      "neutralName": "T5",
+      "lean": "theorem causal_kernel_realization_and_expectedFixed_excess\n    (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] :\n    ∃ f : KernelDecisionSampler,\n      (∀ t, Measurable (Function.uncurry (f t))) ∧\n      (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧\n      (∀ t, Measurable (kernelCausalPolicy f t)) ∧\n      (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t),\n        kernelGeneratedActions f t (fun j => u j) (fun j => y j) i =\n          kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧\n      (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)),\n        (∀ i, i ≤ t → ω.1 i = ω'.1 i) →\n        (∀ i, i < t → ω.2 i = ω'.2 i) →\n        kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧\n      ∀ ν : ProbabilityMeasure (ℕ → ℝ),\n        (∀ t, (kernelGameLaw ν).map (fun ω =>\n          (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) =\n          (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧\n        (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t)\n          (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧\n        (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) →\n          (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0)\n            (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) →\n          (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) →\n          ∀ T : ℕ,\n            expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)\n              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T =\n              (∑ t ∈ Finset.range T, ∫ ω,\n                ((kernelGeneratedPrediction f t ω : ℝ) -\n                  ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧\n            0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t)\n              (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)",
+      "signatureSHA256": "17abd0796feb9518a2010d9f3ae4fca1968ef626a6ee4c9b90f58c15b94d844d"
+    }
+  ],
+  "neutralPacket": {
+    "artifact": "batch29-blind-packet-v1/statements-and-context.lean.txt",
+    "sha256": "677fcb6f1adca96165d575bf8b60595bae08fd58f0bf3bca328a4082ada6f886",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "sourceOnlyDefinitions": {
+    "artifact": "batch29-source-only/context-definitions.lean.txt",
+    "sha256": "78ad349b12c441631008f2f75a87ce90426d6c7eecbe2656d9c5ad0cb2017211",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "originalProductionAndCanary": {
+    "BanditRLProof/OnlineGuessingKernelCausal.lean": {
+      "file": "BanditRLProof__OnlineGuessingKernelCausal.lean",
+      "bytes": 18609,
+      "sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+      "gitBlob": "74c27371f8077b0a8da6db320af350d06a4c8bbf"
+    },
+    "Tests/OnlineGuessingKernelCausalCanary.lean": {
+      "file": "Tests__OnlineGuessingKernelCausalCanary.lean",
+      "bytes": 10189,
+      "sha256": "6b123e347fec544e158f58f627b28838dbbd02bd55273839671364ea20c087c8",
+      "gitBlob": "05583f5020442352f34c3d6ecafdf6cdf0120684"
+    }
+  },
+  "candidateBindings": {
+    "BanditRLProof/OnlineGuessingKernelCausal.lean": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0",
+    "Tests/OnlineGuessingKernelCausalCanary.lean": "6b123e347fec544e158f58f627b28838dbbd02bd55273839671364ea20c087c8",
+    "BanditRLProof.lean": "46d11e7aff03f191051f9c871429584d3d7c3a619a1af90b548b25bcab2c1f53",
+    "Tests.lean": "faf2868b6d26c201b2612468b8b12f479324af65d87396db2a44d77a3a598ea7",
+    ".gitattributes": "1e2f368b6255171cd63f019a0791ab6ff15d5af4c1dba5b7082ac383ea276870",
+    "website/content/chapters.json": "f12e428dcd90763ce4144d91a331cae596bff80a3013706344a777e3d7ba1021",
+    "website/content/readings.json": "0fde078808c51ea025b73101759ed4dc4adca7578c4443bdb0dc8c28c64aa88a",
+    "website/content/highlights.json": "3a6d236e6d428bf375cfc1e78d458882ae3eb7a5dc71c1e48e9aa528b6d228c8",
+    "website/content/declaration-boundaries.json": "3635c0472cbf83c1e9d1e50187f17c28cc4c1cbac9b9d61781998358f7be50bb",
+    "website/scripts/build_site.py": "e4d39d56a255617be626fe4e468a7ee57f06f64b97d94590f7d8b76733826a68",
+    "tools/test_source_declaration_boundaries.py": "e692aca5276fbf4f4026d22fceb97471d076528dd3eddf148aad834551a44517"
+  },
+  "actualImportedAudit": {
+    "artifact": "batch29-imported-audit-v2/receipt.json",
+    "sha256": "ccb12356619efecb36fecff57781d10748e026afb67196200b5ee5638aaacf18",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "actualChecks": "Five full public type identities, ten neutral definition equalities,57standardaxiom checks,22direct VALUE pairs and13reachable privatehelpers passed. Four recursive definition comparisons use induction/congruence instead of rfl; all ten original equality propositions are unchanged.",
+  "consumerBoundary": "The packaged result consumes all four realization endpoints and the accepted randomized expected-fixed producer. Complete canaries consume all five endpoints. The actual binary process is derived using the joint law; its IID coin excess is T/4, an explicit nonsuccess example rather than a learning-rate guarantee.",
+  "readerDisclosureSuccessor": {
+    "proposal": {
+      "artifact": "batch29-disclosure-proposal-v1/receipt.json",
+      "sha256": "5530c273a795eebfe950535b4543c45602cf18570606e73038c6dde90768a4f8",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scientificReview": {
+      "artifact": "batch29-disclosure-scientific-review-v1/review.json",
+      "sha256": "3d0b188a0fed5f34f1d6f21d80e2590f6284b1ce5a8a5e3f9cb66e2e030422f2",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scopeReview": {
+      "artifact": "batch29-disclosure-scope-review-v1/review.json",
+      "sha256": "637a707647f860f7b8c0c17e74b39f2414d5a7a40a93f9dd0fe86392c11260d1",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "port": {
+      "artifact": "batch29-disclosure-port-v1/receipt.json",
+      "sha256": "71aa9502249c24acf32b600c9de1f35581f508db6f7876c2ec8c8fc916875849",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "actualRenderedReview": {
+      "artifact": "batch29-rendered-review-v2/review.json",
+      "sha256": "3f16efd3b1f111af2c5f6711992660a0fb328db958b484f75d27174af40ea514",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "generatedConservationReview": {
+      "artifact": "batch29-generated-scope-review-v2/review.json",
+      "sha256": "8cf1884dc1a6ad05cf6552517ec7ecb10125e9c118961425ba402686d4b8f5e2",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scope": "Eight exact original context blocks are displayed in full. Native boundary eligibility extends from public def to public def or abbrev, preserving all other checks. Four regression tests added. Original mathematical sources, statements,proofs,reader formulas and historical artifacts remain unchanged."
+  }
+}

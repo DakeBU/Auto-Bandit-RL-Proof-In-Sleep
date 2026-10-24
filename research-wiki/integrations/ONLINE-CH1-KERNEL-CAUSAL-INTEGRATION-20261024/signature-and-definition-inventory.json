@@ -1,0 +1,566 @@
+{
+  "status": "semantic inventory, independent review pending",
+  "signatures": [
+    {
+      "id": "T1",
+      "binder_ids": [
+        "kappa",
+        "Markov"
+      ],
+      "nested_binder_ids": [
+        "f",
+        "t",
+        "h"
+      ],
+      "classification": "kernel randomization library infrastructure specialized to history/I carriers",
+      "quantifier_order": "forall kappa Markov, exists ONE f; forall t joint measurable; forall t h exact sampler law. f chosen before any nu or horizon.",
+      "conclusion": "Uniform pushforward equals kappa_t(h) at every t,h.",
+      "null_scope": "Exact all-history equality of measures, not a.e. over a generated law.",
+      "boundary": "No generated-process result by itself. Standard-Borel uniform randomization must be supplied; no source theorem corresponds.",
+      "name": "kernel_sampler_family_exists",
+      "signature_sha256": "92e62cf28d0887f787147b153972c16cbf08f1f53a5882201bc8666ed2cdb138",
+      "printed_theorem": false,
+      "binders": [
+        {
+          "id": "kappa",
+          "type": "forall t:N, Kernel(History_t,I)",
+          "meaning": "Measurable transition family on action/observation histories.",
+          "origin": "derived model"
+        },
+        {
+          "id": "Markov",
+          "type": "implicit [forall t,IsMarkovKernel(kappa_t)]",
+          "meaning": "Every history section a probability measure; exact upstream fields not inspected.",
+          "origin": "derived model"
+        }
+      ],
+      "nested_binders": [
+        {
+          "id": "f",
+          "type": "KernelDecisionSampler",
+          "meaning": "One candidate realization family.",
+          "origin": "derived infrastructure"
+        },
+        {
+          "id": "t",
+          "type": "N",
+          "meaning": "Zero-based current time; t prior entries.",
+          "origin": "typing"
+        },
+        {
+          "id": "h",
+          "type": "KernelDecisionHistory t",
+          "meaning": "Any pair of t past I-valued actions and t real observations, including unrealized histories.",
+          "origin": "derived history carrier"
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "binder_ids": [
+        "f",
+        "hf"
+      ],
+      "nested_binder_ids": [
+        "t",
+        "u_y",
+        "i",
+        "omega_pair",
+        "seed_equal",
+        "past_equal"
+      ],
+      "classification": "deterministic causal recursion infrastructure",
+      "quantifier_order": "forall f hf: (forall t measurable policy) AND (forall t,u,y,i prefix identity) AND forall t,omega,omega_prime, seed_equal -> past_equal -> equal predictions.",
+      "conclusion": "Exact earlier-action consistency and finite-seed/strict-past causal dependence.",
+      "null_scope": "Pointwise for all states, no measure or exceptional set.",
+      "boundary": "No kappa,nu or law conclusion. Output in I everywhere. Syntactic full-tape input becomes finite-prefix dependence via theorem.",
+      "name": "kernel_sampler_causal_process",
+      "signature_sha256": "8dc148f624372e7dde3dc869420ee63bd82c1e6f2b3d55df2e569c97c6384884",
+      "printed_theorem": false,
+      "binders": [
+        {
+          "id": "f",
+          "type": "KernelDecisionSampler",
+          "meaning": "One candidate realization family.",
+          "origin": "derived infrastructure"
+        },
+        {
+          "id": "hf",
+          "type": "forall t,Measurable(uncurry f_t)",
+          "meaning": "Joint measurability in history and fresh uniform; not only separate section measurability.",
+          "origin": "derived interface premise"
+        }
+      ],
+      "nested_binders": [
+        {
+          "id": "t",
+          "type": "N",
+          "meaning": "Zero-based current time; t prior entries.",
+          "origin": "typing"
+        },
+        {
+          "id": "u_y",
+          "type": "u:N->I; y:N->R",
+          "meaning": "Arbitrary deterministic full streams in prefix equality.",
+          "origin": "typing"
+        },
+        {
+          "id": "i",
+          "type": "Fin t",
+          "meaning": "Earlier action index, source round i+1.",
+          "origin": "typing"
+        },
+        {
+          "id": "omega_pair",
+          "type": "omega,omega_prime:(N->I)x(N->R)",
+          "meaning": "Any pair of full stream states.",
+          "origin": "typing"
+        },
+        {
+          "id": "seed_equal",
+          "type": "forall i,i<=t -> omega.seed_i=omega_prime.seed_i",
+          "meaning": "Current seed permitted; later seeds irrelevant.",
+          "origin": "derived causal condition"
+        },
+        {
+          "id": "past_equal",
+          "type": "forall i,i<t -> omega.y_i=omega_prime.y_i",
+          "meaning": "Current outcome excluded.",
+          "origin": "source-inspired information order"
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "binder_ids": [
+        "kappa",
+        "Markov",
+        "f",
+        "hf",
+        "h_kappa",
+        "nu",
+        "t"
+      ],
+      "classification": "derived joint-law realization",
+      "quantifier_order": "forall kappa,f,hf,h_kappa,nu,t, equality of joint measures.",
+      "conclusion": "Law(history_t,action_t)=law(history_t) composition-product kappa_t.",
+      "null_scope": "Measure equality on History_t x I; representation premise exact all histories.",
+      "boundary": "nu can have dependent/unbounded coordinates but is independent of tape by product game law. Prior actions require proof of dependence only on previous uniforms. Does not cover general action-reactive outcome adversaries.",
+      "name": "kernel_sampler_joint_law",
+      "signature_sha256": "893d5a871dd8436160ba5bfbe9d0fb471330db6e3c03b5ede588651a215a2eb7",
+      "printed_theorem": false,
+      "binders": [
+        {
+          "id": "kappa",
+          "type": "forall t:N, Kernel(History_t,I)",
+          "meaning": "Measurable transition family on action/observation histories.",
+          "origin": "derived model"
+        },
+        {
+          "id": "Markov",
+          "type": "implicit [forall t,IsMarkovKernel(kappa_t)]",
+          "meaning": "Every history section a probability measure; exact upstream fields not inspected.",
+          "origin": "derived model"
+        },
+        {
+          "id": "f",
+          "type": "KernelDecisionSampler",
+          "meaning": "One candidate realization family.",
+          "origin": "derived infrastructure"
+        },
+        {
+          "id": "hf",
+          "type": "forall t,Measurable(uncurry f_t)",
+          "meaning": "Joint measurability in history and fresh uniform; not only separate section measurability.",
+          "origin": "derived interface premise"
+        },
+        {
+          "id": "h_kappa",
+          "type": "forall t h,map(volume,f_t(h))=kappa_t(h)",
+          "meaning": "All-history exact realization. Legitimate interface premise in T3/T4; discharged inside T5.",
+          "origin": "derived realization contract"
+        },
+        {
+          "id": "nu",
+          "type": "ProbabilityMeasure(N->R)",
+          "meaning": "Arbitrary exogenous observation-stream law, no IID/bounds except nested T5 risk branch.",
+          "origin": "derived model"
+        },
+        {
+          "id": "t",
+          "type": "N",
+          "meaning": "Zero-based current time; t prior entries.",
+          "origin": "typing"
+        }
+      ],
+      "nested_binders": []
+    },
+    {
+      "id": "T4",
+      "binder_ids": [
+        "kappa",
+        "Markov",
+        "f",
+        "hf",
+        "h_kappa",
+        "nu",
+        "t"
+      ],
+      "classification": "derived conditional-law realization",
+      "quantifier_order": "Same universal inputs as T3; for each(nu,t), conditional-law kernel equals kappa_t a.e. under that history marginal.",
+      "conclusion": "Regular conditional law of action_t given history_t is kappa_t almost everywhere.",
+      "null_scope": "Null set may depend on nu,t; not all histories, not one common null set for all nu. History spaces differ with t.",
+      "boundary": "Requires standard-Borel regular conditional-law existence/uniqueness. Off-support conditional versions may differ despite all-history exact sampler premise.",
+      "name": "kernel_sampler_conditional_law",
+      "signature_sha256": "58c17a5b89f437cea0a32bfae8386557f38d0f8ddd886e9f5441c3b2fe75e859",
+      "printed_theorem": false,
+      "binders": [
+        {
+          "id": "kappa",
+          "type": "forall t:N, Kernel(History_t,I)",
+          "meaning": "Measurable transition family on action/observation histories.",
+          "origin": "derived model"
+        },
+        {
+          "id": "Markov",
+          "type": "implicit [forall t,IsMarkovKernel(kappa_t)]",
+          "meaning": "Every history section a probability measure; exact upstream fields not inspected.",
+          "origin": "derived model"
+        },
+        {
+          "id": "f",
+          "type": "KernelDecisionSampler",
+          "meaning": "One candidate realization family.",
+          "origin": "derived infrastructure"
+        },
+        {
+          "id": "hf",
+          "type": "forall t,Measurable(uncurry f_t)",
+          "meaning": "Joint measurability in history and fresh uniform; not only separate section measurability.",
+          "origin": "derived interface premise"
+        },
+        {
+          "id": "h_kappa",
+          "type": "forall t h,map(volume,f_t(h))=kappa_t(h)",
+          "meaning": "All-history exact realization. Legitimate interface premise in T3/T4; discharged inside T5.",
+          "origin": "derived realization contract"
+        },
+        {
+          "id": "nu",
+          "type": "ProbabilityMeasure(N->R)",
+          "meaning": "Arbitrary exogenous observation-stream law, no IID/bounds except nested T5 risk branch.",
+          "origin": "derived model"
+        },
+        {
+          "id": "t",
+          "type": "N",
+          "meaning": "Zero-based current time; t prior entries.",
+          "origin": "typing"
+        }
+      ],
+      "nested_binders": []
+    },
+    {
+      "id": "T5",
+      "binder_ids": [
+        "kappa",
+        "Markov"
+      ],
+      "nested_binder_ids": [
+        "f",
+        "t",
+        "h",
+        "u_y",
+        "i",
+        "omega_pair",
+        "seed_equal",
+        "past_equal",
+        "nu",
+        "IID",
+        "same_law",
+        "support",
+        "T"
+      ],
+      "classification": "derived integrated realization plus source-inspired IID excess identity",
+      "quantifier_order": "forall kappa Markov, exists ONE f such that: (forall t joint measurability of f_t) AND (forall t h exact sampler law) AND (forall t policy measurability) AND (forall t u y i:Fin t prefix consistency) AND (forall t omega omega_prime, seed_equal -> past_equal -> prediction equality) AND forall nu: (forall t joint law) AND (forall t conditional law) AND (IID -> same_law -> support -> forall T excess identity AND nonnegativity). f chosen independently of nu,T.",
+      "conclusion": "Under nested IID/support premises, expectedFixedRegret=sum_{t<T}E[(action_t-E_game Y_0)^2]>=0, alongside realization clauses valid for all nu.",
+      "null_scope": "Policy/prefix/causal equalities everywhere; sampler law every h; conditional kernel equality separately history-a.e.; support a.e.; risk scalar expectations.",
+      "boundary": "No sublinear convergence, normalized success, regret rate, minimax claim, or converse realization of all causal processes. Expected fixed comparator, not expected pathwise empirical minimum.",
+      "zero_cases": "t=0 unique empty history, fresh u_0 only. T=0 sums0 and sInf{0}=0.",
+      "name": "causal_kernel_realization_and_expectedFixed_excess",
+      "signature_sha256": "17abd0796feb9518a2010d9f3ae4fca1968ef626a6ee4c9b90f58c15b94d844d",
+      "printed_theorem": false,
+      "binders": [
+        {
+          "id": "kappa",
+          "type": "forall t:N, Kernel(History_t,I)",
+          "meaning": "Measurable transition family on action/observation histories.",
+          "origin": "derived model"
+        },
+        {
+          "id": "Markov",
+          "type": "implicit [forall t,IsMarkovKernel(kappa_t)]",
+          "meaning": "Every history section a probability measure; exact upstream fields not inspected.",
+          "origin": "derived model"
+        }
+      ],
+      "nested_binders": [
+        {
+          "id": "f",
+          "type": "KernelDecisionSampler",
+          "meaning": "One candidate realization family.",
+          "origin": "derived infrastructure"
+        },
+        {
+          "id": "t",
+          "type": "N",
+          "meaning": "Zero-based current time; t prior entries.",
+          "origin": "typing"
+        },
+        {
+          "id": "h",
+          "type": "KernelDecisionHistory t",
+          "meaning": "Any pair of t past I-valued actions and t real observations, including unrealized histories.",
+          "origin": "derived history carrier"
+        },
+        {
+          "id": "u_y",
+          "type": "u:N->I; y:N->R",
+          "meaning": "Arbitrary deterministic full streams in prefix equality.",
+          "origin": "typing"
+        },
+        {
+          "id": "i",
+          "type": "Fin t",
+          "meaning": "Earlier action index, source round i+1.",
+          "origin": "typing"
+        },
+        {
+          "id": "omega_pair",
+          "type": "omega,omega_prime:(N->I)x(N->R)",
+          "meaning": "Any pair of full stream states.",
+          "origin": "typing"
+        },
+        {
+          "id": "seed_equal",
+          "type": "forall i,i<=t -> omega.seed_i=omega_prime.seed_i",
+          "meaning": "Current seed permitted; later seeds irrelevant.",
+          "origin": "derived causal condition"
+        },
+        {
+          "id": "past_equal",
+          "type": "forall i,i<t -> omega.y_i=omega_prime.y_i",
+          "meaning": "Current outcome excluded.",
+          "origin": "source-inspired information order"
+        },
+        {
+          "id": "nu",
+          "type": "ProbabilityMeasure(N->R)",
+          "meaning": "Arbitrary exogenous observation-stream law, no IID/bounds except nested T5 risk branch.",
+          "origin": "derived model"
+        },
+        {
+          "id": "IID",
+          "type": "iIndepFun(y->y_t) under nu",
+          "meaning": "Independent outcome coordinates, only final T5 risk implication.",
+          "origin": "SOURCE IID"
+        },
+        {
+          "id": "same_law",
+          "type": "forall t,IdentDistrib(y_t,y_0) nu nu",
+          "meaning": "Common marginal law; only final T5 risk implication.",
+          "origin": "SOURCE identical distribution"
+        },
+        {
+          "id": "support",
+          "type": "forall t,AE y under nu,y_t in[0,1]",
+          "meaning": "Per-time a.s. bounded outcomes; only final T5 risk implication.",
+          "origin": "SOURCE support with a.s. convention"
+        },
+        {
+          "id": "T",
+          "type": "forall T:N",
+          "meaning": "Finite horizon, including zero.",
+          "origin": "typing and zero extension"
+        }
+      ]
+    }
+  ],
+  "binder_registry": {
+    "kappa": {
+      "type": "forall t:N, Kernel(History_t,I)",
+      "meaning": "Measurable transition family on action/observation histories.",
+      "origin": "derived model"
+    },
+    "Markov": {
+      "type": "implicit [forall t,IsMarkovKernel(kappa_t)]",
+      "meaning": "Every history section a probability measure; exact upstream fields not inspected.",
+      "origin": "derived model"
+    },
+    "f": {
+      "type": "KernelDecisionSampler",
+      "meaning": "One candidate realization family.",
+      "origin": "derived infrastructure"
+    },
+    "hf": {
+      "type": "forall t,Measurable(uncurry f_t)",
+      "meaning": "Joint measurability in history and fresh uniform; not only separate section measurability.",
+      "origin": "derived interface premise"
+    },
+    "h_kappa": {
+      "type": "forall t h,map(volume,f_t(h))=kappa_t(h)",
+      "meaning": "All-history exact realization. Legitimate interface premise in T3/T4; discharged inside T5.",
+      "origin": "derived realization contract"
+    },
+    "nu": {
+      "type": "ProbabilityMeasure(N->R)",
+      "meaning": "Arbitrary exogenous observation-stream law, no IID/bounds except nested T5 risk branch.",
+      "origin": "derived model"
+    },
+    "t": {
+      "type": "N",
+      "meaning": "Zero-based current time; t prior entries.",
+      "origin": "typing"
+    },
+    "h": {
+      "type": "KernelDecisionHistory t",
+      "meaning": "Any pair of t past I-valued actions and t real observations, including unrealized histories.",
+      "origin": "derived history carrier"
+    },
+    "u_y": {
+      "type": "u:N->I; y:N->R",
+      "meaning": "Arbitrary deterministic full streams in prefix equality.",
+      "origin": "typing"
+    },
+    "i": {
+      "type": "Fin t",
+      "meaning": "Earlier action index, source round i+1.",
+      "origin": "typing"
+    },
+    "omega_pair": {
+      "type": "omega,omega_prime:(N->I)x(N->R)",
+      "meaning": "Any pair of full stream states.",
+      "origin": "typing"
+    },
+    "seed_equal": {
+      "type": "forall i,i<=t -> omega.seed_i=omega_prime.seed_i",
+      "meaning": "Current seed permitted; later seeds irrelevant.",
+      "origin": "derived causal condition"
+    },
+    "past_equal": {
+      "type": "forall i,i<t -> omega.y_i=omega_prime.y_i",
+      "meaning": "Current outcome excluded.",
+      "origin": "source-inspired information order"
+    },
+    "IID": {
+      "type": "iIndepFun(y->y_t) under nu",
+      "meaning": "Independent outcome coordinates, only final T5 risk implication.",
+      "origin": "SOURCE IID"
+    },
+    "same_law": {
+      "type": "forall t,IdentDistrib(y_t,y_0) nu nu",
+      "meaning": "Common marginal law; only final T5 risk implication.",
+      "origin": "SOURCE identical distribution"
+    },
+    "support": {
+      "type": "forall t,AE y under nu,y_t in[0,1]",
+      "meaning": "Per-time a.s. bounded outcomes; only final T5 risk implication.",
+      "origin": "SOURCE support with a.s. convention"
+    },
+    "T": {
+      "type": "forall T:N",
+      "meaning": "Finite horizon, including zero.",
+      "origin": "typing and zero extension"
+    }
+  },
+  "literal_definitions": [
+    {
+      "name": "KernelDecisionHistory",
+      "group": "kernel",
+      "meaning": "History_t=(Fin t->I)x(Fin t->R), past actions and observations only; observation carrier unrestricted real.",
+      "block_sha256_lf_one_trailing_newline": "68bf705cf71f013114215f36fc87b1a95756e59d022ca026ce11bf8faf4e09f3",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "KernelDecisionSampler",
+      "group": "kernel",
+      "meaning": "f_t:History_t->I->I. Output subtype gives bounds; no measurability or law correctness from type alone.",
+      "block_sha256_lf_one_trailing_newline": "eee0e09d06b3d31c50420ab5ae648f7b866c9fffaff7b237557b8496faead605",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "kernelGeneratedActions",
+      "group": "kernel",
+      "meaning": "Empty vector at0; recursively restrict prefixes then append f_t(past_actions,past_observations)(u_t). Literal context, not proof evidence.",
+      "block_sha256_lf_one_trailing_newline": "52ddbdfeb869c5227db87ea20d28af16dba771dc6464f9c8e1943beed21d94c1",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "kernelCausalPolicy",
+      "group": "kernel",
+      "meaning": "Takes full tape and t past observations, reconstructs past actions, then uses fresh tape coordinate t.",
+      "block_sha256_lf_one_trailing_newline": "e67f5366b8df91b1198cb87a16ad3a50c553b59dec6b0c5c4a21d36e10c641c8",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "kernelGeneratedHistory",
+      "group": "kernel",
+      "meaning": "Pair of recursively generated t actions and t observation prefix.",
+      "block_sha256_lf_one_trailing_newline": "ac7d41340b02a97af800580b00f9c3f35a0df57bd52dbb597cecd2ba26803d12",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "kernelGeneratedPrediction",
+      "group": "kernel",
+      "meaning": "Causal policy applied to full tape and strict-past outcome prefix; returns I.",
+      "block_sha256_lf_one_trailing_newline": "475dc07bc25c2fe54bb08ab77e18f1639394482f7d4ba65ca5be2b89420093bd",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "kernelUniformTapeLaw",
+      "group": "kernel",
+      "meaning": "Infinite product of volume on I; probability and independent-coordinate properties need proof/reuse.",
+      "block_sha256_lf_one_trailing_newline": "2939e5e90378a128624776cd455a0d87390852b8fa7bb85f30821280e82f8443",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "kernelGameLaw",
+      "group": "kernel",
+      "meaning": "Product of uniform tape law and arbitrary probability law nu on outcome streams; tape independent of entire outcome stream.",
+      "block_sha256_lf_one_trailing_newline": "3391abf9379e2c85dd8d448487c76c78fa300698198235882d2502765318bfe0",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "expectedFixedMinimum",
+      "group": "benchmark",
+      "meaning": "sInf over constant u in[0,1] of expected cumulative squared loss; infimum outside expectation.",
+      "block_sha256_lf_one_trailing_newline": "791375e888c426aeba8f3316ce3d5cdf7a4e1354112215a9ca5bdb489f316ff3",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    },
+    {
+      "name": "expectedFixedRegret",
+      "group": "benchmark",
+      "meaning": "Expected learner cumulative loss minus expectedFixedMinimum.",
+      "block_sha256_lf_one_trailing_newline": "1a0b08386710b38a0f9899583d9a3655c1857cbf83a0cfddf7175d7c9a2d670a",
+      "source_relation": "Added formal model or benchmark, not a printed literal definition."
+    }
+  ],
+  "context_file_sha256": "78ad349b12c441631008f2f75a87ce90426d6c7eecbe2656d9c5ad0cb2017211",
+  "hash_convention": "Declaration block hashes use read-text newline normalization, rstrip, and one trailing LF; whole-file byte hash authoritative.",
+  "notation": {
+    "I": "unitInterval subtype[0,1] with standard measurable structure; inherently bounded outputs",
+    "volume": "uniform measure on I",
+    "Kernel": "measure-valued measurable transition; Markov means probability sections",
+    "compProd": "history marginal composition with transition, not necessarily independent product",
+    "condDistrib": "regular conditional kernel determined history-marginal-a.e."
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch29-source-extraction-v1/signature-and-definition-inventory.json",
+      "sha256": "08cae10e70b64a90ee90a76afc132671f8c8ea1b801d48226aa9fce7c721217d",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only are replaced by distinct logical locations with dictionary collision checks. Mathematical contents, original verdicts and historical statuses are retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json. Earlier pending fields retain their historical meaning."
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "status": "blind-reconstructed",
+  "role": "independent source-blind semantic decoder",
+  "source_faithfulness_verdict": "not assessed; source reviewer must compare with the separate source",
+  "input_files": [
+    {
+      "path": "maintenance-evidence/batch29-blind-packet-v1/input-binding.json",
+      "sha256": "3b7ec91cc6509003fd999f5c7f70000deeb6b855af2664829b2df86393c1b906"
+    },
+    {
+      "path": "maintenance-evidence/batch29-blind-packet-v1/statements-and-context.lean.txt",
+      "sha256": "677fcb6f1adca96165d575bf8b60595bae08fd58f0bf3bca328a4082ada6f886"
+    }
+  ],
+  "binding_verification": {
+    "claimed_packet_sha256": "677fcb6f1adca96165d575bf8b60595bae08fd58f0bf3bca328a4082ada6f886",
+    "matches_actual_statement_file": true,
+    "declared_target_count": 5,
+    "reconstructed_target_count": 5
+  },
+  "scope": {
+    "mathematical_inputs": "Only the two sealed files and necessary upstream Mathlib semantics",
+    "procedure_read": "canonical-repository/.agents/skills/bandit-semantic-roundtrip/SKILL.md",
+    "local_import_not_opened": "BanditRLProof.OnlineGuessingRandomizedIID",
+    "production_proof_bodies_read": false,
+    "source_identity_sought": false,
+    "prior_verdicts_read": false,
+    "parent_history_used": false,
+    "memory_used": false,
+    "compilation_performed": false,
+    "production_edits": false,
+    "remote_actions": false
+  },
+  "shared_definitions": [
+    {
+      "name": "Spaces, indexing, kernels and samplers",
+      "text": "Let \\(I=[0,1]\\subset\\mathbb R\\), with its Borel measurable structure and uniform probability measure \\(\\lambda\\) (the subtype volume measure). Time is \\(t\\in\\mathbb N=\\{0,1,\\ldots\\}\\). Write \\(H_t=I^{\\{0,\\ldots,t-1\\}}\\times\\mathbb R^{\\{0,\\ldots,t-1\\}}\\), with the product measurable structure. A history contains past actions and past real outcomes, both of length \\(t\\). A sampler is a family \\(f_t:H_t\\times I\\to I\\), curried in Lean as \\(f_t(h)(u)\\). The measurability hypothesis is joint measurability of \\((h,u)\\mapsto f_t(h,u)\\) for each \\(t\\), not merely separate measurability. A kernel \\(\\kappa_t:H_t\\leadsto I\\) is measurable in history; IsMarkovKernel requires every \\(\\kappa_t(h)\\) to be a probability measure, including histories never generated in a game."
+    },
+    {
+      "name": "Literal finite recursion",
+      "text": "For finite tuples \\(u\\in I^t,y\\in\\mathbb R^t\\), let \\(G_t^f(u,y)\\in I^t\\) denote kernelGeneratedActions. \\(G_0^f\\) is the unique empty tuple. Given \\(u\\in I^{t+1},y\\in\\mathbb R^{t+1}\\), set \\(p=G_t^f(u_{<t},y_{<t})\\). Then\n\\[\nG_{t+1}^f(u,y)=(p_0,\\ldots,p_{t-1},\\,f_t((p,y_{<t}),u_t)).\n\\]\nThis is the literal Fin.snoc recursion. The first history component passed to \\(f_t\\) is the recursively generated action tuple \\(p\\), not the raw random tape \\(u_{<t}\\), and not an arbitrary externally supplied action tuple. The supplied outcome coordinate \\(y_t\\) is unused in \\(G_{t+1}^f\\)."
+    },
+    {
+      "name": "Policy, generated history and prediction",
+      "text": "For an infinite tape \\(u\\in I^{\\mathbb N}\\) and finite outcomes \\(v\\in\\mathbb R^t\\), define\n\\[\nC_t^f(u,v)=f_t((G_t^f(u_{<t},v),v),u_t).\n\\]\nThis is kernelCausalPolicy. On \\(\\Omega=I^{\\mathbb N}\\times\\mathbb R^{\\mathbb N}\\), with \\(\\omega=(u,y)\\), define\n\\[\nH_t^f(u,y)=(G_t^f(u_{<t},y_{<t}),y_{<t}),\\qquad\nA_t^f(u,y)=C_t^f(u,y_{<t})=f_t(H_t^f(u,y),u_t).\n\\]\nThese are kernelGeneratedHistory and kernelGeneratedPrediction. \\(A_0^f=f_0(((),()),u_0)\\). For example \\(A_1^f=f_1(((A_0^f),(y_0)),u_1)\\), so the first decision enters the next decision as an action. \\(A_t^f\\) is \\(I\\)-valued; its coercion to \\(\\mathbb R\\) is used in squared loss."
+    },
+    {
+      "name": "Tape law and game law",
+      "text": "Let \\(U=\\lambda^{\\otimes\\mathbb N}\\), the infinite product probability measure on \\(I^{\\mathbb N}\\). For an arbitrary Borel probability measure \\(\\nu\\) on \\(\\mathbb R^{\\mathbb N}\\), set \\(P_\\nu=U\\otimes\\nu\\) on \\(\\Omega\\). These are kernelUniformTapeLaw and kernelGameLaw. The tape coordinates are independent uniform variables; the entire tape is independent of the entire outcome sequence. Without the additional T5 hypotheses, \\(\\nu\\) may have temporal dependence and unbounded real outcomes. For fixed \\(f,t,\\nu\\), write \\(\\rho_t=(H_t^f)_*P_\\nu\\). The symbol \\(\\rho_t\\otimes_m\\kappa_t\\) is the composition-product, with\n\\[\n(\\rho_t\\otimes_m\\kappa_t)(B\\times D)=\\int_B\\kappa_t(h,D)\\,\\rho_t(dh)\n\\]\nfor measurable \\(B\\subset H_t,D\\subset I\\). It is not an independent product unless the kernel is suitably constant."
+    },
+    {
+      "name": "Conditional distribution and almost everywhere equality",
+      "text": "condDistrib \\(A_t^f\\ H_t^f\\ P_\\nu\\) is Mathlib's selected regular conditional distribution of the action given the generated history, a kernel \\(H_t\\leadsto I\\). The expression \\(=^{\\mathrm{a.e.}[\\rho_t]}\\kappa_t\\) means equality of probability measures at \\(\\rho_t\\)-almost every history, with one exceptional null set for equality as measures. It does not require equality at every history. Equivalently, for each measurable \\(D\\subset I\\), \\(\\kappa_t(H_t^f,D)\\) is a version of \\(P_\\nu(A_t^f\\in D\\mid \\sigma(H_t^f))\\). No externally specified filtration or stopping time occurs in the packet."
+    },
+    {
+      "name": "Fixed benchmark and regret",
+      "text": "For a measurable space \\(\\Omega'\\), a measure \\(\\mu\\), real functions \\(Y_t,p_t:\\Omega'\\to\\mathbb R\\), and \\(T\\in\\mathbb N\\), the packet defines\n\\[\nM_T(\\mu,Y)=\\inf_{c\\in[0,1]}\\int\\sum_{t=0}^{T-1}(c-Y_t)^2\\,d\\mu,\\qquad\nR_T(\\mu,Y,p)=\\int\\sum_{t=0}^{T-1}(p_t-Y_t)^2\\,d\\mu-M_T(\\mu,Y).\n\\]\nThe same fixed deterministic scalar \\(c\\) is used at every time and every sample point. The infimum is outside the expectation. This is not expectation of the samplewise best-comparator loss. These definitions themselves impose no probability, measurability or integrability hypotheses: they use Lean's real Bochner integral and real sInf. In particular a nonintegrable Bochner integrand has integral zero by Mathlib's totalized convention, so the definitions alone do not certify ordinary finite-risk semantics. T5's bounded finite-horizon measurable setting supplies those semantics. No minimum-attainment proposition is separately stated."
+    }
+  ],
+  "targets": [
+    {
+      "id": "T1",
+      "statement": "For every sequence of Markov kernels \\((\\kappa_t:H_t\\leadsto I)_{t\\in\\mathbb N}\\), there exists one sampler family \\(f\\) such that every \\(f_t\\) is jointly measurable and\n\\[\n\\forall t\\in\\mathbb N\\ \\forall h\\in H_t,\\quad (f_t(h,\\cdot))_*\\lambda=\\kappa_t(h).\n\\]",
+      "slots": {
+        "1_objects_and_spaces": "The history spaces H_t, output/uniform-input space I, Borel Markov kernels κ_t, and one family f_t:H_t×I→I.",
+        "2_quantifiers_and_order": "For all κ, assuming ∀t IsMarkovKernel κ_t, there exists f. Inside this existential: (∀t joint measurability) AND (∀t ∀h equality of measures). The same f works simultaneously for all times and all histories. There is no ν or horizon quantifier.",
+        "3_assumptions_and_regularity": "Each κ_t is a measurable kernel by its type and assigns a probability measure to every h by the Markov-kernel instance. Measurability of f is a conclusion, not an input.",
+        "4_conclusion_and_metric": "Jointly measurable sampling representation; pushing uniform volume through the section u↦f_t(h,u) gives exactly κ_t(h), as measures, for every h.",
+        "5_constants_normalization_asymptotics": "Uniform measure has total mass 1 on the closed unit interval. Exact equality with no approximation, rate or asymptotics.",
+        "6_probability_feedback_filtration_stopping": "A single fresh uniform input realizes a fixed kernel at a specified history. This theorem alone introduces no game law, sampled trajectory, filtration, conditional distribution or stopping rule.",
+        "7_boundary_excluded_regimes": "Existence of a measurable family, not a supplied executable sampling algorithm, computability guarantee or complexity bound. No uniqueness is asserted. The action space is exactly I and the history includes arbitrary real outcome prefixes; no claim about arbitrary target spaces is stated."
+      }
+    },
+    {
+      "id": "T2",
+      "statement": "For every sampler \\(f\\) such that every \\(f_t\\) is jointly measurable, all three statements hold:\n\\[\n\\forall t,\\ C_t^f:I^{\\mathbb N}\\times\\mathbb R^t\\to I\\text{ is measurable};\n\\]\n\\[\n\\forall t,u,y,\\ i<t,\\quad G_t^f(u_{<t},y_{<t})_i=A_i^f(u,y);\n\\]\nand for every \\(t,\\omega=(u,y),\\omega'=(u',y')\\),\n\\[\n[(\\forall i\\le t,\\ u_i=u'_i)\\land(\\forall i<t,\\ y_i=y'_i)]\n\\Longrightarrow A_t^f(\\omega)=A_t^f(\\omega').\n\\]",
+      "slots": {
+        "1_objects_and_spaces": "An arbitrary sampler f, infinite tape u∈I^N, infinite outcome sequence y∈R^N, finite generated action tuples, and C_t on I^N×R^t.",
+        "2_quantifiers_and_order": "For every f and proof hf of joint measurability for all t, conclude a conjunction of three universally quantified claims. Prefix consistency quantifies t, then u, then y, then i∈Fin t. Causality quantifies t, then ω and ω', then requires tape equality through t and outcome equality strictly before t.",
+        "3_assumptions_and_regularity": "Only hf is assumed beyond types and the literal definitions. No κ, ν, independence, identical distribution or outcome boundedness is assumed.",
+        "4_conclusion_and_metric": "Measurability of every C_t, exact pointwise consistency between each recursively generated prefix coordinate and the corresponding infinite-input prediction, and exact pointwise causal invariance.",
+        "5_constants_normalization_asymptotics": "Zero-based time; tape dependency includes index t, while outcome dependency stops at t−1. All statements hold for every finite t, including t=0. The i∈Fin 0 claim is vacuous.",
+        "6_probability_feedback_filtration_stopping": "The claim is deterministic and pointwise for all tapes and outcomes, not almost surely. Current prediction uses u_t and prior outcomes, never y_t or later outcomes, and cannot depend on future tape. It does not assert any probabilistic independence. No formal filtration/stopping theorem is present.",
+        "7_boundary_excluded_regimes": "The formal domain C_t includes an entire tape, but invariance bounds actual dependence. A function f is supplied abstractly; recursion is a specified mathematical rule relative to f, not evidence that an arbitrary measurable f has executable code. No loss bound or kernel realization is claimed."
+      }
+    },
+    {
+      "id": "T3",
+      "statement": "For every Markov-kernel family \\(\\kappa\\), every jointly measurable sampler \\(f\\) satisfying the pointwise realization identities \\((f_t(h,\\cdot))_*\\lambda=\\kappa_t(h)\\) for all \\(t,h\\), every probability law \\(\\nu\\) on \\(\\mathbb R^{\\mathbb N}\\), and every \\(t\\in\\mathbb N\\),\n\\[\n(H_t^f,A_t^f)_*P_\\nu=\\rho_t\\otimes_m\\kappa_t.\n\\]\nIn particular the joint law assigns a rectangle \\(B\\times D\\) the probability \\(\\int_B\\kappa_t(h,D)\\,\\rho_t(dh)\\).",
+      "slots": {
+        "1_objects_and_spaces": "κ, f, H_t^f, A_t^f, arbitrary ν∈ProbabilityMeasure(R^N), game law P_ν, and joint measures on H_t×I.",
+        "2_quantifiers_and_order": "For all κ with Markov instances, all f, all hf and hκ, all ν, then all t. hκ quantifies over every time and every history, not merely the chosen time or generated histories.",
+        "3_assumptions_and_regularity": "Markov kernels, joint measurability of all f_t, and all pointwise pushforward equalities are inputs. ν is only a probability law. Tape/outcome independence is built into P_ν, not an additional premise requiring ν to be i.i.d.",
+        "4_conclusion_and_metric": "Exact equality of the joint history/action law and the composition-product of history law with κ_t. The rectangle formula is an unpacking of this equality.",
+        "5_constants_normalization_asymptotics": "Both sides are probability measures. No numerical rate, finite-horizon bound or asymptotic claim.",
+        "6_probability_feedback_filtration_stopping": "History comprises generated past actions and past outcomes. The current fresh tape coordinate realizes κ_t given that history. ν may encode arbitrary temporal dependence. Conditioning is implicit in the joint-law factorization; T3 does not itself state an everywhere-equal regular conditional distribution.",
+        "7_boundary_excluded_regimes": "Restricted to the product game law U⊗ν. Does not assert the same conclusion for arbitrary coupling of the tape and outcomes or for an environment responding to current learner randomness. It assumes a realizing f rather than constructing one in this theorem."
+      }
+    },
+    {
+      "id": "T4",
+      "statement": "Under exactly the universally quantified inputs and assumptions of T3, for every \\(\\nu\\) and \\(t\\),\n\\[\n\\operatorname{condDistrib}(A_t^f\\mid H_t^f;P_\\nu)(h)=\\kappa_t(h)\n\\quad\\text{for }\\rho_t\\text{-almost every }h.\n\\]\nThe equality is equality of conditional probability measures on \\(I\\).",
+      "slots": {
+        "1_objects_and_spaces": "The same inputs as T3 and a regular conditional distribution kernel from H_t to I, compared with κ_t under the history marginal ρ_t.",
+        "2_quantifiers_and_order": "For all κ, Markov instances, f, hf, hκ, ν, and t, equality holds ρ_t-almost everywhere in h. The exceptional history null set may depend on these fixed inputs, in particular ν and t.",
+        "3_assumptions_and_regularity": "Same as T3. I is a nonempty standard Borel space, supporting the Mathlib conditional-distribution construction. No i.i.d. or bounded-outcome condition is assumed.",
+        "4_conclusion_and_metric": "The chosen regular conditional distribution of A_t given H_t agrees with κ_t as a measure-valued function almost everywhere under the law of H_t.",
+        "5_constants_normalization_asymptotics": "Exact almost-everywhere equality of probability measures, no approximation or rate.",
+        "6_probability_feedback_filtration_stopping": "The conditioning variable is H_t^f, not the whole tape, all outcomes, or an arbitrary filtration. At almost every history, all measurable action sets are governed by the same conditional probability measure κ_t(h). No assertion at every null/unreachable history follows.",
+        "7_boundary_excluded_regimes": "hκ is pointwise for every history, but the conditional-distribution conclusion remains only ρ_t-a.e. Product-law restriction remains. No stopping-time extension or algorithm computing conditional laws is supplied."
+      }
+    },
+    {
+      "id": "T5",
+      "statement": "For every Markov-kernel family \\(\\kappa\\), there exists one sampler family \\(f\\) satisfying, in conjunction: joint measurability of every \\(f_t\\); pointwise realization of every \\(\\kappa_t(h)\\); measurability of every \\(C_t^f\\); the pointwise prefix consistency of T2; and the pointwise causality of T2. For this same \\(f\\), for every probability law \\(\\nu\\) on \\(\\mathbb R^{\\mathbb N}\\), both T3's joint-law equality and T4's conditional-law equality hold at every time.\n\nMoreover, for each such \\(\\nu\\), assume successively:\n(i) the coordinate functions \\(y\\mapsto y_t\\), \\(t\\in\\mathbb N\\), are mutually independent under \\(\\nu\\);\n(ii) for every \\(t\\), \\(y_t\\) has the same distribution as \\(y_0\\) under \\(\\nu\\);\n(iii) for every \\(t\\), \\(0\\le y_t\\le1\\) for \\(\\nu\\)-almost every \\(y\\).\nSet \\(Y_t(u,y)=y_t\\) and \\(m=\\int_\\Omega Y_0\\,dP_\\nu\\). Then, for every \\(T\\in\\mathbb N\\),\n\\[\nR_T(P_\\nu,Y,A^f)\n=\\sum_{t=0}^{T-1}\\int_\\Omega (A_t^f-m)^2\\,dP_\\nu\n\\quad\\land\\quad 0\\le R_T(P_\\nu,Y,A^f).\n\\]\nHere real coercions of \\(A_t^f\\in I\\) are understood.",
+      "slots": {
+        "1_objects_and_spaces": "A family of Markov decision kernels on H_t with outputs I; a single jointly measurable sampler family; recursive actions; every probability law ν on the real sequence space; the scalar mean m of outcome coordinate zero under P_ν; and finite-horizon squared-loss fixed-comparator regret.",
+        "2_quantifiers_and_order": "∀κ [∀t Markov κ_t], ∃f, followed by five conjuncts (sampler measurability, all-history realization, policy measurability, prefix consistency, causality), then ∀ν, a conjunction of (∀t joint-law equality), (∀t conditional-law equality), and the nested implication independence → identical marginals → coordinatewise a.e. [0,1] support → ∀T (regret identity AND nonnegativity). In particular f is chosen before ν and T and does not change with the outcome law or horizon. In the support premise the order is ∀t, for ν-a.e. y; countability permits a simultaneous full-measure version, but that is not the literal premise order.",
+        "3_assumptions_and_regularity": "Only the Markov-kernel family is an outer input assumption. f's measurability and realizing property are existential conclusions. The arbitrary-ν joint/conditional law conclusions require none of the final three outcome premises. The regret conclusions do require all three: mutual independence of the entire coordinate family, equality of every coordinate's law with coordinate zero (IdentDistrib also carries a.e. measurability), and each coordinate's a.e. support in the closed interval. Bounded outputs and bounded outcomes at finite horizons give integrability.",
+        "4_conclusion_and_metric": "A common f satisfies all realization, recursive consistency, causal invariance and law claims. Under the extra outcome premises, expected cumulative squared loss minus the infimum of expected cumulative loss of one fixed deterministic c∈[0,1] equals the sum of expected squared deviations of predictions from m. The same regret is nonnegative. Neither comparison with a per-sample empirical best c nor an upper/sublinear regret bound is asserted.",
+        "5_constants_normalization_asymptotics": "T is any natural number, including zero; time sum is 0,…,T−1. Squared loss has coefficient 1, and the regret and right side are unnormalized cumulative sums (no 1/T). m is the expectation of coordinate zero under the game law, not a sample mean. The mean lies in [0,1] under the premises, as a mathematical consequence. T=0 yields 0=0 and 0≤0. No asymptotic, high-probability or concentration rate appears.",
+        "6_probability_feedback_filtration_stopping": "U is i.i.d. uniform and independent of the entire outcome sequence for every ν. Only the last implication requires the outcomes themselves to be i.i.d. and bounded. The action may depend on all previous actions and outcomes through H_t and on u_t. Independence from the current i.i.d. outcome follows from this setup; it is not an extra user-supplied assumption in the statement. Expectations include both tape and outcome randomness. Conditional laws are relative to σ(H_t), and are only history-law-a.e. No stopping horizon or adaptive environmental coupling is quantified.",
+        "7_boundary_excluded_regimes": "This is a measurable existence-and-law theorem plus an exact expected fixed-benchmark regret identity, not executable synthesis, computational complexity, optimality of the selected f, or a learning-rate guarantee. The extra i.i.d./bounded premises restrict only the regret clause. Outside them the earlier law conclusions persist, but this regret conclusion is not asserted. Continuous actions are restricted to [0,1]; outcomes are real in the general law clauses. No all-history equality of selected conditional versions or universality over private hidden-state policy models is claimed."
+      }
+    }
+  ],
+  "semantic_uncertainties_and_limits": [
+    "Upstream checks resolve the specific meanings of I, volume, Fin.snoc, IsMarkovKernel, compProd, condDistrib, IdentDistrib, iIndepFun, infinitePi and the nonintegrable integral convention. No unresolved ambiguity in those operators remains.",
+    "The sealed text contains statements without proof bodies and imports a project-local module that was not opened. This reconstruction does not establish elaboration, instance resolution under every imported setting, successful compilation, proof validity, or absence of axioms. It uses the standard upstream product/Borel structures indicated by these types and checked definitions.",
+    "No numerical source claim or source identity was supplied or sought. No source acceptance verdict is given.",
+    "Existential f can depend on κ. Neither an effective selection procedure nor an executable implementation follows from the existential proposition. The recursive action definitions explicitly specify finite recursion once f is supplied."
+  ],
+  "upstream_files_consulted": [
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Topology/UnitInterval.lean",
+      "purpose": "notation I; searched definition documentation"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/MeasureTheory/Constructions/UnitInterval.lean",
+      "purpose": "subtype volume; probability normalization"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean",
+      "purpose": "Fin.snoc, castSucc preservation, last coordinate"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/MeasureTheory/Measure/ProbabilityMeasure.lean",
+      "purpose": "probability-measure subtype"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/Kernel/Basic.lean",
+      "purpose": "import location of kernel definitions"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/Kernel/Defs.lean",
+      "purpose": "Kernel and IsMarkovKernel"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/Kernel/CondDistrib.lean",
+      "purpose": "argument order, conditional-kernel definition and a.e. meaning"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/Kernel/Composition/MeasureCompProd.lean",
+      "purpose": "composition-product notation and rectangle semantics"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/IdentDistrib.lean",
+      "purpose": "a.e. measurability and equal pushforward laws"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/Independence/InfinitePi.lean",
+      "purpose": "infinite-product independence and supporting import location"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/Independence/Basic.lean",
+      "purpose": "mutual independence semantics"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/Probability/ProductMeasure.lean",
+      "purpose": "infinitePi definition and finite-cylinder probabilities"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/MeasureTheory/Constructions/Pi.lean",
+      "purpose": "searched for infinitePi definition; no relevant match used"
+    },
+    {
+      "path": "canonical-repository/.lake/packages/mathlib/Mathlib/MeasureTheory/Integral/Bochner/Basic.lean",
+      "purpose": "integral_undef for nonintegrable integrands"
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch29-blind-reconstruction-v1/reconstruction.json",
+      "sha256": "3a747fe0a316d0be162a2a3e401888aa49c914acea6654dcb0b650d0402df310",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only are replaced by distinct logical locations with dictionary collision checks. Mathematical contents, original verdicts and historical statuses are retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json. Earlier pending fields retain their historical meaning."
+  }
+}

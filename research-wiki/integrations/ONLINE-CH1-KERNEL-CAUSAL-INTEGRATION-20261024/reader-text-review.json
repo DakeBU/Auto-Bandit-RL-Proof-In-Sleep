@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "accepted": true,
+  "verdict": "accepted-within-bounded-reader-scientific-scope",
+  "sourceRelativeVerdict": "accepted-with-explicit-delta",
+  "createdUTC": "2026-10-24T07:53:56.997595+00:00",
+  "requiredCorrections": [],
+  "failures": [],
+  "evidenceBindings": {
+    "batch29-reader-draft-v3/receipt.json": "0a797c045c911c80ec8f84c21d025ef991fda7d581045988854d7059cf374087",
+    "batch29-reader-draft-v3/alignment-correction.json": "44e231de411a84be2440d3e1103296287e55ac124450169c4b90287da215c29f",
+    "batch29-reader-draft-v3/chapters.json": "f12e428dcd90763ce4144d91a331cae596bff80a3013706344a777e3d7ba1021",
+    "batch29-reader-draft-v3/correction.json": "8c9b2d0f02d0f9c2115ac26f211b2b871795e78fcca701e007eb3fc5eddd9425",
+    "batch29-reader-draft-v3/highlights.json": "3a6d236e6d428bf375cfc1e78d458882ae3eb7a5dc71c1e48e9aa528b6d228c8",
+    "batch29-reader-draft-v3/original-field-map.json": "62bcc240460677560049bb8d67b015cdd67f385e63892f89546b697a74e53535",
+    "batch29-reader-draft-v3/proposal.json": "4aef2582db42b48dee11d6a9ffd24fe4a1915ca0fd508ee8b4b8895d567c547d",
+    "batch29-reader-draft-v3/readings.json": "0fde078808c51ea025b73101759ed4dc4adca7578c4443bdb0dc8c28c64aa88a",
+    "batch29-reader-draft-v2/receipt.json": "49a21c85ffeacbd510d8ad7bf3cb8660206b31356ed9342f2ebba9b248ba440a",
+    "batch29-reader-scientific-review-v1/review.json": "96b686fafe9cd2f7ae75902bef5a6fba143068e9b3c30e3620fcf9aa079dbd2c",
+    "batch29-reader-scientific-review-v2/review.json": "15f39d4353669bd4dbbde9c0d54ed98b15f9ecfea4bff7bb7b1393dcd5f1f2f8",
+    "batch29-source-review-v1/stage1-seal.json": "1ab617e1321015471ed7cf440157a0837a860a7bdc71cb8dc2c0611d1e7073a0",
+    "batch29-body-review-v1/report.json": "70a2052748302dafee3377efa783b2c08216229d091ba1509e397c444b035c16",
+    "batch29-body-review-v1/seal.json": "8ed52a064a445b3d8897a7b9bdf03e0599de2e9a1d8ba34378bb047e6cce23dc"
+  },
+  "candidateReaderBindings": {
+    "chapters.json": "f12e428dcd90763ce4144d91a331cae596bff80a3013706344a777e3d7ba1021",
+    "readings.json": "0fde078808c51ea025b73101759ed4dc4adca7578c4443bdb0dc8c28c64aa88a",
+    "highlights.json": "3a6d236e6d428bf375cfc1e78d458882ae3eb7a5dc71c1e48e9aa528b6d228c8"
+  },
+  "exactDelta": {
+    "proposal.json": [
+      {
+        "path": "/sourceCard/math",
+        "before": "\\begin{aligned}H_t&=(P_{<t},Y_{<t}),\\quad P_t=f_t(H_t,U_t),\\\\\\mathcal L(H_t,P_t)&=\\mathcal L(H_t)\\otimes\\kappa_t.\\\\\\text{If the observations are IID and a.s. in }[0,1]:\\\\R_T^{\\mathrm{expected\\ fixed}}&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E[Y_0])^2\\ge0.\\end{aligned}",
+        "after": "\\begin{aligned}H_t&=(P_{<t},Y_{<t}),\\quad P_t=f_t(H_t,U_t),\\\\\\mathcal L(H_t,P_t)&=\\mathcal L(H_t)\\otimes\\kappa_t.\\\\&\\text{IID},\\quad Y_t\\in[0,1]\\ \\text{a.s.}:\\\\R_T^{\\mathrm{expected\\ fixed}}&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E[Y_0])^2\\ge0.\\end{aligned}"
+      }
+    ],
+    "readings.json": [
+      {
+        "path": "/readings/34/source_theorems/19/math",
+        "before": "\\begin{aligned}H_t&=(P_{<t},Y_{<t}),\\quad P_t=f_t(H_t,U_t),\\\\\\mathcal L(H_t,P_t)&=\\mathcal L(H_t)\\otimes\\kappa_t.\\\\\\text{If the observations are IID and a.s. in }[0,1]:\\\\R_T^{\\mathrm{expected\\ fixed}}&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E[Y_0])^2\\ge0.\\end{aligned}",
+        "after": "\\begin{aligned}H_t&=(P_{<t},Y_{<t}),\\quad P_t=f_t(H_t,U_t),\\\\\\mathcal L(H_t,P_t)&=\\mathcal L(H_t)\\otimes\\kappa_t.\\\\&\\text{IID},\\quad Y_t\\in[0,1]\\ \\text{a.s.}:\\\\R_T^{\\mathrm{expected\\ fixed}}&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E[Y_0])^2\\ge0.\\end{aligned}"
+      }
+    ],
+    "highlights.json": [],
+    "chapters.json": []
+  },
+  "findingResolution": {
+    "R1": "Actual renderer statement_provenance=derived-support retained.",
+    "R2": "Only displayed PDF digest sentence removed; source identity/page anchors retained and full digest remains sealed metadata.",
+    "R3": "Correct history-variable conditional kernel equality and history-marginal AE quantification retained.",
+    "R4": "IID and a.s. unit support now explicitly qualify only the expected-fixed identity; corrected row uses & before a compact condition, preserving mathematical equations and avoiding expansion of first alignment column."
+  },
+  "scientificAssessment": "Accepted five target-specific explanations/formulas and proof outlines, one derived-support source card and chapter boundary append. Exact source/semantic and body conclusions carry with unchanged scientific content. All Markov/measurability/representation/product-law hypotheses remain differentiated; same sampler precedes all nu/T; arbitrary temporal dependence and unbounded outcomes allowed for law clauses only; conditional law is history-marginal-a.e.; expected-fixed infimum remains outside expectation; IID/unit support is necessary for the displayed risk branch; mean is analysis-only. No learning-rate or universal protocol/completion claim introduced.",
+  "verification": "Independently compared complete v2/v3 proposal and three JSON content trees. Exactly one source-card math leaf changes, mirrored once in readings. Highlights and chapters are identical; all new objects and assumptions otherwise carry prior review. Each receipt output hash independently verified.",
+  "limits": [
+    "Static reader content and TeX structure acceptance only; no MathJax/render/pixel/geometry acceptance.",
+    "Full project, actual generated proof/disclosure content, publication/Exposition Seal, CI/main/live and original PR disposition remain separate.",
+    "No production, candidate, remote or earlier review modified."
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch29-reader-scientific-review-v3/review.json",
+      "sha256": "e0d20070b5aad5687313702f4f0638ee68a626a269875b588ceee6f65095399c",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only are replaced by distinct logical locations with dictionary collision checks. Mathematical contents, original verdicts and historical statuses are retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json. Earlier pending fields retain their historical meaning."
+  }
+}

@@ -469,7 +469,7 @@ def apply_declaration_boundaries(
         index, declaration = matches[0]
         start, end = entry["start_line"], entry["end_line"]
         next_line = declarations[index + 1]["line"] if index + 1 < len(declarations) else len(lines) + 1
-        if (declaration["private"] or declaration["kind"] != "def"
+        if (declaration["private"] or declaration["kind"] not in {"def", "abbrev"}
                 or declaration["line"] != start or end >= next_line or end > len(lines)
                 or hashlib.sha256(path.read_bytes()).hexdigest() != entry["file_sha256"]):
             raise ValueError("Stale or invalid declaration boundary: " + entry["full_name"])
