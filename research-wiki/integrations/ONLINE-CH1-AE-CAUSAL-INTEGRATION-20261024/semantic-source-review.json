@@ -1,0 +1,1185 @@
+{
+  "schema": "batch27-independent-source-review-stage-a-v1",
+  "at": "2026-10-24T01:24:53.345438+00:00",
+  "actor": "/root/batch25_source_reviewer",
+  "stage": "A-source-topology-and-anti-anchored-semantic-review-before-implementation",
+  "sourceHead": "8dcdf1e5d74b79ee90d2dd27a48569e9cb4f7fe6",
+  "sourcePDFSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "sourcePagesActuallyViewed": [
+    13,
+    15
+  ],
+  "verdict": "accepted-with-explicit-delta",
+  "derivedContractSemanticAlignment": "accepted",
+  "literalThreePrintedTheoremsClaim": "rejected",
+  "requiredCorrections": [],
+  "failures": [],
+  "precisionNotes": [
+    {
+      "id": "A-PRECISION-1",
+      "severity": "nonblocking-clarification",
+      "location": "batch27-source-topology-v1/report.json target_analysis[T1].null_scope",
+      "original": "stronger than separately stated FORALL t AE omega",
+      "reviewerClarification": "For natural-number time the two forms are logically equivalent by countable intersection. AE omega forall t is syntactically stronger-looking and exposes one common event, but is not mathematically stronger here. The extractor explicitly cites countability, and its graph has the correct obligation. This review adopts the precise equivalence.",
+      "sourceOrSignatureChangeRequired": false,
+      "successor": "batch27-source-topology-v1/report-v2.json",
+      "resolved": true,
+      "successorOnlyNullScopeFieldChanged": true
+    }
+  ],
+  "targets": [
+    {
+      "id": "T1",
+      "name": "ae_predictable_exists_bounded_history_policy",
+      "signatureSHA256": "16fd6701fea34b566c18de217f978e9a33cb350f53173c62b59d4cd6150c2135",
+      "declarationLevel": "source-inspired-derived-library-contract",
+      "printedTheorem": false,
+      "verdict": "accepted-with-explicit-delta",
+      "blindReconstructionMatchesExactSignature": true,
+      "sevenSlots": [
+        {
+          "slot": "objects",
+          "printedSource": "The printed game uses finite real unit-interval actions and outcomes.",
+          "exactLeanAndBlind": "Arbitrary measurable sample/seed types, arbitrary measure, arbitrary outcome maps and all-natural-time prediction maps; no observation support or ambient measurability assumed.",
+          "delta": "General measure-theoretic representation contract, not a printed game theorem."
+        },
+        {
+          "slot": "quantifiers",
+          "printedSource": "Round order forbids access to current outcome; no measurable-factor existence theorem is printed.",
+          "exactLeanAndBlind": "For every supplied model and AE-bounded measurable-version prediction family, there exists one measurable globally bounded policy family, agreeing AE omega simultaneously for all natural t.",
+          "delta": "The policy may depend on the measure and full supplied model; no universal or unique policy. Countable-time AE/forall interchange is valid."
+        },
+        {
+          "slot": "assumptions",
+          "printedSource": "Unit-interval actions and strict-past timing motivate admissibility.",
+          "exactLeanAndBlind": "F_t <= comap H_t, existence of strongly F_t-measurable AE versions, and per-time AE [0,1] bounds.",
+          "delta": "These are explicit derived model premises. F need not increase or lie below the ambient sigma field in T1; no probability/IID/seed-independence assumption."
+        },
+        {
+          "slot": "conclusion",
+          "printedSource": "No policy factorization is printed.",
+          "exactLeanAndBlind": "Measurable policy_t on Seed x R^{range t}, [0,1]-valued on EVERY input, AE agreement at all t.",
+          "delta": "Representation only, no squared-loss guarantee or preservation of off-support behavior."
+        },
+        {
+          "slot": "constants",
+          "printedSource": "Source action interval is [0,1], with one-based rounds.",
+          "exactLeanAndBlind": "Exact [0,1] bounds, zero-based natural times, no error/rate/horizon.",
+          "delta": "At zero time policy may use seed alone. No normalization."
+        },
+        {
+          "slot": "probability_information",
+          "printedSource": "The source does not specify private randomness or completed information spaces.",
+          "exactLeanAndBlind": "Ordinary comap information of the whole seed and strict past; AE strong-measurable version condition.",
+          "delta": "Not a theorem about every completed filtration or all stochastic kernels. No stopping times or null-set-uniformity over all models."
+        },
+        {
+          "slot": "boundary",
+          "printedSource": "Source uses legal observations and actions.",
+          "exactLeanAndBlind": "Zero measure/empty sample space allowed when maps exist; histories may contain arbitrary real values; original prediction may be illegal or nonmeasurable on null sets.",
+          "delta": "Bounded extension may clamp unrealized histories. No uniqueness/computability or constructive strategy extraction."
+        }
+      ],
+      "atomicBinderAudit": [
+        {
+          "binder": "Omega",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary universe-u sample carrier.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Probability/sample carrier made explicit."
+        },
+        {
+          "binder": "Seed",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary universe-v seed carrier.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Private seed is a derived model extension, not printed."
+        },
+        {
+          "binder": "[MeasurableSpace Omega]",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Ambient sigma algebra for mu.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Measure semantics."
+        },
+        {
+          "binder": "[MeasurableSpace Seed]",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Seed sigma algebra, not necessarily standard Borel.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Derived seed model; no standard-Borel hypothesis added."
+        },
+        {
+          "binder": "mu",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Measure on ambient Omega.",
+          "printedSourceClassification": "TYPING",
+          "reason": "T1 any measure; T2/T3 restricted separately to probability."
+        },
+        {
+          "binder": "Y",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Natural-indexed real maps Omega -> R.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Infinite zero-based extension of source finite one-based outcomes."
+        },
+        {
+          "binder": "S",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Map Omega -> Seed.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Supplied seed map, no prescribed law; T1 does not assume ambient measurable. "
+        },
+        {
+          "binder": "F",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "T1/T3 family Nat -> MeasurableSpace Omega; T2 one MeasurableSpace Omega.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Formal subinformation structure is not printed and need not be a filtration."
+        },
+        {
+          "binder": "hF",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each relevant t every F_t-measurable set is in comap H_t; H_t(omega)=(S omega,(Y_i omega)_{i<t}).",
+          "printedSourceClassification": "EXCESS",
+          "reason": "SOURCE classification here means premise of the explicitly declared DERIVED target contract. Source timing motivates but does not print this exact sigma-field assumption."
+        },
+        {
+          "binder": "prediction/P",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Supplied real prediction sequence (T1/T3) or one real map P (T2).",
+          "printedSourceClassification": "TYPING",
+          "reason": "No algorithm construction; supplied functions may depend on the law."
+        },
+        {
+          "binder": "hP",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each relevant t there exists g:Omega->R with StronglyMeasurable[F_t] g AND prediction_t = g mu-AE. Real strong measurability admits a measurable version. No relation between F and ambient is built into AEStronglyMeasurable.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Explicit AE-version formal-model premise, not a printed theorem premise or proof-result substitute."
+        },
+        {
+          "binder": "hpb",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every t, mu-AE omega, 0 <= prediction_t omega AND prediction_t omega <= 1.",
+          "printedSourceClassification": "SOURCE",
+          "reason": "Printed feasibility is pointwise on play; AE version is an explicit extension. The two inequalities and per-time null sets are retained."
+        }
+      ]
+    },
+    {
+      "id": "T2",
+      "name": "ae_predictable_private_seed_independent",
+      "signatureSHA256": "59ae1654a75e0061599dbfd2b9993ea0efcf8327ddfa8f4502b862127f2f8bb7",
+      "declarationLevel": "source-inspired-derived-library-contract",
+      "printedTheorem": false,
+      "verdict": "accepted-with-explicit-delta",
+      "blindReconstructionMatchesExactSignature": true,
+      "sevenSlots": [
+        {
+          "slot": "objects",
+          "printedSource": "Printed IID unit-interval game.",
+          "exactLeanAndBlind": "Probability space, arbitrary measurable seed, measurable independent real outcome family, fixed deterministic t, one F and unbounded real P.",
+          "delta": "Derived independence bridge is more general in outcome laws/ranges than the printed game."
+        },
+        {
+          "slot": "quantifiers",
+          "printedSource": "Current outcome is secret until action.",
+          "exactLeanAndBlind": "For every fixed t and every F below seed-past information and P with an AE F-measurable version, P is independent of Y_t.",
+          "delta": "No independence of prediction process from the whole outcome stream; P can depend on past."
+        },
+        {
+          "slot": "assumptions",
+          "printedSource": "IID includes mutual independence in the motivating source; private seed is not printed.",
+          "exactLeanAndBlind": "Probability; measurable Y; iIndepFun; measurable S independent of the WHOLE infinite outcome vector; hF and AEStronglyMeasurable[F] P.",
+          "delta": "No identical-law, bound, integrability or L2 premise. T1 cannot be invoked directly because T2 lacks its boundedness premise."
+        },
+        {
+          "slot": "conclusion",
+          "printedSource": "No explicit independence lemma is printed; nonnegativity relies on unshown causality reasoning.",
+          "exactLeanAndBlind": "IndepFun P (Y t) mu, including original AE-modified P.",
+          "delta": "Generated-sigma-field/event factorization conclusion, unconditional and distributional."
+        },
+        {
+          "slot": "constants",
+          "printedSource": "No explicit quantitative independence constant.",
+          "exactLeanAndBlind": "Probability mass one; no horizon, normalization or rate.",
+          "delta": "t=0 reduces to seed information; no seed law or numerical seed-zero parameter."
+        },
+        {
+          "slot": "probability_information",
+          "printedSource": "Source timing supports strict past, not a formal kernel representation.",
+          "exactLeanAndBlind": "Joint seed-plus-past/current independence must be derived from mutual outcome independence and full-stream seed independence; transfer through an AE representative.",
+          "delta": "Pairwise independence cannot replace either joint premise; fixed t cannot silently become a stopping time."
+        },
+        {
+          "slot": "boundary",
+          "printedSource": "The source broader adversarial discussion on p3 is separate from p1 IID claims.",
+          "exactLeanAndBlind": "Allows unbounded P/Y and nonidentical laws, excludes zero-measure probability setup.",
+          "delta": "No adversarial or universal-kernel theorem; no whole-process or prediction-to-prediction independence."
+        }
+      ],
+      "atomicBinderAudit": [
+        {
+          "binder": "Omega",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary universe-u sample carrier.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Probability/sample carrier made explicit."
+        },
+        {
+          "binder": "Seed",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary universe-v seed carrier.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Private seed is a derived model extension, not printed."
+        },
+        {
+          "binder": "[MeasurableSpace Omega]",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Ambient sigma algebra for mu.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Measure semantics."
+        },
+        {
+          "binder": "[MeasurableSpace Seed]",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Seed sigma algebra, not necessarily standard Borel.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Derived seed model; no standard-Borel hypothesis added."
+        },
+        {
+          "binder": "mu",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Measure on ambient Omega.",
+          "printedSourceClassification": "TYPING",
+          "reason": "T1 any measure; T2/T3 restricted separately to probability."
+        },
+        {
+          "binder": "Y",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Natural-indexed real maps Omega -> R.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Infinite zero-based extension of source finite one-based outcomes."
+        },
+        {
+          "binder": "S",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Map Omega -> Seed.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Supplied seed map, no prescribed law; T1 does not assume ambient measurable. "
+        },
+        {
+          "binder": "[IsProbabilityMeasure mu]",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "mu univ = 1.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Probability normalization implicit in printed expected IID game; absent from T1."
+        },
+        {
+          "binder": "hY",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every t and Borel set A, Y_t^{-1}(A) is ambient measurable.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Ordinary real-random-variable regularity; no proof result is supplied."
+        },
+        {
+          "binder": "hind",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each finite index set and measurable coordinate events, measure of the intersection is the product of measures (mutual family independence).",
+          "printedSourceClassification": "SOURCE",
+          "reason": "Printed IID has independence; T2 keeps independence without common law."
+        },
+        {
+          "binder": "hS",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every seed-measurable A, S^{-1}(A) is ambient measurable.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Regularity of new private-seed model."
+        },
+        {
+          "binder": "hseed",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "Generated sigma algebra of S is independent of generated sigma algebra of omega -> (t -> Y_t omega): every such event pair factors.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Whole-process independent random tape is a derived admissibility model, not printed. No marginal-only weakening."
+        },
+        {
+          "binder": "t",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary fixed natural time.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Not a stopping time."
+        },
+        {
+          "binder": "F",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "T1/T3 family Nat -> MeasurableSpace Omega; T2 one MeasurableSpace Omega.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Formal subinformation structure is not printed and need not be a filtration."
+        },
+        {
+          "binder": "hF",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each relevant t every F_t-measurable set is in comap H_t; H_t(omega)=(S omega,(Y_i omega)_{i<t}).",
+          "printedSourceClassification": "EXCESS",
+          "reason": "SOURCE classification here means premise of the explicitly declared DERIVED target contract. Source timing motivates but does not print this exact sigma-field assumption."
+        },
+        {
+          "binder": "prediction/P",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Supplied real prediction sequence (T1/T3) or one real map P (T2).",
+          "printedSourceClassification": "TYPING",
+          "reason": "No algorithm construction; supplied functions may depend on the law."
+        },
+        {
+          "binder": "hP",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each relevant t there exists g:Omega->R with StronglyMeasurable[F_t] g AND prediction_t = g mu-AE. Real strong measurability admits a measurable version. No relation between F and ambient is built into AEStronglyMeasurable.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Explicit AE-version formal-model premise, not a printed theorem premise or proof-result substitute."
+        }
+      ]
+    },
+    {
+      "id": "T3",
+      "name": "ae_predictable_private_seed_expectedFixed_excess",
+      "signatureSHA256": "9db5d08728989697cb3cd1cf2e07f96bc64e491305717802eb405f17998d379d",
+      "declarationLevel": "source-inspired-derived-library-contract",
+      "printedTheorem": false,
+      "verdict": "accepted-with-explicit-delta",
+      "blindReconstructionMatchesExactSignature": true,
+      "sevenSlots": [
+        {
+          "slot": "objects",
+          "printedSource": "Printed p1 finite IID [0,1] guessing game and variance benchmark.",
+          "exactLeanAndBlind": "Probability space, measurable IID AE unit-supported sequence, measurable independent whole-stream seed, AE bounded predictable process, arbitrary natural T.",
+          "delta": "Derived seeded AE model extending printed motivation; no prescribed FTL/meanPredict learner."
+        },
+        {
+          "slot": "quantifiers",
+          "printedSource": "Finite horizon and one fixed unknown outcome law.",
+          "exactLeanAndBlind": "All-time hypotheses precede arbitrary deterministic T; one deterministic u is shared across time and samples in inf_u E sum loss.",
+          "delta": "All-time conditions are stronger in scope than a single finite game; fixed sequence handles every T. Law-dependent supplied predictions remain allowed."
+        },
+        {
+          "slot": "assumptions",
+          "printedSource": "IID and [0,1] support/action feasibility are printed; measurability/probability are implicit in ordinary expectation.",
+          "exactLeanAndBlind": "hY, hlaw, hb, hind, hS, hseed, hF, hP, hpb and probability.",
+          "delta": "AE rather than pointwise feasibility, explicit seed/information model. Integrability, independence of predictions and risk/benchmark identities are derived obligations, not new public premises."
+        },
+        {
+          "slot": "conclusion",
+          "printedSource": "Eq1.1 is E cumulative loss - T variance; its nonnegativity is asserted without detailed proof.",
+          "exactLeanAndBlind": "expectedFixedRegret = sum_{t<T} E[(prediction_t-EY_0)^2], and >=0.",
+          "delta": "Exact MSE decomposition and sInf benchmark are additional derived support. Expected minimum must be proved equal to T variance, not assumed."
+        },
+        {
+          "slot": "constants",
+          "printedSource": "Eq1.2 divides by positive T and discusses a zero-limit success criterion.",
+          "exactLeanAndBlind": "Unnormalized coefficient-one finite identity, T=0 allowed with empty sums and sInf{0}=0.",
+          "delta": "No normalized equality, little-o, convergence, success, minimax rate or positive lower bound follows from this signature."
+        },
+        {
+          "slot": "probability_information",
+          "printedSource": "Printed expectation subscript names the outcomes only; no explicit random seed.",
+          "exactLeanAndBlind": "All randomness integrated on Omega; full seed plus strict past and whole-process seed independence; AE bounds/versions.",
+          "delta": "Infimum AFTER expected comparator loss, not expectation of hindsight minimum. No conditional/high-probability/pathwise/stopped guarantee."
+        },
+        {
+          "slot": "boundary",
+          "printedSource": "Unknown-law motivation and broader adversarial FTL are not themselves formalized by this result.",
+          "exactLeanAndBlind": "Degenerate laws, constant seeds and zero horizon included; no universal distribution-free policy is constructed.",
+          "delta": "Original process may change on null sets. No all-kernel representation, completion theorem or chapter closure."
+        }
+      ],
+      "atomicBinderAudit": [
+        {
+          "binder": "Omega",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary universe-u sample carrier.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Probability/sample carrier made explicit."
+        },
+        {
+          "binder": "Seed",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary universe-v seed carrier.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Private seed is a derived model extension, not printed."
+        },
+        {
+          "binder": "[MeasurableSpace Omega]",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Ambient sigma algebra for mu.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Measure semantics."
+        },
+        {
+          "binder": "[MeasurableSpace Seed]",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Seed sigma algebra, not necessarily standard Borel.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Derived seed model; no standard-Borel hypothesis added."
+        },
+        {
+          "binder": "mu",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Measure on ambient Omega.",
+          "printedSourceClassification": "TYPING",
+          "reason": "T1 any measure; T2/T3 restricted separately to probability."
+        },
+        {
+          "binder": "Y",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Natural-indexed real maps Omega -> R.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Infinite zero-based extension of source finite one-based outcomes."
+        },
+        {
+          "binder": "S",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Map Omega -> Seed.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Supplied seed map, no prescribed law; T1 does not assume ambient measurable. "
+        },
+        {
+          "binder": "[IsProbabilityMeasure mu]",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "mu univ = 1.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Probability normalization implicit in printed expected IID game; absent from T1."
+        },
+        {
+          "binder": "hY",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every t and Borel set A, Y_t^{-1}(A) is ambient measurable.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Ordinary real-random-variable regularity; no proof result is supplied."
+        },
+        {
+          "binder": "hlaw",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every t: Y_t is AEMeasurable, Y_0 is AEMeasurable, and Measure.map Y_t mu = Measure.map Y_0 mu. First two fields also follow from hY but remain explicit expanded fields.",
+          "printedSourceClassification": "SOURCE",
+          "reason": "Printed common distribution; nested IdentDistrib fields audited."
+        },
+        {
+          "binder": "hb",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every t, mu-AE omega, 0 <= Y_t omega AND Y_t omega <=1.",
+          "printedSourceClassification": "SOURCE",
+          "reason": "Printed [0,1] support with explicit AE extension."
+        },
+        {
+          "binder": "hind",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each finite index set and measurable coordinate events, measure of the intersection is the product of measures (mutual family independence).",
+          "printedSourceClassification": "SOURCE",
+          "reason": "Printed IID has independence; T2 keeps independence without common law."
+        },
+        {
+          "binder": "hS",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every seed-measurable A, S^{-1}(A) is ambient measurable.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Regularity of new private-seed model."
+        },
+        {
+          "binder": "hseed",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "Generated sigma algebra of S is independent of generated sigma algebra of omega -> (t -> Y_t omega): every such event pair factors.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Whole-process independent random tape is a derived admissibility model, not printed. No marginal-only weakening."
+        },
+        {
+          "binder": "F",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "T1/T3 family Nat -> MeasurableSpace Omega; T2 one MeasurableSpace Omega.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Formal subinformation structure is not printed and need not be a filtration."
+        },
+        {
+          "binder": "hF",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each relevant t every F_t-measurable set is in comap H_t; H_t(omega)=(S omega,(Y_i omega)_{i<t}).",
+          "printedSourceClassification": "EXCESS",
+          "reason": "SOURCE classification here means premise of the explicitly declared DERIVED target contract. Source timing motivates but does not print this exact sigma-field assumption."
+        },
+        {
+          "binder": "prediction/P",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Supplied real prediction sequence (T1/T3) or one real map P (T2).",
+          "printedSourceClassification": "TYPING",
+          "reason": "No algorithm construction; supplied functions may depend on the law."
+        },
+        {
+          "binder": "hP",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For each relevant t there exists g:Omega->R with StronglyMeasurable[F_t] g AND prediction_t = g mu-AE. Real strong measurability admits a measurable version. No relation between F and ambient is built into AEStronglyMeasurable.",
+          "printedSourceClassification": "EXCESS",
+          "reason": "Explicit AE-version formal-model premise, not a printed theorem premise or proof-result substitute."
+        },
+        {
+          "binder": "hpb",
+          "derivedContractClassification": "SOURCE",
+          "expandedMeaning": "For every t, mu-AE omega, 0 <= prediction_t omega AND prediction_t omega <= 1.",
+          "printedSourceClassification": "SOURCE",
+          "reason": "Printed feasibility is pointwise on play; AE version is an explicit extension. The two inequalities and per-time null sets are retained."
+        },
+        {
+          "binder": "T",
+          "derivedContractClassification": "TYPING",
+          "expandedMeaning": "Arbitrary deterministic natural horizon including zero.",
+          "printedSourceClassification": "TYPING",
+          "reason": "Source positive finite game extended by an explicit zero case."
+        }
+      ]
+    }
+  ],
+  "sourceTopology": {
+    "verdict": "accepted-with-explicit-delta",
+    "scope": "Coverage and proposed mathematical proof obligations, not proof completion.",
+    "inventoryCount": 26,
+    "printedNodes": 12,
+    "exclusions": 14,
+    "sourceGaps": 5,
+    "derivedObligations": 18,
+    "routes": 17,
+    "allSourceItemsReviewed": [
+      {
+        "id": "S01-ROUND",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-SECRET",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-PREDICT",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-LOSS",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "X01-MOTIVATION",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Motivation only; no extra mathematical premise."
+      },
+      {
+        "id": "S01-IID",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-MEAN-ORACLE",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-EQ11",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-EQ12",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "S01-NONNEG",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "X01-DIFFICULTY",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Interpretation, not a proof step or additional condition."
+      },
+      {
+        "id": "S01-SUCCESS",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "X01-REGRET-TRANSITION",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Incomplete transition; no missing-page formula is imported from memory."
+      },
+      {
+        "id": "X03-APPLICATION-INTRO",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; General motivation, not a premise for these IID derived targets."
+      },
+      {
+        "id": "X03-CLICKS",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Application example, not a dependency."
+      },
+      {
+        "id": "X03-ROUTING",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Application example, not a dependency."
+      },
+      {
+        "id": "X03-GAMES",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Application example, not a dependency."
+      },
+      {
+        "id": "X03-SGD",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Application example, not a dependency or cited theorem."
+      },
+      {
+        "id": "X03-RETURN",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Pedagogical framing only."
+      },
+      {
+        "id": "S03-ADVERSARIAL-BOUNDARY",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "X03-STATISTICAL-WARNING",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Motivational prose; does not prove a measurable-factorization or independence theorem."
+      },
+      {
+        "id": "X03-EMPIRICAL-MIN",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Different finite-sample minimizer from the expected fixed benchmark. Not required by any of the three sealed targets; no inference from it to a measurable policy factorization."
+      },
+      {
+        "id": "S03-PAST",
+        "disposition": "NODE",
+        "review": "Agrees with actual rendered region; retained as printed source context/assertion"
+      },
+      {
+        "id": "X03-TRACKING",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; FTL stability motivation, not used by any sealed target."
+      },
+      {
+        "id": "X03-FTL",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Specific learner, while all three targets concern arbitrary measurable or ae-predictable processes. No bound or initialization requirement from later pages is imported."
+      },
+      {
+        "id": "X03-PROOF-TRANSITION",
+        "disposition": "EXCLUDED",
+        "review": "Agrees with actual rendered region; Proof lies outside supplied pages and outside these targets; no later Lean/source route is backfilled."
+      }
+    ],
+    "gapReview": [
+      {
+        "id": "SG-ORACLE-RISK",
+        "accepted": true,
+        "reason": "The mean/variance squared-risk expansion and the fact that the mean lies in [0,1] are not proved on supplied pages.",
+        "dischargedByThisReview": false
+      },
+      {
+        "id": "SG-CAUSAL-NONNEG",
+        "accepted": true,
+        "reason": "Source omits the explicit nonanticipation/independence argument that prevents an admissible predictor from beating the variance benchmark.",
+        "dischargedByThisReview": false
+      },
+      {
+        "id": "SG-NORMALIZATION",
+        "accepted": true,
+        "reason": "The normalized-total identity and signed little-o/zero-limit bridge are asserted, not proved; inventoried but not a target in Batch27.",
+        "dischargedByThisReview": false
+      },
+      {
+        "id": "SG-RANDOM-MODEL",
+        "accepted": true,
+        "reason": "No private seed, sigma fields, ae versions, policy factorization, common exceptional set, or joint seed-history independence theorem is printed. These are source-inspired application objects, not hidden printed lemmas.",
+        "dischargedByThisReview": false
+      },
+      {
+        "id": "SG-EXPECTED-MIN",
+        "accepted": true,
+        "reason": "Supplied page1 gives the variance benchmark but no sInf/minimum characterization. Prove the fixed expected squared-loss minimum is attained at the mean internally; do not claim an expected-minimum display was inspected on a missing page.",
+        "dischargedByThisReview": false
+      }
+    ],
+    "derivedObligationReview": [
+      {
+        "id": "A-HISTORY",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "The observation map H_t(omega)=(S(omega),(Y_i(omega))_{i<t}) and its comap information sigma field; F_t lies below it. F need not be a monotone filtration."
+      },
+      {
+        "id": "A-AE-VERSION",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "For each t select an F_t-strongly-measurable representative equal to prediction_t almost everywhere. This is a proof ingredient, not a new public assumption."
+      },
+      {
+        "id": "A-FACTOR",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Use/prove real-valued measurable factorization through H_t for a representative measurable with respect to the comap. Must check exact factorization theorem hypotheses; no standard-Borel or measurability assumption on S/Y is silently added to target1."
+      },
+      {
+        "id": "A-CLAMP",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Apply measurable projection/clamping R->[0,1] to the policy on every seed-history pair. Preserve agreement where the original prediction is in [0,1]; behavior on unattained histories and null sets may change."
+      },
+      {
+        "id": "A-COUNTABLE-AE",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Intersect the countably many almost-sure agreement and boundedness events to obtain one a.e. event on which equality holds for every natural t. No uncountable-time conclusion."
+      },
+      {
+        "id": "A-JOINT-INDEP",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "From iIndepFun Y and independence of S from the entire stream, derive joint independence of (S,Y_{<t}) from Y_t. Pairwise independence alone is not a substitute."
+      },
+      {
+        "id": "A-INFORMATION-INDEP",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Formulate independence of the current draw from the sigma field generated by seed and past, then restrict to F<=that sigma field."
+      },
+      {
+        "id": "A-MEASURABLE-IMAGE",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Transport joint independence through a measurable real-valued function of the history."
+      },
+      {
+        "id": "A-AE-INDEP-TRANSFER",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Transfer independence from a measurable representative to the original ae-equal P. Target2 requires neither boundedness nor identical laws."
+      },
+      {
+        "id": "A-AMBIENT-REGULARITY",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "In target2/3, measurable S and Y make H_t ambient-measurable; F<=comap gives measurable representatives in the ambient space. Target1 alone needs no ambient measurability of S/Y."
+      },
+      {
+        "id": "A-INTEGRABILITY",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Use probability measure and a.s. [0,1] bounds to establish integrability of predictions, observations, squares, products and finite sums. Null-set outliers do not change integrals."
+      },
+      {
+        "id": "A-MEAN-MOMENTS",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Let m=integral Y_0 and v=E[(Y_0-m)^2]. Common law supplies every observation mean/variance; a.s. [0,1] support implies m in [0,1]."
+      },
+      {
+        "id": "A-CROSS-TERM",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Expand (P-Y_t)^2=(P-m)^2+(Y_t-m)^2-2(P-m)(Y_t-m), use independence and integrability to factor the product expectation and make it zero."
+      },
+      {
+        "id": "A-FIXED-ORACLE",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "For each u in [0,1], expected cumulative fixed loss=T*(v+(u-m)^2). The image is nonempty and bounded below, with minimum Tv attained at m; its sInf is therefore Tv."
+      },
+      {
+        "id": "A-FINITE-SUM",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Interchange integral and finite sum after integrability; subtract Tv to derive expectedFixedRegret=sum_t E[(prediction_t-m)^2]."
+      },
+      {
+        "id": "A-NONNEGATIVE",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "Each squared-error integral is nonnegative, so the finite sum and expectedFixedRegret are nonnegative."
+      },
+      {
+        "id": "A-ZERO",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "At T=0 all sums vanish and the expected-fixed-loss image is {0}; sInf and regret are0. The source uses positive game horizons; this is the sealed target natural-number extension."
+      },
+      {
+        "id": "A-POLICY-ROUTE",
+        "reviewedAsNecessaryOrOptionalObligation": true,
+        "proven": false,
+        "scope": "An alternative derived proof can first construct the target1 bounded explicit policy and then prove its squared-risk identity, transporting the finite losses back via common a.e. equality. This is optional, not required by the direct representative route."
+      }
+    ],
+    "routeReview": [
+      {
+        "id": "S-RISK",
+        "target": "S01-MEAN-ORACLE",
+        "allOf": [
+          "S01-IID",
+          "S01-LOSS",
+          "SG-ORACLE-RISK",
+          "SG-CAUSAL-NONNEG"
+        ],
+        "orGroup": null,
+        "assessment": "Valid source-assertion support with explicit missing bridge; not a printed proof.",
+        "premiseDischargeChecked": "Source assertion needs the omitted risk and admissibility arguments; this is not a printed proof."
+      },
+      {
+        "id": "S-NONNEG",
+        "target": "S01-NONNEG",
+        "allOf": [
+          "S01-IID",
+          "S01-SECRET",
+          "S01-PREDICT",
+          "S01-EQ11",
+          "S01-EQ12",
+          "SG-CAUSAL-NONNEG"
+        ],
+        "orGroup": null,
+        "assessment": "Valid source-assertion support with explicit missing bridge; not a printed proof.",
+        "premiseDischargeChecked": "IID plus strictly-past legal information support the missing nonnegative-excess argument. No current draw may enter the prediction."
+      },
+      {
+        "id": "S-NORMALIZE",
+        "target": "S01-SUCCESS",
+        "allOf": [
+          "S01-EQ11",
+          "S01-EQ12",
+          "SG-NORMALIZATION"
+        ],
+        "orGroup": null,
+        "assessment": "Valid source-assertion support with explicit missing bridge; not a printed proof.",
+        "premiseDischargeChecked": "Positive T permits division; finite initial conventions do not affect the asymptotic equivalence. Not a Batch27 theorem target."
+      },
+      {
+        "id": "D1-REPRESENTATIVE",
+        "target": "A-AE-VERSION",
+        "allOf": [
+          "A-HISTORY"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "AEStronglyMeasurable[F_t] supplies the a.e.-equal representative under F_t; no probability/finiteness/IID premise is used."
+      },
+      {
+        "id": "D1-FACTORIZATION",
+        "target": "A-FACTOR",
+        "allOf": [
+          "A-HISTORY",
+          "A-AE-VERSION"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "F_t<=comap H_t lets the real representative factor through the history map, with a measurable factor. Exact library proof/hypotheses remain to verify separately."
+      },
+      {
+        "id": "D1-BOUNDED",
+        "target": "A-CLAMP",
+        "allOf": [
+          "A-FACTOR"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "A.s. input-prediction bound ensures clamping changes no value on a full-measure agreement event. All-history bound holds even on histories outside observation support."
+      },
+      {
+        "id": "D1-COMMON-EVENT",
+        "target": "A-COUNTABLE-AE",
+        "allOf": [
+          "A-AE-VERSION",
+          "A-FACTOR",
+          "A-CLAMP"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Combine per-t equality events over countably many natural times; choose policies coherently before the countable intersection."
+      },
+      {
+        "id": "D1-TARGET",
+        "target": "T1",
+        "allOf": [
+          "A-FACTOR",
+          "A-CLAMP",
+          "A-COUNTABLE-AE"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Produces measurable factors, unconditional [0,1] bounds on all q, and one a.e. event of agreement at every time."
+      },
+      {
+        "id": "D2-JOINT",
+        "target": "A-JOINT-INDEP",
+        "allOf": [
+          "A-HISTORY",
+          "A-AMBIENT-REGULARITY"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Independent observation coordinates and seed independent of full stream establish joint seed-past/current independence; disjoint-index argument excludes t from range t."
+      },
+      {
+        "id": "D2-FACTORED",
+        "target": "T2",
+        "allOf": [
+          "A-AE-VERSION",
+          "A-FACTOR",
+          "A-JOINT-INDEP",
+          "A-MEASURABLE-IMAGE",
+          "A-AE-INDEP-TRANSFER"
+        ],
+        "orGroup": "T2-routes",
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "At this fixed t choose an F-measurable representative, factor it without clamping, transport independence through the factor and transfer across a.e. equality. T1 itself is not applicable without boundedness."
+      },
+      {
+        "id": "D2-SIGMAFIELD",
+        "target": "T2",
+        "allOf": [
+          "A-INFORMATION-INDEP",
+          "A-AE-VERSION",
+          "A-AE-INDEP-TRANSFER",
+          "A-AMBIENT-REGULARITY"
+        ],
+        "orGroup": "T2-routes",
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Establish current-draw independence from seed-past information directly from hind/hseed, restrict to F, apply to the F-measurable representative, then transfer a.e. equality. No policy construction is required."
+      },
+      {
+        "id": "D3-MOMENTS",
+        "target": "A-MEAN-MOMENTS",
+        "allOf": [
+          "S01-IID",
+          "SG-ORACLE-RISK",
+          "A-INTEGRABILITY"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Same-law bounded marginals transfer moments and give feasible mean; independence is unnecessary for the fixed comparator identity."
+      },
+      {
+        "id": "D3-CROSS",
+        "target": "A-CROSS-TERM",
+        "allOf": [
+          "T2",
+          "A-MEAN-MOMENTS",
+          "A-INTEGRABILITY"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Instantiate T2 at each t; integrate polynomial expansion with vanishing centered cross term. The identity is an internal proof obligation."
+      },
+      {
+        "id": "D3-ORACLE",
+        "target": "A-FIXED-ORACLE",
+        "allOf": [
+          "A-MEAN-MOMENTS",
+          "A-INTEGRABILITY",
+          "SG-EXPECTED-MIN"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Use constant u squared-risk expansion, finite-sum integration and minimization at feasible m; prove actual sInf characterization."
+      },
+      {
+        "id": "D3-SUM",
+        "target": "A-FINITE-SUM",
+        "allOf": [
+          "A-CROSS-TERM",
+          "A-FIXED-ORACLE",
+          "A-INTEGRABILITY"
+        ],
+        "orGroup": null,
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Sum risk identities for range T, cancel Tv from the expected fixed benchmark."
+      },
+      {
+        "id": "D3-DIRECT",
+        "target": "T3",
+        "allOf": [
+          "A-FINITE-SUM",
+          "A-NONNEGATIVE",
+          "A-ZERO"
+        ],
+        "orGroup": "T3-routes",
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Identity plus nonnegative squared integrals; empty horizon explicitly supported. No convergence or rate conclusion."
+      },
+      {
+        "id": "D3-EXPLICIT-POLICY",
+        "target": "T3",
+        "allOf": [
+          "T1",
+          "A-POLICY-ROUTE",
+          "A-JOINT-INDEP",
+          "A-INTEGRABILITY",
+          "A-MEAN-MOMENTS",
+          "A-FIXED-ORACLE",
+          "A-NONNEGATIVE",
+          "A-ZERO"
+        ],
+        "orGroup": "T3-routes",
+        "assessment": "Valid derived obligation route under sealed hypotheses; implementation remains unverified.",
+        "premiseDischargeChecked": "Use T1 to replace prediction by bounded explicit history policy on a common full-measure event, establish the same risk expansion via joint independence, integrate and transport back. Separate alternative to direct T2/representative route."
+      }
+    ],
+    "activeOmissionSearch": [
+      "All three game bullets and both numbered displays inventoried.",
+      "Mean feasibility, square-risk expansion and causal nonnegativity are gaps, not hidden printed proofs.",
+      "Partial page transitions remain excluded; page2 and later FTL proof not imported from memory.",
+      "p3 empirical minimizer and FTL formula explicitly excluded from generic AE targets, not confused with expected-fixed optimum.",
+      "Unknown-law motivation does not become a theorem banning law-dependent supplied predictors.",
+      "T2 direct unbounded factorization and sigma-field independence are OR alternatives. Bounded T1 is not silently used.",
+      "T3 direct risk expansion and bounded-policy transport are OR alternatives, not a false combined AND.",
+      "Integrability requires ambient measurable versions in T3; hY/hS and hF discharge that connection, unlike unrestricted T1.",
+      "Mean/variance common-law transfer needs no independence for fixed comparator; independence is separately required for predictor cross-term cancellation.",
+      "SOURCE_GAP entries inside derived routes name undischarged tasks, not logical premises one may assume in Lean. All leaf obligations remain unverified until body/compiler review."
+    ]
+  },
+  "antiAnchoringChecks": [
+    {
+      "test": "pairwise seed independence is insufficient",
+      "argument": "Independent fair bits Y0,Y1 and seed S=Y0 xor Y1: S is independent of each bit separately, yet (S,Y0) reveals Y1. Thus whole-stream independence cannot be dropped."
+    },
+    {
+      "test": "same law without independence is insufficient",
+      "argument": "Let every Y_t be the same fair bit and predict Y_{t-1} for t>0. Past reveals current, so the variance lower bound fails. Common law alone cannot justify T2/T3."
+    },
+    {
+      "test": "hindsight benchmark differs",
+      "argument": "At T=1 with a fair Bernoulli outcome, min_u E[(u-Y)^2]=1/4 but E[min_u (u-Y)^2]=0."
+    },
+    {
+      "test": "identity is not success",
+      "argument": "For Y_t=0 and prediction_t=1, all admissibility conditions hold with constant seed, while excess=T. T3 cannot imply little-o or zero average error."
+    },
+    {
+      "test": "null set versus pointwise",
+      "argument": "A predictor equal to an admissible constant except on a null singleton can take value 2 there. T1 conclusion is AE equality and bounded policy, not pointwise preservation of original values."
+    },
+    {
+      "test": "bounded T1 cannot close unbounded T2",
+      "argument": "T2 permits every real AE-measurable P without hpb. An unbounded measurable function of seed is admitted; invoking T1 needs a separate justified transform or an unbounded factorization lemma, not assumption insertion."
+    }
+  ],
+  "definitionAudit": [
+    {
+      "name": "privateSeedPastInformation",
+      "kind": "literal",
+      "sha256": "eb6c2daf2fb5b3335739acebbf5979bc9f769ee82d242c5a25f6101838557939",
+      "meaning": "Exact ordinary comap of seed plus finite strict-past map; no completed sigma algebra or monotonicity requirement is encoded."
+    },
+    {
+      "name": "expectedFixedMinimum",
+      "kind": "literal",
+      "sha256": "e84088d5230d138eeec9e42bea665c80d095f97ba6c21ee8b5169579aa79cea0",
+      "meaning": "Real sInf over [0,1] of expected finite squared loss. Total syntax alone does not prove finiteness/attainment; these are T3 proof obligations."
+    },
+    {
+      "name": "expectedFixedRegret",
+      "kind": "literal",
+      "sha256": "1f5b703374b54b89c43cf53f5fa455ecb00e0db76ca5372390aff148a2e7ca3e",
+      "meaning": "Expected finite learner loss minus expected fixed minimum; not expectation of sample-wise hindsight regret."
+    }
+  ],
+  "binderClassificationPolicy": "Classifications have TWO declared reference contracts. derivedContractClassification uses SOURCE only for explicit premises of the proposed derived mathematical contract, not for printed Orabona text. printedSourceClassification marks unsupported private-seed/information/AE-model inputs EXCESS if one falsely claimed a literal printed Anchor. Such a literal Anchor is rejected. No RULED correction or separately audited STANDING assumption is invented. No proof ingredient (factorization, independence producer, integrability, risk expansion, minimum attainment) is accepted as a new public premise.",
+  "isolation": {
+    "implementationBodiesRead": false,
+    "oldSourceReviewerVerdictsReadForBatch27": false,
+    "oldSourceIntentRationaleRead": false,
+    "publicReaderProseRead": false,
+    "blindActorDistinct": true,
+    "extractorActorDistinct": true,
+    "historyLimit": "This reviewer previously reviewed Batch25/26 and retains their conversation context; this is not a pristine-history actor. Current Batch27 judgments use only actual two-page source images/text, sealed signatures, fresh blind output, new extractor topology and generic rule/definition context. No earlier Batch27 verdict/body/rationale was read.",
+    "pdfLimit": "Original PDF bytes and page count independently checked; actual PDF13/15 text re-extracted and whitespace-normalized against cached text; both fresh v2 PNGs also actually viewed. Content/formulas correspond; raster byte identity is explicitly not claimed. Both historical render attempts remain retained.",
+    "mathlibContext": "Read only definitions of AE strong measurability, probability measure, IdentDistrib, IndepFun/iIndepFun and their kernel independence expansion; no target or dependency implementation bodies.",
+    "memory": "Quick memory index pass used only generic staged evidence discipline, not source semantics."
+  },
+  "evidenceBindings": {
+    "batch27-source-only/source-pdf13-text-v1.txt": "b16d82b563558afaaa14776c6015a78be9e0daa3d888a9a0593c057a54d2288b",
+    "batch27-source-only/source-pdf13-v1.png": "b841925f189212435f79c9edd78c14961bfe9eff4b3f3de9e46e5c1020ff4047",
+    "batch27-source-only/source-pdf15-text-v1.txt": "037b6d907a868c339b881162333f6e56352cbebf285902eb6ed628ff4f8bd947",
+    "batch27-source-only/source-pdf15-v1.png": "977f04c6ed26fbc76ffe4add672577ee38753cacda8e3e1b07bc538474716165",
+    "batch27-source-only/source-page-cache-bindings-v1.json": "306f3a569d318fea38351b9cb341a145611b3e2a4efcc1208c39a1700172a710",
+    "batch27-source-only/sealed-signatures-v1.json": "220eaafd10057bbc87e9a1d2eec4797442e37c1a59cc8510cf29fb8ea0681ab0",
+    "batch27-source-only/input-binding.json": "2043e5322bb66c73ac49f25533605cdcbc03306ef35b93a665f36d0bbe9b5882",
+    "batch27-blind-input-binding-v1.json": "d616a2f445554d2a9fb3cba41b7ef75c4587568407f650673c4f640fae60fa6f",
+    "batch27-preport-statement-seal-v1.json": "e7bc9ffa38ed178115ca62c6e00ec3602a98eaf834a75605564eaf735f385e3b",
+    "batch27-blind-review-v1/report.json": "2cf76c4b8f1601db94ae285393f564f3443f1377953b5d9571ab7310096fb9e6",
+    "batch27-blind-review-v1/reconstruction.md": "b65cdd30fea70200ae06c108c8515e06a17bea8273b73c1b0b8d10ac84e791d1",
+    "batch27-source-topology-v1/source-inventory.md": "d269c3837af9a54085cce12a741f41b5ba5e156eb643c70c3513e3cdd6a2d931",
+    "batch27-source-topology-v1/source-inventory.json": "ba0e92867d55f3c853dec00e465c2b877bb8796210b491ad6da03f61b71bc648",
+    "batch27-source-topology-v1/source-proof-graph.json": "1a51c06b824df459493ea4286fa2b71aaf28efbb44d1728fe73d56956767f436",
+    "batch27-source-topology-v1/report.json": "e728ff5a9150094cd4657e363e93252ae2273a75dd06c4c93248525fc7ab3e96",
+    "batch27-source-topology-v1/report-v2.json": "492950fc11d361efeeb6777862b6f21bca6bb737d5a055b8e39533464dca9828",
+    "batch27-source-pdf-reverification-v1/receipt.json": "9be02259b790a1f8bca71a46e6016793307e13d391e9da5f1fd2020d7548daf8",
+    "batch27-source-pdf-reverification-v2/receipt.json": "9d22d2719b09a7571cb639eba1bff580deed24698dee0ddeaa130d6d0e0b890c",
+    "batch27-source-pdf-reverification-v2/source-pdf13-fresh.png": "bce48be8515951f1505e6bdfc68f6b3a36f477ace699d0b0494c0b8db9f4a55c",
+    "batch27-source-pdf-reverification-v2/source-pdf15-fresh.png": "43a66ee31b263d3f4e4d43e037e706171a93819ca87d2e31ff69cfccc6d370bd",
+    "batch27-source-pdf-reverification-v1/source-pdf13-fresh.txt": "da99d6376f5e3ae105a7dd48dfe86730dd6b10a78ce440b9efcd7721bf8cf85c",
+    "batch27-source-pdf-reverification-v1/source-pdf15-fresh.txt": "d382239d9bc52b5a071622b999e71a9ab26dc63ad95d36ba3d6fbe4a6ea1abf5"
+  },
+  "ruleBindings": {
+    "AGENTS.md": "6635867d8d12521d553d503e3c461b30d995f56db06f5acc3eb1745ec8688a93",
+    "CONTRIBUTING.md": "ea004f626be82fde7e4b5c42dacd112cdba47574333c4b8af1fd2593d45bd11f",
+    "docs/contributor-codex-contract.md": "bf1bea6a7532f1a192f6289107e3120a6428b2806850cfe69bb62c71865a8353",
+    "docs/theorem-publication-protocol.md": "71772f56444ba1e919aab9cc0d8caab3f0fb6b20887a12aa0f73001afd1c4385",
+    "docs/proof-digestion-protocol.md": "8a183dde41c2b58f5c6a6e2fa4158ccc64ad3e427b9349110d15141aed254492",
+    "docs/evidence-routed-memory-protocol.md": "9e529672bb9706b245596e272024d4b38f3e5a32a5b54310ac70aa8d2118ccf7",
+    ".agents/skills/bandit-substantive-advance/SKILL.md": "000ff0aab81bac73a480da8d51ad9d05ad4fd2858716767e82258d7276be5823",
+    ".agents/skills/bandit-semantic-roundtrip/SKILL.md": "7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477",
+    ".agents/skills/bandit-lean-formalization/SKILL.md": "e5b62df259e833a8094a90fd41e305f1dbec1089ce4d5d7ceb7e7500ec56f642"
+  },
+  "remainingGates": [
+    "Implementation/body and actual dependency/axiom audit under unchanged signatures.",
+    "Exact original canary and meaningful counterexample coverage, compile and combined project gates.",
+    "Reader proof/explanation, actual source mappings, full context and rendered publication review.",
+    "No integration, merge, live, closure/retirement or final Exposition acceptance from Stage A."
+  ],
+  "originalPDFReverification": {
+    "path": "workspace/ABRL\\worktrees\\research-online-book\\runs\\online-ch2-b4-strong-convex-growth-20261011\\source-originals\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "bytes": 3483459,
+    "pages": 328,
+    "checks": [
+      {
+        "pdfPage": 13,
+        "printedPage": 1,
+        "originalPDFTextIndependentlyExtracted": true,
+        "normalizedTextEqualsCached": true,
+        "freshImageActuallyViewed": true,
+        "freshImageSHA256": "bce48be8515951f1505e6bdfc68f6b3a36f477ace699d0b0494c0b8db9f4a55c",
+        "visualContentAndFormulasCorrespond": true,
+        "rasterByteIdentityClaimed": false
+      },
+      {
+        "pdfPage": 15,
+        "printedPage": 3,
+        "originalPDFTextIndependentlyExtracted": true,
+        "normalizedTextEqualsCached": true,
+        "freshImageActuallyViewed": true,
+        "freshImageSHA256": "43a66ee31b263d3f4e4d43e037e706171a93819ca87d2e31ff69cfccc6d370bd",
+        "visualContentAndFormulasCorrespond": true,
+        "rasterByteIdentityClaimed": false
+      }
+    ]
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch27-source-review-v1/stage-a-report.json",
+      "sha256": "e5c6f01cb5ccabd8e800f812e1c6eaae0d6c00bacdc37cbf94e55f2732d7bfd0",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Original mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "See review-binding.json for later scoped evidence. Earlier pending fields remain immutable historical observations."
+  }
+}

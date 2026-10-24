@@ -1,0 +1,281 @@
+{
+  "schema": "batch27-independent-source-review-stage-b-v1",
+  "at": "2026-10-24T01:28:14.162227+00:00",
+  "stage": "B-nonblind-original-body-and-actual-private-compile-review",
+  "actor": "/root/batch25_source_reviewer",
+  "sourceHead": "8dcdf1e5d74b79ee90d2dd27a48569e9cb4f7fe6",
+  "acceptedComparisonMain": "18dc1abe2ed83b91c1d4cfc975c62971982dfef5",
+  "probeWorkspaceHead": "f5675b25a248d3465d02ccd649205ddb7468ab41",
+  "verdict": "accepted-bounded-original-implementation-and-private-probe",
+  "sourceRelativeSemanticVerdict": "accepted-with-explicit-delta",
+  "requiredCorrections": [],
+  "failures": [],
+  "stageAPreserved": true,
+  "sourceChecks": {
+    "BanditRLProof/OnlineGuessingAECausal.lean": {
+      "sha256": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+      "gitBlob": "c77a420060300e69f9a9ca78b1236cf56b820fd1",
+      "lines": 104,
+      "exactOriginalGitBytes": true,
+      "intakeProbeCopiesEqual": true
+    },
+    "Tests/OnlineGuessingAECausalCanary.lean": {
+      "sha256": "ee94efc0185f7d9be0a41bbe9fe79b7058812c0b34bb22ad0186f096433e84d4",
+      "gitBlob": "33f35eaab06fd715b9ab5a6ca4749b86285335e0",
+      "lines": 123,
+      "exactOriginalGitBytes": true,
+      "intakeProbeCopiesEqual": true
+    }
+  },
+  "headerAndBodyBindings": [
+    {
+      "name": "ae_predictable_exists_bounded_history_policy",
+      "exactFrozenHeader": true,
+      "headerSHA256": "16fd6701fea34b566c18de217f978e9a33cb350f53173c62b59d4cd6150c2135",
+      "bodySpanSHA256": "6122f78b446820a7bb3712efd25f32dc1d2ba2e7fe7688446474020268f0215e",
+      "bodySpanConvention": "From literal space-colon-equals-by through before next top-level theorem/end marker; UTF-8 original text, no normalization."
+    },
+    {
+      "name": "ae_predictable_private_seed_independent",
+      "exactFrozenHeader": true,
+      "headerSHA256": "59ae1654a75e0061599dbfd2b9993ea0efcf8327ddfa8f4502b862127f2f8bb7",
+      "bodySpanSHA256": "3339a279f9e976b58bf341f5db2d14fd3f0f1c71563b364e272d4adc7b2bd244",
+      "bodySpanConvention": "From literal space-colon-equals-by through before next top-level theorem/end marker; UTF-8 original text, no normalization."
+    },
+    {
+      "name": "ae_predictable_private_seed_expectedFixed_excess",
+      "exactFrozenHeader": true,
+      "headerSHA256": "9db5d08728989697cb3cd1cf2e07f96bc64e491305717802eb405f17998d379d",
+      "bodySpanSHA256": "f4f8dc37b1dc524c983c5feab10dd75409f4bfbfbfaaf4c36175bf9c1ec7f680",
+      "bodySpanConvention": "From literal space-colon-equals-by through before next top-level theorem/end marker; UTF-8 original text, no normalization."
+    }
+  ],
+  "dependencyByteReuse": {
+    "BanditRLProof/OnlineGuessingRandomizedIID.lean": {
+      "sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+      "gitBlob": "088cad05e0a706ee909c260659787088c50647a2",
+      "originalHeadMainWorkspaceExactBytes": true
+    },
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean": {
+      "sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+      "gitBlob": "c62ed19a6e5ada780eb66143108d98f30db29a8a",
+      "originalHeadMainWorkspaceExactBytes": true
+    },
+    "Tests/OnlineGuessingIIDSuccessCanary.lean": {
+      "sha256": "d437875e5e6c4fa75bf8f2b61f84d6e09e3de67409597f8809e80bae621a3651",
+      "gitBlob": "09ca96357dd59eb46c99b4c91bda5ee588028e2d",
+      "originalHeadMainWorkspaceExactBytes": true
+    }
+  },
+  "productionProofReview": [
+    {
+      "target": "T1",
+      "name": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+      "verdict": "accepted-under-exact-derived-contract",
+      "steps": [
+        "Select each hP.mk representative with F_t measurability and AE equality. Raise to ordinary comap H_t measurability using hF; no ambient S/Y measurability is inserted.",
+        "Apply Measurable.exists_eq_measurable_comp to obtain a globally measurable factor. Its Nonempty/StandardBorel codomain assumptions are discharged by real numbers, not by an illicit StandardBorel Seed premise.",
+        "Choose a family of factors and compose with continuous projection to [0,1]. Subtype membership supplies every-seed/every-history boundedness, including off-support inputs.",
+        "On each time-specific full-measure agreement-and-bound event, projIcc is identity. ae_all_iff combines natural times into one common event."
+      ],
+      "sourceGraphRoute": [
+        "D1-REPRESENTATIVE",
+        "D1-FACTORIZATION",
+        "D1-BOUNDED",
+        "D1-COMMON-EVENT",
+        "D1-TARGET"
+      ],
+      "proofIngredientsSuppliedAsPublicPremises": false
+    },
+    {
+      "target": "T2",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+      "verdict": "accepted-under-exact-derived-contract",
+      "steps": [
+        "Apply existing predictable_private_seed_independent to the F-measurable representative hP.mk P. This existing theorem restricts independent generated sigma fields and consumes no boundedness.",
+        "Existing private_seed_past_independent derives past/current independence via disjoint finite indices and transports whole-stream seed independence to (past,current). independent_private_seed_pair regrouping uses exact product-law identities.",
+        "IndepFun.congr transfers representative independence to original P by hP.ae_eq_mk.symm. No clamp/T1 call and no moment assumption occurs."
+      ],
+      "sourceGraphRoute": [
+        "D2-JOINT",
+        "D2-SIGMAFIELD"
+      ],
+      "unselectedAlternative": "D2-FACTORED remains a mathematical alternative, not an actual dependency.",
+      "proofIngredientsSuppliedAsPublicPremises": false
+    },
+    {
+      "target": "T3",
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "verdict": "accepted-under-exact-derived-contract",
+      "steps": [
+        "Measurable seed and each coordinate make H_t ambient measurable. Compose hF with its comap inclusion, then AEStronglyMeasurable.mono supplies ambient AE measurability.",
+        "Probability implies finite measure; memLp_of_bounded with hpb gives L2 prediction regularity. T2 derives prediction/current independence at each t.",
+        "expectedFixedMinimum_eq_variance is an actual producer: expected_fixed_prefix_minimum proves mean feasibility and IsLeast, then csInf_eq evaluates the expected-fixed benchmark for every T including zero.",
+        "iid_cumulative_prediction_decomposition integrates finite sums using L2, transfers equal-law mean/variance, and reuses independent_prediction_square. The latter uses variance_sub/covariance_eq_zero, the equivalent variance route for the source-topology centered cross-term obligation.",
+        "Subtract T variance and sum nonnegative squared integrals. No positive-horizon division, limit, source FTL proof or generic success theorem is used."
+      ],
+      "sourceGraphRoute": [
+        "D3-MOMENTS",
+        "D3-CROSS",
+        "D3-ORACLE",
+        "D3-SUM",
+        "D3-DIRECT"
+      ],
+      "unselectedAlternative": "D3-EXPLICIT-POLICY/T1 is not in this proof. It is not promoted to an actual proof edge.",
+      "proofIngredientsSuppliedAsPublicPremises": false
+    }
+  ],
+  "canaryReview": [
+    {
+      "name": "Tests.OnlineGuessingAECausal.badPrediction",
+      "assessment": "Changes the persistent seed-bit prediction to 2 exactly when the unrevealed current target equals 2. This is a genuine nonempty off-support condition on the real product carrier."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.bad_eq_causal_ae",
+      "assessment": "AE [0,1] target support excludes target=2 and proves equality with the seed-only causal predictor."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.causal_version_measurable",
+      "assessment": "Seed-bit composition with seed projection is measurable under the ordinary comap history information."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.bad_ae_predictable",
+      "assessment": "Transfers AE strong measurability across the established AE equality, without asserting pointwise causality."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.bad_ae_unit",
+      "assessment": "AE equality plus globally feasible seedBit proves AE unit bounds; no pointwise outcome/prediction support introduced."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.bad_is_not_pointwise_predictable",
+      "assessment": "At t=0, points (seed0,all2) and (seed0,all0) have identical empty-history information but different predictions. Measurable.factorsThrough yields a contradiction."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.bad_is_not_everywhere_unit",
+      "assessment": "The explicit all2 path at t=0 produces value 2 and contradicts global unit-interval feasibility."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_all_time_bounded_policy",
+      "assessment": "Genuine T1 existential consumer on the non-pointwise process, establishing measurable bounded policy and one common AE event."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_current_independence",
+      "assessment": "Genuine T2 consumer with the concrete product seed law and infinite IID coordinates, despite null-event peeking."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_original_excess_identity",
+      "assessment": "Genuine T3 consumer with every model assumption produced by concrete test lemmas."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_mean_square",
+      "assessment": "Target mean 1/2 and persistent seedBit in {0,1} yield squared error 1/4 AE; integral_congr_ae and probability mass one give exact value."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_nonzero_excess",
+      "assessment": "T3 equality plus per-time 1/4 errors gives T/4, demonstrating the finite identity does not imply sublinear success."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_two_round_excess",
+      "assessment": "T=2 gives exactly 1/2."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_empty_excess",
+      "assessment": "T=0 gives exactly zero; no illegal division by zero used."
+    },
+    {
+      "name": "Tests.OnlineGuessingAECausal.actual_positive_target_variance",
+      "assessment": "Concrete target variance is 1/4; example is not a degenerate zero-variance validation."
+    }
+  ],
+  "actualOwnedConsumers": {
+    "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy": [
+      "Tests.OnlineGuessingAECausal.actual_all_time_bounded_policy"
+    ],
+    "BanditRL.OnlineLearning.ae_predictable_private_seed_independent": [
+      "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "Tests.OnlineGuessingAECausal.actual_current_independence"
+    ],
+    "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess": [
+      "Tests.OnlineGuessingAECausal.actual_original_excess_identity"
+    ]
+  },
+  "consumerBoundary": "T1 and T3 have only the concrete canary consumers in this 18-declaration graph; T2 also has T3 as a production consumer. No claim of two production consumers for every endpoint. T1 is a meaningful bounded AE representation interface, and T2/T3 extend ordinary measurable contracts without assuming their derived independence/L2 results. Existing generic core facts are reused, not duplicated.",
+  "probeAudit": {
+    "rootExecutedCompile": true,
+    "reviewerReranCompile": false,
+    "actualTerminalExitCode": 0,
+    "fullOriginalProductionAndCanaryBodiesPresent": true,
+    "canaryOnlyAssemblyChange": "Removed import directives while including their dependencies; all declarations/bodies retained.",
+    "frozenUniversalTypeChecks": 3,
+    "literalDefinitionEqualities": 3,
+    "namedDeclarations": 18,
+    "productionTheorems": 3,
+    "canaryDefinitions": 1,
+    "canaryTheorems": 14,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "typeValueGraph": "Compiler environment exporter uses actual ConstantInfo type and opaque value; direct expression constants, not a transitive closure or minimal mathematical dependency graph.",
+    "allOwnedHaveActualValues": true,
+    "logWarnings": "Neutral wrapper only: class-valued definition reducibility recommendation and unused binder warnings in literal Prop definitions; no original theorem errors and no sorryAx.",
+    "importedModuleGate": false,
+    "fullProjectGate": false
+  },
+  "sourceGapDisposition": {
+    "SG-ORACLE-RISK": "Internally bridged for sealed probability/AE support contracts by shared squared-risk and mean-feasibility producers; source page itself still omits this proof.",
+    "SG-CAUSAL-NONNEG": "T2 and T3 bridge the explicit private-seed AE-information model only.",
+    "SG-RANDOM-MODEL": "The specified AE version/comap representation and its bounded policy theorem are established; general completed-filtration/all-kernel coverage remains open.",
+    "SG-EXPECTED-MIN": "Actual shared IsLeast plus csInf_eq establishes this specific expected-fixed benchmark, including T=0.",
+    "SG-NORMALIZATION": "Not a Batch27 target and not claimed closed by these proofs."
+  },
+  "remainingBoundaries": [
+    "No public theorem signature or original proof changed.",
+    "Classical representative/factor choice is not an executable learner constructor.",
+    "No pointwise preservation on null samples, no off-support identity/uniqueness, no uncountable-time common event.",
+    "No claim of universally representing completed filtrations or arbitrary stochastic kernels.",
+    "No stochastic success, convergence, rate, chapter/book completion or final purification follows.",
+    "Private concatenated elaboration has not yet certified ordinary imported-module/root/Tests/full harness integration.",
+    "Reader exposition/rendering, metadata integration, CI/main/live and any closure/ref retirement remain separate."
+  ],
+  "evidenceBindings": {
+    "batch27-source-review-v1/stage-a-report.json": "e5c6f01cb5ccabd8e800f812e1c6eaae0d6c00bacdc37cbf94e55f2732d7bfd0",
+    "batch27-source-review-v1/stage-a-report.md": "a020576900abd9cacdd29bcde1c3a97e26a2834cd8aa3ddf8243a7deb2bf5ab4",
+    "batch27-source-review-v1/stage-a-seal.json": "f88fbffde0d537897da8b8bc1dfd39ab60db4d95e647e8d95cea81d03dfd5967",
+    "batch27-preport-statement-seal-v1.json": "e7bc9ffa38ed178115ca62c6e00ec3602a98eaf834a75605564eaf735f385e3b",
+    "probe_batch27_original_v1.py": "4765418c8550bcb7b07901ce823b8ea3f63d3f65d3e4fb0b8a9e48bb4e9f9176",
+    "batch27-actual-proof-probe-v1/receipt.json": "43f1c2b544f7b364463b26680b8ea7a59c87ecf556241fcb1fca9a0bd3f2a6ed",
+    "batch27-actual-proof-probe-v1/Probe.lean": "e67f18fb5156d3f9a4f9712ff5f4f4915d3f9716301a51e18e8ebaa13ad7aa4a",
+    "batch27-actual-proof-probe-v1/probe.log": "49681e06cb23a6d64fba8fcd1d5ccace4987537225c68b2f385e1f9f6130eded",
+    "batch27-actual-proof-probe-v1/neutral-propositions.lean": "451ab2ef21ce813ad421c3bb6ef6096c1216fdd051783a558cbd3819d9d9d47c",
+    "batch27-actual-proof-probe-v1/actual-dependencies.json": "8ec00025c3a0fbb2b8b72384e382abbd8f3bbb0d601a48afc3cb43a7aee822d8",
+    "batch27-actual-proof-probe-v1/BanditRLProof__OnlineGuessingAECausal.lean": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+    "batch27-actual-proof-probe-v1/Tests__OnlineGuessingAECausalCanary.lean": "ee94efc0185f7d9be0a41bbe9fe79b7058812c0b34bb22ad0186f096433e84d4",
+    "batch27-intake-v1/BanditRLProof__OnlineGuessingAECausal.lean": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+    "batch27-intake-v1/Tests__OnlineGuessingAECausalCanary.lean": "ee94efc0185f7d9be0a41bbe9fe79b7058812c0b34bb22ad0186f096433e84d4"
+  },
+  "currentSourceAndMathlibBindings": {
+    "BanditRLProof/OnlineGuessingRandomizedIID.lean": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3",
+    "BanditRLProof/OnlineGuessingIIDBenchmark.lean": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7",
+    "Tests/OnlineGuessingIIDSuccessCanary.lean": "d437875e5e6c4fa75bf8f2b61f84d6e09e3de67409597f8809e80bae621a3651",
+    "BanditRLProof/OnlineLearningStochastic.lean": "1c943259b35743d191eac96f9a82788517fd6b0386e8bfb52de9e126acbd01f9",
+    "Tests/OnlineGuessingRandomizedIIDCanary.lean": "6223f9ef63b02d3291204242633e09362ff5507a6301301ccb7a257ea57fb2a1",
+    "Tests/OnlineGuessingIIDBenchmarkCanary.lean": "fd83e21326c383f75fed34d544ddb91b9bef264525023a4463c76caa539c9a5d",
+    "lean-toolchain": "b15a57f8ea4c890197465ce1156667ae13d9ed4ab8a9f263a920bf010d967d82",
+    "lake-manifest.json": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48",
+    ".lake/packages/mathlib/Mathlib/MeasureTheory/Function/FactorsThrough.lean": "b9764e0b78b01b92e60a25b6a850a5cbadddbea7690a790019cb73b11632c46a",
+    ".lake/packages/mathlib/Mathlib/MeasureTheory/Function/LpSeminorm/Basic.lean": "3a4a6e6ce8dac303a036fc832a456ff018e8892fafcee50358c3759a0b18374b",
+    ".lake/packages/mathlib/Mathlib/Probability/Independence/Basic.lean": "2bd891eb5f899d05724facae4676272b5ca2020a74cf1eefd74a2a1ea097d338"
+  },
+  "mathlibCommit": "5e932f97dd25535344f80f9dd8da3aab83df0fe6",
+  "public_projection": {
+    "original": {
+      "artifact": "batch27-source-review-v1/stage-b-report.json",
+      "sha256": "f7c71799a07840278ea714c1e77c5e62155108906deefe1850dfd463eb8c5fa5",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Original mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "See review-binding.json for later scoped evidence. Earlier pending fields remain immutable historical observations."
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "instruction": "Reconstruct all three exact target signatures in seven mathematical slots from Lean alone. No source identity, proof bodies or previous verdict supplied. Definitions are exact Lean, not pseudocode. Record quantifier order, all assumptions, probability and information semantics, null-set scope and zero-horizon behavior. Ask formalizer for missing scoped Lean definitions rather than consulting source or private reports.",
+  "scopedContext": "open MeasureTheory ProbabilityTheory\nuniverse u v\nnamespace BanditRL.OnlineLearning",
+  "imports": [
+    "BanditRLProof.OnlineGuessingRandomizedIID",
+    "Mathlib.MeasureTheory.Function.FactorsThrough",
+    "Mathlib.Topology.UnitInterval"
+  ],
+  "definitions": [
+    {
+      "kind": "def",
+      "name": "privateSeedPastInformation",
+      "lean": "def privateSeedPastInformation {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed]\n    (S : Ω → Seed) (Y : ℕ → Ω → ℝ) (t : ℕ) : MeasurableSpace Ω :=\n  MeasurableSpace.comap (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω))\n    inferInstance"
+    },
+    {
+      "kind": "def",
+      "name": "expectedFixedMinimum",
+      "lean": "noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n    Set.Icc (0 : ℝ) 1)"
+    },
+    {
+      "kind": "def",
+      "name": "expectedFixedRegret",
+      "lean": "noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n    expectedFixedMinimum μ Y T"
+    }
+  ],
+  "targets": [
+    {
+      "kind": "theorem",
+      "name": "ae_predictable_exists_bounded_history_policy",
+      "lean": "theorem ae_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :\n    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,\n      (∀ t, Measurable (policy t)) ∧\n      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧\n      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)"
+    },
+    {
+      "kind": "theorem",
+      "name": "ae_predictable_private_seed_independent",
+      "lean": "theorem ae_predictable_private_seed_independent {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ) (hP : AEStronglyMeasurable[F] P μ) :\n    IndepFun P (Y t) μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "ae_predictable_private_seed_expectedFixed_excess",
+      "lean": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ)\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T"
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch27-blind-input/neutral-statements-v1.json",
+      "sha256": "220eaafd10057bbc87e9a1d2eec4797442e37c1a59cc8510cf29fb8ea0681ab0",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Original mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "See review-binding.json for later scoped evidence. Earlier pending fields remain immutable historical observations."
+  }
+}
