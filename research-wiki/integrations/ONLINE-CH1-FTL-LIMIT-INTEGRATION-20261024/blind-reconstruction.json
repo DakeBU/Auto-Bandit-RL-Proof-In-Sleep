@@ -1,0 +1,363 @@
+{
+  "schema_version": "1.0",
+  "document_kind": "source-blind Lean semantic reconstruction",
+  "role": "distinct source-blind semantic decoder",
+  "decision_scope": "Reconstruction of definitions and proof-omitted signatures only. This document is not a proof verification, compilation result, source-fidelity judgment, or acceptance approval.",
+  "input": {
+    "path": "maintenance-evidence/batch30-blind-packet-v1/statements.txt",
+    "sha256_expected": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "sha256_observed": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "hash_match": true,
+    "contents": "Five exact Lean definitions and five theorem signatures, with proofs omitted."
+  },
+  "access_disclosure": {
+    "evidence_files_read": [
+      "maintenance-evidence/batch30-blind-packet-v1/statements.txt"
+    ],
+    "context": "The decoder received the assignment and supplied workspace guidance. The designated packet was the only evidence-bearing file opened. No surrounding repository files, source citations, source extracts, original PR context, prior reports, goal history, or proof bodies were read.",
+    "actions": [
+      "Computed SHA256 of the designated packet.",
+      "Read the designated packet verbatim.",
+      "Wrote only this requested reconstruction artifact in its designated maintenance directory."
+    ],
+    "actions_not_performed": [
+      "No production edits.",
+      "No compilation or theorem-proof checking.",
+      "No external source access.",
+      "No external mutation.",
+      "No assumption that a theorem name establishes facts absent from its type."
+    ]
+  },
+  "ambient_semantics": {
+    "namespace": "BanditRL.OnlineLearning",
+    "imports_and_notation": "The packet imports Mathlib and opens Filter. All sequences are indexed by Lean natural numbers, including zero. A sum over Finset.range T includes exactly indices 0 through T-1.",
+    "spaces": [
+      "The generic comparator-regret and LimitNoRegret definitions quantify over an arbitrary type X : Type*. No vector-space, metric, topology, convexity, finiteness, or order structure on X is required by these definitions.",
+      "Loss values, predictions in the specialized squared-loss results, outcomes, empirical means, comparator values, and limits are real numbers.",
+      "Set.Icc (0 : ℝ) 1 is the closed real interval [0,1], including both endpoints.",
+      "All five specialized theorem signatures concern sequences y : ℕ → ℝ and the specific predictor meanPredict y."
+    ],
+    "indexing_and_casts": "An occurrence of T or n as a divisor of a real expression is coerced from ℕ to ℝ. The explicit casts in several signatures and the inferred casts in the definitions have the same mathematical meaning.",
+    "division_by_zero": "Lean real division is total: x / 0 = 0. In particular the empirical mean of the empty prefix is 0, and all displayed normalized regret expressions have value 0 at horizon 0. Their limits as T tends to infinity are unaffected by that one initial value.",
+    "limit_semantics": {
+      "expression": "Tendsto f atTop (nhds a)",
+      "meaning": "The ordinary, finite real limit of the entire natural-indexed sequence f(T) is a as T tends to infinity.",
+      "epsilon_form_latex": "\\forall \\varepsilon>0\\;\\exists N\\in\\mathbb N\\;\\forall T\\in\\mathbb N,\\ T\\ge N\\Longrightarrow |f(T)-a|<\\varepsilon.",
+      "exclusions": "This is not merely a limsup inequality, a subsequential limit, a convergence-in-probability statement, an almost-sure statement, an expectation bound, or convergence to an extended-real infinity."
+    },
+    "metric_and_normalization": [
+      "The specialized loss is (x-y_t)^2, the square of the usual Euclidean distance on ℝ. Squared distance itself is not asserted to be a metric.",
+      "Regret is a signed difference between two cumulative losses, rather than a nonnegative distance. Generic comparator regret can be negative.",
+      "Division by T produces average regret per round. The packet does not normalize by sqrt(T), take a root mean squared error, or introduce any dimension-dependent scaling."
+    ],
+    "noncomputability": "The four numerical definitions carry the Lean noncomputable marker. Their mathematical values are specified, but the packet supplies no executable algorithm or computational complexity guarantee."
+  },
+  "notation": {
+    "y": "The complete real sequence y_0,y_1,... .",
+    "p": "p_t = meanPredict y t.",
+    "M": "M_T = empiricalMean y T.",
+    "S": "S_T = Σ_{t=0}^{T-1}(p_t-y_t)^2.",
+    "Q": "Q_T(u) = Σ_{t=0}^{T-1}(u-y_t)^2.",
+    "R": "R_T(u) = S_T-Q_T(u) for the specialized predictor p.",
+    "A": "A_T = R_T(M_T), comparator regret relative to the empirical mean of the current horizon.",
+    "B": "B_T = S_T-inf_{u∈[0,1]} Q_T(u), the specialized squaredBestRegret.",
+    "qualification": "These short symbols are explanatory notation introduced by the decoder. They are not additional declarations in the packet."
+  },
+  "definitions": [
+    {
+      "name": "comparatorRegret",
+      "binder_order": [
+        "{X : Type*}, implicit",
+        "(loss : ℕ → X → ℝ)",
+        "(prediction : ℕ → X)",
+        "(u : X)",
+        "(T : ℕ)"
+      ],
+      "result_type": "ℝ",
+      "hypotheses": [],
+      "natural_language": "For any action type X, time-indexed real-valued loss function, prediction sequence, one comparator u, and natural horizon T, subtract the loss of always using u on rounds 0 through T-1 from the loss incurred by the prediction sequence on those rounds.",
+      "latex": "R_T^{\\ell,p}(u)=\\sum_{t=0}^{T-1}\\ell_t(p_t)-\\sum_{t=0}^{T-1}\\ell_t(u).",
+      "scope": [
+        "The comparator is a single element of X held fixed across all rounds in the finite sum.",
+        "The definition by itself neither optimizes over u nor restricts u or prediction t to an admissible subset.",
+        "No nonnegativity, boundedness, convexity, stochastic independence, or causal restriction on loss or prediction is assumed.",
+        "At T=0 both sums are empty, so regret is 0."
+      ]
+    },
+    {
+      "name": "empiricalMean",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(n : ℕ)"
+      ],
+      "result_type": "ℝ",
+      "hypotheses": [],
+      "natural_language": "The sum of the first n sequence entries divided by the real coercion of n.",
+      "latex": "M_n=\\frac{\\sum_{t=0}^{n-1}y_t}{n},\\qquad M_0=0\\ \\text{under Lean real division}.",
+      "scope": [
+        "For n>0 this is the usual arithmetic mean of y_0,...,y_{n-1}.",
+        "There is no hypothesis that y is bounded or that these means converge.",
+        "The n=0 value is the totalized expression 0/0=0; it is not an unspecified or undefined empty-sample mean."
+      ]
+    },
+    {
+      "name": "meanPredict",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(t : ℕ)"
+      ],
+      "result_type": "ℝ",
+      "hypotheses": [],
+      "natural_language": "At round 0 predict one half. At every later round t predict the empirical mean of exactly the preceding t outcomes.",
+      "latex": "p_t=\\begin{cases}\\tfrac12,&t=0,\\\\M_t,&t>0.\\end{cases}",
+      "scope": [
+        "p_0=1/2 even though M_0=0.",
+        "For t>0 the formula depends on y_0,...,y_{t-1}, and not on y_t or later entries. This is the causal dependence directly visible in the definition.",
+        "The interface accepts a full infinite sequence. There is no separately formalized filtration, strategy space, interaction protocol, or randomness.",
+        "For a bounded sequence satisfying y_t∈[0,1], the formula implies p_t∈[0,1], including t=0. This range fact is an elementary consequence, not an additional hypothesis or standalone theorem supplied in the packet."
+      ]
+    },
+    {
+      "name": "squaredBestRegret",
+      "binder_order": [
+        "(y prediction : ℕ → ℝ)",
+        "(T : ℕ)"
+      ],
+      "result_type": "ℝ",
+      "hypotheses": [],
+      "natural_language": "Subtract the infimum of the cumulative squared loss of a constant real comparator in [0,1] from the cumulative squared loss of the supplied prediction sequence, at the same horizon.",
+      "latex": "B_T(y,p)=\\sum_{t=0}^{T-1}(p_t-y_t)^2-\\inf_{u\\in[0,1]}\\sum_{t=0}^{T-1}(u-y_t)^2.",
+      "scope": [
+        "The Lean sInf is applied to the image set of attainable cumulative comparator losses, not to comparator values themselves.",
+        "The comparator is constant within a horizon, but the optimizing comparator may depend on the horizon. This is a horizon-specific hindsight optimum over [0,1].",
+        "The definition does not constrain either y or prediction to [0,1]. The interval restricts only the benchmark comparator.",
+        "For these finite real squared-loss sums the image set is nonempty and bounded below by 0, so its real infimum is meaningful. Attainment follows from elementary compactness and continuity, although the definition itself uses sInf and does not supply an argmin.",
+        "At T=0 the image set is {0}, so squaredBestRegret is 0.",
+        "The definition alone does not make this signed quantity nonnegative for an arbitrary prediction sequence."
+      ]
+    },
+    {
+      "name": "LimitNoRegret",
+      "binder_order": [
+        "{X : Type*}, implicit",
+        "(V : Set X)",
+        "(loss : ℕ → X → ℝ)",
+        "(prediction : ℕ → X)"
+      ],
+      "result_type": "Prop",
+      "quantified_body_order": [
+        "For every u : X",
+        "If u∈V",
+        "There exists a : ℝ, potentially depending on u",
+        "a≤0 and the entire sequence comparatorRegret loss prediction u T / T converges to a"
+      ],
+      "natural_language": "For each admissible fixed comparator separately, average regret has a finite ordinary limit, and that limit is nonpositive.",
+      "latex": "\\forall u\\in V\\;\\exists a\\in\\mathbb R:\\quad a\\le0\\quad\\land\\quad\\lim_{T\\to\\infty}\\frac{R_T^{\\ell,p}(u)}{T}=a.",
+      "scope": [
+        "The existential limit a is inside the quantifier over u. A common limit for all comparators is not required.",
+        "The comparator u is fixed before T varies. The definition does not insert a sequence u_T of changing comparators.",
+        "There is no uniformity over u, no common convergence rate, and no maximum or supremum over V in this predicate.",
+        "It requires more than an upper asymptotic bound limsup≤0: actual ordinary convergence must exist for every u∈V.",
+        "It permits negative limits; it does not require that all comparator regrets average to 0.",
+        "It does not state that prediction t belongs to V. If V is empty it is vacuously true."
+      ]
+    }
+  ],
+  "theorems": [
+    {
+      "name": "meanPredict_bestLoss_nonneg",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(T : ℕ)"
+      ],
+      "hypotheses": [],
+      "quantified_statement": "For every real sequence y, then every natural horizon T, the displayed inequality holds.",
+      "natural_language": "The cumulative squared loss of the running-mean predictor is at least the cumulative squared loss of the single constant equal to the empirical mean of that horizon.",
+      "latex": "\\forall y:\\mathbb N\\to\\mathbb R\\;\\forall T\\in\\mathbb N,\\qquad 0\\le R_T(M_T)=A_T.",
+      "interpretation": [
+        "No assumption y_t∈[0,1] is present.",
+        "The comparator M_T is computed using all outcomes in the evaluated horizon and may change as T changes. It is a hindsight comparator, not the predictor used at each round.",
+        "For T>0 the empirical mean is the unrestricted real constant minimizing finite cumulative squared loss. This familiar interpretation follows from the algebra of squared loss, but the exact signature only asserts nonnegativity of the displayed regret.",
+        "At T=0 the assertion is 0≤0 despite p_0=1/2, because round 0 is outside the empty sum."
+      ],
+      "not_established": [
+        "It does not assert nonnegative regret against every fixed u.",
+        "It does not explicitly mention the [0,1]-constrained sInf benchmark.",
+        "It supplies no upper bound, rate, or limit for unbounded sequences."
+      ]
+    },
+    {
+      "name": "meanPredict_comparator_decomposition",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(u : ℝ)",
+        "(T : ℕ)"
+      ],
+      "hypotheses": [],
+      "quantified_statement": "For every real sequence y, every real comparator u, and every natural horizon T, in that order, the identity holds.",
+      "natural_language": "Regret against u equals regret against the empirical mean minus T times the squared distance between u and that mean.",
+      "latex": "\\forall y\\;\\forall u\\in\\mathbb R\\;\\forall T\\in\\mathbb N,\\qquad R_T(u)=A_T-T(u-M_T)^2.",
+      "interpretation": [
+        "u is any real number and need not lie in [0,1]. y is not required to be bounded.",
+        "The subtractive sign is essential. A comparator farther from M_T has larger cumulative loss, hence smaller regret for the predictor.",
+        "For T≥1, division gives R_T(u)/T=A_T/T-(u-M_T)^2.",
+        "At T=0 the original identity is 0=0-0·(u-0)^2.",
+        "The normalized identity after cancelling T is valid for T>0 only. At T=0 the normalized left side is 0 whereas A_0/0-(u-M_0)^2 equals -u^2 in general.",
+        "This is finite-horizon squared-loss algebra. Although such a loss decomposition is mathematically generic in the prediction sequence, the theorem signature is specialized to meanPredict y and does not explicitly quantify over an arbitrary predictor."
+      ],
+      "not_established": [
+        "The identity alone does not establish any asymptotic rate or convergence.",
+        "Together with A_T≥0 it does not make R_T(u) nonnegative, because the subtracted term can dominate."
+      ]
+    },
+    {
+      "name": "meanPredict_bestRegret_average_tendsto_zero",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1)"
+      ],
+      "hypotheses": [
+        "For every natural t, 0≤y_t≤1."
+      ],
+      "quantified_statement": "For every y, given a proof that every entry lies in [0,1], the following ordinary limit holds.",
+      "natural_language": "For every outcome sequence in [0,1], the running-mean predictor's average regret relative to the best constant comparator in [0,1] at each horizon converges to zero.",
+      "latex": "\\bigl(\\forall t\\in\\mathbb N,\\ 0\\le y_t\\le1\\bigr)\\Longrightarrow\\lim_{T\\to\\infty}\\frac{B_T}{T}=0.",
+      "interpretation": [
+        "This is a statement about the horizon-dependent optimum, not a fixed u selected once for all horizons.",
+        "No convergence of M_T is assumed here.",
+        "Under hy, M_T∈[0,1] for T>0; hence the finite squared-loss minimization gives B_T=A_T. The same equality is true at T=0 because both quantities are 0. This bridge is an elementary derived observation, not an explicitly listed theorem in the packet.",
+        "Consequently the theorem can be read as sublinear horizon-optimal regret B_T=o(T). It does not assert that the unnormalized B_T tends to 0.",
+        "The limit is ordinary deterministic convergence along all natural horizons. There is no averaging over random sequences."
+      ],
+      "not_established": [
+        "No finite-time numerical upper bound or explicit logarithmic, square-root, or other rate appears in the signature.",
+        "It does not say R_T(u)/T→0 for every fixed u.",
+        "It does not, by itself, give the ordinary convergence required by LimitNoRegret for every bounded sequence.",
+        "It does not cover arbitrary unbounded y."
+      ]
+    },
+    {
+      "name": "meanPredict_fixedRegret_limit_iff",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1)",
+        "(u a : ℝ), u then a"
+      ],
+      "hypotheses": [
+        "For every natural t, 0≤y_t≤1."
+      ],
+      "quantified_statement": "For every bounded y and its bound hypothesis, and then for every real u and every real a, the two specific convergence assertions are equivalent.",
+      "natural_language": "Average regret against a fixed real comparator u converges to a exactly when the squared distance between u and the horizon empirical mean converges to -a.",
+      "latex": "\\bigl(\\forall t,\\ 0\\le y_t\\le1\\bigr)\\Longrightarrow\\forall u,a\\in\\mathbb R,\\quad\\left[\\lim_{T\\to\\infty}\\frac{R_T(u)}{T}=a\\right]\\Longleftrightarrow\\left[\\lim_{T\\to\\infty}(u-M_T)^2=-a\\right].",
+      "directions": [
+        "Forward: if the full normalized fixed-comparator regret sequence converges to the specified real a, the squared-distance sequence converges to the specified real -a.",
+        "Reverse: if the squared-distance sequence converges to -a, the normalized fixed-comparator regret sequence converges to a."
+      ],
+      "interpretation": [
+        "u need not lie in [0,1]. It is held fixed throughout the limit.",
+        "a is universally quantified, not existentially supplied by this theorem.",
+        "There is no explicit hypothesis a≤0. However, either equivalent convergence assertion entails a≤0, because a limit of nonnegative squared distances is nonnegative and that limit is -a.",
+        "If a>0, neither side can hold.",
+        "The equivalence identifies the entire possible asymptotic discrepancy, not merely its sign.",
+        "The exact right side involves squared distance. It should not be silently rewritten as convergence of the signed distance u-M_T or of M_T itself; such a reformulation needs an additional mathematical argument.",
+        "The exceptional value at T=0 does not affect either ordinary limit."
+      ],
+      "not_established": [
+        "The theorem does not assert that either limit exists for all bounded sequences.",
+        "It does not assert a common limit a for different comparators.",
+        "It does not use or require an empirical-mean limit m as an input."
+      ]
+    },
+    {
+      "name": "meanPredict_limitNoRegret_of_mean_converges",
+      "binder_order": [
+        "(y : ℕ → ℝ)",
+        "(hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1)",
+        "(m : ℝ)",
+        "(hm : Tendsto (empiricalMean y) atTop (nhds m))"
+      ],
+      "hypotheses": [
+        "Every sequence entry y_t belongs to [0,1].",
+        "m is a real number.",
+        "The entire empirical-mean sequence M_T converges ordinarily to m."
+      ],
+      "quantified_statement": "For every y, boundedness witness hy, real m, and convergence witness hm, a conjunction of two conclusions holds.",
+      "natural_language": "If a bounded outcome sequence has convergent empirical means with limit m, then for every real fixed comparator u its average regret converges to the explicit nonpositive value -(u-m)^2. In addition, the defined LimitNoRegret property holds on [0,1].",
+      "latex": "\\left[\\forall t,\\ 0\\le y_t\\le1\\right]\\land\\left[M_T\\to m\\right]\\Longrightarrow\\left[\\forall u\\in\\mathbb R,\\ \\frac{R_T(u)}{T}\\to-(u-m)^2\\right]\\land\\operatorname{LimitNoRegret}\\bigl([0,1],\\ell,p\\bigr),\\quad\\ell_t(x)=(x-y_t)^2.",
+      "conjunction_structure": [
+        "First conjunct: ∀u:ℝ, the normalized regret converges to -(u-m)^2. The quantifier over u is inside this conjunct and ranges over all real comparators.",
+        "Second conjunct: LimitNoRegret [0,1] squared-loss meanPredict. Expanding the definition, for each u∈[0,1] there exists a real a≤0 with normalized regret tending to a.",
+        "For the second conjunct a valid witness is a=-(u-m)^2, obtained from the first conjunct. Its value may differ with u."
+      ],
+      "interpretation": [
+        "The empirical-mean convergence assumption is additional to boundedness. It is not the same as pointwise convergence y_t→m and does not require the outcomes themselves to converge.",
+        "The explicit fixed-comparator limit is 0 when u=m and strictly negative when u≠m.",
+        "The bound and mean-convergence assumptions imply m∈[0,1], but the signature does not take this interval membership as a separate hypothesis.",
+        "The first conjunct is pointwise in every real u and therefore stronger in comparator domain than the second conjunct's [0,1] restriction. It does not state uniform convergence in u.",
+        "No stationarity, identical distribution, independence, or probabilistic model is assumed."
+      ],
+      "not_established": [
+        "The statement gives a sufficient condition for LimitNoRegret. It does not explicitly state a converse.",
+        "It does not remove the mean-convergence hypothesis merely because the sequence is bounded.",
+        "It does not say every fixed-comparator limit is zero.",
+        "It does not assert convergence of the realized outcomes or a numerical convergence rate."
+      ]
+    }
+  ],
+  "cross_statement_reconstruction": {
+    "finite_horizon_algebra": "The first two theorems apply to arbitrary real y, without boundedness. They assert A_T≥0 and R_T(u)=A_T-T(u-M_T)^2. They are distinct from the three bounded-sequence asymptotic results.",
+    "bounded_sequence_bridge": "For bounded y and T≥1, the empirical mean belongs to [0,1] and minimizes the finite cumulative squared loss there, so B_T=A_T. Combining this elementary minimization fact with the third theorem and the normalized decomposition explains why the fourth theorem has a minus sign and exactly the squared-distance convergence criterion.",
+    "fixed_vs_optimal": "B_T compares against a horizon optimum, which can vary with T. R_T(u) in an ordinary limit holds u fixed. Even if B_T/T→0, a fixed comparator can be beaten by a nonvanishing average amount, giving a negative limit, or can have an oscillating normalized regret if its empirical-mean distance oscillates.",
+    "weaker_consequence_without_mean_convergence": "From the bounded-sequence bridge and decomposition, for each fixed u and each ε>0, eventually R_T(u)/T≤ε. This is a derived asymptotic upper bound and does not alone provide the existence of an ordinary limit required by LimitNoRegret.",
+    "sign_check": "The first theorem makes A_T nonnegative. It does not make R_T(u) nonnegative. The negative squared term determines fixed-comparator limits. Under the last theorem, the values are exactly -(u-m)^2≤0.",
+    "zero_horizon_table": [
+      {
+        "quantity": "empiricalMean y 0",
+        "value": "0"
+      },
+      {
+        "quantity": "meanPredict y 0",
+        "value": "1/2"
+      },
+      {
+        "quantity": "comparatorRegret loss prediction u 0",
+        "value": "0"
+      },
+      {
+        "quantity": "squaredBestRegret y prediction 0",
+        "value": "0"
+      },
+      {
+        "quantity": "Any regret expression in the packet divided by the horizon at T=0",
+        "value": "0"
+      },
+      {
+        "quantity": "Unnormalized comparator decomposition at T=0",
+        "value": "Valid: 0=0"
+      },
+      {
+        "quantity": "Normalized decomposition with T cancelled at T=0",
+        "value": "Not generally valid; cancellation requires T>0"
+      }
+    ]
+  },
+  "overall_boundaries": [
+    "No proof bodies were supplied or verified. This reconstruction records what the signatures claim, not whether their proofs compile.",
+    "No connection to any external manuscript, source theorem, theorem number, author, or intended application has been checked.",
+    "The signatures do not state a finite-time regret rate, optimality among online algorithms, a minimax lower bound, or computational complexity.",
+    "The formal predictor is causally specified by past outcomes, but no separate adversary protocol, measurable filtration, randomization, or stochastic guarantee appears.",
+    "The generic regret definitions impose no feasibility restriction on predictions. Specialized bounded-y feasibility follows from the displayed mean formula.",
+    "Average regret against the best constant in [0,1], ordinary average regret against each fixed comparator, and the predicate LimitNoRegret are different assertions with different quantifier structure.",
+    "No claim is made about dynamic comparators that may change within a horizon, multidimensional predictions, nonsquared losses, or arbitrary predictors.",
+    "Any stronger source-fidelity conclusion requires an independent comparison against the source by a different reviewer."
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch30-blind-reconstruction-v1/reconstruction.json",
+      "sha256": "b0f38188e27897be7324c90b47057786b6cdc3e2b84de193800e6196b59cd107",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only replaced by distinct logical locations, with collision checks. Mathematical contents, original verdicts and historical statuses retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; earlier pending fields retain historical meaning."
+  }
+}

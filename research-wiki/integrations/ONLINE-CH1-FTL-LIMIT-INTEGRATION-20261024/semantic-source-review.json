@@ -1,0 +1,575 @@
+{
+  "at": "2026-10-24T10:39:50.784549+00:00",
+  "stage": "1-independent-source-signature-blind-semantic-comparison",
+  "accepted": true,
+  "verdict": "accepted-with-explicit-delta",
+  "requiredCorrections": [],
+  "failures": [],
+  "evidenceBindings": {
+    "batch30-source-extraction-v1/source-extraction-report.json": "e0b07a6260cca5390e2b4e6e9a56221a06e29ea883277bea4663176cb9184944",
+    "batch30-source-extraction-v1/source-coverage.json": "9a5b6908868aa5d6f078960395fed492ba76f42631a6bc07c325377a4971a445",
+    "batch30-source-extraction-v1/source-proof-graph.json": "40a00f4df788fe497ca3ebfdd04d643f2fc902eae1bc6e8acfb7bed269f110e9",
+    "batch30-source-extraction-v1/signature-and-definition-inventory.json": "ffae15fca5565595859a1676773c1a76fce7c4b17bde2bcd4cac9d7f4fc20e7d",
+    "batch30-preport-statement-seal-v1.json": "08bf86aa4018ce8c1a6f462722506e2e4cfec57c99e448f08f184cfa4acee51d",
+    "batch30-blind-packet-v1/statements.txt": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "batch30-blind-reconstruction-v1/reconstruction.json": "b0f38188e27897be7324c90b47057786b6cdc3e2b84de193800e6196b59cd107",
+    "batch30-source-extraction-v1/source-title.txt": "3a5bec6f3917b5c566e06135f1fa90018b1033dadc7b6bc5ccf6b27a3c73d69d",
+    "batch30-source-extraction-v1/source-pages13-18.txt": "a6c51a839ea5843fb5d72932935d79b0fa6cd1846310696447eacf371b351d0d",
+    "batch30-source-extraction-v1/page-013.png": "8117d312b5856e25af9232212c284cfcad012aafb7157810d577c2ba8dfdb4a4",
+    "batch30-source-extraction-v1/page-014.png": "1f8f34992584490b76afabd7c0fecda1c41bf4fb4f42349b4fc486b26d82c11b",
+    "batch30-source-extraction-v1/page-015.png": "c212ebdefda8ceb442a90b168f779046b9a6a96a1f86d02c124b14a71e3fe5dd",
+    "batch30-source-extraction-v1/page-016.png": "b49474e1cbd73e2f04a9027b11d24e55337f86832adadb7f9a852c57e7d647f2",
+    "batch30-source-extraction-v1/page-017.png": "34e55b6b71a91395b880ab5a9aa1d6d30b04fcc248a60cc10772bfd359165017",
+    "batch30-source-extraction-v1/page-018.png": "c4f26bc59e2012e73733c4e75bf7cc581af6c0322d7ea4dffeb5979cb0c6f45c",
+    "batch30-source-extraction-v1/reconciliation-analysis.md": "3e3d8f8e41f8823d16de390d681f038d0c73394e2179edca7c980ec7fef9cae2",
+    "batch30-source-review-v1/build_review.py": "5890eeb66f258a1258835bdbdb348243fdb6f36c3a9bf588962eed1c8111f633",
+    "batch30-source-review-v1/source-topology-review.json": "bdfc8076a99f3e82677a6cf9eb573d5e2932fde80adae30c2a500456e2744c90",
+    "batch30-source-review-v1/derived-reconciliation-review.json": "e0fc58b6ff81cb7cfbdc5a5c124f323b9db6dce58d553a275a351c63419579ee"
+  },
+  "externalSourceBindings": {
+    "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "isolation": {
+    "actor": "/root/batch25_source_reviewer",
+    "formalizer": "/root",
+    "sourceExtractor": "/root/batch25_source_extractor",
+    "blindDecoder": "/root/batch30_blind_decoder",
+    "distinctActors": true,
+    "reviewMode": "source/signature-only before implementation access",
+    "priorContext": "This reviewer retains Batch25–29 conversation and scientific review context, including these source pages. This is an independent implementation-isolated audit, not pristine-history or absolute blindness. A brief memory registry lookup supplied workflow guidance only; no previous PR201 verdict or proof route was used.",
+    "implementationBodiesRead": false,
+    "productionOrCanaryBodiesRead": false,
+    "oldPR201VerdictsRead": false,
+    "sourceExtractorPrivateRationaleRead": false,
+    "permittedInputs": "Pinned raw PDF, six current page images and extracted text, public extraction artifacts, five sealed headers and five literal definitions, designated neutral blind input and fresh decoder output. The extractor build helper was hashed as packet-integrity evidence only, not read as topology rationale.",
+    "actuallyViewedImages": [
+      "batch30-source-extraction-v1/page-013.png",
+      "batch30-source-extraction-v1/page-014.png",
+      "batch30-source-extraction-v1/page-015.png",
+      "batch30-source-extraction-v1/page-016.png",
+      "batch30-source-extraction-v1/page-017.png",
+      "batch30-source-extraction-v1/page-018.png"
+    ],
+    "viewMethod": "tools.view_image original detail; every current page individually emitted and read"
+  },
+  "scopePreservation": {
+    "originalC1Objects": 16,
+    "proofObligationTotal": "unknown; unchanged",
+    "coverageItemsDoNotReplaceOriginalObjects": true,
+    "fiveTargets": "derived library contracts, not five printed theorems",
+    "sourceRepairApproved": false,
+    "chapterComplete": false,
+    "bookComplete": false,
+    "productionEdits": false,
+    "portApprovedByThisReport": false,
+    "proofAcceptance": false,
+    "publicationAcceptance": false,
+    "originalDispositionAuthorized": false
+  },
+  "targetReviews": [
+    {
+      "id": "T1",
+      "name": "meanPredict_bestLoss_nonneg",
+      "exactHeader": "theorem meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) :\n    0 ≤ comparatorRegret (fun t x => (x - y t)^2)\n      (meanPredict y) (empiricalMean y T) T",
+      "headerSHA256": "f37b5928617d5ec2db88d91b96e4ce87d8156f2c02120a535cf976feaa931a9c",
+      "repositoryNormalizedStatementHash": "1f39d2dcdf7e6643cc69a3aae76a423642eff8947d29071c750241da223474cf",
+      "classification": "derived-support, not printed-source theorem",
+      "binderAudit": [
+        {
+          "name": "y",
+          "lean": "y : ℕ → ℝ",
+          "classification": "TYPING",
+          "reason": "One coherent deterministic infinite real sequence, whose prefixes form all horizons; unrestricted carrier generalizes the unit source game until hy is supplied."
+        },
+        {
+          "name": "T",
+          "lean": "T : ℕ",
+          "classification": "TYPING",
+          "reason": "Finite prefix length including zero; empty-prefix extension is explicit. Asymptotic T is internally quantified by Tendsto, not a fixed external horizon."
+        }
+      ],
+      "slots": {
+        "objects_and_spaces": {
+          "review": "Real sequence, exact initial-half/past-mean predictor, cumulative squared losses and horizon empirical-mean comparator.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "quantifier_order": {
+          "review": "∀y:ℕ→ℝ ∀T:ℕ. The comparator changes with T as hindsight mean; no fixed-u quantifier here.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "assumptions_and_regularity": {
+          "review": "No bounds, convergence, randomness or regularity hypotheses. This extends the source game algebra to all real data.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "conclusion_and_metric": {
+          "review": "0<=R_T(m_T). This is a learner-specific lower bound, not nonnegative regret for arbitrary online predictions or all fixed comparators.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "normalization_constants_asymptotics": {
+          "review": "Unnormalized cumulative difference; T=0 gives0<=0. No rate or asymptotic claim.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "probability_feedback_information": {
+          "review": "Deterministic pathwise identity for a predictor using only outcomes with index<t; no probability space/IID/expectation.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "boundary_and_excluded_regimes": {
+          "review": "Derived lower bound absent from printed Theorem1.3. For unbounded y this is not automatically the [0,1]-constrained best benchmark.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        }
+      },
+      "verdict": "accepted-with-explicit-delta",
+      "proofVerified": false
+    },
+    {
+      "id": "T2",
+      "name": "meanPredict_comparator_decomposition",
+      "exactHeader": "theorem meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) :\n    comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T =\n      comparatorRegret (fun t x => (x - y t)^2)\n        (meanPredict y) (empiricalMean y T) T -\n      (T : ℝ) * (u - empiricalMean y T)^2",
+      "headerSHA256": "13476eebfff48a25d3a4b06f62baad23b1d61a0ea095af4459388a4e66ceab07",
+      "repositoryNormalizedStatementHash": "53b787b2b0a558701890251688011a477b8d8df77f4c8125fc430703212de81e",
+      "classification": "derived-support, not printed-source theorem",
+      "binderAudit": [
+        {
+          "name": "y",
+          "lean": "y : ℕ → ℝ",
+          "classification": "TYPING",
+          "reason": "One coherent deterministic infinite real sequence, whose prefixes form all horizons; unrestricted carrier generalizes the unit source game until hy is supplied."
+        },
+        {
+          "name": "u",
+          "lean": "u : ℝ",
+          "classification": "TYPING",
+          "reason": "One fixed real comparator, universally quantified before the horizon limit. The all-real domain generalizes source u∈[0,1]; it is not a varying u_T."
+        },
+        {
+          "name": "T",
+          "lean": "T : ℕ",
+          "classification": "TYPING",
+          "reason": "Finite prefix length including zero; empty-prefix extension is explicit. Asymptotic T is internally quantified by Tendsto, not a fixed external horizon."
+        }
+      ],
+      "slots": {
+        "objects_and_spaces": {
+          "review": "Same real-sequence predictor and mean, arbitrary real comparator u, finite horizon.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "quantifier_order": {
+          "review": "∀y ∀u∈ℝ ∀T∈ℕ; u held constant within the loss sum.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "assumptions_and_regularity": {
+          "review": "No bounds or convergence premises; all real y,u allowed.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "conclusion_and_metric": {
+          "review": "R_T(u)=R_T(m_T)-T(u-m_T)^2. Minus sign is essential.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "normalization_constants_asymptotics": {
+          "review": "Unnormalized equality includesT=0. Cancellation/division version valid onlyT>0, eventually sufficient for atTop.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "probability_feedback_information": {
+          "review": "Deterministic exact square-completion algebra. No stochastic benchmark or expectation placement issue.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "boundary_and_excluded_regimes": {
+          "review": "Derived identity, not printed. Does not itself prove any ordinary limit or nonnegativity against u.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        }
+      },
+      "verdict": "accepted-with-explicit-delta",
+      "proofVerified": false
+    },
+    {
+      "id": "T3",
+      "name": "meanPredict_bestRegret_average_tendsto_zero",
+      "exactHeader": "theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ))\n      atTop (nhds (0 : ℝ))",
+      "headerSHA256": "443a1ba4a34c99e35a6c130f545a15ad7629a60b6c7b601a73b1a207779a7192",
+      "repositoryNormalizedStatementHash": "80dc80f444a9a8e7c3314da200b0cc6f59f63dcc902ec05a2dbd56f775d64029",
+      "classification": "derived-support, not printed-source theorem",
+      "binderAudit": [
+        {
+          "name": "y",
+          "lean": "y : ℕ → ℝ",
+          "classification": "TYPING",
+          "reason": "One coherent deterministic infinite real sequence, whose prefixes form all horizons; unrestricted carrier generalizes the unit source game until hy is supplied."
+        },
+        {
+          "name": "hy",
+          "lean": "∀ t : ℕ, y t ∈ Set.Icc (0 : ℝ) 1",
+          "classification": "SOURCE",
+          "reason": "Atomic expansion: for every t, 0<=y_t AND y_t<=1. This is the explicit unit-outcome premise of the source guessing game and finite theorem."
+        }
+      ],
+      "slots": {
+        "objects_and_spaces": {
+          "review": "Unit-bounded sequence and constrained [0,1] hindsight infimum, exact past-mean predictor.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "quantifier_order": {
+          "review": "∀y with globalhy; one sequence then all natural horizons tending∞. Hindsight minimizer may depend onT.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "assumptions_and_regularity": {
+          "review": "Every y_t in[0,1]; no assumption empirical means converge.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "conclusion_and_metric": {
+          "review": "Ordinary limit of squaredBestRegret/T is0. This differs from every fixed-u limit.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "normalization_constants_asymptotics": {
+          "review": "T0 is totalized0 and irrelevant to the limit; signed little-o of this empirical-best regret follows. No finite rate in the signature.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "probability_feedback_information": {
+          "review": "Pathwise, compatible with any realized adaptive bounded sequence; no random-policy or IID theorem.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "boundary_and_excluded_regimes": {
+          "review": "Derived squeeze requires a separate lower bound absent from source upper proof. No every-bounded-sequence LimitNoRegret conclusion.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        }
+      },
+      "verdict": "accepted-with-explicit-delta",
+      "proofVerified": false
+    },
+    {
+      "id": "T4",
+      "name": "meanPredict_fixedRegret_limit_iff",
+      "exactHeader": "theorem meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (u a : ℝ) :\n    Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds a) ↔\n    Tendsto (fun T : ℕ => (u - empiricalMean y T)^2) atTop (nhds (-a))",
+      "headerSHA256": "ad35920ca6536c279abd0fc0fe5dd10772514f2c526bb5476e183a57ed39a200",
+      "repositoryNormalizedStatementHash": "b9fa340a1fc3e48a6a614a15cd6bdc1ea67ff514a46a203d8ba272a150c456f2",
+      "classification": "derived-support, not printed-source theorem",
+      "binderAudit": [
+        {
+          "name": "y",
+          "lean": "y : ℕ → ℝ",
+          "classification": "TYPING",
+          "reason": "One coherent deterministic infinite real sequence, whose prefixes form all horizons; unrestricted carrier generalizes the unit source game until hy is supplied."
+        },
+        {
+          "name": "hy",
+          "lean": "∀ t : ℕ, y t ∈ Set.Icc (0 : ℝ) 1",
+          "classification": "SOURCE",
+          "reason": "Atomic expansion: for every t, 0<=y_t AND y_t<=1. This is the explicit unit-outcome premise of the source guessing game and finite theorem."
+        },
+        {
+          "name": "u",
+          "lean": "u : ℝ",
+          "classification": "TYPING",
+          "reason": "One fixed real comparator, universally quantified before the horizon limit. The all-real domain generalizes source u∈[0,1]; it is not a varying u_T."
+        },
+        {
+          "name": "a",
+          "lean": "a : ℝ",
+          "classification": "TYPING",
+          "reason": "Universally specified candidate finite limit; not an existential convergence witness, and a<=0 is not assumed."
+        }
+      ],
+      "slots": {
+        "objects_and_spaces": {
+          "review": "Unit sequence, all-real fixed comparator and candidate real limit.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "quantifier_order": {
+          "review": "∀y hy ∀u∈ℝ ∀a∈ℝ: two specified whole-sequence convergence statements are equivalent.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "assumptions_and_regularity": {
+          "review": "Only unit bound. Neither side is asserted to hold. a<=0 is a consequence if convergence holds, not an added premise.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "conclusion_and_metric": {
+          "review": "R_T(u)/T→a iff (u-m_T)^2→-a; preserve squared distance and the negated limit.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "normalization_constants_asymptotics": {
+          "review": "Ordinary finite limits, not limsup or signed little-o. T0 cancellation exception is handled by eventual equality.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "probability_feedback_information": {
+          "review": "Deterministic pointwise-in-u limits with no uniform-u rate or probabilistic mode.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "boundary_and_excluded_regimes": {
+          "review": "Derived characterization; not existence for arbitrary bounded data, not a claim empiricalMean converges without further argument.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        }
+      },
+      "verdict": "accepted-with-explicit-delta",
+      "proofVerified": false
+    },
+    {
+      "id": "T5",
+      "name": "meanPredict_limitNoRegret_of_mean_converges",
+      "exactHeader": "theorem meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (m : ℝ)\n    (hm : Tendsto (empiricalMean y) atTop (nhds m)) :\n    (∀ u : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds (-(u - m)^2))) ∧\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+      "headerSHA256": "2675b195227b8099a68bf8d665df41dc3a096c19bd063397d2e6c8510a124a9b",
+      "repositoryNormalizedStatementHash": "56b3b3feb14d54850212b0f6a6ff4b92941fb42a236c6e93152def4d5a66ed8d",
+      "classification": "derived-support, not printed-source theorem",
+      "binderAudit": [
+        {
+          "name": "y",
+          "lean": "y : ℕ → ℝ",
+          "classification": "TYPING",
+          "reason": "One coherent deterministic infinite real sequence, whose prefixes form all horizons; unrestricted carrier generalizes the unit source game until hy is supplied."
+        },
+        {
+          "name": "hy",
+          "lean": "∀ t : ℕ, y t ∈ Set.Icc (0 : ℝ) 1",
+          "classification": "SOURCE",
+          "reason": "Atomic expansion: for every t, 0<=y_t AND y_t<=1. This is the explicit unit-outcome premise of the source guessing game and finite theorem."
+        },
+        {
+          "name": "m",
+          "lean": "m : ℝ",
+          "classification": "TYPING",
+          "reason": "Specified empirical-mean limit, not a learner input."
+        },
+        {
+          "name": "hm",
+          "lean": "Tendsto (empiricalMean y) atTop (nhds m)",
+          "classification": "SOURCE",
+          "reason": "Explicit premise of this separately stated conditional derived contract. It is NOT a printed source premise or automatically implied by boundedness. Treating it as a premise of an alleged universal source theorem would be EXCESS and is rejected. No source repair is claimed."
+        }
+      ],
+      "slots": {
+        "objects_and_spaces": {
+          "review": "Unit sequence, empirical-mean limitm, exact predictor, comparator family.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "quantifier_order": {
+          "review": "∀y hy ∀m hm; conclusion (∀u∈ℝ, quotient→-(u-m)^2) AND (∀u∈[0,1], ∃a∈ℝ, a<=0 AND quotient→a). Existentiala lies insideu.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "assumptions_and_regularity": {
+          "review": "Unit bounds AND ordinary empirical-mean convergence. hm is a visible additional premise of a conditional derived theorem.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "conclusion_and_metric": {
+          "review": "Explicit all-real comparator limit and the literal finite-ordinary LimitNoRegret predicate on[0,1].",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "normalization_constants_asymptotics": {
+          "review": "Limit may be negative, with0 only whenu=m. m is not an algorithm input, no convergence rate or common a.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "probability_feedback_information": {
+          "review": "Deterministic one-sequence conditional theorem, no stationarity/IID, outcome convergence or uniformity assumed.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        },
+        "boundary_and_excluded_regimes": {
+          "review": "Not a proof that every bounded sequence satisfies printed ordinary-limit no-regret. This conditional contract leaves the factorial-block obstruction and source notation issue visible.",
+          "blindReconstruction": "matches exact interface; no mismatch found",
+          "sourceRelation": "derived additional contract; explicit delta retained"
+        }
+      },
+      "verdict": "accepted-with-explicit-delta",
+      "proofVerified": false
+    }
+  ],
+  "definitionAudit": [
+    {
+      "name": "comparatorRegret",
+      "kind": "literal",
+      "binders": [
+        "{X : Type*}",
+        "loss : ℕ→X→ℝ",
+        "prediction : ℕ→X",
+        "u : X",
+        "T : ℕ"
+      ],
+      "logicalExpansion": "No Prop assumptions. Two finite sums over0,...,T-1, the comparator is the sameu throughout. Generic carrier need not be a vector space; feasibility is not part of the definition.",
+      "sourceDelta": "Source general regret usesV⊂ℝ^d and feasible predictions; the API generalizes to arbitraryX. Specialized mean predictor is feasible underhy, a derived property rather than an added premise.",
+      "zero": "Both sums are empty; value0.",
+      "exactText": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "SHA256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0",
+      "binderClassification": "All carriers, values, functions and finite indices are TYPING. There is no hidden source hypothesis bundle; LimitNoRegret quantified body is expanded explicitly above."
+    },
+    {
+      "name": "empiricalMean",
+      "kind": "literal",
+      "binders": [
+        "y : ℕ→ℝ",
+        "n : ℕ"
+      ],
+      "logicalExpansion": "Finite prefix sum divided by realn. No choice, optimizer witness or characterized-object fallback.",
+      "sourceDelta": "Matches the printed mean at positive horizons after index shift. Source uniqueness as empirical minimizer is a separate square-completion fact and requires positive horizon.",
+      "zero": "Total real division gives0; this is not a unique empty-prefix minimizer.",
+      "exactText": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "SHA256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa",
+      "binderClassification": "All carriers, values, functions and finite indices are TYPING. There is no hidden source hypothesis bundle; LimitNoRegret quantified body is expanded explicitly above."
+    },
+    {
+      "name": "meanPredict",
+      "kind": "literal",
+      "binders": [
+        "y : ℕ→ℝ",
+        "t : ℕ"
+      ],
+      "logicalExpansion": "ift=0 then1/2 else empiricalMean y t; for t>0 depends exactly on indices<t.",
+      "sourceDelta": "Matches Theorem1.3 initialhalf; informalp3 permits other initial predictions, but this API does not quantify over them.",
+      "zero": "Prediction1/2 is distinct from empty empiricalMean0; explicit algorithm initial condition, not a fallback for a failed characterization.",
+      "exactText": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "SHA256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4",
+      "binderClassification": "All carriers, values, functions and finite indices are TYPING. There is no hidden source hypothesis bundle; LimitNoRegret quantified body is expanded explicitly above."
+    },
+    {
+      "name": "squaredBestRegret",
+      "kind": "literal",
+      "binders": [
+        "y : ℕ→ℝ",
+        "prediction : ℕ→ℝ",
+        "T : ℕ"
+      ],
+      "logicalExpansion": "Learner finite square sum minus sInf of image of the entire fixed-comparator square sum over[0,1]. No expectation. Domain ofy/prediction is not constrained by this definition.",
+      "sourceDelta": "Corresponds to source minimum because the finite continuous loss on nonempty compact[0,1] attains its minimum; underhy empiricalMean is a minimizing comparator. This bridge is an obligation, not an assumed theorem binder.",
+      "zero": "Comparator image={0}; value0.",
+      "exactText": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "SHA256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631",
+      "binderClassification": "All carriers, values, functions and finite indices are TYPING. There is no hidden source hypothesis bundle; LimitNoRegret quantified body is expanded explicitly above."
+    },
+    {
+      "name": "LimitNoRegret",
+      "kind": "literal Prop definition",
+      "binders": [
+        "{X : Type*}",
+        "V : Set X",
+        "loss : ℕ→X→ℝ",
+        "prediction : ℕ→X"
+      ],
+      "logicalExpansion": "∀u:X, u∈V → ∃a:ℝ, a<=0 AND Tendsto (T↦comparatorRegret loss prediction u T / T) atTop (nhds a). u precedesa;T is the limit variable. No feasibility of predictions is encoded. V=empty makes it vacuous.",
+      "sourceDelta": "Faithful finite-ordinary interpretation of printed lim<=0 in the bounded square-loss specialization. General unbounded-loss finite versus extended limit ambiguity remains outside this packet; API does not encode limsup or extended-real limits.",
+      "zero": "Finite changes at horizon0 do not affect atTop.",
+      "exactText": "def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧\n    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)",
+      "SHA256": "ffd6329f61b345de7ebc373f497184297edb32db5d66bf2f4c0dd485b27f10a0",
+      "binderClassification": "All carriers, values, functions and finite indices are TYPING. There is no hidden source hypothesis bundle; LimitNoRegret quantified body is expanded explicitly above."
+    }
+  ],
+  "binderClassificationScope": "SOURCE means a genuine premise of the specifically identified contract. hy is printed-source data bounds; hm is explicitly SOURCE only for the separately declared conditional derived contract. hm is not SOURCE for Theorem1.3 or a universal bounded-stream ordinary-limit assertion. No RULED source correction is claimed. No proof ingredient is accepted as a public premise of an unchanged printed Anchor.",
+  "binderTotals": {
+    "targets": 5,
+    "topLevelBinders": [
+      2,
+      3,
+      2,
+      4,
+      4
+    ],
+    "atomicUnitBounds": "Each hy recursively expands to forall t with conjunction0<=y_t andy_t<=1.",
+    "remainingProjectOwnedPropBundles": 0,
+    "unexplainedTypeclasses": 0,
+    "EXCESSInAcceptedDerivedContracts": 0,
+    "RULEDSourceCorrections": 0,
+    "counterfactualExcess": "Dropping the explicit derived-contract label and treating hm as a source-wide premise would reject the universal source Anchor."
+  },
+  "blindAudit": {
+    "inputSHA256": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "outputSHA256": "b0f38188e27897be7324c90b47057786b6cdc3e2b84de193800e6196b59cd107",
+    "allFiveHeadersAndDefinitionsByteIdenticalToSeal": true,
+    "allFiveSevenSlotComparisonsCompleted": true,
+    "materialMismatches": [],
+    "particularChecks": [
+      "No all-real bound silently added toT1/T2.",
+      "T1 mean comparator is not confused with constrained sInf outsidehy.",
+      "Negative square andT0 division caveat retained.",
+      "T4 universal candidatea is not an existential convergence proof.",
+      "T5 explicit mean-convergence premise retained; not pointwise outcome convergence.",
+      "No uniform-over-comparators or stochastic/AE statement inferred."
+    ]
+  },
+  "explicitDeltaLedger": [
+    {
+      "id": "D1",
+      "kind": "derived-support",
+      "delta": "Five new contracts are not printed as-is. They analyze the relation between finite FTL regret and ordinary-limit semantics."
+    },
+    {
+      "id": "D2",
+      "kind": "generalization",
+      "delta": "T1/T2 apply to unrestricted real outcomes, and T2/T4/T5 quantify over all real comparators. The source guessing game and comparison domain are[0,1]."
+    },
+    {
+      "id": "D3",
+      "kind": "normalization",
+      "delta": "Source rounds1..T map to Lean0..T-1; empty prefixes and total division at0 are explicit API extensions; positive-T quotient cancellation only."
+    },
+    {
+      "id": "D4",
+      "kind": "derived-proof-gap",
+      "delta": "Printed upper bound alone does not yield ordinary zero empirical-best limit; learner-specific nonnegativity must be proved or reused as a genuine dependency."
+    },
+    {
+      "id": "D5",
+      "kind": "conditional-derived-contract",
+      "delta": "T5 assumes empirical-mean convergence. This is additional, is not inferred from boundedness, and is not a silent modification of the printed theorem."
+    },
+    {
+      "id": "D6",
+      "kind": "unresolved-source-interpretation",
+      "delta": "Printed ordinarylim and derived limsup guarantee are distinct. No limsup notation repair is approved and no universal ordinary-limit theorem is attributed toTheorem1.3."
+    },
+    {
+      "id": "D7",
+      "kind": "scope",
+      "delta": "Deterministic pathwise contracts do not discharge stochastic C1-SUCCESS, minimaxity, remaining chapter exercises or unknown total proof obligations."
+    }
+  ],
+  "semanticStressChecks": {
+    "constantData": "For y=0,u=1,T>=1 normalized fixed regret is1/(4T)-1→-1, compatible with nonpositive limit and incompatible with every-comparator zero.",
+    "factorialBlocks": "Reviewed separately; bounded stream with u=0 has normalized regret endpoint limits-1and0. This is compatible withT3/T4 and excluded byT5 hm.",
+    "positiveCandidateLimit": "T4 remains valid for a>0 because neither side can hold; no a<=0 premise is required.",
+    "zeroHorizon": "T1/T2 hold at0; normalized quantities0. The identity after cancellingT may fail at0 but atTop is unaffected.",
+    "adaptiveData": "Universal deterministic sequences cover realized bounded paths, including adaptive choices; no probabilistic independence is necessary or concluded."
+  },
+  "remainingGates": [
+    "Implementation bodies have not been inspected.",
+    "No proof/axiom/dependency/compiler validation is inferred from signatures or reconstructed mathematics.",
+    "Reader/publication/purification and exact integration gates remain pending.",
+    "Any source repair and original PR/ref disposition require separate review."
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch30-source-review-v1/semantic-source-review.json",
+      "sha256": "61dac834d3c48438c7ca9efd105f36294507679eacbee0a8204fc76e71071a0b",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only replaced by distinct logical locations, with collision checks. Mathematical contents, original verdicts and historical statuses retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; earlier pending fields retain historical meaning."
+  }
+}

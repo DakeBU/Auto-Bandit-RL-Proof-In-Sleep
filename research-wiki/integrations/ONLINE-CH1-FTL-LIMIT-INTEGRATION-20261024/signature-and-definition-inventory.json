@@ -1,0 +1,123 @@
+{
+  "status": "Source mathematical contracts only; no target Lean signature read or certified",
+  "contracts": [
+    {
+      "id": "C1-REGRET",
+      "kind": "printed definition family",
+      "location": "printed2/PDF14",
+      "objects": "General V subsetR^d, predictions x_t inV, arbitrary real loss functions ell_t:V->R, fixed comparator u inV.",
+      "formula": "Regret_T(u)=sum_{t=1}^T ell_t(x_t)-sum_{t=1}^T ell_t(u). Squared-game empirical-best variant: R*_T=sum(x_t-y_t)^2-min_{u in[0,1]}sum(u-y_t)^2.",
+      "quantifiers": "For every finite positive horizon and admissible data/loss/prediction sequence; u fixed across rounds. Empirical-best u*_T may depend on the entire horizon/path.",
+      "probability": "General definition deterministic, no probability mode specified. P2 opening expected-fixed version has min outside expectation.",
+      "boundary": "Fixed-u regret and empirical-best regret are not identical; the latter is maximum over fixed-u regrets at a given horizon. No automatic nonnegativity for arbitrary algorithms."
+    },
+    {
+      "id": "C1-NOREGRET",
+      "kind": "printed definition with unresolved ordinary-limit applicability",
+      "location": "printed2/PDF14 paragraph after regret(u)",
+      "exact_printed_expression": "lim_{T->infinity} Regret_T(u)/T <= 0",
+      "quantifiers": "For every fixed u inV. Source ordinary lim notation, not limsup. Algorithm need not know u.",
+      "interpretation": "Ordinary limit notation normally presupposes existence. Source does not specify finite versus extended-real limit; in bounded square-loss case normalized regrets lie[-1,1], so any limit is finite.",
+      "boundary": "Cannot silently replace with limsup or require zero limit. Source phrase at most sublinear is one-sided; fixed regret may be negative linear. Theorem1.3 alone does not establish ordinary-limit existence for every fixed u."
+    },
+    {
+      "id": "Theorem1.3",
+      "kind": "printed theorem",
+      "location": "printed4/PDF16; proof printed5-6/PDF17-18",
+      "signature": "For every positive integer T and y_1,...,y_T in[0,1], set x_1=1/2, x_t=(sum_{i<t} y_i)/(t-1) for t>=2. Then R*_T<=4+4 lnT.",
+      "premises": [
+        "T positive integer implicit in log/sums",
+        "arbitrary bounded finite data sequence",
+        "exact strictly-past empirical-mean learner",
+        "initial prediction1/2"
+      ],
+      "conclusion": "Finite empirical-best regret upper bound, not a lower bound or fixed-comparator ordinary-limit theorem.",
+      "probability": "Pathwise, no IID/probability assumptions; may hold along adaptive adversary realizations.",
+      "zero": "No printed theorem at T=0.",
+      "boundary": "Informal p3 permits arbitrary first prediction; theorem specializes to1/2. Source explicitly leaves minimaxity/lower rate unproved."
+    },
+    {
+      "id": "C1-SUCCESS",
+      "kind": "printed stochastic criterion",
+      "location": "printed1/PDF13, equations1.1/1.2 and following text",
+      "signature": "C_T=E sum(x_t-Y_t)^2-T sigma^2; A_T=E sum(x_t-Y_t)^2/T-sigma^2. Success: C_T grows sublinearly iff A_T->0.",
+      "premises": [
+        "Fixed common distribution on[0,1]",
+        "IID draws",
+        "Prediction precedes current observation",
+        "Expected losses well defined under bounded prediction convention"
+      ],
+      "quantifiers": "One strategy/process as horizon tends infinity, source criterion not assertion of universal success.",
+      "boundary": "Different from deterministic R*_T and fixed R_T(u). No source permission to identify all three metrics; stochastic application requires benchmark and causal bridges."
+    },
+    {
+      "id": "SUPPORT-MEAN",
+      "kind": "printed asserted definition/characterization",
+      "location": "printed3/PDF15",
+      "signature": "m_T=(1/T)sum y_t is empirical squared-loss minimizer in[0,1].",
+      "premises": [
+        "T>=1",
+        "all y_t in[0,1]"
+      ],
+      "gap": "Complete-square identity omitted."
+    },
+    {
+      "id": "SUPPORT-FTL",
+      "kind": "printed algorithm",
+      "location": "printed3 and4",
+      "signature": "x_t=m_{t-1} for t>=2, x_1=1/2 in Theorem1.3.",
+      "boundary": "Strictly past, not mean including current observation."
+    },
+    {
+      "id": "Lemma1.2",
+      "kind": "printed supporting theorem",
+      "location": "printed4",
+      "signature": "For arbitrary losses ell_t:V->R and prefix minimizers x*_t in argmin_V sum_{i<=t}ell_i, sum_t ell_t(x*_t)<=sum_t ell_t(x*_T).",
+      "premises": [
+        "Each relevant prefix minimum attained inV"
+      ],
+      "boundary": "No convexity/IID assumption; existence premise supplied by empirical mean for square-loss application. Induction hypothesis is not final public premise."
+    },
+    {
+      "id": "DERIVED-FIXED-BEST-IDENTITY",
+      "kind": "derived reconciliation candidate, not printed",
+      "signature": "For T>=1, R_T(u)/T=R*_T/T-(m_T-u)^2.",
+      "premises": [
+        "Squared loss",
+        "u in[0,1] for source comparator",
+        "empirical-mean complete-square identity"
+      ],
+      "boundary": "Algebra alone, not a zero-limit or ordinary-limit existence theorem."
+    }
+  ],
+  "scope_preservation": {
+    "original_C1_object_count": 16,
+    "object_ids_not_rescoped": true,
+    "proof_obligation_total": "unknown; unchanged",
+    "research_claims_closed": 0,
+    "chapter_completed": false,
+    "remaining_chapter_obligations": "preserved, neither enumerated nor discharged by this bounded extraction",
+    "ledger_changes": false,
+    "inventory_note": "Local paragraph/node counts are coverage granularity, not replacement for original16 C1 source objects. Only four requested source objects plus supporting material analyzed."
+  },
+  "normalization": {
+    "source_index": "1,...,T",
+    "horizon": "Positive finite T in theorem, coherent infinite bounded sequence for asymptotics",
+    "learner": "x_1=1/2; x_t=mean of1,...,t-1",
+    "benchmarks": [
+      "empirical-best pathwise minimum",
+      "fixed-u pathwise cumulative loss",
+      "minimum of expected fixed loss in stochastic discussion"
+    ],
+    "limits": "Ordinary lim printed in C1-NOREGRET. Derived limsup bound is distinct. Signed little-o requires zero quotient limit, not merely eventual upper smallness."
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch30-source-extraction-v1/signature-and-definition-inventory.json",
+      "sha256": "ffae15fca5565595859a1676773c1a76fce7c4b17bde2bcd4cac9d7f4fc20e7d",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only replaced by distinct logical locations, with collision checks. Mathematical contents, original verdicts and historical statuses retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; earlier pending fields retain historical meaning."
+  }
+}

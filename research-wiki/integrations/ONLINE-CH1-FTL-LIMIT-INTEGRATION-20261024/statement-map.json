@@ -1,0 +1,134 @@
+{
+  "sourcePR": 201,
+  "sourceBase": "71c73d727e0a19ed68751994c3b1319aa9c3d756",
+  "sourceHead": "224927197e78e1330c4c93e84f9c69388d3027a7",
+  "integrationBase": "e3df4659fb20d9fab12cd139e98ae5e57438f9a5",
+  "sealedTargets": [
+    {
+      "name": "meanPredict_bestLoss_nonneg",
+      "header": "theorem meanPredict_bestLoss_nonneg (y : ℕ → ℝ) (T : ℕ) :\n    0 ≤ comparatorRegret (fun t x => (x - y t)^2)\n      (meanPredict y) (empiricalMean y T) T",
+      "sha256": "f37b5928617d5ec2db88d91b96e4ce87d8156f2c02120a535cf976feaa931a9c",
+      "repositoryNormalizedStatementHash": "1f39d2dcdf7e6643cc69a3aae76a423642eff8947d29071c750241da223474cf"
+    },
+    {
+      "name": "meanPredict_comparator_decomposition",
+      "header": "theorem meanPredict_comparator_decomposition (y : ℕ → ℝ) (u : ℝ) (T : ℕ) :\n    comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T =\n      comparatorRegret (fun t x => (x - y t)^2)\n        (meanPredict y) (empiricalMean y T) T -\n      (T : ℝ) * (u - empiricalMean y T)^2",
+      "sha256": "13476eebfff48a25d3a4b06f62baad23b1d61a0ea095af4459388a4e66ceab07",
+      "repositoryNormalizedStatementHash": "53b787b2b0a558701890251688011a477b8d8df77f4c8125fc430703212de81e"
+    },
+    {
+      "name": "meanPredict_bestRegret_average_tendsto_zero",
+      "header": "theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ))\n      atTop (nhds (0 : ℝ))",
+      "sha256": "443a1ba4a34c99e35a6c130f545a15ad7629a60b6c7b601a73b1a207779a7192",
+      "repositoryNormalizedStatementHash": "80dc80f444a9a8e7c3314da200b0cc6f59f63dcc902ec05a2dbd56f775d64029"
+    },
+    {
+      "name": "meanPredict_fixedRegret_limit_iff",
+      "header": "theorem meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (u a : ℝ) :\n    Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds a) ↔\n    Tendsto (fun T : ℕ => (u - empiricalMean y T)^2) atTop (nhds (-a))",
+      "sha256": "ad35920ca6536c279abd0fc0fe5dd10772514f2c526bb5476e183a57ed39a200",
+      "repositoryNormalizedStatementHash": "b9fa340a1fc3e48a6a614a15cd6bdc1ea67ff514a46a203d8ba272a150c456f2"
+    },
+    {
+      "name": "meanPredict_limitNoRegret_of_mean_converges",
+      "header": "theorem meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (m : ℝ)\n    (hm : Tendsto (empiricalMean y) atTop (nhds m)) :\n    (∀ u : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds (-(u - m)^2))) ∧\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+      "sha256": "2675b195227b8099a68bf8d665df41dc3a096c19bd063397d2e6c8510a124a9b",
+      "repositoryNormalizedStatementHash": "56b3b3feb14d54850212b0f6a6ff4b92941fb42a236c6e93152def4d5a66ed8d"
+    }
+  ],
+  "literalDefinitions": [
+    {
+      "name": "comparatorRegret",
+      "text": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "sha256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0"
+    },
+    {
+      "name": "empiricalMean",
+      "text": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa"
+    },
+    {
+      "name": "meanPredict",
+      "text": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4"
+    },
+    {
+      "name": "squaredBestRegret",
+      "text": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "sha256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631"
+    },
+    {
+      "name": "LimitNoRegret",
+      "text": "def LimitNoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∃ a : ℝ, a ≤ 0 ∧\n    Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)",
+      "sha256": "ffd6329f61b345de7ebc373f497184297edb32db5d66bf2f4c0dd485b27f10a0"
+    }
+  ],
+  "neutralPacket": {
+    "artifact": "batch30-blind-packet-v1/statements.txt",
+    "sha256": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "originalProductionAndCanary": {
+    "BanditRLProof/OnlineFTLLimitSemantics.lean": {
+      "file": "BanditRLProof__OnlineFTLLimitSemantics.lean",
+      "bytes": 5007,
+      "sha256": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+      "gitBlob": "eb28547256679b94e1bcbf32adc15590a33adcbf"
+    },
+    "Tests/OnlineFTLLimitSemanticsCanary.lean": {
+      "file": "Tests__OnlineFTLLimitSemanticsCanary.lean",
+      "bytes": 6287,
+      "sha256": "4f1dfe62392987cab19f0f197be9a5064d125c0eb83de384e3f2f16ea52d63a9",
+      "gitBlob": "5e9592bbc5e5166652ee621abba3b3e7095781b0"
+    }
+  },
+  "candidateBindings": {
+    "BanditRLProof/OnlineFTLLimitSemantics.lean": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+    "Tests/OnlineFTLLimitSemanticsCanary.lean": "4f1dfe62392987cab19f0f197be9a5064d125c0eb83de384e3f2f16ea52d63a9",
+    "BanditRLProof.lean": "e9d0e343c202ffd0bb58f596a16da8aee9974cc71343db722e1f03561207f9f2",
+    "Tests.lean": "0e14da5443698755a622e4a323309aaf4c62dba9cdbd170ecbf03bc5a447a4e6",
+    ".gitattributes": "9f6fad59ab01a182afb28f77dd91743293a849260da4b4a1dcb31233376f5064",
+    "website/content/chapters.json": "adee95e7c1bb1d8f126c1f31f9a8826cdbef4ccb903184e4afa45e288bbfc7d1",
+    "website/content/readings.json": "b16e67cbeb9f4c2191e8f85a6e2d16166939c6032aa41c776ecda6bd563cef16",
+    "website/content/highlights.json": "4b8523e850f839d265f1816007246b350464ef9ce74df075e8890a2f989ca152"
+  },
+  "actualImportedAudit": {
+    "artifact": "batch30-imported-audit-v1/receipt.json",
+    "sha256": "099c51ce7e02b39090f8f20247a637f5e37fc9b2d1b5d75ef21a16238916dcea",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "actualChecks": "Five full public type witnesses, five literal-definition equalities,38standard-only axiom outputs and16required direct VALUE pairs passed. No production theorem or proof body changed.",
+  "consumerBoundary": "The ordinary-limit criterion consumes the exact decomposition and normalized best-regret limit. The final mean-convergence theorem consumes that criterion. Complete binary canaries consume all five endpoints, prove their own prefix-count mean convergence, and derive -1/4 at comparator0 and0 at comparator1/2. They do not supply an oscillating-mean obstruction or the all-comparator converse.",
+  "readerDisclosureSuccessor": {
+    "proposal": {
+      "artifact": "batch30-public-proposal-v3/receipt.json",
+      "sha256": "4f93a77abc967e7cd0d6095361ccb98082019ab1268aea594c00ff1dba046e9e",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scientificReview": {
+      "artifact": "batch30-public-scientific-review-v3/review.json",
+      "sha256": "ba9e7fc8e4828a8e05d54b38db1871374554a1a30407d276b7a73ea8feb31795",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scopeReview": {
+      "artifact": "batch30-public-scope-review-v3/review.json",
+      "sha256": "c821b0574233e95b1ee826dea49ab04189f44aa32f6e447816aeb4cd6a914687",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "port": {
+      "artifact": "batch30-public-port-v1/receipt.json",
+      "sha256": "f0df905c8bc690c41714cb3460e67536e834e25597bfcb69fe5a81c647581cb4",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "actualRenderedReview": {
+      "artifact": "batch30-rendered-review-v1/review.json",
+      "sha256": "ceabec3c8e04cc37099702aff4f259d4441995c3a4b9671b2fc01987cb56ae95",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "generatedConservationReview": {
+      "artifact": "batch30-generated-scope-review-v1/review.json",
+      "sha256": "50e7698b087bb3c7dbfe886fc705e49794e76bf233aff1f84efd0ab0c4e39634",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scope": "One exact source-bound range adds the full comparatorRegret body; the other four context definitions were already complete. All 28 previous ranges and adjacent NoRegret remain unchanged. LF rules bind exact source bytes. Original production, full canary, mathematical statements and reader formulas remain unchanged."
+  }
+}

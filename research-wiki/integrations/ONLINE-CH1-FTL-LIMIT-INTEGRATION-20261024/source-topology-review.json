@@ -1,0 +1,806 @@
+{
+  "at": "2026-10-24T10:39:50.779089+00:00",
+  "stage": "1-source-topology",
+  "accepted": true,
+  "verdict": "accepted-with-explicit-delta",
+  "requiredCorrections": [],
+  "failures": [],
+  "evidenceBindings": {
+    "batch30-source-extraction-v1/source-extraction-report.json": "e0b07a6260cca5390e2b4e6e9a56221a06e29ea883277bea4663176cb9184944",
+    "batch30-source-extraction-v1/source-coverage.json": "9a5b6908868aa5d6f078960395fed492ba76f42631a6bc07c325377a4971a445",
+    "batch30-source-extraction-v1/source-proof-graph.json": "40a00f4df788fe497ca3ebfdd04d643f2fc902eae1bc6e8acfb7bed269f110e9",
+    "batch30-source-extraction-v1/signature-and-definition-inventory.json": "ffae15fca5565595859a1676773c1a76fce7c4b17bde2bcd4cac9d7f4fc20e7d",
+    "batch30-preport-statement-seal-v1.json": "08bf86aa4018ce8c1a6f462722506e2e4cfec57c99e448f08f184cfa4acee51d",
+    "batch30-blind-packet-v1/statements.txt": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "batch30-blind-reconstruction-v1/reconstruction.json": "b0f38188e27897be7324c90b47057786b6cdc3e2b84de193800e6196b59cd107",
+    "batch30-source-extraction-v1/source-title.txt": "3a5bec6f3917b5c566e06135f1fa90018b1033dadc7b6bc5ccf6b27a3c73d69d",
+    "batch30-source-extraction-v1/source-pages13-18.txt": "a6c51a839ea5843fb5d72932935d79b0fa6cd1846310696447eacf371b351d0d",
+    "batch30-source-extraction-v1/page-013.png": "8117d312b5856e25af9232212c284cfcad012aafb7157810d577c2ba8dfdb4a4",
+    "batch30-source-extraction-v1/page-014.png": "1f8f34992584490b76afabd7c0fecda1c41bf4fb4f42349b4fc486b26d82c11b",
+    "batch30-source-extraction-v1/page-015.png": "c212ebdefda8ceb442a90b168f779046b9a6a96a1f86d02c124b14a71e3fe5dd",
+    "batch30-source-extraction-v1/page-016.png": "b49474e1cbd73e2f04a9027b11d24e55337f86832adadb7f9a852c57e7d647f2",
+    "batch30-source-extraction-v1/page-017.png": "34e55b6b71a91395b880ab5a9aa1d6d30b04fcc248a60cc10772bfd359165017",
+    "batch30-source-extraction-v1/page-018.png": "c4f26bc59e2012e73733c4e75bf7cc581af6c0322d7ea4dffeb5979cb0c6f45c",
+    "batch30-source-extraction-v1/reconciliation-analysis.md": "3e3d8f8e41f8823d16de390d681f038d0c73394e2179edca7c980ec7fef9cae2",
+    "batch30-source-review-v1/build_review.py": "5890eeb66f258a1258835bdbdb348243fdb6f36c3a9bf588962eed1c8111f633",
+    "batch30-source-review-v1/derived-reconciliation-review.json": "e0fc58b6ff81cb7cfbdc5a5c124f323b9db6dce58d553a275a351c63419579ee"
+  },
+  "externalSourceBindings": {
+    "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "instructionBindings": {
+    "AGENTS.md": "6635867d8d12521d553d503e3c461b30d995f56db06f5acc3eb1745ec8688a93",
+    "CONTRIBUTING.md": "ea004f626be82fde7e4b5c42dacd112cdba47574333c4b8af1fd2593d45bd11f",
+    "docs/contributor-codex-contract.md": "bf1bea6a7532f1a192f6289107e3120a6428b2806850cfe69bb62c71865a8353",
+    "docs/theorem-publication-protocol.md": "71772f56444ba1e919aab9cc0d8caab3f0fb6b20887a12aa0f73001afd1c4385",
+    "docs/proof-digestion-protocol.md": "8a183dde41c2b58f5c6a6e2fa4158ccc64ad3e427b9349110d15141aed254492",
+    "docs/evidence-routed-memory-protocol.md": "9e529672bb9706b245596e272024d4b38f3e5a32a5b54310ac70aa8d2118ccf7",
+    ".agents/skills/bandit-substantive-advance/SKILL.md": "000ff0aab81bac73a480da8d51ad9d05ad4fd2858716767e82258d7276be5823",
+    ".agents/skills/bandit-semantic-roundtrip/SKILL.md": "7ee7b72b8a84ab954966dc13900952c3439bd8d4e97877b622c1ca0a7aa85477",
+    ".agents/skills/bandit-lean-formalization/SKILL.md": "e5b62df259e833a8094a90fd41e305f1dbec1089ce4d5d7ceb7e7500ec56f642"
+  },
+  "isolation": {
+    "actor": "/root/batch25_source_reviewer",
+    "formalizer": "/root",
+    "sourceExtractor": "/root/batch25_source_extractor",
+    "blindDecoder": "/root/batch30_blind_decoder",
+    "distinctActors": true,
+    "reviewMode": "source/signature-only before implementation access",
+    "priorContext": "This reviewer retains Batch25–29 conversation and scientific review context, including these source pages. This is an independent implementation-isolated audit, not pristine-history or absolute blindness. A brief memory registry lookup supplied workflow guidance only; no previous PR201 verdict or proof route was used.",
+    "implementationBodiesRead": false,
+    "productionOrCanaryBodiesRead": false,
+    "oldPR201VerdictsRead": false,
+    "sourceExtractorPrivateRationaleRead": false,
+    "permittedInputs": "Pinned raw PDF, six current page images and extracted text, public extraction artifacts, five sealed headers and five literal definitions, designated neutral blind input and fresh decoder output. The extractor build helper was hashed as packet-integrity evidence only, not read as topology rationale.",
+    "actuallyViewedImages": [
+      "batch30-source-extraction-v1/page-013.png",
+      "batch30-source-extraction-v1/page-014.png",
+      "batch30-source-extraction-v1/page-015.png",
+      "batch30-source-extraction-v1/page-016.png",
+      "batch30-source-extraction-v1/page-017.png",
+      "batch30-source-extraction-v1/page-018.png"
+    ],
+    "viewMethod": "tools.view_image original detail; every current page individually emitted and read"
+  },
+  "scopePreservation": {
+    "originalC1Objects": 16,
+    "proofObligationTotal": "unknown; unchanged",
+    "coverageItemsDoNotReplaceOriginalObjects": true,
+    "fiveTargets": "derived library contracts, not five printed theorems",
+    "sourceRepairApproved": false,
+    "chapterComplete": false,
+    "bookComplete": false,
+    "productionEdits": false,
+    "portApprovedByThisReport": false,
+    "proofAcceptance": false,
+    "publicationAcceptance": false,
+    "originalDispositionAuthorized": false
+  },
+  "source": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10, 21 June 2026, printed1–6/PDF13–18.",
+  "independentPageFindings": [
+    {
+      "printed": 1,
+      "pdf": 13,
+      "finding": "Three-stage game enforces current observation secrecy until prediction, unit feasibility, and squared loss. IID fixed distribution, mean/variance benchmark, equations1.1/1.2 and success are expected quantities. Their asserted optimality/nonnegativity is not the deterministic empirical-best lower bound."
+    },
+    {
+      "printed": 2,
+      "pdf": 14,
+      "finding": "Expected-fixed minimum is outside expectation. Deterministic hindsight minimum and general fixed-u regret are separately defined. The no-regret text visibly prints ordinary lim, not limsup, and permits a nonpositive value. Footnote alternate prediction set, dynamic-comparator reference and suppressed-loss remark are accounted for."
+    },
+    {
+      "printed": 3,
+      "pdf": 15,
+      "finding": "The pathwise argument allows data chosen after the prediction. The hindsight mean assertion lacks its square-completion proof. FTL uses strictly earlier outcomes, with any initial unit value informally; this is not an IID premise."
+    },
+    {
+      "printed": 4,
+      "pdf": 16,
+      "finding": "All BTL induction/cancellation/minimizer/feasibility steps were checked. Theorem1.3 specifically chooses 1/2 initially and a positive finite horizon; it states only the upper bound4+4lnT. Minimax lower bound remains explicitly unproved."
+    },
+    {
+      "printed": 5,
+      "pdf": 17,
+      "finding": "Checked replacement by final mean, BTL subtraction direction, first-round1/4, difference-of-squares factor, mean-shift algebra, loose4/t bound, final harmonic sum and figure role."
+    },
+    {
+      "printed": 6,
+      "pdf": 18,
+      "finding": "Checked shifted reciprocal integral and logarithm endpoint; proof-summary upper conclusion does not prove every fixed-comparator ordinary limit. Parameter/computation remarks and all historical citations are explicitly excluded with reasons, not mistaken for proof dependencies."
+    }
+  ],
+  "coverageAudit": {
+    "items": [
+      {
+        "id": "P1-GAME",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X1-MOTIVE",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Motivation only."
+      },
+      {
+        "id": "P1-IID",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P1-ORACLE",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P1-EQ11",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P1-EQ12",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P1-NONNEG",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X1-DIFFICULTY",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Interpretation only."
+      },
+      {
+        "id": "P1-SUCCESS",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P2-EXPECTED-FIXED",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P2-BEST-REGRET",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X2-JUSTIFY",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Motivation only."
+      },
+      {
+        "id": "P2-COMPARATOR",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X2-CH14",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Different scope."
+      },
+      {
+        "id": "P2-FIXED-REGRET",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P2-NOREGRET",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P2-REMARK11",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X2-FOOTNOTE",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Optional alternate game, not Theorem1.3."
+      },
+      {
+        "id": "X3-APPLICATIONS",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Examples, not proof inputs."
+      },
+      {
+        "id": "X3-RETURN",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Framing only."
+      },
+      {
+        "id": "P3-ADVERSARY",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X3-MODELING",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Motivation only."
+      },
+      {
+        "id": "P3-MEAN",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P3-TRACK",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P3-FTL",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X3-ANNOUNCE",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "No extra premise."
+      },
+      {
+        "id": "P4-BTL",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-BASE",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-IH",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-CANCEL",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-IH-USE",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-MIN-USE",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-CHAIN",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X4-INTERPRET",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "No new result."
+      },
+      {
+        "id": "P4-BOUNDARY",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P4-THM13",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-FIG11",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-BTL-BOUND",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-FIRST",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-FACTOR",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-MEANSHIFT",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-STABILITY",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-SUM",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P5-AREA",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P6-INTEGRAL",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P6-CLOSE",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "P6-SUMMARY",
+        "disposition": "NODE",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Located in actual page and represented as source claim/proof step, with gaps preserved."
+      },
+      {
+        "id": "X6-PRACTICE",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Not proof dependencies of selected contracts."
+      },
+      {
+        "id": "X6-STATML",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Context only."
+      },
+      {
+        "id": "X6-FUTURE",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "No present dependency."
+      },
+      {
+        "id": "X6-HISTORY1",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical decision theory outside proof route."
+      },
+      {
+        "id": "X6-SAVAGE1951A",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not used to prove selected contracts."
+      },
+      {
+        "id": "X6-WALD1950A",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not used to prove selected contracts."
+      },
+      {
+        "id": "X6-SAVAGE1951B",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not used to prove selected contracts."
+      },
+      {
+        "id": "X6-SAVAGE1951C",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not used to prove selected contracts."
+      },
+      {
+        "id": "X6-SAVAGE1954A",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not used to prove selected contracts."
+      },
+      {
+        "id": "X6-MILNOR1951",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not used to prove selected contracts."
+      },
+      {
+        "id": "X6-HISTORY2",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical topic outside bounded route."
+      },
+      {
+        "id": "X6-WALD1950B",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not a proof input."
+      },
+      {
+        "id": "X6-WALD1950C",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not a proof input."
+      },
+      {
+        "id": "X6-SAVAGE1954B",
+        "disposition": "EXCLUDED",
+        "review": "accepted within the bounded extraction scope",
+        "reason": "Historical citation, not a proof input."
+      }
+    ],
+    "printedNodes": 37,
+    "excludedWithReason": 24,
+    "gaps": 8,
+    "derivedNodes": 11,
+    "routes": 21,
+    "eachInventoryItemCheckedAgainstActualPages": true,
+    "findings": []
+  },
+  "gapAudit": [
+    {
+      "id": "SG-MEAN-MIN",
+      "kind": "SOURCE_GAP",
+      "use_site": "P3-MEAN",
+      "description": "Complete-square empirical minimizer/feasibility proof omitted.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "SG-ORACLE",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-ORACLE/P2-EXPECTED-FIXED",
+      "description": "Expected mean/variance and fixed expected minimum identities omitted.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "SG-IID-LOWER",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-NONNEG",
+      "description": "Causal IID risk decomposition/nonnegative expected excess omitted.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "SG-NORMALIZE",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-SUCCESS",
+      "description": "Signed total-o(T) iff normalized total tends0 omitted.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "SG-LOG-LIMIT",
+      "kind": "SOURCE_GAP",
+      "use_site": "P6-SUMMARY",
+      "description": "Analytic logT/T->0 not proved in supplied source.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "AG-EMPIRICAL-LOWER",
+      "kind": "DERIVED_RECONCILIATION_GAP",
+      "use_site": "Empirical-best ordinary zero limit",
+      "description": "Theorem1.3 printed upper bound alone does not prove a lower bound. Need a separate FTL nonnegative-regret argument.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "AG-FIXED-EXISTENCE",
+      "kind": "DERIVED_RECONCILIATION_GAP",
+      "use_site": "P2-NOREGRET versus Theorem1.3",
+      "description": "An upper bound only implies limsup<=0. Existence of every fixed-u ordinary limit is not supplied and is generally false for arbitrary bounded sequences.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    },
+    {
+      "id": "AG-ASYMPTOTIC-PATH",
+      "kind": "DERIVED_RECONCILIATION_GAP",
+      "use_site": "Applying finite theorem to limits",
+      "description": "Choose one infinite bounded sequence and apply each finite prefix; do not mix horizon-dependent arbitrary arrays without specifying asymptotic family.",
+      "review": "Preserved as omitted source proof or additional derived application obligation, not silently discharged by an existing library declaration or this Stage1 report."
+    }
+  ],
+  "routeAudit": [
+    {
+      "id": "R-MEAN",
+      "layer": "printed",
+      "allOf": [
+        "P1-GAME",
+        "SG-MEAN-MIN"
+      ],
+      "target": "P3-MEAN",
+      "review": "Feasible mean requires unit bounds; optimality follows the omitted square-completion bridge. The assertion is correctly not treated as an already printed proof."
+    },
+    {
+      "id": "R-BTL-STEP",
+      "layer": "printed",
+      "allOf": [
+        "P4-CANCEL",
+        "P4-IH-USE",
+        "P4-MIN-USE"
+      ],
+      "target": "P4-CHAIN",
+      "review": "Cancellation leaves the prefix inequality. IH compares to the old minimizer; minimizer property compares that fixed old minimizer to the feasible final minimizer. Transitivity direction is correct."
+    },
+    {
+      "id": "R-BTL",
+      "layer": "printed",
+      "allOf": [
+        "P4-BASE",
+        "P4-IH",
+        "P4-CHAIN"
+      ],
+      "target": "P4-BTL",
+      "review": "T=1 is reflexivity. The local IH is discharged by induction, not introduced as a public hypothesis or circular theorem premise."
+    },
+    {
+      "id": "R-LOSS-GAP",
+      "layer": "printed",
+      "allOf": [
+        "P2-BEST-REGRET",
+        "P3-MEAN",
+        "P3-FTL",
+        "P4-BTL"
+      ],
+      "target": "P5-BTL-BOUND",
+      "review": "BTL gives sum current-leader losses <= final-best loss. Subtracting reverses this comparison into the desired regret upper bound; all prefix minimizers are supplied by the mean characterization."
+    },
+    {
+      "id": "R-FIRST",
+      "layer": "printed",
+      "allOf": [
+        "P1-GAME",
+        "P3-MEAN"
+      ],
+      "target": "P5-FIRST",
+      "review": "Initial-half is a theorem premise explicitly cited in premise_discharge, not inferred from generic game rules. x*_1=y_1 makes the current-best loss zero and the first gap <=1/4."
+    },
+    {
+      "id": "R-FACTOR",
+      "layer": "printed",
+      "allOf": [
+        "P1-GAME",
+        "P3-MEAN"
+      ],
+      "target": "P5-FACTOR",
+      "review": "Both neighboring positive-prefix means and y_t lie in [0,1]; the factor |x*_{t-1}+x*_t-2y_t| is <=2."
+    },
+    {
+      "id": "R-SHIFT",
+      "layer": "printed",
+      "allOf": [
+        "P3-MEAN"
+      ],
+      "target": "P5-MEANSHIFT",
+      "review": "At t>=2 both denominators are nonzero. Splitting the current sum gives the displayed adjacent-mean difference."
+    },
+    {
+      "id": "R-STABLE",
+      "layer": "printed",
+      "allOf": [
+        "P5-FACTOR",
+        "P5-MEANSHIFT",
+        "P1-GAME"
+      ],
+      "target": "P5-STABILITY",
+      "review": "Triangle inequality and bounds on the prefix sum and new observation imply the printed loose bound 4/t. A possible sharper bound must not replace the source constant silently."
+    },
+    {
+      "id": "R-SUM",
+      "layer": "printed",
+      "allOf": [
+        "P5-BTL-BOUND",
+        "P5-FIRST",
+        "P5-STABILITY"
+      ],
+      "target": "P5-SUM",
+      "review": "First-round 1/4 and t>=2 bounds sum to the displayed expression, then relax to 4 times the harmonic sum."
+    },
+    {
+      "id": "R-INTEGRAL",
+      "layer": "printed",
+      "allOf": [
+        "P5-AREA"
+      ],
+      "target": "P6-INTEGRAL",
+      "review": "For integer t>=2, 1/t <= integral_t^{t+1} 1/(s-1) ds. Add the first term 1 and evaluate at T+1 and 2; T=1 has an empty integral. Figure is illustrative, not a necessary premise."
+    },
+    {
+      "id": "R-CLOSE",
+      "layer": "printed",
+      "allOf": [
+        "P5-SUM",
+        "P6-INTEGRAL"
+      ],
+      "target": "P6-CLOSE",
+      "review": "Combining harmonic and preceding regret bounds gives 4+4 log T at positive horizons."
+    },
+    {
+      "id": "R-THM",
+      "layer": "printed",
+      "allOf": [
+        "P6-CLOSE",
+        "P3-FTL"
+      ],
+      "target": "P4-THM13",
+      "review": "Theorem scope retains arbitrary unit-bounded finite outcomes and initial half. The informal earlier arbitrary first prediction does not erase this specialization."
+    },
+    {
+      "id": "R-SUMMARY",
+      "layer": "printed",
+      "allOf": [
+        "P4-BTL",
+        "P5-STABILITY",
+        "P6-CLOSE",
+        "SG-LOG-LIMIT"
+      ],
+      "target": "P6-SUMMARY",
+      "review": "The paragraph summarizes an upper-bound route. An ordinary zero quotient additionally needs a lower bound; no fixed-u existence edge is created."
+    },
+    {
+      "id": "R-STOCHASTIC",
+      "layer": "printed",
+      "allOf": [
+        "P1-EQ11",
+        "P1-EQ12",
+        "SG-NORMALIZE"
+      ],
+      "target": "P1-SUCCESS",
+      "review": "Equation1.2 is equation1.1 divided by positive T. The stochastic criterion and its unproved risk/normalization bridges stay distinct from deterministic five-target claims."
+    },
+    {
+      "id": "D-LOWER",
+      "layer": "derived",
+      "allOf": [
+        "D-SQUARE",
+        "D-VARIANCE-UPDATE",
+        "P3-FTL"
+      ],
+      "target": "D-EXACT-REGRET",
+      "review": "The variance update telescopes with the actual initial-half loss. Reviewed as derived algebra only, with nonnegative identity valid even for unrestricted real data."
+    },
+    {
+      "id": "D-ZERO-SQUEEZE",
+      "layer": "derived",
+      "allOf": [
+        "D-EXACT-REGRET",
+        "P4-THM13",
+        "SG-LOG-LIMIT",
+        "AG-ASYMPTOTIC-PATH"
+      ],
+      "target": "D-BEST-ZERO",
+      "review": "One sufficient route: derived lower bound plus printed upper bound and analytic normalization."
+    },
+    {
+      "id": "D-ZERO-EXACT",
+      "layer": "derived",
+      "allOf": [
+        "D-EXACT-REGRET",
+        "P6-INTEGRAL",
+        "SG-LOG-LIMIT",
+        "AG-ASYMPTOTIC-PATH"
+      ],
+      "target": "D-BEST-ZERO",
+      "review": "Alternative sufficient route: exact identity plus unit bounds and harmonic estimate. It does not additionally require the printed BTL route."
+    },
+    {
+      "id": "D-COMPARATOR",
+      "layer": "derived",
+      "allOf": [
+        "D-SQUARE",
+        "P2-FIXED-REGRET",
+        "P2-BEST-REGRET"
+      ],
+      "target": "D-FIXED-ID",
+      "review": "Subtract completed-square fixed loss. All-real u is allowed algebraically, but it is a generalization of the feasible source comparator domain."
+    },
+    {
+      "id": "D-UPPERLIMIT",
+      "layer": "derived",
+      "allOf": [
+        "D-FIXED-ID",
+        "P4-THM13",
+        "SG-LOG-LIMIT",
+        "AG-ASYMPTOTIC-PATH"
+      ],
+      "target": "D-FIXED-LIMSUP",
+      "review": "Only a one-sided eventual upper bound follows. No ordinary-limit existence is discharged here."
+    },
+    {
+      "id": "D-IF",
+      "layer": "derived",
+      "allOf": [
+        "D-FIXED-ID",
+        "D-BEST-ZERO"
+      ],
+      "target": "D-FIXED-IF-LIMIT",
+      "review": "Both directions use best-average convergence and eventual positive-T identity. Extra squared-distance/mean convergence is explicitly conditional, not a hidden source premise."
+    },
+    {
+      "id": "D-OSCILLATION",
+      "layer": "derived",
+      "allOf": [
+        "D-BLOCKS",
+        "D-FIXED-ID",
+        "D-BEST-ZERO"
+      ],
+      "target": "D-NONCONVERGENCE",
+      "review": "Factorial endpoint blocks give two distinct quotient limits. This is a separately checked diagnostic, not an implementation dependency or a silent source correction."
+    }
+  ],
+  "andOrAudit": {
+    "accepted": true,
+    "alternativeSufficientRoutes": [
+      "D-ZERO-SQUEEZE",
+      "D-ZERO-EXACT"
+    ],
+    "operator": "OR, not an AND across their distinct upper-bound providers",
+    "induction": "Local IH is an induction obligation; no source theorem takes its own result as premise.",
+    "sourceGapAnnotations": "SG-ORACLE and SG-IID-LOWER carry explicit use_site links to the asserted stochastic claims; these unresolved support claims are not full proof routes and are not falsely closed by R-STOCHASTIC.",
+    "illustration": "Figure1.1 is located/retained but not required as an independent proof premise."
+  },
+  "sourceDerivedBoundary": {
+    "sourceOrdinaryLimit": "Retained literally, including existence issue; not replaced by limsup.",
+    "derivedAnalysis": "Separate derived-reconciliation-review.json validates elementary algebra and the diagnostic only. Extractor originals remain immutable with DERIVED_UNREVIEWED historical flags.",
+    "sourceRepair": "No approved repair, replacement definition, source-invalid classification or chapter closure.",
+    "targets": "All five exact interfaces are additional derived contracts. None is a verbatim printed theorem."
+  },
+  "remainingGates": [
+    "Independent semantic report against actual blind reconstruction.",
+    "Only after Stage1 seal may implementation bodies and compiler evidence be audited.",
+    "No source repair, publication, proof, purification, merge or disposition acceptance."
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch30-source-review-v1/source-topology-review.json",
+      "sha256": "bdfc8076a99f3e82677a6cf9eb573d5e2932fde80adae30c2a500456e2744c90",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only replaced by distinct logical locations, with collision checks. Mathematical contents, original verdicts and historical statuses retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; earlier pending fields retain historical meaning."
+  }
+}

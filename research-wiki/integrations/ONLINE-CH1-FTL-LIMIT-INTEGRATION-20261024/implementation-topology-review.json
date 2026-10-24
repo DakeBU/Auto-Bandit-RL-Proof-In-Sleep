@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "stage": "2-source-to-implementation",
+  "createdUTC": "2026-10-24T10:49:39.893982+00:00",
+  "actor": "/root/batch25_source_reviewer",
+  "accepted": true,
+  "verdict": "accepted-with-explicit-delta",
+  "requiredCorrections": [],
+  "failures": [],
+  "stage1Unchanged": true,
+  "stage1SealSHA256": "6c3b070e660ce0ee3a5f595be5bb33881db50c99d2841828251e0743da0ea984",
+  "originalHead": "224927197e78e1330c4c93e84f9c69388d3027a7",
+  "acceptedBase": "e3df4659fb20d9fab12cd139e98ae5e57438f9a5",
+  "sourceBindings": {
+    "BanditRLProof/OnlineFTLLimitSemantics.lean": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+    "Tests/OnlineFTLLimitSemanticsCanary.lean": "4f1dfe62392987cab19f0f197be9a5064d125c0eb83de384e3f2f16ea52d63a9",
+    "BanditRLProof.lean": "e9d0e343c202ffd0bb58f596a16da8aee9974cc71343db722e1f03561207f9f2",
+    "Tests.lean": "0e14da5443698755a622e4a323309aaf4c62dba9cdbd170ecbf03bc5a447a4e6",
+    ".gitattributes": "9f6fad59ab01a182afb28f77dd91743293a849260da4b4a1dcb31233376f5064"
+  },
+  "roleDisclosure": "Independent source reviewer; source-only Stage1 sealed before body access. Stage2 is explicitly nonblind, reads full original bodies plus distinct body reviewer and current imported evidence. Prior Batch25-29 context retained. No compiler or gate invoked by this reviewer.",
+  "routes": [
+    {
+      "target": "meanPredict_bestLoss_nonneg",
+      "sourceAnchors": [
+        "P3-MEAN",
+        "P3-FTL"
+      ],
+      "actualAND": [
+        "empiricalMean_minimizes at n+1 with comparator meanPredict y n",
+        "old-prefix loss equality; n=0 empty sum or literal meanPredict at n>0",
+        "induction hypothesis and sum_range_succ"
+      ],
+      "relation": "New derived lower-bound route discharges AG-EMPIRICAL-LOWER for this FTL. It is not printed Lemma1.2 and does not consume D-VARIANCE-UPDATE or D-EXACT-REGRET. Those Stage1 mathematical alternatives remain separate; this extension does not rewrite the frozen source graph.",
+      "zero": "Empty learner and comparator sums; initial-half value does not require empty-prefix minimizer uniqueness."
+    },
+    {
+      "target": "meanPredict_comparator_decomposition",
+      "sourceAnchors": [
+        "P2-FIXED-REGRET",
+        "P3-MEAN",
+        "D-SQUARE",
+        "D-COMPARATOR"
+      ],
+      "actualAND": [
+        "positive-prefix empiricalMean_decomposition",
+        "unfold comparatorRegret and ring",
+        "separate T=0 branch"
+      ],
+      "relation": "Derived complete-square subtraction, negative T*(u-mean)^2. All real streams and comparators, no unit premise. Extends unnormalized identity to T=0."
+    },
+    {
+      "target": "meanPredict_bestRegret_average_tendsto_zero",
+      "sourceAnchors": [
+        "P4-THM13",
+        "SG-LOG-LIMIT",
+        "AG-ASYMPTOTIC-PATH",
+        "D-BEST-ZERO"
+      ],
+      "actualAND": [
+        "T1 nonnegative actual FTL gap",
+        "produced feasible minimum and squaredBestRegret_eq_comparatorRegret",
+        "meanPredict_bestRegret_bound via theorem_1_3",
+        "library log-power limit composed with natural cast",
+        "squeeze_zero"
+      ],
+      "relation": "Uses the printed upper-envelope branch with a different valid derived lower producer. Does not implement the exact-regret/harmonic alternative. One all-time bounded stream supplies every finite prefix, not a different stream at each horizon.",
+      "zero": "Lower bound includes T=0; log upper used only eventually T>0."
+    },
+    {
+      "target": "meanPredict_fixedRegret_limit_iff",
+      "sourceAnchors": [
+        "D-FIXED-ID",
+        "D-BEST-ZERO",
+        "D-IF",
+        "AG-FIXED-EXISTENCE"
+      ],
+      "actualAND": [
+        "T2",
+        "T3",
+        "interval-minimum identification",
+        "eventual positive-T cancellation",
+        "subtraction of convergent functions in each direction"
+      ],
+      "relation": "For fixed real u,a, equivalence of two specified limits; no witness of convergence existence is created. Reverse direction handles minus minus a.",
+      "zero": "field_simp only after nonzero real cast is established."
+    },
+    {
+      "target": "meanPredict_limitNoRegret_of_mean_converges",
+      "sourceAnchors": [
+        "P2-NOREGRET",
+        "D-IF",
+        "AG-FIXED-EXISTENCE"
+      ],
+      "actualAND": [
+        "explicit supplied hm for empiricalMean",
+        "continuity of subtraction and square",
+        "reverse T4 with a=-(u-m)^2",
+        "nonpositivity from square and literal comparator-wise existential"
+      ],
+      "relation": "Conditional derived sufficient criterion. m is an analysis parameter, not a predictor input. The first conjunct is for all real comparators; the second restricts to interval comparators. The unused hu is legitimate strengthening, not discarded essential premise."
+    }
+  ],
+  "printedUpperDependencyComparison": {
+    "lemma1_2": "Actual induction cancels common last loss, handles empty prefix, uses IH and prefix minimization at feasible final leader; minimizer/feasibility supplied in generic lemma, constructed in actual FTL caller.",
+    "theorem1_3": "Actual caller uses V=univ and produced global empirical minimization; feasibility becomes trivial. Stability uses exact squared-update algebra and unit bounds, an equivalent derived algebraic route rather than verbatim printed absolute-product steps. Harmonic library provides the integral-bound conclusion.",
+    "firstRound": "Coarse theorem_1_3 uses uniform4/(t+1) including first round. Separate existing refined theorem retains initial1/4 and tail. T3 uses coarse theorem only; no fabricated refined direct edge.",
+    "scope": "Review verifies actual source ingredients and mathematical equivalence without asserting every printed proof line is literally executed."
+  },
+  "binderAssessment": [
+    {
+      "target": "meanPredict_bestLoss_nonneg",
+      "assumptions": "Only arbitrary real stream y and natural T; no unit bound, stability oracle or target-regret premise.",
+      "zeroHorizon": "Direct simp of empty sums; no positive-horizon minimizer assumption at n=0.",
+      "independentAgreement": true
+    },
+    {
+      "target": "meanPredict_comparator_decomposition",
+      "assumptions": "Arbitrary real stream, real comparator and natural horizon.",
+      "zeroHorizon": "Explicit substitution and empty sums; no division cancellation at0.",
+      "independentAgreement": true
+    },
+    {
+      "target": "meanPredict_bestRegret_average_tendsto_zero",
+      "assumptions": "One stream unit-valued at every time; actual meanPredict fixed, no caller-supplied upper/lower bound.",
+      "zeroHorizon": "Lean total division and lower bound include0; logarithmic upper and cancellation used only eventuallyT>0. No claim log upper at0.",
+      "independentAgreement": true
+    },
+    {
+      "target": "meanPredict_fixedRegret_limit_iff",
+      "assumptions": "Same all-time unit stream, fixed realu,a. No convergence existence assumption except the respective direction antecedent.",
+      "zeroHorizon": "Eventual equality ignores only finiteT0; no division by0 cancellation.",
+      "independentAgreement": true
+    },
+    {
+      "target": "meanPredict_limitNoRegret_of_mean_converges",
+      "assumptions": "Unit stream plus explicit empiricalMean convergence to real m. m is an analysis parameter, not input to meanPredict.",
+      "zeroHorizon": "Ordinary atTop limits tolerateT0; finite definitions unchanged.",
+      "independentAgreement": true
+    }
+  ],
+  "canaryAssessment": {
+    "all13DeclarationsActuallyRead": true,
+    "definitionCount": 1,
+    "theoremCount": 12,
+    "meaningfulCases": [
+      "proven binary feasibility and nonconstant values",
+      "exact floor(T/2) prefix count",
+      "independently squeezed empirical mean limit1/2",
+      "predictions1/2,0,1/2,1/3",
+      "best-regret T0,T1,T2 values0,1/4,3/4",
+      "five target APIs consumed",
+      "fixed comparator0 limit-1/4 vs comparator1/2 limit0",
+      "literal conditional LimitNoRegret"
+    ],
+    "limits": "The factorial-block obstruction was mathematically reviewed separately in Stage1 but is not implemented or tested by these files. The alternating canary has convergent empirical means and is not that obstruction. An exact all-comparator converse is not among these five endpoints."
+  },
+  "noTargetShapedPremiseOrFakeConsumer": true,
+  "deadResidueAssessment": "No proof holes/local axiom/admitted target; application canaries are identified as applications, not independent research. Existing unused hT/hu warnings do not weaken the frozen contracts.",
+  "scientificLimits": [
+    "All five endpoints are derived support, not five printed source theorems. Stage1 source-relative accepted-with-explicit-delta remains unchanged.",
+    "No general bounded-stream ordinary fixed-comparator limit follows from Theorem1.3. T5 requires empirical-mean convergence. Upper-epsilon NoRegret and finite ordinary LimitNoRegret are distinct.",
+    "The factorial-block obstruction was mathematically reviewed separately in Stage1 but is not implemented or tested by these files. The alternating canary has convergent empirical means and is not that obstruction. An exact all-comparator converse is not among these five endpoints.",
+    "No source repair, lim-to-limsup substitution, stochastic C1-SUCCESS closure, expected-minimum exchange, minimax lower bound or arbitrary-algorithm best-regret nonnegativity is approved.",
+    "SG-MEAN-MIN and SG-LOG-LIMIT are supplied here by accepted Lean dependencies for this route; their omission in the printed source remains recorded. SG-ORACLE, SG-IID-LOWER and SG-NORMALIZE are outside this deterministic proof route.",
+    "Original16 C1 objects, unknown proof-leaf total, original OPEN/digest evidence, other chapter and whole-book obligations retain their scope. No ledger or disposition change.",
+    "Focused3333 jobs and imported evidence are actual and passed. They do not establish combined project/harness, publication, rendered Exposition Seal, exact committed CI/main/live or original disposition."
+  ],
+  "evidenceBindings": {
+    "batch30-source-extraction-v1/source-extraction-report.json": "e0b07a6260cca5390e2b4e6e9a56221a06e29ea883277bea4663176cb9184944",
+    "batch30-source-extraction-v1/source-coverage.json": "9a5b6908868aa5d6f078960395fed492ba76f42631a6bc07c325377a4971a445",
+    "batch30-source-extraction-v1/source-proof-graph.json": "40a00f4df788fe497ca3ebfdd04d643f2fc902eae1bc6e8acfb7bed269f110e9",
+    "batch30-source-extraction-v1/signature-and-definition-inventory.json": "ffae15fca5565595859a1676773c1a76fce7c4b17bde2bcd4cac9d7f4fc20e7d",
+    "batch30-preport-statement-seal-v1.json": "08bf86aa4018ce8c1a6f462722506e2e4cfec57c99e448f08f184cfa4acee51d",
+    "batch30-blind-packet-v1/statements.txt": "00dc09b21f604dff8ac8bd69052e31d053c46a4d3adeb8e491820f53d0ecc078",
+    "batch30-blind-reconstruction-v1/reconstruction.json": "b0f38188e27897be7324c90b47057786b6cdc3e2b84de193800e6196b59cd107",
+    "batch30-source-extraction-v1/source-title.txt": "3a5bec6f3917b5c566e06135f1fa90018b1033dadc7b6bc5ccf6b27a3c73d69d",
+    "batch30-source-extraction-v1/source-pages13-18.txt": "a6c51a839ea5843fb5d72932935d79b0fa6cd1846310696447eacf371b351d0d",
+    "batch30-source-extraction-v1/page-013.png": "8117d312b5856e25af9232212c284cfcad012aafb7157810d577c2ba8dfdb4a4",
+    "batch30-source-extraction-v1/page-014.png": "1f8f34992584490b76afabd7c0fecda1c41bf4fb4f42349b4fc486b26d82c11b",
+    "batch30-source-extraction-v1/page-015.png": "c212ebdefda8ceb442a90b168f779046b9a6a96a1f86d02c124b14a71e3fe5dd",
+    "batch30-source-extraction-v1/page-016.png": "b49474e1cbd73e2f04a9027b11d24e55337f86832adadb7f9a852c57e7d647f2",
+    "batch30-source-extraction-v1/page-017.png": "34e55b6b71a91395b880ab5a9aa1d6d30b04fcc248a60cc10772bfd359165017",
+    "batch30-source-extraction-v1/page-018.png": "c4f26bc59e2012e73733c4e75bf7cc581af6c0322d7ea4dffeb5979cb0c6f45c",
+    "batch30-source-extraction-v1/reconciliation-analysis.md": "3e3d8f8e41f8823d16de390d681f038d0c73394e2179edca7c980ec7fef9cae2",
+    "batch30-source-review-v1/build_review.py": "5890eeb66f258a1258835bdbdb348243fdb6f36c3a9bf588962eed1c8111f633",
+    "batch30-source-review-v1/stage1-seal.json": "6c3b070e660ce0ee3a5f595be5bb33881db50c99d2841828251e0743da0ea984",
+    "batch30-source-review-v1/source-topology-review.json": "bdfc8076a99f3e82677a6cf9eb573d5e2932fde80adae30c2a500456e2744c90",
+    "batch30-source-review-v1/semantic-source-review.json": "61dac834d3c48438c7ca9efd105f36294507679eacbee0a8204fc76e71071a0b",
+    "batch30-source-review-v1/derived-reconciliation-review.json": "e0fc58b6ff81cb7cfbdc5a5c124f323b9db6dce58d553a275a351c63419579ee",
+    "batch30-body-review-v1/report.json": "16f1bc5b9eb1d7b99c4a5e1fd8e6eb41ef9e41a922955d96f01773dc6060be09",
+    "batch30-body-review-v1/seal.json": "12beb8d3df6f1d1c142e3ed2af9c17948793715b1aef85cbc5d68440e7dbf036",
+    "batch30-body-review-v1/source-declaration-inventory.json": "e9d82bc2149ebd68d31e8c9a445efe364f674c73da1815f831f2b47fcf9d7f03",
+    "batch30-body-review-v1/source-body-dependency-map.json": "6806151ec1bafcc038e24bb699fef34a8f67137d6cacab28bf1352680f82a969",
+    "batch30-focused-build-v1/receipt.json": "9dc5fb827d0da851d59a4478009c6ea1a0d3dacf30f92dc9ef0ed1c4c62cb389",
+    "batch30-focused-build-v1/build.log": "180a4d76a9271f461b9f1db779b3a95a27f3b343e55c7eb0891c8f6055de26f1",
+    "batch30-imported-audit-v1/receipt.json": "099c51ce7e02b39090f8f20247a637f5e37fc9b2d1b5d75ef21a16238916dcea",
+    "batch30-imported-audit-v1/actual-dependencies.json": "8974a38586ac2abb13fb7dd0e0a7a2b01fa78cd75c0eedbe830482fb0cd9f0e4",
+    "batch30-source-review-v1/build_stage2_review.py": "4c1c5516519e5ed4ea34ddbcec73469d05d9bf4eb206f91734b6eb800bd8c98b",
+    "batch30-imported-audit-preparation-v1/ImportedGraph.lean": "8fba02ff49c3b454e4caae068f139eb6dfe3ad71983e8fcb7f5dc519de0f39af",
+    "batch30-imported-audit-preparation-v1/LiteralDefinitions.lean": "1c3bf44c009297e5e0548c90660499fbffa5372862a92303f3fb154ee43936d3",
+    "batch30-imported-audit-preparation-v1/original-compiled-audit.json": "e0d696e2b68d8ffa23153d2a157b0ed3b922557422d3f5441c56806722aa12b7",
+    "batch30-imported-audit-preparation-v1/OriginalImportedGraph.lean": "03a60b42611a03aa39cad0bca3076e30ffe570651444469e1908863c3fe0bfb8",
+    "batch30-imported-audit-preparation-v1/OriginalPublicValues.lean": "04cc4f2f71a764ae4ac7b972f5e33b0925fbf7207ae9e4b7825b5711961c8919",
+    "batch30-imported-audit-preparation-v1/receipt.json": "1440b3bf12bf4a36035a38c4d3a980305c28bbeadfc58970d15ad4c50c65dbf7",
+    "batch30-imported-audit-v1/direct-graph.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "batch30-imported-audit-v1/literal-definitions.log": "f4b15d4f38cbdb69c29299670f335b5f980449bf5f8ee01d631992b307ea8237",
+    "batch30-imported-audit-v1/public-types-axioms.log": "aee45919d87e0d416e92350d74e91ae93a162035fddfab980373de1547380f58",
+    "batch30-body-review-v1/source-snapshots/BanditRLProof__OnlineFTLLimitSemantics.lean": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9",
+    "batch30-body-review-v1/source-snapshots/Tests__OnlineFTLLimitSemanticsCanary.lean": "4f1dfe62392987cab19f0f197be9a5064d125c0eb83de384e3f2f16ea52d63a9",
+    "batch30-body-review-v1/source-snapshots/BanditRLProof__OnlineLearningRegret.lean": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f",
+    "batch30-body-review-v1/source-snapshots/BanditRLProof__OnlineLearningMean.lean": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+    "batch30-body-review-v1/source-snapshots/BanditRLProof__OnlineLearningFTL.lean": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305",
+    "batch30-body-review-v1/source-snapshots/BanditRLProof__OnlineSquareMinimum.lean": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+    "batch30-body-review-v1/source-snapshots/BanditRLProof__OnlineNoRegretSemantics.lean": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7",
+    "batch30-body-review-v1/source-snapshots/Mathlib__Analysis__SpecialFunctions__Log__Basic.lean": "807a1424d95f14c1be2df5a8d6ada2b4ccd27b9c7d0a9d248d84328c1f900874",
+    "batch30-body-review-v1/source-snapshots/Mathlib__Topology__Algebra__Order__Field.lean": "e5f286cecc8ceadff5083a8888ef8c2f38dcfb5d4e95c97512608b91f264fbb5",
+    "batch30-body-review-v1/source-snapshots/Mathlib__Order__Filter__AtTopBot__Archimedean.lean": "c52f32e361f8c0e8d8e080a3358f3d3311f8290db8a44f61f1e845290c065674",
+    "batch30-body-review-v1/source-snapshots/Mathlib__Topology__MetricSpace__Pseudo__Lemmas.lean": "7a3618be1837fe61face18d3a5e49eea5330a1c3f773e5aa4c6d2aeaab164648"
+  },
+  "externalReadBindings": {
+    "canonical-repository\\BanditRLProof\\OnlineLearningFoundations.lean": "1cc8586376b0e69907bf118c67c40f73a021957fb3363294131e234cc8a8b71f"
+  },
+  "productionEdits": false,
+  "remoteMutations": false,
+  "sourceRepairApproved": false,
+  "expositionSealAccepted": false,
+  "closureAuthorized": false,
+  "public_projection": {
+    "original": {
+      "artifact": "batch30-source-review-v1/stage2-source-proof-topology-review.json",
+      "sha256": "b9d17d6646723e1657b2121f8c2ee79c32f1c4a39588de4580fb1017a31941c1",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only replaced by distinct logical locations, with collision checks. Mathematical contents, original verdicts and historical statuses retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; earlier pending fields retain historical meaning."
+  }
+}
