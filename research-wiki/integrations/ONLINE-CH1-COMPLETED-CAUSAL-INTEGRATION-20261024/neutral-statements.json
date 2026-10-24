@@ -1,0 +1,58 @@
+{
+  "instruction": "Reconstruct four target statements in seven mathematical slots solely from Lean statements and exact context definitions. No source, implementation body, claimed fidelity or prior verdict is provided. Preserve all quantifiers, measure/filtration assumptions, null-set scope and horizon endpoints. Request missing definitions rather than browsing source identity.",
+  "scopedContext": "open MeasureTheory ProbabilityTheory Filter\nuniverse u v\nnamespace BanditRL.OnlineLearning",
+  "imports": [
+    "BanditRLProof.OnlineGuessingAECausal",
+    "Mathlib.MeasureTheory.MeasurableSpace.EventuallyMeasurable",
+    "Mathlib.MeasureTheory.Constructions.Polish.Basic"
+  ],
+  "definitions": [
+    {
+      "kind": "def",
+      "name": "privateSeedPastInformation",
+      "lean": "def privateSeedPastInformation {Ω : Type u} {Seed : Type v} [MeasurableSpace Seed]\n    (S : Ω → Seed) (Y : ℕ → Ω → ℝ) (t : ℕ) : MeasurableSpace Ω :=\n  MeasurableSpace.comap (fun ω => (S ω, fun i : (↑(Finset.range t) : Type) => Y i ω))\n    inferInstance"
+    },
+    {
+      "kind": "def",
+      "name": "expectedFixedMinimum",
+      "lean": "noncomputable def expectedFixedMinimum {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  sInf ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) ''\n    Set.Icc (0 : ℝ) 1)"
+    },
+    {
+      "kind": "def",
+      "name": "expectedFixedRegret",
+      "lean": "noncomputable def expectedFixedRegret {Ω : Type*} [MeasurableSpace Ω]\n    (μ : Measure Ω) (Y prediction : ℕ → Ω → ℝ) (T : ℕ) : ℝ :=\n  (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) -\n    expectedFixedMinimum μ Y T"
+    }
+  ],
+  "upstreamDefinitionContext": "open Filter Set MeasurableSpace\n\nvariable {α : Type*} (m : MeasurableSpace α) {s t : Set α}\n\n/-- The `MeasurableSpace` of sets which are measurable with respect to a given σ-algebra `m`\non `α`, modulo a given σ-filter `l` on `α`. -/\n@[implicit_reducible]\ndef eventuallyMeasurableSpace (l : Filter α) [CountableInterFilter l] : MeasurableSpace α where\n  MeasurableSet' s := ∃ t, MeasurableSet t ∧ s =ᶠ[l] t\n  measurableSet_empty := ⟨∅, MeasurableSet.empty, EventuallyEq.refl _ _ ⟩\n  measurableSet_compl := fun _ ⟨t, ht, hts⟩ => ⟨tᶜ, ht.compl, hts.compl⟩\n  measurableSet_iUnion s hs := by\n    choose t ht hts using hs\n    exact ⟨⋃ i, t i, MeasurableSet.iUnion ht, .countable_iUnion hts⟩",
+  "targets": [
+    {
+      "kind": "theorem",
+      "name": "T1",
+      "lean": "theorem T1 {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ)\n    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :\n    ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version"
+    },
+    {
+      "kind": "theorem",
+      "name": "T2",
+      "lean": "theorem T2 {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :\n    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,\n      (∀ t, Measurable (policy t)) ∧\n      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧\n      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)"
+    },
+    {
+      "kind": "theorem",
+      "name": "T3",
+      "lean": "theorem T3 {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ)\n    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :\n    IndepFun P (Y t) μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "T4",
+      "lean": "theorem T4 {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T"
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch28-blind-input/neutral-statements-v1.json",
+      "sha256": "046e2f0ac6a8196e00bfdc7a997b21101ef0d34c070a065a3297963d4796f957",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind the private original, not the projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; pending fields in this original report remain historical."
+  }
+}

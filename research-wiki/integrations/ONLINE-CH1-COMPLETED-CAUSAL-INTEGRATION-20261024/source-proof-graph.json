@@ -1,0 +1,632 @@
+{
+  "status": "EXTRACTED_REVIEW_PENDING",
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "input_binding_sha256": "946014182511b511bd68cfa673d69b0888bb16806f81d9b503c3c03be9ddc76d",
+  "nodes": [
+    {
+      "id": "P1-TIME",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-TIME",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Opening and round line",
+        "content": "Finite repeated game with one-based rounds t=1,...,T.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-SECRET",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-SECRET",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "First bullet",
+        "content": "Adversary chooses y_t in [0,1] and keeps it secret.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-ACTION",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-ACTION",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Second bullet",
+        "content": "Learner predicts x_t in [0,1] before observing the current outcome.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-LOSS",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-LOSS",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Third bullet",
+        "content": "Outcome is revealed and the squared difference (x_t-y_t)^2 is charged.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-IID",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-IID",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Let us start paragraph, first sentences",
+        "content": "A fixed distribution over [0,1] is chosen initially; observations are independent and identically distributed, and the distribution is unknown to the learner.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-MEAN",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-MEAN",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Same paragraph, known-distribution sentences",
+        "content": "Predicting the mean each round gives expected total sigma^2 T; source asserts no admissible learner can do better.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-EQ11",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-EQ11",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Equation(1.1)",
+        "content": "E_{Y_1,...,Y_T}[sum_t(x_t-Y_t)^2]-sigma^2 T; no explicit seed or sigma-field appears in the notation.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-EQ12",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-EQ12",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Connecting sentence and Equation(1.2)",
+        "content": "Expected total squared loss divided by T, minus sigma^2; an equivalent normalization for positive horizons.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-NONNEG",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-NONNEG",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "First assertion after(1.2)",
+        "content": "Both excess quantities are asserted nonnegative; no conditioning or cross-term calculation is printed.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-SUCCESS",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P1-SUCCESS",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Remaining paragraph after(1.2)",
+        "content": "Successful strategy means sublinear total excess, equivalently average excess tends to zero; this is a criterion, not a claim that any learner succeeds.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P3-ADVERSARY",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P3-ADVERSARY",
+        "printed_page": 3,
+        "pdf_page": 15,
+        "disposition": "NODE",
+        "locator": "A Winning Strategy paragraph",
+        "content": "More general game allows arbitrary outcomes, even chosen after the adversary observes the learner action. This is an adversarial setting boundary, not an IID independence premise.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P3-PAST",
+      "kind": "PRINTED_SOURCE",
+      "source_region": {
+        "id": "P3-PAST",
+        "printed_page": 3,
+        "pdf_page": 15,
+        "disposition": "NODE",
+        "locator": "First sentences after argmin display",
+        "content": "Future unavailable; past known; use a predictor determined by past information.",
+        "exclusion_reason": ""
+      }
+    },
+    {
+      "id": "SG-MEAN",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-MEAN",
+      "description": "Source asserts mean-oracle risk without displaying the mean/variance expansion or feasibility of the mean."
+    },
+    {
+      "id": "SG-CAUSAL",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-MEAN and P1-NONNEG",
+      "description": "No explicit causal-information independence or expected cross-term argument is printed. The no-better assertion needs admissibility, not bounded predictions alone."
+    },
+    {
+      "id": "SG-NORMALIZE",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-EQ12 and P1-SUCCESS",
+      "description": "Division identity and asymptotic equivalence are asserted without proof. Inventoried for complete page coverage but outside the four targets."
+    },
+    {
+      "id": "AG-COMPLETION",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T1 and completed measurability premises of T2-T4",
+      "description": "Supplied source contains no sigma-field completion, modulo-ae measurable set definition, or real-valued version theorem. This is added general measure theory, not an omitted author theorem."
+    },
+    {
+      "id": "AG-POLICY",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T2-T4",
+      "description": "Private seed, generated information sigma field, measurable factorization, null-set modification and common event are explicit formal-model extensions absent from the source."
+    },
+    {
+      "id": "AG-FIXED-MIN",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T4 expectedFixedMinimum",
+      "description": "The supplied pages do not characterize a minimum/sInf of expected fixed losses. Its equality to T variance requires a derived proof from the source mean benchmark, with minimum outside expectation."
+    },
+    {
+      "id": "V-SET-REPS",
+      "kind": "GENERAL_LIBRARY_OBLIGATION",
+      "description": "Under Measurable with respect to eventuallyMeasurableSpace F (ae mu), each real Borel preimage agrees a.e. with an F-measurable set. Use a countable determining family such as rational sublevel sets.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "V-COUNTABLE",
+      "kind": "GENERAL_LIBRARY_OBLIGATION",
+      "description": "Choose representatives for the countable real determining family and intersect their equality events. Countably many a.e. assertions are equivalent to one a.e. assertion holding for all members.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "V-RECONSTRUCT",
+      "kind": "GENERAL_LIBRARY_OBLIGATION",
+      "description": "Construct an F-measurable real version from coherent rational cuts, or prove the equivalent real standard-Borel version theorem. Resolve inconsistent cuts on an F-measurable bad set with a total value while showing this set is null; preserve equality a.e. No boundedness, probability, F<=ambient or finite-measure premise may be added.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "M-DEFINITION",
+      "kind": "MODEL_DEFINITION",
+      "description": "The supplied eventuallyMeasurableSpace definition means: a set s belongs iff some F-measurable set r satisfies s= r modulo ae mu. F is not assumed below the ambient measurable space. Do not silently identify this with completion of a restricted measure.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "H-DEFINITION",
+      "kind": "MODEL_DEFINITION",
+      "description": "H_t(omega)=(S(omega),(Y_i(omega))_{i in range t}); privateSeedPastInformation is comap H_t of product measurability. F_t<=this is an information inclusion, not a monotone-filtration axiom.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "H-FACTOR",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "An F_t-measurable real version with F_t<=comap H_t factors measurably through H_t. Verify the exact real-valued measurable factorization theorem or prove it; arbitrary Seed has only its supplied measurable-space structure.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "H-CLAMP",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Clamp each factor measurably into [0,1] on all seed-history pairs. Original prediction bounds and version equality hold a.e., so this preserves realized predictions a.e.; off-support histories and null-set values may change.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "H-COMMON",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "After choosing one policy family, countably intersect per-time agreement/boundedness events. AE omega FORALL t and FORALL t AE omega are equivalent for natural times, not a stronger mathematical condition.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "I-JOINT",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "iIndepFun Y and seed independent of the whole stream yield independence of joint seed-plus-past H_t from Y_t. Disjoint range t excludes current index; pairwise independence cannot replace these joint premises.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "I-IMAGE",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Push joint independence through the measurable real-valued history factor; no prediction boundedness is required.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "I-SIGMAFIELD",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Alternative: prove current draw independent of seed-plus-past information sigma field, restrict to F, and apply to an F-measurable version. This avoids explicit policy factorization.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "I-AE-TRANSFER",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Independence is invariant under a.e. equality of the prediction. Transfer from the measurable version to the original completed-measurable P.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-AMBIENT",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "For T3/T4, measurable S and each Y make H_t ambient-measurable; F<=comap then makes its real versions ambient-measurable. This is not an assumption or requirement of T1/T2.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-INTEGRABLE",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Probability measure and a.s. [0,1] observation/prediction bounds give integrability of all squares, centered products and finite sums; a.e. versions supply required measurability.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-MOMENTS",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "m=integral Y_0 lies in [0,1]; v=E[(Y_0-m)^2]. Identical laws transfer first and second moments to each Y_t. Same-law marginals alone suffice for the fixed-comparator identity.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-CROSS",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Expand E[(P-Y_t)^2] as E[(P-m)^2]+v-2 E[(P-m)(Y_t-m)]. Independence and integrability factor the last term; E[Y_t-m]=0 makes it vanish.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-MINIMUM",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "For constant u in [0,1], expected total loss=T*(v+(u-m)^2). Nonempty bounded-below image attains Tv at feasible m, proving its sInf equals Tv without exchanging minimum and expectation.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-SUM",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Apply linearity of integrals of finite integrable sums, subtract the fixed benchmark Tv, and obtain sum_{t<T}E[(prediction_t-m)^2].",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-NONNEG",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Every squared-error integral is nonnegative; hence its finite sum is nonnegative.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-ZERO",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "At T=0 finite sums vanish and the fixed-loss image is {0}; its sInf and regret are0. At t=0 the history is empty and only the seed can enter a policy.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "R-POLICY-TRANSFER",
+      "kind": "DERIVED_OBLIGATION",
+      "description": "Optional alternative to the direct version route: use the bounded explicit policy of T2, prove its risk identity by joint independence, then transfer the integrals back using a.e. equality. This is derived analysis, not a printed proof or verified library invocation.",
+      "status": "proof-and-review-pending"
+    },
+    {
+      "id": "T1",
+      "name": "completed_measurable_real_exists_version",
+      "signature_sha256": "f80eaf3c37cb10a5cf0ea9a79b8e85f081167575ca7edcf904d1b763a7a4a50e",
+      "classification": "GENERAL_LIBRARY_NODE",
+      "printed_theorem": false
+    },
+    {
+      "id": "T2",
+      "name": "completed_predictable_exists_bounded_history_policy",
+      "signature_sha256": "fbbd948abfbb9e2509d275e1a7e506e1e381e2c0011734855116e81809c59cc0",
+      "classification": "DERIVED_SOURCE_APPLICATION",
+      "printed_theorem": false
+    },
+    {
+      "id": "T3",
+      "name": "completed_predictable_private_seed_independent",
+      "signature_sha256": "e1fcc1bd54bed887310d67b455fc0eb082382a13735840af37c8c1e36719c6d9",
+      "classification": "DERIVED_SOURCE_APPLICATION",
+      "printed_theorem": false
+    },
+    {
+      "id": "T4",
+      "name": "completed_predictable_private_seed_expectedFixed_excess",
+      "signature_sha256": "0fe65750dc9229b3c0f09a84c3f76d1be64217a879bd3d77667a61c65a3168b5",
+      "classification": "DERIVED_SOURCE_APPLICATION",
+      "printed_theorem": false
+    }
+  ],
+  "routes": [
+    {
+      "id": "P-ORACLE",
+      "layer": "printed_assertion_support",
+      "target": "P1-MEAN",
+      "all_of": [
+        "P1-IID",
+        "P1-LOSS",
+        "SG-MEAN",
+        "SG-CAUSAL"
+      ],
+      "consumer_use_site": "p1 known-distribution mean paragraph",
+      "premise_discharge": "Retains the omitted mean-risk and no-better causal argument; not a printed proof chain.",
+      "or_group": null
+    },
+    {
+      "id": "P-NONNEG",
+      "layer": "printed_assertion_support",
+      "target": "P1-NONNEG",
+      "all_of": [
+        "P1-IID",
+        "P1-SECRET",
+        "P1-ACTION",
+        "P1-EQ11",
+        "P1-EQ12",
+        "SG-CAUSAL"
+      ],
+      "consumer_use_site": "p1 after Equation1.2",
+      "premise_discharge": "Information order must prevent access to current draw. Source does not specify null sets, completion or private seed.",
+      "or_group": null
+    },
+    {
+      "id": "P-NORMALIZE",
+      "layer": "printed_assertion_support",
+      "target": "P1-SUCCESS",
+      "all_of": [
+        "P1-EQ11",
+        "P1-EQ12",
+        "SG-NORMALIZE"
+      ],
+      "consumer_use_site": "p1 final full paragraph",
+      "premise_discharge": "Positive-horizon normalization; not a Batch28 target and not used to conclude convergence for T4.",
+      "or_group": null
+    },
+    {
+      "id": "V-PREIMAGES",
+      "layer": "general_library",
+      "target": "V-SET-REPS",
+      "all_of": [
+        "M-DEFINITION",
+        "AG-COMPLETION"
+      ],
+      "consumer_use_site": "T1 completed-measurability premise",
+      "premise_discharge": "Unfold supplied modulo-ae set definition for countably many real Borel generators; hP supplies each completed-measurable preimage.",
+      "or_group": null
+    },
+    {
+      "id": "V-VERSION",
+      "layer": "general_library",
+      "target": "T1",
+      "all_of": [
+        "V-SET-REPS",
+        "V-COUNTABLE",
+        "V-RECONSTRUCT"
+      ],
+      "consumer_use_site": "T1 existential version conclusion",
+      "premise_discharge": "Countable determining real sets permit one coherent F-measurable reconstruction agreeing with P a.e.; exact reconstruction proof remains an obligation. Arbitrary mu and F retained.",
+      "or_group": null
+    },
+    {
+      "id": "H-FACTORIZATION",
+      "layer": "derived_application",
+      "target": "H-FACTOR",
+      "all_of": [
+        "T1",
+        "H-DEFINITION",
+        "AG-POLICY"
+      ],
+      "consumer_use_site": "T2 history factor",
+      "premise_discharge": "Apply T1 separately at each time. F_t inclusion gives measurability with respect to H_t comap, so derive a measurable factor. No ambient measurability of H_t is needed here.",
+      "or_group": null
+    },
+    {
+      "id": "H-BOUNDED-POLICY",
+      "layer": "derived_application",
+      "target": "T2",
+      "all_of": [
+        "H-FACTOR",
+        "H-CLAMP",
+        "H-COMMON"
+      ],
+      "consumer_use_site": "T2 all three policy conclusions",
+      "premise_discharge": "Original a.s. prediction bounds preserve clamped agreement; the constructed factor is bounded on every q, including unrealized histories. Countability produces common event.",
+      "or_group": null
+    },
+    {
+      "id": "I-BY-FACTOR",
+      "layer": "derived_application",
+      "target": "T3",
+      "all_of": [
+        "T1",
+        "H-DEFINITION",
+        "H-FACTOR",
+        "I-JOINT",
+        "I-IMAGE",
+        "I-AE-TRANSFER",
+        "R-AMBIENT"
+      ],
+      "consumer_use_site": "T3 independence conclusion",
+      "premise_discharge": "Use unbounded factorization of an F-measurable version at fixed t, transport current-draw independence, and transfer a.e. equality. Does not invoke the bounded T2 theorem.",
+      "or_group": "INDEPENDENCE-ROUTES"
+    },
+    {
+      "id": "I-BY-SIGMAFIELD",
+      "layer": "derived_application",
+      "target": "T3",
+      "all_of": [
+        "T1",
+        "H-DEFINITION",
+        "I-SIGMAFIELD",
+        "I-AE-TRANSFER",
+        "R-AMBIENT"
+      ],
+      "consumer_use_site": "T3 alternative information-field argument",
+      "premise_discharge": "Prove information/current-draw independence using hind and hseed, restrict to F, apply to version, then transfer a.e. Equality. No factorized policy necessary.",
+      "or_group": "INDEPENDENCE-ROUTES"
+    },
+    {
+      "id": "R-FIXED",
+      "layer": "derived_application",
+      "target": "R-MINIMUM",
+      "all_of": [
+        "R-MOMENTS",
+        "R-INTEGRABLE",
+        "AG-FIXED-MIN"
+      ],
+      "consumer_use_site": "T4 expectedFixedMinimum",
+      "premise_discharge": "Bounded same-law marginals give scalar quadratic expected fixed loss. Mean is feasible and attains minimum, discharging nonempty/bounded-below sInf conditions internally.",
+      "or_group": null
+    },
+    {
+      "id": "R-CROSS-ID",
+      "layer": "derived_application",
+      "target": "R-CROSS",
+      "all_of": [
+        "T3",
+        "R-INTEGRABLE",
+        "R-MOMENTS"
+      ],
+      "consumer_use_site": "T4 squared-risk expansion",
+      "premise_discharge": "Instantiate T3 at each t, then use product-integral factorization and zero mean of Y_t-m. Identity not a public premise.",
+      "or_group": null
+    },
+    {
+      "id": "R-SUM-ID",
+      "layer": "derived_application",
+      "target": "R-SUM",
+      "all_of": [
+        "R-CROSS",
+        "R-MINIMUM",
+        "R-INTEGRABLE"
+      ],
+      "consumer_use_site": "T4 equality conclusion",
+      "premise_discharge": "Interchange only finite sums and integrals with integrability; cancel Tv. Infimum stays outside expectation.",
+      "or_group": null
+    },
+    {
+      "id": "R-DIRECT",
+      "layer": "derived_application",
+      "target": "T4",
+      "all_of": [
+        "R-SUM",
+        "R-NONNEG",
+        "R-ZERO"
+      ],
+      "consumer_use_site": "T4 equality and nonnegativity",
+      "premise_discharge": "Exact identity plus nonnegative integrals. T=0 is explicit; no asymptotic claim.",
+      "or_group": "EXCESS-ROUTES"
+    },
+    {
+      "id": "R-BOUNDED-POLICY",
+      "layer": "derived_application",
+      "target": "T4",
+      "all_of": [
+        "T2",
+        "I-JOINT",
+        "R-POLICY-TRANSFER",
+        "R-AMBIENT",
+        "R-INTEGRABLE",
+        "R-MOMENTS",
+        "R-MINIMUM",
+        "R-NONNEG",
+        "R-ZERO"
+      ],
+      "consumer_use_site": "T4 alternative explicit-policy route",
+      "premise_discharge": "Apply measurable-image independence to T2 policy, expand its risk, subtract expected fixed minimum, and transport by a.e. equality. A separate sufficient route rather than an extra AND dependency of R-DIRECT.",
+      "or_group": "EXCESS-ROUTES"
+    }
+  ],
+  "semantics": {
+    "all_of": "AND for the ingredients within one proposed sufficient route. Printed-assertion-support routes retain SOURCE_GAPs and are not claims that the author printed these missing proofs.",
+    "or_groups": [
+      {
+        "id": "INDEPENDENCE-ROUTES",
+        "operator": "OR",
+        "routes": [
+          "I-BY-FACTOR",
+          "I-BY-SIGMAFIELD"
+        ]
+      },
+      {
+        "id": "EXCESS-ROUTES",
+        "operator": "OR",
+        "routes": [
+          "R-DIRECT",
+          "R-BOUNDED-POLICY"
+        ]
+      }
+    ],
+    "source_route_vs_library": "No library or application route is attributed to Orabona. Target1 is generic measure theory. Targets2-4 are source-inspired formal-model extensions, not printed theorems.",
+    "premise_rule": "Graph obligations are internal proof ingredients. They are not additional permitted public assumptions. All are unverified in this extraction.",
+    "motivation_links": [
+      {
+        "source": [
+          "P1-SECRET",
+          "P1-ACTION",
+          "P3-PAST"
+        ],
+        "targets": [
+          "T2",
+          "T3"
+        ],
+        "relation": "information-model motivation, not theorem implication"
+      },
+      {
+        "source": [
+          "P1-MEAN",
+          "P1-EQ11",
+          "P1-NONNEG"
+        ],
+        "targets": [
+          "T4"
+        ],
+        "relation": "risk-benchmark motivation, not a printed exact identity"
+      },
+      {
+        "source": [],
+        "targets": [
+          "T1"
+        ],
+        "relation": "general library substrate, no direct printed theorem anchor"
+      }
+    ],
+    "zero_round": "Lean range T counts T rounds indexed0,...,T-1, corresponding to source rounds1,...,T. Strict past range t excludes current draw. T=0 is an added natural-number convention for T4."
+  },
+  "isolation": {
+    "actor": "/root/batch25_source_extractor",
+    "role": "Batch28 source-only topology extractor",
+    "self_approval": false,
+    "prior_context": "Actor previously performed Batch25 and Batch27 source-only extractions in the same conversation; their source/interface context remains present, and a prior narrow AE-quantifier wording correction was received. This is not a pristine-history actor. No earlier packet or verdict file was opened for Batch28.",
+    "current_reads": "Only the six files under batch28-source-only listed in input_hashes; no implementation bodies, source-intent rationale, private former reviews, blind reports or other actor current outputs.",
+    "governance": "Source-first protocol already read earlier in the same conversation; not reopened outside the current allowed input directory.",
+    "images_actually_viewed": [
+      "source-pdf13.png",
+      "source-pdf15.png"
+    ],
+    "pdf_provenance_limit": "The assigned PDF SHA and input manifest are pinned. Current raw images/text were hash-checked against the manifest and visually inspected. The PDF itself was not read in Batch28, so rerender provenance to its bytes is supplied, not independently reproduced by this extractor.",
+    "product_files_or_refs_modified": false,
+    "network_used": false
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch28-source-extraction-v1/source-proof-graph.json",
+      "sha256": "a7d8f0551a5513333ade1c33771d99b98c78ea81dd5a484bed80e64b630bdb87",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind the private original, not the projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; pending fields in this original report remain historical."
+  }
+}

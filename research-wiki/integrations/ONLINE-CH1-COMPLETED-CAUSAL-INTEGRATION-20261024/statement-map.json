@@ -1,0 +1,121 @@
+{
+  "sourcePR": 199,
+  "sourceBase": "8dcdf1e5d74b79ee90d2dd27a48569e9cb4f7fe6",
+  "sourceHead": "4db37e090143760d99b9aedd026a72fa0f1f09ac",
+  "integrationBase": "efaf503398d817289a8b3697f8360e3d7f8029af",
+  "sealedTargets": [
+    {
+      "name": "completed_measurable_real_exists_version",
+      "signatureSHA256": "f80eaf3c37cb10a5cf0ea9a79b8e85f081167575ca7edcf904d1b763a7a4a50e",
+      "lean": "theorem completed_measurable_real_exists_version {Ω : Type u} [MeasurableSpace Ω]\n    (μ : Measure Ω) (F : MeasurableSpace Ω) (P : Ω → ℝ)\n    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :\n    ∃ version : Ω → ℝ, Measurable[F] version ∧ P =ᶠ[ae μ] version",
+      "neutralName": "T1"
+    },
+    {
+      "name": "completed_predictable_exists_bounded_history_policy",
+      "signatureSHA256": "fbbd948abfbb9e2509d275e1a7e506e1e381e2c0011734855116e81809c59cc0",
+      "lean": "theorem completed_predictable_exists_bounded_history_policy {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) (Y : ℕ → Ω → ℝ) (S : Ω → Seed)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) :\n    ∃ policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ,\n      (∀ t, Measurable (policy t)) ∧\n      (∀ t q, policy t q ∈ Set.Icc (0 : ℝ) 1) ∧\n      ∀ᵐ ω ∂μ, ∀ t, prediction t ω = policy t (S ω, fun i => Y i ω)",
+      "neutralName": "T2"
+    },
+    {
+      "name": "completed_predictable_private_seed_independent",
+      "signatureSHA256": "e1fcc1bd54bed887310d67b455fc0eb082382a13735840af37c8c1e36719c6d9",
+      "lean": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t)\n    (P : Ω → ℝ)\n    (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) :\n    IndepFun P (Y t) μ",
+      "neutralName": "T3"
+    },
+    {
+      "name": "completed_predictable_private_seed_expectedFixed_excess",
+      "signatureSHA256": "0fe65750dc9229b3c0f09a84c3f76d1be64217a879bd3d77667a61c65a3168b5",
+      "lean": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v}\n    [MeasurableSpace Ω] [MeasurableSpace Seed]\n    (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ)\n    (hY : ∀ t, Measurable (Y t))\n    (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ)\n    (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1)\n    (hind : iIndepFun Y μ)\n    (S : Ω → Seed) (hS : Measurable S)\n    (hseed : IndepFun S (fun ω t => Y t ω) μ)\n    (F : ℕ → MeasurableSpace Ω)\n    (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t)\n    (prediction : ℕ → Ω → ℝ)\n    (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t))\n    (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) :\n    expectedFixedRegret μ Y prediction T =\n      (∑ t ∈ Finset.range T,\n        ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧\n      0 ≤ expectedFixedRegret μ Y prediction T",
+      "neutralName": "T4"
+    }
+  ],
+  "neutralPacket": {
+    "artifact": "batch28-blind-input/neutral-statements-v1.json",
+    "sha256": "046e2f0ac6a8196e00bfdc7a997b21101ef0d34c070a065a3297963d4796f957",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "productionAndCanaryOriginalBytes": {
+    "BanditRLProof/OnlineGuessingCompletedCausal.lean": {
+      "file": "BanditRLProof__OnlineGuessingCompletedCausal.lean",
+      "bytes": 5813,
+      "sha256": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93",
+      "gitBlob": "6c34235cc22d3005c576acb4a781de4a64779fd0"
+    },
+    "Tests/OnlineGuessingCompletedCausalCanary.lean": {
+      "file": "Tests__OnlineGuessingCompletedCausalCanary.lean",
+      "bytes": 3581,
+      "sha256": "57ffdae457e9b3844e3260b075573617d31537977567382bb892785aca912cea",
+      "gitBlob": "354890bceb740ffd607d1090b423ee6e8c5057d1"
+    }
+  },
+  "candidateBindings": {
+    "BanditRLProof/OnlineGuessingCompletedCausal.lean": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93",
+    "Tests/OnlineGuessingCompletedCausalCanary.lean": "57ffdae457e9b3844e3260b075573617d31537977567382bb892785aca912cea",
+    "BanditRLProof.lean": "edf76076d246d6e90d2d6b3f6512fc3b2f810d734038f068d55a0ef2084167b4",
+    "Tests.lean": "47b73bc09589f27c23411a0be6b8824fcd9b98a890a816d536e33f1f67cd5cdd",
+    "website/content/chapters.json": "9d366b8549adcaf7af84a52e9a05189af8aab68a2f2064d950bb5552a7ea066d",
+    "website/content/readings.json": "0daf763b5ace42fa6f0522f6d544198e123da897d720608036ee88e40c796f23",
+    "website/content/highlights.json": "c4d17e78f3c8fa6f8d890e33c5658dc2a5e45fe95a1ac5d9e5fd6b89afa8f6c4"
+  },
+  "actualImportedAudit": {
+    "artifact": "batch28-imported-audit-v1/receipt.json",
+    "sha256": "08c7e31edf26d8b7e9882dbd516d22e9ef3bd3b71d990f969a16781c71b9a229",
+    "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+  },
+  "actualCheck": "Four universal exact-type witnesses, three literal definition identities and all15 value/axiom audits passed against actual imported original modules. Direct TYPE/VALUE graphs match the private probe.",
+  "consumerBoundary": "The general real-version producer is used by all three new production adapters. All four production results have concrete canary consumers. The new independence result is not a direct parent of the new excess proof; that proof calls the accepted AE excess producer.",
+  "readerDisplaySuccessor": {
+    "proposal": {
+      "artifact": "batch28-reader-display-proposal-v1/proposal.json",
+      "sha256": "f7e4491f34e633920f7f0004cf4a9af8fa8e9f9b382873281bc27660e5747e6a",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "changes": [
+      {
+        "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+        "pointer": "/math",
+        "before": "\\begin{aligned}\\text{Under the probability and independence assumptions below:}\\\\F\\subseteq\\sigma(S,Y_{<t}),\\quad P:\\overline F^{\\mu}\\to\\mathbb R\\text{ measurable}\\\\\\Longrightarrow\\quad P\\perp Y_t.\\end{aligned}",
+        "after": "\\begin{aligned}F\\subseteq\\sigma(S,Y_{<t}),\\quad P:\\overline F^{\\mu}\\to\\mathbb R\\text{ measurable}\\\\\\Longrightarrow\\quad P\\perp Y_t.\\end{aligned}",
+        "change": "Remove only the long non-mathematical prose row. All displayed mathematical premises and conclusions, explicit contextual plain/lean_notes assumptions and actual Lean statements/proofs are unchanged."
+      },
+      {
+        "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+        "pointer": "/math",
+        "before": "\\begin{aligned}\\text{Under the bounded IID and information assumptions below:}\\\\R_T^{\\mathrm{expected\\ fixed}}&=\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2\\\\&\\quad-\\inf_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2\\\\&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E Y_0)^2\\ge0,\\qquad T\\in\\mathbb N.\\end{aligned}",
+        "after": "\\begin{aligned}R_T^{\\mathrm{expected\\ fixed}}&=\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2\\\\&\\quad-\\inf_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2\\\\&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E Y_0)^2\\ge0,\\qquad T\\in\\mathbb N.\\end{aligned}",
+        "change": "Remove only the long non-mathematical prose row. All displayed mathematical premises and conclusions, explicit contextual plain/lean_notes assumptions and actual Lean statements/proofs are unchanged."
+      }
+    ],
+    "scope": "Only two nonmathematical leading prose rows in new T3/T4 displayed formulas are removed. Every mathematical premise and conclusion, plain/lean_notes context, exact Lean signature/proof and all other reader content are unchanged.",
+    "readerDraft": {
+      "artifact": "batch28-reader-draft-v3/receipt.json",
+      "sha256": "45df621a9d7ed5fc322c9e034aa7ff822e5a03cbbfa0ee3b710a3a535fbf0034",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "scientificReview": {
+      "artifact": "batch28-source-review-v1/display-proposal-review-v1.json",
+      "sha256": "c37e4e7d9207406793f30bb273c94ab74a7076291aa03bbf58d739d5b5c9ae50",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "conservationReview": {
+      "artifact": "batch28-scope-review-v1/display-proposal-review-v1.json",
+      "sha256": "39c796e3f563e163fd029d3764bdc5d69672fc99fbf18f23e603790332a1672e",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "actualPort": {
+      "artifact": "batch28-reader-display-port-v1/receipt.json",
+      "sha256": "6d55593c00b874cc045d12094fcb9d92b88980a408f2a2ebbc5bf094db65c8c5",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "actualRenderedReview": {
+      "artifact": "batch28-source-review-v1/rendered-reader-review-v2.json",
+      "sha256": "0c417a639ffda567cb5b7d5746415610f77e93a4f030dfc919762600e161464b",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "actualGeneratedContinuation": {
+      "artifact": "batch28-scope-review-v1/generated-display-continuation-review-v1.json",
+      "sha256": "58dbfee2208e9a367aa0c4321f496bbd67bf2927b007aedf088906f6f92fc21f",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    }
+  }
+}
