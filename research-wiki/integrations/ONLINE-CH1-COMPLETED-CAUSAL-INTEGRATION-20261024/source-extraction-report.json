@@ -1,0 +1,230 @@
+{
+  "status": "EXTRACTED_REVIEW_PENDING",
+  "created_utc": "2026-10-24T04:33:30.187655+00:00",
+  "source": {
+    "manifest_identity": "Orabona arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "printed_pdf_pages": [
+      [
+        1,
+        13
+      ],
+      [
+        3,
+        15
+      ]
+    ]
+  },
+  "input_hashes": [
+    {
+      "path": "maintenance-evidence\\batch28-source-only\\input-binding.json",
+      "sha256": "946014182511b511bd68cfa673d69b0888bb16806f81d9b503c3c03be9ddc76d"
+    },
+    {
+      "path": "maintenance-evidence\\batch28-source-only\\sealed-signatures-v1.json",
+      "sha256": "f4fdda2a80a44f313c3b430f9b68b5ee9f28fedcd9c92e79a0b69d820eae555a"
+    },
+    {
+      "path": "maintenance-evidence\\batch28-source-only\\source-pdf13.png",
+      "sha256": "bce48be8515951f1505e6bdfc68f6b3a36f477ace699d0b0494c0b8db9f4a55c"
+    },
+    {
+      "path": "maintenance-evidence\\batch28-source-only\\source-pdf13.txt",
+      "sha256": "da99d6376f5e3ae105a7dd48dfe86730dd6b10a78ce440b9efcd7721bf8cf85c"
+    },
+    {
+      "path": "maintenance-evidence\\batch28-source-only\\source-pdf15.png",
+      "sha256": "43a66ee31b263d3f4e4d43e037e706171a93819ca87d2e31ff69cfccc6d370bd"
+    },
+    {
+      "path": "maintenance-evidence\\batch28-source-only\\source-pdf15.txt",
+      "sha256": "d382239d9bc52b5a071622b999e71a9ab26dc63ad95d36ba3d6fbe4a6ea1abf5"
+    }
+  ],
+  "sealed_targets": [
+    {
+      "id": "T1",
+      "name": "completed_measurable_real_exists_version",
+      "signature_sha256": "f80eaf3c37cb10a5cf0ea9a79b8e85f081167575ca7edcf904d1b763a7a4a50e",
+      "classification": "GENERAL_LIBRARY_NODE",
+      "printed_theorem": false
+    },
+    {
+      "id": "T2",
+      "name": "completed_predictable_exists_bounded_history_policy",
+      "signature_sha256": "fbbd948abfbb9e2509d275e1a7e506e1e381e2c0011734855116e81809c59cc0",
+      "classification": "DERIVED_SOURCE_APPLICATION",
+      "printed_theorem": false
+    },
+    {
+      "id": "T3",
+      "name": "completed_predictable_private_seed_independent",
+      "signature_sha256": "e1fcc1bd54bed887310d67b455fc0eb082382a13735840af37c8c1e36719c6d9",
+      "classification": "DERIVED_SOURCE_APPLICATION",
+      "printed_theorem": false
+    },
+    {
+      "id": "T4",
+      "name": "completed_predictable_private_seed_expectedFixed_excess",
+      "signature_sha256": "0fe65750dc9229b3c0f09a84c3f76d1be64217a879bd3d77667a61c65a3168b5",
+      "classification": "DERIVED_SOURCE_APPLICATION",
+      "printed_theorem": false
+    }
+  ],
+  "definition_hashes": [
+    {
+      "name": "privateSeedPastInformation",
+      "sha256": "eb6c2daf2fb5b3335739acebbf5979bc9f769ee82d242c5a25f6101838557939"
+    },
+    {
+      "name": "expectedFixedMinimum",
+      "sha256": "e84088d5230d138eeec9e42bea665c80d095f97ba6c21ee8b5169579aa79cea0"
+    },
+    {
+      "name": "expectedFixedRegret",
+      "sha256": "1f5b703374b54b89c43cf53f5fa455ecb00e0db76ca5372390aff148a2e7ca3e"
+    }
+  ],
+  "upstream_definition_context_sha256": "acdcc9b07b6f9155e6617d5c71ddaa507a7247049acc236b3fc2643b18f77f28",
+  "target_analyses": [
+    {
+      "target": "T1",
+      "classification": "general canonical library node; not source-facing printed theorem",
+      "name": "completed_measurable_real_exists_version",
+      "objects": "Arbitrary measure mu on an ambient measurable Omega, arbitrary information sigma field F, real map P.",
+      "premises": "P measurable under eventuallyMeasurableSpace F (ae mu). No probability, finiteness, completeness of ambient measure, F<=ambient, or boundedness premise.",
+      "conclusion": "An exactly F-measurable real function exists and equals P a.e. under mu. No uniqueness or equality everywhere.",
+      "definition_boundary": "The supplied definition is modulo ambient ae-filter equality of sets. Since F<=ambient is not assumed, do not replace it with an unstated restriction/completion construction.",
+      "source_relation": "No completion or measurable-version theorem appears on either page. Real-valued countable-determining-set reconstruction is added measure theory and must be proved/reused separately.",
+      "zero_horizon": "No time or horizon appears.",
+      "proof_obligations": [
+        "M-DEFINITION",
+        "V-SET-REPS",
+        "V-COUNTABLE",
+        "V-RECONSTRUCT"
+      ]
+    },
+    {
+      "target": "T2",
+      "classification": "derived representation of a completed strict-past policy model",
+      "name": "completed_predictable_exists_bounded_history_policy",
+      "objects": "Arbitrary measure, seed and observations, family F_t<=seed-plus-past comap, real process measurable under the per-time modulo-ae structures.",
+      "premises": "Per-time completed measurability and a.s. [0,1] prediction bounds. No probability, measurable seed/observations, IID, bounded observation, or increasing-F condition.",
+      "conclusion": "One family of measurable all-domain [0,1]-valued seed/history policies reproduces prediction_t for every natural time on one full-measure event.",
+      "null_scope": "For natural times, AE omega FORALL t and FORALL t AE omega are equivalent by countable intersection. Policies are chosen before this conjunction. Equality is not required at null outcomes or all possible histories.",
+      "source_relation": "Source supplies game information order and past-only motivation. Completion, versions, factorization, private seed, all-history clamping and common a.e. event are added formal-model results.",
+      "zero_horizon": "At t=0 the history is empty and only seed dependence is available. No horizon T occurs.",
+      "proof_obligations": [
+        "T1",
+        "H-DEFINITION",
+        "H-FACTOR",
+        "H-CLAMP",
+        "H-COMMON"
+      ]
+    },
+    {
+      "target": "T3",
+      "classification": "derived information/current-observation independence bridge",
+      "name": "completed_predictable_private_seed_independent",
+      "objects": "Probability space, independent measurable observation coordinates, measurable seed independent of full stream, a fixed t, F below seed-plus-past comap, completed-F-measurable P.",
+      "premises": "Coordinate independence plus full-stream seed independence. Neither identical laws nor bounds on observations/prediction are assumed. F is not required to be part of a monotone filtration.",
+      "conclusion": "P is independent of Y_t. This is not independence from past or from the full stream.",
+      "null_scope": "A measurable version can be used, with independence transferred across a.e. equality. Null-set perturbations cannot be treated as changes in the distribution.",
+      "source_relation": "An explicit probability bridge supporting the no-better oracle assertion. No such lemma is printed. The bounded policy targetT2 cannot be invoked wholesale because T3 does not assume boundedness.",
+      "zero_horizon": "At t=0 seed-only information is independent of Y_0 by the full-stream seed premise.",
+      "proof_obligations": [
+        "T1",
+        "I-JOINT",
+        "I-IMAGE",
+        "I-SIGMAFIELD",
+        "I-AE-TRANSFER",
+        "R-AMBIENT"
+      ],
+      "alternative_note": "I-JOINT+I-IMAGE via factorization and I-SIGMAFIELD are OR routes, not jointly required."
+    },
+    {
+      "target": "T4",
+      "classification": "derived completed-predictable expected-fixed excess identity",
+      "name": "completed_predictable_private_seed_expectedFixed_excess",
+      "objects": "Probability space; IID measurable a.s. [0,1] observations; measurable seed independent of full stream; completed-F_t-measurable, a.s. [0,1] predictions with F_t below seed-plus-past information; natural T.",
+      "premises": "Identical laws, coordinate independence, per-time support bounds, seed-stream independence, information inclusion and completed measurability. No mean learner, no known conditional-loss identity, no increasing filtration, no supplied regret bound.",
+      "conclusion": "expectedFixedRegret equals sum_{t<T} E[(prediction_t-EY_0)^2] and is nonnegative.",
+      "benchmark": "expectedFixedMinimum is sInf of expected fixed comparator loss over u in [0,1]. Establish attainment at feasible mean, nonempty bounded-below image and value T variance; do not exchange infimum and expectation.",
+      "null_scope": "For fixed T finite a.e. modifications suffice. A common all-time event from T2 is an optional route, not a necessary extra public hypothesis.",
+      "source_relation": "Refines p1 mean benchmark and nonnegative assertion, but the exact identity, modulo-ae information model and sInf characterization are not printed. No empirical mean statement on p3 is a dependency.",
+      "zero_horizon": "At T=0 the fixed-loss image is {0}; both equality and nonnegativity hold.",
+      "boundary": "No sublinear convergence, logarithmic rate, pathwise guarantee, high-probability result or minimax statement follows merely from this target.",
+      "proof_obligations": [
+        "T3",
+        "R-INTEGRABLE",
+        "R-MOMENTS",
+        "R-CROSS",
+        "R-MINIMUM",
+        "R-SUM",
+        "R-NONNEG",
+        "R-ZERO"
+      ]
+    }
+  ],
+  "isolation": {
+    "actor": "/root/batch25_source_extractor",
+    "role": "Batch28 source-only topology extractor",
+    "self_approval": false,
+    "prior_context": "Actor previously performed Batch25 and Batch27 source-only extractions in the same conversation; their source/interface context remains present, and a prior narrow AE-quantifier wording correction was received. This is not a pristine-history actor. No earlier packet or verdict file was opened for Batch28.",
+    "current_reads": "Only the six files under batch28-source-only listed in input_hashes; no implementation bodies, source-intent rationale, private former reviews, blind reports or other actor current outputs.",
+    "governance": "Source-first protocol already read earlier in the same conversation; not reopened outside the current allowed input directory.",
+    "images_actually_viewed": [
+      "source-pdf13.png",
+      "source-pdf15.png"
+    ],
+    "pdf_provenance_limit": "The assigned PDF SHA and input manifest are pinned. Current raw images/text were hash-checked against the manifest and visually inspected. The PDF itself was not read in Batch28, so rerender provenance to its bytes is supplied, not independently reproduced by this extractor.",
+    "product_files_or_refs_modified": false,
+    "network_used": false
+  },
+  "counts": {
+    "inventory": 26,
+    "printed_nodes": 12,
+    "excluded": 14,
+    "source_gaps": 3,
+    "application_gaps": 3,
+    "derived_or_library_obligations": 21,
+    "targets": 4,
+    "routes": 14
+  },
+  "validation": {
+    "input_manifest_digest_matches_assignment": true,
+    "all_current_input_hashes_match_manifest": true,
+    "both_page_images_actually_viewed": true,
+    "unique_inventory_node_ids": true,
+    "all_route_references_resolve": true,
+    "structural_checks_are_not_correctness_or_completeness_acceptance": true
+  },
+  "remaining_gates": [
+    "Distinct topology reviewer to audit full source coverage and target root closure.",
+    "Independent source/statement semantic review and binder expansion.",
+    "Separate proof/implementation verification; this extractor has not read or certified proof bodies."
+  ],
+  "output_hashes": [
+    {
+      "path": "source-inventory.json",
+      "sha256": "5b7903798e9756a46cd99014a76b677c3fcd6cffbcb46368951c0d62609833da"
+    },
+    {
+      "path": "source-proof-graph.json",
+      "sha256": "a7d8f0551a5513333ade1c33771d99b98c78ea81dd5a484bed80e64b630bdb87"
+    },
+    {
+      "path": "source-extraction.md",
+      "sha256": "eda01ec24e219733ac062c163689db99dc09e42ea72f287468cf9794460f77d8"
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch28-source-extraction-v1/source-extraction-report.json",
+      "sha256": "e9938b40659e7788cb3a863bd7c345eac97dd48e5b607a30fdf5e0e9f2c16811",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind the private original, not the projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json; pending fields in this original report remain historical."
+  }
+}

@@ -6763,6 +6763,75 @@
         "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
         "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition"
       ]
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+      "intuition": "Countably many measurable representative bits recover one real-valued version. Only exceptional null samples may change.",
+      "lean_notes": "Write bar F for eventuallyMeasurableSpace F (ae mu): a set belongs to bar F exactly when it equals an F-measurable set almost everywhere under the ambient measure mu. This is the precise ambient null augmentation; no identification with completion of mu.trim F is asserted. Assume an arbitrary ambient measure on an arbitrary measurable sample space, a separately specified measurable space F on the same carrier, and a real P measurable from bar F. There is no probability, finiteness, F-below-ambient or standard-Borel assumption on the sample space. The real output supplies the standard-Borel structure. The result produces an actual F-measurable version, not an input witness. Mathlib ingredients include mapNatBool, measurableEmbedding, measurable_invFun, measurable_pi_iff, measurable_to_bool and ae_all_iff. No arbitrary-output-space version theorem is claimed.",
+      "math": "\\begin{aligned}\\overline F^{\\mu}&=\\{A:\\exists B\\in F,\\ A=_{\\mu\\text{-AE}}B\\},\\\\P:\\overline F^{\\mu}\\to\\mathbb R\\text{ measurable}&\\Longrightarrow\\exists Q:F\\to\\mathbb R\\text{ measurable},\\\\&P=Q\\quad\\mu\\text{-AE}.\\end{aligned}",
+      "plain": "Every real function measurable with respect to the stated ambient null augmentation of F has an F-measurable version equal to it almost everywhere.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed pages 1 and 3 / PDF pages 13 and 15. This general measure-theory node supplies the version construction for three derived strict-past applications; it is not a printed book theorem.",
+      "proof_idea": "Encode each real value by a countable Boolean sequence using a measurable embedding. Augmented measurability gives an F-measurable representative set for each coordinate. Their membership bits form an F-measurable sequence. Countable intersection makes that sequence equal the original code almost everywhere. Composing with the measurable left inverse, defined on every Boolean sequence, gives an F-measurable real version equal to P almost everywhere.",
+      "teaching_order": 120,
+      "title": "A real version from ambient null augmentation",
+      "why": "Supply the precise real-valued version needed by the causal adapters."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+        "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.completed_predictable_exists_bounded_history_policy",
+      "intuition": "A causal version can be feasible on every history input even when the original process violates pointwise causality or feasibility on exceptional null samples.",
+      "lean_notes": "Write bar F for eventuallyMeasurableSpace F (ae mu): a set belongs to bar F exactly when it equals an F-measurable set almost everywhere under the ambient measure mu. This is the precise ambient null augmentation; no identification with completion of mu.trim F is asserted. Under any ambient measure and any measurable seed space, put H_t=(S,Y_{<t}) and require F_t below its comap. Original real predictions P_t are measurable from bar F_t and unit-valued almost everywhere for each natural t. No ambient measurability of S or Y, probability, independence, identical laws, monotonicity of F, or standard-Borel structure on Seed is required. The output is one family of measurable policies, globally unit-valued on every seed/history input, equal to the original process on one AE event for all natural times. This is equivalent to the per-time AE formulation because the index is countable. Time 0 uses only the seed. The choice is classical and law-relative, not an executable learner constructor. Pointwise source feasibility is explicitly generalized to AE original feasibility.",
+      "math": "\\begin{aligned}H_t&=(S,Y_{<t}),\\quad F_t\\subseteq\\sigma(H_t),\\\\P_t:\\overline F_t^{\\mu}\\to\\mathbb R\\text{ measurable},&\\quad P_t\\in[0,1]\\quad\\mu\\text{-AE}\\\\\\Longrightarrow\\exists(\\pi_t)_t:\\quad&\\pi_t\\text{ measurable},\\quad\\forall q,\\ \\pi_t(q)\\in[0,1],\\\\&\\mu\\text{-AE }\\omega,\\ \\forall t\\in\\mathbb N,\\ P_t(\\omega)=\\pi_t(H_t(\\omega)).\\end{aligned}",
+      "plain": "Under the arbitrary-measure strict-past and AE unit assumptions below, a prediction process measurable from the augmented information fields has a measurable, globally bounded history-policy version on one common all-time AE event.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed pages 1 and 3 / PDF pages 13 and 15. This is an explicit derived application of the IID squared-loss or strict-past discussion, not a printed theorem. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Apply the real-version theorem at each natural time. The F_t-measurable versions give relative AE strong measurability of the original process. The existing AE causal producer factors these versions through seed and strict past and projects their values to [0,1]. The policies are measurable and feasible on every seed/history input. A countable intersection gives one event on which the original process and this single policy family agree at every time.",
+      "teaching_order": 121,
+      "title": "A bounded history policy from augmented information",
+      "why": "Convert augmented-information measurability into a single feasible history-policy family."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_independent"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+      "intuition": "Null modifications preserve independence; the unbounded measurable-version argument needs no feasibility assumption.",
+      "lean_notes": "Write bar F for eventuallyMeasurableSpace F (ae mu): a set belongs to bar F exactly when it equals an F-measurable set almost everywhere under the ambient measure mu. This is the precise ambient null augmentation; no identification with completion of mu.trim F is asserted. Assume a probability space, measurable jointly independent real targets Y, a measurable seed S independent of the whole infinite target stream, a fixed natural t, and F below the comap of (S,Y_{<t}). Original P is measurable from bar F. Then original P is independent of Y_t. No bounds, support, identical target laws or moments are assumed. Pairwise seed/coordinate independence is insufficient for the stated premise. Time 0 is included. The direct ABRL parents are the real-version theorem and ae_predictable_private_seed_independent; no claim about stopping times follows.",
+      "math": "\\begin{aligned}F\\subseteq\\sigma(S,Y_{<t}),\\quad P:\\overline F^{\\mu}\\to\\mathbb R\\text{ measurable}\\\\\\Longrightarrow\\quad P\\perp Y_t.\\end{aligned}",
+      "plain": "Under the probability, joint target independence and whole-stream seed independence assumptions below, an original prediction measurable from augmented strict-past information is independent of the current target.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed pages 1 and 3 / PDF pages 13 and 15. This is an explicit derived application of the IID squared-loss or strict-past discussion, not a printed theorem. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Construct an F-measurable version of P with the real-version theorem. Feed the resulting relative AE strong measurability into the existing unbounded AE causal independence theorem. Joint independence of the targets and independence of the seed from the whole stream separate strict past from the current target. AE congruence transfers independence back to the original P. No bounded-policy theorem or boundedness premise is used.",
+      "teaching_order": 122,
+      "title": "Current independence under augmented information",
+      "why": "Derive current-target independence for the original process."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.completed_measurable_real_exists_version",
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+      "intuition": "After subtracting the best expected fixed loss, only squared distance from the population mean remains.",
+      "lean_notes": "Write bar F for eventuallyMeasurableSpace F (ae mu): a set belongs to bar F exactly when it equals an F-measurable set almost everywhere under the ambient measure mu. This is the precise ambient null augmentation; no identification with completion of mu.trim F is asserted. Assume a probability space, measurable jointly independent identically distributed targets with AE unit bounds, a measurable seed independent of the whole target stream, and F_t below seed/strict-past information. Original predictions are measurable from bar F_t and AE unit-valued. For the same infinite process and every natural T, expectedFixedRegret is the sum of expected squared deviations from E[Y_0], hence nonnegative. The infimum over fixed unit comparators is outside expectation. The population mean is an analysis witness, not learner input. Ambient AE measurability, integrability and current independence are derived. Direct ABRL parents are the real-version theorem and ae_predictable_private_seed_expectedFixed_excess; this proof does not directly call the new completed-information independence theorem. No convergence, rate, pathwise or high-probability guarantee is asserted.",
+      "math": "\\begin{aligned}R_T^{\\mathrm{expected\\ fixed}}&=\\mathbb E\\!\\sum_{t<T}(P_t-Y_t)^2\\\\&\\quad-\\inf_{u\\in[0,1]}\\mathbb E\\!\\sum_{t<T}(u-Y_t)^2\\\\&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E Y_0)^2\\ge0,\\qquad T\\in\\mathbb N.\\end{aligned}",
+      "plain": "Under the bounded IID and private-seed assumptions below, the original augmented-information predictor has expected-fixed regret equal to its cumulative expected squared distance from the target mean.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed pages 1 and 3 / PDF pages 13 and 15. This is an explicit derived application of the IID squared-loss or strict-past discussion, not a printed theorem. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Construct measurable versions at every time and pass the resulting relative AE strong measurability to the existing AE expected-fixed-excess theorem. That producer derives current independence and bounded L2 integrability. The population mean attains the minimum expected fixed unit-comparator loss. The common target variance cancels from the cumulative loss decomposition, leaving squared deviations of the original predictions from that mean. T=0 is the empty-sum identity.",
+      "teaching_order": 123,
+      "title": "Expected-fixed excess under augmented information",
+      "why": "Extend the source IID variance calculation to the original process under explicit augmented-information assumptions."
     }
   ]
 }
