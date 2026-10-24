@@ -6832,6 +6832,92 @@
       "teaching_order": 123,
       "title": "Expected-fixed excess under augmented information",
       "why": "Extend the source IID variance calculation to the original process under explicit augmented-information assumptions."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.kernel_sampler_family_exists",
+      "intuition": "A fresh draw acts on an actually generated strict past.",
+      "lean_notes": "Let I=[0,1] and H_t=I^{Fin t} × R^{Fin t}. Given a Markov kernel kappa_t from H_t to I at each natural time, there exists one family f_t:H_t × I -> I, jointly measurable in history and draw, whose uniform pushforward equals kappa_t(h) at every time and every history h. The family is chosen before any observation law or horizon. Standard-Borel structure of I supports Mathlib Kernel.exists_measurable_map_eq_unitInterval. This is classical existence, not a numerical sampler. No observation-law, independence or IID premise occurs in this theorem.",
+      "math": "\\forall (\\kappa_t)_t\\ \\exists(f_t)_t\\ \\forall t,h:\\ (f_t(h,\\cdot))_\\#\\mathrm{Unif}[0,1]=\\kappa_t(h).",
+      "plain": "Every given measurable family of unit-action Markov kernels has one jointly measurable uniform sampler family that represents it at every history, chosen before any observation law or horizon.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 1 / PDF page 13 gives the IID squared-loss benchmark and equations (1.1)–(1.2); printed page 3 / PDF page 15 gives strict-past information. Behavioral-kernel realization is additional derived library infrastructure. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Apply pinned Mathlib kernel randomization at every natural time and choose one jointly measurable sampler family before any observation law or horizon. Every history has the exact uniform pushforward law.",
+      "teaching_order": 130,
+      "title": "One sampler family before every law and horizon",
+      "why": "Connect a specified randomized decision law to its causal process and exact probabilistic endpoint."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.kernel_sampler_causal_process",
+      "intuition": "A fresh draw acts on an actually generated strict past.",
+      "lean_notes": "For any sampler family jointly measurable in history and draw, the actual recursive policy is measurable, every finite generated-action prefix agrees pointwise with the same infinite process, and matching tapes through t and observations strictly before t give the same current prediction. The recursion starts with empty histories and appends the sampled action, rather than substituting raw uniforms for past actions. This theorem requires no kernel representation, Markov property, probability law or independence assumption. It uses finite-coordinate measurability and the private finite-recursion lemma.",
+      "math": "\\begin{aligned}P_t&=f_t((P_{<t},Y_{<t}),U_t),\\\\U_{\\le t}=U^{\\prime}_{\\le t},\\ Y_{<t}=Y^{\\prime}_{<t}&\\Longrightarrow P_t=P^{\\prime}_t.\\end{aligned}",
+      "plain": "A jointly measurable sampler generates one measurable, pointwise causal process whose finite prefixes agree with its actual recursive action history.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 1 / PDF page 13 gives the IID squared-loss benchmark and equations (1.1)–(1.2); printed page 3 / PDF page 15 gives strict-past information. Behavioral-kernel realization is additional derived library infrastructure. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Induct on the actual finite action recursion. Each step restricts both prefixes, generates prior actions and appends the current sample. Prove finite-input measurability, equality of every earlier action with the same infinite process, and pointwise nonanticipation.",
+      "teaching_order": 131,
+      "title": "The same causal recursion at every round",
+      "why": "Connect a specified randomized decision law to its causal process and exact probabilistic endpoint."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.independent_private_seed_pair"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.kernel_sampler_joint_law",
+      "intuition": "A fresh draw acts on an actually generated strict past.",
+      "lean_notes": "Fix a Markov-kernel family and any jointly measurable sampler family representing it at every history. Put the product law of an independent infinite uniform tape and an arbitrary probability law nu on real observation streams on the common sample space. Then the joint law of actual generated history H_t and prediction P_t is the composition-product of the history marginal with kappa_t. The observation coordinates may be dependent and unbounded; the entire observation stream must remain independent of the tape through the stated product construction. The proof uses independent_private_seed_pair, independent uniform coordinates and product-law independence. The symbol tensor denotes kernel composition-product, not an independent product of history and prediction.",
+      "math": "\\mathcal L(H_t,P_t)=\\mathcal L(H_t)\\otimes\\kappa_t,\\qquad H_t=(P_{<t},Y_{<t}).",
+      "plain": "Under the independent tape and observation-stream product law, actual generated history and current prediction have the joint law specified by the given kernel.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 1 / PDF page 13 gives the IID squared-loss benchmark and equations (1.1)–(1.2); printed page 3 / PDF page 15 gives strict-past information. Behavioral-kernel realization is additional derived library infrastructure. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Independent infinite uniform coordinates give independence of the current draw from the strict past tape. The product law separates the entire observation stream from the tape. Regroup these blocks and map through the actual generated history, then through the sampler; the joint law is history marginal composed with the given kernel.",
+      "teaching_order": 132,
+      "title": "Actual joint law from fresh uniform draws",
+      "why": "Connect a specified randomized decision law to its causal process and exact probabilistic endpoint."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.kernel_sampler_causal_process",
+        "BanditRL.OnlineLearning.kernel_sampler_joint_law"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.kernel_sampler_conditional_law",
+      "intuition": "A fresh draw acts on an actually generated strict past.",
+      "lean_notes": "Use the same Markov, joint-measurability, all-history representation and product-law inputs as the joint-law theorem. The conditional distribution of the actual prediction given the actual generated history equals kappa_t almost everywhere under that history marginal, for each nu and t. Its exceptional null set may depend on nu and t. This does not specify a unique conditional law at unreachable histories. The proof directly uses the causal-process and joint-law theorems and Mathlib condDistrib_ae_eq_of_measure_eq_compProd.",
+      "math": "\\begin{aligned}\\rho_t&=\\mathcal L(H_t),\\quad K_t=\\operatorname{condDistrib}(P_t,H_t),\\\\K_t(h)&=\\kappa_t(h)\\quad\\text{for }\\rho_t\\text{-a.e. history }h.\\end{aligned}",
+      "plain": "The actual conditional action law equals the given kernel almost everywhere under the generated-history marginal.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 1 / PDF page 13 gives the IID squared-loss benchmark and equations (1.1)–(1.2); printed page 3 / PDF page 15 gives strict-past information. Behavioral-kernel realization is additional derived library infrastructure. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Use the actual measurable generated prediction and established joint law. Conditional-distribution uniqueness identifies the kernel AE under the actual generated-history marginal, including time0.",
+      "teaching_order": 133,
+      "title": "Actual conditional law on reached histories",
+      "why": "Connect a specified randomized decision law to its causal process and exact probabilistic endpoint."
+    },
+    {
+      "chapter": "online-foundations",
+      "dependencies": [
+        "BanditRL.OnlineLearning.kernel_sampler_family_exists",
+        "BanditRL.OnlineLearning.kernel_sampler_causal_process",
+        "BanditRL.OnlineLearning.kernel_sampler_joint_law",
+        "BanditRL.OnlineLearning.kernel_sampler_conditional_law",
+        "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess"
+      ],
+      "featured": false,
+      "full_name": "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess",
+      "intuition": "A fresh draw acts on an actually generated strict past.",
+      "lean_notes": "Given a Markov-kernel family, choose one jointly measurable representing sampler before every observation law and horizon. It supplies the causal process, pointwise prefix consistency, joint law and AE conditional law for every real-observation probability law nu. If the observation coordinates are mutually independent, identically distributed and almost everywhere in I, the same infinite process satisfies the displayed expected-fixed identity for every natural horizon T, including T=0. The infimum is over one fixed unit comparator and lies outside expectation. The target mean is an analysis witness, not learner input. The proof reuses all four realization endpoints and randomized_history_policy_expectedFixed_excess. No rate, convergence, pathwise or high-probability statement is obtained.",
+      "math": "\\begin{aligned}R_T&=\\mathbb E\\sum_{t<T}(P_t-Y_t)^2-\\inf_{u\\in[0,1]}\\mathbb E\\sum_{t<T}(u-Y_t)^2,\\\\&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb E[Y_0])^2\\ge0.\\end{aligned}",
+      "plain": "One sampler realizes the given kernels for every observation law. Under bounded IID observations, its expected-fixed regret is the cumulative expected squared distance from the target mean.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), printed page 1 / PDF page 13 gives the IID squared-loss benchmark and equations (1.1)–(1.2); printed page 3 / PDF page 15 gives strict-past information. Behavioral-kernel realization is additional derived library infrastructure. Printed round 1 corresponds to Lean time 0.",
+      "proof_idea": "Select one sampler family first and retain its recursion, joint and conditional laws for every observation law. Under coordinate IID, same-law and AE unit observations, lift those assumptions through the product law. The concrete feasible history policy instantiates the existing IID expected-fixed excess producer at every natural horizon, including zero.",
+      "teaching_order": 134,
+      "title": "One realized process and every-horizon IID excess",
+      "why": "Connect a specified randomized decision law to its causal process and exact probabilistic endpoint."
     }
   ]
 }

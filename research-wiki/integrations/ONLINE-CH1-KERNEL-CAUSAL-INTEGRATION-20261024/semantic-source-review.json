@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "stage": "1-source-signature-blind-comparison",
+  "accepted": true,
+  "verdict": "accepted-with-explicit-delta",
+  "requiredCorrections": [],
+  "failures": [],
+  "isolation": {
+    "actor": "/root/batch25_source_reviewer",
+    "role": "independent source and semantic reviewer; not formalizer or blind decoder or extractor",
+    "priorContext": "Same actor reviewed Batch25–28 and retains that conversation context, especially Batch28 source pages. This is an implementation-isolated fresh inspection, not absolute blindness. No earlier source verdict or production implementation file was opened for this Stage1.",
+    "implementationBodiesRead": false,
+    "projectImportedModuleBodiesRead": false,
+    "sourceImagesActuallyViewed": [
+      "batch29-source-only/source-pdf13.png",
+      "batch29-source-only/source-pdf15.png"
+    ],
+    "pdfProvenance": "Independently hashed pinned original PDF and all supplied page text/image bytes; inspected both actual supplied page images. No new PDF render or pixel-identity claim.",
+    "upstreamScope": "Read selected Mathlib semantic definitions/fields for Kernel, IsMarkovKernel, condDistrib, iIndepFun, IdentDistrib and unit-interval volume. No current production proof reviewed.",
+    "workflow": "Raw source and interfaces read and both pages viewed before inspecting extractor topology; blind interpretation independently compared to exact signatures.",
+    "productionOrRemoteMutations": false
+  },
+  "evidenceBindings": {
+    "batch29-blind-packet-v1/input-binding.json": "3b7ec91cc6509003fd999f5c7f70000deeb6b855af2664829b2df86393c1b906",
+    "batch29-blind-packet-v1/statements-and-context.lean.txt": "677fcb6f1adca96165d575bf8b60595bae08fd58f0bf3bca328a4082ada6f886",
+    "batch29-blind-reconstruction-v1/reconstruction.json": "3a747fe0a316d0be162a2a3e401888aa49c914acea6654dcb0b650d0402df310",
+    "batch29-blind-reconstruction-v1/reconstruction.md": "0b90a69aa93751ad9d3bd6a2377a90db84d87551214b7e3e0779d8a4e2542e98",
+    "batch29-source-extraction-v1/signature-and-definition-inventory.json": "08cae10e70b64a90ee90a76afc132671f8c8ea1b801d48226aa9fce7c721217d",
+    "batch29-source-extraction-v1/source-coverage.json": "56ecab17b7d2226156d256205ee08de3ad168801d855a09837be8146739e7339",
+    "batch29-source-extraction-v1/source-extraction-report.json": "08eaa912557955131380438afacdae2f995b7bec494a49ad1b1c1abc823e4dc3",
+    "batch29-source-extraction-v1/source-extraction.md": "a26af98d0bac4364ef62994ffecbfdf7aaec608812c5d2f251695e85042612ae",
+    "batch29-source-extraction-v1/source-proof-graph.json": "4af0a262e44a19a5313c58ba090b00feec0f9b61a8e9ed31453adb725b0df41b",
+    "batch29-source-only/context-definitions.lean.txt": "78ad349b12c441631008f2f75a87ce90426d6c7eecbe2656d9c5ad0cb2017211",
+    "batch29-source-only/input-binding.json": "6a1b10da9c0b5a7373283cc8b3123d0dc6180305532766f238e1d48c51a8d5de",
+    "batch29-source-only/sealed-signatures-v1.json": "b6cce60caa494965838a1f2873c2b4cf5085307e6aed65cb07a580c6d124847b",
+    "batch29-source-only/source-pdf13.png": "bce48be8515951f1505e6bdfc68f6b3a36f477ace699d0b0494c0b8db9f4a55c",
+    "batch29-source-only/source-pdf13.txt": "da99d6376f5e3ae105a7dd48dfe86730dd6b10a78ce440b9efcd7721bf8cf85c",
+    "batch29-source-only/source-pdf15.png": "43a66ee31b263d3f4e4d43e037e706171a93819ca87d2e31ff69cfccc6d370bd",
+    "batch29-source-only/source-pdf15.txt": "d382239d9bc52b5a071622b999e71a9ab26dc63ad95d36ba3d6fbe4a6ea1abf5"
+  },
+  "upstreamSemanticBindings": {
+    "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Probability\\Kernel\\Defs.lean": "98348091d249cc6665f9c92b3a2f3d64a0f267fef171d6b5974db73bd4094070",
+    "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Probability\\Kernel\\CondDistrib.lean": "3211405182248757cb4e55d5db350f38f5674525aced9c69e2219a0b8873d725",
+    "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Probability\\Independence\\Basic.lean": "2bd891eb5f899d05724facae4676272b5ca2020a74cf1eefd74a2a1ea097d338",
+    "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Probability\\IdentDistrib.lean": "d80bf5251f0462284a6791204f79765241de21cc0b851a36edd187c1ca17c003",
+    "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\MeasureTheory\\Constructions\\UnitInterval.lean": "7ca90fd3368b02190f4a80cb4fa3344b0a9447a3947e6a17a4fbad717b0eac10"
+  },
+  "targetReviews": [
+    {
+      "id": "T1",
+      "name": "kernel_sampler_family_exists",
+      "signatureSHA256": "92e62cf28d0887f787147b153972c16cbf08f1f53a5882201bc8666ed2cdb138",
+      "slots": {
+        "objects_spaces": "H_t=I^t×R^t and f_t:H_t×I→I with Borel structures.",
+        "quantifiers_order": "For each entire Markov kernel family choose one f, then all t and all histories. No nu occurs.",
+        "assumptions_regularity": "Kernel measurability and probability at every history are inputs; sampler joint measurability is a conclusion.",
+        "conclusion_metric": "Uniform-section pushforward equals kappa_t(h) everywhere, as measures.",
+        "constants_normalization": "Unit interval volume has mass1; exact equality, no approximation.",
+        "probability_information": "No process law or conditional distribution is concluded by T1 alone.",
+        "remaining_boundary": "Derived standard-Borel sampling infrastructure; no executable sampler or unique selection."
+      },
+      "blindComparison": "All seven slots agree with the independent reconstruction after literal comparison with sealed Lean.",
+      "sourceComparison": "Accepted only with explicit derived-contract deltas D1-D9; not a printed theorem."
+    },
+    {
+      "id": "T2",
+      "name": "kernel_sampler_causal_process",
+      "signatureSHA256": "8dc148f624372e7dde3dc869420ee63bd82c1e6f2b3d55df2e569c97c6384884",
+      "slots": {
+        "objects_spaces": "An arbitrary jointly measurable sampler and the literal finite-action recursion.",
+        "quantifiers_order": "For all f,hf: all-time policy measurability AND all t,u,y,i<t prefix consistency AND causality for all t,omega,omega-prime.",
+        "assumptions_regularity": "Only joint hf; no Markov family, probability law, IID, support or independence input.",
+        "conclusion_metric": "Three exact deterministic conclusions; no null set.",
+        "constants_normalization": "At time0 the history is empty and only u0 can affect prediction; Fin0 prefix claim vacuous.",
+        "probability_information": "Uniform prefix through t is allowed, outcomes strictly before t. Entire tape formal domain is restricted semantically by invariance.",
+        "remaining_boundary": "Derived causality for this recursion, not converse classification of all policies."
+      },
+      "blindComparison": "All seven slots agree with the independent reconstruction after literal comparison with sealed Lean.",
+      "sourceComparison": "Accepted only with explicit derived-contract deltas D1-D9; not a printed theorem."
+    },
+    {
+      "id": "T3",
+      "name": "kernel_sampler_joint_law",
+      "signatureSHA256": "893d5a871dd8436160ba5bfbe9d0fb471330db6e3c03b5ede588651a215a2eb7",
+      "slots": {
+        "objects_spaces": "Joint law on H_t×I under U×nu and history-law composition with kappa_t.",
+        "quantifiers_order": "All kappa, Markov proofs, f,hf,h-kappa,nu,t; h-kappa itself covers all times/histories.",
+        "assumptions_regularity": "Joint measurability and representation are explicit interface premises; nu is arbitrary probability on real sequences.",
+        "conclusion_metric": "Exact equality of joint measures, not independence of action and history.",
+        "constants_normalization": "No loss constant or horizon rate.",
+        "probability_information": "Fresh uniform independent of generated past and full outcome stream; nu need not be IID or bounded.",
+        "remaining_boundary": "Only product exogenous environment; not action-reactive adversaries. Interface h-kappa must be produced internally when assembling T5."
+      },
+      "blindComparison": "All seven slots agree with the independent reconstruction after literal comparison with sealed Lean.",
+      "sourceComparison": "Accepted only with explicit derived-contract deltas D1-D9; not a printed theorem."
+    },
+    {
+      "id": "T4",
+      "name": "kernel_sampler_conditional_law",
+      "signatureSHA256": "58c17a5b89f437cea0a32bfae8386557f38d0f8ddd886e9f5441c3b2fe75e859",
+      "slots": {
+        "objects_spaces": "Conditional action distribution given H_t, compared under rho_t=law(H_t).",
+        "quantifiers_order": "Same inputs as T3; for each fixed nu,t, almost every history has equality as measures.",
+        "assumptions_regularity": "Same representation/regularity inputs; standard-Borel output I supports conditional distribution.",
+        "conclusion_metric": "A.e. equality of kernels under rho_t, not everywhere at null/unreachable histories.",
+        "constants_normalization": "Exact a.e. equality, no approximation or numerical constant.",
+        "probability_information": "Conditioning is on generated history, not whole tape/outcomes or an arbitrary filtration. Null exceptions may depend on nu,t.",
+        "remaining_boundary": "All-history h-kappa does not make selected conditional versions equal everywhere. Different times have different history carriers."
+      },
+      "blindComparison": "All seven slots agree with the independent reconstruction after literal comparison with sealed Lean.",
+      "sourceComparison": "Accepted only with explicit derived-contract deltas D1-D9; not a printed theorem."
+    },
+    {
+      "id": "T5",
+      "name": "causal_kernel_realization_and_expectedFixed_excess",
+      "signatureSHA256": "17abd0796feb9518a2010d9f3ae4fca1968ef626a6ee4c9b90f58c15b94d844d",
+      "slots": {
+        "objects_spaces": "Same sampler/game model, scalar expected-fixed squared-loss excess and analytic mean E_game Y0.",
+        "quantifiers_order": "For every kappa choose ONE f before every nu and T. Five deterministic/representation conjuncts precede every-nu joint/conditional-law clauses; only last implication requires IID, same law, support.",
+        "assumptions_regularity": "Outer inputs are Markov kernels; all sampler/causality facts are conclusions. Final branch: independent coordinate family, IdentDistrib to coordinate0, each coordinate a.e. in [0,1].",
+        "conclusion_metric": "R_T=sum(t<T) E[(A_t-m)^2] AND R_T≥0, with real coercion of I-valued actions.",
+        "constants_normalization": "Unnormalized cumulative sum, squared-loss coefficient1, natural T including0. No divide by T; mean is not sample average.",
+        "probability_information": "Expectation includes independent tape and outcome law. Causality plus IID yields action/current-outcome independence as proof obligation, not public premise.",
+        "remaining_boundary": "No sublinear rate, learner optimality, pointwise L2 limit or universal success. Mean is analysis-only; sampler can be chosen without knowing nu."
+      },
+      "blindComparison": "All seven slots agree with the independent reconstruction after literal comparison with sealed Lean.",
+      "sourceComparison": "Accepted only with explicit derived-contract deltas D1-D9; not a printed theorem."
+    }
+  ],
+  "binderAudit": {
+    "classificationScope": "SOURCE identifies actual printed IID/support components. TYPING covers carriers and bound data. STANDING identifies explicitly exposed derived-kernel/sampler interface or comparison contracts audited here, not a claim that the book states them. No RULED source repair asserted. If T1-T4 were advertised as printed source theorems, these added interface/model assumptions would be excess; acceptance is only for the disclosed derived API.",
+    "atoms": [
+      {
+        "binder": "kappa",
+        "classification": "TYPING",
+        "scope": "T1,T3,T4,T5 outer",
+        "meaning": "Time-indexed measurable kernels H_t→Measure I; Kernel.measurable is part of the typed object, not a hidden causal result."
+      },
+      {
+        "binder": "[forall t, IsMarkovKernel(kappa t)]",
+        "classification": "STANDING",
+        "scope": "T1,T3,T4,T5 outer",
+        "meaning": "Derived kernel-model standing contract: each section at every h is a probability measure. Expanded upstream field is forall h, IsProbabilityMeasure(kappa_t h). Not printed source wording."
+      },
+      {
+        "binder": "f",
+        "classification": "TYPING",
+        "scope": "T2,T3,T4 outer; T1,T5 existential conclusion",
+        "meaning": "For every t and history a total I→I map. No measurability, law realization or executability follows from the type."
+      },
+      {
+        "binder": "hf: forall t, Measurable(uncurry(f t))",
+        "classification": "STANDING",
+        "scope": "T2,T3,T4 outer only",
+        "meaning": "Explicit independently audited derived sampler-interface regularity. It is a conclusion supplied by T1 inside T5; not an extra premise on the source-facing assembled target."
+      },
+      {
+        "binder": "h-kappa: forall t h, volume.map(f t h)=kappa t h",
+        "classification": "STANDING",
+        "scope": "T3,T4 outer only",
+        "meaning": "Explicit realizing-sampler interface. Legitimate conditional library contract, not proof of joint/conditional law assumed as a premise. Must be discharged within T5 by existence, never added to T5 outer binders."
+      },
+      {
+        "binder": "nu: ProbabilityMeasure(N→R)",
+        "classification": "TYPING",
+        "scope": "T3,T4 outer; T5 universal inside exists f",
+        "meaning": "Probability law on real outcome sequences; probability field inspected by type meaning. Product with independent tape is literal model choice, not arbitrary coupling."
+      },
+      {
+        "binder": "t: N",
+        "classification": "TYPING",
+        "scope": "Every explicit/nested time quantifier in T1-T5",
+        "meaning": "Zero-based finite prefix length with no positivity premise."
+      },
+      {
+        "binder": "h: H_t",
+        "classification": "TYPING",
+        "scope": "T1,T3,T4,T5 realization quantifiers",
+        "meaning": "Every action/outcome history; generated-history support is not imposed."
+      },
+      {
+        "binder": "u: N→I",
+        "classification": "TYPING",
+        "scope": "T2,T5 prefix conclusion",
+        "meaning": "Arbitrary deterministic infinite tape."
+      },
+      {
+        "binder": "y: N→R",
+        "classification": "TYPING",
+        "scope": "T2,T5 prefix conclusion; T5 coordinate functions/support",
+        "meaning": "Arbitrary stream in deterministic clause; integration/AE variables under nu in probabilistic clause."
+      },
+      {
+        "binder": "i: Fin t",
+        "classification": "TYPING",
+        "scope": "T2,T5 prefix consistency",
+        "meaning": "Every strict earlier index; finite type proves i<t."
+      },
+      {
+        "binder": "omega: (N→I)×(N→R)",
+        "classification": "TYPING",
+        "scope": "T2,T5 causality; T3/T4/T5 maps/integrals",
+        "meaning": "Arbitrary pair in pointwise claims, bound sample variable under game measure in risk/law claims."
+      },
+      {
+        "binder": "omega-prime: (N→I)×(N→R)",
+        "classification": "TYPING",
+        "scope": "T2,T5 causality",
+        "meaning": "Second arbitrary full stream state; no almost-sure qualification."
+      },
+      {
+        "binder": "forall i:N, i<=t -> omega.seed i=omega-prime.seed i",
+        "classification": "STANDING",
+        "scope": "T2,T5 nested implication in causality conclusion",
+        "meaning": "Defining comparison condition for finite-seed invariance; current uniform included. Not an outer constraint on realized trajectories."
+      },
+      {
+        "binder": "forall i:N, i<t -> omega.outcome i=omega-prime.outcome i",
+        "classification": "STANDING",
+        "scope": "T2,T5 nested implication in causality conclusion",
+        "meaning": "Defining strict-past comparison condition; current outcome excluded. Source-motivated information order, not an assumed independence result."
+      },
+      {
+        "binder": "iIndepFun coordinates nu",
+        "classification": "SOURCE",
+        "scope": "T5 risk implication only",
+        "meaning": "Atomic independence component of printed IID hypothesis, for the entire countable coordinate family."
+      },
+      {
+        "binder": "forall t, IdentDistrib coordinate_t coordinate_0 nu nu",
+        "classification": "SOURCE",
+        "scope": "T5 risk implication only",
+        "meaning": "Atomic common-distribution component of printed IID. Expanded: AE measurability of both variables and equal pushforward laws; coordinate maps are already measurable on the product carrier."
+      },
+      {
+        "binder": "forall t, AE y under nu, y_t in Icc(0,1)",
+        "classification": "SOURCE",
+        "scope": "T5 risk implication only",
+        "meaning": "Printed [0,1] support represented almost surely. Membership expands to 0<=y_t and y_t<=1; countability allows one simultaneous full-measure event for fixed nu."
+      },
+      {
+        "binder": "T:N",
+        "classification": "TYPING",
+        "scope": "T5 risk conclusion and benchmark definitions",
+        "meaning": "All finite horizons, including empty T=0; source positive rounds explicitly extended."
+      },
+      {
+        "binder": "implicit Omega:Type* and MeasurableSpace Omega",
+        "classification": "TYPING",
+        "scope": "Both benchmark definitions",
+        "meaning": "Arbitrary domain/measurable carrier; these literal definitions alone do not assume probability or integrability."
+      },
+      {
+        "binder": "mu:Measure Omega; Y,prediction:N→Omega→R",
+        "classification": "TYPING",
+        "scope": "Benchmark definitions",
+        "meaning": "Totalized real integral/sInf data. Ordinary finite-risk interpretation is justified only with measurable bounded finite-horizon setting."
+      },
+      {
+        "binder": "u:R in Icc(0,1)",
+        "classification": "TYPING",
+        "scope": "expectedFixedMinimum image variable",
+        "meaning": "One deterministic feasible comparator for every time/sample, infimum outside expectation."
+      },
+      {
+        "binder": "finite tuple u:Fin t→I; y:Fin t→R; q:(N→I)×(Fin t→R)",
+        "classification": "TYPING",
+        "scope": "Generated-actions recursion and causal-policy definition",
+        "meaning": "Full literal argument carriers; previous action tuple reconstructed internally, not a raw tape tuple or supplied external action path."
+      },
+      {
+        "binder": "lambda indices j, integration variables omega and inner omega",
+        "classification": "TYPING",
+        "scope": "All definitions and signatures",
+        "meaning": "Lexically bound dummy variables; inner mean integral is a scalar independent of outer sample. Shadowing does not make the mean sample-dependent."
+      }
+    ],
+    "projectOwnedBundlesExpanded": [
+      "KernelDecisionHistory",
+      "KernelDecisionSampler",
+      "kernelGeneratedActions",
+      "kernelCausalPolicy",
+      "kernelGeneratedHistory",
+      "kernelGeneratedPrediction",
+      "kernelUniformTapeLaw",
+      "kernelGameLaw",
+      "expectedFixedMinimum",
+      "expectedFixedRegret"
+    ],
+    "excessBindersInAcceptedDerivedContract": [],
+    "assemblyObligation": "T5 must internally produce f, hf, h-kappa, policy measurability, consistency, causality and loss decomposition; their availability from another theorem cannot license adding them as public outer assumptions. Actual discharge remains Stage2."
+  },
+  "definitionAudit": [
+    {
+      "name": "KernelDecisionHistory",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "68bf705cf71f013114215f36fc87b1a95756e59d022ca026ce11bf8faf4e09f3",
+      "assessment": "Whole-carrier finite pair; outcome coordinates may be outside [0,1].",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "KernelDecisionSampler",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "eee0e09d06b3d31c50420ab5ae648f7b866c9fffaff7b237557b8496faead605",
+      "assessment": "Whole-carrier curried family; type only enforces [0,1] outputs.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "kernelGeneratedActions",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "52ddbdfeb869c5227db87ea20d28af16dba771dc6464f9c8e1943beed21d94c1",
+      "assessment": "Literal Fin.elim0/snoc recursion. G1(u,y)=(f0(empty,u0)); G2=(A0,f1((A0,y0),u1)). Final supplied outcome in G_(t+1) is unused.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "kernelCausalPolicy",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "e67f5366b8df91b1198cb87a16ad3a50c553b59dec6b0c5c4a21d36e10c641c8",
+      "assessment": "Uses internally generated actions, strict outcome prefix and u_t. Full tape is syntactic input; finite dependence is T2 conclusion.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "kernelGeneratedHistory",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "ac7d41340b02a97af800580b00f9c3f35a0df57bd52dbb597cecd2ba26803d12",
+      "assessment": "Exactly generated actions and observations of length t. It excludes current uniform from the history by recursive dependency, not a new definition axiom.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "kernelGeneratedPrediction",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "475dc07bc25c2fe54bb08ab77e18f1639394482f7d4ba65ca5be2b89420093bd",
+      "assessment": "Exactly causal policy on full tape and strict past outcomes. Real coercion only at squared-loss interface.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "kernelUniformTapeLaw",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "2939e5e90378a128624776cd455a0d87390852b8fa7bb85f30821280e82f8443",
+      "assessment": "Literal infinite product of unit-interval volume. Its distributional properties are library obligations, not additional definition fields.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "kernelGameLaw",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "3391abf9379e2c85dd8d448487c76c78fa300698198235882d2502765318bfe0",
+      "assessment": "Literal product U×nu. Independence is built into this model and prevents general action-reactive adversary interpretation.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "expectedFixedMinimum",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "791375e888c426aeba8f3316ce3d5cdf7a4e1354112215a9ca5bdb489f316ff3",
+      "assessment": "Literal sInf of expected finite loss image. No argmin choice or default minimizer; benchmark attainment must be proved in the bounded IID use.",
+      "printedLiteralDefinition": false
+    },
+    {
+      "name": "expectedFixedRegret",
+      "kind": "literal",
+      "blockSHA256_LF_oneTrailingNewline": "1a0b08386710b38a0f9899583d9a3655c1857cbf83a0cfddf7175d7c9a2d670a",
+      "assessment": "Literal expected total loss minus expectedFixedMinimum. Not pathwise minimum or normalized average.",
+      "printedLiteralDefinition": false
+    }
+  ],
+  "conditionalVersionAudit": "condDistrib is an upstream selected regular conditional kernel, not a new literal project-defined conditional law. T4 identifies it only history-law-a.e. Uniqueness is modulo that relation, not pointwise. Histories vary by t; no single exception subset of all history carriers is claimed. For a fixed nu, pullbacks of the countably many exceptional history sets can be united into a null set on the game space; no uniform null set for every nu follows.",
+  "sourceDeltaLedger": [
+    {
+      "id": "D1",
+      "kind": "generalization",
+      "detail": "All five endpoints are derived infrastructure/application contracts. Neither page prints kernel, uniform representation, recursive sampler or conditional-distribution theorems."
+    },
+    {
+      "id": "D2",
+      "kind": "source-implicit",
+      "detail": "Past-known/current-outcome-hidden information is made exact as dependence on u_0,...,u_t and y_0,...,y_(t-1). Current private uniform is permitted; future uniforms are excluded pointwise."
+    },
+    {
+      "id": "D3",
+      "kind": "generalization",
+      "detail": "Action-inclusive finite histories and arbitrary real outcome prefixes are new model choices. Sampler realization applies to all histories, including unreachable histories."
+    },
+    {
+      "id": "D4",
+      "kind": "unresolved",
+      "detail": "The product law U×nu covers exogenous outcome streams, including dependent/unbounded streams for law clauses. It does not model the full printed p3 action-reactive adversary or prove equivalence to every hidden-state/causal policy model."
+    },
+    {
+      "id": "D5",
+      "kind": "mathematically-necessary",
+      "detail": "Fresh-seed independence, standard-Borel representation and conditional-law disintegration/uniqueness are external derived obligations, not omitted printed theorems or public assumptions of T5."
+    },
+    {
+      "id": "D6",
+      "kind": "same",
+      "detail": "T5 risk branch retains IID independent coordinates, common marginal and [0,1] outcomes. Support is stated coordinatewise almost surely; countability yields simultaneous support for a fixed nu."
+    },
+    {
+      "id": "D7",
+      "kind": "generalization",
+      "detail": "Expected fixed benchmark is inf over c in [0,1] of expected cumulative loss; equality to T variance requires a derived feasibility/optimality bridge. It is not expected empirical hindsight regret."
+    },
+    {
+      "id": "D8",
+      "kind": "generalization",
+      "detail": "Zero-based t and every natural horizon T, including zero, extend the positive-round source convention. Eq1.2 division interpretation uses positive T only; no normalized/little-o conclusion is asserted."
+    },
+    {
+      "id": "D9",
+      "kind": "unresolved",
+      "detail": "No convergence or sublinear-success theorem, executable sampler, uniqueness of the sampler, arbitrary action-space representation, stopping-time theorem, completed-filtration equivalence, chapter/book closure or original-PR disposition follows."
+    }
+  ],
+  "independentStressChecks": [
+    "At t=0, empty history and A0=f0(empty,u0); no y0 leakage.",
+    "At t=1, the history stores A0, not u0; current action may depend on y0 and u1 but not y1.",
+    "A constant nonoptimal kernel can have linear expected excess, so nonnegativity is not universal success.",
+    "Changing a conditional-law version on an exceptional history does not contradict all-history sampler realization.",
+    "Dependent outcomes are allowed in T3/T4, but current-outcome independence needed in T5 risk can fail without IID.",
+    "At T=0 all sums and expected fixed benchmark are zero; positive-T division of Eq1.2 is not invoked.",
+    "For T5, f depends on kappa but not on outcome law, its analytic mean, or horizon."
+  ],
+  "remainingGates": [
+    "Actual proof bodies and dependency/axiom graph",
+    "Exact type and definition checks under real imports",
+    "Shared project gates",
+    "Reader/render/Exposition Seal",
+    "Integration/main/live and original-scope disposition"
+  ],
+  "processNotes": [
+    {
+      "kind": "IMPLEMENTATION_FAILED",
+      "scope": "Read-only reviewer command only",
+      "detail": "PowerShell ConvertFrom-Json without -AsHashtable rejected distinct t/T keys in extractor JSON; rerun with -AsHashtable read the exact same valid JSON. No source/statement correction or evidence loss."
+    }
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch29-source-review-v1/semantic-source-review.json",
+      "sha256": "added552582b0d93213edd7a97407414b64aa95d1c00bdd5614cbad11a98356e",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only are replaced by distinct logical locations with dictionary collision checks. Mathematical contents, original verdicts and historical statuses are retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json. Earlier pending fields retain their historical meaning."
+  }
+}

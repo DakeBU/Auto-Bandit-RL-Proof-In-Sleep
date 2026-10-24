@@ -1,0 +1,646 @@
+{
+  "status": "EXTRACTED_REVIEW_PENDING",
+  "input_binding_sha256": "6a1b10da9c0b5a7373283cc8b3123d0dc6180305532766f238e1d48c51a8d5de",
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "nodes": [
+    {
+      "id": "P1-TIME",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-TIME",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Opening",
+        "content": "Finite game rounds1,...,T.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-SECRET",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-SECRET",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "First bullet",
+        "content": "y_t in[0,1] selected secretly.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-ACTION",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-ACTION",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Second bullet",
+        "content": "Predict x_t in[0,1] before seeing current outcome.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-LOSS",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-LOSS",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Third bullet",
+        "content": "Outcome revealed and squared loss paid.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-IID",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-IID",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "First part of Let us start paragraph",
+        "content": "Initially chosen fixed unknown distribution on[0,1]; IID draws.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-ORACLE",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-ORACLE",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Mean/variance sentences",
+        "content": "Mean prediction has expected loss sigma^2 T; source asserts no better admissible strategy.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-EQ11",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-EQ11",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Equation1.1",
+        "content": "Expected cumulative squared loss minus sigma^2 T; no seed/kernel notation.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-EQ12",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-EQ12",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Connecting sentence and Equation1.2",
+        "content": "Expected average squared loss minus sigma^2.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-NONNEG",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-NONNEG",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "First assertion after1.2",
+        "content": "Both excess quantities nonnegative; no proof displayed.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P1-SUCCESS",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P1-SUCCESS",
+        "printed_page": 1,
+        "pdf_page": 13,
+        "disposition": "NODE",
+        "locator": "Remainder after1.2",
+        "content": "Success criterion is sublinear total excess or zero-limit normalized excess; not universal success.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P3-ADVERSARY",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P3-ADVERSARY",
+        "printed_page": 3,
+        "pdf_page": 15,
+        "disposition": "NODE",
+        "locator": "A Winning Strategy paragraph",
+        "content": "General game allows arbitrary outcomes even chosen after seeing learner action. This is a scope boundary; not generally modeled by observation law independent of private tape.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "P3-PAST",
+      "kind": "PRINTED_SOURCE",
+      "region": {
+        "id": "P3-PAST",
+        "printed_page": 3,
+        "pdf_page": 15,
+        "disposition": "NODE",
+        "locator": "First sentences after argmin",
+        "content": "Future unavailable; past known; past-based prediction motivates causal model.",
+        "exclusion_reason": null
+      }
+    },
+    {
+      "id": "SG-RISK",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-ORACLE",
+      "description": "Mean/variance expansion, feasibility and optimality omitted."
+    },
+    {
+      "id": "SG-CAUSAL",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-NONNEG",
+      "description": "Causal independence/vanishing cross term omitted."
+    },
+    {
+      "id": "SG-NORMALIZE",
+      "kind": "SOURCE_GAP",
+      "use_site": "P1-SUCCESS",
+      "description": "Normalization/little-o equivalence omitted; outside target conclusions."
+    },
+    {
+      "id": "AG-SAMPLER",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T1",
+      "description": "No kernel/uniform randomization theorem printed."
+    },
+    {
+      "id": "AG-RECURSION",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T2",
+      "description": "Action-inclusive histories, recursive generation and prefix consistency are added infrastructure."
+    },
+    {
+      "id": "AG-LAWS",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T3/T4",
+      "description": "Product tape, composition-product joint law and regular conditional-law uniqueness absent from source."
+    },
+    {
+      "id": "AG-EXCESS",
+      "kind": "SOURCE_GAP_APPLICATION",
+      "use_site": "T5",
+      "description": "Expected-fixed sInf and exact error decomposition are derived, not displayed."
+    },
+    {
+      "id": "K-BOREL",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Borel/standard-Borel I and finite histories; volume on I probability, endpoints correctly treated.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "K-REP",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Joint measurable uniform representation of each Markov kernel into I, valid every h; exact compatible theorem required, import filename is not evidence.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "K-FAMILY",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Choose all f_t as one family before any observation law, preserving measurability and all-history laws.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "C-INDUCT",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Induction on recursion: empty vector and snoc step, measurable finite vectors and prior-prefix restriction.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "C-MEAS",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Composition with projections and jointly measurable f gives measurable policy, history and prediction.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "C-PREFIX",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Stored prior action equals global prediction at its earlier index; preserve Fin.castSucc/snoc indexing.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "C-CAUSAL",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Prediction_t uses uniforms<=t and observations<t; exact prefix agreement gives equal actions.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "L-PRODUCT",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Infinite uniform product has independent coordinates; game product makes full tape independent of entire outcome stream.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "L-FRESH",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Fresh u_t independent of(u_<t,entire y), hence generated history_t. Prior actions need recursion argument, not an independence assumption.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "L-INTEGRATE",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Integrate joint tests first over fresh seed, apply h_kappa at fixed h, then integrate history marginal.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "L-EXT",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Measurable rectangle/test-function agreement implies equality of probability measures; all regularity conditions discharged.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "D-DISINT",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Existence and disintegration identity of regular conditional law in standard-Borel finite-history/I setting.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "D-UNIQUE",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Disintegration uniqueness gives history-law-a.e. equality, not all-history equality.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "D-TEST",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Alternative: conditional tests on history events via fresh uniform and h_kappa, then countable determining action sets give a.e. kernel equality.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-LIFT",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Outcome marginal under game law is nu; lift IID/common-law/support assumptions and identify mean/variance.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-INDEP",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "With IID outcomes and independent tape, causal action_t independent of current Y_t; past actions are allowed-input functions.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-INT",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "I-valued predictions and a.s. bounded outcomes yield measurable integrable squares/products/finite sums.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-CROSS",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Squared loss expansion around m=E_game Y_0; centered cross term vanishes by independence/integrability.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-MIN",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Fixed-u expected loss=T*(v+(u-m)^2); feasible m attains Tv; prove nonempty/bounded-below sInf characterization.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-SUM",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Finite integral linearity and subtraction of Tv give exact excess identity; do not exchange infimum and expectation.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-NONNEG",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Squared error integrals and their finite sum nonnegative.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "R-ZERO",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Empty horizon sums0, fixed-loss image{0}; empty history is well typed.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "A-ASSEMBLE",
+      "kind": "DERIVED_OR_LIBRARY_OBLIGATION",
+      "description": "Use the same f from T1 for every nu,T throughout all remaining clauses; no law-dependent witness or assumed risk identity.",
+      "status": "unverified-in-this-extraction"
+    },
+    {
+      "id": "T1",
+      "kind": "DERIVED_TARGET",
+      "name": "kernel_sampler_family_exists",
+      "signature_sha256": "92e62cf28d0887f787147b153972c16cbf08f1f53a5882201bc8666ed2cdb138"
+    },
+    {
+      "id": "T2",
+      "kind": "DERIVED_TARGET",
+      "name": "kernel_sampler_causal_process",
+      "signature_sha256": "8dc148f624372e7dde3dc869420ee63bd82c1e6f2b3d55df2e569c97c6384884"
+    },
+    {
+      "id": "T3",
+      "kind": "DERIVED_TARGET",
+      "name": "kernel_sampler_joint_law",
+      "signature_sha256": "893d5a871dd8436160ba5bfbe9d0fb471330db6e3c03b5ede588651a215a2eb7"
+    },
+    {
+      "id": "T4",
+      "kind": "DERIVED_TARGET",
+      "name": "kernel_sampler_conditional_law",
+      "signature_sha256": "58c17a5b89f437cea0a32bfae8386557f38d0f8ddd886e9f5441c3b2fe75e859"
+    },
+    {
+      "id": "T5",
+      "kind": "DERIVED_TARGET",
+      "name": "causal_kernel_realization_and_expectedFixed_excess",
+      "signature_sha256": "17abd0796feb9518a2010d9f3ae4fca1968ef626a6ee4c9b90f58c15b94d844d"
+    }
+  ],
+  "routes": [
+    {
+      "id": "S-ORACLE",
+      "layer": "source_assertion",
+      "target": "P1-ORACLE",
+      "all_of": [
+        "P1-IID",
+        "P1-LOSS",
+        "SG-RISK",
+        "SG-CAUSAL"
+      ],
+      "consumer_use_site": "p1 mean paragraph",
+      "premise_discharge": "Omitted source arguments remain gaps, not invented author proof.",
+      "or_group": null
+    },
+    {
+      "id": "S-NONNEG",
+      "layer": "source_assertion",
+      "target": "P1-NONNEG",
+      "all_of": [
+        "P1-SECRET",
+        "P1-ACTION",
+        "P1-IID",
+        "P1-EQ11",
+        "P1-EQ12",
+        "SG-CAUSAL"
+      ],
+      "consumer_use_site": "p1 after1.2",
+      "premise_discharge": "Causal independence omitted by author.",
+      "or_group": null
+    },
+    {
+      "id": "S-SUCCESS",
+      "layer": "source_assertion",
+      "target": "P1-SUCCESS",
+      "all_of": [
+        "P1-EQ11",
+        "P1-EQ12",
+        "SG-NORMALIZE"
+      ],
+      "consumer_use_site": "p1 success paragraph",
+      "premise_discharge": "Outside target conclusions; not all kernels succeed.",
+      "or_group": null
+    },
+    {
+      "id": "K-EXISTS",
+      "layer": "derived",
+      "target": "T1",
+      "all_of": [
+        "K-BOREL",
+        "K-REP",
+        "K-FAMILY"
+      ],
+      "consumer_use_site": "T1",
+      "premise_discharge": "Markov probability sections and representation produce all-history measurable family before nu.",
+      "or_group": null
+    },
+    {
+      "id": "C-PREFIX-STEP",
+      "layer": "derived",
+      "target": "C-PREFIX",
+      "all_of": [
+        "C-INDUCT"
+      ],
+      "consumer_use_site": "T2 prefix equality",
+      "premise_discharge": "Empty base, correct snoc append, prior prefix unchanged.",
+      "or_group": null
+    },
+    {
+      "id": "C-TARGET",
+      "layer": "derived",
+      "target": "T2",
+      "all_of": [
+        "C-INDUCT",
+        "C-MEAS",
+        "C-PREFIX",
+        "C-CAUSAL"
+      ],
+      "consumer_use_site": "T2 all conjuncts",
+      "premise_discharge": "Joint hf public premise; recursion bookkeeping proved internally.",
+      "or_group": null
+    },
+    {
+      "id": "L-FRESH-STEP",
+      "layer": "derived",
+      "target": "L-FRESH",
+      "all_of": [
+        "L-PRODUCT",
+        "C-PREFIX",
+        "C-CAUSAL"
+      ],
+      "consumer_use_site": "T3 fresh seed",
+      "premise_discharge": "Generated history excludes u_t; full y independent of tape.",
+      "or_group": null
+    },
+    {
+      "id": "L-JOINT",
+      "layer": "derived",
+      "target": "T3",
+      "all_of": [
+        "C-MEAS",
+        "L-FRESH",
+        "L-INTEGRATE",
+        "L-EXT"
+      ],
+      "consumer_use_site": "T3",
+      "premise_discharge": "Use all-history h_kappa under history marginal. Arbitrary exogenous nu suffices.",
+      "or_group": null
+    },
+    {
+      "id": "D-JOINT",
+      "layer": "derived",
+      "target": "T4",
+      "all_of": [
+        "T3",
+        "K-BOREL",
+        "D-DISINT",
+        "D-UNIQUE"
+      ],
+      "consumer_use_site": "T4",
+      "premise_discharge": "Compare disintegrations of same joint law; equality under this specific history marginal.",
+      "or_group": "CONDITIONAL-OR"
+    },
+    {
+      "id": "D-TESTS",
+      "layer": "derived",
+      "target": "T4",
+      "all_of": [
+        "C-MEAS",
+        "L-FRESH",
+        "D-TEST",
+        "K-BOREL",
+        "D-DISINT"
+      ],
+      "consumer_use_site": "T4 alternative",
+      "premise_discharge": "Fresh-seed conditional tests and countable action determining class give a.e. kernel equality.",
+      "or_group": "CONDITIONAL-OR"
+    },
+    {
+      "id": "R-CURRENT",
+      "layer": "derived",
+      "target": "R-INDEP",
+      "all_of": [
+        "L-PRODUCT",
+        "R-LIFT",
+        "C-CAUSAL",
+        "C-MEAS"
+      ],
+      "consumer_use_site": "T5 risk",
+      "premise_discharge": "IID outcome independent of strict past; tape independent of full outcomes; action measurable allowed-input function.",
+      "or_group": null
+    },
+    {
+      "id": "R-SQUARE",
+      "layer": "derived",
+      "target": "R-CROSS",
+      "all_of": [
+        "R-INDEP",
+        "R-INT",
+        "R-LIFT"
+      ],
+      "consumer_use_site": "T5 risk expansion",
+      "premise_discharge": "Centered current-outcome mean0 and product-integral factorization.",
+      "or_group": null
+    },
+    {
+      "id": "R-TOTAL",
+      "layer": "derived",
+      "target": "R-SUM",
+      "all_of": [
+        "R-CROSS",
+        "R-MIN",
+        "R-INT"
+      ],
+      "consumer_use_site": "T5 identity",
+      "premise_discharge": "Sum risks and subtract expected fixed minimum Tv.",
+      "or_group": null
+    },
+    {
+      "id": "A-TARGET",
+      "layer": "derived",
+      "target": "T5",
+      "all_of": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "R-SUM",
+        "R-NONNEG",
+        "R-ZERO",
+        "A-ASSEMBLE"
+      ],
+      "consumer_use_site": "T5 full statement",
+      "premise_discharge": "One f witnesses all clauses; IID/support assumptions only final risk implication.",
+      "or_group": null
+    }
+  ],
+  "semantics": {
+    "all_of": "AND within route; source routes retain missing SOURCE_GAPs.",
+    "alternatives": [
+      {
+        "id": "CONDITIONAL-OR",
+        "operator": "OR",
+        "routes": [
+          "D-JOINT",
+          "D-TESTS"
+        ]
+      }
+    ],
+    "attribution": "Derived routes are proposed obligations, not Orabona proof steps or actual Lean dependency claims.",
+    "motivation": [
+      {
+        "source": [
+          "P1-SECRET",
+          "P1-ACTION",
+          "P3-PAST"
+        ],
+        "targets": [
+          "T1",
+          "T2",
+          "T3",
+          "T4"
+        ],
+        "relation": "information motivation, not implication"
+      },
+      {
+        "source": [
+          "P1-IID",
+          "P1-ORACLE",
+          "P1-NONNEG"
+        ],
+        "targets": [
+          "T5"
+        ],
+        "relation": "source-inspired risk application"
+      }
+    ]
+  },
+  "isolation": {
+    "actor": "/root/batch25_source_extractor",
+    "assignment": "Batch29 original PR200 source-only extraction",
+    "prior_context": "Same conversation previously processed Batch25/27/28 source/interface packets and one narrow AE wording correction. Context remains. Not absolutely blind or pristine-history. No earlier packet/verdict/reader file opened during Batch29.",
+    "current_reads": [
+      "maintenance-evidence\\batch29-source-only\\input-binding.json",
+      "maintenance-evidence\\batch29-source-only\\context-definitions.lean.txt",
+      "maintenance-evidence\\batch29-source-only\\sealed-signatures-v1.json",
+      "maintenance-evidence\\batch29-source-only\\source-pdf13.png",
+      "maintenance-evidence\\batch29-source-only\\source-pdf13.txt",
+      "maintenance-evidence\\batch29-source-only\\source-pdf15.png",
+      "maintenance-evidence\\batch29-source-only\\source-pdf15.txt"
+    ],
+    "images_actually_viewed": [
+      "source-pdf13.png",
+      "source-pdf15.png"
+    ],
+    "implementation_proof_bodies_read": false,
+    "prior_verdict_files_read": false,
+    "reader_exposition_read": false,
+    "imported_module_bodies_read": false,
+    "pdf_provenance": "Input bytes reverified and both images viewed. Original PDF not reopened; PDF-to-render binding supplied, not independently rerendered.",
+    "source_first_rules": "Protocol previously read remains applicable; no out-of-allowlist reread.",
+    "product_or_remote_mutations": false,
+    "self_approval": false
+  },
+  "public_projection": {
+    "original": {
+      "artifact": "batch29-source-extraction-v1/source-proof-graph.json",
+      "sha256": "4af0a262e44a19a5313c58ba090b00feec0f9b61a8e9ed31453adb725b0df41b",
+      "availability": "Private maintenance evidence retained by the maintainer; this digest is not a public download URL."
+    },
+    "change": "Physical locations only are replaced by distinct logical locations with dictionary collision checks. Mathematical contents, original verdicts and historical statuses are retained. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "Later scoped evidence is in review-binding.json. Earlier pending fields retain their historical meaning."
+  }
+}

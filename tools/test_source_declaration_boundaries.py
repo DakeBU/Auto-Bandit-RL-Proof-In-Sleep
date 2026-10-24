@@ -122,6 +122,60 @@ class SourceDeclarationBoundaryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "skips source code"):
             site.scan_lean_tree()
 
+    def configure_abbreviation(self, prefix="noncomputable abbrev"):
+        self.SOURCE = (
+            "namespace Example\n"
+            + prefix + " state (initial : Nat) : Nat → Nat :=\n"
+            "  fun t => initial + t\n"
+            "\n/-- Neighbor must remain unchanged. -/\n"
+            "theorem state_zero (initial : Nat) : state initial 0 = initial := by rfl\n"
+            "end Example\n"
+        )
+        self.file.write_bytes(self.SOURCE.encode())
+        self.entry.update(end_line=3, file_sha256=hashlib.sha256(self.file.read_bytes()).hexdigest(),
+                          block_LF_sha256=self.block_hash(3), include_definition_body=True)
+
+    def test_abbreviation_body_is_opt_in_and_preserves_neighbor_and_metadata(self):
+        self.configure_abbreviation()
+        before = site.scan_module(self.file, [])["declarations"]
+        self.configure()
+        after = site.scan_lean_tree()[0]["declarations"]
+        self.assertEqual(after[0]["kind"], "abbrev")
+        self.assertEqual(after[0]["statement"], "\n".join(self.SOURCE.splitlines()[1:3]))
+        self.assertNotIn("fun t", before[0]["statement"])
+        self.assertEqual(after[1], before[1])
+        self.assertEqual({k:v for k,v in after[0].items() if k != "statement"},
+                         {k:v for k,v in before[0].items() if k != "statement"})
+        self.entry["include_definition_body"] = False
+        self.configure()
+        self.assertNotIn("fun t", site.scan_lean_tree()[0]["declarations"][0]["statement"])
+
+    def test_abbreviation_truncation_and_neighbor_overlap_fail_closed(self):
+        self.configure_abbreviation()
+        for end in (2, 6):
+            with self.subTest(end=end):
+                self.entry.update(end_line=end, block_LF_sha256=self.block_hash(end))
+                self.configure()
+                with self.assertRaises(ValueError):
+                    site.scan_lean_tree()
+
+    def test_abbreviation_stale_pins_fail_closed(self):
+        self.configure_abbreviation()
+        for key in ("file_sha256", "block_LF_sha256"):
+            with self.subTest(key=key):
+                original = self.entry[key]
+                self.entry[key] = "0" * 64
+                self.configure()
+                with self.assertRaisesRegex(ValueError, "Stale"):
+                    site.scan_lean_tree()
+                self.entry[key] = original
+
+    def test_private_abbreviation_remains_ineligible(self):
+        self.configure_abbreviation("private abbrev")
+        self.configure()
+        with self.assertRaises(ValueError):
+            site.scan_lean_tree()
+
     def test_definition_body_flag_requires_boolean(self):
         self.entry["include_definition_body"] = "true"
         self.configure()
