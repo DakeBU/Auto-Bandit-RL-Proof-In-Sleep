@@ -166,3 +166,4 @@ import Tests.OnlineGuessingCompletedCausalCanary
 import Tests.OnlineGuessingKernelCausalCanary
 import Tests.OnlineFTLLimitSemanticsCanary
 import Tests.OnlineFTLOscillationCanary
+import Tests.OnlineLearningChapterAuditCanary

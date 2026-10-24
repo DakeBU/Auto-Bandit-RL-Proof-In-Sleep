@@ -1,0 +1,825 @@
+{
+  "schema_version": 1,
+  "role": "independent_source_only_chapter1_extractor",
+  "source": {
+    "path": "workspace/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "chapter": "1 What is Online Learning?",
+    "pdf_pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "printed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "boundary": "Chapter2 starts PDF20 / printed8. TOC PDF4 and Chapter2 heading establish boundary. PDF1 inspected for title/version only."
+  },
+  "evidence_boundary": {
+    "mathematical_input": "Pinned PDF only; no Batch32 candidate signatures read.",
+    "protocols": "Previously read proof-digestion-protocol.md and theorem-publication-protocol.md apply.",
+    "implementation_read": false,
+    "prior_chapter_map_or_verdict_read": false,
+    "builds_run": false,
+    "remote_actions": false,
+    "new_proof_or_product_code": false,
+    "prior_batch_artifacts_used": false,
+    "prior_context_note": "Extractor has prior Chapter1 subset context from batch31; current inventory independently reconstructed from newly rendered full Chapter1 pages. No previous extraction artifact imported.",
+    "visual_inspection": "New full-page renders PDF13-19 at120dpi and PDF1 at90dpi visually inspected. Renderer emitted font warnings; all inspected mathematical displays were legible.",
+    "scope_boundary": "Chapter1 pages13-19 including history and exercises inventoried. Chapter2 text appeared in boundary detection but contributes no mathematics or dependencies.",
+    "independent_review_required": true,
+    "self_approval": false
+  },
+  "nodes": [
+    {
+      "id": "C1-game",
+      "kind": "source_protocol",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-game",
+      "statement": "For t=1,...,T: adversary selects secret y_t in [0,1], learner chooses x_t in [0,1], then y_t revealed and squared loss (x_t-y_t)^2 paid."
+    },
+    {
+      "id": "C1-iid",
+      "kind": "standing_assumptions",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-iid",
+      "statement": "Simplified model: Y_t iid from a distribution over [0,1], chosen freely by adversary at beginning and unknown to learner."
+    },
+    {
+      "id": "C1-population-opt",
+      "kind": "source_claim",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-population-opt",
+      "statement": "If distribution known, predicting its mean each round yields expected cumulative loss sigma^2 T; source says no strategy can do better."
+    },
+    {
+      "id": "C1-eq11",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-eq11",
+      "statement": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2 T."
+    },
+    {
+      "id": "C1-eq12",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-eq12",
+      "statement": "(1/T) E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2; normalized Eq1.1 for T>0."
+    },
+    {
+      "id": "C1-stochastic-nonnegative",
+      "kind": "source_claim",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-stochastic-nonnegative",
+      "statement": "Expected excess losses in Eq1.1 and Eq1.2 are nonnegative for legal causal strategies in the IID model."
+    },
+    {
+      "id": "C1-stochastic-success",
+      "kind": "source_asymptotic_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-stochastic-success",
+      "statement": "Success: Eq1.1 grows sublinearly, equivalently Eq1.2 tends to zero as T grows, approaching optimal expected average performance."
+    },
+    {
+      "id": "C1-expected-min",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-expected-min",
+      "statement": "E[sum_t (x_t-Y_t)^2] - min_{x in [0,1]} E[sum_t (x-Y_t)^2]; minimum is OUTSIDE expectation."
+    },
+    {
+      "id": "C1-remove-stochasticity",
+      "kind": "source_model_transition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-remove-stochasticity",
+      "statement": "Drop the generation assumption and use arbitrary y_t; deterministic algorithms permit pathwise formulation without expectation."
+    },
+    {
+      "id": "C1-best-regret",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-best-regret",
+      "statement": "sum_t (x_t-y_t)^2 - min_{x in [0,1]} sum_t (x-y_t)^2, compared to best single choice in hindsight; success described as sublinear growth."
+    },
+    {
+      "id": "C1-fixed-competitor",
+      "kind": "source_boundary",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-fixed-competitor",
+      "statement": "Use one fixed comparator throughout horizon; comparator sequences postponed to Chapter14."
+    },
+    {
+      "id": "C1-general-game",
+      "kind": "standing_assumptions",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-general-game",
+      "statement": "V subset R^d, x_t in V, ell_t:V->R, fixed arbitrary u in V; loss-function sequence arbitrary."
+    },
+    {
+      "id": "C1-comparator-regret",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-comparator-regret",
+      "statement": "sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u)."
+    },
+    {
+      "id": "C1-ordinary-no-regret",
+      "kind": "source_definition",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-ordinary-no-regret",
+      "statement": "Algorithm need not know u or corresponding regret. No-regret: for every fixed u in V, at most sublinear regret, displayed lim_{T->infty} Regret_T(u)/T <=0. Printed notation is ordinary lim; finite-real interpretation must be stated separately from upper-epsilon semantics."
+    },
+    {
+      "id": "C1-remark11",
+      "kind": "source_notation",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-remark11",
+      "statement": "Dependence on ell_1,...,ell_T suppressed."
+    },
+    {
+      "id": "C1-footnote1",
+      "kind": "source_boundary",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-footnote1",
+      "statement": "Some games allow predictions in W strictly containing V; not a universal replacement for source feasibility."
+    },
+    {
+      "id": "C1-adaptive-order",
+      "kind": "standing_assumptions",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-adaptive-order",
+      "statement": "Winning strategy also allows adversary to select y_t after observing x_t, with no restriction on decision mechanism except legal range."
+    },
+    {
+      "id": "C1-mean-minimizer",
+      "kind": "source_characterization",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-mean-minimizer",
+      "statement": "For T>=1, bounded observations y_t in [0,1], x_T^star = (1/T) sum_{t=1}^T y_t is the minimizer of cumulative squared loss over [0,1]. Source calls this immediate, omitting derivation."
+    },
+    {
+      "id": "C1-tracking-rationale",
+      "kind": "source_proof_explanation",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-tracking-rationale",
+      "statement": "Past leader is used because adjacent optimal guesses change slowly, not because future resembles past."
+    },
+    {
+      "id": "C1-FTL-arbitrary-init",
+      "kind": "source_algorithm",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-FTL-arbitrary-init",
+      "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1)) sum_{i<t} y_i; FIRST prediction is ANY value in [0,1]. Called Follow-the-Leader."
+    },
+    {
+      "id": "C1-BTL-premises",
+      "kind": "premise_only",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-premises",
+      "statement": "V subset R^d, arbitrary ell_t:V->R; for each relevant t exists chosen feasible x_t^star minimizing sum_{i=1}^t ell_i over V. Convexity, compactness, differentiability, uniqueness not assumed."
+    },
+    {
+      "id": "C1-BTL",
+      "kind": "source_theorem",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL",
+      "statement": "sum_{t=1}^T ell_t(x_t^star) <= sum_{t=1}^T ell_t(x_T^star)."
+    },
+    {
+      "id": "C1-BTL-base",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-base",
+      "statement": "T=1 reflexivity ell_1(x_1^star)<=ell_1(x_1^star)."
+    },
+    {
+      "id": "C1-BTL-IH",
+      "kind": "local_hypothesis",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-IH",
+      "statement": "For arbitrary T>=2 locally assume conclusion at T-1. This is an induction hypothesis, not an extra theorem binder."
+    },
+    {
+      "id": "C1-BTL-cancel",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-cancel",
+      "statement": "Cancel identical final summands to reduce target to sum_{t<T} ell_t(x_t^star)<=sum_{t<T} ell_t(x_T^star)."
+    },
+    {
+      "id": "C1-BTL-prefix",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-prefix",
+      "statement": "IH gives prefix varying-leader loss <=prefix loss of x_{T-1}^star."
+    },
+    {
+      "id": "C1-BTL-opt",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-opt",
+      "statement": "Prefix optimality of x_{T-1}^star and feasibility of x_T^star give prefix loss of former <=prefix loss of latter."
+    },
+    {
+      "id": "C1-BTL-chain",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-chain",
+      "statement": "Chain inequalities to obtain Eq1.3 and induction step."
+    },
+    {
+      "id": "C1-minimax-boundary",
+      "kind": "source_boundary",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-minimax-boundary",
+      "statement": "At-most-logarithmic guarantee intended; minimax optimality/logarithmic lower bound expressly not proved."
+    },
+    {
+      "id": "C1-T13-premises",
+      "kind": "premise_only",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-premises",
+      "statement": "Positive horizon T; arbitrary y_1,...,y_T in [0,1]; x_t=mean of first t-1 for t>=2; x_1=x_0^star=0.5. This specializes the general initial-choice algorithm."
+    },
+    {
+      "id": "C1-T13",
+      "kind": "source_theorem",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13",
+      "statement": "Best-in-hindsight squared regret <=4+4 ln T."
+    },
+    {
+      "id": "C1-figure11",
+      "kind": "source_figure",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-figure11",
+      "statement": "Reciprocal rectangles and curves 1/x,1/(x-1) illustrate harmonic-sum integral upper bound."
+    },
+    {
+      "id": "C1-T13-BTL",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-BTL",
+      "statement": "Substitute past leaders and final minimizer, then BTL: Regret_T<=sum_t[(x_{t-1}^star-y_t)^2-(x_t^star-y_t)^2]."
+    },
+    {
+      "id": "C1-T13-first",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-first",
+      "statement": "First difference <=0.25; depends on chosen x_0^star=0.5 and x_1^star=y_1."
+    },
+    {
+      "id": "C1-T13-factor",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-factor",
+      "statement": "Expand squares, factor difference as (x_{t-1}^star+x_t^star-2y_t)(x_{t-1}^star-x_t^star), use absolute product and range to bound <=2|adjacent-mean difference|."
+    },
+    {
+      "id": "C1-T13-mean-diff",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-mean-diff",
+      "statement": "Substitute empirical means, isolate new observation y_t/t, t>=2."
+    },
+    {
+      "id": "C1-T13-stability",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-stability",
+      "statement": "Triangle inequality, bounded prefix sum and |y_t|<=1 give <=2/t+2|y_t|/t<=4/t."
+    },
+    {
+      "id": "C1-T13-sum",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-sum",
+      "statement": "Regret_T<=0.25+4 sum_{t=2}^T 1/t <=4 sum_{t=1}^T 1/t."
+    },
+    {
+      "id": "C1-harmonic-picture",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-harmonic-picture",
+      "statement": "Interpret reciprocal sum as gray rectangles and majorize by 1 plus integral of 1/(t-1) from2 toT+1."
+    },
+    {
+      "id": "C1-harmonic",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-harmonic",
+      "statement": "sum_{t=1}^T 1/t <=1+integral_2^{T+1}1/(t-1)dt=1+ln T, T>=1."
+    },
+    {
+      "id": "C1-T13-close",
+      "kind": "source_proof_step",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-T13-close",
+      "statement": "Combine regret <=4 harmonic sum with harmonic bound."
+    },
+    {
+      "id": "C1-proof-summary",
+      "kind": "source_proof_explanation",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-proof-summary",
+      "statement": "Summary: BTL replaces fixed best guess by leader sequence; adjacent leaders differ at 1/t scale; total regret is upper-sublinear."
+    },
+    {
+      "id": "C1-running-average",
+      "kind": "source_algorithm_property",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-running-average",
+      "statement": "Parameter-free, running-average summary suffices, no gradients, one data stream; no explicit recurrence formula or runtime theorem is printed."
+    },
+    {
+      "id": "C1-BTL-attribution",
+      "kind": "source_attribution",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-BTL-attribution",
+      "statement": "Lemma1.2 attributed to Hannan1957."
+    },
+    {
+      "id": "C1-ex11",
+      "kind": "exercise_statement",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-ex11",
+      "statement": "Exercise: observations y_t in R^d with Euclidean norm<=1, predictions x_t in R^d, squared Euclidean loss. Extend previous algorithm/analysis to obtain logarithmic regret bound independent of d. Hint Cauchy-Schwarz |<x,y>|<=||x|| ||y||. Comparator set and initial vector not explicitly specified in exercise; must preserve/clarify rather than silently impose a different game."
+    },
+    {
+      "id": "C1-ex12",
+      "kind": "exercise_statement",
+      "origin": "PRINTED_SOURCE",
+      "source_region": "R-C1-ex12",
+      "statement": "Exercise: scalar x,y_t in [0,1], absolute loss |x-y_t|; show any median of y_1,...,y_T is a best fixed prediction in hindsight. No proof or median convention for even T printed."
+    },
+    {
+      "id": "G-iid-formalization",
+      "kind": "SOURCE_GAP",
+      "origin": "IMPLICIT_PROBABILITY_AND_CAUSALITY_BRIDGE",
+      "statement": "Probability space, measurable bounded IID observations and prediction determined by revealed past are needed to formalize page1. Any learner randomization extension needs independent nonanticipating seed and explicit expectation. No filtration/measurability statement printed.",
+      "required_inputs": [
+        "C1-game",
+        "C1-iid"
+      ],
+      "consumers": [
+        "C1-population-opt",
+        "C1-stochastic-nonnegative"
+      ]
+    },
+    {
+      "id": "G-mean-variance",
+      "kind": "SOURCE_GAP",
+      "origin": "UNPROVED_PRINTED_ASSERTION",
+      "statement": "Population mean is feasible and minimizes expected squared loss with value variance; cumulative value sigma²T and no-better-strategy claim need causal fresh-observation independence. No proof printed.",
+      "required_inputs": [
+        "C1-iid",
+        "G-iid-formalization"
+      ],
+      "consumers": [
+        "C1-population-opt",
+        "C1-stochastic-nonnegative",
+        "C1-expected-min"
+      ]
+    },
+    {
+      "id": "G-normalization",
+      "kind": "SOURCE_GAP",
+      "origin": "UNEXPANDED_ARITHMETIC_AND_LIMIT_STEP",
+      "statement": "For T>0 Eq1.2 is Eq1.1/T and sublinearity equivalent to zero normalized limit. Stochastic excess-loss nonnegativity must not be transferred to pathwise regret.",
+      "required_inputs": [
+        "C1-eq11",
+        "C1-eq12"
+      ],
+      "consumers": [
+        "C1-stochastic-success"
+      ]
+    },
+    {
+      "id": "G-mean-feasible",
+      "kind": "SOURCE_GAP",
+      "origin": "IMPLICIT_SOURCE_BRIDGE",
+      "statement": "For each positive prefix1<=t<=T prove arithmetic mean in [0,1] from bounded observations, without presupposing argmin characterization.",
+      "required_inputs": [
+        "C1-T13-premises"
+      ],
+      "consumers": [
+        "C1-mean-minimizer",
+        "C1-T13-BTL",
+        "C1-T13-factor"
+      ]
+    },
+    {
+      "id": "G-empirical-minimizer",
+      "kind": "SOURCE_GAP",
+      "origin": "UNPROVED_PRINTED_ASSERTION",
+      "statement": "Prove positive-prefix mean minimizes cumulative squared loss and uniqueness if source singleton argmin notation is characterized. At T=0 all comparators minimize and uniqueness fails.",
+      "required_inputs": [
+        "C1-T13-premises",
+        "G-mean-feasible"
+      ],
+      "consumers": [
+        "C1-mean-minimizer"
+      ]
+    },
+    {
+      "id": "G-log-over-horizon",
+      "kind": "SOURCE_GAP",
+      "origin": "UNEXPANDED_ANALYTIC_LIMIT",
+      "statement": "Show (4+4 ln T)/T tends to0 along positive integer horizons; this gives only upper-asymptotic control.",
+      "required_inputs": [
+        "C1-T13"
+      ],
+      "consumers": [
+        "C1-proof-summary"
+      ]
+    },
+    {
+      "id": "G-ordinary-limit-inference",
+      "kind": "SOURCE_GAP",
+      "origin": "UNSUPPORTED_POTENTIALLY_FALSE_INFERENCE",
+      "statement": "One-sided logarithmic upper bound supplies no lower control or ordinary finite-limit existence. Ordinary lim versus upper-epsilon is a semantic issue, not a universally provable missing lemma or approved repair.",
+      "required_inputs": [
+        "C1-ordinary-no-regret",
+        "C1-T13"
+      ],
+      "consumers": [
+        "C1-proof-summary"
+      ]
+    },
+    {
+      "id": "G-arbitrary-initialization",
+      "kind": "SOURCE_GAP",
+      "origin": "ALGORITHM_TO_SPECIALIZED_THEOREM_BOUNDARY",
+      "statement": "General FTL permits any a in [0,1]; printed Theorem1.3 proves half initialization. Any general-initialization theorem needs a separate first-round estimate/aggregation. Cannot reuse <=0.25 unchanged.",
+      "required_inputs": [
+        "C1-FTL-arbitrary-init",
+        "C1-T13-first"
+      ],
+      "consumers": []
+    },
+    {
+      "id": "G-running-state",
+      "kind": "SOURCE_GAP",
+      "origin": "UNEXPANDED_ALGORITHM_PROPERTY",
+      "statement": "Running-average summary property has no printed recursion, initial-state typing or trajectory-equivalence proof. Such a formal interface is a derived obligation.",
+      "required_inputs": [
+        "C1-FTL-arbitrary-init",
+        "C1-running-average"
+      ],
+      "consumers": []
+    },
+    {
+      "id": "G-ex11",
+      "kind": "SOURCE_GAP",
+      "origin": "EXERCISE_WITHOUT_PRINTED_PROOF",
+      "statement": "Vector FTL dimension-free logarithmic regret exercise has no proof; comparator domain and initialization need explicit source-faithful contract. Cauchy-Schwarz is a hint, not full proof topology.",
+      "required_inputs": [
+        "C1-ex11"
+      ],
+      "consumers": []
+    },
+    {
+      "id": "G-ex12",
+      "kind": "SOURCE_GAP",
+      "origin": "EXERCISE_WITHOUT_PRINTED_PROOF",
+      "statement": "Median absolute-loss minimization exercise has no proof. Define even-sample median convention and positive-horizon boundary; no empty-sample convention printed.",
+      "required_inputs": [
+        "C1-ex12"
+      ],
+      "consumers": []
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "E-population",
+      "logic": "AND",
+      "inputs": [
+        "C1-iid",
+        "G-iid-formalization",
+        "G-mean-variance"
+      ],
+      "output": "C1-population-opt",
+      "consumer_use_site": "PDF13 mean/variance sentences",
+      "conditional_premises": "Open probability and variance bridges remain open.",
+      "route_group": "stochastic_motivation"
+    },
+    {
+      "id": "E-nonnegative",
+      "logic": "AND",
+      "inputs": [
+        "C1-game",
+        "C1-iid",
+        "C1-population-opt",
+        "G-iid-formalization"
+      ],
+      "output": "C1-stochastic-nonnegative",
+      "consumer_use_site": "PDF13 below Eq1.2",
+      "conditional_premises": "Causal strategy, bounded losses, positive T for average.",
+      "route_group": "stochastic_motivation"
+    },
+    {
+      "id": "E-stochastic-success",
+      "logic": "AND",
+      "inputs": [
+        "C1-eq11",
+        "C1-eq12",
+        "C1-stochastic-nonnegative",
+        "G-normalization"
+      ],
+      "output": "C1-stochastic-success",
+      "consumer_use_site": "PDF13 final paragraph",
+      "conditional_premises": "T>0 and precise sublinear convention.",
+      "route_group": "stochastic_motivation"
+    },
+    {
+      "id": "E-expected-benchmark",
+      "logic": "AND",
+      "inputs": [
+        "C1-eq11",
+        "C1-population-opt",
+        "G-mean-variance"
+      ],
+      "output": "C1-expected-min",
+      "consumer_use_site": "PDF14 first display",
+      "conditional_premises": "Min outside expectation; no min/expectation exchange.",
+      "route_group": "stochastic_motivation"
+    },
+    {
+      "id": "E-BTL-prefix",
+      "logic": "AND",
+      "inputs": [
+        "C1-BTL-IH"
+      ],
+      "output": "C1-BTL-prefix",
+      "consumer_use_site": "PDF16 IH display",
+      "conditional_premises": "Locally assume IH at T-1 for T>=2.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-BTL-opt",
+      "logic": "AND",
+      "inputs": [
+        "C1-BTL-premises"
+      ],
+      "output": "C1-BTL-opt",
+      "consumer_use_site": "PDF16 because clause",
+      "conditional_premises": "Prefix optimality and feasibility.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-BTL-chain",
+      "logic": "AND",
+      "inputs": [
+        "C1-BTL-prefix",
+        "C1-BTL-opt",
+        "C1-BTL-cancel"
+      ],
+      "output": "C1-BTL-chain",
+      "consumer_use_site": "PDF16 proof end",
+      "conditional_premises": "Transitivity and last-summand cancellation.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-BTL-close",
+      "logic": "AND",
+      "inputs": [
+        "C1-BTL-base",
+        "C1-BTL-chain"
+      ],
+      "output": "C1-BTL",
+      "consumer_use_site": "PDF16 induction",
+      "conditional_premises": "Discharge local C1-BTL-IH at arbitrary T>=2; base T=1; no independent global IH binder.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-mean-characterization",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-premises",
+        "G-mean-feasible",
+        "G-empirical-minimizer"
+      ],
+      "output": "C1-mean-minimizer",
+      "consumer_use_site": "PDF15 argmin display",
+      "conditional_premises": "For1<=t<=T, bounded inputs and positive horizon from premise node; characterization and range remain open.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-BTL",
+      "logic": "AND",
+      "inputs": [
+        "C1-BTL",
+        "C1-mean-minimizer",
+        "G-mean-feasible",
+        "C1-T13-premises",
+        "C1-best-regret"
+      ],
+      "output": "C1-T13-BTL",
+      "consumer_use_site": "PDF17 first display",
+      "conditional_premises": "Squared-loss specialization and valid prefix minimizers; half-initialized past means.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-first",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-premises",
+        "C1-mean-minimizer"
+      ],
+      "output": "C1-T13-first",
+      "consumer_use_site": "PDF17 t=1",
+      "conditional_premises": "x_0^star=1/2 and x_1^star=y_1; <=1/4 does not hold unchanged for arbitrary initial value.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-factor",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-premises",
+        "G-mean-feasible"
+      ],
+      "output": "C1-T13-factor",
+      "consumer_use_site": "PDF17 first three calculation lines",
+      "conditional_premises": "t>=2, means use positive prefixes, all inputs in [0,1].",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-mean-diff",
+      "logic": "AND",
+      "inputs": [
+        "C1-mean-minimizer",
+        "C1-T13-factor"
+      ],
+      "output": "C1-T13-mean-diff",
+      "consumer_use_site": "PDF17 equalities",
+      "conditional_premises": "t>=2 gives t,t-1 positive.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-stability",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-mean-diff",
+        "C1-T13-premises"
+      ],
+      "output": "C1-T13-stability",
+      "consumer_use_site": "PDF17 last calculation line",
+      "conditional_premises": "Triangle inequality, prefix sum<=t-1, |y_t|<=1.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-sum",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-BTL",
+        "C1-T13-first",
+        "C1-T13-stability",
+        "C1-T13-premises"
+      ],
+      "output": "C1-T13-sum",
+      "consumer_use_site": "PDF17 overall",
+      "conditional_premises": "First/later partition, later sum empty at T=1.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-harmonic",
+      "logic": "AND",
+      "inputs": [
+        "C1-figure11",
+        "C1-harmonic-picture",
+        "C1-T13-premises"
+      ],
+      "output": "C1-harmonic",
+      "consumer_use_site": "PDF18 first display",
+      "conditional_premises": "T>=1 from premise-only node; rectangle comparison and integral evaluation are printed.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-close",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-sum",
+        "C1-harmonic"
+      ],
+      "output": "C1-T13-close",
+      "consumer_use_site": "PDF18 closure",
+      "conditional_premises": "Multiply harmonic bound by4.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-T13-root",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13-close"
+      ],
+      "output": "C1-T13",
+      "consumer_use_site": "Theorem1.3 conclusion",
+      "conditional_premises": "No theorem conclusion used as premise.",
+      "route_group": "deterministic_FTL"
+    },
+    {
+      "id": "E-upper-summary",
+      "logic": "AND",
+      "inputs": [
+        "C1-T13",
+        "G-log-over-horizon"
+      ],
+      "output": "C1-proof-summary",
+      "consumer_use_site": "PDF18 summary",
+      "conditional_premises": "Upper asymptotic conclusion only; G-ordinary-limit-inference stays open.",
+      "route_group": "deterministic_FTL"
+    }
+  ],
+  "roots": [
+    "C1-population-opt",
+    "C1-stochastic-nonnegative",
+    "C1-stochastic-success",
+    "C1-expected-min",
+    "C1-BTL",
+    "C1-T13"
+  ],
+  "exercise_obligations": [
+    "G-ex11",
+    "G-ex12"
+  ],
+  "topology_rules": {
+    "direction": "inputs -> consumer/output",
+    "AND": "Joint ingredients within routes; induction base AND step, local IH discharged at closure.",
+    "OR": "No alternate sufficient proofs printed. Stochastic motivation and deterministic FTL are DIFFERENT MODELS, neither OR proofs of one theorem nor joint AND assumptions for Theorem1.3.",
+    "gaps": "Gap dependencies do not discharge obligations. Potentially false ordinary-limit inference is not promised provable.",
+    "min_expectation": "Min outside expectation in stochastic benchmark. Transition to pathwise hindsight changes model/criterion, no min/expectation commutation edge.",
+    "source_not_lean": "Source graph only, not compiler dependencies or original claim closure."
+  },
+  "derived_or_correction_boundaries": [
+    {
+      "id": "D-arbitrary-init",
+      "status": "UNPRINTED_DERIVED_OBLIGATION",
+      "source_inputs": [
+        "C1-FTL-arbitrary-init",
+        "G-arbitrary-initialization"
+      ],
+      "finding": "General-initialization theorem needs separate first-round and aggregation proof."
+    },
+    {
+      "id": "D-state-recursion",
+      "status": "UNPRINTED_DERIVED_OBLIGATION",
+      "source_inputs": [
+        "C1-running-average",
+        "G-running-state"
+      ],
+      "finding": "Concrete recurrence/trajectory interface not printed theorem."
+    },
+    {
+      "id": "D-upper-semantics",
+      "status": "ALTERNATIVE_SEMANTICS_NOT_APPROVED_REPAIR",
+      "source_inputs": [
+        "C1-ordinary-no-regret",
+        "G-ordinary-limit-inference"
+      ],
+      "finding": "Upper-epsilon versus ordinary finite-limit must remain visible."
+    },
+    {
+      "id": "D-min-representation",
+      "status": "CONDITIONAL_REPRESENTATION_OBLIGATION",
+      "source_inputs": [
+        "C1-best-regret",
+        "C1-mean-minimizer"
+      ],
+      "finding": "If min represented by sInf, prove equality of values. If unique characterized choice used, prove existence/uniqueness. No implementation inspected."
+    },
+    {
+      "id": "D-zero-carrier",
+      "status": "CONDITIONAL_EXTENSION_DELTA",
+      "source_inputs": [
+        "C1-game",
+        "C1-general-game",
+        "C1-eq12",
+        "C1-mean-minimizer"
+      ],
+      "finding": "Zero-horizon division and generic carrier/domain extensions must be explicit."
+    }
+  ],
+  "closure_status": "OPEN_SOURCE_GRAPH_AWAITING_DISTINCT_REVIEW",
+  "public_projection": {
+    "original": {
+      "artifact": "batch32-source-extraction-v1/source-proof-graph.json",
+      "sha256": "14547283fd131221dc26887494232f474962c8690031d04c4ef28bb45888247d",
+      "availability": "Retained private maintenance evidence; digest is not a public download URL."
+    },
+    "change": "Physical path prefixes only replaced by distinct logical locations. Original mathematics, historical statuses and values retained. Current bounded status is in review-binding.json."
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-AUDIT-INTEGRATION-20261025",
+  "route": "online-learning / Chapter1 source audit and general-initial FTL",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). General initialization: printed page 3 / PDF 15. Theorem 1.3 fixes initial 1/2: printed page 4 / PDF 16; its proof and quarter-plus-tail refinement are on printed pages 5–6 / PDF 17–18. These four interfaces are derived results. Source round t+1 is Lean index t. The full Chapter 1 inventory also includes printed page 7 / PDF 19, with history and the two exercises classified separately. Pinned PDF SHA256: cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate original PR203 four general-initial FTL theorems and27canaries, reconcile every original17main-text claim with explicit boundaries, and retain the entire1198-path original scope.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineFTLInitializationRegret.lean",
+    "website/content/chapters.json",
+    "website/content/declaration-boundaries.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+    "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted main,49ABRL and1pinned Mathlib contract; exact original signatures/module ownership and current definitions audited before port."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.ftlPredict",
+      "BanditRL.OnlineLearning.meanPredict",
+      "BanditRL.OnlineLearning.squaredBestRegret",
+      "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "BanditRL.OnlineLearning.noRegret_of_vanishing_bound"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+      "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+      "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+      "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero"
+    ],
+    "known_consumers": [
+      "G001 is an actual VALUE parent of G002,G003,G004.",
+      "G002,G003,G004 are separate finite,upper and ordinary-best endpoint contracts with real canary consumers.",
+      "27original canaries include substantive boundary examples and projection checks; projections receive no independent source-proof credit."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the actual strict-past predictor and existing half-initial proof chains. Transfer initialization through an exact first-scored-loss identity; do not duplicate the library or silently strengthen source assumptions."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch32-blind-decoder",
+    "source_reviewer": "independent-batch32-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. Their count is not a proof denominator. Exercises 1.1 and 1.2 are separate; the mandatory proof-leaf total is unknown, and chapter/book completion is not claimed."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Same scalar squared-loss FTL setting; no cross-setting transport or certified functor.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Pending actual generated graph and folded reader inspection. Compiled TYPE/VALUE edges,source topology and four-move compressed spine remain distinct.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: four lessons and one source card; all22prior cards,418prior highlights and5references retained. Chapter overview reconciled with original history retained; step2 status clarified and4proof steps appended.",
+    "banditrlwiki": "updated: bounded statement/source/native graph,17claim reconciliation,retained obligations and compressed-spine packet at research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025",
+    "results_ledger": "no-change-with-reason: bounded general-initial FTL and source reconciliation do not complete a chapter or global milestone.",
+    "roadmap": "no-change-with-reason: Chapter2,later chapters and appendices retain their separate scopes; no new research expansion from branch maintenance.",
+    "website_surfaces": [
+      "Online foundations23source cards,422total highlights and13proof steps",
+      "Six complete literal definitions",
+      "Shared Lean graph and search",
+      "Proof-bridge presentation capacity9to13 with per-step guards unchanged"
+    ]
+  },
+  "truth_boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. Their count is not a proof denominator. Exercises 1.1 and 1.2 are separate; the mandatory proof-leaf total is unknown, and chapter/book completion is not claimed.",
+  "verification": {
+    "focused_checks": [
+      "Exact original4production and27canary signatures/bodies retained;81whole public type witnesses,6literal equalities,111graph values and13required VALUE pairs passed with standard-only axioms.",
+      "Independent bounded code/proof review passed233checks; reader scientific/conservation review passed829checks.",
+      "Shared BanditRLProof9105jobs and Tests9270jobs passed."
+    ],
+    "bandit_check": "Exact ten-file code/reader/renderer candidate passed full gate:475tests with7skips,shared roots,ProofGraphExport and placeholder scan. Final contribution-packet candidate checks remain pending.",
+    "site_build": "Actual --lean-verified build passed after current full Lean/harness gate with unchanged scientific inputs. Renderer-only capacity change also passed exact ten-file full harness.",
+    "site_check": "Site checker and13-step generated DOM check passed. Actual pixels,folded proofs/literal contexts and graph Exposition remain pending.",
+    "independent_review": "Distinct blind/source/body/global-root roles accepted bounded statements,proofs and whole-original reader scope. Public packet,rendered Exposition,final contributor/CI/main/live and original disposition remain pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship preserved in immutable PR203 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "NONE refers to unchanged accepted production proofs. All1198 original paths and2OPEN artifact uses over2digests retain their original owners/statuses. Environmental path failure,probe layout failures and reader-capacity failure are retained; no research route or original claim is discarded.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "first-loss-correction-finite-tail-upper-property-ordinary-best-limit"
+      ],
+      "expected_information_gain": "One original proof route with distinct mandatory blind/source,global reconciliation and conservation reviews.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main a0128c4f361ff186609eccbe826cf6c8442b16b7"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Exact first-loss correction feeds three distinct endpoints: legal finite tail,vanishing comparator upper bound,and constant perturbation of the half-initial two-sided best-regret limit.",
+      "selection_reason": "No parallel competing proof-search directions; source topology alternatives are not asserted implementations."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Code,compression and reader text are reviewed. Public projection and actual folded reader/graph pixels remain pending.",
+      "source_expansion_nodes": [
+        "All17 original Chapter1 claims with explicit source/model/metric boundaries",
+        "Four derived general-initial FTL contracts; printed half-initial theorem and ordinary-limit display retained"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+        "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

@@ -5745,7 +5745,7 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 or not str(proof_bridge.get("summary", "")).strip()
                 or not str(proof_bridge.get("boundary", "")).strip()
                 or not isinstance(bridge_steps, list)
-                or not 3 <= len(bridge_steps) <= 9
+                or not 3 <= len(bridge_steps) <= 13
             ):
                 raise SystemExit(f"reading {reading['slug']} has an incomplete proof bridge")
             for step in bridge_steps:
