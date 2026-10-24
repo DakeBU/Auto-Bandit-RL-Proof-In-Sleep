@@ -1,0 +1,117 @@
+{
+  "schema": "independent-blind-mathematical-reconstruction-v1",
+  "status": "blind-reconstructed",
+  "actor": "/root/batch27_blind_decoder",
+  "role": "distinct source-blind decoder",
+  "input": {
+    "path": "maintenance-evidence/batch27-blind-input/neutral-statements-v1.json",
+    "sha256": "220eaafd10057bbc87e9a1d2eec4797442e37c1a59cc8510cf29fb8ea0681ab0",
+    "hash_verified": true,
+    "contents_used": "Three exact theorem signatures, three exact definition expansions, scope and import names."
+  },
+  "isolation": {
+    "source_documents_read": false,
+    "theorem_implementation_or_proof_bodies_read": false,
+    "repository_readme_read": false,
+    "prior_verdicts_or_other_agent_reports_read": false,
+    "production_or_remote_edits": false,
+    "disclosure": "I received the assigned blind-decoder task, generic workspace instructions and automatically injected general memory/skill catalog context. I did not consult memory files, source documents, production declarations, implementation, PRs, or earlier reviews. Visible theorem, namespace and import names are those already in the neutral packet. Only the round-trip skill, the packet, and Mathlib definition-level context were read for this reconstruction. This is role isolation, not a claim that generic workspace context was technically inaccessible.",
+    "skill_read": "repository/.agents/skills/bandit-semantic-roundtrip/SKILL.md",
+    "mathlib_context": [
+      "MeasureTheory/Function/StronglyMeasurable/AEStronglyMeasurable.lean:66-77",
+      "Probability/Independence/Basic.lean:133-146",
+      "Probability/IdentDistrib.lean:68-76"
+    ],
+    "mathlib_search_disclosure": "A definition search confined to Mathlib MeasureTheory and Probability also returned incidental Mathlib use-site lines; these were not used as target/source evidence."
+  },
+  "shared_semantics": {
+    "history": "H_t(omega) = (S(omega), (Y_i(omega))_{i in range t}), with range t = {0,...,t-1}. The history codomain is Seed times a finite real product, equipped with its product measurable structure.",
+    "information": "privateSeedPastInformation is the pullback measurable space H_t^{-1}(product sigma-algebra). F_t <= this pullback means every F_t-measurable set belongs to that information space. The inequality does not assert equality or that the family F is increasing.",
+    "ae_strong_measurability": "AEStronglyMeasurable[F] P mu means there exists an everywhere F-strongly-measurable g with P = g mu-almost everywhere. The measure's ambient measurable space can differ from F. For real codomains this is an F-measurable version condition.",
+    "expected_fixed_minimum": "inf over deterministic u in [0,1] of E_mu[sum_{t<T}(u-Y_t)^2], with the infimum outside the integral. The definition uses real sInf, not an existential minimizer.",
+    "expected_fixed_regret": "E_mu[sum_{t<T}(prediction_t-Y_t)^2] minus the expected fixed minimum. It is a real scalar, not a random variable.",
+    "integration": "The displayed integrals are Mathlib real Bochner integrals. In theorem 3 measurability up to null sets, boundedness and the probability-measure hypothesis ensure the usual finite expectation interpretation. The bare definitions are total Lean expressions even outside such assumptions."
+  },
+  "targets": [
+    {
+      "name": "ae_predictable_exists_bounded_history_policy",
+      "reconstruction": "For any measure and any given prediction sequence with an [0,1]-valued almost-everywhere version measurable using information no richer than the seed and strictly past outcomes, there exists one family of measurable policies on full seed-history spaces, each everywhere [0,1]-valued, whose realized outputs agree with every prediction time on one common full-measure set.",
+      "quantifier_order": "For all Omega and Seed with measurable spaces; for all mu,Y,S,F satisfying forall t, F_t <= information_t; for all prediction with forall t, AE strong F_t-measurability and forall t, AE [0,1] boundedness; there exists policy; then forall t measurability, forall t and every history q boundedness, and AE omega forall t agreement. The policy can depend on all the supplied data, including mu and prediction; no universal policy for all processes is asserted.",
+      "seven_slots": {
+        "1_objects_and_spaces": "Arbitrary measurable Omega and Seed, arbitrary measure mu on Omega, real-valued sequences Y and prediction indexed by natural numbers, seed map S, and a family F of measurable spaces on Omega. Policy_t maps Seed x R^{range t} to R.",
+        "2_quantifiers": "All hypotheses hold for every natural time before one policy family is chosen. Its measurability and boundedness are universal in t. The last conclusion places AE omega before forall t, hence simultaneous countable-time agreement outside one mu-null set.",
+        "3_assumptions": "Only F_t <= information_t, AEStronglyMeasurable[F_t] prediction_t mu, and prediction_t in [0,1] mu-AE for each t. No probability, finite measure, sigma-finiteness, measurability of S or Y relative to the ambient space, independence, identical laws, outcome bounds, F monotonicity, or standard-Borel Seed hypothesis is stated. In particular F_t <= the ambient measurable space is not a hypothesis here.",
+        "4_conclusion_metric": "Existence of measurable deterministic functions policy_t of seed plus the entire strictly prior finite history, globally bounded in [0,1], with pathwise equality to the predictions on a common full-measure event. No loss or performance bound appears.",
+        "5_constants_normalization_asymptotics": "The range constraint is the closed interval [0,1], including both endpoints. Times start at zero. This is an exact representation, not an approximation, rate or asymptotic statement.",
+        "6_probability_feedback_stopping": "Measure-theoretic AE statement under arbitrary mu. There is no random-seed independence condition here and no stochastic information restriction beyond the explicit pullback comparison. Inputs contain S and Y_0 through Y_{t-1}; not Y_t. The whole seed is available at each time. No stopping time or conditional probability is in the conclusion.",
+        "7_boundaries": "At t=0 the history factor is the singleton empty function space, so policy_0 depends only on S. No horizon parameter exists. A deterministic/constant seed is allowed when such S exists. Zero measure is allowed and makes the agreement requirement vacuous. Empty Omega is allowed; empty Seed is compatible only if S:Omega->Seed exists, hence Omega must then be empty. Policy values on all possible histories, including unreachable histories and histories with real coordinates outside [0,1], remain bounded."
+      },
+      "limitations": [
+        "Does not assert original prediction functions are measurable everywhere or bounded everywhere.",
+        "Does not assert agreement at every omega, nor a common exceptional set uniform over all possible input processes or measures.",
+        "No uniqueness, computability, continuity, constructive policy extraction, or measurability jointly across separate model parameters is asserted.",
+        "No completion of the pullback sigma-algebra is named; null-set flexibility enters through AEStronglyMeasurable and the AE conclusion."
+      ],
+      "uncertainties": []
+    },
+    {
+      "name": "ae_predictable_private_seed_independent",
+      "reconstruction": "In a probability space, let Y be a mutually independent sequence of measurable real random variables, and let measurable seed S be independent of the entire infinite sequence Y. Fix deterministic t. Any real P having an almost-everywhere F-measurable version, with F contained in the information of S and Y_0,...,Y_{t-1}, is independent of Y_t.",
+      "quantifier_order": "For all Omega,Seed,mu,Y with mu a probability measure, measurable Y_t and joint family independence; for all measurable S independent of omega -> (t -> Y_t(omega)); for every deterministic t, every F below information_t, every real P with AE strong F-measurability; conclude IndepFun P (Y_t) mu.",
+      "seven_slots": {
+        "1_objects_and_spaces": "Arbitrary measurable Omega and Seed, probability mu, real random variables Y_t, measurable Seed-valued S, one natural t, one measurable space F on Omega, and one real P.",
+        "2_quantifiers": "t is universally quantified but fixed before F and P. Independence is concluded separately for every permitted choice. No simultaneous conclusion asserting independence of the whole prediction sequence and the whole outcome sequence is present.",
+        "3_assumptions": "mu(Omega)=1; every Y_t is measurable; iIndepFun Y mu is mutual family independence, not merely pairwise independence; S is measurable and independent of the full infinite sequence as a product-valued random variable; F <= information_t; P admits a strongly F-measurable version mu-AE. There is no identical-distribution, integrability, boundedness, zero-mean, or moment assumption.",
+        "4_conclusion_metric": "IndepFun P (Y_t) mu: the generated measurable spaces are independent. Equivalently for Borel A,B in R, mu({P in A} intersect {Y_t in B}) = mu(P in A) mu(Y_t in B). AE versions suffice, so this remains a distributional claim about the given P despite possible exceptional values.",
+        "5_constants_normalization_asymptotics": "Probability normalization is one; there are no numerical error constants, scaling factors, rates, or horizons.",
+        "6_probability_feedback_stopping": "Seed independence is from the complete outcome vector, stronger than a list of marginal pairwise seed-coordinate conditions. Available information is seed plus strictly earlier outcomes. Full-family outcome independence is what separates current Y_t from past coordinates. The theorem concludes unconditional independence; it does not state a conditional-expectation identity or a stopping-time result. F need not be a filtration. Here S/Y measurability implies the history pullback is contained in the ambient measurable space.",
+        "7_boundaries": "At t=0 no prior outcomes occur, so the allowed information is that of the seed alone. A constant seed is allowed and no seed distribution is prescribed. A probability measure excludes empty Omega and zero measure; existence of S then excludes empty Seed. Arbitrary real P is permitted without bounds. No horizon parameter appears."
+      },
+      "limitations": [
+        "Does not assert P is independent of past outcomes or of the full sequence.",
+        "Does not assert different predictions are independent of each other.",
+        "Does not cover an outcome-dependent seed unless the explicit full-sequence independence still holds.",
+        "Replacing deterministic t with a random time requires a further theorem and is not licensed by this signature."
+      ],
+      "uncertainties": []
+    },
+    {
+      "name": "ae_predictable_private_seed_expectedFixed_excess",
+      "reconstruction": "For iid measurable [0,1]-valued outcomes on a probability space, a measurable seed independent of the entire outcome sequence, and any [0,1]-valued prediction sequence measurable up to null sets using seed and strictly past outcomes, expected cumulative squared loss in excess of the best deterministic constant comparator in [0,1] equals the sum of expected squared distances of the predictions from the common outcome mean. Consequently that excess is nonnegative.",
+      "quantifier_order": "For all Omega,Seed,mu,Y with probability mu and all-time measurability, identical laws relative to Y_0, AE bounds and mutual independence; for all measurable independent S, all F with all-time information inclusions, and all prediction with all-time AE measurability and bounds; for every deterministic natural T, assert both an exact scalar equality and nonnegativity. No existential algorithm or comparator is present in the target conclusion.",
+      "formula": "Let m = integral Y_0 dmu. Then E[sum_{t=0}^{T-1}(prediction_t-Y_t)^2] - inf_{u in [0,1]} E[sum_{t=0}^{T-1}(u-Y_t)^2] = sum_{t=0}^{T-1} E[(prediction_t-m)^2] >= 0.",
+      "seven_slots": {
+        "1_objects_and_spaces": "Arbitrary measurable Omega and Seed, probability mu, iid real-valued Y_t supported in [0,1] up to null sets, Seed-valued S, measurable-space family F, real predictions, and natural horizon T. All expectations and the fixed-comparator infimum are real scalars.",
+        "2_quantifiers": "All-time assumptions precede T, including at times beyond the finite horizon. The infimum ranges over a single deterministic real u shared across all t and omega, after expected total loss is computed. It is not a random comparator and not a separately optimized u_t. Every T is allowed, but T is deterministic.",
+        "3_assumptions": "mu is a probability measure; each Y_t is measurable; each Y_t has the same pushforward law as Y_0; for every t, Y_t in [0,1] mu-AE; the entire Y family is mutually independent; S is measurable and independent of the infinite outcome vector; each F_t is contained in information_t; each prediction_t has a strongly F_t-measurable version mu-AE and lies in [0,1] mu-AE. No increasing-filtration, separate integrability, seed-law, atomlessness, or standard-Borel Seed assumption is supplied. Integrability of the displayed finite squared losses follows from these probability, measurability and bounds conditions.",
+        "4_conclusion_metric": "An equality for cumulative expected fixed-comparator excess squared loss and a conjoined inequality that this real number is nonnegative. The right side sums expected squared deviations from m=E[Y_0]. There is no empirical best-comparator loss inside the expectation.",
+        "5_constants_normalization_asymptotics": "Each squared deviation has coefficient exactly 1. Summation is t=0,...,T-1 without a 1/T factor. The comparator/prediction/outcome interval is closed [0,1]. There is no confidence parameter, logarithm, asymptotic notation, unspecified constant, or strictly positive lower bound. The common mean does not depend on t.",
+        "6_probability_feedback_stopping": "Expectations include all randomness on Omega, including seed and outcomes. AE restrictions permit arbitrary exceptional values of Y/prediction. Countability allows the per-time bounds to be simultaneous outside a common null set, but the final theorem is a scalar expectation identity. Strict-past information and full-sequence seed independence exclude current/future outcome information through the permitted version. No random horizon, stopping rule, high-probability, adversarial-sequence, or conditional guarantee is stated.",
+        "7_boundaries": "T=0 is included: empty sums give learner loss zero, every comparator has expected loss zero, the comparator-value set is {0}, the sInf is zero, and the identity is 0=0 with nonnegativity. At time zero predictions may depend on S only, up to null sets. A constant seed and deterministic predictions are allowed. There is no seed magnitude or numerical zero-seed parameter. If S is constantly zero in a measurable seed type containing zero, it is the constant-seed case. Empty Seed/Omega and zero measure cannot satisfy the probability setup with S. Degenerate outcome laws are included."
+      },
+      "derived_explanation_not_additional_target_claim": "Under the stated hypotheses m is in [0,1]. If v=E[(Y_0-m)^2], a deterministic u has expected cumulative loss T*((u-m)^2+v), so the comparator infimum is T*v and is attained by m (all u are minimizers at T=0). Per-time independence gives E[(prediction_t-Y_t)^2] = E[(prediction_t-m)^2]+v. These identities explain the displayed theorem; they are not separate conclusions printed in the supplied target.",
+      "limitations": [
+        "This is the infimum of expected loss, not the expectation of the pathwise infimum. The latter can have a different value.",
+        "It does not assert sublinear regret, convergence, consistency, a minimax rate, a variance-dependent positive lower bound, or construction of a predictor.",
+        "The exact excess can be zero, for example if predictions equal the common mean almost everywhere.",
+        "The policy can depend on the distribution through the universally supplied prediction functions; no distribution-free learnability or knowledge restriction is stated beyond information measurability.",
+        "The assumptions are global over all natural times even for T=0; the theorem does not syntactically weaken them at zero horizon."
+      ],
+      "uncertainties": []
+    }
+  ],
+  "remaining_uncertainties": [
+    "No missing definition-level context was needed to interpret these supplied signatures.",
+    "The packet's extraction completeness, actual declaration provenance, proof validity, compilation status and any source-faithfulness relation were not independently inspected. They are outside this decoder role.",
+    "No source-fidelity verdict is issued. The mathematical reconstruction alone is not an acceptance decision."
+  ],
+  "public_projection": {
+    "original": {
+      "artifact": "batch27-blind-review-v1/report.json",
+      "sha256": "2cf76c4b8f1601db94ae285393f564f3443f1377953b5d9571ab7310096fb9e6",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    },
+    "change": "Only physical locations are replaced by logical locations. Original mathematical content, scoped verdicts and historical statuses are unchanged. Original hashes bind private originals, not projected bytes.",
+    "currentStatus": "See review-binding.json for later scoped evidence. Earlier pending fields remain immutable historical observations."
+  }
+}

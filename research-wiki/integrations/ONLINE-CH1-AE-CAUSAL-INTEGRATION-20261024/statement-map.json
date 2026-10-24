@@ -1,0 +1,112 @@
+{
+  "sourcePR": 198,
+  "sourceBase": "4ca57025a2cdc4f4ba0d5cc2423b55786b0a7afe",
+  "sourceHead": "8dcdf1e5d74b79ee90d2dd27a48569e9cb4f7fe6",
+  "integrationBase": "18dc1abe2ed83b91c1d4cfc975c62971982dfef5",
+  "sealedTargets": [
+    {
+      "name": "ae_predictable_exists_bounded_history_policy",
+      "originalTarget": "L1",
+      "exactOriginalHeader": true,
+      "rawHeaderSHA256": "16fd6701fea34b566c18de217f978e9a33cb350f53173c62b59d4cd6150c2135",
+      "originalStatementHash": "e833ef6d42d7c88fb328349e8fbe76bd4838c790f040aa1b89d6329c45fb6f91",
+      "scope": "unmodified-existing-PR-statement-frozen-before-port",
+      "proofSearchPerformed": false
+    },
+    {
+      "name": "ae_predictable_private_seed_independent",
+      "originalTarget": "L2",
+      "exactOriginalHeader": true,
+      "rawHeaderSHA256": "59ae1654a75e0061599dbfd2b9993ea0efcf8327ddfa8f4502b862127f2f8bb7",
+      "originalStatementHash": "67ea6421e66a39194e5076e3b9f71d824285d488cf117f503e0be2b958e8a37e",
+      "scope": "unmodified-existing-PR-statement-frozen-before-port",
+      "proofSearchPerformed": false
+    },
+    {
+      "name": "ae_predictable_private_seed_expectedFixed_excess",
+      "originalTarget": "L3",
+      "exactOriginalHeader": true,
+      "rawHeaderSHA256": "9db5d08728989697cb3cd1cf2e07f96bc64e491305717802eb405f17998d379d",
+      "originalStatementHash": "ba4a2317c32fef15e0dc2b76c82237a5590ba451f229942454897981fdaf5351",
+      "scope": "unmodified-existing-PR-statement-frozen-before-port",
+      "proofSearchPerformed": false
+    }
+  ],
+  "neutralPacket": {
+    "artifact": "batch27-blind-input/neutral-statements-v1.json",
+    "sha256": "220eaafd10057bbc87e9a1d2eec4797442e37c1a59cc8510cf29fb8ea0681ab0",
+    "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+  },
+  "productionAndCanaryOriginalBytes": {
+    "BanditRLProof/OnlineGuessingAECausal.lean": {
+      "file": "BanditRLProof__OnlineGuessingAECausal.lean",
+      "bytes": 5417,
+      "sha256": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+      "gitBlob": "c77a420060300e69f9a9ca78b1236cf56b820fd1"
+    },
+    "Tests/OnlineGuessingAECausalCanary.lean": {
+      "file": "Tests__OnlineGuessingAECausalCanary.lean",
+      "bytes": 5317,
+      "sha256": "ee94efc0185f7d9be0a41bbe9fe79b7058812c0b34bb22ad0186f096433e84d4",
+      "gitBlob": "33f35eaab06fd715b9ab5a6ca4749b86285335e0"
+    }
+  },
+  "candidateBindings": {
+    "BanditRLProof/OnlineGuessingAECausal.lean": "f4d44e48352e08073e90f4b915e22aa4641f566f44160a61df65c41ba424fdab",
+    "Tests/OnlineGuessingAECausalCanary.lean": "ee94efc0185f7d9be0a41bbe9fe79b7058812c0b34bb22ad0186f096433e84d4",
+    "BanditRLProof.lean": "c96821660295ad83057e1743dfd3bb76f55770839a757ebcb5933b14998edd5f",
+    "Tests.lean": "83fdbadf4d7e5a8003aa63351ff899fd1269fc58d9aa2411909cba3a129e044e",
+    "website/content/chapters.json": "5c5df90684059ce768ee88841502460f690e08a3a79ed0f9369e477070cedf44",
+    "website/content/readings.json": "1375e4f362062e4a3cb685428c6266beac6692e03f3f1d753a7bf0a3c6f6f5ff",
+    "website/content/highlights.json": "1fa8471138523ced1be0ba5554510b6b8590daee3c4d18c3c6ce6b70b52f265a"
+  },
+  "actualImportedAudit": {
+    "artifact": "batch27-imported-audit-v3/receipt.json",
+    "sha256": "66292c5257edecdbc1f7513b708fe73c736320e2525318b5ceaf588ee9261525",
+    "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+  },
+  "actualCheck": "Corrected whole-file imported audit v3 passed three universal exact-type witnesses and three literal definition identities. All18declarations have values and only standard axioms; direct TYPE/VALUE graph equals the private probe. This audit covers actual imported modules, not merely concatenated private elaboration. Combined root/Tests/harness passed separately in v2; later reader display and verification metadata do not change formal inputs.",
+  "consumerBoundary": "The bounded-policy existence result and excess identity have concrete canary consumers. The independence theorem is also used by the production excess theorem. No second production consumer is invented for the other two.",
+  "commentOnlySuccessor": {
+    "path": "BanditRLProof/OnlineGuessingAECausal.lean",
+    "line": 11,
+    "originalSHA256": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+    "correctedSHA256": "f4d44e48352e08073e90f4b915e22aa4641f566f44160a61df65c41ba424fdab",
+    "oldText": "A classical measurable version, not off-null identity or an executable learner constructor.",
+    "newText": "A classical measurable version agreeing almost everywhere; exceptional null samples may differ. This is not an executable learner constructor.",
+    "scope": "One module documentation sentence replaced. Imports, universes, namespace, every theorem signature/proof and entire canary remain byte-exact to the original. Declaration starting lines unchanged.",
+    "independentReview": {
+      "artifact": "batch27-source-review-v1/comment-correction-review-v1.json",
+      "sha256": "5a1518064e612afb68dd2dcc43a5e99272427b60e498516f3b1cc263fd7bc325",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    },
+    "originalIntake": {
+      "artifact": "batch27-intake-v1/BanditRLProof__OnlineGuessingAECausal.lean",
+      "sha256": "623634fa5df3c91dee704be00218b5eac7d513a1f8a0b483ccf730832cd5f814",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    }
+  },
+  "historicalImportedAudit": {
+    "artifact": "batch27-imported-audit-v1/receipt.json",
+    "sha256": "64d7b8559776181489d076a7557c119f9ec2e1a4962e734a660769227b174e2a",
+    "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+  },
+  "readerDisplaySuccessor": {
+    "path": "website/content/readings.json",
+    "jsonPointer": "/readings/34/source_theorems/17/relationship",
+    "before": "Orabona arXiv:1912.13213v10,2026-06-21, SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17: IID squared-loss variance benchmark and Eq(1.1)/(1.2), printed1/PDF13; strict-past prediction distinction, printed3/PDF15. These three statements are derived causal/AE formalization infrastructure, not three numbered or printed theorems. Source round1 corresponds to Lean time0.",
+    "after": "Orabona arXiv:1912.13213v10,2026-06-21: IID squared-loss variance benchmark and Eq(1.1)/(1.2), printed1/PDF13; strict-past prediction distinction, printed3/PDF15. These three statements are derived causal/AE formalization infrastructure, not three numbered or printed theorems. Source round1 corresponds to Lean time0.",
+    "retainedSourcePDFSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "scope": "Only a duplicate digest is removed from the new card relationship prose; version,date,pages,source links and all mathematical content remain. Full digest remains in source-extraction-report,source-proof-graph,semantic-source-review and three reader notes.",
+    "review": {
+      "artifact": "batch27-source-review-v1/digest-proposal-review-v1.json",
+      "sha256": "6028c0773667d4cbc5090812466367eb8677385da16d4e45705c535b2262c807",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    },
+    "conservation": {
+      "artifact": "batch27-scope-review-v1/reader-digest-proposal-review-v2.json",
+      "sha256": "b47a50166e264fd84647763123ae433bb75ed6d21c45d254a4386b409d8a8ed6",
+      "availability": "Private maintenance evidence retained by the maintainer; a digest is not a public download URL."
+    }
+  }
+}

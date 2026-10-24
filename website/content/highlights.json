@@ -6710,6 +6710,59 @@
       "proof_idea": "Positive natural T has nonzero real coercion. Clear the denominator and use distributivity.",
       "lean_notes": "Arbitrary real total A and variance parameter v, only T>0. It supplies no probability, algorithm, sign, convergence or rate. At T0 the left side is−v, the right side0, as the v=1/4 canary verifies. These twelve existing APIs retain their original assumptions. The pointwise target bounds and global all-history policy bounds are stronger than almost-sure support and feasibility on legal histories. General stochastic-kernel representation, completed information and almost-everywhere factorization remain separate. Chapter 1 and the book remain incomplete; the mandatory proof-leaf total is unknown. Actual proof uses nonzero real coercion from T>0, field_simp and ring; no probabilistic convergence fact.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+      "title": "One bounded history policy agrees AE at every time",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 110,
+      "plain": "Choose each relative measurable version, factor through seed/strict past, and clip globally with projIcc. AE original feasibility makes clipping harmless; countable AE intersection gives one common event for all t.",
+      "math": "\\exists\\pi:\\quad \\forall t,\\ \\pi_t\\text{ measurable},\\quad\\forall t,q,\\ \\pi_t(q)\\in[0,1],\\qquad\\forall^{\\mu\\text{-AE}}\\omega,\\ \\forall t,\\ P_t(\\omega)=\\pi_t(S(\\omega),Y_{<t}(\\omega)).",
+      "intuition": "A null-set modification can have a globally feasible causal version even when the original process is not pointwise predictable or everywhere bounded.",
+      "why": "Represent an AE-adapted process by a globally feasible policy on seed and history inputs.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21, SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17: IID squared-loss variance benchmark and Eq(1.1)/(1.2), printed1/PDF13; strict-past prediction distinction, printed3/PDF15. These three statements are derived causal/AE formalization infrastructure, not three numbered or printed theorems. Source round1 corresponds to Lean time0.",
+      "proof_idea": "Choose each relative measurable version, factor through seed/strict past, and clip globally with projIcc. AE original feasibility makes clipping harmless; countable AE intersection gives one common event for all t.",
+      "lean_notes": "Let H_t=(S,Y_{<t}). Under any ambient measure and any measurable seed space, assume F_t is below the comap of H_t, P_t is AE strongly measurable relative to F_t under that measure, and P_t lies in [0,1] almost everywhere. No ambient measurability of S or Y, probability, IID, monotonicity of F, or standard-Borel structure on Seed is required. The real output supplies the standard-Borel structure for factorization. Measurable versions factor through H_t and are projected to [0,1], giving measurable policies bounded on every seed/history input. They equal the original process on one common event for all natural times. Countable indexing makes this equivalent to AE equality at each time. Time 0 uses only the seed. This explicitly extends the source pathwise model to AE assumptions. The choice is classical and law-relative, with equality asserted only almost everywhere and no executable learner construction. Values on exceptional null samples may differ. General completed-information and universal kernel representation remain open. Actual proof ingredients include AEStronglyMeasurable.measurable_mk, Measurable.exists_eq_measurable_comp, projIcc and ae_all_iff.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.privateSeedPastInformation"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+      "title": "AE predictable original predictions are independent of the current target",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 111,
+      "plain": "Apply the actual whole-stream seed/strict-past independence producer to the measurable version. IndepFun.congr transfers the conclusion to the original prediction, so current independence is produced rather than assumed.",
+      "math": "(Y_t)_{t\\ge0}\\text{ jointly independent},\\quad S\\perp(Y_t)_{t\\ge0},\\quad F\\subseteq\\sigma(S,Y_{<t}),\\quad P\\text{ has an }F\\text{-measurable AE version}\\ \\Longrightarrow\\ P\\perp Y_t.",
+      "intuition": "Changing a random variable on a null set preserves independence. The measurable-version argument does not require bounded predictions.",
+      "why": "Derive current-target independence from the information available before its reveal.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21, SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17: IID squared-loss variance benchmark and Eq(1.1)/(1.2), printed1/PDF13; strict-past prediction distinction, printed3/PDF15. These three statements are derived causal/AE formalization infrastructure, not three numbered or printed theorems. Source round1 corresponds to Lean time0.",
+      "proof_idea": "Apply the actual whole-stream seed/strict-past independence producer to the measurable version. IndepFun.congr transfers the conclusion to the original prediction, so current independence is produced rather than assumed.",
+      "lean_notes": "On a probability space, assume measurable jointly independent real targets, a measurable seed independent of the whole infinite target process, a fixed natural time t, F below the seed/strict-past comap, and original P AE strongly measurable relative to F under the ambient measure. Then original P is independent of Y_t. Bounds, identical target laws, support and integrability are not premises. Whole-process seed independence cannot be replaced by pairwise independence. Time 0 is included; stopping times are not asserted. The proof uses an unbounded measurable version, the existing predictable_private_seed_independent producer and IndepFun.congr. It does not invoke the bounded-policy theorem or assume its feasibility premise. General completed-information and universal kernel representation remain open.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.predictable_private_seed_independent"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "title": "Original AE causal IID excess equals mean-square error",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 112,
+      "plain": "Measurable seed/target histories lift relative AE measurability to the ambient field, and AE unit bounds yield L2. The new AE independence producer cancels the cross term. Substitute the attained expected fixed minimum T·Var(Y0), then sum nonnegative square integrals.",
+      "math": "\\begin{aligned}R_T^{\\mathrm{expected\\ fixed}}&=\\mathbb E\\sum_{t<T}(P_t-Y_t)^2-\\inf_{u\\in[0,1]}\\mathbb E\\sum_{t<T}(u-Y_t)^2\\\\&=\\sum_{t<T}\\mathbb E(P_t-\\mathbb EY_0)^2\\ge0,\\quad T\\in\\mathbb N.\\end{aligned}",
+      "intuition": "The original process pays the unavoidable variance plus its squared distance from the population mean; the mean is an analysis benchmark.",
+      "why": "Express the source IID variance benchmark exactly for the original AE process.",
+      "position": "Orabona arXiv:1912.13213v10,2026-06-21, SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17: IID squared-loss variance benchmark and Eq(1.1)/(1.2), printed1/PDF13; strict-past prediction distinction, printed3/PDF15. These three statements are derived causal/AE formalization infrastructure, not three numbered or printed theorems. Source round1 corresponds to Lean time0.",
+      "proof_idea": "Measurable seed/target histories lift relative AE measurability to the ambient field, and AE unit bounds yield L2. The new AE independence producer cancels the cross term. Substitute the attained expected fixed minimum T·Var(Y0), then sum nonnegative square integrals.",
+      "lean_notes": "On a probability space, assume measurable jointly independent identically distributed targets with AE unit bounds, a measurable seed independent of the whole infinite target process, and F_t below seed/strict-past information. Original predictions are AE strongly measurable relative to F_t under the ambient measure and AE unit-valued. For this same infinite process and every natural T, expectedFixedRegret equals the sum of expected squared deviations from E[Y_0] and is nonnegative. The infimum over fixed unit comparators is outside expectation. The population mean attains that benchmark and is an analysis witness, not learner input. Ambient AE measurability, L2 integrability and current independence are derived. T=0 gives the empty-sum identity. The proof uses ae_predictable_private_seed_independent, expectedFixedMinimum_eq_variance and iid_cumulative_prediction_decomposition. It establishes no convergence, asymptotic success, rate or high-probability bound. General completed-information and universal kernel representation remain open.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition"
+      ]
     }
   ]
 }

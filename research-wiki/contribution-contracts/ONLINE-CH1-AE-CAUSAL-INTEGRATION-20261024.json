@@ -1,0 +1,161 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH1-AE-CAUSAL-INTEGRATION-20261024",
+  "route": "online-learning / Chapter 1 explicit AE causal information",
+  "frontier_cell": "online-foundations",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona, revision 2026-06-21; printed p1/PDF13 IID squared-loss variance benchmark and Eq1.1/1.2, printed p3/PDF15 strict-past distinction. These three explicit AE causal statements are derived support results.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate the original three production theorem signatures/proofs and complete15-declaration canary from PR198 into the shared Lean project, with one independently reviewed module-doc correction.",
+  "affected_files": [
+    "BanditRLProof/OnlineGuessingAECausal.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+    "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+    "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Exact original and accepted-main OnlineGuessingRandomizedIID, OnlineGuessingIIDBenchmark and OnlineGuessingIIDSuccessCanary byte comparison.",
+      "Independent source/body inspection of real measurable factorization, AE representatives, interval projection, private-seed independence, attained expected-fixed benchmark and covariance decomposition."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineLearning.privateSeedPastInformation",
+      "BanditRL.OnlineLearning.predictable_private_seed_independent",
+      "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "BanditRL.OnlineLearning.iid_cumulative_prediction_decomposition",
+      "MeasureTheory.AEStronglyMeasurable.measurable_mk",
+      "Measurable.exists_eq_measurable_comp",
+      "MeasureTheory.ae_all_iff",
+      "ProbabilityTheory.IndepFun.congr"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineLearning.ae_predictable_private_seed_independent"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess consumes BanditRL.OnlineLearning.ae_predictable_private_seed_independent.",
+      "The complete AE canary consumes all three targets and retains a nonempty null-event counterexample, original-process T/4 excess, T=2 and T=0, and variance1/4."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse existing probability and attained square-loss producers. The unbounded independence route does not misuse bounded-policy feasibility; no second Lean project or duplicated probability foundation."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch27-blind-decoder",
+    "source_reviewer": "independent-batch27-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Three derived AE causal results, not three printed source theorems. The policy-version result allows any measure and measurable seed space, needs relative AE strong measurability and AE unit feasibility, and makes one classically chosen, law-relative measurable policy family globally unit-valued. Equality to the original process holds on a common full-measure event; exceptional null samples may differ. The deterministic-time independence theorem needs probability, measurable jointly independent targets and a measurable seed independent of the whole infinite process, but no bounds, common law or moments. The IID excess result additionally needs common target laws and AE unit bounds; ambient L2 regularity, current independence and attained fixed-comparator minimum are derived. The infimum is outside expectation, and the mean is analysis-only. The same process works for every natural horizon including zero, without any rate or asymptotic-success claim. General completed-information and universal kernel representation, remaining chapter/book obligations and eight historical hash-use obligations remain open."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "AE versions and private-seed causality extend the existing scalar square-loss setting; no certified cross-setting transport or functor is established.",
+    "focus_targets": [
+      "online-foundations"
+    ],
+    "visual_review": "Eight actual corrected graph images independently inspected and accepted; graph data is unchanged apart from generation time in site v3. Teaching relations remain distinct from actual proof dependencies. Reader review additionally inspected67images and13corrected-card successor images.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: three notes and one derived support card; all17 prior cards,397 prior highlight occurrences and five teaching-source references preserved.",
+    "banditrlwiki": "updated: bounded source, semantic, proof, dependency and historical-retention packet at research-wiki/integrations/ONLINE-CH1-AE-CAUSAL-INTEGRATION-20261024",
+    "results_ledger": "no-change-with-reason: this bounded AE information-model advance does not close the existing global milestone or Chapter 1.",
+    "roadmap": "no-change-with-reason: completed information, universal kernels and remaining chapter/book obligations retain their scopes and owners.",
+    "website_surfaces": [
+      "Online foundations chapter and source reader",
+      "Three formula/proof notes",
+      "Shared Lean declaration graph and existing contextual definitions"
+    ]
+  },
+  "truth_boundary": "Three derived AE causal results, not three printed source theorems. The policy-version result allows any measure and measurable seed space, needs relative AE strong measurability and AE unit feasibility, and makes one classically chosen, law-relative measurable policy family globally unit-valued. Equality to the original process holds on a common full-measure event; exceptional null samples may differ. The deterministic-time independence theorem needs probability, measurable jointly independent targets and a measurable seed independent of the whole infinite process, but no bounds, common law or moments. The IID excess result additionally needs common target laws and AE unit bounds; ambient L2 regularity, current independence and attained fixed-comparator minimum are derived. The infimum is outside expectation, and the mean is analysis-only. The same process works for every natural horizon including zero, without any rate or asymptotic-success claim. General completed-information and universal kernel representation, remaining chapter/book obligations and eight historical hash-use obligations remain open.",
+  "verification": {
+    "focused_checks": [
+      "Corrected production module and original complete canary passed the actual imported audit:18 declaration values,3 universal exact-type witnesses,3 literal definition identities,standard axioms only; direct TYPE/VALUE graph equals the independent private probe.",
+      "Original signatures,proofs,imports and complete canary remain byte-exact. One independently reviewed module-doc sentence and a duplicate digest in reader prose were corrected."
+    ],
+    "bandit_check": "Corrected module full gate v2 passed shared library9100jobs,Tests9260jobs,ProofGraphExport,placeholder scan and471tests with7skips. Later reader-only digest removal and verification metadata do not change these Lean/harness inputs; no additional Lean run is claimed.",
+    "site_build": "Corrected module site v2 and reader-display successor site v3 build/check passed. Site v3 explicitly carries the same verified Lean inputs.",
+    "site_check": "Independent actual review covered67reader and8graph images, then13fresh corrected-card images at1440/390 with horizontal math sweeps. The duplicate-digest clipping is resolved; old content and unchanged rendered surfaces are separately conserved. Exact committed source URLs remain pending.",
+    "independent_review": "Distinct source,blind,scientific and scope roles accepted bounded semantics,original bodies,reader exposition and actual rendering. Local Exposition Seal and purification cover only these three derived contracts. This final metadata successor and exact candidate contributor/CI/main/live/final disposition are separate gates."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship preserved in Git and immutable PR history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-NK-EXP3-API-SHAPE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "NONE applies only to unchanged original mathematical proof routes. Helper/publication IMPLEMENTATION_FAILED history is retained in review-binding.json: source wording, raster nonidentity, reader assembly, three reader corrections and raw/Git line-ending comparison. All original proof bytes, statements, canary declarations, failed receipts and historical research obligations remain; no mathematical fragment discarded and no source target repaired. Actual graph pixels exposed the same AE wording error in the original module documentation. One reviewed comment-only correction preserves every original proof/signature and all original input bytes in the intake. At the comment-proposal stage, new exact-file gates and pixels were pending. Corrected-file imported/full gates and local rendered successor are now accepted. A later mobile duplicate-digest clipping failure was corrected by removing only that displayed substring; the exact PDF hash remains in provenance and three notes. Failed captures and checker lookup/order false positives are retained separately. No mathematical route was repaired.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "AE-versions-factorization-transport-independence-original-IID-excess"
+      ],
+      "expected_information_gain": "One original proof route with distinct source/blind/scientific/scope review roles.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main 18dc1abe2ed83b91c1d4cfc975c62971982dfef5"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Relative measurable version; real-output history factorization and clipping; unbounded version independence transport; attained expected-fixed benchmark and square-loss decomposition.",
+      "selection_reason": "No parallel competing proof-search directions. Source topology preserves alternative routes without asserting their implementation."
+    },
+    "reader_backpressure": {
+      "purification_status": "purified",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Local bounded Exposition Seal for the three derived AE contracts: review-binding.json /localExpositionSeal, bound to rendered-reader-review-v2.json. Source nodes, actual Lean producers and public proof moves expand explicitly. No repository-wide dead-code/import/cost optimization, chapter/book completion or post-main release seal is claimed.",
+      "source_expansion_nodes": [
+        "Printed IID variance benchmark and Eq1.1/1.2",
+        "Printed strict-past prediction distinction",
+        "Three derived explicit AE causal obligations"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineLearning.ae_predictable_exists_bounded_history_policy",
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_independent",
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
