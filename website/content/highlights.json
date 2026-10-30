@@ -7220,6 +7220,148 @@
       "dependencies": [
         "BanditRL.OnlineConvex.hinge_convex_differentiable_iff"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+      "title": "Obtain negative movement from the actual projection",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 201,
+      "plain": "For any starting point x, positive eta and feasible comparator u, the updated point p=P_V(x-eta g) satisfies a one-step loss bound with both negative distance and movement terms.",
+      "math": "\\begin{aligned}p&=P_V(x-\\eta g),\\\\\\langle g,p-u\\rangle&\\le\\frac{\\|x-u\\|^2-\\|p-u\\|^2-\\|p-x\\|^2}{2\\eta}.\\end{aligned}",
+      "intuition": "Projection optimality controls the loss at the updated point.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Canonical-library one-step producer supporting the source specialization.",
+      "proof_idea": "The projection variational inequality gives <x-eta g-p,u-p> <= 0, hence eta<g,p-u> <= <x-p,p-u>. Expand ||x-u|| squared as ||x-p|| squared + 2<x-p,p-u> + ||p-u|| squared, then divide by positive 2 eta. The starting point x may lie outside V.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. Here x and g are arbitrary, eta>0, and u belongs to V. This local inequality is derived from the attained projection; no minimizer oracle or regret inequality is assumed. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlinePrescientLinear.advance"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+      "title": "Choose the affine proximal minimizer before playing",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 202,
+      "plain": "The selected projection attains the minimum of the current affine loss plus a quadratic movement penalty over V.",
+      "math": "\\begin{aligned}p&=P_V(x-\\eta g)\\in V,\\\\\\langle g,p\\rangle+b+\\frac{\\|p-x\\|^2}{2\\eta}&\\le\\langle g,u\\rangle+b+\\frac{\\|u-x\\|^2}{2\\eta}\\quad(u\\in V).\\end{aligned}",
+      "intuition": "A projected gradient step is the exact proximal update for an affine loss.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Source-facing algorithm characterization for affine loss and quadratic potential.",
+      "proof_idea": "Use the one-step inequality and add ||p-x|| squared/(2 eta) to both sides. Rewrite ||x-u|| as ||u-x||, and drop the nonnegative distance ||p-u|| squared/(2 eta). Expand <g,p-u> and add the same arbitrary offset b. Projection supplies feasibility.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. eta>0 and b is any real offset. The center x need not be feasible. This theorem proves attainment and the minimizing inequality, not a separately stated uniqueness theorem for the objective. The reused projection itself has an existence-and-uniqueness theorem. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlinePrescientLinear.advance",
+        "BanditRL.OnlinePrescientLinear.advance_sharp_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.prediction_mem",
+      "title": "Every played prediction lies in the feasible set",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 203,
+      "plain": "Every prediction p_t belongs to V, even when the initial center x_0 lies outside V.",
+      "math": "\\forall t\\in\\mathbb N,\\quad p_t=z_{t+1}\\in V.",
+      "intuition": "The played point is always a projected point.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Canonical-library feasibility property of the generated trajectory.",
+      "proof_idea": "Unfold the prediction and one recursive update. The membership part of project_spec places P_V(z_t-eta g_t) in V. This argument also applies at t=0.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. eta may be any real number for this feasibility identity. It does not claim that z_0=x_0 is feasible, or that eta<=0 implements the positive-step source algorithm. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project_spec",
+        "BanditRL.OnlinePrescientLinear.iterate"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.prediction_prefix",
+      "title": "Use the current vector while ignoring the future",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 204,
+      "plain": "Two vector sequences that agree through the current index t produce the same prediction p_t from the same initial center and fixed step.",
+      "math": "(\\forall s\\le t,\\ g_s=g'_s)\\quad\\Longrightarrow\\quad p_t(g)=p_t(g').",
+      "intuition": "Prediction depends on a current-inclusive finite prefix.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Canonical-library relational lemma, not a printed Source Anchor.",
+      "proof_idea": "Induct on the number n of updates. Agreement for all s<n gives the same previous state and the same vector at update n-1. Apply this statement at n=t+1. Agreement only for s<t is not sufficient.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. eta is any real number. The prefix-equality hypothesis belongs only to this relational infrastructure theorem; it is not a premise of either regret bound. This is deterministic information-flow invariance, not a filtration, probability or bandit-feedback theorem. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlinePrescientLinear.advance",
+        "BanditRL.OnlinePrescientLinear.iterate"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+      "title": "Cancel affine offsets on the same trajectory",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 205,
+      "plain": "The signed inner-product regret equals cumulative affine loss difference at the actual played predictions, for arbitrary time-dependent offsets.",
+      "math": "\\begin{aligned}R_T(u)&=\\sum_{t<T}\\langle g_t,p_t-u\\rangle\\\\&=\\sum_{t<T}\\bigl[(\\langle g_t,p_t\\rangle+b_t)-(\\langle g_t,u\\rangle+b_t)\\bigr].\\end{aligned}",
+      "intuition": "The offset cancels separately in every round.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Canonical-library loss-interpretation identity.",
+      "proof_idea": "Distribute the inner product over p_t-u. Add and subtract the same b_t, then sum over exactly range T. The trajectory is unchanged by this algebraic interpretation.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. eta is any real number, u may be any ambient point, and T may be zero. No comparator feasibility or positive-step assumption is needed for this equality. It is a finite signed sum, not an expectation or normalized average. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlinePrescientLinear.prediction",
+        "BanditRL.OnlinePrescientLinear.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+      "title": "Telescope while retaining both negative residuals",
+      "chapter": "online-ogd",
+      "featured": true,
+      "teaching_order": 206,
+      "plain": "For fixed eta>0, every feasible fixed comparator u and every natural horizon T, affine regret along the generated trajectory is bounded by initial distance minus terminal distance and movement energy.",
+      "math": "\\begin{aligned}R_T(u)\\le{}&\\frac{\\|x_0-u\\|^2-\\|z_T-u\\|^2}{2\\eta}\\\\&-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.\\end{aligned}",
+      "intuition": "Successive comparator-distance terms cancel, leaving every movement penalty.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Source-facing derived constant-step affine/quadratic endpoint with the sharp terminal residual.",
+      "proof_idea": "Apply advance_sharp_bound to z_t and g_t on the same trajectory. Multiply by 2 eta and induct on T. The previous terminal distance cancels the next initial distance, while the new movement square is subtracted. Divide by 2 eta. At T=0 both sums are empty and z_T=x_0, so the sharp inequality is 0<=0.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. The initial center is arbitrary in E; u belongs to V. Neither bounded V nor bounded g is assumed. The terminal is iterate T, equal to the last played prediction when T>0. T=0 and complete Hilbert spaces are explicit extensions of the source presentation. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlinePrescientLinear.advance",
+        "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+        "BanditRL.OnlinePrescientLinear.iterate",
+        "BanditRL.OnlinePrescientLinear.prediction",
+        "BanditRL.OnlinePrescientLinear.regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "title": "Drop terminal distance but keep movement energy",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 207,
+      "plain": "Removing only the nonnegative terminal-distance quotient gives the constant-step source-shaped bound with negative movement energy.",
+      "math": "R_T(u)\\le\\frac{\\|x_0-u\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.",
+      "intuition": "The simpler bound preserves the useful negative movement term.",
+      "why": "Understand the affine prescient update and its signed regret on the actual generated trajectory.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Chapter 2 printed page 14 and Section 15.5.1, Algorithm 15.8/Theorem 15.30, printed pages 265–266 (PDF 26, 277–278). Source-facing derived affine/quadratic specialization of the constant-step form; the full source theorem remains open.",
+      "proof_idea": "Start from regret_sharp_bound. Since eta>0, ||z_T-u|| squared/(2 eta) is nonnegative, so omitting its subtraction increases the right-hand side. The movement sum is unchanged.",
+      "lean_notes": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. eta>0, u belongs to V, x_0 is arbitrary and T may be zero. On a constrained domain, projection may clip a step; movement energy cannot generally be replaced by eta squared times gradient energy. A concrete canary disproves that replacement while another verifies equality in the unconstrained example. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlinePrescientLinear.iterate",
+        "BanditRL.OnlinePrescientLinear.prediction",
+        "BanditRL.OnlinePrescientLinear.regret",
+        "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+      ]
     }
   ]
 }

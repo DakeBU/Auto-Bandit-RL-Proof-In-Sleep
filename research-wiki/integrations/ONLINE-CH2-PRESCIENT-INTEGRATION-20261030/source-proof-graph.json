@@ -1,0 +1,883 @@
+{
+  "schemaVersion": "abrl-source-proof-graph-v1",
+  "role": "independent_source_only_extraction_not_approval",
+  "sourceBindings": {
+    "sourceDirectory": "maintenance/github-maintenance-goal-20261011/batch34-source-only-v1",
+    "authoritativePacket": "packet-v2.json",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10, 2026-06-21",
+    "sourceURL": "https://arxiv.org/pdf/1912.13213v10",
+    "files": [
+      {
+        "file": "packet.json",
+        "sha256": "d7514362118fa67e641221d2f88fdbfa5f037e414b4ca7242bdc452e5f4671f1",
+        "hashVerified": true
+      },
+      {
+        "file": "packet-v2.json",
+        "sha256": "f6969f8899d0a65e8576b2fd056f4c137ccfbd8c2598ab465397d0b261ba6e8e",
+        "hashVerified": true
+      },
+      {
+        "file": "source-pinned.pdf",
+        "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "hashVerified": true
+      },
+      {
+        "file": "pdf-page-026.txt",
+        "sha256": "0c909b41f4dbda2a4f76f0801ec0549a6efd4572a283334c227d27c134250334",
+        "hashVerified": true
+      },
+      {
+        "file": "pdf-page-026.png",
+        "sha256": "b235c5a94393ae03209fc405d2eab6b6d072019699c90beff41652dea5d57cca",
+        "hashVerified": true
+      },
+      {
+        "file": "pdf-page-277.txt",
+        "sha256": "d05e5d5e002e533738b7387cd2b831c9909b9bcebda74be6a22ccd506c03bbc1",
+        "hashVerified": true
+      },
+      {
+        "file": "pdf-page-277.png",
+        "sha256": "4acc6716e5e1a184af00e0f0dcdebf044c25ba315fbb7d9534954bb447876039",
+        "hashVerified": true
+      },
+      {
+        "file": "pdf-page-278.txt",
+        "sha256": "46ca49e33d4e034b92d24ec36db494e7644bc5eac322d7b7efd25688cda94bf8",
+        "hashVerified": true
+      },
+      {
+        "file": "pdf-page-278.png",
+        "sha256": "8ad3bd85254258ecf50152dc0d0d9257d0ed22ef5056d5199c8226d1a0162028",
+        "hashVerified": true
+      }
+    ],
+    "imageInspection": {
+      "method": "tools.view_image",
+      "pages": [
+        26,
+        277,
+        278
+      ],
+      "performed": true
+    },
+    "titleProvenance": "packet-v2.json corrects packet.json metadata; title page was not independently inspected by this extractor.",
+    "supplementalSources": [
+      {
+        "path": "maintenance/github-maintenance-goal-20261011/batch34-source-review-v1/source-dependency-pdf-page-023.txt",
+        "sha256": "9934ee46e90f11a7d33ed64473430801e3b31c1abceccf3deab422aad664717c",
+        "hashVerified": true
+      },
+      {
+        "path": "maintenance/github-maintenance-goal-20261011/batch34-source-review-v1/source-dependency-pdf-page-023.png",
+        "sha256": "471a743df32ebeba0264fd66e856effe73afdbec1705d4497e9f0dd4ee42c37f",
+        "hashVerified": true
+      },
+      {
+        "path": "maintenance/github-maintenance-goal-20261011/batch34-source-review-v1/source-dependency-pdf-page-076.txt",
+        "sha256": "acba9d67e1091fba0e875edfe42cb4edf278fc20cbbfad57a5dcf97604514c30",
+        "hashVerified": true
+      },
+      {
+        "path": "maintenance/github-maintenance-goal-20261011/batch34-source-review-v1/source-dependency-pdf-page-076.png",
+        "sha256": "058f92dd2f35ce15ba29d6b409bb2e8d011fa03b2f616b113e55efa77b5f4195",
+        "hashVerified": true
+      }
+    ],
+    "directPinnedPdfInspection": {
+      "pages": [
+        23,
+        76
+      ],
+      "method": "pdftotext -layout run directly on source-pinned.pdf; matches supplied extracted text; source-dependency PNGs visually inspected",
+      "completed": true
+    }
+  },
+  "scope": "Chapter 2 printed 14 first bullet; Algorithm 15.8 and full Theorem 15.30 printed 265-266, including constant-step exercise.",
+  "notation": {
+    "regret": "sum_(t=1)^T (ell_t(x_t)-ell_t(u))",
+    "movement": "B_psi(x_t;x_(t-1))",
+    "B_psi": "Source notation retained; definition external.",
+    "D_squared": "Finite maximum over x_0,...,x_(T-1), for fixed u; not Euclidean diameter."
+  },
+  "edgeSemantics": {
+    "AND": "All premises are jointly required by a source step. Edges record source argument structure, not independently verified mathematical correctness.",
+    "OPEN_AND_OBLIGATION": "Unproved source branch. Cannot be treated as a proof edge or closed leaf.",
+    "AND_COVERAGE": "All conclusions are required for coverage of the complete theorem.",
+    "OR": "No OR proof alternatives are supplied in this scope. Varying and constant cases are separately required, not interchangeable alternatives.",
+    "PROCEDURAL_ORDER": "Algorithm temporal order, not logical implication.",
+    "FORWARD_REFERENCE": "Document reference only.",
+    "INTERPRETIVE_SUPPORT": "Explanatory support with any unexpanded bridge recorded, not a completed proof.",
+    "ALGORITHM_RESTATEMENT": "Same algorithmic expression restated in prose.",
+    "SOURCE_ATTRIBUTION": "Associates named algorithm with update."
+  },
+  "noOrEdgesReason": "No source-stated alternate proof routes. The constant-step moreover branch is additional coverage, not an OR fallback for the main result.",
+  "nodes": [
+    {
+      "id": "C2_COST",
+      "kind": "observation",
+      "claim": "The gradient-square terms in the preceding OSD bounds arise from outputting x_t before observing ell_t.",
+      "sourceRegions": [
+        "R14-B1A"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "C2_PRESCIENT",
+      "kind": "observation",
+      "claim": "The first bullet says those terms become non-positive when ell_t can be observed before x_t is produced.",
+      "sourceRegions": [
+        "R14-B1B"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "C2_FORWARD",
+      "kind": "forward_reference",
+      "claim": "Section 15.5.1 is the explicit destination supporting the prescient observation.",
+      "sourceRegions": [
+        "R14-B1C"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "SECTION",
+      "kind": "section_anchor",
+      "claim": "Section 15.5.1: Prescient Online Mirror Descent and Be-The-Regularized-Leader.",
+      "sourceRegions": [
+        "R265-SEC"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "ALG",
+      "kind": "algorithm",
+      "claim": "Algorithm 15.8, Prescient Online Mirror Descent.",
+      "sourceRegions": [
+        "R265-A-TITLE"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_V",
+      "kind": "algorithm_requirement",
+      "claim": "V is non-empty, closed, convex; the algorithm prints V subset X (glyph subset, not subseteq).",
+      "sourceRegions": [
+        "R265-A-REQ-V"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_X",
+      "kind": "algorithm_requirement",
+      "claim": "X subseteq R^d.",
+      "sourceRegions": [
+        "R265-A-REQ-V"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_PSI",
+      "kind": "algorithm_requirement",
+      "claim": "psi : X -> R is strictly convex and differentiable on int X.",
+      "sourceRegions": [
+        "R265-A-REQ-PSI"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_X0",
+      "kind": "algorithm_requirement",
+      "claim": "x_0 in int X. The input does not say x_0 in V.",
+      "sourceRegions": [
+        "R265-A-REQ-X0"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_ETA",
+      "kind": "algorithm_requirement",
+      "claim": "eta_1, ..., eta_T > 0.",
+      "sourceRegions": [
+        "R265-A-REQ-ETA"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_LOOP",
+      "kind": "algorithm_step",
+      "claim": "For t = 1, ..., T, execute the following steps in the printed order.",
+      "sourceRegions": [
+        "R265-A1"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_LOSS",
+      "kind": "algorithm_step_requirement",
+      "claim": "Receive ell_t : R^d -> (-infinity,+infinity] with V subseteq dom ell_t before selecting x_t.",
+      "sourceRegions": [
+        "R265-A2"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_UPDATE",
+      "kind": "algorithm_step",
+      "claim": "Choose x_t in argmin_(x in V) {ell_t(x) + B_psi(x;x_(t-1))/eta_t}.",
+      "sourceRegions": [
+        "R265-A3"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_PAY",
+      "kind": "algorithm_step",
+      "claim": "Pay ell_t(x_t).",
+      "sourceRegions": [
+        "R265-A4"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "A_END",
+      "kind": "algorithm_step",
+      "claim": "End for.",
+      "sourceRegions": [
+        "R265-A5"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "INTRO_UPDATE",
+      "kind": "algorithm_restatement",
+      "claim": "The second section paragraph identifies Prescient OMD with exactly the proximal argmin update and points to Algorithm 15.8.",
+      "sourceRegions": [
+        "R265-CTX2B"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "H_PSI",
+      "kind": "theorem_hypothesis",
+      "claim": "psi : X -> R is differentiable in int X, closed, and strictly convex. Closedness is printed in the theorem, not the algorithm Require line.",
+      "sourceRegions": [
+        "R265-T-PSI"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "H_V",
+      "kind": "theorem_hypothesis",
+      "claim": "V subseteq X is non-empty, closed, and convex; the theorem uses subseteq.",
+      "sourceRegions": [
+        "R265-T-V"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "H_INTERIOR",
+      "kind": "theorem_hypothesis",
+      "claim": "x_t in int X, in the theorem's t = 1, ..., T quantification.",
+      "sourceRegions": [
+        "R265-T-INT"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "H_SUBDIFF",
+      "kind": "theorem_hypothesis",
+      "claim": "ell_t is subdifferentiable on V, t = 1, ..., T. The displayed statement does not separately say ell_t is convex.",
+      "sourceRegions": [
+        "R265-T-SUB"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "H_MONO",
+      "kind": "theorem_hypothesis",
+      "claim": "eta_(t+1) <= eta_t for t = 1, ..., T, exactly as printed.",
+      "sourceRegions": [
+        "R265-T-ETA"
+      ],
+      "status": "source_asserted",
+      "sourceIssue": "G_MONOTONICITY_INDEX"
+    },
+    {
+      "id": "H_U",
+      "kind": "theorem_quantifier",
+      "claim": "For every u in V.",
+      "sourceRegions": [
+        "R265-T-U"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "H_CONSTANT",
+      "kind": "additional_case_hypothesis",
+      "claim": "eta_t = eta for all t = 1, ..., T. This is the theorem's moreover case, not an alternative theorem hypothesis replacing all earlier assumptions.",
+      "sourceRegions": [
+        "R265-T-CONST-H"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "THEOREM",
+      "kind": "theorem_conjunction",
+      "claim": "Theorem 15.30 states both the varying nonincreasing-step conclusion and the additional constant-step conclusion for Algorithm 15.8.",
+      "sourceRegions": [
+        "R265-TITLE"
+      ],
+      "status": "source_stated_not_independently_audited"
+    },
+    {
+      "id": "VARYING_BOUND",
+      "kind": "conclusion",
+      "claim": "sum_(t=1)^T ell_t(x_t) - sum_(t=1)^T ell_t(u) <= max_(0<=s<=T-1) B_psi(u;x_s)/eta_T - sum_(t=1)^T B_psi(x_t;x_(t-1))/eta_t.",
+      "sourceRegions": [
+        "R265-T-DISPLAY1"
+      ],
+      "status": "source_proof_supplied_with_open_optimality_applicability_gap"
+    },
+    {
+      "id": "CONSTANT_BOUND",
+      "kind": "conclusion",
+      "claim": "If eta_t = eta, sum_(t=1)^T (ell_t(x_t)-ell_t(u)) <= B_psi(u;x_0)/eta - (1/eta) sum_(t=1)^T B_psi(x_t;x_(t-1)).",
+      "sourceRegions": [
+        "R265-T-DISPLAY2"
+      ],
+      "status": "source_asserted_exercise_proof_omitted"
+    },
+    {
+      "id": "EXT_T28",
+      "kind": "external_source_obligation",
+      "claim": "Theorem 2.8 (printed 11, PDF 23): V nonempty convex; x* in V; f convex and differentiable over an open set containing V. Then x* minimizes f on V iff <gradient f(x*),y-x*> >= 0 for all y in V. Its result is differentiable first-order optimality, not a stated nonsmooth subgradient existence theorem.",
+      "sourceRegions": [
+        "R265-P1",
+        "R11-INTRO",
+        "R11-T28"
+      ],
+      "status": "external_source_statement_inspected_application_gap_open"
+    },
+    {
+      "id": "FOC",
+      "kind": "proof_step",
+      "claim": "There exists g_t in partial ell_t(x_t) such that <eta_t g_t + grad psi(x_t)-grad psi(x_(t-1)),u-x_t> >= 0 for all u in V.",
+      "sourceRegions": [
+        "R265-P1",
+        "R265-P1-DISPLAY"
+      ],
+      "status": "source_asserted_nonsmooth_application_gap_open",
+      "sourceIssue": "G_EXTERNAL_T28"
+    },
+    {
+      "id": "SUBGRAD_STEP",
+      "kind": "proof_step",
+      "claim": "eta_t(ell_t(x_t)-ell_t(u)) <= <eta_t g_t,x_t-u>.",
+      "sourceRegions": [
+        "R265-P2",
+        "R265-P2-LINE1A"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "REARRANGE_FOC",
+      "kind": "proof_step",
+      "claim": "<eta_t g_t,x_t-u> <= <grad psi(x_(t-1))-grad psi(x_t),x_t-u>.",
+      "sourceRegions": [
+        "R265-P2-LINE1B"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "EXT_L67",
+      "kind": "external_source_obligation",
+      "claim": "Lemma 6.7 (printed 64, PDF 76): for B_psi associated with psi:X->R, x,y in int X and z in X, B_psi(z;x)+B_psi(x;y)-B_psi(z;y)=<gradient psi(y)-gradient psi(x),z-x>. Apply x=x_t, y=x_(t-1), z=u and negate/rearrange to obtain the displayed Theorem 15.30 identity. z need only belong to X, not int X.",
+      "sourceRegions": [
+        "R266-P3A",
+        "R64-L67-INTRO",
+        "R64-L67"
+      ],
+      "status": "external_source_statement_and_applicability_scope_inspected"
+    },
+    {
+      "id": "THREE_POINT",
+      "kind": "proof_identity",
+      "claim": "<grad psi(x_(t-1))-grad psi(x_t),x_t-u> = B_psi(u;x_(t-1))-B_psi(u;x_t)-B_psi(x_t;x_(t-1)).",
+      "sourceRegions": [
+        "R265-P2-LINE2"
+      ],
+      "status": "source_asserted_external_lemma_scope_recorded"
+    },
+    {
+      "id": "ONE_STEP",
+      "kind": "proof_step",
+      "claim": "eta_t(ell_t(x_t)-ell_t(u)) <= B_psi(u;x_(t-1))-B_psi(u;x_t)-B_psi(x_t;x_(t-1)).",
+      "sourceRegions": [
+        "R265-P2-LINE1A",
+        "R265-P2-LINE1B",
+        "R265-P2-LINE2"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "DIVIDE_SUM",
+      "kind": "proof_step",
+      "claim": "Dividing by positive eta_t and summing: sum regret <= sum_(t=1)^T [B_psi(u;x_(t-1))/eta_t-B_psi(u;x_t)/eta_t] - sum_(t=1)^T B_psi(x_t;x_(t-1))/eta_t.",
+      "sourceRegions": [
+        "R266-P3B",
+        "R266-D1"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "TELESCOPE_EXACT",
+      "kind": "proof_identity",
+      "claim": "The RHS equals B_psi(u;x_0)/eta_1 - B_psi(u;x_T)/eta_T + sum_(t=1)^(T-1) [(1/eta_(t+1)-1/eta_t) B_psi(u;x_t)] - sum_(t=1)^T B_psi(x_t;x_(t-1))/eta_t. The terminal negative potential is retained at this node.",
+      "sourceRegions": [
+        "R266-D2"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "D_DEF",
+      "kind": "local_notation",
+      "claim": "D^2 := max_(0<=t<=T-1) B_psi(u;x_t). It depends on u and the realized iterates and is not a supplied Euclidean diameter bound.",
+      "sourceRegions": [
+        "R266-DDEF"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "RECIPROCAL_NONNEG",
+      "kind": "implicit_proof_obligation",
+      "claim": "Positive nonincreasing eta implies 1/eta_(t+1)-1/eta_t >= 0 for 1 <= t <= T-1; this sign is needed when bounding the weighted potentials by D^2.",
+      "sourceRegions": [
+        "R266-D3"
+      ],
+      "status": "implicit_in_source_step"
+    },
+    {
+      "id": "EXT_BREGMAN",
+      "kind": "external_definition_obligation",
+      "claim": "Printed 64 (PDF 76) explicitly gives nonnegativity for interior pairs and then the stronger supporting inequality for each y in int X and every x in X, with equality only at x=y under strict convexity. Thus boundary first arguments u in X are allowed in this sign claim. The preceding formal Bregman definition and broader domain conventions are not inspected here.",
+      "sourceRegions": [
+        "R265-A3",
+        "R266-D3",
+        "R266-NEG",
+        "R64-NONNEG"
+      ],
+      "status": "external_nonnegativity_scope_inspected_formal_definition_still_external"
+    },
+    {
+      "id": "TERMINAL_NONNEG",
+      "kind": "implicit_proof_obligation",
+      "claim": "B_psi(u;x_T) >= 0 justifies discarding -B_psi(u;x_T)/eta_T. The inequality is implicit in the source's D^2 upper-bound step.",
+      "sourceRegions": [
+        "R266-D3",
+        "R64-NONNEG"
+      ],
+      "status": "implicit_in_source_step"
+    },
+    {
+      "id": "MAX_BOUND",
+      "kind": "proof_step",
+      "claim": "Use B_psi(u;x_0) <= D^2, B_psi(u;x_t) <= D^2 for 1 <= t <= T-1, nonnegative reciprocal differences, and discard the nonpositive terminal term: RHS <= D^2/eta_1 + D^2 sum_(t=1)^(T-1)(1/eta_(t+1)-1/eta_t) - sum movement/eta_t.",
+      "sourceRegions": [
+        "R266-D3"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "RECIPROCAL_TELESCOPE",
+      "kind": "proof_identity",
+      "claim": "sum_(t=1)^(T-1) (1/eta_(t+1)-1/eta_t) = 1/eta_T-1/eta_1; substitute into the D^2 bound.",
+      "sourceRegions": [
+        "R266-D4"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "FINAL_SIMPLIFY",
+      "kind": "proof_step",
+      "claim": "D^2/eta_1 + D^2(1/eta_T-1/eta_1) - sum movement/eta_t = D^2/eta_T - sum movement/eta_t.",
+      "sourceRegions": [
+        "R266-D5"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "CONSTANT_EXERCISE",
+      "kind": "source_gap",
+      "claim": "The second statement is left as an exercise. There is no source-supplied derivation of the constant-step conclusion in this packet.",
+      "sourceRegions": [
+        "R266-EXERCISE"
+      ],
+      "status": "explicitly_open_in_source"
+    },
+    {
+      "id": "NEGATIVE_MOVEMENT",
+      "kind": "implicit_sign_obligation",
+      "claim": "-B_psi(x_t;x_(t-1))/eta_t <= 0 from positive eta_t and Bregman nonnegativity. This signs the movement term only, not the whole regret bound.",
+      "sourceRegions": [
+        "R265-T-DISPLAY1",
+        "R265-T-DISPLAY2",
+        "R266-NEG",
+        "R64-NONNEG"
+      ],
+      "status": "implicit_in_source_interpretation"
+    },
+    {
+      "id": "NEGATIVE_INTERPRETATION",
+      "kind": "interpretation",
+      "claim": "Prescient OMD regret contains the negative terms needed by optimistic algorithms; this is stated both before and after Theorem 15.30.",
+      "sourceRegions": [
+        "R265-CTX2B",
+        "R266-NEG"
+      ],
+      "status": "source_asserted"
+    },
+    {
+      "id": "FORWARD_BRIDGE_GAP",
+      "kind": "source_gap",
+      "claim": "The selected pages contain the Chapter 2 forward reference and the general Bregman result, but no explicit Euclidean specialization that identifies the earlier ||g_t||_2^2 terms with a particular negative expression. Do not invent an equality for projected updates.",
+      "sourceRegions": [
+        "R14-B1B",
+        "R14-B1C",
+        "R265-T-DISPLAY1",
+        "R266-NEG"
+      ],
+      "status": "source_bridge_not_expanded"
+    },
+    {
+      "id": "STANDING_CONTEXT",
+      "kind": "standing_assumptions_boundary",
+      "claim": "No additional standing assumptions are stated in the permitted extracts. Definitions of subdifferentiability/Bregman divergence and broader chapter conventions remain external; do not silently import convex losses, strong convexity, compactness, smoothness, or x_0 in V.",
+      "sourceRegions": [],
+      "status": "outside_packet_unverified"
+    },
+    {
+      "id": "EXECUTABILITY",
+      "kind": "algorithm_existence_obligation",
+      "claim": "The argmin update presupposes selectable minimizers and well-defined Bregman terms. The allowed pages do not prove argmin existence; an executed trajectory is assumed by the theorem. This is not a license to add a new theorem hypothesis.",
+      "sourceRegions": [
+        "R265-A3"
+      ],
+      "status": "not_established_in_packet"
+    },
+    {
+      "id": "CONTRACT",
+      "kind": "applicable_assumptions_bundle",
+      "claim": "Algorithm requirements and theorem hypotheses apply jointly. Categories remain separately recorded, including psi closedness only in the theorem and eta positivity inherited from the algorithm.",
+      "sourceRegions": [
+        "R265-A-TITLE",
+        "R265-T-U"
+      ],
+      "status": "structural_conjunction"
+    },
+    {
+      "id": "FOC_APPLICABILITY_GAP",
+      "kind": "source_applicability_gap",
+      "claim": "Theorem 15.30 invokes Theorem 2.8 to assert existence of g_t in partial ell_t(x_t), but Theorem 2.8 requires a convex differentiable objective on an open set containing V. Merely subdifferentiable ell_t on V and interior iterates do not supply that printed differentiability/open-neighborhood premise. No nonsmooth extension or sum-rule justification is given at this citation. This is an unresolved source applicability gap, not a finding that Theorem 15.30 is false.",
+      "sourceRegions": [
+        "R11-T28",
+        "R265-T-SUB",
+        "R265-T-INT",
+        "R265-P1",
+        "R265-P1-DISPLAY"
+      ],
+      "status": "source_applicability_gap_open_no_repair"
+    }
+  ],
+  "edges": [
+    {
+      "id": "E_REQ",
+      "type": "AND",
+      "premises": [
+        "A_V",
+        "A_X",
+        "A_PSI",
+        "A_X0",
+        "A_ETA",
+        "A_LOSS",
+        "A_UPDATE",
+        "H_PSI",
+        "H_V",
+        "H_INTERIOR",
+        "H_SUBDIFF",
+        "H_MONO",
+        "H_U"
+      ],
+      "conclusion": "CONTRACT",
+      "note": "Conjunctive applicability bundle, not a derivation that requirements hold or minimizers exist."
+    },
+    {
+      "id": "E_FOC",
+      "type": "OPEN_AND_OBLIGATION",
+      "premises": [
+        "CONTRACT",
+        "EXT_T28",
+        "FOC_APPLICABILITY_GAP"
+      ],
+      "conclusion": "FOC",
+      "note": "Theorem 15.30 asserts this step, but inspected Theorem 2.8 is differentiable optimality on an open neighborhood of V. The nonsmooth subgradient existence step is not closed by this citation. No new hypothesis or replacement theorem is inserted."
+    },
+    {
+      "id": "E_SUBGRAD",
+      "type": "AND",
+      "premises": [
+        "FOC",
+        "H_SUBDIFF",
+        "H_U",
+        "A_ETA"
+      ],
+      "conclusion": "SUBGRAD_STEP",
+      "note": "Uses the subgradient inequality in the source's convention; no separately printed loss-convexity assumption is added."
+    },
+    {
+      "id": "E_REARRANGE",
+      "type": "AND",
+      "premises": [
+        "FOC"
+      ],
+      "conclusion": "REARRANGE_FOC"
+    },
+    {
+      "id": "E_3POINT",
+      "type": "AND",
+      "premises": [
+        "EXT_L67",
+        "A_PSI",
+        "A_X0",
+        "H_INTERIOR",
+        "H_U",
+        "H_V"
+      ],
+      "conclusion": "THREE_POINT",
+      "note": "Exact Lemma 6.7 instantiation: x=x_t and y=x_(t-1) are in int X using H_INTERIOR and A_X0 at t=1; z=u is in X using H_U plus explicit H_V. Negate/rearrange its printed identity. No u in int X assumption."
+    },
+    {
+      "id": "E_CHAIN",
+      "type": "AND",
+      "premises": [
+        "SUBGRAD_STEP",
+        "REARRANGE_FOC",
+        "THREE_POINT"
+      ],
+      "conclusion": "ONE_STEP",
+      "note": "All three links are needed; these are not alternative proof routes."
+    },
+    {
+      "id": "E_SUM",
+      "type": "AND",
+      "premises": [
+        "ONE_STEP",
+        "A_ETA",
+        "A_LOOP"
+      ],
+      "conclusion": "DIVIDE_SUM"
+    },
+    {
+      "id": "E_TELESCOPE",
+      "type": "AND",
+      "premises": [
+        "DIVIDE_SUM"
+      ],
+      "conclusion": "TELESCOPE_EXACT",
+      "note": "Finite summation rearrangement preserves terminal potential."
+    },
+    {
+      "id": "E_RECIP_SIGN",
+      "type": "AND",
+      "premises": [
+        "H_MONO",
+        "A_ETA"
+      ],
+      "conclusion": "RECIPROCAL_NONNEG",
+      "note": "Only t <= T-1 is used; source's extra printed t=T remains recorded, not silently repaired."
+    },
+    {
+      "id": "E_TERMINAL",
+      "type": "AND",
+      "premises": [
+        "EXT_BREGMAN",
+        "H_PSI",
+        "H_U",
+        "H_INTERIOR",
+        "H_V"
+      ],
+      "conclusion": "TERMINAL_NONNEG",
+      "note": "Printed page 64 nonnegativity applies with first argument u in X from H_U AND H_V, and second argument x_T in int X from H_INTERIOR; H_PSI supplies strict convexity."
+    },
+    {
+      "id": "E_MAX",
+      "type": "AND",
+      "premises": [
+        "TELESCOPE_EXACT",
+        "D_DEF",
+        "RECIPROCAL_NONNEG",
+        "TERMINAL_NONNEG",
+        "A_ETA"
+      ],
+      "conclusion": "MAX_BOUND"
+    },
+    {
+      "id": "E_RECIP_TELE",
+      "type": "AND",
+      "premises": [
+        "MAX_BOUND"
+      ],
+      "conclusion": "RECIPROCAL_TELESCOPE"
+    },
+    {
+      "id": "E_SIMPLIFY",
+      "type": "AND",
+      "premises": [
+        "RECIPROCAL_TELESCOPE"
+      ],
+      "conclusion": "FINAL_SIMPLIFY"
+    },
+    {
+      "id": "E_FINAL",
+      "type": "AND",
+      "premises": [
+        "FINAL_SIMPLIFY",
+        "D_DEF"
+      ],
+      "conclusion": "VARYING_BOUND",
+      "note": "Substitute the printed finite maximum; no uniform bounded-domain hypothesis is added."
+    },
+    {
+      "id": "E_CONST_OPEN",
+      "type": "OPEN_AND_OBLIGATION",
+      "premises": [
+        "CONTRACT",
+        "H_CONSTANT",
+        "CONSTANT_EXERCISE"
+      ],
+      "conclusion": "CONSTANT_BOUND",
+      "note": "This records the omitted proof obligation, not a completed inference. A natural route from the exact telescope is not supplied as source proof."
+    },
+    {
+      "id": "E_THEOREM",
+      "type": "AND_COVERAGE",
+      "premises": [
+        "VARYING_BOUND",
+        "CONSTANT_BOUND"
+      ],
+      "conclusion": "THEOREM",
+      "note": "The full theorem requires both conclusions; an incomplete exercise branch cannot be hidden by accepting just the varying-step branch."
+    },
+    {
+      "id": "E_SIGN",
+      "type": "AND",
+      "premises": [
+        "EXT_BREGMAN",
+        "H_PSI",
+        "A_ETA",
+        "A_UPDATE",
+        "A_X0",
+        "H_INTERIOR"
+      ],
+      "conclusion": "NEGATIVE_MOVEMENT"
+    },
+    {
+      "id": "E_INTERPRET",
+      "type": "AND",
+      "premises": [
+        "VARYING_BOUND",
+        "NEGATIVE_MOVEMENT"
+      ],
+      "conclusion": "NEGATIVE_INTERPRETATION",
+      "note": "The negative movement terms support the stated interpretation, without implying total regret <= 0."
+    },
+    {
+      "id": "S1",
+      "type": "PROCEDURAL_ORDER",
+      "premises": [
+        "A_LOOP"
+      ],
+      "conclusion": "A_LOSS"
+    },
+    {
+      "id": "S2",
+      "type": "PROCEDURAL_ORDER",
+      "premises": [
+        "A_LOSS"
+      ],
+      "conclusion": "A_UPDATE",
+      "note": "Prescience: receive the current function before choosing the current prediction."
+    },
+    {
+      "id": "S3",
+      "type": "PROCEDURAL_ORDER",
+      "premises": [
+        "A_UPDATE"
+      ],
+      "conclusion": "A_PAY"
+    },
+    {
+      "id": "S4",
+      "type": "PROCEDURAL_ORDER",
+      "premises": [
+        "A_PAY"
+      ],
+      "conclusion": "A_END"
+    },
+    {
+      "id": "R1",
+      "type": "FORWARD_REFERENCE",
+      "premises": [
+        "C2_FORWARD"
+      ],
+      "conclusion": "SECTION"
+    },
+    {
+      "id": "R2",
+      "type": "INTERPRETIVE_SUPPORT",
+      "premises": [
+        "C2_COST",
+        "NEGATIVE_INTERPRETATION",
+        "FORWARD_BRIDGE_GAP"
+      ],
+      "conclusion": "C2_PRESCIENT",
+      "note": "Forward-reference support is not an independently proved Euclidean identification."
+    },
+    {
+      "id": "R3",
+      "type": "ALGORITHM_RESTATEMENT",
+      "premises": [
+        "INTRO_UPDATE"
+      ],
+      "conclusion": "A_UPDATE"
+    },
+    {
+      "id": "R4",
+      "type": "SOURCE_ATTRIBUTION",
+      "premises": [
+        "ALG"
+      ],
+      "conclusion": "A_UPDATE"
+    }
+  ],
+  "sourceGapIds": [
+    "G_EXTERNAL_T28",
+    "G_EXTERNAL_L67",
+    "G_EXTERNAL_DEFINITIONS",
+    "G_MONOTONICITY_INDEX",
+    "G_CONSTANT_EXERCISE",
+    "G_ARGMIN_EXISTENCE",
+    "G_FORWARD_SPECIALIZATION",
+    "G_STANDING_CONTEXT",
+    "G_HORIZON"
+  ],
+  "approval": {
+    "approved": false,
+    "reason": "Extractor cannot approve its own topology; independent fresh source review required."
+  },
+  "artifactRevision": 2,
+  "supersedesDirectory": "maintenance/github-maintenance-goal-20261011/batch34-source-extraction-v1"
+}
