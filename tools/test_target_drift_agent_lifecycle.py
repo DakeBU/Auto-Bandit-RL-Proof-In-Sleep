@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import queue
+import sys
 import tempfile
 import threading
 import time
@@ -86,6 +87,36 @@ class TargetDriftAgentLifecycleTest(unittest.TestCase):
         self.assertIn('ENTRYPOINT ["python3", "/usr/local/bin/abrl-agent-pid1"]', recipe)
         self.assertNotIn("--init", recipe)
         self.assertIn("USER 65532:65532", recipe)
+
+    def test_fixture_heartbeat_survives_interrupted_write(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            # Capture the actual escaped-child script without starting a process.
+            with mock.patch.object(controller.subprocess, "Popen") as spawn, \
+                    mock.patch.object(controller, "dump_atomic"), \
+                    mock.patch.object(controller.os, "getpgid", return_value=9,
+                                      create=True), \
+                    mock.patch.object(controller.time, "sleep",
+                                      side_effect=InterruptedError):
+                with self.assertRaises(InterruptedError):
+                    controller.run_fixture(root)
+            command = spawn.call_args.args[0]
+            heartbeat = Path(command[3])
+            write_text = Path.write_text
+
+            def interrupted_write(path, text, *args, **kwargs):
+                if text == "2":
+                    # Termination after opening/truncating the next write.
+                    path.write_bytes(b"")
+                    raise InterruptedError
+                return write_text(path, text, *args, **kwargs)
+
+            with mock.patch.object(Path, "write_text", interrupted_write), \
+                    mock.patch.object(sys, "argv", ["-c", str(heartbeat)]), \
+                    mock.patch.object(controller.time, "sleep"):
+                with self.assertRaises(InterruptedError):
+                    exec(command[2], {})
+            self.assertEqual(probe.read_heartbeat_counter(heartbeat), 1)
 
     def test_workflow_runs_the_crash_probe_without_secrets(self) -> None:
         workflow = (

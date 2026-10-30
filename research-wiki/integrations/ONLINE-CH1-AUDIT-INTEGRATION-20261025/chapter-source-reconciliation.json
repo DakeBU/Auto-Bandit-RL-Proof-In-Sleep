@@ -1,0 +1,1871 @@
+{
+  "claims": [
+    {
+      "sourceID": "C1-GAME",
+      "originalPointer": "/rows/0",
+      "originalCanonicalSHA256": "8bdbd6f6632737409a815d4f8535974edbabd76f8eb4de9952b13b4c4598ce7f",
+      "printedPage": 1,
+      "pdfPage": 13,
+      "kind": "definition/information",
+      "requiredMainText": true,
+      "pinnedIntent": "Outputs and targets in[0,1], predict before reveal; squared loss. Deterministic/adversarial game and IID motivation separated.",
+      "originalSemanticContract": "Same unit squared-loss game. Strict-prefix deterministic/state causality is produced; IID current independence is produced from independent private randomness and strict past. Pathwise every-realization bound permits an adversary observing the deterministic current choice. It does not assert an arbitrary action-dependent stochastic environment is IID.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.meanPredict_prefix",
+        "BanditRL.OnlineLearning.meanPredict_mem",
+        "BanditRL.OnlineLearning.ftlPredict_prefix",
+        "BanditRL.OnlineLearning.ftlPredict_mem",
+        "BanditRL.OnlineLearning.randomized_history_policy_independent",
+        "BanditRL.OnlineLearning.completed_predictable_private_seed_independent"
+      ],
+      "targetIDs": [
+        "A040",
+        "A038",
+        "A021",
+        "A020",
+        "A045",
+        "A008"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted static source contract. Feasible causal deterministic outputs and per-realization adversarial bounds are real producers; IID semantics remain separate.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-IID-MEAN",
+      "originalPointer": "/rows/1",
+      "originalCanonicalSHA256": "fc202b33876c778751cd8a2e56eaa96562ee65fb0f86f1389beb7a2b596e374c",
+      "printedPage": 1,
+      "pdfPage": 13,
+      "kind": "unnumbered formal result",
+      "requiredMainText": true,
+      "pinnedIntent": "Mean minimizes expected squared loss, optimum variance; probability/L2/interval support conditions must be explicit.",
+      "originalSemanticContract": "Mean oracle is an analytical benchmark, never supplied to unknown-law meanPredict. Probability, measurability and AE unit support are explicit. The expected FIXED-comparator minimum lies OUTSIDE expectation; IsLeast is produced before real csInf. No min/expectation interchange.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+        "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+        "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+        "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero"
+      ],
+      "targetIDs": [
+        "A017",
+        "A018",
+        "A016",
+        "A009"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted static expected-fixed benchmark contract; mean is analytical, IsLeast produced, minimum outside expectation.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-IID-LOWER",
+      "originalPointer": "/rows/2",
+      "originalCanonicalSHA256": "641f1e744c3d6105f935e0edaab9d263e7140cd009fc9b42117710baefe9cadf",
+      "printedPage": 1,
+      "pdfPage": 13,
+      "kind": "unnumbered main performance bound",
+      "requiredMainText": true,
+      "pinnedIntent": "Every causal measurable bounded prediction has cumulative expected loss at least T*variance under IID targets; current-target independence must be derived.",
+      "originalSemanticContract": "Every quantified measurable legal-cube private-seed policy, AE/completed predictable version, and produced unit-valued causal-kernel strategy has nonnegative expected fixed regret under joint IID and independent private randomness. Current independence is derived, not an input oracle. Audit whether these explicit mathematical strategy/information models discharge the source cannot-do-better claim; the arbitrary-protocol/filtration/private-state reduction caveat is preserved for reviewer adjudication, not silently removed.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+        "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+        "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+        "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess"
+      ],
+      "targetIDs": [
+        "A044",
+        "A002",
+        "A007",
+        "A003"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted with declared mathematical model delta. Original /rows/2 expressly preserves the arbitrary-protocol caveat; original referenced receipt /prior_source_decisions/iid_model rejects requiring an extra unspecified-private-state bridge. Fresh reading agrees. Such a universal external reduction remains unproved if later claimed, but is not a new blocking requirement for this bounded original source contract.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-EQ1.1-1.2",
+      "originalPointer": "/rows/3",
+      "originalCanonicalSHA256": "d2c9920b7cc08d065241f0b4e9e4760d9aad73b4a54864925e8c0909a54e01f1",
+      "printedPage": 1,
+      "pdfPage": 13,
+      "kind": "equations/normalization",
+      "requiredMainText": true,
+      "pinnedIntent": "Expected total excess over T*variance and average excess over variance; T>0 normalization; sublinear/vanishing equivalence needs precise asymptotic meaning.",
+      "originalSemanticContract": "Exact total-average identity only for T>0. Little-o centered total iff ordinary zero average holds on the same all-time process, using eventually positive horizons. General strategy success is characterized, not asserted for every strategy; T0 is separately an empty extension.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.normalized_excess",
+        "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+        "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+        "BanditRL.OnlineLearning.randomized_history_policy_success_iff"
+      ],
+      "targetIDs": [
+        "A043",
+        "A028",
+        "A004",
+        "A046"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted static identity/equivalence contract, positive-horizon normalization and all-time eventual limit explicitly separated.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-REGRET",
+      "originalPointer": "/rows/4",
+      "originalCanonicalSHA256": "8de23ea6c07a3d356c7a21d23e6c3cf40fdbab244d99f1d48f75fef5bc9488f1",
+      "printedPage": 2,
+      "pdfPage": 14,
+      "kind": "definition",
+      "requiredMainText": true,
+      "pinnedIntent": "Best-fixed-in-hindsight regret and comparator-parameterized difference of sums; all feasible comparators.",
+      "originalSemanticContract": "Comparator remains a fixed evaluation parameter, not learner input. Both signed comparator regret and true feasible interval minimum are represented. Footnote1 loss domain W/comparator V subsetW mapping was accepted in ONLINE-REGRET-DOMAINS-20261007, not a generic regret performance theorem; new chapter mapping must preserve its typed carrier and no loss evaluation outside declared domain.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+        "BanditRL.OnlineLearning.guessing_prefix_minimum",
+        "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+        "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+        "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret"
+      ],
+      "targetIDs": [
+        "A005",
+        "A027",
+        "A048",
+        "A047",
+        "A006"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted static definitions/attained minimum/fixed comparator and W/V typed-carrier mapping. No general regret performance is claimed.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-NOREGRET",
+      "originalPointer": "/rows/5",
+      "originalCanonicalSHA256": "9038389c79a4098945f57bd638b383c095212da03b98f52f111dd08ab50fb503",
+      "printedPage": 2,
+      "pdfPage": 14,
+      "kind": "definition/asymptotic",
+      "requiredMainText": true,
+      "pinnedIntent": "For every fixed feasible comparator normalized regret at most sublinear; source limit wording vs epsilon eventual upper-bound interface must be reviewed.",
+      "originalSemanticContract": "Literal ordinary finite real nonpositive-limit predicate is kept separate from eventual upper-epsilon NoRegret. Equivalence requires actual comparator-wise convergence. The same bounded actual FTL dyadic counterexample refutes universal ordinary-limit inference from the printed logarithmic upper bound; exact iff characterizes when the literal predicate holds. The pinned source, true finite Theorem1.3, obstruction and separately reviewed correction PROPOSAL are four separate objects. Source definition represented is not a universal convergence proof. Reviewer must decide chapter reconciliation authority; no silent weakened target.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+        "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+        "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+        "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction"
+      ],
+      "targetIDs": [
+        "A031",
+        "A030",
+        "A037",
+        "A010"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted static representation, counterexample and conditional characterization, with a genuine false universal ordinary-limit inference NOT carried forward. Original /rows/5 demands separate original definition, finite theorem, obstruction and correction proposal. Original historical chapter_complete is not independent approval to replace lim. The separately labelled upper interpretation is mathematically sound as an alternative; author/source repair remains unapproved.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "Remark1.1",
+      "originalPointer": "/rows/6",
+      "originalCanonicalSHA256": "7f48304dee56733e066d5b241d8e637dbdb6ce4813979d8eed9252c33c9916dc",
+      "printedPage": 2,
+      "pdfPage": 14,
+      "kind": "remark/semantic",
+      "requiredMainText": true,
+      "pinnedIntent": "Loss-sequence dependence suppressed in source notation; actual losses remain parameters.",
+      "originalSemanticContract": "The loss sequence is an explicit parameter of comparatorRegret; notation suppression changes no mathematics. A nondegenerate loss-swap test must expose this dependence, without altering the learner/comparator interface.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.comparatorRegret_eq_sum"
+      ],
+      "targetIDs": [
+        "A005"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted explicit loss-parameter semantics. Notation suppression does not erase dependence; no new theorem required.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-MEAN-PREFIX",
+      "originalPointer": "/rows/7",
+      "originalCanonicalSHA256": "81722c7d8bbd04163cbc344536ddb2f83dd2d29f780d6d6e3eb534d70bb5f7ce",
+      "printedPage": 3,
+      "pdfPage": 15,
+      "kind": "unnumbered formal result",
+      "requiredMainText": true,
+      "pinnedIntent": "Positive-prefix square-loss hindsight minimizer is empirical mean and lies in[0,1]; minimizer existence/uniqueness and finite-prefix identity.",
+      "originalSemanticContract": "Positive-prefix unique empirical mean is produced and feasible, with actual minimization and least-element identification. T0 uses an explicit empty convention and never claims uniqueness. Unbounded real comparator minimization generalizes source interval without replacing feasible-minimum evidence.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.empiricalMean_decomposition",
+        "BanditRL.OnlineLearning.empiricalMean_minimizes",
+        "BanditRL.OnlineLearning.empiricalMean_mem",
+        "BanditRL.OnlineLearning.empiricalMean_unique",
+        "BanditRL.OnlineLearning.guessing_prefix_minimum"
+      ],
+      "targetIDs": [
+        "A011",
+        "A013",
+        "A012",
+        "A014",
+        "A027"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted static positive-prefix minimizer, feasibility and uniqueness; empty extension and nonuniqueness visible.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-FTL",
+      "originalPointer": "/rows/8",
+      "originalCanonicalSHA256": "a5bd97bd01d65d87f15c7a544852c4dc093cebc456d3d9130dbd891f38032a5f",
+      "printedPage": 3,
+      "pdfPage": 15,
+      "kind": "algorithm definition",
+      "requiredMainText": true,
+      "pinnedIntent": "Printed3/PDF15 FTL algorithm family: choose ANY initial point in[0,1], later average EXACT strict-past targets. Printed4/PDF16 Theorem1.3 specializes first point to1/2. Existing meanPredict encodes this specialization; general-initialization source definition remains required separately.",
+      "originalSemanticContract": "All feasible initial values have the source strict-past algorithm and true count/mean recursive state; the printed Theorem1.3 performance branch uses exactly initial1/2. Count/mean state update consumes only the next observation. No all-future-sequence arbitrary algorithm existence or best-history minimization oracle.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.ftlPredict_prefix",
+        "BanditRL.OnlineLearning.ftlPredict_mem",
+        "BanditRL.OnlineLearning.ftlPredict_half",
+        "BanditRL.OnlineLearning.ftlState_first",
+        "BanditRL.OnlineLearning.ftlState_eq_predict",
+        "BanditRL.OnlineLearning.ftlState_prefix",
+        "BanditRL.OnlineLearning.ftlState_mem",
+        "BanditRL.OnlineLearning.ftlState_half"
+      ],
+      "targetIDs": [
+        "A021",
+        "A020",
+        "A019",
+        "A023",
+        "A022",
+        "A026",
+        "A025",
+        "A024"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted actual any-initial definition/state/causality, with ideal arithmetic sufficient state. Performance remains distinct in17th row.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "Lemma1.2",
+      "originalPointer": "/rows/9",
+      "originalCanonicalSHA256": "d49d8433bc42d64e73fd63b0fd09b5f992834210bc3d9f2f1e110f58582fa78c",
+      "printedPage": 4,
+      "pdfPage": 16,
+      "kind": "lemma",
+      "requiredMainText": true,
+      "pinnedIntent": "Assume each positive-prefix feasible argmin; current-prefix leaders cumulative loss <= final leader loss; arbitrary loss.",
+      "originalSemanticContract": "Source explicitly assumes feasible exact cumulative minimizers; arbitrary ambient carrier is a harmless geometry-free generalization. Current-prefix hindsight leaders are distinct from the causal FTL predictor. Zero-prefix extension is empty, and no arbitrary argmin existence is claimed.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.lemma_1_2"
+      ],
+      "targetIDs": [
+        "A029"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted finite source theorem proof with local IH and supplied feasible minimizer assumptions, generic carrier and empty extension disclosed.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "Theorem1.3",
+      "originalPointer": "/rows/10",
+      "originalCanonicalSHA256": "3254eb47a91a18de1827189b4f30e31153fd36dd49ccf8345d9510c66340f654",
+      "printedPage": 4,
+      "pdfPage": 16,
+      "kind": "theorem/algorithm guarantee",
+      "requiredMainText": true,
+      "pinnedIntent": "Actual strict-past FTL for arbitrary targets[0,1], x1=.5, positive horizon; regret to true hindsight mean <=4+4lnT.",
+      "originalSemanticContract": "For every finite positive T and actual unit observations, initial1/2 strictpast FTL has true interval-best regret at most4+4lnT. Empirical-mean minimizer is separately produced before literal minimum identification. The learner is fixed, never horizon- or comparator-selected.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.theorem_1_3",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_bound"
+      ],
+      "targetIDs": [
+        "A049",
+        "A033"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted finite half-initial true-best theorem and actual harmonic call. Native coarse-first-term route differs from the sharper printed intermediate route, which exists separately.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-STABILITY",
+      "originalPointer": "/rows/11",
+      "originalCanonicalSHA256": "e02175d5deacfe1bf030babd8b216724ca6e6a0b98d6cf7c11fea24caff11842",
+      "printedPage": 5,
+      "pdfPage": 17,
+      "kind": "necessary main proof bound",
+      "requiredMainText": true,
+      "pinnedIntent": "Initial loss difference <=.25; positive later prefix leader movement yields difference <=4/t. Existing uniform bound may be coarser at initial round; preserve exact-source dependency coverage boundary.",
+      "originalSemanticContract": "Exact mean update, actual zero-based one-step4/(t+1), and sharp initial1/4 are preserved. They come from the real predictor and current observation, not supplied stability premises.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.empiricalMean_update",
+        "BanditRL.OnlineLearning.meanPredict_stability",
+        "BanditRL.OnlineLearning.meanPredict_initial_stability"
+      ],
+      "targetIDs": [
+        "A015",
+        "A042",
+        "A036"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted exact sharp first term and actual later stability. Alternative contraction proof is explicit; not a literal native factor/triangle route claim.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-REFINED-REGRET",
+      "originalPointer": "/rows/12",
+      "originalCanonicalSHA256": "2caf508eea554ae1e2d9cf492ce9e1f72ed65ffa81c58ed9e2c84bf4f87101e1",
+      "printedPage": 5,
+      "pdfPage": 17,
+      "kind": "unnumbered main performance bound",
+      "requiredMainText": true,
+      "pinnedIntent": "Actual causal FTL best-fixed interval regret <=0.25+4 sum(source t=2..T)1/t, with positive horizon, targets in[0,1] and empiricalMean as produced feasible minimizer",
+      "originalSemanticContract": "Actual SAME predictor true-minimum regret is at most1/4 + sum of4/(t+2) for t<T-1. This is the printed intermediate estimate and indices/initial term are not absorbed or changed.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.meanPredict_regret_refined",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_refined"
+      ],
+      "targetIDs": [
+        "A041",
+        "A034"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted exact quarter+4 tail for the same predictor and produced true minimum; indices preserved.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-LOG-UNAVOIDABLE",
+      "originalPointer": "/rows/13",
+      "originalCanonicalSHA256": "0f3cbbf291ef0509052b443812aaf89eada713c3992c056d130d30faf3f2f405",
+      "printedPage": 4,
+      "pdfPage": 16,
+      "kind": "unnumbered lower-bound forward reference/source-claim audit",
+      "requiredMainText": true,
+      "pinnedIntent": "Source says logarithmic dependence in the guessing problem is unavoidable but does not prove it here. Keep REQUIRED source-claim/lower-bound dependency audit; precise learner/adversary/quantifiers/asymptotic constants/probability mode need a separately reviewed contract and later-source dependencies.",
+      "originalSemanticContract": "Source qualitative logarithmic dependence is necessary. Existing producer quantifies every bounded measurable private-seed causal binary-history policy and positive horizon, produces one deterministic binary sequence with seed-expected regret at least ln(T+2)/6. The1/6 coefficient is derived, not printed/sharp; no full real-valued minimax constant or future-observing strategy impossibility.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower"
+      ],
+      "targetIDs": [
+        "A001"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted derived qualitative necessity support, binary witness subset of legal paths, expectation/witness order correct. No sharp minimax/full real-valued constant/high-probability claim.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-HARMONIC",
+      "originalPointer": "/rows/14",
+      "originalCanonicalSHA256": "f0bbc19722489b0e8ba6eaca5c5f69b619dad10c6d2561651cec0fe5f9b2726f",
+      "printedPage": 6,
+      "pdfPage": 18,
+      "kind": "unnumbered main bound",
+      "requiredMainText": true,
+      "pinnedIntent": "Sum_{t=1}^T1/t <=1+lnT at positive horizon. Exact local Mathlib theorem reuse and actual VALUE call within Theorem1.3 to be audited.",
+      "originalSemanticContract": "Reuse exact pinned Mathlib harmonic bound. It is a required proof dependency, not a new ABRL theorem. Finite harmonic normalization and eventual positive T distinguish log0 convention from source natural domain.",
+      "originalPublicNames": [
+        "harmonic_le_one_add_log"
+      ],
+      "targetIDs": [
+        "A050"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted exact pinned Mathlib reuse, real call in A049. No new ABRL theorem or count padding.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-SUCCESS",
+      "originalPointer": "/rows/15",
+      "originalCanonicalSHA256": "8f4309c818166bd136786b6bf5948bbb623df31f9b3cbad83ce1c637f3bd700d",
+      "printedPage": 6,
+      "pdfPage": 18,
+      "kind": "asymptotic main consequence",
+      "requiredMainText": true,
+      "pinnedIntent": "Actual FTL regret is logarithmic/sublinear, normalized comparator regret upper-vanishes; not minimax lower bound.",
+      "originalSemanticContract": "Actual same FTL has upper-epsilon regret, ordinary zero normalized TRUE-best regret, and ordinary zero/little-o expected FIXED regret under joint IID/AEunit support. Ordinary fixed-comparator adversarial convergence is deliberately not inferred, and its bounded obstruction remains visible.",
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.meanPredict_noRegret",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.meanPredict_iid_success"
+      ],
+      "targetIDs": [
+        "A039",
+        "A032",
+        "A035"
+      ],
+      "staticDisposition": "accepted-static-contract-with-explicit-delta",
+      "judgment": "Accepted upper fixed-comparator success, independently proved true-best zero and expected-fixed IID zero. No fixed-comparator ordinary zero claim.",
+      "currentCodeScope": "Previously accepted main substrate; current50 whole type witnesses and shared root checks passed. Bounded static global reconciliation accepted.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false
+    },
+    {
+      "sourceID": "C1-FTL-ANY-INITIAL-GUARANTEE",
+      "originalPointer": "/rows/16",
+      "originalCanonicalSHA256": "9a421940fe3d76ff2fd9ff2500dad8259df80b76e9f4ea87524bb3578112a03e",
+      "printedPage": 3,
+      "pdfPage": 15,
+      "kind": "required unnumbered algorithm performance guarantee",
+      "requiredMainText": true,
+      "pinnedIntent": "Any unit initial FTL family followed by promise the same strategy wins; specialize printed Theorem1.3 half separately.",
+      "originalSemanticContract": null,
+      "originalPublicNames": [
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+        "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero"
+      ],
+      "targetIDs": [
+        "G001",
+        "G002",
+        "G003",
+        "G004"
+      ],
+      "staticDisposition": "sealed-statement-only-body-and-current-compiler-pending",
+      "judgment": "Genuine original required performance item, not historical-only. Four accepted sealed statements address it; new body/canary/compiler/publication gates are still pending for this static review. Old accepted statuses cannot replace them.",
+      "currentCodeScope": "Four G bodies and27canaries accepted under exact seals;50reused full type witnesses compile on accepted main substrate.",
+      "historicalAcceptedFlagPromoted": false,
+      "wholeChapterAcceptance": false,
+      "originalRequiredTerminals": [
+        "same ftlPredict, initialunit, positiveT and bounded scoredprefix: truebestR<=1+sum(range(T-1),4/(t+2))",
+        "same all-time unitstream/initial: upper-epsilon NoRegret for every fixed unitcomparator"
+      ],
+      "originalSemanticContractAbsent": true,
+      "originalFieldMap": {
+        "pinnedIntent": "source_intent",
+        "originalPublicNames": "lean_names",
+        "originalRequiredTerminals": "source_review_required_terminals",
+        "originalSemanticContract": null
+      }
+    }
+  ],
+  "sourceNodes": {
+    "nodes": [
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-game",
+          "kind": "source_protocol",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-game",
+          "statement": "For t=1,...,T: adversary selects secret y_t in [0,1], learner chooses x_t in [0,1], then y_t revealed and squared loss (x_t-y_t)^2 paid."
+        },
+        "targetIDs": [
+          "A020",
+          "A021",
+          "A038",
+          "A040",
+          "A049"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual deterministic predictor is feasible and strict-past; the finite theorem quantifies every legal realized stream, so an after-action adversary is covered pathwise. This is not an action-dependent IID-environment theorem."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-iid",
+          "kind": "standing_assumptions",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-iid",
+          "statement": "Simplified model: Y_t iid from a distribution over [0,1], chosen freely by adversary at beginning and unknown to learner."
+        },
+        "targetIDs": [
+          "A002",
+          "A003",
+          "A007",
+          "A008",
+          "A044",
+          "A045"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Joint IID observations, independent complete private randomness, measurable strict-past/subordinate information and AE legality are explicit formalization conventions. Actual causal independence is derived. Supplied-kernel realization is proved; reduction of all unspecified protocols/side information to kernels is not claimed or required by the bounded original contract."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-population-opt",
+          "kind": "source_claim",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-population-opt",
+          "statement": "If distribution known, predicting its mean each round yields expected cumulative loss sigma^2 T; source says no strategy can do better."
+        },
+        "targetIDs": [
+          "A009",
+          "A016",
+          "A017",
+          "A018",
+          "A002",
+          "A007",
+          "A044",
+          "A003"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Produced feasible mean/IsLeast and variance identity establish analytical optimum; policy lower bound uses produced independence under the stated causal models. Unknown-law learner does not receive the mean."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-eq11",
+          "kind": "source_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-eq11",
+          "statement": "E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2 T."
+        },
+        "targetIDs": [
+          "A017",
+          "A046"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Expected cumulative loss minus T times variance, with explicit joint expectation and integrability; no pathwise nonnegativity inference."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-eq12",
+          "kind": "source_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-eq12",
+          "statement": "(1/T) E_{Y_1,...,Y_T}[sum_{t=1}^T (x_t-Y_t)^2] - sigma^2; normalized Eq1.1 for T>0."
+        },
+        "targetIDs": [
+          "A004",
+          "A028",
+          "A043",
+          "A046"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Normalize only at positive T; eventual positivity suffices for the asymptotic little-o iff zero-average equivalence. Empty-horizon division is never cancelled."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-stochastic-nonnegative",
+          "kind": "source_claim",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-stochastic-nonnegative",
+          "statement": "Expected excess losses in Eq1.1 and Eq1.2 are nonnegative for legal causal strategies in the IID model."
+        },
+        "targetIDs": [
+          "A002",
+          "A003",
+          "A007",
+          "A044"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Nonnegativity is proved for explicitly quantified seed/history, AE/completed subordinate predictable and realized-kernel IID strategies. Not arbitrary side information or target-aware predictors."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-stochastic-success",
+          "kind": "source_asymptotic_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-stochastic-success",
+          "statement": "Success: Eq1.1 grows sublinearly, equivalently Eq1.2 tends to zero as T grows, approaching optimal expected average performance."
+        },
+        "targetIDs": [
+          "A004",
+          "A035",
+          "A046"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Sublinearity versus normalized-zero is an equivalence, not a guarantee for every policy. The actual mean predictor has a separate proved IID success producer."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-expected-min",
+          "kind": "source_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-expected-min",
+          "statement": "E[sum_t (x_t-Y_t)^2] - min_{x in [0,1]} E[sum_t (x-Y_t)^2]; minimum is OUTSIDE expectation."
+        },
+        "targetIDs": [
+          "A016",
+          "A017",
+          "A018"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Expected FIXED-comparator minimum is outside expectation. Feasible IsLeast is produced before csInf; samplewise hindsight minimum is a different object."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-remove-stochasticity",
+          "kind": "source_model_transition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-remove-stochasticity",
+          "statement": "Drop the generation assumption and use arbitrary y_t; deterministic algorithms permit pathwise formulation without expectation."
+        },
+        "targetIDs": [
+          "A020",
+          "A021",
+          "A038",
+          "A040",
+          "A049"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual deterministic predictor is feasible and strict-past; the finite theorem quantifies every legal realized stream, so an after-action adversary is covered pathwise. This is not an action-dependent IID-environment theorem."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-best-regret",
+          "kind": "source_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-best-regret",
+          "statement": "sum_t (x_t-y_t)^2 - min_{x in [0,1]} sum_t (x-y_t)^2, compared to best single choice in hindsight; success described as sublinear growth."
+        },
+        "targetIDs": [
+          "A027",
+          "A032",
+          "A047",
+          "A048"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Constrained pathwise minimum equals the attained empirical-mean value; general comparator regret may be negative. Actual mean-predictor true-best nonnegativity is a separately proved special fact."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-fixed-competitor",
+          "kind": "source_boundary",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-fixed-competitor",
+          "statement": "Use one fixed comparator throughout horizon; comparator sequences postponed to Chapter14."
+        },
+        "targetIDs": [
+          "A005",
+          "A006"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Loss and comparator are explicit, fixed comparator is not learner input. Generic carrier specializes to V or to subtype W with comparators V subset W. No loss on V is evaluated outside V; no generic performance guarantee follows."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-general-game",
+          "kind": "standing_assumptions",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-general-game",
+          "statement": "V subset R^d, x_t in V, ell_t:V->R, fixed arbitrary u in V; loss-function sequence arbitrary."
+        },
+        "targetIDs": [
+          "A005",
+          "A006"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Loss and comparator are explicit, fixed comparator is not learner input. Generic carrier specializes to V or to subtype W with comparators V subset W. No loss on V is evaluated outside V; no generic performance guarantee follows."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-comparator-regret",
+          "kind": "source_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-comparator-regret",
+          "statement": "sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u)."
+        },
+        "targetIDs": [
+          "A005",
+          "A006"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Loss and comparator are explicit, fixed comparator is not learner input. Generic carrier specializes to V or to subtype W with comparators V subset W. No loss on V is evaluated outside V; no generic performance guarantee follows."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-ordinary-no-regret",
+          "kind": "source_definition",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-ordinary-no-regret",
+          "statement": "Algorithm need not know u or corresponding regret. No-regret: for every fixed u in V, at most sublinear regret, displayed lim_{T->infty} Regret_T(u)/T <=0. Printed notation is ordinary lim; finite-real interpretation must be stated separately from upper-epsilon semantics."
+        },
+        "targetIDs": [
+          "A010",
+          "A030",
+          "A031",
+          "A037"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Literal finite ordinary LimitNoRegret is represented separately. Its universal inference for this FTL family is refuted, and its exact actual-mean convergence condition is retained. Accept the representation and obstruction, not a source replacement or universal truth."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-remark11",
+          "kind": "source_notation",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-remark11",
+          "statement": "Dependence on ell_1,...,ell_T suppressed."
+        },
+        "targetIDs": [
+          "A005"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "The loss-sequence parameter remains explicit in the definition and equality. No theorem changes when notation suppresses it."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-footnote1",
+          "kind": "source_boundary",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-footnote1",
+          "statement": "Some games allow predictions in W strictly containing V; not a universal replacement for source feasibility."
+        },
+        "targetIDs": [
+          "A005",
+          "A006"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Loss and comparator are explicit, fixed comparator is not learner input. Generic carrier specializes to V or to subtype W with comparators V subset W. No loss on V is evaluated outside V; no generic performance guarantee follows."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-adaptive-order",
+          "kind": "standing_assumptions",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-adaptive-order",
+          "statement": "Winning strategy also allows adversary to select y_t after observing x_t, with no restriction on decision mechanism except legal range."
+        },
+        "targetIDs": [
+          "A020",
+          "A021",
+          "A038",
+          "A040",
+          "A049"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual deterministic predictor is feasible and strict-past; the finite theorem quantifies every legal realized stream, so an after-action adversary is covered pathwise. This is not an action-dependent IID-environment theorem."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-mean-minimizer",
+          "kind": "source_characterization",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-mean-minimizer",
+          "statement": "For T>=1, bounded observations y_t in [0,1], x_T^star = (1/T) sum_{t=1}^T y_t is the minimizer of cumulative squared loss over [0,1]. Source calls this immediate, omitting derivation."
+        },
+        "targetIDs": [
+          "A011",
+          "A013",
+          "A014",
+          "A027",
+          "A048"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Completing squares produces optimality and positive-prefix uniqueness. Interval feasibility is separately established. At T=0 every comparator minimizes and uniqueness is not claimed."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-tracking-rationale",
+          "kind": "source_proof_explanation",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-tracking-rationale",
+          "statement": "Past leader is used because adjacent optimal guesses change slowly, not because future resembles past."
+        },
+        "targetIDs": [
+          "A015",
+          "A040",
+          "A042"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual strict-past learner and one-step mean update support stability; no statistical prediction-of-future premise."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-FTL-arbitrary-init",
+          "kind": "source_algorithm",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-FTL-arbitrary-init",
+          "statement": "For t>=2, x_t=x_{t-1}^star=(1/(t-1)) sum_{i<t} y_i; FIRST prediction is ANY value in [0,1]. Called Follow-the-Leader."
+        },
+        "targetIDs": [
+          "A019",
+          "A020",
+          "A021",
+          "A022",
+          "A023",
+          "A024",
+          "A025",
+          "A026"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual any-initial definition, feasibility, strict past and count/mean recurrence are already proved. They do not supply any-initial regret performance; G001-G004 remain separately sealed targets."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-premises",
+          "kind": "premise_only",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-premises",
+          "statement": "V subset R^d, arbitrary ell_t:V->R; for each relevant t exists chosen feasible x_t^star minimizing sum_{i=1}^t ell_i over V. Convexity, compactness, differentiability, uniqueness not assumed."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Feasible chosen minimizers of every relevant positive prefix are source assumptions. No convexity, uniqueness, compactness or conclusion assumption is added; arbitrary carrier and empty extension are disclosed."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL",
+          "kind": "source_theorem",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL",
+          "statement": "sum_{t=1}^T ell_t(x_t^star) <= sum_{t=1}^T ell_t(x_T^star)."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-base",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-base",
+          "statement": "T=1 reflexivity ell_1(x_1^star)<=ell_1(x_1^star)."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-IH",
+          "kind": "local_hypothesis",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-IH",
+          "statement": "For arbitrary T>=2 locally assume conclusion at T-1. This is an induction hypothesis, not an extra theorem binder."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-cancel",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-cancel",
+          "statement": "Cancel identical final summands to reduce target to sum_{t<T} ell_t(x_t^star)<=sum_{t<T} ell_t(x_T^star)."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-prefix",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-prefix",
+          "statement": "IH gives prefix varying-leader loss <=prefix loss of x_{T-1}^star."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-opt",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-opt",
+          "statement": "Prefix optimality of x_{T-1}^star and feasibility of x_T^star give prefix loss of former <=prefix loss of latter."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-chain",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-chain",
+          "statement": "Chain inequalities to obtain Eq1.3 and induction step."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual induction has empty base extension (source T=1 follows), local IH, prefix restriction, optimality against feasible final leader and last-term cancellation. IH is discharged inside the proof, not a public binder."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-minimax-boundary",
+          "kind": "source_boundary",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-minimax-boundary",
+          "statement": "At-most-logarithmic guarantee intended; minimax optimality/logarithmic lower bound expressly not proved."
+        },
+        "targetIDs": [
+          "A001"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "The source does not prove lower bound or minimax optimality. Derived binary witness lower ln(T+2)/6 supports qualitative log necessity for every causal bounded measurable private-seed rule, with expectation/witness order explicit; no sharp coefficient or high-probability result."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-premises",
+          "kind": "premise_only",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-premises",
+          "statement": "Positive horizon T; arbitrary y_1,...,y_T in [0,1]; x_t=mean of first t-1 for t>=2; x_1=x_0^star=0.5. This specializes the general initial-choice algorithm."
+        },
+        "targetIDs": [
+          "A049",
+          "A033"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Exactly half initialization, positive horizon and unit scored observations. Learner fixed independently of horizon/comparator. Actual true-minimum adapter retains printed finite 4+4 ln T bound."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13",
+          "kind": "source_theorem",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13",
+          "statement": "Best-in-hindsight squared regret <=4+4 ln T."
+        },
+        "targetIDs": [
+          "A049",
+          "A033"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Exactly half initialization, positive horizon and unit scored observations. Learner fixed independently of horizon/comparator. Actual true-minimum adapter retains printed finite 4+4 ln T bound."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-figure11",
+          "kind": "source_figure",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-figure11",
+          "statement": "Reciprocal rectangles and curves 1/x,1/(x-1) illustrate harmonic-sum integral upper bound."
+        },
+        "targetIDs": [
+          "A050"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Source reciprocal rectangle/integral comparison agrees with the actual pinned Mathlib proof. Figure pixels are reused from the accepted independent source-topology report, not newly viewed here."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-BTL",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-BTL",
+          "statement": "Substitute past leaders and final minimizer, then BTL: Regret_T<=sum_t[(x_{t-1}^star-y_t)^2-(x_t^star-y_t)^2]."
+        },
+        "targetIDs": [
+          "A029",
+          "A041",
+          "A049",
+          "A048"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "The proofs actually instantiate BTL with produced empirical minimizers; interval refinement and unrestricted-real minimizer route both specialize faithfully to the true interval minimum."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-first",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-first",
+          "statement": "First difference <=0.25; depends on chosen x_0^star=0.5 and x_1^star=y_1."
+        },
+        "targetIDs": [
+          "A036"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual half first prediction and first empirical mean=y0 give the sharp quarter. Retained as a real theorem even though A049 uses coarser first-round control."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-factor",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-factor",
+          "statement": "Expand squares, factor difference as (x_{t-1}^star+x_t^star-2y_t)(x_{t-1}^star-x_t^star), use absolute product and range to bound <=2|adjacent-mean difference|."
+        },
+        "targetIDs": [
+          "A042"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Printed factor identity is algebraically valid and range gives absolute first factor at most 2. Actual source proof instead substitutes the mean update into an equivalent contraction identity; no native call to a separately named factor theorem is claimed."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-mean-diff",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-mean-diff",
+          "statement": "Substitute empirical means, isolate new observation y_t/t, t>=2."
+        },
+        "targetIDs": [
+          "A015",
+          "A042"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Actual average update implies m_t-m_(t-1)=(y_t-m_(t-1))/t for t>=2. This directly proves the source isolated-observation equality; source graph edge through factoring is expository, not the native dependency graph."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-stability",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-stability",
+          "statement": "Triangle inequality, bounded prefix sum and |y_t|<=1 give <=2/t+2|y_t|/t<=4/t."
+        },
+        "targetIDs": [
+          "A042"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Printed triangle route is valid: unit means give |m_(t-1)-m_t|<=1/t, so loss difference<=2/t<=4/t. Actual contraction proof yields the claimed 4/t without replaying the printed intermediate inequalities."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-sum",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-sum",
+          "statement": "Regret_T<=0.25+4 sum_{t=2}^T 1/t <=4 sum_{t=1}^T 1/t."
+        },
+        "targetIDs": [
+          "A041",
+          "A034",
+          "A049"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "The exact quarter+4 tail is proved by A041/A034. A049 terminal uses uniform 4/(t+1) including a coarse first term, sufficient for 4 harmonic sum. No claim that its proof term calls the quarter refinement."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-harmonic-picture",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-harmonic-picture",
+          "statement": "Interpret reciprocal sum as gray rectangles and majorize by 1 plus integral of 1/(t-1) from2 toT+1."
+        },
+        "targetIDs": [
+          "A050"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Source reciprocal rectangle/integral comparison agrees with the actual pinned Mathlib proof. Figure pixels are reused from the accepted independent source-topology report, not newly viewed here."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-harmonic",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-harmonic",
+          "statement": "sum_{t=1}^T 1/t <=1+integral_2^{T+1}1/(t-1)dt=1+ln T, T>=1."
+        },
+        "targetIDs": [
+          "A050"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Source reciprocal rectangle/integral comparison agrees with the actual pinned Mathlib proof. Figure pixels are reused from the accepted independent source-topology report, not newly viewed here."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-T13-close",
+          "kind": "source_proof_step",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-T13-close",
+          "statement": "Combine regret <=4 harmonic sum with harmonic bound."
+        },
+        "targetIDs": [
+          "A049",
+          "A050",
+          "A033"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual A049 explicitly calls harmonic_le_one_add_log T after finite-sum normalization. The true-minimum endpoint A033 consumes it."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-proof-summary",
+          "kind": "source_proof_explanation",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-proof-summary",
+          "statement": "Summary: BTL replaces fixed best guess by leader sequence; adjacent leaders differ at 1/t scale; total regret is upper-sublinear."
+        },
+        "targetIDs": [
+          "A039",
+          "A032",
+          "A035"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual analytic log/T decay gives upper-epsilon fixed-comparator success; separate lower control gives ordinary zero true-best and expected-fixed IID success. No ordinary fixed-comparator convergence is inferred."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-running-average",
+          "kind": "source_algorithm_property",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-running-average",
+          "statement": "Parameter-free, running-average summary suffices, no gradients, one data stream; no explicit recurrence formula or runtime theorem is printed."
+        },
+        "targetIDs": [
+          "A022",
+          "A023",
+          "A024",
+          "A025",
+          "A026"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Concrete count/mean trajectory equals strict-past predictor. This is derived support for sufficient-state prose, not executable bit-complexity or a runtime benchmark."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-BTL-attribution",
+          "kind": "source_attribution",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-BTL-attribution",
+          "statement": "Lemma1.2 attributed to Hannan1957."
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Hannan attribution is preserved as printed source provenance, not independently bibliographically re-researched or treated as a proof premise."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-ex11",
+          "kind": "exercise_statement",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-ex11",
+          "statement": "Exercise: observations y_t in R^d with Euclidean norm<=1, predictions x_t in R^d, squared Euclidean loss. Extend previous algorithm/analysis to obtain logarithmic regret bound independent of d. Hint Cauchy-Schwarz |<x,y>|<=||x|| ||y||. Comparator set and initial vector not explicitly specified in exercise; must preserve/clarify rather than silently impose a different game."
+        },
+        "targetIDs": [],
+        "status": "separate-exercise-open-not-in-original-maintext-closure",
+        "reason": "Vector/dimension-free exercise requires its own exact feasible-domain/initialization contract and proof. Retained separately, not counted among original17 maintext claims or silently marked done."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "C1-ex12",
+          "kind": "exercise_statement",
+          "origin": "PRINTED_SOURCE",
+          "source_region": "R-C1-ex12",
+          "statement": "Exercise: scalar x,y_t in [0,1], absolute loss |x-y_t|; show any median of y_1,...,y_T is a best fixed prediction in hindsight. No proof or median convention for even T printed."
+        },
+        "targetIDs": [],
+        "status": "separate-exercise-open-not-in-original-maintext-closure",
+        "reason": "Absolute-loss/median exercise requires median and positive/empty-sample conventions and proof. Retained separately, not counted among original17 maintext claims."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-iid-formalization",
+          "kind": "SOURCE_GAP",
+          "origin": "IMPLICIT_PROBABILITY_AND_CAUSALITY_BRIDGE",
+          "statement": "Probability space, measurable bounded IID observations and prediction determined by revealed past are needed to formalize page1. Any learner randomization extension needs independent nonanticipating seed and explicit expectation. No filtration/measurability statement printed.",
+          "required_inputs": [
+            "C1-game",
+            "C1-iid"
+          ],
+          "consumers": [
+            "C1-population-opt",
+            "C1-stochastic-nonnegative"
+          ]
+        },
+        "targetIDs": [
+          "A002",
+          "A003",
+          "A007",
+          "A008",
+          "A044",
+          "A045"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Joint IID observations, independent complete private randomness, measurable strict-past/subordinate information and AE legality are explicit formalization conventions. Actual causal independence is derived. Supplied-kernel realization is proved; reduction of all unspecified protocols/side information to kernels is not claimed or required by the bounded original contract."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-mean-variance",
+          "kind": "SOURCE_GAP",
+          "origin": "UNPROVED_PRINTED_ASSERTION",
+          "statement": "Population mean is feasible and minimizes expected squared loss with value variance; cumulative value sigma²T and no-better-strategy claim need causal fresh-observation independence. No proof printed.",
+          "required_inputs": [
+            "C1-iid",
+            "G-iid-formalization"
+          ],
+          "consumers": [
+            "C1-population-opt",
+            "C1-stochastic-nonnegative",
+            "C1-expected-min"
+          ]
+        },
+        "targetIDs": [
+          "A009",
+          "A016",
+          "A017",
+          "A018",
+          "A002",
+          "A007",
+          "A044",
+          "A003"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Produced feasible mean/IsLeast and variance identity establish analytical optimum; policy lower bound uses produced independence under the stated causal models. Unknown-law learner does not receive the mean."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-normalization",
+          "kind": "SOURCE_GAP",
+          "origin": "UNEXPANDED_ARITHMETIC_AND_LIMIT_STEP",
+          "statement": "For T>0 Eq1.2 is Eq1.1/T and sublinearity equivalent to zero normalized limit. Stochastic excess-loss nonnegativity must not be transferred to pathwise regret.",
+          "required_inputs": [
+            "C1-eq11",
+            "C1-eq12"
+          ],
+          "consumers": [
+            "C1-stochastic-success"
+          ]
+        },
+        "targetIDs": [
+          "A004",
+          "A028",
+          "A043",
+          "A046"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Normalize only at positive T; eventual positivity suffices for the asymptotic little-o iff zero-average equivalence. Empty-horizon division is never cancelled."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-mean-feasible",
+          "kind": "SOURCE_GAP",
+          "origin": "IMPLICIT_SOURCE_BRIDGE",
+          "statement": "For each positive prefix1<=t<=T prove arithmetic mean in [0,1] from bounded observations, without presupposing argmin characterization.",
+          "required_inputs": [
+            "C1-T13-premises"
+          ],
+          "consumers": [
+            "C1-mean-minimizer",
+            "C1-T13-BTL",
+            "C1-T13-factor"
+          ]
+        },
+        "targetIDs": [
+          "A012"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Positive finite sum bounds yield unit empirical mean without assuming it is an argmin."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-empirical-minimizer",
+          "kind": "SOURCE_GAP",
+          "origin": "UNPROVED_PRINTED_ASSERTION",
+          "statement": "Prove positive-prefix mean minimizes cumulative squared loss and uniqueness if source singleton argmin notation is characterized. At T=0 all comparators minimize and uniqueness fails.",
+          "required_inputs": [
+            "C1-T13-premises",
+            "G-mean-feasible"
+          ],
+          "consumers": [
+            "C1-mean-minimizer"
+          ]
+        },
+        "targetIDs": [
+          "A011",
+          "A013",
+          "A014",
+          "A027",
+          "A048"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Completing squares produces optimality and positive-prefix uniqueness. Interval feasibility is separately established. At T=0 every comparator minimizes and uniqueness is not claimed."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-log-over-horizon",
+          "kind": "SOURCE_GAP",
+          "origin": "UNEXPANDED_ANALYTIC_LIMIT",
+          "statement": "Show (4+4 ln T)/T tends to0 along positive integer horizons; this gives only upper-asymptotic control.",
+          "required_inputs": [
+            "C1-T13"
+          ],
+          "consumers": [
+            "C1-proof-summary"
+          ]
+        },
+        "targetIDs": [
+          "A039",
+          "A032",
+          "A035"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual analytic log/T decay gives upper-epsilon fixed-comparator success; separate lower control gives ordinary zero true-best and expected-fixed IID success. No ordinary fixed-comparator convergence is inferred."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-ordinary-limit-inference",
+          "kind": "SOURCE_GAP",
+          "origin": "UNSUPPORTED_POTENTIALLY_FALSE_INFERENCE",
+          "statement": "One-sided logarithmic upper bound supplies no lower control or ordinary finite-limit existence. Ordinary lim versus upper-epsilon is a semantic issue, not a universally provable missing lemma or approved repair.",
+          "required_inputs": [
+            "C1-ordinary-no-regret",
+            "C1-T13"
+          ],
+          "consumers": [
+            "C1-proof-summary"
+          ]
+        },
+        "targetIDs": [
+          "A010",
+          "A030",
+          "A037"
+        ],
+        "status": "universal-ordinary-limit-inference-refuted-not-carried-forward",
+        "reason": "False bridge, not an unfinished universally provable lemma: bounded actual dyadic FTL has no fixed-comparator-0 ordinary limit. Original source-mapping authority expressly separated a proposed correction; original chapter_complete cannot promote this false inference."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-arbitrary-initialization",
+          "kind": "SOURCE_GAP",
+          "origin": "ALGORITHM_TO_SPECIALIZED_THEOREM_BOUNDARY",
+          "statement": "General FTL permits any a in [0,1]; printed Theorem1.3 proves half initialization. Any general-initialization theorem needs a separate first-round estimate/aggregation. Cannot reuse <=0.25 unchanged.",
+          "required_inputs": [
+            "C1-FTL-arbitrary-init",
+            "C1-T13-first"
+          ],
+          "consumers": []
+        },
+        "targetIDs": [
+          "G001",
+          "G002",
+          "G003",
+          "G004"
+        ],
+        "status": "sealed-statement-only-body-and-current-compiler-pending",
+        "reason": "Original17th claim genuinely requires any-legal-initial performance beyond existing definition/state. Four exact sealed statements address it, but this reviewer does not accept new bodies/canaries/compiler by statement presence."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-running-state",
+          "kind": "SOURCE_GAP",
+          "origin": "UNEXPANDED_ALGORITHM_PROPERTY",
+          "statement": "Running-average summary property has no printed recursion, initial-state typing or trajectory-equivalence proof. Such a formal interface is a derived obligation.",
+          "required_inputs": [
+            "C1-FTL-arbitrary-init",
+            "C1-running-average"
+          ],
+          "consumers": []
+        },
+        "targetIDs": [
+          "A022",
+          "A023",
+          "A024",
+          "A025",
+          "A026"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Concrete count/mean trajectory equals strict-past predictor. This is derived support for sufficient-state prose, not executable bit-complexity or a runtime benchmark."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-ex11",
+          "kind": "SOURCE_GAP",
+          "origin": "EXERCISE_WITHOUT_PRINTED_PROOF",
+          "statement": "Vector FTL dimension-free logarithmic regret exercise has no proof; comparator domain and initialization need explicit source-faithful contract. Cauchy-Schwarz is a hint, not full proof topology.",
+          "required_inputs": [
+            "C1-ex11"
+          ],
+          "consumers": []
+        },
+        "targetIDs": [],
+        "status": "separate-exercise-open-not-in-original-maintext-closure",
+        "reason": "Vector/dimension-free exercise requires its own exact feasible-domain/initialization contract and proof. Retained separately, not counted among original17 maintext claims or silently marked done."
+      },
+      {
+        "sourceNodeUnmodified": {
+          "id": "G-ex12",
+          "kind": "SOURCE_GAP",
+          "origin": "EXERCISE_WITHOUT_PRINTED_PROOF",
+          "statement": "Median absolute-loss minimization exercise has no proof. Define even-sample median convention and positive-horizon boundary; no empty-sample convention printed.",
+          "required_inputs": [
+            "C1-ex12"
+          ],
+          "consumers": []
+        },
+        "targetIDs": [],
+        "status": "separate-exercise-open-not-in-original-maintext-closure",
+        "reason": "Absolute-loss/median exercise requires median and positive/empty-sample conventions and proof. Retained separately, not counted among original17 maintext claims."
+      }
+    ],
+    "census": 57,
+    "sourceNodeRecordsPreserved": true,
+    "sourceGapLabelsUnmodified": true,
+    "countsAreNotProofCompletion": true
+  },
+  "sourceEdges": {
+    "hyperedges": [
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-population",
+          "logic": "AND",
+          "inputs": [
+            "C1-iid",
+            "G-iid-formalization",
+            "G-mean-variance"
+          ],
+          "output": "C1-population-opt",
+          "consumer_use_site": "PDF13 mean/variance sentences",
+          "conditional_premises": "Open probability and variance bridges remain open.",
+          "route_group": "stochastic_motivation"
+        },
+        "targetIDs": [
+          "A009",
+          "A016",
+          "A017",
+          "A018",
+          "A002",
+          "A044"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Moment decomposition, feasibility and causal independence close the mathematical benchmark within the explicit probability/history model; the premise is not a policy-loss oracle.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-nonnegative",
+          "logic": "AND",
+          "inputs": [
+            "C1-game",
+            "C1-iid",
+            "C1-population-opt",
+            "G-iid-formalization"
+          ],
+          "output": "C1-stochastic-nonnegative",
+          "consumer_use_site": "PDF13 below Eq1.2",
+          "conditional_premises": "Causal strategy, bounded losses, positive T for average.",
+          "route_group": "stochastic_motivation"
+        },
+        "targetIDs": [
+          "A002",
+          "A003",
+          "A007",
+          "A044"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "All explicit policy models derive independence before the nonnegative decomposition. Source universal language is scoped by the disclosed causal/no-extra-information model.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-stochastic-success",
+          "logic": "AND",
+          "inputs": [
+            "C1-eq11",
+            "C1-eq12",
+            "C1-stochastic-nonnegative",
+            "G-normalization"
+          ],
+          "output": "C1-stochastic-success",
+          "consumer_use_site": "PDF13 final paragraph",
+          "conditional_premises": "T>0 and precise sublinear convention.",
+          "route_group": "stochastic_motivation"
+        },
+        "targetIDs": [
+          "A004",
+          "A043",
+          "A046"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Positive-horizon normalization and eventual positivity prove the success equivalence; this edge does not assert success of every policy.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-expected-benchmark",
+          "logic": "AND",
+          "inputs": [
+            "C1-eq11",
+            "C1-population-opt",
+            "G-mean-variance"
+          ],
+          "output": "C1-expected-min",
+          "consumer_use_site": "PDF14 first display",
+          "conditional_premises": "Min outside expectation; no min/expectation exchange.",
+          "route_group": "stochastic_motivation"
+        },
+        "targetIDs": [
+          "A016",
+          "A017",
+          "A018"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Produced IsLeast identifies min of expected fixed loss with T variance; no min/expectation interchange.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-BTL-prefix",
+          "logic": "AND",
+          "inputs": [
+            "C1-BTL-IH"
+          ],
+          "output": "C1-BTL-prefix",
+          "consumer_use_site": "PDF16 IH display",
+          "conditional_premises": "Locally assume IH at T-1 for T>=2.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Local induction hypothesis is applied to restricted prefix hypotheses.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-BTL-opt",
+          "logic": "AND",
+          "inputs": [
+            "C1-BTL-premises"
+          ],
+          "output": "C1-BTL-opt",
+          "consumer_use_site": "PDF16 because clause",
+          "conditional_premises": "Prefix optimality and feasibility.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Prefix minimizer compares against the final leader using its feasibility.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-BTL-chain",
+          "logic": "AND",
+          "inputs": [
+            "C1-BTL-prefix",
+            "C1-BTL-opt",
+            "C1-BTL-cancel"
+          ],
+          "output": "C1-BTL-chain",
+          "consumer_use_site": "PDF16 proof end",
+          "conditional_premises": "Transitivity and last-summand cancellation.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Transitivity and cancellation establish the successor case.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-BTL-close",
+          "logic": "AND",
+          "inputs": [
+            "C1-BTL-base",
+            "C1-BTL-chain"
+          ],
+          "output": "C1-BTL",
+          "consumer_use_site": "PDF16 induction",
+          "conditional_premises": "Discharge local C1-BTL-IH at arbitrary T>=2; base T=1; no independent global IH binder.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A029"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Natural induction discharges the local IH. Empty extension implies the printed positive-horizon theorem.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-mean-characterization",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-premises",
+            "G-mean-feasible",
+            "G-empirical-minimizer"
+          ],
+          "output": "C1-mean-minimizer",
+          "consumer_use_site": "PDF15 argmin display",
+          "conditional_premises": "For1<=t<=T, bounded inputs and positive horizon from premise node; characterization and range remain open.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A011",
+          "A012",
+          "A013",
+          "A014"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Positive-prefix square identity, feasibility and uniqueness jointly supply the omitted minimizer bridge; half initialization is not imposed on this helper.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-BTL",
+          "logic": "AND",
+          "inputs": [
+            "C1-BTL",
+            "C1-mean-minimizer",
+            "G-mean-feasible",
+            "C1-T13-premises",
+            "C1-best-regret"
+          ],
+          "output": "C1-T13-BTL",
+          "consumer_use_site": "PDF17 first display",
+          "conditional_premises": "Squared-loss specialization and valid prefix minimizers; half-initialized past means.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A029",
+          "A041",
+          "A049",
+          "A048"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual minimizer and feasible sequence instantiate BTL before the regret comparison.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-first",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-premises",
+            "C1-mean-minimizer"
+          ],
+          "output": "C1-T13-first",
+          "consumer_use_site": "PDF17 t=1",
+          "conditional_premises": "x_0^star=1/2 and x_1^star=y_1; <=1/4 does not hold unchanged for arbitrary initial value.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A036"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Half initialization and the singleton empirical mean yield exactly 1/4.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-factor",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-premises",
+            "G-mean-feasible"
+          ],
+          "output": "C1-T13-factor",
+          "consumer_use_site": "PDF17 first three calculation lines",
+          "conditional_premises": "t>=2, means use positive prefixes, all inputs in [0,1].",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A042"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Source algebra/range argument independently valid; native proof uses contraction identity instead of this named factor stage.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-mean-diff",
+          "logic": "AND",
+          "inputs": [
+            "C1-mean-minimizer",
+            "C1-T13-factor"
+          ],
+          "output": "C1-T13-mean-diff",
+          "consumer_use_site": "PDF17 equalities",
+          "conditional_premises": "t>=2 gives t,t-1 positive.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A015",
+          "A042"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Mean-update identity is the native prerequisite. Printed factoring is not needed to prove this arithmetic equality and is not falsely recorded as a compiler edge.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-stability",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-mean-diff",
+            "C1-T13-premises"
+          ],
+          "output": "C1-T13-stability",
+          "consumer_use_site": "PDF17 last calculation line",
+          "conditional_premises": "Triangle inequality, prefix sum<=t-1, |y_t|<=1.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A042"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Source triangle chain and actual contraction route have the same bounded conclusion; exact native dependency pending compiler audit, source text route remains separately preserved.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-sum",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-BTL",
+            "C1-T13-first",
+            "C1-T13-stability",
+            "C1-T13-premises"
+          ],
+          "output": "C1-T13-sum",
+          "consumer_use_site": "PDF17 overall",
+          "conditional_premises": "First/later partition, later sum empty at T=1.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A041",
+          "A034"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "The exact printed quarter and tail occur in the independently existing refinement, not only in a prose map.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-harmonic",
+          "logic": "AND",
+          "inputs": [
+            "C1-figure11",
+            "C1-harmonic-picture",
+            "C1-T13-premises"
+          ],
+          "output": "C1-harmonic",
+          "consumer_use_site": "PDF18 first display",
+          "conditional_premises": "T>=1 from premise-only node; rectangle comparison and integral evaluation are printed.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A050"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Actual pinned Mathlib integral comparison implements the source geometric argument with explicit positive horizon.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-close",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-sum",
+            "C1-harmonic"
+          ],
+          "output": "C1-T13-close",
+          "consumer_use_site": "PDF18 closure",
+          "conditional_premises": "Multiply harmonic bound by4.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A049",
+          "A050"
+        ],
+        "status": "accepted-static-equivalent-route-with-disclosed-delta",
+        "reason": "Native terminal uses a coarser valid 4 harmonic bound, then the actual harmonic call. The sharper source sum is separately proved; graph routes are not falsely identified.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-T13-root",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13-close"
+          ],
+          "output": "C1-T13",
+          "consumer_use_site": "Theorem1.3 conclusion",
+          "conditional_premises": "No theorem conclusion used as premise.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A049",
+          "A033"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "The finite bound is proved for the actual same half-initial learner and produced true minimum.",
+        "compilerValueEdgeClaim": false
+      },
+      {
+        "sourceHyperedgeUnmodified": {
+          "id": "E-upper-summary",
+          "logic": "AND",
+          "inputs": [
+            "C1-T13",
+            "G-log-over-horizon"
+          ],
+          "output": "C1-proof-summary",
+          "consumer_use_site": "PDF18 summary",
+          "conditional_premises": "Upper asymptotic conclusion only; G-ordinary-limit-inference stays open.",
+          "route_group": "deterministic_FTL"
+        },
+        "targetIDs": [
+          "A039",
+          "A032",
+          "A035"
+        ],
+        "status": "accepted-static-contract-with-explicit-delta",
+        "reason": "Upper-asymptotic passage closes only upper success. Stronger true-best/IID zero statements have separate lower/decomposition evidence; ordinary fixed-comparator inference remains rejected.",
+        "compilerValueEdgeClaim": false
+      }
+    ],
+    "census": 19,
+    "sourceGraphUnmodified": true,
+    "nativeAndSourceGraphsDistinct": true
+  },
+  "originalFullClaimLedger": {
+    "artifact": "batch32-scope-review-v1/whole-chapter-source-claim-ledger-v1.json",
+    "sha256": "112632df1ed238169120f11b28a222fd87017af5f2b1da35df025d798e623924",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "freshGlobalReview": {
+    "artifact": "batch32-chapter-reconciliation-review-v1/review.json",
+    "sha256": "bbef7fc6b7b7c2978c6b5382d89f1d228e4af1ade15e51afd741a68c56095bf8",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "currentAcceptance": "Bounded contracts with explicit model, metric and native-route deltas; all17 original claims owned. Original source-gap labels remain unchanged; native discharge and source topology are distinct.",
+  "ordinaryLimit": "Universal fixed-comparator ordinary-limit inference is refuted by the bounded actual-FTL dyadic example. Upper-epsilon success is a separately proved interpretation, not author endorsement or source-repair approval.",
+  "strategyScope": "Complete private randomness independent of the whole IID stream and measurable strict history, with explicit AE/completed/realized-kernel variants. Unspecified external protocols are outside this disclosed model, not a newly invented gate.",
+  "proofLeafTotal": null,
+  "exerciseBoundary": "Exercises1.1 and1.2 and history have separate dispositions; no exercise is asserted solved.",
+  "wholeChapterAccepted": false,
+  "sourceRepairApproved": false
+}

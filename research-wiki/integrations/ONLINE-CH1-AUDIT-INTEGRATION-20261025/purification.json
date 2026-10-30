@@ -1,0 +1,159 @@
+{
+  "status": "code-and-reader-reviewed-pending-main-acceptance",
+  "productionDeclarations": [
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+    "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero"
+  ],
+  "productionPrivateDeclarations": 0,
+  "actualConsumers": {
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction": [
+      "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+      "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+      "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero",
+      "Tests.OnlineLearningChapterAudit.two_round_initial_correction",
+      "Tests.OnlineLearningChapterAudit.outside_real_initial_identity"
+    ],
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined": [
+      "Tests.OnlineLearningChapterAudit.general_initial_finite_values"
+    ],
+    "BanditRL.OnlineLearning.ftlPredict_upperNoRegret": [
+      "Tests.OnlineLearningChapterAudit.all_initial_dyadic_upper"
+    ],
+    "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero": [
+      "Tests.OnlineLearningChapterAudit.nonhalf_dyadic_best_average"
+    ]
+  },
+  "codeOriginalBytesUnchanged": true,
+  "deadProduction": "All four public endpoints have actual selected theorem consumers. The identity feeds all other three; the latter are independent finite/upper/ordinary-best endpoint contracts, not duplicate wrappers.",
+  "canaryBoundary": "All 27 original canaries and their two local definitions/two private helpers are preserved. Projection checks are not independent source proofs. Both private helpers are compiler-graph reachable.",
+  "imports": "OnlineLearningFTLState owns the actual arbitrary-initial predictor; OnlineFTLLimitSemantics owns the half-initial two-sided ordinary best-regret limit. Both original imports are retained; no new library or duplicate definitions.",
+  "literalDefinitions": [
+    {
+      "name": "BanditRL.OnlineLearning.comparatorRegret",
+      "boundary": {
+        "full_name": "BanditRL.OnlineLearning.comparatorRegret",
+        "file": "BanditRLProof/OnlineLearningRegret.lean",
+        "file_sha256": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f",
+        "start_line": 35,
+        "end_line": 37,
+        "block_LF_sha256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0",
+        "include_definition_body": true,
+        "reason": "Complete unchanged literal signed fixed-comparator regret definition, bound to the independently sealed context. Shows both finite loss sums and their subtraction, with no adjacent declaration."
+      },
+      "entireLiteralText": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "unchanged": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.NoRegret",
+      "boundary": {
+        "full_name": "BanditRL.OnlineLearning.NoRegret",
+        "file": "BanditRLProof/OnlineLearningRegret.lean",
+        "file_sha256": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f",
+        "start_line": 40,
+        "end_line": 42,
+        "block_LF_sha256": "74cc9b68372abfdf1426cf24a9f65d5fa045243e1917fb902c97f42d2cadaf18",
+        "include_definition_body": true,
+        "reason": "Complete literal definition from the independently sealed seven-definition context. Recursive clauses and termination proof,when present,are included. No adjacent declaration or changed Lean bytes."
+      },
+      "entireLiteralText": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,\n    comparatorRegret loss prediction u T / T ≤ ε",
+      "unchanged": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean",
+      "boundary": {
+        "full_name": "BanditRL.OnlineLearning.empiricalMean",
+        "file": "BanditRLProof/OnlineLearningMean.lean",
+        "file_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2",
+        "start_line": 8,
+        "end_line": 9,
+        "block_LF_sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa",
+        "include_definition_body": true,
+        "reason": "Complete unchanged literal finite-prefix arithmetic mean. The empty-prefix value is zero by total real division; uniqueness of the empirical minimizer requires positive prefix length."
+      },
+      "entireLiteralText": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "unchanged": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict",
+      "boundary": {
+        "full_name": "BanditRL.OnlineLearning.meanPredict",
+        "file": "BanditRLProof/OnlineLearningFTL.lean",
+        "file_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305",
+        "start_line": 8,
+        "end_line": 9,
+        "block_LF_sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4",
+        "include_definition_body": true,
+        "reason": "Complete unchanged literal strict-past learner with prescribed initial one half. No population mean, horizon, IID or convergence input is supplied to this definition."
+      },
+      "entireLiteralText": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "unchanged": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict",
+      "boundary": {
+        "full_name": "BanditRL.OnlineLearning.ftlPredict",
+        "file": "BanditRLProof/OnlineLearningFTLState.lean",
+        "file_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+        "start_line": 5,
+        "end_line": 6,
+        "block_LF_sha256": "5beff51c1c74e0f73e89ddcd4c5727c1e900815658c4e449de9a6e65b3773ee9",
+        "include_definition_body": true,
+        "reason": "Complete literal arbitrary-initial FTL definition from the independently sealed six-context packet; positive-time strict-prefix mean and initial branch included. No source edit."
+      },
+      "entireLiteralText": "noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then initial else empiricalMean y t",
+      "unchanged": true
+    },
+    {
+      "name": "BanditRL.OnlineLearning.squaredBestRegret",
+      "boundary": {
+        "full_name": "BanditRL.OnlineLearning.squaredBestRegret",
+        "file": "BanditRLProof/OnlineSquareMinimum.lean",
+        "file_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210",
+        "start_line": 6,
+        "end_line": 9,
+        "block_LF_sha256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631",
+        "include_definition_body": true,
+        "reason": "Complete unchanged original signed pathwise loss-minus-sInf definition. Actual interval-minimum attainment is proved separately under the stated target-prefix assumption."
+      },
+      "entireLiteralText": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "unchanged": true
+    }
+  ],
+  "readerDefault": "Four concise lessons and four displayed-formula proof steps with exact folded Lean; the full17-claim boundary is retained separately from code counts.",
+  "remaining": [
+    "Publication-metadata successor committed contribution/project/site gates and exact-head CI",
+    "Main/Pages/live acceptance",
+    "Whole-original release disposition and guarded dependency-aware retirement"
+  ],
+  "expositionSeal": "accepted",
+  "literalDisclosureState": "Six complete literal definitions independently checked against sealed source and inspected in desktop/mobile browser views; graph disclosures and navigation reviewed.",
+  "rendererCapacity": "The existing reviewed nine proof steps plus four new steps need thirteen slots. Only the presentation count cap changed from9to13; mandatory title/detail/math/fallback and delimiter validation remain unchanged.",
+  "independentCodeAndCompressionReview": {
+    "artifact": "batch32-compiled-proof-review-v1/review.json",
+    "sha256": "fec524ac5a6382be07cbd02f0d843037f2d7902b874e2466ff04e9397d91e37b",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "readerTextAndConservationReview": {
+    "artifact": "batch32-reader-scope-review-v1/review.json",
+    "sha256": "10dac54accedee8d856c4e77146c3228665d2c8e7cfc0577a712765f5d7ce1b3",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "historicalProposalRemaining": [
+    "Independent compiled/body acceptance",
+    "Independent reader/scope acceptance",
+    "Full candidate harness and contributor gate",
+    "Rendered reader/graph and Exposition Seal",
+    "CI/main/live and whole-original disposition"
+  ],
+  "completedReviewGates": [
+    "Independent compiled/body acceptance",
+    "Independent reader/scope acceptance",
+    "Independent public scientific projection review",
+    "Independent public scope/conservation review",
+    "Committed22-path contributor and full candidate CI",
+    "Independent rendered reader/graph Exposition Seal"
+  ],
+  "expositionReview": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/exposition-review.json"
+}

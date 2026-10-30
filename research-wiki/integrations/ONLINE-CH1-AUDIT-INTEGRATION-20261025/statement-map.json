@@ -1,0 +1,487 @@
+{
+  "originalPR": 203,
+  "originalBase": "a03f304522ed30ee34d43b38bd67deffbbf3b08f",
+  "originalHead": "097359ac6e1398c55e712bbfa02ff3f1803dd3ea",
+  "acceptedBase": "a0128c4f361ff186609eccbe826cf6c8442b16b7",
+  "targets": [
+    {
+      "id": "G001",
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+      "header": "theorem ftlPredict_bestRegret_initial_correction (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) :\n    squaredBestRegret y (ftlPredict initial y) T =\n      squaredBestRegret y (meanPredict y) T +\n        ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2)",
+      "sha256": "e7cf3c37efedda17658e78fe3559a6fba15156aba3a088d8941712f1b5da45e1",
+      "repositoryNormalizedStatementHash": "215d0187299363a61224017a1c56a9331d521fcdd778da43d855d6426dc426ca"
+    },
+    {
+      "id": "G002",
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+      "header": "theorem ftlPredict_bestRegret_refined (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) :\n    squaredBestRegret y (ftlPredict initial y) T ≤\n      (1 : ℝ) + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "sha256": "6eff44dbcfe83bc3e49c793007c65bbde0baed741343bfa1e898c423651aafa2",
+      "repositoryNormalizedStatementHash": "2dd706bffd4ef9fd2133aee0653f8cf3252b5f5249e8538866049aaaf8783d27"
+    },
+    {
+      "id": "G003",
+      "name": "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+      "header": "theorem ftlPredict_upperNoRegret (initial : ℝ) (y : ℕ → ℝ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    NoRegret (Set.Icc (0 : ℝ) 1)\n      (fun t x => (x - y t)^2) (ftlPredict initial y)",
+      "sha256": "2db92b9a0eeb3ca2157af5a06ef0f5f1a5cad13806d3126117e80298c589b2e2",
+      "repositoryNormalizedStatementHash": "81eea12628cc1949b8f232b898517eaf1a1066fc89da10dd46d6a267bf47ee0b"
+    },
+    {
+      "id": "G004",
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero",
+      "header": "theorem ftlPredict_bestRegret_average_tendsto_zero (initial : ℝ) (y : ℕ → ℝ)\n    (hi : initial ∈ Set.Icc (0 : ℝ) 1)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    Tendsto (fun T : ℕ =>\n      squaredBestRegret y (ftlPredict initial y) T / (T : ℝ))\n        atTop (nhds (0 : ℝ))",
+      "sha256": "58d31c87e905148a82f97d528d8eb2dd4909ff099204fe70f48c1fcf1c6eab57",
+      "repositoryNormalizedStatementHash": "25f6376f56a529764c6ad0fb63a8e4e75533e3aeb553a1a2978e9c2039dc1060"
+    }
+  ],
+  "definitions": [
+    {
+      "name": "comparatorRegret",
+      "text": "noncomputable def comparatorRegret {X : Type*} (loss : ℕ → X → ℝ)\n    (prediction : ℕ → X) (u : X) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, loss t (prediction t)) - ∑ t ∈ Finset.range T, loss t u",
+      "sha256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0",
+      "owningFile": "BanditRLProof/OnlineLearningRegret.lean",
+      "kind": "literal",
+      "identicalAtAcceptedMain": true
+    },
+    {
+      "name": "NoRegret",
+      "text": "def NoRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) : Prop :=\n  ∀ u ∈ V, ∀ ε : ℝ, 0 < ε → ∀ᶠ T in atTop,\n    comparatorRegret loss prediction u T / T ≤ ε",
+      "sha256": "74cc9b68372abfdf1426cf24a9f65d5fa045243e1917fb902c97f42d2cadaf18",
+      "owningFile": "BanditRLProof/OnlineLearningRegret.lean",
+      "kind": "literal",
+      "identicalAtAcceptedMain": true
+    },
+    {
+      "name": "empiricalMean",
+      "text": "noncomputable def empiricalMean (y : ℕ → ℝ) (n : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range n, y t) / n",
+      "sha256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa",
+      "owningFile": "BanditRLProof/OnlineLearningMean.lean",
+      "kind": "literal",
+      "identicalAtAcceptedMain": true
+    },
+    {
+      "name": "meanPredict",
+      "text": "noncomputable def meanPredict (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then 1/2 else empiricalMean y t",
+      "sha256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4",
+      "owningFile": "BanditRLProof/OnlineLearningFTL.lean",
+      "kind": "literal",
+      "identicalAtAcceptedMain": true
+    },
+    {
+      "name": "ftlPredict",
+      "text": "noncomputable def ftlPredict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ℝ :=\n  if t = 0 then initial else empiricalMean y t",
+      "sha256": "5beff51c1c74e0f73e89ddcd4c5727c1e900815658c4e449de9a6e65b3773ee9",
+      "owningFile": "BanditRLProof/OnlineLearningFTLState.lean",
+      "kind": "literal",
+      "identicalAtAcceptedMain": true
+    },
+    {
+      "name": "squaredBestRegret",
+      "text": "noncomputable def squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) : ℝ :=\n  (∑ t ∈ Finset.range T, (prediction t - y t)^2) -\n    sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) ''\n      Set.Icc (0 : ℝ) 1)",
+      "sha256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631",
+      "owningFile": "BanditRLProof/OnlineSquareMinimum.lean",
+      "kind": "literal",
+      "identicalAtAcceptedMain": true
+    }
+  ],
+  "binderAudit": {
+    "status": "proposed-pending-independent-review",
+    "allowedClassifications": [
+      "SOURCE",
+      "STANDING",
+      "TYPING",
+      "RULED",
+      "EXCESS"
+    ],
+    "targets": [
+      {
+        "target": "G001",
+        "atoms": [
+          {
+            "binder": "initial : real",
+            "classification": "TYPING",
+            "reason": "Scalar initialization carrier; unrestricted extension inG001 explicitly declared."
+          },
+          {
+            "binder": "y : natural -> real",
+            "classification": "TYPING",
+            "reason": "Zero-based sequence representation; prefix-only data consumed in finite targets."
+          },
+          {
+            "binder": "T : natural",
+            "classification": "TYPING",
+            "reason": "Finite natural horizon."
+          },
+          {
+            "binder": "hT : 0<T",
+            "classification": "STANDING",
+            "reason": "Positive scored horizon convention (source rounds1..T and positive-prefix formulas). For derivedG001 this is an explicit domain restriction essential to first-round correction, not a proof ingredient."
+          }
+        ],
+        "EXCESS": [],
+        "RULED": [],
+        "conclusionQuantifiersNotPremises": null
+      },
+      {
+        "target": "G002",
+        "atoms": [
+          {
+            "binder": "initial : real",
+            "classification": "TYPING",
+            "reason": "Scalar initialization carrier; unrestricted extension inG001 explicitly declared."
+          },
+          {
+            "binder": "y : natural -> real",
+            "classification": "TYPING",
+            "reason": "Zero-based sequence representation; prefix-only data consumed in finite targets."
+          },
+          {
+            "binder": "T : natural",
+            "classification": "TYPING",
+            "reason": "Finite natural horizon."
+          },
+          {
+            "binder": "hT : 0<T",
+            "classification": "STANDING",
+            "reason": "Positive scored horizon convention (source rounds1..T and positive-prefix formulas). For derivedG001 this is an explicit domain restriction essential to first-round correction, not a proof ingredient."
+          },
+          {
+            "binder": "hi.left : 0<=initial",
+            "classification": "SOURCE",
+            "reason": "General FTL legal first guess PDF15."
+          },
+          {
+            "binder": "hi.right : initial<=1",
+            "classification": "SOURCE",
+            "reason": "General FTL legal first guess PDF15."
+          },
+          {
+            "binder": "hy : forall t, t<T -> 0<=y t",
+            "classification": "SOURCE",
+            "reason": "Legal unit-interval outcomes; finite prefix forG002, consistent infinite legal run forG003/G004."
+          },
+          {
+            "binder": "hy : forall t, t<T -> y t<=1",
+            "classification": "SOURCE",
+            "reason": "Legal unit-interval outcomes; finite prefix forG002, consistent infinite legal run forG003/G004."
+          }
+        ],
+        "EXCESS": [],
+        "RULED": [],
+        "conclusionQuantifiersNotPremises": null
+      },
+      {
+        "target": "G003",
+        "atoms": [
+          {
+            "binder": "initial : real",
+            "classification": "TYPING",
+            "reason": "Scalar initialization carrier; unrestricted extension inG001 explicitly declared."
+          },
+          {
+            "binder": "y : natural -> real",
+            "classification": "TYPING",
+            "reason": "Zero-based sequence representation; prefix-only data consumed in finite targets."
+          },
+          {
+            "binder": "hi.left : 0<=initial",
+            "classification": "SOURCE",
+            "reason": "General FTL legal first guess PDF15."
+          },
+          {
+            "binder": "hi.right : initial<=1",
+            "classification": "SOURCE",
+            "reason": "General FTL legal first guess PDF15."
+          },
+          {
+            "binder": "hy : forall t, 0<=y t",
+            "classification": "SOURCE",
+            "reason": "Legal unit-interval outcomes; finite prefix forG002, consistent infinite legal run forG003/G004."
+          },
+          {
+            "binder": "hy : forall t, y t<=1",
+            "classification": "SOURCE",
+            "reason": "Legal unit-interval outcomes; finite prefix forG002, consistent infinite legal run forG003/G004."
+          }
+        ],
+        "EXCESS": [],
+        "RULED": [],
+        "conclusionQuantifiersNotPremises": "G003 u,epsilon and eventual threshold are conclusion quantifiers, not extra public assumptions."
+      },
+      {
+        "target": "G004",
+        "atoms": [
+          {
+            "binder": "initial : real",
+            "classification": "TYPING",
+            "reason": "Scalar initialization carrier; unrestricted extension inG001 explicitly declared."
+          },
+          {
+            "binder": "y : natural -> real",
+            "classification": "TYPING",
+            "reason": "Zero-based sequence representation; prefix-only data consumed in finite targets."
+          },
+          {
+            "binder": "hi.left : 0<=initial",
+            "classification": "SOURCE",
+            "reason": "General FTL legal first guess PDF15."
+          },
+          {
+            "binder": "hi.right : initial<=1",
+            "classification": "SOURCE",
+            "reason": "General FTL legal first guess PDF15."
+          },
+          {
+            "binder": "hy : forall t, 0<=y t",
+            "classification": "SOURCE",
+            "reason": "Legal unit-interval outcomes; finite prefix forG002, consistent infinite legal run forG003/G004."
+          },
+          {
+            "binder": "hy : forall t, y t<=1",
+            "classification": "SOURCE",
+            "reason": "Legal unit-interval outcomes; finite prefix forG002, consistent infinite legal run forG003/G004."
+          }
+        ],
+        "EXCESS": [],
+        "RULED": [],
+        "conclusionQuantifiersNotPremises": null
+      }
+    ],
+    "excess": [],
+    "noNewSourcePremise": true,
+    "sourceRepairApproved": false,
+    "standingAssumptionRecord": {
+      "id": "C1-POSITIVE-SCORED-HORIZON",
+      "source": "Chapter1 rounds1..T and positive-prefix formulas; PDF13-18",
+      "atoms": [
+        "0 < T"
+      ],
+      "independentlyAuditedIn": "batch32-statement-source-review-v1/review.json",
+      "notAProofIngredient": true
+    }
+  },
+  "definitionAudit": [
+    {
+      "name": "comparatorRegret",
+      "literalTextSHA256": "06ca59fb1f657efb39ba10043aa8e7437ad1a6fcc02fc9d265be65c0c2a69ab0",
+      "literalLeanTextAccepted": true,
+      "expandedDependencies": [],
+      "sourceRelation": "Literal finite subtraction on matching legal source domain after0/1-based reindexing; generic carrier and lack of feasibility constraints are explicit library extensions.",
+      "wholeCarrier": "All typesX and arbitrary losses/predictions/u are permitted; empty sums give0 atT=0. No feasible-set membership is bundled.",
+      "requiredRepresentationEvidence": []
+    },
+    {
+      "name": "NoRegret",
+      "literalTextSHA256": "74cc9b68372abfdf1426cf24a9f65d5fa045243e1917fb902c97f42d2cadaf18",
+      "literalLeanTextAccepted": true,
+      "expandedDependencies": [
+        "comparatorRegret"
+      ],
+      "sourceRelation": "Literal supplied Lean definition of eventual upper behavior; NOT literal source ordinary-lim definition. Retain semantic delta without approved repair.",
+      "wholeCarrier": "forall u inV, forall positive epsilon, eventually normalized comparatorRegret<=epsilon. Threshold need not be uniform in u. EmptyV gives vacuity; prediction membership inV, causality, lower control and ordinary limit are not part of definition.",
+      "requiredRepresentationEvidence": [
+        "No equivalence to ordinary-limit source definition is accepted. Separate repair authority would be necessary to replace that source definition; it is unnecessary to publish this explicitly different upper property."
+      ]
+    },
+    {
+      "name": "empiricalMean",
+      "literalTextSHA256": "ca4af9772611cae09ad4f8c45f51f59c7f72b2cc4500b61633fb77b3692254aa",
+      "literalLeanTextAccepted": true,
+      "expandedDependencies": [],
+      "sourceRelation": "Literal arithmetic mean on positive source prefixes; arbitrary-real carrier and n=0 value extend source domain.",
+      "wholeCarrier": "Sum range n divided by real n; n=0 gives0. No bounds or uniqueness implicit.",
+      "requiredRepresentationEvidence": [
+        "Mean belongs to[0,1] only under appropriate prefix bounds; argmin characterization/uniqueness requires proof, not a hidden premise."
+      ]
+    },
+    {
+      "name": "meanPredict",
+      "literalTextSHA256": "d3a706c2234f0309ad014c5a60f3c1daa78876a681f45bb3b753ca8b2737a5a4",
+      "literalLeanTextAccepted": true,
+      "expandedDependencies": [
+        "empiricalMean"
+      ],
+      "sourceRelation": "Literal half-initial source formula on legal bounded runs, after index shift.",
+      "wholeCarrier": "At0 returns1/2; atpositive t returns mean of exactly indices<t, excluding current observation. Unbounded y may yield infeasible values.",
+      "requiredRepresentationEvidence": [
+        "Feasibility on bounded runs is a proof obligation."
+      ]
+    },
+    {
+      "name": "ftlPredict",
+      "literalTextSHA256": "5beff51c1c74e0f73e89ddcd4c5727c1e900815658c4e449de9a6e65b3773ee9",
+      "literalLeanTextAccepted": true,
+      "expandedDependencies": [
+        "empiricalMean"
+      ],
+      "sourceRelation": "Literal general-initial source algorithm on legal a,y after index shift; out-of-interval values are a library extension.",
+      "wholeCarrier": "At0 returns initial; later predictions ignore initial and average strict past. No pseudo-observation, clipping, fallback choice or recursion is hidden.",
+      "requiredRepresentationEvidence": [
+        "Feasibility for legal a and bounded prefixes; no state-recursion/trajectory theorem is implied by this definition."
+      ]
+    },
+    {
+      "name": "squaredBestRegret",
+      "literalTextSHA256": "b370f147682d754250726745c3df344c5916be34e23ce656c97701685fd68631",
+      "literalLeanTextAccepted": true,
+      "expandedDependencies": [],
+      "sourceRelation": "Literal supplied sInf formula; representing printed minimum requires value-equality/attainment evidence, not mere naming. No chosen minimizer or uniqueness is encoded.",
+      "wholeCarrier": "All real y,p and naturalT. Comparator set always[0,1]; image is nonempty and bounded below by0; finite squared-loss polynomial attains a minimum on compact interval. T=0 image{0}, regret0. These mathematical observations are not compiled proof acceptance.",
+      "requiredRepresentationEvidence": [
+        "Audit actual reused proof of minimum/infimum equality, and bounded-positive empirical-mean minimizer characterization where consumed. G001 cancellation itself does not need the latter."
+      ]
+    }
+  ],
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "date": "2026-06-21",
+    "pdf": "workspace/ABRL\\worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "generalInitialAnchor": {
+      "printed": 3,
+      "pdfPage": 15
+    },
+    "halfInitialTheorem": {
+      "printed": 4,
+      "pdfPage": 16
+    },
+    "chapterReviewPages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "halfInitialProofPages": [
+      17,
+      18
+    ]
+  },
+  "exactOriginalCode": {
+    "BanditRLProof/OnlineFTLInitializationRegret.lean": {
+      "file": "BanditRLProof__OnlineFTLInitializationRegret.lean",
+      "bytes": 5768,
+      "sha256": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+      "gitBlob": "2ff49486e549a3b0aebe6c03d7a00ace01268341"
+    },
+    "Tests/OnlineLearningChapterAuditCanary.lean": {
+      "file": "Tests__OnlineLearningChapterAuditCanary.lean",
+      "bytes": 13470,
+      "sha256": "746fc763bf61afffbe57fa2542edf2c77a2e55ca1ea3306b25ff0e2e5f0d3d31",
+      "gitBlob": "3e4fc870b7b933f8c14d2a1dbb22df5db03078f6"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/context-v1.lean.txt": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__context-v1.lean.txt",
+      "bytes": 5752,
+      "sha256": "1246f539ca3b0db9839293e7c74a8a04bf8c48e4945f3fdb2f679b25ae8497a2",
+      "gitBlob": "7cdd0e1f3d4b5ace5e0798057d5c6ab757a287ab"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/targets-v1.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__targets-v1.json",
+      "bytes": 50557,
+      "sha256": "5dce20c9ae5f9938511f0af3a49b3bce152f7b103e58bc7ae4d1d83871086b4a",
+      "gitBlob": "8cb3f5956b33ae77356b674e75ae457dc6fb0528"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/targets-v1.lean.txt": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__targets-v1.lean.txt",
+      "bytes": 17669,
+      "sha256": "32fff3488af143a5024b970836619b33710aa9a8b75b7ddd31a1ee1cfc5084b1",
+      "gitBlob": "cf91941fd418ffe946932a491c3920195307366f"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/source-intent-v1.md": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__source-intent-v1.md",
+      "bytes": 8107,
+      "sha256": "26532cfcdda9ae232e4db92555e9a80b65ecfda9054abfb866d68db290fe8122",
+      "gitBlob": "67630ff7f339c64323a99c5116e899960b8bae19"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/source-fingerprint-v1.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__source-fingerprint-v1.json",
+      "bytes": 4615,
+      "sha256": "25760dc4ee5b99b54dcc3bd9f255bc3ef39263862bf19411ca93ae9ead47b150",
+      "gitBlob": "02c165bd5c0b7250868c053df08471817af29003"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/general-initialization-targets-stabilized-v3.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__general-initialization-targets-stabilized-v3.json",
+      "bytes": 4811,
+      "sha256": "9086ad263dad0b9b0be6a54f8e36e4a966ae61b23f74da36dfe0bbb6678a6da2",
+      "gitBlob": "dd0de5797bd46a8985d2de0d19672dc754ab3600"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/general-initialization-DAG-v3.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__general-initialization-DAG-v3.json",
+      "bytes": 948,
+      "sha256": "f72a529bba0aff2c688e8c0f2b9b33b2414e0fb65f212c2a2793bc24eb4d1e0e",
+      "gitBlob": "dbc41bac36426bf243d6a012618fe790e99fd4da"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/chapter-one-accepted-v6.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__chapter-one-accepted-v6.json",
+      "bytes": 40784,
+      "sha256": "378f613ed3255bb8e9c2ea72155c5a4807b6a6bea62558e62d553ec8aedc6d8c",
+      "gitBlob": "c4e30f1c8ce319bb25f0e435383229f72a0202f4"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/chapter-one-source-map-draft-v3.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__chapter-one-source-map-draft-v3.json",
+      "bytes": 41115,
+      "sha256": "5db0b0e9f9fbf0fcc7f181133c90faa8135ba9d748c1e5387cc9506503433c20",
+      "gitBlob": "269c98a201710de9832431d3b2f265f6d88122ff"
+    },
+    "docs/contracts/online-c1-chapter-audit-v1/definition-context-v1.json": {
+      "file": "docs__contracts__online-c1-chapter-audit-v1__definition-context-v1.json",
+      "bytes": 14251,
+      "sha256": "23ef174ad32a17417533f92c219444ef789b13e0ad48e527549200b42aeffee9",
+      "gitBlob": "fcb225cabdd958740d69baaa9b6ac3b39cceda8a"
+    },
+    "research-wiki/contribution-contracts/ONLINE-C1-CHAPTER-AUDIT-20261009.json": {
+      "file": "research-wiki__contribution-contracts__ONLINE-C1-CHAPTER-AUDIT-20261009.json",
+      "bytes": 9760,
+      "sha256": "7d1e08a994d5b392e3929dc638f25338ab8dc681ec4ec64ddd20ddfff77d7b1b",
+      "gitBlob": "27ba66cf7d4b68bd7a4c1be2b1093c2a874402df"
+    },
+    "docs/contracts/online-book-v1/coverage.json": {
+      "file": "docs__contracts__online-book-v1__coverage.json",
+      "bytes": 4642,
+      "sha256": "f2d4955702c721e9d46057470619e2cc80d642fbeac64d5ca585b1e18b2eba01",
+      "gitBlob": "2fb82ba1f6721dcfb9e6dea1261da337418b130b"
+    }
+  },
+  "candidateBindings": {
+    "BanditRLProof/OnlineFTLInitializationRegret.lean": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+    "Tests/OnlineLearningChapterAuditCanary.lean": "746fc763bf61afffbe57fa2542edf2c77a2e55ca1ea3306b25ff0e2e5f0d3d31",
+    "BanditRLProof.lean": "17c5112f970f7da722e2f1c626cdeab9e622ff821049b380f815f639b2b2ac3f",
+    "Tests.lean": "0987f83221fd2ede843df50f207d8fa3eae09377bdc13301ca8ace5d6fb94f24",
+    ".gitattributes": "ccaaafbbd98a090833280f364adef88496a1949c9edf7bf50ccb81e68a1bfad0",
+    "website/content/chapters.json": "0a0c990d3d935f03454fb39e52718418d2abef2b4ae9bdd0c182062c180d227f",
+    "website/content/highlights.json": "cab76e026f30fae4a18a16dd622e2d0033a64d8a2f0ab966fa449d5724da8e48",
+    "website/content/readings.json": "d33e4fdfc5f40923e1b72f81756d31cd201319b5255ba0fd4df4efbcee124b56",
+    "website/content/declaration-boundaries.json": "95f211c0742444f79563b337623ec8cea40ce2ff03d5ef52804a916288563a2b",
+    "website/scripts/build_site.py": "641f3ced4f3f643acdbcc9992ad4b66e6a012eb405d1f51c4bbb3ff3d27b03a1"
+  },
+  "statementSeal": {
+    "artifact": "batch32-preport-statement-seal-v4.json",
+    "sha256": "2042f1ae16126ab5de7bb21ed0d79b89b4f536d89d6a1d67a69d9a28f4adeac9",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "blindPacket": {
+    "artifact": "batch32-blind-packet-v1/statements.txt",
+    "sha256": "9a35625260d3f03b7b9bd3dd4640a5592b570ce097258866269e2bc87b4a89a0",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "blindReconstruction": {
+    "artifact": "batch32-blind-reconstruction-v1/reconstruction.json",
+    "sha256": "3a16a70e399096cf84a522380ab0f4512fa96f7e415f05e81115a9cd6f0cf45b",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "independentSourceReview": {
+    "artifact": "batch32-statement-source-review-v3/review.json",
+    "sha256": "1b3fc334fdf06beeefe6c008a27fb5007cc9b8c10f943b6091d8c19d943012ac",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "independentCompiledProofReview": {
+    "artifact": "batch32-compiled-proof-review-v1/review.json",
+    "sha256": "fec524ac5a6382be07cbd02f0d843037f2d7902b874e2466ff04e9397d91e37b",
+    "availability": "Retained private maintenance evidence; digest is not a public download URL."
+  },
+  "scope": "Four derived contracts with exact original signatures and six whole-carrier literal contexts. Source ordinary-limit semantics are not silently replaced by the derived upper property. The legal-initial binder of G004 is retained although its body does not consume it."
+}

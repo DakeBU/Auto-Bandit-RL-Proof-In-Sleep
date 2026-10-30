@@ -7081,6 +7081,92 @@
       "teaching_order": 153,
       "title": "Bounded actual FTL separates upper and ordinary no-regret",
       "why": "Reconcile the literal source definition with its actual bounded FTL guarantee."
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+      "title": "Exact first-round initialization correction",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 160,
+      "plain": "For any real initial prediction a, real observation stream y and positive natural horizon T, initialized FTL and half-initialized FTL have exactly the same best-comparator regret except for their first squared-loss difference.",
+      "math": "R_T^{a,\\mathrm{best}}=R_T^{1/2,\\mathrm{best}}+(a-y_0)^2-(\\tfrac12-y_0)^2\\quad(T>0).",
+      "intuition": "Initialization affects only the first played prediction; later strict-past means are identical.",
+      "why": "Extend the strict-past FTL performance guarantee to every legal fixed initialization while preserving the source half-initial theorem and the distinct regret metrics.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). General initialization: printed page 3 / PDF 15. Theorem 1.3 fixes initial 1/2: printed page 4 / PDF 16; its proof and quarter-plus-tail refinement are on printed pages 5–6 / PDF 17–18. These four interfaces are derived results. Source round t+1 is Lean index t.",
+      "proof_idea": "For every positive time, both predictors equal the same strict-prefix empirical mean. Split each cumulative prediction loss into time zero and its tail; the tails cancel. Both best-regret expressions subtract the identical comparator infimum, which cancels without a minimum-existence assumption. The remaining term is c=(a-y_0)^2-(1/2-y_0)^2.",
+      "lean_notes": "G001 imposes no interval or measurability hypotheses. T>0 is essential: at T=0 both regrets vanish, while c need not vanish. Outside [0,1] this is an algebraic extension, not a legal-game assertion. The literal infimum can be canceled even before proving it is attained.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.empiricalMean",
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.squaredBestRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+      "title": "Finite regret for every legal FTL initialization",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 161,
+      "plain": "With a in [0,1], T>0 and y_t in [0,1] for t<T, initialized FTL has best-comparator regret at most 1 plus four times the reciprocal sum from 2 through T.",
+      "math": "R_T^{a,\\mathrm{best}}\\le1+4\\sum_{s=2}^{T}\\frac1s\\quad(a\\in[0,1],\\ T>0).",
+      "intuition": "Initialization affects only the first played prediction; later strict-past means are identical.",
+      "why": "Extend the strict-past FTL performance guarantee to every legal fixed initialization while preserving the source half-initial theorem and the distinct regret metrics.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). General initialization: printed page 3 / PDF 15. Theorem 1.3 fixes initial 1/2: printed page 4 / PDF 16; its proof and quarter-plus-tail refinement are on printed pages 5–6 / PDF 17–18. These four interfaces are derived results. Source round t+1 is Lean index t.",
+      "proof_idea": "Reuse the half-initialized quarter-plus-tail bound and add the exact first-round correction c. Expanding 1/4+c gives a^2+(1-2a)y_0. Since a^2<=a, splitting y_0<=1/2 or y_0>=1/2 bounds this expression by 1. The reciprocal tail is unchanged.",
+      "lean_notes": "G002 needs only the finite scored prefix, not an all-time range premise. The quarter constant belongs to the half-initialized theorem; with a=0 and y_0=1 the one-round regret equals 1. The exact terminal is 1+sum_{t<T-1}4/(t+2), including the empty tail at T=1.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+        "BanditRL.OnlineLearning.squaredBestRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+      "title": "Upper no-regret for initialized FTL",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 162,
+      "plain": "For one initial a in [0,1] and one all-time unit-valued stream, every fixed comparator u in [0,1] has eventually normalized regret at most each positive epsilon. This is an upper property, without an ordinary-limit claim.",
+      "math": "\\forall u\\in[0,1]\\;\\forall\\varepsilon>0\\;\\exists N\\;\\forall T\\ge N:\\quad R_T^a(u)/T\\le\\varepsilon.",
+      "intuition": "Initialization affects only the first played prediction; later strict-past means are identical.",
+      "why": "Extend the strict-past FTL performance guarantee to every legal fixed initialization while preserving the source half-initial theorem and the distinct regret metrics.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). General initialization: printed page 3 / PDF 15. Theorem 1.3 fixes initial 1/2: printed page 4 / PDF 16; its proof and quarter-plus-tail refinement are on printed pages 5–6 / PDF 17–18. These four interfaces are derived results. Source round t+1 is Lean index t.",
+      "proof_idea": "For each feasible comparator, its regret is at most the interval-best regret. Combine the exact correction with the half-initialized logarithmic bound. The first squared loss is at most 1, so 5+4 log T is an upper bound for positive T. Divide by T and use 1/T and log T/T tending to zero. The actual proof uses this logarithmic route, not the new finite refined theorem.",
+      "lean_notes": "G003 expands NoRegret as: for every feasible fixed u and every epsilon>0, some N gives R_T(u)/T<=epsilon for all T>=N. N may depend on u and epsilon. The 5+4 log T intermediate does not replace G002. This is a separately named derived interpretation of source success, not the printed finite ordinary-limit display.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.comparatorRegret",
+        "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+        "BanditRL.OnlineLearning.squaredBestRegret",
+        "BanditRL.OnlineLearning.noRegret_of_vanishing_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero",
+      "title": "Initialized FTL best-average regret tends to zero",
+      "chapter": "online-foundations",
+      "featured": false,
+      "teaching_order": 163,
+      "plain": "For the same legal initialization and all-time unit-valued stream, normalized regret against the best constant comparator in [0,1] tends to zero. No empirical-mean convergence assumption is required.",
+      "math": "R_T^{a,\\mathrm{best}}/T\\longrightarrow0.",
+      "intuition": "Initialization affects only the first played prediction; later strict-past means are identical.",
+      "why": "Extend the strict-past FTL performance guarantee to every legal fixed initialization while preserving the source half-initial theorem and the distinct regret metrics.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (2026-06-21). General initialization: printed page 3 / PDF 15. Theorem 1.3 fixes initial 1/2: printed page 4 / PDF 16; its proof and quarter-plus-tail refinement are on printed pages 5–6 / PDF 17–18. These four interfaces are derived results. Source round t+1 is Lean index t.",
+      "proof_idea": "For positive T, divide the exact identity by T. The accepted half-initialized best-regret theorem gives its normalized limit zero, using an actual nonnegative half-FTL loss gap and an upper bound. The fixed correction c divided by T also tends to zero. Adding these two limits and using eventual equality proves the result; an upper bound alone would not suffice.",
+      "lean_notes": "G004 retains the sealed legal-initial hypothesis even though the constant-over-horizon argument does not consume it. The comparator optimizing the best loss can depend on T. This is not a fixed-comparator ordinary-limit assertion and does not imply such a limit. General-initial regret is not assumed nonnegative: the proof transfers a two-sided half-initial limit by a possibly negative constant correction.",
+      "dependencies": [
+        "BanditRL.OnlineLearning.ftlPredict",
+        "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+        "BanditRL.OnlineLearning.meanPredict",
+        "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+        "BanditRL.OnlineLearning.squaredBestRegret"
+      ]
     }
   ]
 }
