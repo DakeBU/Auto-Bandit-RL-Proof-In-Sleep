@@ -1,0 +1,113 @@
+{
+  "version": "arXiv:1912.13213v10",
+  "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "sourceContractMarkdown": "# Batch 37 source-only contracts\n\nStatus: SOURCE_EXTRACTED, independent topology review pending. This record does not approve a correction, certify a theorem, or inspect implementation Lean. Source: Francesco Orabona, *Online Learning: A Modern Introduction Using Convex Optimization*, arXiv:1912.13213v10, 21 June 2026. PDF SHA256: `cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17`.\n\nPage references below give printed / one-based PDF pages. The source PDF remains at `../batch36-source-extraction-v2/source-pinned.pdf`. Raw text extracts and rendered target pages accompany this record. Text extraction is not a replacement for the rendered equations.\n\n## Domain, properness, and support\n\n- Printed 9 / PDF 21 defines `dom f = {x : f(x) < +infinity}` for an extended-real function taking values in `R union {-infinity,+infinity}`. Thus domain membership alone does **not** exclude minus infinity under this general convention.\n- Definition 2.18, 16 / 28: proper means nowhere minus infinity and finite somewhere. It does not mean finite everywhere, closed, or convex.\n- Definition 2.20, 16 / 28: for a proper `f : R^d -> (-infinity,+infinity]`, a subgradient at x is a finite vector g satisfying `f(y) >= f(x) + <g,y-x>` for **every y in R^d**. The definition does not assume convexity and its support inequality is global, even when subgradients are assumed only on V.\n- Printed 17 / PDF 29 defines the subdifferential, subdifferentiability and `dom partial f`. It states for proper convex f that `dom partial f` is contained in `dom f`, explaining that support is impossible at `f(x)=+infinity`. The finite witness supplied by properness is essential to that explanation. Convexity is not used by this particular contradiction, but dropping it is a derived generalization, not the literal prose statement.\n- The same paragraph cites Rockafellar 23.4 for subdifferentiability on `int dom f`; the footnote mentions the stronger relative-interior result but explicitly does not use it. Neither citation establishes subdifferentiability at every boundary point of V.\n\n## Theorem 2.21: finite-valued restriction convexity\n\nPrinted 17 / PDF 29: `f : R^d -> R`, V a convex subset of `R^d`, and `partial f(x)` nonempty for every x in V. Conclusion: the **restriction** of f to V is convex. V need not be nonempty or closed. This is not a conclusion that f is globally convex unless V is all of `R^d`.\n\nThe proof chooses x1,x2 in V, lambda in [0,1], y=lambda*x1+(1-lambda)*x2 in V, then a support g at y. It applies that one support to both endpoints, multiplies the two real inequalities by lambda and 1-lambda, and cancels the inner products. Both endpoint support inequalities are jointly necessary to this printed route. Endpoint lambda values are included. No independence/probability assumptions occur.\n\nThe theorem's global real-valued carrier is stronger than Algorithm 15.8's loss carrier. Reusing the same proof for a proper extended-real function finite on V needs a separately identified restriction/finite-value bridge. Such a bridge must not be named or credited as the literal numbered Theorem 2.21.\n\n## Theorem 2.8: differentiable constrained optimality\n\nPrinted 11 / PDF 23: V is nonempty and convex, x-star is in V, and f is convex and differentiable on an **open set containing V**. The conclusion is the equivalence between `x-star in argmin_{x in V} f(x)` and `<grad f(x-star), y-x-star> >= 0` for all y in V. No closedness or boundedness of V, existence of an optimizer, or global finite-valuedness on all of `R^d` is asserted.\n\nThe sufficient direction uses the first-order lower support inequality (Theorem 2.7). The necessary direction assumes an actual minimizer, takes a feasible segment toward a point with negative directional derivative, and contradicts minimality using a small positive segment parameter. These are two directions of an iff and must both be proved for the full iff. They are not alternative OR proofs of the full iff.\n\nTheorem 2.7 explicitly has a globally convex extended-real f and an interior-domain differentiability point. Theorem 2.8 uses its local/open-set supporting-inequality consequence. Record that localization as a mathematical restriction step; do not replace Theorem 2.8's open-neighborhood condition with a claim of global finiteness.\n\n## Definition 6.4 and Lemma 6.7\n\nPrinted 63 / PDF 75: Definition 6.4 has `psi : X -> R`, strict convexity, differentiability on nonempty `int X`, and X is the domain of psi. Definition 6.3 defines strict convexity on a convex set. The Bregman carrier is **X times int X**, with\n\n`Bpsi(x;y) = psi(x) - psi(y) - <grad psi(y), x-y>`.\n\nThe first argument may be a boundary point of X. The gradient/reference second argument must be interior. Psi is finite on X; there is no stated finite extension to all of `R^d`.\n\nPrinted 64 / PDF 76 states the supporting inequality for fixed y in int X and all x in X, with equality only when x=y. In particular Bpsi is nonnegative on its whole declared carrier, not just for two interior points. Its asymmetry is explicitly noted. This nonnegativity is used when dropping the terminal Bregman term in Theorem 15.30.\n\nLemma 6.7 (Chen and Teboulle, 1993): x,y in int X, z in X, and\n\n`Bpsi(z;x) + Bpsi(x;y) - Bpsi(z;y) = <grad psi(y)-grad psi(x), z-x>`.\n\nThere is no printed proof beyond calling this lemma immediate. Expansion and cancellation are implicit algebra, not a separately printed proof paragraph. The application in Theorem 15.30 is x=xt, y=x(t-1), z=u, with the sign changed to use xt-u on the right.\n\n## Algorithm 15.8 and Theorem 15.30\n\nPrinted 265 / PDF 277. Algorithm requirements: nonempty closed convex `V subset X subseteq R^d` (the algorithm prints a strict-subset glyph for V versus X; the theorem prints subseteq), psi strictly convex and differentiable on int X, x0 in int X, and eta1,...,etaT positive. The source does **not** require x0 in V.\n\nRound t is ordered: receive current loss `ell_t : R^d -> (-infinity,+infinity]` with `V subseteq dom ell_t`; choose an **actual minimizer**\n\n`xt in argmin_{x in V} [ell_t(x) + Bpsi(x;x(t-1))/eta_t]`;\n\nthen pay ell_t(xt). This is prescient access to the entire current loss, not output-before-loss online causality, a gradient-only oracle, or an arbitrary update satisfying a supplied variational inequality. The surrounding paragraph explicitly warns that the oracle changes. No filtration, stochastic model, probability event, or causality restriction on loss selection is imposed by this pathwise statement.\n\nTheorem 15.30 adds psi closed, assumes xt in int X, ell_t subdifferentiable on V, and decreasing eta. The theorem prints `eta_(t+1) <= eta_t` for t=1,...,T, although the algorithm only supplies eta1,...,etaT and the proof uses comparisons through T-1. Preserve this indexing discrepancy for review; do not silently bind a fictional eta_(T+1).\n\nFor every u in V, the variable-rate bound is\n\n`sum_{t=1}^T [ell_t(xt)-ell_t(u)] <= max_{0<=t<=T-1} Bpsi(u;xt)/eta_T - sum_{t=1}^T Bpsi(xt;x(t-1))/eta_t`.\n\nFor eta_t=eta throughout 1,...,T, the fixed-rate bound is\n\n`sum_{t=1}^T [ell_t(xt)-ell_t(u)] <= Bpsi(u;x0)/eta - (1/eta)*sum_{t=1}^T Bpsi(xt;x(t-1))`.\n\nFinite horizon is implicit in the algorithm and sums. T>=1 is needed for eta_T and the nonempty finite maximum; there is no literal T=0 convention. The maximum is over the realized T reference points and may depend on u and the trajectory. It is not a global diameter assumption or a supplied uniform bound. Each value is finite because u is in X and x0,...,x(T-1) are interior. Losses are finite at u and xt because they have no minus infinity, V is inside their domains, and xt belongs to V. V nonempty also supplies a finite witness for properness of each loss.\n\nNeither the algorithm box nor Theorem 15.30 proves existence of its argmin or preservation of the interior invariant. The theorem is conditional on actual selected minimizers and interior iterates. Closed strictly convex psi and closed V alone are not a printed existence proof. A mere assertion that a minimizer exists does not identify the executed xt with that minimizer. Uniqueness is not part of the stated output guarantee.\n\nThe first proof paragraph asserts existence of gt in partial ell_t(xt) satisfying a constrained variational inequality and cites Theorem 2.8. This citation does not discharge its differentiability/open-neighborhood convexity requirements for ell_t+Bpsi/eta_t. The loss assumptions give supports on V, not differentiability or convexity on an open neighborhood of V. This is SOURCE_GAP G1530-OPT, which remains unresolved in this extraction.\n\nConditional on that asserted gt, Definition 2.20 gives the first scalar inequality, the asserted variational inequality the second, and Lemma 6.7 the equality. Division by positive eta_t and summation give an exact weighted telescope. For nonincreasing positive eta, all reciprocal differences are nonnegative, the finite maximum bounds the T reference values, and nonnegativity permits discarding `-Bpsi(u;xT)/eta_T`. Reciprocal differences then telescope to the stated variable bound. These are AND dependencies, not alternative proofs.\n\nThe fixed-rate statement is explicitly left as an exercise on 266 / 278. Its natural exact telescope retains `-Bpsi(u;xT)/eta` before dropping it, but that derivation is not printed. It is a separate fixed-rate route from the one-step inequality, not a consequence of replacing the variable-rate maximum by its initial value. The source does not establish that the initial Bregman value is the maximum.\n\n## Chapter 2 observation and scope boundary\n\nPrinted 14 / PDF 26 says that the gradient-square terms reflect choosing xt before observing ell_t and become nonpositive if the current loss is observed first, referring to Section 15.5.1. It is a qualitative forward pointer, not a theorem that replaces any causal OGD update with a prescient one. Its neighboring observations preserve the terminal negative norm term, distinguish fixed-rate unbounded-domain validity from variable-rate distance control, and are separately disposed in coverage.json.\n\nPDF 77 was read only to check the nearby discussion of OMD interior invariants. That discussion assumes argmin existence and gives alternative sufficient interior conditions for **Algorithm 6.1**. It is not a proof for Algorithm 15.8 and is not imported as a hidden premise. Likewise nearby Theorems 2.22/2.23 are not silently invoked to repair the missing nonsmooth optimality argument.\n",
+  "sourceContractOriginalSHA256": "86452db547ec4597392856a7a7bc79fadfc79367f5be56dced924391046afe30",
+  "sourceReview": {
+    "schema": "abrl-independent-source-review-receipt-v1",
+    "created_utc": "2026-10-30T21:40:10.793826+00:00",
+    "reviewer": "batch37_source_reviewer",
+    "role_distinct_from": [
+      "root formalizer",
+      "blind decoder",
+      "source extractor"
+    ],
+    "verdict": "accepted-with-explicit-delta",
+    "scope": "Three derived production interfaces and two full concrete canaries, including inherited binder contexts; independent source topology recording review. Not candidate/proof/merge acceptance.",
+    "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "statement_seal_sha256": "f26f1885eb7b92f44b4469912ee8afd3228ef6cf0b0e15d26fce1c322bb92141",
+    "blind_packet_sha256": "b8ccdf940f81175ac84219e5bcf3d9fd7316a42d470195eefaea6405b18a64dc",
+    "source_extractor_receipt_sha256": "600b0d914fe47dfd4ff9a773c101b0c674cc346ccb097ecf5844bc7f86d51d97",
+    "claims": [
+      {
+        "id": "claim_0",
+        "name": "finitePart_convex_of_subdifferentiable",
+        "signatureSHA256": "30ccbb6e82f24f456aad683a8ff7d130b4ce61240da8aeeadda1619b1822250b",
+        "verdict": "accepted-with-explicit-delta"
+      },
+      {
+        "id": "claim_1",
+        "name": "proximal_finitePart_minimizer_iff",
+        "signatureSHA256": "24c2f539a2e5e931e16d5a4c33603dacdd3822eea074ca1323d75a04d4c4e621",
+        "verdict": "accepted-with-explicit-delta"
+      },
+      {
+        "id": "claim_2",
+        "name": "proximal_one_step_extended",
+        "signatureSHA256": "b652833cccb45261614ccdcba98b1daf08fa3a0b7bc4a975b564878d5b61461b",
+        "verdict": "accepted-with-explicit-delta"
+      },
+      {
+        "id": "claim_3",
+        "name": "restricted_absolute_nonquadratic",
+        "signatureSHA256": "3feb0512108ecbfb1e3e975fca8584b0823bda1a34470639a767830f5721e234",
+        "verdict": "accepted-with-explicit-delta"
+      },
+      {
+        "id": "claim_4",
+        "name": "restricted_linear_outside_center",
+        "signatureSHA256": "7ea880aeef889428a9cab84eb24d087b99871e494b59f5aad7aa03855124eec3",
+        "verdict": "accepted-with-explicit-delta"
+      }
+    ],
+    "seven_slots_each": true,
+    "atomic_binder_audit_complete": true,
+    "EXCESS": [],
+    "canary_conjunct_counts": [
+      12,
+      11
+    ],
+    "source_topology_verdict": "accepted-with-explicit-delta",
+    "source_root_closure": false,
+    "source_repairs_approved": false,
+    "implementation_read": false,
+    "historical_review_verdicts_used": false,
+    "builds_run": false,
+    "production_changes": false,
+    "remote_actions": false,
+    "writes_confined_to": "private-maintenance/github-maintenance-goal-20261011/batch37-source-review-v1",
+    "remaining_gaps": [
+      "Source-domain X and Bregman X times int X embedding.",
+      "Interior preservation for every iterate and both derivative bases.",
+      "Ambient extension existence and derivative compatibility.",
+      "Argmin attainment and any required uniqueness/well-definedness.",
+      "Causal receive-current-loss-before-selecting-iterate recursion.",
+      "T15.30 nonsmooth optimality step: stated T2.8 requires differentiable convex objective on open neighborhood; source loss is only subdifferentiable on V. Source gap retained, no repair blessed.",
+      "Variable-step weighted telescope, nonincreasing steps, max-divergence bound and terminal residual treatment.",
+      "Fixed-step telescope, including source main-text exercise and exact negative movement sum.",
+      "Literal source eta_(T+1) indexing discrepancy remains OPEN; no corrected range approved."
+    ],
+    "route_limits": {
+      "forward_routes": 8,
+      "navigation_only_routes": 1,
+      "closed_routes_claimed": 0,
+      "chapter_coverage_change": null,
+      "chapter_acceptance": false,
+      "full_algorithm_acceptance": false,
+      "candidate_or_merge_acceptance": false
+    },
+    "artifacts": {
+      "packet-alignment.json": "34b99e13b6492d2be46f3dddef23cd95718d77dd39e4288d7a5bd4e6dabb8f8a",
+      "review-summary.md": "fbfbbc97ff50559425680512faab3f51cba0730e6045ee26058ca6f641a96494",
+      "semantic-binder-review.json": "fd0b8f89df8d62ce54361affcea6b5628fab27ee22b965d4793f1368c070923f",
+      "source-pdf21.txt": "4687cd1859e5c177b1e6dee7f5344ff20f9f701a02cf1aaa4295d258a205c086",
+      "source-pdf22.txt": "03ac7db69330cbcb514c8c1b9e5bdf204cce81091fe1c49f4afe0c1a2aec5be5",
+      "source-pdf23.txt": "9934ee46e90f11a7d33ed64473430801e3b31c1abceccf3deab422aad664717c",
+      "source-pdf24.txt": "0f1fd6d3b6e4d003a3ea8c5689f8faca244384b361172c72612e1a4176ea1181",
+      "source-pdf25.txt": "70e748de9af7b3150757e62e4e0c5ca352342f14140f792a1adb202ba577feaa",
+      "source-pdf26.txt": "f96af5f374dd4033b2ad5b83eac7036c8d021e1ec8a5480a16518b9a2ccb7830",
+      "source-pdf27.txt": "d6cc1cba84b5bb370c7728077d719233b2847d3232d7231fa0d1cfa7742982bd",
+      "source-pdf277.txt": "5cbed439034ea7d383e528fccd788bf2e842e189bb10af328ad4101c74c07bc2",
+      "source-pdf278.txt": "a6b35e11c46bfe7ff1e5f23e300cb549acb4c5eeb0e83ceb4842c9fa87ae5fe2",
+      "source-pdf28.txt": "a07958f760b11b3879700350f2e4c67a0ee2cbf02d97b4eaf3b58ef2494882c0",
+      "source-pdf29.txt": "c729cbdda802a4bc65acc9ce506369d1884ca57dd6515660c3b24c8553eaa590",
+      "source-pdf75.txt": "6b0593ef5e71b753b90e911430d279b2850aae3eb4a0a5af22a7e3c688c28575",
+      "source-pdf76.txt": "acba9d67e1091fba0e875edfe42cb4edf278fc20cbbfad57a5dcf97604514c30",
+      "source-pdf77.txt": "0ddaf4e4ecb2fe0f7febc9b20672982cb94c776e4459dcbed95944ddfe180df5",
+      "topology-review.json": "d6e169afd0511594648874f3b0cda65007d8875a39b5228bebeafcd7093748c1",
+      "write-review.py": "cad32fe2ebde35d49f3f062d1d554477b7840d097e8904c4dcae9035e10d094f"
+    }
+  },
+  "boundary": "These three derived extended-loss bridges support the Chapter 2 prescient dependency. Full Algorithm 15.8 and Theorem 15.30 still require source-domain/interior and ambient-extension compatibility, attained causal current-loss updates with interior invariants, and sharp fixed/variable-step telescopes for that same run. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. All eight Chapter 2 forward containers remain open; the chapter proof total is unknown.",
+  "sourceRepairApproved": false
+}

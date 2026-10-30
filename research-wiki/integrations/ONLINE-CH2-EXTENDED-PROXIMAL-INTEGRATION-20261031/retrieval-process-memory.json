@@ -1,0 +1,165 @@
+{
+  "at": "2026-10-30T21:35:28.092831+00:00",
+  "acceptedMain": "d582057ac6ef80d19dfc2e321db9d647746d2c42",
+  "commands": [
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/check_process_memory.py",
+        "check"
+      ],
+      "exitCode": 0,
+      "stdout": "00-stdout.txt",
+      "stdoutSHA256": "9eaf787390c5f1bf4dea8a4f7b1cf06937163fda2f17afdffafddbb4672c10bb",
+      "stderr": "00-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "search-memory",
+        "finitePart"
+      ],
+      "exitCode": 0,
+      "stdout": "01-stdout.txt",
+      "stdoutSHA256": "87c98915ef06dc861992a84db23f29f016f212108eab491663ea088449bb93e4",
+      "stderr": "01-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "search-memory",
+        "subgradient"
+      ],
+      "exitCode": 0,
+      "stdout": "02-stdout.txt",
+      "stdoutSHA256": "3fef62310359375dd39100b32d1f2a1390fa1bcb1bdb3f2bcee8e36fa51a64ee",
+      "stderr": "02-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "minOn_finitePart_iff",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "03-stdout.txt",
+      "stdoutSHA256": "515bd38aa5da42873f35df1e016d02dcc84e51f35d807c8a051f87077aa43028",
+      "stderr": "03-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "subgradient_point_finite",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "04-stdout.txt",
+      "stdoutSHA256": "628f8f464fe3eb3e542950b86fd4aef8d099df58c0f6e3e32b75625f8c051fd1",
+      "stderr": "04-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "theorem_2_21",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "05-stdout.txt",
+      "stdoutSHA256": "44cd0ec02efde69d145aed308c7fd5e05b6e842cec906ca3893e2931d18a8971",
+      "stderr": "05-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "proximal_one_step",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "06-stdout.txt",
+      "stdoutSHA256": "35e2c92e9c4087de3957490ee2d14361b8ca94cbf19500deae36926c672034d3",
+      "stderr": "06-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "mathlibCommit": "5e932f97dd25535344f80f9dd8da3aab83df0fe6",
+  "mathlibSearch": {
+    "command": [
+      "rg",
+      "-n",
+      "toReal.*(convex|Convex)|[Cc]onvex.*toReal|coe_toReal|coe_le_coe_iff",
+      "canonical-repository/.lake/packages/mathlib/Mathlib/Analysis/Convex",
+      "canonical-repository/.lake/packages/mathlib/Mathlib/Data/EReal",
+      "-g",
+      "*.lean"
+    ],
+    "evidence": "mathlib-search.txt",
+    "sha256": "8ad8537e5aa6b62be85c4a7ced68cfb9c13f4217ec19d43fe1a6c10245e33f1a"
+  },
+  "decision": "adapt_existing",
+  "reason": "Reuse canonical properness/global support and finite-point theorem, minimum-order API, and accepted Bregman one-step. Existing theorem_2_21 accepts globally real f; applying it directly to a zero-default EReal.toReal extension would not supply the required ambient global supports. New first bridge derives convexity only on V from actual finite values at feasible convex combinations. No new shared definitions or project introduced.",
+  "dependencySourceBindings": {
+    "BanditRLProof/OnlineConvexOptimality.lean": {
+      "gitBlob": "5c0227d57cdbd119ba507d8b124be6cfa36d4939",
+      "gitBytesSHA256": "e0827b1fdba8f65640582b866c4971a1f49c78c64f685bb5e083959336d7523c"
+    },
+    "BanditRLProof/OnlineSubgradientBasic.lean": {
+      "gitBlob": "c37ca8e2fb69ef4346dc4dcd6d17faa0b580839f",
+      "gitBytesSHA256": "0909561292bec87909286cbf59d6e12dab22bc9658931327491cca84660d517d"
+    },
+    "BanditRLProof/OnlineClosedProper.lean": {
+      "gitBlob": "3aab9a8af9e1566d34969cfb0b2e0e54e432c286",
+      "gitBytesSHA256": "0524722fb25231dc3c9096f9574c9a4342b401c5c2208a07a97453234968ae75"
+    },
+    "BanditRLProof/OnlineBregmanProximal.lean": {
+      "gitBlob": "e40e3e295f5a86a1fcd976bf3d8f5391a16419b8",
+      "gitBytesSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59"
+    },
+    "Tests/OnlineBregmanProximalCanary.lean": {
+      "gitBlob": "e13d730acb8c421121c1b68b6f92876c4aef756d",
+      "gitBytesSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0"
+    }
+  },
+  "upstreamCandidacy": "Support-to-convex-restriction and finite minimum transport are general-purpose candidate interfaces; no upstream submission or minimality claim.",
+  "processMemory": {
+    "path": "runs/process_memory.json",
+    "sha256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "usedIDs": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ]
+  },
+  "schedulerChanged": false,
+  "productionEdited": false,
+  "sourceOrProofAcceptance": false
+}

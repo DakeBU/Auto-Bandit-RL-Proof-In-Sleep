@@ -1,0 +1,451 @@
+{
+  "role": "independent anti-anchored source/binder reviewer",
+  "reviewer": "batch37_source_reviewer",
+  "created_utc": "2026-10-30T21:37:45.135021+00:00",
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "review_scope": "Five sealed derived-library interfaces only, no production proof or candidate acceptance",
+  "implementation_lean_or_proof_bodies_inspected": false,
+  "builds_run": false,
+  "remote_actions": false,
+  "source_repair_approved": false,
+  "blind_reconstruction_agreement": true,
+  "verdict": "accepted-with-explicit-delta",
+  "source_topology_review": "independently reviewed: accepted-with-explicit-delta, see topology-review.json; full roots remain open",
+  "atomic_classification_policy": "SOURCE refers to the cited source premises specialized to the explicit derived one-step/library contract. TYPING includes the declared generalized ambient carrier. No derived result is admitted as a public premise merely because an implementation needs it. None of these claims is the full numbered source theorem.",
+  "memory_use": "Protocol-boundary reminder only; no prior semantic review conclusion used.",
+  "claims": [
+    {
+      "id": "claim_0",
+      "name": "finitePart_convex_of_subdifferentiable",
+      "signatureSHA256": "30ccbb6e82f24f456aad683a8ff7d130b4ce61240da8aeeadda1619b1822250b",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Any real inner product space, not necessarily complete; f:E->EReal, V subset E. Source T2.21 uses f:R^d->R.",
+        "quantifiers": "forall f,V satisfying premises; forall z in V exists g in E forall y in E support. The proper finite witness is global, not necessarily in V.",
+        "assumptions": "Convex V; f nowhere bottom and finite somewhere; global supports at each feasible point. Supports plus properness force finite f on V.",
+        "conclusion_metric": "ConvexOn R V (toReal o f), only restriction to V. No global convexity or claim about infinite values under conversion.",
+        "constants_normalization": "Unit-coefficient support pairing; ordinary nonnegative convex weights summing to one.",
+        "probability_feedback": "Deterministic static result; no algorithm/feedback/probability.",
+        "boundary": "V may be empty; f may be top outside V; toReal(top)=toReal(bottom)=0. Properness plus supports justifies conversion only on V."
+      },
+      "atomic_binders": [
+        {
+          "input": "E",
+          "classification": "TYPING",
+          "expanded": "E : Type*",
+          "basis": "Explicit derived-library ambient carrier, generalizes source R^d."
+        },
+        {
+          "input": "NormedAddCommGroup E",
+          "classification": "TYPING",
+          "expanded": "Normed real additive carrier",
+          "basis": "Ambient analytical typing."
+        },
+        {
+          "input": "InnerProductSpace R E",
+          "classification": "TYPING",
+          "expanded": "Real inner product structure compatible with the norm",
+          "basis": "Source dot product generalized to real inner product pairing."
+        },
+        {
+          "input": "f,V",
+          "classification": "TYPING",
+          "expanded": "f:E->EReal; V:Set E",
+          "basis": "Declared extended-real bridge carrier."
+        },
+        {
+          "input": "hV",
+          "classification": "SOURCE",
+          "expanded": "forall a,b>=0 with a+b=1, forall z,w in V, a*z+b*w in V",
+          "basis": "Convex feasible set in T2.21 and Alg15.8/T15.30."
+        },
+        {
+          "input": "hp/hf.1",
+          "classification": "SOURCE",
+          "expanded": "forall y:E, f y != bottom",
+          "basis": "Definition 2.18 nowhere minus infinity; global quantifier."
+        },
+        {
+          "input": "hp/hf.2",
+          "classification": "SOURCE",
+          "expanded": "exists y:E, exists r:R, f y = embed(r)",
+          "basis": "Definition 2.18 finite somewhere; witness is not constrained to V."
+        },
+        {
+          "input": "hs",
+          "classification": "SOURCE",
+          "expanded": "forall z:E, z in V -> exists g:E, forall y:E, f z + embed(inner g (y-z)) <= f y",
+          "basis": "Definition 2.20 plus T2.21/T15.30 subdifferentiable on V; g depends on z and y ranges over all E."
+        }
+      ],
+      "delta": "Derived finite-domain extension of T2.21 using Definitions 2.18/2.20, not literal globally real-valued T2.21. No original-source repair is approved."
+    },
+    {
+      "id": "claim_1",
+      "name": "proximal_finitePart_minimizer_iff",
+      "signatureSHA256": "24c2f539a2e5e931e16d5a4c33603dacdd3822eea074ca1323d75a04d4c4e621",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Complete real inner product E; extended loss, real ambient psi, eta:R, x,p:E, V:Set E.",
+        "quantifiers": "All supplied data; p in V and all z in V finite; equivalence of two universal comparisons against z in V.",
+        "assumptions": "Exactly completeness, membership p in V, and f z != top AND f z != bottom on V. No convexity/differentiability/eta positivity.",
+        "conclusion_metric": "IsMinOn of extended-real objective iff IsMinOn of real finite-part objective for this supplied p. Does not construct or characterize a unique minimizer.",
+        "constants_normalization": "eta inverse multiplies D on both sides. eta=0 uses inverse zero and eta<0 is permitted in this static conversion.",
+        "probability_feedback": "No algorithm update semantics or oracle guarantee.",
+        "boundary": "D is total via fderiv including fallback zero at nondifferentiability. x need not be feasible or in loss domain. No source Bregman-geometry property follows."
+      },
+      "atomic_binders": [
+        {
+          "input": "E",
+          "classification": "TYPING",
+          "expanded": "E : Type*",
+          "basis": "Explicit derived-library ambient carrier, generalizes source R^d."
+        },
+        {
+          "input": "NormedAddCommGroup E",
+          "classification": "TYPING",
+          "expanded": "Normed real additive carrier",
+          "basis": "Ambient analytical typing."
+        },
+        {
+          "input": "InnerProductSpace R E",
+          "classification": "TYPING",
+          "expanded": "Real inner product structure compatible with the norm",
+          "basis": "Source dot product generalized to real inner product pairing."
+        },
+        {
+          "input": "CompleteSpace E",
+          "classification": "TYPING",
+          "expanded": "Every Cauchy filter converges in E",
+          "basis": "Exact inherited complete-space carrier of claims 1 and 2. Source R^d is complete; not silently removed or declared necessary for the conversion argument."
+        },
+        {
+          "input": "f,V,psi,eta,x,p",
+          "classification": "TYPING",
+          "expanded": "f:E->EReal; V:Set E; psi:E->R; eta:R; x,p:E",
+          "basis": "Explicit derived order-conversion parameters, including arbitrary eta."
+        },
+        {
+          "input": "hp",
+          "classification": "SOURCE",
+          "expanded": "p in V",
+          "basis": "Supplied minimizer is feasible as in source argmin update; IsMinOn alone does not imply this."
+        },
+        {
+          "input": "hfin.1",
+          "classification": "SOURCE",
+          "expanded": "forall z in V, f z != top",
+          "basis": "Algorithm 15.8 V subset dom loss."
+        },
+        {
+          "input": "hfin.2",
+          "classification": "SOURCE",
+          "expanded": "forall z in V, f z != bottom",
+          "basis": "Source loss codomain (-infinity,+infinity]."
+        }
+      ],
+      "delta": "New static representation-equivalence bridge, not a numbered source result or positive-step update. Completeness is retained as sealed, even though not mathematically needed for order conversion."
+    },
+    {
+      "id": "claim_2",
+      "name": "proximal_one_step_extended",
+      "signatureSHA256": "b652833cccb45261614ccdcba98b1daf08fa3a0b7bc4a975b564878d5b61461b",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Complete real inner product E; extended loss, feasible V, ambient real psi, eta>0, center x and supplied minimizer p.",
+        "quantifiers": "Global proper witness; forall z in V exists global supporting g; supplied p and hmin; conclusion forall u in V. No time-indexed selection or recursion.",
+        "assumptions": "Convex V, proper f, global supports at all z in V, eta>0, p in V, actual Frechet differentiability of psi at both x and p, extended IsMinOn objective. No differentiability of f and no convexity/strict convexity of psi.",
+        "conclusion_metric": "eta*(toReal(f p)-toReal(f u)) <= D(psi,u,x)-D(psi,u,p)-D(psi,p,x). Both negative residuals and ordered arguments preserved.",
+        "constants_normalization": "Objective eta^-1*D; conclusion eta times loss difference. Three-point RHS = (dpsi(p)-dpsi(x))(u-p), no missing factor or reversed sign.",
+        "probability_feedback": "One-step deterministic conditional inequality. Receive-loss-before-update causal semantics are not asserted.",
+        "boundary": "x can be outside V and dom f; p,u finite by proper/support assumptions. No existence, uniqueness, ambient extension, interior preservation, source-domain embedding, telescoping, full regret or nonpositive-regret conclusion."
+      },
+      "atomic_binders": [
+        {
+          "input": "E",
+          "classification": "TYPING",
+          "expanded": "E : Type*",
+          "basis": "Explicit derived-library ambient carrier, generalizes source R^d."
+        },
+        {
+          "input": "NormedAddCommGroup E",
+          "classification": "TYPING",
+          "expanded": "Normed real additive carrier",
+          "basis": "Ambient analytical typing."
+        },
+        {
+          "input": "InnerProductSpace R E",
+          "classification": "TYPING",
+          "expanded": "Real inner product structure compatible with the norm",
+          "basis": "Source dot product generalized to real inner product pairing."
+        },
+        {
+          "input": "CompleteSpace E",
+          "classification": "TYPING",
+          "expanded": "Every Cauchy filter converges in E",
+          "basis": "Exact inherited complete-space carrier of claims 1 and 2. Source R^d is complete; not silently removed or declared necessary for the conversion argument."
+        },
+        {
+          "input": "f,V,psi,eta,x,p",
+          "classification": "TYPING",
+          "expanded": "Declared extended/real ambient data",
+          "basis": "Derived one-step carrier, not a source-domain X identification."
+        },
+        {
+          "input": "hV",
+          "classification": "SOURCE",
+          "expanded": "forall a,b>=0 with a+b=1, forall z,w in V, a*z+b*w in V",
+          "basis": "Convex feasible set in T2.21 and Alg15.8/T15.30."
+        },
+        {
+          "input": "hp/hf.1",
+          "classification": "SOURCE",
+          "expanded": "forall y:E, f y != bottom",
+          "basis": "Definition 2.18 nowhere minus infinity; global quantifier."
+        },
+        {
+          "input": "hp/hf.2",
+          "classification": "SOURCE",
+          "expanded": "exists y:E, exists r:R, f y = embed(r)",
+          "basis": "Definition 2.18 finite somewhere; witness is not constrained to V."
+        },
+        {
+          "input": "hs",
+          "classification": "SOURCE",
+          "expanded": "forall z:E, z in V -> exists g:E, forall y:E, f z + embed(inner g (y-z)) <= f y",
+          "basis": "Definition 2.20 plus T2.21/T15.30 subdifferentiable on V; g depends on z and y ranges over all E."
+        },
+        {
+          "input": "heta",
+          "classification": "SOURCE",
+          "expanded": "0 < eta",
+          "basis": "Algorithm 15.8 positive learning rates."
+        },
+        {
+          "input": "hp",
+          "classification": "SOURCE",
+          "expanded": "p in V",
+          "basis": "Supplied minimizer is feasible as in source argmin update; IsMinOn alone does not imply this."
+        },
+        {
+          "input": "hdx",
+          "classification": "SOURCE",
+          "expanded": "DifferentiableAt R psi x",
+          "basis": "Source psi differentiable on int X and previous iterate/initial center in int X, specialized to pointwise ambient derivative. Extension obligation remains open."
+        },
+        {
+          "input": "hdp",
+          "classification": "SOURCE",
+          "expanded": "DifferentiableAt R psi p",
+          "basis": "Source current iterate in int X and psi differentiable there, specialized pointwise. Kept independently of hdx."
+        },
+        {
+          "input": "hmin",
+          "classification": "SOURCE",
+          "expanded": "forall z in V, f p + embed(eta^-1*D psi p x) <= f z + embed(eta^-1*D psi z x)",
+          "basis": "Source argmin update localized to one supplied feasible p. Legitimate conditional update premise, not a proof result smuggled into a full algorithm theorem."
+        }
+      ],
+      "delta": "Derived conditional finite-domain one-step bridge generalizes the algebra to an ambient differentiable psi without asserting Bregman geometry. It does not close the source use of T2.8 for nonsmooth losses or construct the source algorithm."
+    },
+    {
+      "id": "claim_3",
+      "name": "restricted_absolute_nonquadratic",
+      "signatureSHA256": "3feb0512108ecbfb1e3e975fca8584b0823bda1a34470639a767830f5721e234",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Concrete R; V=[-1,1], f=abs on V/top outside, psi=z^4/4+z^2/2.",
+        "quantifiers": "Closed theorem with fixed let-bound data and no public hypotheses. Full global support and feasible-comparator quantifiers remain.",
+        "assumptions": "None; all 12 listed conjuncts are conclusions, not supplied hypotheses.",
+        "conclusion_metric": "All conjuncts preserved in full_conjunction below. Minimized point 0 is distinct from attained objective value.",
+        "constants_normalization": "eta=1; x=1/2; p=0; D(1/2,0)=9/64; D(0,1/2)=11/64; signed RHS=-5u/8; attained objective=11/64.",
+        "probability_feedback": "Deterministic concrete witness, not an algorithm or stochastic test.",
+        "boundary": "toReal(top)=0 makes global finite-part convexity false. Closed interval endpoints included. No uniqueness/causal recursion/regret claim. Nonsmooth f at minimizer and asymmetric D explicitly witnessed."
+      },
+      "atomic_binders": [
+        {
+          "input": "R and its canonical structures",
+          "classification": "TYPING",
+          "expanded": "Real numbers with standard complete inner product structure",
+          "basis": "Concrete canary carrier."
+        },
+        {
+          "input": "V,f,psi let bindings",
+          "classification": "TYPING",
+          "expanded": "Exactly the concrete formulas in the seal",
+          "basis": "Definitions of this original derived-contract canary, not external hypotheses."
+        }
+      ],
+      "full_conjunction": [
+        "Proper f: globally no bottom and finite somewhere.",
+        "Global supports exist at each z in [-1,1], testing every y:R.",
+        "f(2)=top.",
+        "Convex finite part on [-1,1].",
+        "Finite part is not convex on all R.",
+        "psi strictly convex on all R.",
+        "Extended objective IsMinOn at point 0 over [-1,1].",
+        "abs not differentiable at 0.",
+        "D(1/2,0)=9/64.",
+        "D(0,1/2)=11/64.",
+        "forall u in [-1,1], -abs(u)<=D(u,1/2)-D(u,0)-D(0,1/2).",
+        "-1/2<=-5/16."
+      ],
+      "conjunct_count": 12,
+      "independent_arithmetic_check": "psi prime=z^3+z. Objective minus objective(0)=abs(z)+z^4/4+z^2/2-5z/8>=0 on V. Global finite-part convexity fails using points 0 and 2 with midpoint 1.",
+      "delta": "Original concrete contract witness, not an example or theorem credited to the source author."
+    },
+    {
+      "id": "claim_4",
+      "name": "restricted_linear_outside_center",
+      "signatureSHA256": "7ea880aeef889428a9cab84eb24d087b99871e494b59f5aad7aa03855124eec3",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Concrete R; V=[0,1], f=z on V/top outside, psi=z^2/2.",
+        "quantifiers": "Closed theorem with fixed let-bound data and no public hypotheses. Full global support and feasible-comparator quantifiers remain.",
+        "assumptions": "None; all 11 listed conjuncts are conclusions, not supplied hypotheses.",
+        "conclusion_metric": "All conjuncts preserved in full_conjunction below. Minimized point 0 is distinct from attained objective value.",
+        "constants_normalization": "eta=1; x=-1; p=0; D(a,b)=(a-b)^2/2; signed RHS=u; attained objective=1/2.",
+        "probability_feedback": "Deterministic concrete witness, not an algorithm or stochastic test.",
+        "boundary": "toReal(top)=0 makes global finite-part convexity false. Closed interval endpoints included. No uniqueness/causal recursion/regret claim. Center outside V and loss domain explicitly witnessed; ambient polynomial psi is still differentiable there."
+      },
+      "atomic_binders": [
+        {
+          "input": "R and its canonical structures",
+          "classification": "TYPING",
+          "expanded": "Real numbers with standard complete inner product structure",
+          "basis": "Concrete canary carrier."
+        },
+        {
+          "input": "V,f,psi let bindings",
+          "classification": "TYPING",
+          "expanded": "Exactly the concrete formulas in the seal",
+          "basis": "Definitions of this original derived-contract canary, not external hypotheses."
+        }
+      ],
+      "full_conjunction": [
+        "Proper f: globally no bottom and finite somewhere.",
+        "Global supports exist at each z in [0,1], testing every y:R.",
+        "f(-1)=top.",
+        "-1 is not in [0,1].",
+        "Convex finite part on [0,1].",
+        "Finite part is not convex on all R.",
+        "psi strictly convex on all R.",
+        "Extended objective IsMinOn at point 0 over [0,1].",
+        "D(0,-1)=1/2.",
+        "forall u in [0,1], -u<=D(u,-1)-D(u,0)-D(0,-1).",
+        "-1/2<=1/2."
+      ],
+      "conjunct_count": 11,
+      "independent_arithmetic_check": "psi prime=z. Objective minus objective(0)=2z+z^2/2>=0 on [0,1]. Global finite-part convexity fails using points 0 and 2 with midpoint 1.",
+      "delta": "Original concrete contract witness, not an example or theorem credited to the source author."
+    }
+  ],
+  "definition_audit": [
+    {
+      "name": "SourceProper / P",
+      "kind": "literal",
+      "expansion": "(forall x, f x != bottom) AND exists x exists r:R, f x=embed(r)",
+      "source": "Definition 2.18 PDF28",
+      "finding": "Exact properness meaning on the stated EReal carrier; source Euclidean carrier generalized explicitly."
+    },
+    {
+      "name": "SourceSubdifferential / S",
+      "kind": "literal conditional on proper source regime",
+      "expansion": "{g | forall y:E, f x+embed(inner g (y-x))<=f y}",
+      "source": "Definition 2.20 PDF28-29",
+      "finding": "Global test domain matches source. Project definition is total even for improper f, but every production use needing source semantics has properness or finite-loss assumptions. No claimed source meaning for improper off-regime inputs."
+    },
+    {
+      "name": "divergence / D",
+      "kind": "literal algebraic ambient extension, not literal whole-carrier source definition",
+      "expansion": "psi(a)-psi(b)-fderiv R psi b (a-b)",
+      "source": "Definition 6.4 PDF75; Lemma 6.7 PDF76",
+      "finding": "Ordered algebra agrees when the ambient derivative realizes the source derivative at b. Source domain is X times int X with strictly convex differentiable psi; total ambient D, including derivative fallback, does not itself establish that source domain or its geometry. No source-domain extension or repair approved."
+    },
+    {
+      "name": "IsMinOn",
+      "kind": "mathlib predicate semantic expansion",
+      "expansion": "forall z in V, objective(p)<=objective(z)",
+      "finding": "No p membership, existence or uniqueness hidden in predicate. hp is separately audited."
+    },
+    {
+      "name": "ConvexOn",
+      "kind": "mathlib predicate semantic expansion",
+      "expansion": "Convex V plus Jensen convex-combination inequality for every pair in V",
+      "finding": "Only restriction to V, never global toReal convexity."
+    },
+    {
+      "name": "StrictConvexOn",
+      "kind": "mathlib predicate semantic expansion",
+      "expansion": "Convex set plus strict Jensen inequality for distinct points and strictly positive weights summing to one",
+      "finding": "Concrete canary conclusion on univ, not a general production input."
+    },
+    {
+      "name": "DifferentiableAt",
+      "kind": "mathlib predicate semantic expansion",
+      "expansion": "Existence of a Frechet derivative at the stated ambient point",
+      "finding": "Two distinct assumptions in claim_2. No derivative of loss is assumed."
+    }
+  ],
+  "binder_summary": {
+    "SOURCE": "Source premises retained under derived-contract scope",
+    "STANDING": [],
+    "TYPING": "Exact carrier/data including inherited completeness; no hidden project typeclass bundle",
+    "RULED": [],
+    "EXCESS": [],
+    "logical_project_owned_bundles_recursively_expanded": [
+      "SourceProper",
+      "SourceSubdifferential"
+    ],
+    "nonprop_project_definition_expanded": [
+      "divergence"
+    ],
+    "no_source_theorem_binder_clean_bill": "Binder acceptance applies to these derived bridge contracts only, not full T15.30 or Alg15.8."
+  },
+  "open_obligations": [
+    "Source-domain X and Bregman X times int X embedding.",
+    "Interior preservation for every iterate and both derivative bases.",
+    "Ambient extension existence and derivative compatibility.",
+    "Argmin attainment and any required uniqueness/well-definedness.",
+    "Causal receive-current-loss-before-selecting-iterate recursion.",
+    "T15.30 nonsmooth optimality step: stated T2.8 requires differentiable convex objective on open neighborhood; source loss is only subdifferentiable on V. Source gap retained, no repair blessed.",
+    "Variable-step weighted telescope, nonincreasing steps, max-divergence bound and terminal residual treatment.",
+    "Fixed-step telescope, including source main-text exercise and exact negative movement sum.",
+    "Literal source eta_(T+1) indexing discrepancy remains OPEN; no corrected range approved."
+  ],
+  "route_limits": {
+    "forward_routes": 8,
+    "navigation_only_routes": 1,
+    "closed_routes_claimed": 0,
+    "chapter_coverage_change": null,
+    "chapter_acceptance": false,
+    "full_algorithm_acceptance": false,
+    "candidate_or_merge_acceptance": false
+  },
+  "input_hashes": [
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch37-preport-statement-seal-v1.json",
+      "sha256": "f26f1885eb7b92f44b4469912ee8afd3228ef6cf0b0e15d26fce1c322bb92141"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch37-intake-v1/supporting-definitions.json",
+      "sha256": "b0873b4bdaa28174b6744938f8d2d7387f6444a437b20816f556224815e44941"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch37-blind-input-v1/packet.json",
+      "sha256": "b8ccdf940f81175ac84219e5bcf3d9fd7316a42d470195eefaea6405b18a64dc"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch37-blind-review-v1/reconstruction.json",
+      "sha256": "7312d2c27ecd35c06b729c7c550cb6691a9f50e89c461c0fcfbfaaf9edf85468"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch37-blind-review-v1/reconstruction.md",
+      "sha256": "b9507324a7c3b55ad5c975c76b33d8a40ee519c4369525c8e5ff21e8813408f7"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch37-blind-review-v1/receipt.json",
+      "sha256": "e09db56ddcb368a95f4424c41aa7a2c16328345d31e0e87fda510abee7a36849"
+    }
+  ]
+}

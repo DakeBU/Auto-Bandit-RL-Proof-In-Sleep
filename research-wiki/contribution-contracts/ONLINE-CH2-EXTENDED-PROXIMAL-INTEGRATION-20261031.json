@@ -1,0 +1,205 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-EXTENDED-PROXIMAL-INTEGRATION-20261031",
+  "route": "online-learning / Chapter2 prescient observation / finite-domain extended-loss proximal bridges",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona,21June2026; Chapter2 printed14/PDF26; Definitions2.18/2.20 and Theorem2.21 printed16-17/PDF28-29; Definition6.4/Lemma6.7 printed63-64/PDF75-76; Algorithm15.8/Theorem15.30 printed265-266/PDF277-278. Derived extended-loss supporting bridges. PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate original PR210 three derived extended-loss bridges and two complete canaries with meaningful continuations for all329 original paths and11ignored terminal files.",
+  "affected_files": [
+    "BanditRLProof/OnlineBregmanExtended.lean",
+    "Tests/OnlineBregmanExtendedCanary.lean",
+    "BanditRLProof.lean",
+    "Tests.lean",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+    "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+    "BanditRL.OnlineBregman.proximal_one_step_extended"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current source and process-memory retrieval bound in retrieval-process-memory.json. Existing finite-point/order and Bregman APIs reused; no shared definitions or per-book project duplicated."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.subgradient_point_finite",
+      "BanditRL.OnlineConvex.minOn_finitePart_iff",
+      "BanditRL.OnlineBregman.proximal_one_step",
+      "BanditRL.OnlineBregman.divergence"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+      "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+      "BanditRL.OnlineBregman.proximal_one_step_extended"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+      "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center"
+    ],
+    "planned_consumers": [
+      "Source-domain/interior and attained causal recurrence adapters, followed by same-run fixed/variable-step telescopes; planned only."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Three extended-loss bridges adapt existing real-valued APIs and have complete concrete consumers. No duplicate definition or public wrapper-only theorem."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch37-blind-decoder",
+    "source_reviewer": "independent-batch37-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "These three derived extended-loss bridges support the Chapter 2 prescient dependency. Full Algorithm 15.8 and Theorem 15.30 still require source-domain/interior and ambient-extension compatibility, attained causal current-loss updates with interior invariants, and sharp fixed/variable-step telescopes for that same run. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. All eight Chapter 2 forward containers remain open; the chapter proof total is unknown."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The extended-loss finite-value and minimum-order adapters do not establish a new cross-setting certified functor.",
+    "focus_targets": [
+      "online-ogd"
+    ],
+    "visual_review": "Pending exact rendered reader/catalog/graph review. Selected compiled environment has5public interfaces plus1generated test auxiliary,1241direct coalesced TYPE/VALUE constant-presence edges; presence is not mathematical implication or full transitive topology.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: all15 original semantic deltas with8legacy wording corrections explicitly accounted,3new declaration lessons,1derived source card and chapter module/goal/scope updates.",
+    "banditrlwiki": "updated: research-wiki/integrations/ONLINE-CH2-EXTENDED-PROXIMAL-INTEGRATION-20261031 source/statement/proof/whole-original continuation packet.",
+    "results_ledger": "no-change-with-reason: no full-source or chapter closure.",
+    "roadmap": "no-change-with-reason:8forward containers and1historical navigation remain open.",
+    "website_surfaces": [
+      "Projected OGD reader",
+      "OnlineBregmanExtended module/declaration catalog",
+      "Shared declaration graph/search"
+    ]
+  },
+  "truth_boundary": "These three derived extended-loss bridges support the Chapter 2 prescient dependency. Full Algorithm 15.8 and Theorem 15.30 still require source-domain/interior and ambient-extension compatibility, attained causal current-loss updates with interior invariants, and sharp fixed/variable-step telescopes for that same run. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. All eight Chapter 2 forward containers remain open; the chapter proof total is unknown.",
+  "verification": {
+    "focused_checks": [
+      "Focused production/Test build and full public types/axioms passed;12required actual VALUE pairs pass.",
+      "Independent annotation-skipping beta/zeta selected-tail audit confirms direct proximal_one_step_extended proof use in both12/11conjunct canaries;7negative and4positive controls pass."
+    ],
+    "bandit_check": "Fresh combined prepublication gate recorded separately; final complete-package/commit gate pending.",
+    "site_build": "Requires actual fresh Lean gate success.",
+    "site_check": "Candidate rendered and exact committed source-link review pending.",
+    "independent_review": "Distinct blind/source/BODY and bounded reader text accepted. Materialized whole-original public packet, Exposition Seal, contributor/full candidate, CI, merge/main/Pages/live gates remain pending. Comment-only successor pointer separately reviewed; all mathematical source/proof bytes unchanged. Final post-comment complete-package gates remain pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in immutable PR210 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "pending",
+      "reason": "All329original paths plus11ignored terminal files retained; public continuation needs final independent review. Seven inherited missing digests remain open.",
+      "promoted_fragments": [
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step_extended"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "extended-loss-finite-domain-minimum-transfer-real-proximal-comparison"
+      ],
+      "expected_information_gain": "One preserved proof route with mandatory distinct semantic/source/BODY and conservation reviews.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17;main d582057ac6ef80d19dfc2e321db9d647746d2c42"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Global support gives finite convex restriction; finite-order transfer yields the actual real minimum; use the existing real proximal comparison.",
+      "selection_reason": "No competing parallel proof-search routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Step-by-step reviewed actual source/Lean IDs in research-wiki/integrations/ONLINE-CH2-EXTENDED-PROXIMAL-INTEGRATION-20261031/exposition-node-expansion.json; source-context-only and derived proof moves distinguished. Fresh rendered exact candidate and final links pending.",
+      "source_expansion_nodes": [
+        "A15.8-ARGMIN",
+        "A15.8-RECEIVE",
+        "A15.8-REQUIRE",
+        "D2-CONVEX-SET",
+        "D2-PROPER",
+        "D2-SUBDIFF",
+        "D2-SUPPORT",
+        "D6.4",
+        "L6.7",
+        "P2-SUPPORT-DOMAIN",
+        "P6-BREGMAN-ASYMMETRY",
+        "T15.30-LOSS-SUPPORT",
+        "T15.30-THREEPOINT",
+        "T15.30-VI-USE",
+        "T2.21",
+        "T2.21-COMBINE",
+        "T2.21-LEFT",
+        "T2.21-MIX",
+        "T2.21-RIGHT"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence_eq_gradient",
+        "BanditRL.OnlineBregman.divergence_self",
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step",
+        "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+        "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.abs_subgradient_negative",
+        "BanditRL.OnlineConvex.abs_subgradient_positive",
+        "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "BanditRL.OnlineConvex.minOn_finitePart_iff",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "EReal.coe_add",
+        "EReal.coe_le_coe_iff",
+        "EReal.coe_ne_bot",
+        "EReal.coe_ne_top",
+        "EReal.coe_toReal",
+        "EReal.toReal_coe",
+        "Eq.mp",
+        "abs_of_nonneg",
+        "mul_le_mul_of_nonneg_left"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

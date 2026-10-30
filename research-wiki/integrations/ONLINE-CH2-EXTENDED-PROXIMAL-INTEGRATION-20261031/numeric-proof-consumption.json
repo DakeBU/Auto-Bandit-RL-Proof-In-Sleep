@@ -1,0 +1,158 @@
+{
+  "source": "actual imported compiled environment",
+  "production_dependencies": [
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlineConvex.subgradient_point_finite",
+          "live_uses": 4
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.subgradient_point_finite"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineConvex.minOn_finitePart_iff"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlineConvex.subgradient_point_finite",
+          "live_uses": 1
+        },
+        {
+          "provider": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+          "live_uses": 1
+        },
+        {
+          "provider": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+          "live_uses": 1
+        },
+        {
+          "provider": "BanditRL.OnlineBregman.proximal_one_step",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlineBregman.proximal_one_step_extended"
+    }
+  ],
+  "method": "Select actual full-canary conjunction components; numeric Eq.mp proof argument; local beta/zeta plus explicit id elimination; skip annotations and known transport type arguments; require exact extended-one-step target head after transports. No declaration unfolding or proof-irrelevance normalization.",
+  "controls_are_synthetic_syntax_not_well_typed_theorems": true,
+  "controls": [
+    {
+      "observed": 0,
+      "name": "dead_let_value",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "lambda_domain_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "forall_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "let_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "unused_beta_argument",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "transport_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "identity_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 1,
+      "name": "direct_constant",
+      "expected": 1
+    },
+    {
+      "observed": 1,
+      "name": "identity_value",
+      "expected": 1
+    },
+    {
+      "observed": 1,
+      "name": "used_beta_argument",
+      "expected": 1
+    },
+    {
+      "observed": 1,
+      "name": "used_let_value",
+      "expected": 1
+    }
+  ],
+  "canaries": [
+    {
+      "transport_trace": [
+        "Eq.mp",
+        "Eq.mp"
+      ],
+      "transport_core_head": "BanditRL.OnlineBregman.proximal_one_step_extended",
+      "transport_core_argument_count": 20,
+      "selected_proof_argument_live_target_uses": 1,
+      "selected_numeric_tail_index_zero_based": 11,
+      "numeric_tail_head": "Eq.mp",
+      "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+      "general_comparator_conjunct_live_target_uses": 1,
+      "direct_target_head_required": true,
+      "conjunct_count": 12
+    },
+    {
+      "transport_trace": [
+        "Eq.mp",
+        "Eq.mp"
+      ],
+      "transport_core_head": "BanditRL.OnlineBregman.proximal_one_step_extended",
+      "transport_core_argument_count": 20,
+      "selected_proof_argument_live_target_uses": 1,
+      "selected_numeric_tail_index_zero_based": 10,
+      "numeric_tail_head": "Eq.mp",
+      "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+      "general_comparator_conjunct_live_target_uses": 1,
+      "direct_target_head_required": true,
+      "conjunct_count": 11
+    }
+  ]
+}
