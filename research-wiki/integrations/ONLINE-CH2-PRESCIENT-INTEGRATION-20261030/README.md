@@ -11,3 +11,5 @@ Four definitions, seven proofs, five public canaries and three original API prob
 The reader uses a derived-library label. Local desktop/mobile exposition and exact proof/Tests/harness gates passed. This materialized packet passed independent package review. Final contributor/candidate checks and exact committed source links remain required. CI, merge, Pages, live acceptance, original PR closure and branch retirement are separate later gates. No retirement is authorized by this packet.
 
 Source: Francesco Orabona, *Online Learning: A Modern Introduction Using Convex Optimization*, arXiv:1912.13213v10 (21June2026), printed14 and265–266 / PDF26 and277–278. See the contribution manifest for all three graph classifications and unchanged-surface reasons.
+
+Git byte provenance: [git-byte-bindings.json](git-byte-bindings.json) distinguishes the two reviewed precommit CRLF hashes in the current-path rows and candidate bindings from their committed LF hashes. Historical fields are preserved; the record binds the exact conversion and candidate commit.
