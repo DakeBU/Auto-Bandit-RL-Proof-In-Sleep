@@ -134,9 +134,11 @@ def run_controller(command: list[str], ready: Path, exit_record: Path) -> int:
 def run_fixture(evidence: Path) -> int:
     """Spawn a session-escaping heartbeat process for the lifecycle probe."""
     heartbeat = evidence / "escape-heartbeat.txt"
+    # A namespace kill may interrupt a write; preserve the last complete counter.
     child_script = (
-        "import pathlib,time,sys; p=pathlib.Path(sys.argv[1]); i=0; "
-        "\nwhile True:\n i+=1; p.write_text(str(i)); time.sleep(0.05)"
+        "import pathlib,time,sys; p=pathlib.Path(sys.argv[1]); "
+        "q=p.with_name(p.name+'.tmp'); i=0; "
+        "\nwhile True:\n i+=1; q.write_text(str(i)); q.replace(p); time.sleep(0.05)"
     )
     escaped = subprocess.Popen(
         [sys.executable, "-c", child_script, str(heartbeat)],
