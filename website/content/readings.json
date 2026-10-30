@@ -1493,7 +1493,9 @@
         "BanditRL.OnlineGradientDescent.iterate",
         "BanditRL.OnlineGradientDescentSource.lemma_2_12",
         "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
-        "BanditRL.OnlineGradientDescentSource.equation_2_1"
+        "BanditRL.OnlineGradientDescentSource.equation_2_1",
+        "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+        "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
       ],
       "source_theorems": [
         {
@@ -1514,8 +1516,8 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Compiled local source-repair candidate",
-            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
+            "label": "Compiled OGD core in the accepted library",
+            "boundary": "These bounded OGD results are integrated in the accepted library. Each card retains its stated hypotheses, exact source relationship and horizon restrictions. Chapter 2 and the book remain incomplete."
           }
         },
         {
@@ -1536,8 +1538,8 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Compiled local source-repair candidate",
-            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
+            "label": "Compiled OGD core in the accepted library",
+            "boundary": "These bounded OGD results are integrated in the accepted library. Each card retains its stated hypotheses, exact source relationship and horizon restrictions. Chapter 2 and the book remain incomplete."
           }
         },
         {
@@ -1558,8 +1560,8 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Compiled local source-repair candidate",
-            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
+            "label": "Compiled OGD core in the accepted library",
+            "boundary": "These bounded OGD results are integrated in the accepted library. Each card retains its stated hypotheses, exact source relationship and horizon restrictions. Chapter 2 and the book remain incomplete."
           }
         },
         {
@@ -1580,8 +1582,8 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Compiled local source-repair candidate",
-            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
+            "label": "Compiled OGD core in the accepted library",
+            "boundary": "These bounded OGD results are integrated in the accepted library. Each card retains its stated hypotheses, exact source relationship and horizon restrictions. Chapter 2 and the book remain incomplete."
           }
         },
         {
@@ -1602,9 +1604,32 @@
           },
           "local_status": {
             "status": "compiled",
-            "label": "Compiled local source-repair candidate",
-            "boundary": "Compiled local OGD source-repair candidate, with distinct source/body review. Full harness, actual graph, shared Book registry, final reader/site and PR gates remain separate. This is not all Chapter2 or the whole book, and is not merged or live."
+            "label": "Compiled OGD core in the accepted library",
+            "boundary": "These bounded OGD results are integrated in the accepted library. Each card retains its stated hypotheses, exact source relationship and horizon restrictions. Chapter 2 and the book remain incomplete."
           }
+        },
+        {
+          "label": "Prescient proximal updates: derived affine/quadratic constant-step case",
+          "pages": "printed 14, 265–266 / PDF 26, 277–278",
+          "pdf_page": 277,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{aligned}p_t=z_{t+1}&=P_V(z_t-\\eta g_t),\\quad z_0=x_0,\\\\R_T(u)\\le{}&\\frac{\\|x_0-u\\|^2-\\|z_T-u\\|^2}{2\\eta}\\\\&-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.\\end{aligned}",
+          "plain": "Algorithm 15.8 receives the current loss before choosing its proximal minimizer. For affine loss ell_(t+1)(x)=<g_t,x>+b_t and psi(x)=||x|| squared/2, that minimizer is the actual projection P_V(z_t-eta g_t). Projection optimality gives the one-step inequality; summing along the same recurrence cancels adjacent distances and retains terminal distance and movement energy.",
+          "fallback": "Receive each affine loss before predicting. Project the previous state minus eta times its vector. Signed cumulative loss is at most initial squared distance minus terminal squared distance and all squared movements, divided by positive 2 eta.",
+          "relationship": "These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here.",
+          "contract": {
+            "model": "For a fixed step eta and vector sequence g, z_0=x_0, z_(t+1)=P_V(z_t-eta g_t), and the played prediction is p_t=z_(t+1). The current affine loss is received before p_t is played; future vectors are irrelevant. Lean t=0 is source round 1.",
+            "assumptions": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. eta>0 is fixed, u belongs to V, and x_0 is any ambient point. T is any natural number, including zero. No bounded-domain, bounded-gradient or stochastic assumption is made.",
+            "parameters": "In the finite-dimensional source specialization take X=E, psi(x)=||x|| squared/2, B_psi(a;b)=||a-b|| squared/2, and source index k=t+1. The library also allows complete real Hilbert spaces.",
+            "regret": "R_T(u) is the signed finite sum of affine loss differences at post-update predictions against the same fixed comparator. It is neither averaged nor in expectation.",
+            "guarantee": "The actual projection minimizes the affine proximal objective. The sharp bound retains both residuals; the simpler bound discards only terminal distance. The feasibility, current-inclusive prefix and affine-offset identities are supporting library facts."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Derived affine constant-step chain compiled; general source remains open",
+            "boundary": "These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {
@@ -1635,7 +1660,7 @@
       },
       "proof_bridge": {
         "title": "Projection, one-step progress and the two telescopes",
-        "summary": "The projected-gradient update yields a squared-distance inequality. A supporting-gradient bound turns this into regret; fixed and varying rates then use separate telescoping routes.",
+        "summary": "The projected-gradient update yields a squared-distance inequality. A supporting-gradient bound turns this into regret; fixed and varying rates then use separate telescoping routes. The added prescient chain instead evaluates each current affine loss at its post-update prediction, producing negative movement energy.",
         "steps": [
           {
             "title": "Establish projection and expand the update",
@@ -1666,9 +1691,27 @@
             "detail": "Given D>0, G>0, T>0 and valid bounds on domain distances and actual-run gradient norms, choose eta=D/(G sqrt(T)). Use the fixed-rate bound, replace initial distance by D and energy by T G^2, then discard the nonpositive residual. This uses known bounds, not inaccessible future gradients or the unknown comparator.",
             "math": "\\(\\eta=\\frac D{G\\sqrt T}>0,\\qquad R_T(u)\\le\\frac{D^2}{2\\eta}+\\frac{\\eta G^2T}{2}=DG\\sqrt T.\\)",
             "fallback": "The positive known-bound prescription yields the square-root regret upper bound."
+          },
+          {
+            "title": "Receive the current affine loss and attain its proximal minimum",
+            "detail": "E is a complete real inner-product space and V is a nonempty closed convex subset. Write P_V for the unique nearest-point projection. For a fixed step eta and vector sequence g, z_0=x_0, z_(t+1)=P_V(z_t-eta g_t), and the played prediction is p_t=z_(t+1). The current affine loss is received before p_t is played; future vectors are irrelevant. Lean t=0 is source round 1. With eta>0, the projection supplies the actual minimizer; an argmin oracle is not assumed. The initial center need not belong to V.",
+            "math": "\\begin{aligned}p_t&=P_V(z_t-\\eta g_t),\\\\p_t&\\in\\arg\\min_{v\\in V}\\left[\\langle g_t,v\\rangle+b_t+\\frac{\\|v-z_t\\|^2}{2\\eta}\\right].\\end{aligned}",
+            "fallback": "The current affine proximal minimizer is a projection of the previous center minus eta times the current vector."
+          },
+          {
+            "title": "Use the variational inequality and telescope the same path",
+            "detail": "Projection optimality gives eta<g_t,p_t-u> <= <z_t-p_t,p_t-u>. The squared-distance identity gives the one-step sharp bound. Summation cancels successive comparator distances, including the initial and terminal indexing at T=0.",
+            "math": "\\begin{aligned}2\\eta\\langle g_t,p_t-u\\rangle&\\le\\|z_t-u\\|^2-\\|z_{t+1}-u\\|^2-\\|z_{t+1}-z_t\\|^2,\\\\2\\eta R_T(u)&\\le\\|x_0-u\\|^2-\\|z_T-u\\|^2-\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.\\end{aligned}",
+            "fallback": "The one-step distance difference telescopes, leaving a negative terminal distance and a negative movement sum."
+          },
+          {
+            "title": "Keep the movement term when simplifying the bound",
+            "detail": "Drop only the nonnegative terminal-distance quotient. With constraints the movement is a projected displacement, so replacing it by eta times the current vector is generally invalid. The five canaries cover clipping, its gradient-energy counterexample, an unconstrained equality, current/future information and an outside initial center with an empty horizon.",
+            "math": "R_T(u)\\le\\frac{\\|x_0-u\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.",
+            "fallback": "The simplified bound still subtracts actual movement energy."
           }
         ],
-        "boundary": "The public source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed."
+        "boundary": "The OGD source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. The general nonlinear/Bregman/variable-step theorem and its general constant-step exercise remain open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here."
       }
     },
     {

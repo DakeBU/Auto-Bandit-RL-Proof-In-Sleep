@@ -168,3 +168,4 @@ import Tests.OnlineFTLLimitSemanticsCanary
 import Tests.OnlineFTLOscillationCanary
 import Tests.OnlineLearningChapterAuditCanary
 import Tests.OnlineNonsmoothExamplesCanary
+import Tests.OnlinePrescientLinearCanary

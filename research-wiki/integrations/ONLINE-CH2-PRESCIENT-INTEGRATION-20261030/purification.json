@@ -1,0 +1,101 @@
+{
+  "status": "bounded-proof-reader-and-public-packet-reviewed",
+  "productionDeclarations": [
+    "BanditRL.OnlinePrescientLinear.advance",
+    "BanditRL.OnlinePrescientLinear.iterate",
+    "BanditRL.OnlinePrescientLinear.prediction",
+    "BanditRL.OnlinePrescientLinear.regret",
+    "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+    "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+    "BanditRL.OnlinePrescientLinear.prediction_mem",
+    "BanditRL.OnlinePrescientLinear.prediction_prefix",
+    "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+    "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+    "BanditRL.OnlinePrescientLinear.regret_source_bound"
+  ],
+  "productionProofs": [
+    "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+    "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+    "BanditRL.OnlinePrescientLinear.prediction_mem",
+    "BanditRL.OnlinePrescientLinear.prediction_prefix",
+    "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+    "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+    "BanditRL.OnlinePrescientLinear.regret_source_bound"
+  ],
+  "publicCanaries": [
+    "Tests.OnlinePrescientLinear.active_projection_values",
+    "Tests.OnlinePrescientLinear.constrained_gradient_sign_counterexample",
+    "Tests.OnlinePrescientLinear.unbounded_exact_identity",
+    "Tests.OnlinePrescientLinear.current_and_future_information",
+    "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon"
+  ],
+  "productionPrivateHelpers": 0,
+  "originalProofBytesUnchanged": true,
+  "knownValueConsumers": {
+    "BanditRL.OnlinePrescientLinear.advance": [
+      "BanditRL.OnlinePrescientLinear.iterate",
+      "BanditRL.OnlinePrescientLinear.advance_sharp_bound",
+      "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+      "BanditRL.OnlinePrescientLinear.prediction_prefix",
+      "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+    ],
+    "BanditRL.OnlinePrescientLinear.iterate": [
+      "BanditRL.OnlinePrescientLinear.prediction",
+      "BanditRL.OnlinePrescientLinear.prediction_mem",
+      "BanditRL.OnlinePrescientLinear.prediction_prefix",
+      "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+      "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "Tests.OnlinePrescientLinear.active_projection_values",
+      "Tests.OnlinePrescientLinear.constrained_gradient_sign_counterexample",
+      "Tests.OnlinePrescientLinear.unbounded_exact_identity",
+      "Tests.OnlinePrescientLinear.current_and_future_information",
+      "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon"
+    ],
+    "BanditRL.OnlinePrescientLinear.prediction": [
+      "BanditRL.OnlinePrescientLinear.regret",
+      "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+      "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+      "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "Tests.OnlinePrescientLinear.active_projection_values",
+      "Tests.OnlinePrescientLinear.constrained_gradient_sign_counterexample",
+      "Tests.OnlinePrescientLinear.unbounded_exact_identity",
+      "Tests.OnlinePrescientLinear.current_and_future_information",
+      "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon"
+    ],
+    "BanditRL.OnlinePrescientLinear.regret": [
+      "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference",
+      "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+      "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "Tests.OnlinePrescientLinear.active_projection_values",
+      "Tests.OnlinePrescientLinear.constrained_gradient_sign_counterexample",
+      "Tests.OnlinePrescientLinear.unbounded_exact_identity",
+      "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon"
+    ],
+    "BanditRL.OnlinePrescientLinear.advance_sharp_bound": [
+      "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
+      "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+    ],
+    "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer": [],
+    "BanditRL.OnlinePrescientLinear.prediction_mem": [],
+    "BanditRL.OnlinePrescientLinear.prediction_prefix": [
+      "Tests.OnlinePrescientLinear.current_and_future_information"
+    ],
+    "BanditRL.OnlinePrescientLinear.regret_eq_loss_difference": [],
+    "BanditRL.OnlinePrescientLinear.regret_sharp_bound": [
+      "BanditRL.OnlinePrescientLinear.regret_source_bound",
+      "Tests.OnlinePrescientLinear.outside_initial_center_and_empty_horizon"
+    ],
+    "BanditRL.OnlinePrescientLinear.regret_source_bound": []
+  },
+  "duplicateAudit": "One shared advance_sharp_bound produces proximal minimization and the sharp telescope. regret_source_bound is an explicit weaker residual-dropping interface. Feasibility, current-inclusive prefix and offset cancellation have distinct statements. No duplicate projection or second Lean project is introduced.",
+  "deadCodeAudit": "All eleven declarations have an actual canonical consumer, a concrete canary or a public reader/algorithm role. Proof-local algebraic facts are not promoted as source results.",
+  "canaryBoundary": "Clipping and its invalid-gradient-energy counterexample, whole-line identity, current/future dependence, outside initial center and zero horizon. Three original API values also replayed, without counting them as production results.",
+  "originalArtifacts": "All 343 original historical paths retained with exact Git objects and dispositions. No historical failure, helper or old lifecycle version deleted.",
+  "reader": "Seven explicit lessons, one derived source-context card, three proof steps, six default route cards. Five old OGD statuses corrected; old mathematics preserved.",
+  "failureHistory": "Source graph v1 omitted V subset X and first-order applicability gap; v2 reviewed correction retained. Compiled probe v1/v2 namespace contexts repaired without changing proofs. Reader v2 missing provenance field corrected in v3. All originals preserved.",
+  "remainingBoundary": "Four definitions and seven proofs establish one derived affine-loss, quadratic-potential, fixed-positive-step producer chain in complete real Hilbert spaces, with five canaries. Current loss is received before prediction. Initial center may be outside V; comparator is feasible for bounds; T=0 is included. Negative terminal distance and actual movement energy remain explicit. General nonlinear/Bregman/variable-step Theorem15.30 and its full constant-step exercise remain open. The first-order applicability gap, variable-step indexing ambiguity and general argmin attainment boundary are not repaired. Eight required forward containers and one navigation item remain; chapter proof denominator is unknown. No chapter/book completion or source repair is claimed.",
+  "finalPackageReviewAccepted": true,
+  "finalCommittedSourceLinksAccepted": false,
+  "independentPublicReviewSHA256": "4158730a3ceeb2c12019e1a60944db4ed17f713de165dd6dc5f749943b2b35ee",
+  "reviewScope": "Bounded materialized packet; not final committed candidate or publishing gates."
+}

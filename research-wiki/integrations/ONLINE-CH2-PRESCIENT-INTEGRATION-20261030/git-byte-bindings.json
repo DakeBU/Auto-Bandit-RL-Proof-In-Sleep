@@ -1,0 +1,33 @@
+{
+  "schema": "abrl-git-byte-bindings-v1",
+  "recordedAt": "2026-10-30T11:53:58.594828+00:00",
+  "candidateCommit": "186e007de9571ff56498d819c54aeaaac64d5793",
+  "scope": "Append-only clarification of the reviewed precommit working-tree hashes versus committed Git blob bytes.",
+  "interpretation": {
+    "original-path-continuations.json": "For the two named rows, currentSHA256 records precommit working-tree bytes, not the Git blob hash.",
+    "whole-original-continuation.json": "For the two named paths, candidateBindings records precommit working-tree bytes, not the Git blob hash."
+  },
+  "historicalFieldsPreserved": true,
+  "independentReviewSHA256": "ad4bb07fcfb8e31b9df2f4dad97750c7acc7fa06ba97524ab549d99260a0a3b8",
+  "bindings": [
+    {
+      "path": "website/content/chapters.json",
+      "originalPathRow": "PR205-0362",
+      "precommitWorkingSHA256": "d23109a0a6270850ee1f060dbbb1d2d6810dd9ea9a92b94f58e181ac68a46b25",
+      "committedLFSHA256": "28822377e640eb8b27c75efa0858ca15cdd2ca88056e92e4904d50cea7f4505e",
+      "conversion": "Replace each CRLF byte pair (0d 0a) with LF (0a); no parsing, reserialization or other transformation.",
+      "exactConversionVerified": true,
+      "parsedJSONEqual": true
+    },
+    {
+      "path": "website/content/highlights.json",
+      "originalPathRow": "PR205-0363",
+      "precommitWorkingSHA256": "109bc0d500aaa3a18e97d382c074356e65e04d3eabac7c809c4259b7c181315e",
+      "committedLFSHA256": "80ed8f8cf4bcdc15fe665546b550145098aa2e1d33412859310a18a32aee8227",
+      "conversion": "Replace each CRLF byte pair (0d 0a) with LF (0a); no parsing, reserialization or other transformation.",
+      "exactConversionVerified": true,
+      "parsedJSONEqual": true
+    }
+  ],
+  "successorRule": "These bindings remain valid for a descendant only while its corresponding committed file bytes are unchanged. Other candidate/runtime/publication gates remain separate."
+}

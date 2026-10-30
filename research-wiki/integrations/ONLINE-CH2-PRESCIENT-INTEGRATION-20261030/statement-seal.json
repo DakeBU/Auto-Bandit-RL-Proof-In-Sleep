@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-30T10:46:46.252677+00:00",
+  "originalHead": "29086b6f3a033f6536054f4d9a06ae0e9b2f8a91",
+  "acceptedMain": "17c40c5b4672ca87c9ca3da9729c324d5584e153",
+  "proofModuleGitBlob": "aaa8db0b65bed60a1f07d890713720c2c275f21e",
+  "proofModuleSHA256": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc",
+  "dependencyModuleSHA256": "7e74ae994bd9b7c7d0b27f4d3af6753dc9e66b720fef99f7117c8639eb9a2ffd",
+  "declarations": [
+    {
+      "kind": "def",
+      "name": "advance",
+      "text": "def advance (V : Domain E) (η : ℝ) (g x : E) : E :=\n  project V (x - η • g)",
+      "sha256": "2eb77f8c86936b1086746116db036c9c6badb299ef08f3769c044890e5e5c7cd"
+    },
+    {
+      "kind": "def",
+      "name": "iterate",
+      "text": "def iterate (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) : ℕ → E\n  | 0 => x0\n  | t + 1 => advance V η (g t) (iterate V η g x0 t)",
+      "sha256": "3bdc682b8efae317a9ed746fc288bc6cf977fbed2a1911241c7d9ff11cbcc2cc"
+    },
+    {
+      "kind": "def",
+      "name": "prediction",
+      "text": "def prediction (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) : E :=\n  iterate V η g x0 (t + 1)",
+      "sha256": "758d8914942c43499bfc5715f908c06590a201c92fd5c0f0801b1e92f128ac2e"
+    },
+    {
+      "kind": "def",
+      "name": "regret",
+      "text": "def regret (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 u : E) (T : ℕ) : ℝ :=\n  ∑ t ∈ range T, inner ℝ (g t) (prediction V η g x0 t - u)",
+      "sha256": "9cca4292747332521850c68fbdc1da9e55add8826e7ede0e393b86192b891815"
+    },
+    {
+      "kind": "theorem",
+      "name": "advance_sharp_bound",
+      "text": "theorem advance_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g x u : E)\n    (hu : u ∈ V.carrier) :\n    inner ℝ g (advance V η g x - u) ≤\n      (‖x - u‖ ^ 2 - ‖advance V η g x - u‖ ^ 2 - ‖advance V η g x - x‖ ^ 2) /\n        (2 * η)",
+      "sha256": "d3ba3b9fe5da9ee7dee5f38bee401067bd3d03e910229a506193dc04738781a0"
+    },
+    {
+      "kind": "theorem",
+      "name": "advance_proximal_minimizer",
+      "text": "theorem advance_proximal_minimizer (V : Domain E) (η : ℝ) (hη : 0 < η) (g x : E)\n    (b : ℝ) :\n    advance V η g x ∈ V.carrier ∧ ∀ u ∈ V.carrier,\n      inner ℝ g (advance V η g x) + b + ‖advance V η g x - x‖ ^ 2 / (2 * η) ≤\n        inner ℝ g u + b + ‖u - x‖ ^ 2 / (2 * η)",
+      "sha256": "bb6d7567b3d79821e37797609329107b0316262a145479e1b6922d9c3a9a8438"
+    },
+    {
+      "kind": "theorem",
+      "name": "prediction_mem",
+      "text": "theorem prediction_mem (V : Domain E) (η : ℝ) (g : ℕ → E) (x0 : E) (t : ℕ) :\n    prediction V η g x0 t ∈ V.carrier",
+      "sha256": "85157678e17f08994c93886b5cb1cbee0330096f0a3302dfd7bba352d1bf2d69"
+    },
+    {
+      "kind": "theorem",
+      "name": "prediction_prefix",
+      "text": "theorem prediction_prefix (V : Domain E) (η : ℝ) (g g' : ℕ → E) (x0 : E) (t : ℕ)\n    (h : ∀ s ≤ t, g s = g' s) :\n    prediction V η g x0 t = prediction V η g' x0 t",
+      "sha256": "c43443746b4eb699a025b9d50c4913e1c355b69c4a6639f996cd497cb3e47f94"
+    },
+    {
+      "kind": "theorem",
+      "name": "regret_eq_loss_difference",
+      "text": "theorem regret_eq_loss_difference (V : Domain E) (η : ℝ) (g : ℕ → E) (b : ℕ → ℝ)\n    (x0 u : E) (T : ℕ) :\n    regret V η g x0 u T =\n      ∑ t ∈ range T, ((inner ℝ (g t) (prediction V η g x0 t) + b t) -\n        (inner ℝ (g t) u + b t))",
+      "sha256": "63a00723de0e73d075896e0423e28375d5ae74cdd47dfab7190b8109d45903fe"
+    },
+    {
+      "kind": "theorem",
+      "name": "regret_sharp_bound",
+      "text": "theorem regret_sharp_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E)\n    (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) :\n    regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) -\n      ‖iterate V η g x0 T - u‖ ^ 2 / (2 * η) -\n      (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)",
+      "sha256": "8f337d71832db5325b023e6b5a5a184e138ae45a443cbbbcaf66f2f11e4fbba4"
+    },
+    {
+      "kind": "theorem",
+      "name": "regret_source_bound",
+      "text": "theorem regret_source_bound (V : Domain E) (η : ℝ) (hη : 0 < η) (g : ℕ → E)\n    (x0 u : E) (T : ℕ) (hu : u ∈ V.carrier) :\n    regret V η g x0 u T ≤ ‖x0 - u‖ ^ 2 / (2 * η) -\n      (∑ t ∈ range T, ‖prediction V η g x0 t - iterate V η g x0 t‖ ^ 2) / (2 * η)",
+      "sha256": "eb167e05b4b6e961cc2fe51c65dbce45380c0ffa6433f94ed0cbddf4dfcaa944"
+    }
+  ],
+  "expandedDomain": "structure Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where\n  carrier : Set E\n  nonempty : carrier.Nonempty\n  closed : IsClosed carrier\n  convex : Convex ℝ carrier",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10, 2026-06-21",
+    "sourceURL": "https://arxiv.org/pdf/1912.13213v10",
+    "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pages": [
+      {
+        "pdfPage": 26,
+        "printedPage": 14,
+        "text": "pdf-page-026.txt",
+        "textSHA256": "0c909b41f4dbda2a4f76f0801ec0549a6efd4572a283334c227d27c134250334",
+        "image": "pdf-page-026.png",
+        "imageSHA256": "b235c5a94393ae03209fc405d2eab6b6d072019699c90beff41652dea5d57cca"
+      },
+      {
+        "pdfPage": 277,
+        "printedPage": 265,
+        "text": "pdf-page-277.txt",
+        "textSHA256": "d05e5d5e002e533738b7387cd2b831c9909b9bcebda74be6a22ccd506c03bbc1",
+        "image": "pdf-page-277.png",
+        "imageSHA256": "4acc6716e5e1a184af00e0f0dcdebf044c25ba315fbb7d9534954bb447876039"
+      },
+      {
+        "pdfPage": 278,
+        "printedPage": 266,
+        "text": "pdf-page-278.txt",
+        "textSHA256": "46ca49e33d4e034b92d24ec36db494e7644bc5eac322d7b7efd25688cda94bf8",
+        "image": "pdf-page-278.png",
+        "imageSHA256": "8ad3bd85254258ecf50152dc0d0d9257d0ed22ef5056d5199c8226d1a0162028"
+      }
+    ],
+    "scope": "Chapter2 printed14 first post-Theorem2.13 bullet and its Section15.5.1 forward reference; Algorithm15.8 and full Theorem15.30 statement/proof printed265-266, including the constant-step exercise. Classify adjacent prose and unrelated Algorithm15.9/Theorem15.31 as context/excluded with reason. Preserve every in-scope source region and any source gaps. Do not infer the Lean implementation or approve a source repair.",
+    "supersedes": {
+      "path": "packet.json",
+      "sha256": "d7514362118fa67e641221d2f88fdbfa5f037e414b4ca7242bdc452e5f4671f1",
+      "reason": "Correct title transcription against pinned PDF title page; source bytes and scope unchanged."
+    }
+  },
+  "sourceFacingSignaturesFrozenBeforePort": true,
+  "blindInputSHA256": "b4f916f4627e61a0ee0158a5dd5c649a3a4af9df9df4239bfe7f9694c4ae83dd",
+  "sourcePacketSHA256": "f6969f8899d0a65e8576b2fd056f4c137ccfbd8c2598ab465397d0b261ba6e8e",
+  "semanticReview": "pending",
+  "productionEdited": false,
+  "statementChangeAllowedWithoutSuccessorSeal": false,
+  "supersedes": {
+    "path": "batch34-preport-statement-seal-v1.json",
+    "sha256": "21896a28a424cd1a1275c9bb8109df9af48f0ea77f8f819a072f60843aac2424",
+    "reason": "Source title metadata corrected only; frozen declaration texts and proof bytes unchanged."
+  }
+}
