@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "artifact_role": "Independent source-blind mathematical reconstruction of supplied Lean interfaces, not a semantic-match verdict",
+  "input": {
+    "path": "private-maintenance/github-maintenance-goal-20261011/batch36-blind-input-v1/packet.json",
+    "sha256": "73c197ffc6f5b4c4d69da4761d476962e3451b32ffbe69ca5080ec0d8efa69ef"
+  },
+  "actor": {
+    "task_name": "/root/batch36_blind_decoder",
+    "role": "independent source-blind Lean mathematical decoder"
+  },
+  "scope": {
+    "inspected_files": [
+      "private-maintenance/github-maintenance-goal-20261011/batch36-blind-input-v1/packet.json"
+    ],
+    "mathlib_files_inspected": [],
+    "source_identity_inferred_or_searched": false,
+    "source_text_inspected": false,
+    "proof_bodies_inspected": false,
+    "nearby_files_inspected": false,
+    "prior_verdicts_inspected": false,
+    "compilation_run": false,
+    "source_fidelity_assessed": false
+  },
+  "semantic_conventions": [
+    "All unbound theorem parameters and displayed context types/typeclasses are universally quantified. Typeclass assumptions are part of each interface.",
+    "For normed real vector spaces, DifferentiableAt is ambient Fréchet differentiability. It asserts existence of a continuous linear derivative giving a first-order approximation with error o(||h||). It is not DifferentiableWithinAt.",
+    "fderiv is a total operator valued in continuous linear maps. At a nondifferentiable point it is the zero map. No totality caveat removes explicit DifferentiableAt hypotheses from a theorem interface.",
+    "ConvexOn ℝ S f includes convexity of S plus f(a x+b y)≤a f(x)+b f(y) for x,y∈S, a,b≥0, a+b=1. Convexity of S means a x+b y∈S for these choices.",
+    "StrictConvexOn ℝ S f includes convexity of S plus the strict inequality for x≠y and a,b>0 with a+b=1.",
+    "IsMinOn g S p is the comparison ∀z∈S, g(p)≤g(z). Feasibility p∈S is separate. It is global on the given S, not a merely local minimum.",
+    "Dψ(a,b) always uses derivative base b and displacement a-b. Fractional numerals in the concrete tests are real numbers.",
+    "No source/reference matching, proof correctness, successful Lean elaboration/compilation, or proof dependency is established by this reconstruction."
+  ],
+  "declarations": [
+    {
+      "id": "D",
+      "natural_language": "For an arbitrary real-valued function on a real normed vector space, D at ordered arguments (x,y) is the function value at x minus the function value at y minus the total Fréchet-derivative operator at y applied to x-y. The second argument is the derivative base point, and the first is the evaluation point.",
+      "latex": "D_\\psi(x,y):=\\psi(x)-\\psi(y)-\\mathrm{fderiv}_{\\mathbb R}\\psi(y)[x-y].",
+      "semantic_slots": {
+        "objects_spaces": "E is a type equipped with a normed additive commutative group and a real normed-space structure. Thus E is a real normed vector space; completeness, finite dimension and an inner product are not assumed. The codomain is the real numbers. The derivative operator has type E →L[ℝ] ℝ, a continuous real-linear map.",
+        "quantifiers": "The definition is available for every such E, every ψ:E→ℝ, and every ordered pair x,y∈E.",
+        "assumptions": "There are no regularity, convexity or set-membership hypotheses.",
+        "conclusions": "This is a definition of a real number, not a theorem asserting a distance property.",
+        "constants_normalization": "The coefficient of the derivative term is exactly 1. The derivative is evaluated at y and applied to x-y; there is no 1/2 factor or norm. fderiv is total: when ψ is not Fréchet differentiable at y it returns the zero continuous linear map, so in that case the defined expression is ψ(x)-ψ(y).",
+        "probability_feedback": "No randomness, probability space, observations, feedback protocol or stochastic quantification occurs.",
+        "exclusions": "No nonnegativity, symmetry, triangle inequality, positive definiteness, differentiability or existence of an optimization solution is asserted. Noncomputable is an elaboration/computability context, not an additional mathematical hypothesis."
+      }
+    },
+    {
+      "id": "claim_1",
+      "natural_language": "Every diagonal value of D is zero, for every function, without any differentiability assumption.",
+      "latex": "\\forall\\psi:E\\to\\mathbb R\\;\\forall x\\in E,\\quad D_\\psi(x,x)=0.",
+      "semantic_slots": {
+        "objects_spaces": "E is any real normed vector space as in D; ψ is real-valued.",
+        "quantifiers": "Universally quantified over E and its displayed structures, every ψ:E→ℝ and x∈E.",
+        "assumptions": "None beyond the normed-vector-space structures.",
+        "conclusions": "Dψ(x,x)=0.",
+        "constants_normalization": "Both ordered arguments equal x. Even a fallback fderiv value is a linear map and sends the zero displacement to zero.",
+        "probability_feedback": "No probability or feedback objects occur.",
+        "exclusions": "The converse Dψ(x,y)=0⇒x=y is not asserted. Nor are positivity, symmetry or differentiability asserted."
+      }
+    },
+    {
+      "id": "claim_2",
+      "natural_language": "An exact three-point algebraic identity holds for arbitrary ψ and x,y,z: D(z,x)+D(x,y)-D(z,y) is the difference of the total derivative maps at y and x applied to z-x.",
+      "latex": "\\forall\\psi:E\\to\\mathbb R\\;\\forall x,y,z\\in E,\\quad D_\\psi(z,x)+D_\\psi(x,y)-D_\\psi(z,y)=\\bigl(\\mathrm{fderiv}_{\\mathbb R}\\psi(y)-\\mathrm{fderiv}_{\\mathbb R}\\psi(x)\\bigr)[z-x].",
+      "semantic_slots": {
+        "objects_spaces": "E is any real normed vector space. The subtraction on the right is subtraction in the space of continuous real-linear maps E→ℝ, followed by evaluation.",
+        "quantifiers": "Universal over ψ and all three points x,y,z, without a feasible set.",
+        "assumptions": "No differentiability or convexity assumptions.",
+        "conclusions": "The displayed identity, with exactly the ordered pairs (z,x), (x,y), (z,y).",
+        "constants_normalization": "All three D terms have unit coefficients with signs +,+,−. The map difference is derivative at y minus derivative at x and the displacement is z-x. fderiv retains its total-function convention at both points.",
+        "probability_feedback": "No probability or feedback objects occur.",
+        "exclusions": "No derivative existence is implied. No inequality, nonnegativity, symmetry or norm/inner-product representation is asserted."
+      }
+    },
+    {
+      "id": "claim_3",
+      "natural_language": "If ψ is convex on X, both x and y belong to X, and ψ is Fréchet differentiable in the ambient space at the second point y, then the ordered value Dψ(x,y) is nonnegative.",
+      "latex": "\\operatorname{ConvexOn}(\\mathbb R,X,\\psi)\\;\\land\\;x,y\\in X\\;\\land\\;\\operatorname{DifferentiableAt}_{\\mathbb R}(\\psi,y)\\quad\\Longrightarrow\\quad 0\\le D_\\psi(x,y).",
+      "semantic_slots": {
+        "objects_spaces": "E is any real normed vector space; X⊆E; ψ:E→ℝ; x,y∈E.",
+        "quantifiers": "Universal over X, ψ, x and y satisfying the named assumptions.",
+        "assumptions": "ConvexOn includes convexity of X and the inequality ψ(a v+b w)≤aψ(v)+bψ(w) for every v,w∈X and every a,b≥0 with a+b=1. Membership x∈X and y∈X is explicit. DifferentiableAt is ambient real Fréchet differentiability at y, not merely differentiation along or within X.",
+        "conclusions": "0≤Dψ(x,y), equivalently ψ(x)≥ψ(y)+dψ(y)[x-y] under the differentiability assumption.",
+        "constants_normalization": "The derivative base is the second argument y; no derivative at x is required. There is no strong-convexity parameter, quadratic lower bound or multiplicative scaling.",
+        "probability_feedback": "No probability or feedback objects occur.",
+        "exclusions": "No strict convexity, strict positivity for distinct points, symmetry, differentiability at x, openness of X, completeness or finite dimension is assumed or concluded."
+      }
+    },
+    {
+      "id": "claim_4",
+      "natural_language": "For a convex objective f on V, a positive real η, and an explicitly feasible global minimizer p of z↦f(z)+η⁻¹Dψ(z,x) over V, ambient differentiability of ψ at x and p implies the displayed bound for every feasible comparison point u. The reference point x need not be feasible.",
+      "latex": "\\begin{gathered}\\eta>0,\\ p\\in V,\\ \\operatorname{ConvexOn}(\\mathbb R,V,f),\\ \\psi\\text{ Fr\\acute echet differentiable at }x,p,\\\\\\forall z\\in V:\\ f(p)+\\eta^{-1}D_\\psi(p,x)\\le f(z)+\\eta^{-1}D_\\psi(z,x)\\\\\\Longrightarrow\\quad\\forall u\\in V:\\ \\eta\\bigl(f(p)-f(u)\\bigr)\\le D_\\psi(u,x)-D_\\psi(u,p)-D_\\psi(p,x).\\end{gathered}",
+      "semantic_slots": {
+        "objects_spaces": "E is any real normed vector space; V⊆E; f,ψ:E→ℝ; η∈ℝ; x,p∈E. All functions are defined on the whole ambient E even though optimization is restricted to V.",
+        "quantifiers": "Universal over these data and proofs of the displayed hypotheses; the conclusion quantifies over every u:E with u∈V.",
+        "assumptions": "η>0; p∈V; ConvexOn ℝ V f, including convexity of V and its usual convex-combination inequality for f; ambient DifferentiableAt ℝ ψ x and DifferentiableAt ℝ ψ p. IsMinOn of g(z)=f(z)+η⁻¹Dψ(z,x) at p means ∀z∈V, g(p)≤g(z). It does not itself assert p∈V, which is separately supplied by hp.",
+        "conclusions": "For every feasible u, η(f(p)-f(u))≤Dψ(u,x)-Dψ(u,p)-Dψ(p,x). The conclusion is a deterministic comparison inequality conditional on the supplied minimizer.",
+        "constants_normalization": "The minimization objective has the reciprocal-step coefficient η⁻¹ multiplying D, and the conclusion has η multiplying the objective difference. η>0 ensures a nonzero reciprocal. Derivatives at x and p serve as the second-argument bases of the respective D terms. No derivative at u is assumed. The orientations and minus signs are exactly as displayed.",
+        "probability_feedback": "No randomness, noisy feedback, sampled gradient, iteration index or observation model occurs.",
+        "exclusions": "There is no assumption x∈V, no convexity or strict convexity assumption on ψ, and no differentiability assumption on f. V need not be open or closed. No existence or uniqueness of p is proved by this interface, no iterative convergence rate is stated, and no positivity of each individual D term follows from the listed assumptions alone. No inner product or completeness is required."
+      }
+    },
+    {
+      "id": "claim_5",
+      "natural_language": "In a complete real inner-product space, at a differentiability base point y the continuous derivative term defining D equals the inner product of the gradient at y with x-y.",
+      "latex": "\\operatorname{DifferentiableAt}_{\\mathbb R}(\\psi,y)\\quad\\Longrightarrow\\quad D_\\psi(x,y)=\\psi(x)-\\psi(y)-\\langle\\nabla\\psi(y),x-y\\rangle_{\\mathbb R}.",
+      "semantic_slots": {
+        "objects_spaces": "E has a normed additive commutative group, a compatible real inner-product-space structure, and CompleteSpace E. Thus this declaration is over a real Hilbert space, potentially infinite-dimensional. The inner-product structure supplies the real normed-space structure needed by D. ψ:E→ℝ and x,y∈E.",
+        "quantifiers": "Universal over all such E and every ψ,x,y satisfying differentiability at y.",
+        "assumptions": "Ambient real Fréchet differentiability of ψ at y, together with the displayed complete inner-product-space typeclasses.",
+        "conclusions": "Dψ(x,y)=ψ(x)-ψ(y)-⟨gradient ψ y,x-y⟩ℝ. The gradient is the vector representing the continuous derivative by the real inner product.",
+        "constants_normalization": "The gradient is evaluated at the second point y and occupies the first inner-product argument. The displacement x-y is second. There is no scaling constant. Under hd this is the actual derivative representation, not an invocation of a fallback derivative at a nondifferentiable point.",
+        "probability_feedback": "No probability or feedback objects occur.",
+        "exclusions": "No convexity, feasible-set membership, finite dimension, differentiability at x, or nonnegativity assertion is present. The displayed interface includes completeness and does not assert this representation for arbitrary normed spaces."
+      }
+    },
+    {
+      "id": "claim_6",
+      "natural_language": "A closed conjunction asserts seven facts about the explicit real function φ(z)=z⁴/4+z²/2, the absolute-value objective, reference point 1/2 and candidate minimizer zero. Every conjunct is listed separately below.",
+      "latex": "\\text{The seven formulas below hold jointly (logical conjunction).}",
+      "semantic_slots": {
+        "objects_spaces": "All variables and function values are real. The set univ is the entire real line. Define the decoding abbreviation φ(z)=z⁴/4+z²/2.",
+        "quantifiers": "There are no external parameters or premises. The second conjunct universally compares against every z∈ℝ through IsMinOn. The sixth explicitly quantifies over every u∈ℝ. Strict convexity contains its own point-and-weight quantifiers.",
+        "assumptions": "No assumptions are supplied: each component is part of the conclusion. StrictConvexOn includes convexity of the domain and φ(a v+b w)<aφ(v)+bφ(w) whenever v,w lie in that domain, v≠w, a>0, b>0, and a+b=1. IsMinOn means the global comparison in conjunct 2; membership of zero in univ is automatic from this particular domain, not part of the general IsMinOn predicate.",
+        "conclusions": "Exactly the seven conjuncts enumerated below: strict convexity, global minimality, nondifferentiability of abs at zero, the two oriented D values, an all-real-points inequality, and a standalone scalar comparison.",
+        "constants_normalization": "φ has quartic coefficient 1/4 and quadratic coefficient 1/2. The regularizer coefficient in the minimization expression is 1 (compatible with η=1). The base is x=1/2 and minimizer is p=0. The two unequal ordered values are 9/64 and 11/64, in the displayed order. The final constants are −1/2 and −5/16. As a decoding aid, ordinary polynomial differentiation gives φ′(t)=t³+t, making the sixth conjunct’s right side −5u/8; substituting u=1/2 yields the final numerical comparison. This algebraic correspondence is not evidence of a proof dependency.",
+        "probability_feedback": "All conjuncts are deterministic. No probability distribution, noisy feedback or sampling is asserted.",
+        "exclusions": "Logical conjunction does not show that one component was proved using another or using claim_4. No implementation or proof-term dependency is visible. These are facts about this explicit function, not a theorem claiming symmetry for all D, smoothness of abs, a general minimizer-existence theorem or an iterative algorithm. No uniqueness claim is explicitly included."
+      },
+      "conjuncts": [
+        {
+          "index": 1,
+          "natural_language": "The function φ(z)=z⁴/4+z²/2 is strictly convex on all real numbers.",
+          "latex": "\\operatorname{StrictConvexOn}(\\mathbb R,\\mathbb R,\\varphi),\\qquad \\varphi(z)=z^4/4+z^2/2."
+        },
+        {
+          "index": 2,
+          "natural_language": "Zero globally minimizes z↦|z|+Dφ(z,1/2) over all real numbers: its value at zero is no larger than its value at every real z.",
+          "latex": "\\forall z\\in\\mathbb R:\\ |0|+D_\\varphi(0,1/2)\\le |z|+D_\\varphi(z,1/2)."
+        },
+        {
+          "index": 3,
+          "natural_language": "The absolute-value function is not ambient real Fréchet differentiable at zero.",
+          "latex": "\\neg\\operatorname{DifferentiableAt}_{\\mathbb R}(|\\cdot|,0)."
+        },
+        {
+          "index": 4,
+          "natural_language": "The ordered value with evaluation point 1/2 and derivative base zero is 9/64.",
+          "latex": "D_\\varphi(1/2,0)=9/64."
+        },
+        {
+          "index": 5,
+          "natural_language": "The reverse ordered value with evaluation point zero and derivative base 1/2 is 11/64.",
+          "latex": "D_\\varphi(0,1/2)=11/64."
+        },
+        {
+          "index": 6,
+          "natural_language": "For every real comparison point u, −|u| is bounded above by Dφ(u,1/2)−Dφ(u,0)−Dφ(0,1/2).",
+          "latex": "\\forall u\\in\\mathbb R:\\ -|u|\\le D_\\varphi(u,1/2)-D_\\varphi(u,0)-D_\\varphi(0,1/2)."
+        },
+        {
+          "index": 7,
+          "natural_language": "The real-number comparison −1/2≤−5/16 holds.",
+          "latex": "(-1/2:\\mathbb R)\\le-5/16."
+        }
+      ]
+    },
+    {
+      "id": "claim_7",
+      "natural_language": "A closed conjunction asserts six facts for q(z)=z²/2 and the absolute-value objective on [0,1], with the outside reference point −1 and feasible candidate minimizer zero. Every conjunct is listed separately below.",
+      "latex": "\\text{The six formulas below hold jointly (logical conjunction).}",
+      "semantic_slots": {
+        "objects_spaces": "The ambient space is ℝ. Define q(z)=z²/2. univ means ℝ. Icc 0 1 is the closed interval {t:0≤t and t≤1}.",
+        "quantifiers": "No external parameters or premises. IsMinOn universally compares against z∈[0,1]; the fifth conjunct explicitly quantifies over u∈[0,1]. Strict convexity contains the usual distinct-point and positive-weight quantifiers.",
+        "assumptions": "None: all six components are asserted conclusions. StrictConvexOn includes a convex domain and the strict convex-combination inequality for distinct real points and strictly positive weights summing to one. IsMinOn expands to the comparison in conjunct 3 and does not inherently include membership, although 0∈[0,1] is immediate for this concrete interval.",
+        "conclusions": "Exactly six conjuncts: global strict convexity of q, exclusion of −1 from [0,1], minimality at zero over that interval, the value Dq(0,−1)=1/2, the feasible-comparison inequality, and a separate numerical inequality.",
+        "constants_normalization": "q has coefficient 1/2. The regularizer coefficient is 1 (compatible with η=1); the reference is x=−1 and candidate minimizer p=0. The fifth conjunct uses orientations (u,−1), (u,0), and (0,−1), with signs +,−,−. Ordinary polynomial differentiation gives Dq(a,b)=(a-b)²/2, so that right side is u; at u=1/2 it matches the last scalar comparison. This is a decoding observation, not proof-dependency evidence.",
+        "probability_feedback": "No randomness, stochastic quantifiers, observations or feedback protocol occurs.",
+        "exclusions": "The all-u inequality is limited to u∈[0,1]; the interface does not quantify it over the whole line. Logical conjunction alone establishes no use of claim_4 or dependency between conjuncts. There is no general existence/uniqueness claim, iterative convergence result, or claim that reference points must be feasible. This signature has no separate nondifferentiability conjunct."
+      },
+      "conjuncts": [
+        {
+          "index": 1,
+          "natural_language": "The function q(z)=z²/2 is strictly convex on the whole real line.",
+          "latex": "\\operatorname{StrictConvexOn}(\\mathbb R,\\mathbb R,q),\\qquad q(z)=z^2/2."
+        },
+        {
+          "index": 2,
+          "natural_language": "The reference point −1 does not lie in the closed feasible interval [0,1].",
+          "latex": "-1\\notin[0,1],\\qquad[0,1]=\\{t\\in\\mathbb R:0\\le t\\le1\\}."
+        },
+        {
+          "index": 3,
+          "natural_language": "Zero globally minimizes z↦|z|+Dq(z,−1) over the interval [0,1].",
+          "latex": "\\forall z\\in[0,1]:\\ |0|+D_q(0,-1)\\le |z|+D_q(z,-1)."
+        },
+        {
+          "index": 4,
+          "natural_language": "The ordered value at evaluation point zero and derivative base −1 equals 1/2.",
+          "latex": "D_q(0,-1)=1/2."
+        },
+        {
+          "index": 5,
+          "natural_language": "For every u in the closed interval [0,1], −|u|≤Dq(u,−1)−Dq(u,0)−Dq(0,−1).",
+          "latex": "\\forall u\\in[0,1]:\\ -|u|\\le D_q(u,-1)-D_q(u,0)-D_q(0,-1)."
+        },
+        {
+          "index": 6,
+          "natural_language": "The real-number comparison −1/2≤1/2 holds.",
+          "latex": "(-1/2:\\mathbb R)\\le1/2."
+        }
+      ]
+    }
+  ]
+}

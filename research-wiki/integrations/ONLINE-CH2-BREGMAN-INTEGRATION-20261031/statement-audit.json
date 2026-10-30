@@ -1,0 +1,461 @@
+{
+  "head": "65e21be78abfbd4255798e54265ce418651ef70f",
+  "interfaces": [
+    {
+      "id": "D",
+      "kind": "def",
+      "name": "divergence",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "def divergence (ψ : E → ℝ) (x y : E) : ℝ :=\n  ψ x - ψ y - fderiv ℝ ψ y (x - y)",
+      "signatureSHA256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "normalizedStatementSHA256": "fd6b669fbcff45436c3047c0d5293a88ebffddc132e3d9232e7707a696fdaeff",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59",
+      "reviewedOriginalSourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "metadataOnlyChange": "research-wiki/integrations/ONLINE-CH2-BREGMAN-INTEGRATION-20261031/metadata-pointer-change.json"
+    },
+    {
+      "id": "claim_1",
+      "kind": "theorem",
+      "name": "divergence_self",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem divergence_self (ψ : E → ℝ) (x : E) :\n    divergence ψ x x = 0",
+      "signatureSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "normalizedStatementSHA256": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59",
+      "reviewedOriginalSourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "metadataOnlyChange": "research-wiki/integrations/ONLINE-CH2-BREGMAN-INTEGRATION-20261031/metadata-pointer-change.json"
+    },
+    {
+      "id": "claim_2",
+      "kind": "theorem",
+      "name": "three_point_identity",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem three_point_identity (ψ : E → ℝ) (x y z : E) :\n    divergence ψ z x + divergence ψ x y - divergence ψ z y =\n      (fderiv ℝ ψ y - fderiv ℝ ψ x) (z - x)",
+      "signatureSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "normalizedStatementSHA256": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59",
+      "reviewedOriginalSourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "metadataOnlyChange": "research-wiki/integrations/ONLINE-CH2-BREGMAN-INTEGRATION-20261031/metadata-pointer-change.json"
+    },
+    {
+      "id": "claim_3",
+      "kind": "theorem",
+      "name": "divergence_nonneg",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem divergence_nonneg (X : Set E) (ψ : E → ℝ) (hψ : ConvexOn ℝ X ψ)\n    (x y : E) (hx : x ∈ X) (hy : y ∈ X) (hd : DifferentiableAt ℝ ψ y) :\n    0 ≤ divergence ψ x y",
+      "signatureSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "normalizedStatementSHA256": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59",
+      "reviewedOriginalSourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "metadataOnlyChange": "research-wiki/integrations/ONLINE-CH2-BREGMAN-INTEGRATION-20261031/metadata-pointer-change.json"
+    },
+    {
+      "id": "claim_4",
+      "kind": "theorem",
+      "name": "proximal_one_step",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem proximal_one_step (V : Set E) (f ψ : E → ℝ) (η : ℝ) (hη : 0 < η)\n    (x p : E) (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)\n    (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) :\n    ∀ u ∈ V, η * (f p - f u) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "signatureSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "normalizedStatementSHA256": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59",
+      "reviewedOriginalSourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "metadataOnlyChange": "research-wiki/integrations/ONLINE-CH2-BREGMAN-INTEGRATION-20261031/metadata-pointer-change.json"
+    },
+    {
+      "id": "claim_5",
+      "kind": "theorem",
+      "name": "divergence_eq_gradient",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "statement": "theorem divergence_eq_gradient (ψ : E → ℝ) (x y : E)\n    (hd : DifferentiableAt ℝ ψ y) :\n    divergence ψ x y = ψ x - ψ y - inner ℝ (gradient ψ y) (x - y)",
+      "signatureSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "normalizedStatementSHA256": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59",
+      "reviewedOriginalSourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f",
+      "metadataOnlyChange": "research-wiki/integrations/ONLINE-CH2-BREGMAN-INTEGRATION-20261031/metadata-pointer-change.json"
+    },
+    {
+      "id": "claim_6",
+      "kind": "theorem",
+      "name": "nonquadratic_nonsmooth",
+      "path": "Tests/OnlineBregmanProximalCanary.lean",
+      "context": "",
+      "statement": "theorem nonquadratic_nonsmooth :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) z (1 / 2)) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) (1 / 2) 0 = 9 / 64 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2) = 11 / 64 ∧\n      (∀ u : ℝ, -|u| ≤ divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u (1 / 2) -\n        divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2)) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "signatureSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "sourceModuleSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0",
+      "normalizedStatementSHA256": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0"
+    },
+    {
+      "id": "claim_7",
+      "kind": "theorem",
+      "name": "boundary_outside_initial",
+      "path": "Tests/OnlineBregmanProximalCanary.lean",
+      "context": "",
+      "statement": "theorem boundary_outside_initial :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 2 / 2) ∧\n      (-1 : ℝ) ∉ Icc 0 1 ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 2 / 2) z (-1)) (Icc 0 1) 0 ∧\n      divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -|u| ≤ divergence (fun z : ℝ => z ^ 2 / 2) u (-1) -\n        divergence (fun z : ℝ => z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "signatureSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "sourceModuleSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0",
+      "normalizedStatementSHA256": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84",
+      "rawStatementVerifiedInOriginal": true,
+      "disposition": "exact-interface-preserved-current-source-and-BODY-reviewed",
+      "currentSourceSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0"
+    }
+  ],
+  "contractHeaderChecks": [
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-fence-0-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+      "storedHash": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "normalizedHeaderSHA256": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-fence-1-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+      "storedHash": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "normalizedHeaderSHA256": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-stabilized-v1.json",
+      "pointer": "/targets/0",
+      "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+      "storedHash": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "normalizedHeaderSHA256": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-stabilized-v1.json",
+      "pointer": "/targets/1",
+      "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+      "storedHash": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "normalizedHeaderSHA256": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-stabilized-v1.json",
+      "pointer": "/allowed_scope/targets/0",
+      "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+      "storedHash": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "verifiedRecipes": [
+        "raw-UTF8-header"
+      ],
+      "rawHeaderSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "normalizedHeaderSHA256": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-stabilized-v1.json",
+      "pointer": "/allowed_scope/targets/1",
+      "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+      "storedHash": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "verifiedRecipes": [
+        "raw-UTF8-header"
+      ],
+      "rawHeaderSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "normalizedHeaderSHA256": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-targets-draft-v1.json",
+      "pointer": "/targets/0",
+      "declaration": "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+      "storedHash": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "verifiedRecipes": [
+        "raw-UTF8-header"
+      ],
+      "rawHeaderSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "normalizedHeaderSHA256": "1c4186fb6fe983ca265e9e31053d13eab172cb208e7782c10ff8ea3a2cc734a2"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/canary-targets-draft-v1.json",
+      "pointer": "/targets/1",
+      "declaration": "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+      "storedHash": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "verifiedRecipes": [
+        "raw-UTF8-header"
+      ],
+      "rawHeaderSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "normalizedHeaderSHA256": "115e518a74f8ed25d563a5c21b460f8683623aec9bd4143b65b39bb95b2fcc84"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/targets/0",
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "storedHash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "normalizedHeaderSHA256": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/targets/1",
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "storedHash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "normalizedHeaderSHA256": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/targets/2",
+      "declaration": "BanditRL.OnlineBregman.divergence_nonneg",
+      "storedHash": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "normalizedHeaderSHA256": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/targets/3",
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+      "storedHash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "normalizedHeaderSHA256": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/targets/4",
+      "declaration": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "storedHash": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "normalizedHeaderSHA256": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/initial_lower_leaves/0",
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "storedHash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "normalizedHeaderSHA256": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/initial_lower_leaves/1",
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "storedHash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "normalizedHeaderSHA256": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/statement-fence-0-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "storedHash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "normalizedHeaderSHA256": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/statement-fence-1-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "storedHash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "normalizedHeaderSHA256": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/statement-fence-2-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregman.divergence_nonneg",
+      "storedHash": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "normalizedHeaderSHA256": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/statement-fence-3-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+      "storedHash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "normalizedHeaderSHA256": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/statement-fence-4-v1.json",
+      "pointer": "",
+      "declaration": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "storedHash": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1",
+      "verifiedRecipes": [
+        "raw-UTF8-header",
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "normalizedHeaderSHA256": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/targets-draft-v1.json",
+      "pointer": "/targets/0",
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "storedHash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "normalizedHeaderSHA256": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/targets-draft-v1.json",
+      "pointer": "/targets/1",
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "storedHash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "normalizedHeaderSHA256": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/targets-draft-v1.json",
+      "pointer": "/targets/2",
+      "declaration": "BanditRL.OnlineBregman.divergence_nonneg",
+      "storedHash": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "normalizedHeaderSHA256": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/targets-draft-v1.json",
+      "pointer": "/targets/3",
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+      "storedHash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "normalizedHeaderSHA256": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/targets-draft-v1.json",
+      "pointer": "/targets/4",
+      "declaration": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "storedHash": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1",
+      "verifiedRecipes": [
+        "split-whitespace-and-single-space-join-UTF8"
+      ],
+      "rawHeaderSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "normalizedHeaderSHA256": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1"
+    }
+  ],
+  "definitionChecks": [
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/stabilized-v1.json",
+      "pointer": "/definition",
+      "sha256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/targets-draft-v1.json",
+      "pointer": "/definition",
+      "sha256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491"
+    }
+  ],
+  "terminalHashChecks": [
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/current-obligations-accepted-v1.json",
+      "pointer": "/terminals/0",
+      "declaration": "BanditRL.OnlineBregman.divergence_self",
+      "storedHash": "cb97e323943684554be58aa2ee0bbf1bd56fbe03ee1278046af070121717f704"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/current-obligations-accepted-v1.json",
+      "pointer": "/terminals/1",
+      "declaration": "BanditRL.OnlineBregman.three_point_identity",
+      "storedHash": "d05bbd5f616054d298969056c002a54b64f2a6c4ae0d5dc65068b70c2765d422"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/current-obligations-accepted-v1.json",
+      "pointer": "/terminals/2",
+      "declaration": "BanditRL.OnlineBregman.divergence_nonneg",
+      "storedHash": "d130de4f7491f134125635a6fcd44838d923c7e8a65adf2f819838860cce0e67"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/current-obligations-accepted-v1.json",
+      "pointer": "/terminals/3",
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step",
+      "storedHash": "b34d4ee5d1fe4c00a6082ea81a2f2dddced22e7ffd710f30c21aa54a7ea546ff"
+    },
+    {
+      "owner": "docs/contracts/online-ch2-bregman-v1/current-obligations-accepted-v1.json",
+      "pointer": "/terminals/4",
+      "declaration": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "storedHash": "a7ccda7d19036fef3af76e3b62095cf816cd81c04f7ad10e5db64f4785bf8ea1"
+    }
+  ],
+  "hashRecipeBoundary": "Native normalized hashes and literal raw-header hashes are different explicitly retained recipes, especially nested canary allowed_scope. No scientific or signature rewrite.",
+  "currentCompiledTypeEvidence": "batch36-compiled-probes-v1/receipt.json",
+  "currentBodyEvidence": "batch36-body-review-v1/receipt.json",
+  "statementMutation": false
+}

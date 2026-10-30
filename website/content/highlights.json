@@ -7377,6 +7377,107 @@
       "proof_idea": "Fix u in V and move along q(a)=p+a(u-p), with 0<=a<=1. Convexity of V keeps q(a) feasible. Minimality and convexity of f give f(p)+h(p)<=f(q(a))+h(q(a))<=(1-a)f(p)+a f(u)+h(q(a)). Thus H(a)=a(f(u)-f(p))+h(q(a))-h(p) has a minimum at a=0 on [0,1]. Differentiate h along the affine segment: Hprime(0)=f(u)-f(p)+Dh(p)[u-p]. The feasible positive tangent direction gives Hprime(0)>=0, which is the claimed comparison.",
       "lean_notes": "Let E be a real normed vector space, V a convex subset, and f,h:E to R. Assume f is convex on V, p belongs to V, p minimizes f+h over V, and h has ambient Frechet derivative Dh(p). Every comparator u belongs to the same V. No derivative of f or convexity of h is needed; V may have a boundary or be a singleton. Finite dimension, completeness, an inner product, closedness and boundedness are not assumed. The implementation uses IsLocalMinOn.hasFDerivWithinAt_nonneg, sub_mem_posTangentConeAt_of_segment_subset, Convex.segment_subset and HasFDerivAt.comp_hasDerivAt_of_eq, together with scalar derivative algebra. No earlier ABRL theorem is a direct proof parent. Three test families supply their own minimizing conditions and derivative data: an absolute-value loss with a shifted quadratic; a boundary minimum on [0,1] that is not a whole-line minimum; and a convex quadratic loss with a nonconvex perturbation. These examples are not additional source theorems. This is a derived real-valued comparison interface associated with the prescient proof, not full Algorithm 15.8 or Theorem 15.30. The minimizer is supplied. Existence, uniqueness, extended-real/domain and subgradient adapters, Bregman specialization, valid current-loss recursion and same-run fixed/variable-step regret bounds remain separate obligations. The source invocation of differentiable Theorem 2.8 does not itself justify the nonsmooth subgradient step. The fixed-step source proof is left as an exercise. No source repair or chapter completion is claimed.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.divergence",
+      "title": "Ordered divergence from the derivative at the base",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 168,
+      "plain": "B_psi(a;b) subtracts the affine approximation at b from the value at a. The second argument is the base; the actual total fderiv is used.",
+      "math": "B_\\psi(a;b)=\\psi(a)-\\psi(b)-D\\psi(b)[a-b].",
+      "intuition": "Measure the error of the first-order affine approximation, keeping the base and target ordered.",
+      "why": "Give the shared library one canonical dual-map expression for the Bregman algebra.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278.",
+      "proof_idea": "This is a definition. It evaluates psi(a)-psi(b)-Dpsi(b)[a-b]. No freely supplied gradient field is substituted.",
+      "lean_notes": "The source defines Bregman divergence on X times int(X), with a strictly convex potential on X and differentiability on its nonempty interior. The library formula instead uses the actual total ambient Frechet derivative on a real normed vector space. At a nondifferentiable base, fderiv is zero. Recovering the source interface requires interior base points and a valid ambient extension with local derivative agreement; the total formula does not supply those facts. This definition alone gives no nonnegativity, strict separation, symmetry or metric property.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.divergence_self",
+      "title": "Self divergence vanishes algebraically",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 169,
+      "plain": "For every real-valued psi and every x, B_psi(x;x)=0, with no convexity or differentiability assumption.",
+      "math": "B_\\psi(x;x)=0.",
+      "intuition": "Equal arguments give a zero displacement.",
+      "why": "Cancel the self term when a comparator equals a Bregman base.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278.",
+      "proof_idea": "The two values psi(x) cancel. Every continuous linear map sends the zero displacement to zero.",
+      "lean_notes": "This normed-space identity uses the canonical definition and linear-map evaluation at zero. It has no converse: B_psi(x;y)=0 does not imply x=y. The source defines Bregman divergence on X times int(X), with a strictly convex potential on X and differentiability on its nonempty interior. The library formula instead uses the actual total ambient Frechet derivative on a real normed vector space. At a nondifferentiable base, fderiv is zero. Recovering the source interface requires interior base points and a valid ambient extension with local derivative agreement; the total formula does not supply those facts.",
+      "dependencies": [
+        "BanditRL.OnlineBregman.divergence"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.three_point_identity",
+      "title": "Three-point algebra with ordered bases",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 170,
+      "plain": "For arbitrary x,y,z, B_psi(z;x)+B_psi(x;y)-B_psi(z;y)=(Dpsi(y)-Dpsi(x))[z-x]. The algebraic extension requires no derivative-existence or convexity hypothesis.",
+      "math": "B_\\psi(z;x)+B_\\psi(x;y)-B_\\psi(z;y)=(D\\psi(y)-D\\psi(x))[z-x].",
+      "intuition": "The function values cancel, leaving the difference between the two affine approximations.",
+      "why": "Turn the derivative comparison at a proximal minimum into the exact two signed Bregman residuals.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278.",
+      "proof_idea": "Expand all three divergences. Use linearity to distribute each derivative over differences, cancel function values, and collect the coefficient of z-x. The order is the one displayed in Lemma 6.7.",
+      "lean_notes": "The compiled proof uses the canonical divergence, ContinuousLinearMap.sub_apply, map_sub and scalar ring algebra. Its unrestricted ambient inputs are an explicit algebraic generalization of the source domain. The source defines Bregman divergence on X times int(X), with a strictly convex potential on X and differentiability on its nonempty interior. The library formula instead uses the actual total ambient Frechet derivative on a real normed vector space. At a nondifferentiable base, fderiv is zero. Recovering the source interface requires interior base points and a valid ambient extension with local derivative agreement; the total formula does not supply those facts.",
+      "dependencies": [
+        "BanditRL.OnlineBregman.divergence"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.divergence_nonneg",
+      "title": "Convex support makes the divergence nonnegative",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 171,
+      "plain": "If psi is convex on X, x and y belong to X, and psi has an ambient derivative at y, then B_psi(x;y)>=0.",
+      "math": "B_\\psi(x;y)\\ge0\\quad(x,y\\in X).",
+      "intuition": "A convex function lies above its supporting affine approximation at a differentiable base.",
+      "why": "Supply a separate nonnegativity theorem when the needed convexity and domain assumptions are available.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278.",
+      "proof_idea": "Restrict psi to the affine line y+t(x-y). Convexity transfers to the preimage of X, which contains t=0 and t=1. Its derivative at zero is Dpsi(y)[x-y]. The convex derivative-versus-secant inequality gives Dpsi(y)[x-y]<=psi(x)-psi(y). Rearranging is exactly nonnegativity.",
+      "lean_notes": "ConvexOn includes convexity of X. The actual Mathlib support parent is ConvexOn.le_slope_of_hasDerivAt, with composition along AffineMap.lineMap. Only the derivative at y is assumed. Strict positivity and separation are not concluded. A generic public-value witness is checked; the two concrete Test declarations are not claimed as VALUE consumers of this nonnegativity theorem.",
+      "dependencies": [
+        "BanditRL.OnlineBregman.divergence"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.proximal_one_step",
+      "title": "A proximal minimum preserves both Bregman residuals",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 172,
+      "plain": "A supplied minimum of a convex real loss plus a differentiable Bregman penalty yields eta(f(p)-f(u))<=B_psi(u;x)-B_psi(u;p)-B_psi(p;x) for every feasible comparator.",
+      "math": "\\begin{aligned}B_\\psi(a;b)&=\\psi(a)-\\psi(b)-D\\psi(b)[a-b],\\\\p&\\in\\arg\\min_{z\\in V}\\{f(z)+\\eta^{-1}B_\\psi(z;x)\\},\\\\Dh(p)&=\\eta^{-1}(D\\psi(p)-D\\psi(x)),\\\\f(p)-f(u)&\\le Dh(p)[u-p],\\\\\\eta(f(p)-f(u))&\\le(D\\psi(p)-D\\psi(x))[u-p]\\\\&=B_\\psi(u;x)-B_\\psi(u;p)-B_\\psi(p;x).\\end{aligned}",
+      "intuition": "Compare along a feasible segment toward u, differentiating the penalty while using only convexity of the loss.",
+      "why": "Specialize the shared nonsmooth minimizer comparison to an ordered Bregman penalty.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278.",
+      "proof_idea": "Differentiate the penalty h(z)=eta^(-1) B_psi(z;x) at p. Its derivative is eta^(-1)(Dpsi(p)-Dpsi(x)). The shared convex_minimizer_comparison uses the supplied feasible minimum and convexity of f to give f(p)-f(u)<=Dh(p)[u-p]. Multiply by positive eta. Apply three_point_identity with (p,x,u), then rearrange to retain both subtracted divergences. The derivative at x remains in the frozen interface for source instantiation, although the proof clears it: the fixed linear map Dpsi(x) is already differentiable as a function of z.",
+      "lean_notes": "Let E be a real normed vector space, V a convex subset, f and psi real-valued functions, and eta>0. Assume f is convex on V, p belongs to V and minimizes f(z)+eta^(-1) B_psi(z;x) there. The frozen comparison assumes ambient differentiability of psi at both x and p. Every comparator u belongs to V; x need not belong to V. No derivative of f, convexity of psi, inner product, completeness, closedness or minimum-existence theorem is assumed by this comparison. Both residuals stay signed: the comparison does not assume convexity of psi, so their nonnegativity cannot be inferred here. Two illustrative tests construct their minimizing conditions. For psi(z)=z^4/4+z^2/2 and f(z)=|z| on R, eta=1, x=1/2 and p=0, the ordered divergences are B(1/2;0)=9/64 and B(0;1/2)=11/64. The potential is strictly convex and the loss is not differentiable at zero. The comparison at u=1/2 gives -1/2<=-5/16. For the globally strictly convex potential psi(z)=z^2/2 on R, again with f(z)=|z| and eta=1, take V=[0,1], x=-1 outside V and p=0 as an actual boundary minimum; B(0;-1)=1/2 and the comparison at u=1/2 gives -1/2<=1/2. Each full test retains its universal comparison and transports that comparison into its final numerical inequality. Both use the public gradient conversion. These are concrete instances, not a general attainment theorem or an algorithm construction. These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. Source-domain/interiority/local-extension validity, proper extended-real finite-domain and subgradient bridges, minimum transfer and attainment, a causal current-loss recursion with interior invariants, and sharp fixed/variable-step telescopes for that same run remain REQUIRED/OPEN. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. The eight Chapter 2 forward containers remain open and the mandatory chapter proof total is unknown.",
+      "dependencies": [
+        "BanditRL.OnlineProximal.convex_minimizer_comparison",
+        "BanditRL.OnlineBregman.three_point_identity"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineBregman.divergence_eq_gradient",
+      "title": "Convert the dual formula to an inner product",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 173,
+      "plain": "In a complete real inner-product space, at an ambient differentiable base y, B_psi(x;y)=psi(x)-psi(y)-<gradient psi(y),x-y>.",
+      "math": "B_\\psi(x;y)=\\psi(x)-\\psi(y)-\\langle\\nabla\\psi(y),x-y\\rangle.",
+      "intuition": "The gradient represents the derivative functional through the inner product.",
+      "why": "Connect the canonical dual-map formula to the source gradient notation and the concrete real-line examples.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278.",
+      "proof_idea": "Obtain HasGradientAt from ambient differentiability at y. Use HasGradientAt.fderiv_apply to replace the derivative applied to x-y by the corresponding inner product in the defining formula.",
+      "lean_notes": "Only this adapter requires InnerProductSpace and CompleteSpace. Those assumptions do not extend to the other five interfaces. Both illustrative Test declarations use this adapter with actual polynomial derivatives. The source defines Bregman divergence on X times int(X), with a strictly convex potential on X and differentiability on its nonempty interior. The library formula instead uses the actual total ambient Frechet derivative on a real normed vector space. At a nondifferentiable base, fderiv is zero. Recovering the source interface requires interior base points and a valid ambient extension with local derivative agreement; the total formula does not supply those facts.",
+      "dependencies": [
+        "BanditRL.OnlineBregman.divergence"
+      ]
     }
   ]
 }

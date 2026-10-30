@@ -170,3 +170,4 @@ import Tests.OnlineLearningChapterAuditCanary
 import Tests.OnlineNonsmoothExamplesCanary
 import Tests.OnlinePrescientLinearCanary
 import Tests.OnlineProximalComparisonCanary
+import Tests.OnlineBregmanProximalCanary

@@ -1,0 +1,198 @@
+{
+  "schema": "abrl-source-contract-extraction-v1",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "revision": "arXiv:1912.13213v10 [cs.LG] 21 Jun 2026",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "local_pdf": "source-pinned.pdf",
+    "pagination": "PDF pages are one-based; main-text printed page = PDF page - 12",
+    "canonical_research_path": "canonical-repository",
+    "research_head_observed": "601f39c1ab0f119dba63567932a86b7dc791fac1",
+    "research_dirty_state_observed": "git status --short empty; no repository changes by extractor"
+  },
+  "status": "source-extracted-no-statement-or-proof-seal",
+  "anchors": [
+    {
+      "id": "src:D6.4",
+      "pdf_page": 75,
+      "printed_page": 63,
+      "region": "Definition 6.4 and displayed definition",
+      "kind": "literal-definition",
+      "claim": "psi:X->R strictly convex, differentiable on nonempty int X. B_psi:X x int X->R; B(a;b)=psi(a)-psi(b)-<grad psi(b),a-b>. No value outside this carrier is defined here.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:nonnegative",
+      "pdf_page": 76,
+      "printed_page": 64,
+      "region": "Opening distance-generating-function paragraph and nonnegativity/strict-support paragraph",
+      "kind": "literal-source-fact",
+      "claim": "B is nonnegative for both arguments in int X by convexity; stronger paragraph explicitly asserts psi(a)>=psi(b)+<grad psi(b),a-b> for all a in X and fixed b in int X, equality only a=b. Therefore B>=0 on the full defined carrier. Reference point dependence and lack of symmetry are stated.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:L6.7",
+      "pdf_page": 76,
+      "printed_page": 64,
+      "region": "Immediate-lemma introductory paragraph, Lemma 6.7, citation and display",
+      "kind": "literal-source-fact",
+      "claim": "For x,y in int X and z in X: B(z;x)+B(x;y)-B(z;y)=<grad psi(y)-grad psi(x),z-x>. Attributed to Chen and Teboulle (1993). No written proof follows on this page or before section 6.4 on the next page.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:T2.8",
+      "pdf_page": 23,
+      "printed_page": 11,
+      "region": "Theorem 2.8 statement",
+      "kind": "literal-source-fact",
+      "claim": "V nonempty convex, x* in V, f convex and differentiable on an open set containing V. x* minimizes f on V iff <grad f(x*),y-x*>>=0 for all y in V.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:observation-prescience",
+      "pdf_page": 26,
+      "printed_page": 14,
+      "region": "First bullet after Theorem2.13 proof",
+      "kind": "literal-source-fact",
+      "claim": "Gradient-square terms arise from output before observing loss; they become nonpositive if observing loss before output. Explicit cross-reference Section15.5.1.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:A15.8",
+      "pdf_page": 277,
+      "printed_page": 265,
+      "region": "Algorithm15.8 complete box",
+      "kind": "literal-algorithm",
+      "claim": "Nonempty closed convex V subset X subset R^d; strictly convex psi differentiable on int X; x0 in int X, not stated in V; eta1,...,etaT>0. Receive extended-real loss with V subset dom loss, select xt in argmin_V loss_t+eta_t^-1 B(.;x_(t-1)), then pay loss at xt.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:T15.30-premises",
+      "pdf_page": 277,
+      "printed_page": 265,
+      "region": "Theorem15.30 statement hypotheses from Let psi through for t=1,...,T, before Then",
+      "kind": "literal-source-premises",
+      "claim": "psi differentiable on int X, closed, strictly convex; nonempty closed convex V subset X; xt in int X, losses subdifferentiable on V; eta_(t+1)<=eta_t for t=1,...,T as printed. Positive eta and x0 in int X inherited from Algorithm15.8. Thus the source supplies all reference-point interiority needed in this theorem. For u in V, u is in X. No source-domain gap is asserted.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:T15.30-variable",
+      "pdf_page": 277,
+      "printed_page": 265,
+      "region": "Theorem15.30 first conclusion beginning Then and its first display",
+      "kind": "literal-source-fact",
+      "claim": "Under src:T15.30-premises and Algorithm15.8, for all u in V, regret <= max_(0<=t<=T-1) B(u;xt)/eta_T - sum_(t=1)^T B(xt;x_(t-1))/eta_t.",
+      "status": "source-recorded"
+    },
+    {
+      "id": "src:T15.30-fixed",
+      "pdf_page": 277,
+      "printed_page": 265,
+      "region": "Theorem15.30 moreover statement and display",
+      "kind": "literal-source-fact",
+      "claim": "For eta_t=eta, t=1,...,T, regret <= B(u;x0)/eta - sum_(t=1)^T B(xt;x_(t-1))/eta. This is a second theorem conclusion, not a consequence of maximizing a variable-step bound.",
+      "status": "source-recorded"
+    }
+  ],
+  "source_semantics": {
+    "space": "finite-dimensional R^d with Euclidean gradient pairing; source loss may take +infinity away from V",
+    "B_domain": "X x int X",
+    "initialization": "x0 in int X only, no x0 in V requirement in Algorithm15.8",
+    "later_iterates": "x_t in V by actual argmin selection and in int X by separate T15.30 assumption",
+    "comparator": "every u in V, hence finite loss there and first B argument in X",
+    "feedback": "observe full loss function before predicting and paying it",
+    "probability": "deterministic pathwise guarantee; no probability, filtration or expectation stated",
+    "normalization": "eta times one-step loss difference; three divergence terms with coefficient +1,-1,-1",
+    "fixed_terminal": "author statement drops terminal; author supplies no fixed-step proof",
+    "variable_terminal": "author exact summation has -B(u;xT)/etaT, subsequently dropped using nonnegativity",
+    "definition_kind": "literal only on source carrier"
+  },
+  "proposed_derived_interface": {
+    "id": "derived:real-dual-interface",
+    "kind": "proposed-derived-interface",
+    "status": "proposal-unreviewed",
+    "claim": "Let E be a real normed vector space, V convex, f,psi:E->R, f convex on V, p,u in V, eta>0. Let x in E, not necessarily V, and assume psi Frechet differentiable at x and p. Supply p as an actual global minimizer over V of f(y)+eta^-1 B(y;x), where B(a;b)=psi(a)-psi(b)-Dpsi(b)(a-b). Then eta(f(p)-f(u))<=B(u;x)-B(u;p)-B(p;x). No f differentiability is required."
+  },
+  "atomic_delta_ledger": [
+    {
+      "input": "E arbitrary real normed vector space",
+      "classification": "generalization",
+      "source": "R^d",
+      "obligation": "continuous-dual pairing and finite-dimensional source specialization"
+    },
+    {
+      "input": "f,psi:E->R globally",
+      "classification": "restriction-and-extension-boundary",
+      "source": "psi:X->R; loss:R^d->(-infinity,+infinity]",
+      "obligation": "real restriction of finite loss on V and any differentiable local/global extension"
+    },
+    {
+      "input": "V convex, p,u in V",
+      "classification": "same-for-local-geometry",
+      "source": "V additionally nonempty closed; p membership witnesses nonempty",
+      "obligation": "Closedness omission is valid for supplied-minimizer local inequality, not an attainment theorem"
+    },
+    {
+      "input": "f convex on V",
+      "classification": "derived-substitute",
+      "source": "loss subdifferentiable on V",
+      "obligation": "Support-based convexity bridge for finite restriction, preserving full source semantics"
+    },
+    {
+      "input": "psi differentiable at x and p",
+      "classification": "pointwise-regularity-interface",
+      "source": "psi differentiable on int X and both reference points interior",
+      "obligation": "Actual source-domain membership and derivative agreement"
+    },
+    {
+      "input": "eta>0",
+      "classification": "same",
+      "source": "Algorithm15.8 Require"
+    },
+    {
+      "input": "actual supplied global minimizer p over V",
+      "classification": "same-selection-contract",
+      "source": "Algorithm15.8 argmin membership",
+      "obligation": "No existence, uniqueness, closedness or measurable choice theorem proved by this premise"
+    },
+    {
+      "input": "x arbitrary, may be outside V",
+      "classification": "source-compatible",
+      "source": "x0 only required in int X",
+      "obligation": "For literal source B still require x in int X"
+    },
+    {
+      "input": "strict convexity/closedness of psi omitted from local inequality",
+      "classification": "generalization",
+      "source": "Both present in T15.30",
+      "obligation": "Needed source connections and nonnegative terminal control are separate; local inequality alone does not give them"
+    },
+    {
+      "input": "total fderiv-based definition",
+      "classification": "extension-boundary",
+      "source": "Derivative used only on int X",
+      "obligation": "Not automatically literal on enlarged carrier; explicit agreement theorem required"
+    }
+  ],
+  "unresolved": [
+    "General Theorem15.30 nonsmooth/extended-real constrained optimality bridge",
+    "Source-domain/interiority/local-extension equivalence for any global real-valued interface",
+    "Argmin attainment and any required uniqueness, not supplied by a chosen minimizer premise",
+    "Fixed-step exercise and same-run terminal telescoping formal proof",
+    "Variable-step same-run terminal and reciprocal-weight reasoning formal proof",
+    "Source eta_(T+1) indexing ambiguity",
+    "Independent source topology review",
+    "External cited results remain source references, not independently reverified publications"
+  ],
+  "independence": {
+    "no_implementation_lean_read": true,
+    "no_prior_implementation_graphs_read": true,
+    "no_prior_verdicts_read": true,
+    "no_repository_history_used": true,
+    "target_role": "The parent supplied a proposed interface only; it is quarantined in derived_proposals and did not determine source proof steps."
+  },
+  "source_domain_assumptions_status": "Explicitly supplied by Algorithm15.8 and Theorem15.30; not a source gap. Local/global extension equivalence remains only a proposed-interface transfer obligation.",
+  "extraction_version": 2,
+  "supersedes_directory": "../batch36-source-extraction-v1"
+}

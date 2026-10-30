@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "actor": "/root/batch36_source_reviewer",
+  "status": "source-reviewed",
+  "verdict": "accepted-with-explicit-delta",
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "statement_seal_sha256": "186c74b0ad98220421598eace110b20156fc02e47a833143b3aaec23a365e617",
+  "blind_input_sha256": "73c197ffc6f5b4c4d69da4761d476962e3451b32ffbe69ca5080ec0d8efa69ef",
+  "blind_reconstruction_json_sha256": "f1a71676d2e603397973ca0c82ba31000448f4d65074bca6b3b441cf6ccf8233",
+  "blind_receipt_sha256": "b95c8d607aafa67ca98f04c9547bf48b3457c0847877c48a05e7684bdac106d1",
+  "independence": {
+    "source_read_before_blind_reconstruction": true,
+    "implementation_bodies_inspected": false,
+    "old_verdicts_inspected": false,
+    "compilation_claimed": false
+  },
+  "entries": [
+    {
+      "id": "D",
+      "name": "divergence",
+      "signatureSHA256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real normed space and ambient real-valued psi replace Euclidean domain X. Source uses X times int X and gradient, Lean uses all E times E and fderiv.",
+        "quantifiers": "All psi,x,y are admitted. Source only admits strict-convex psi differentiable on nonempty int X and admissible points.",
+        "assumptions_regularity": "No regularity premise in D. Mathlib total fderiv defaults to zero at nondifferentiable y. This is a material carrier delta.",
+        "conclusion_metric": "Exact source algebraic formula when derivative and gradient agree at admissible y. Not a distance characterization.",
+        "constants_normalization": "Second argument is base, displacement x-y, unit coefficient.",
+        "probability_feedback": "Deterministic definition.",
+        "boundary": "Literal derived total interface, not literal Def6.4 over the widened carrier. No global positivity, symmetry or unique-zero assertion."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_1",
+      "name": "divergence_self",
+      "signatureSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Same total interface on real normed E.",
+        "quantifiers": "Every psi,x; source diagonal consequence only on admissible Bregman pairs.",
+        "assumptions_regularity": "No differentiability or convexity needed for this algebraic consequence.",
+        "conclusion_metric": "Diagonal D(x,x)=0 only.",
+        "constants_normalization": "No scaling or orientation drift.",
+        "probability_feedback": "Deterministic.",
+        "boundary": "Does not establish zero iff equality, or source strict-convex characterization."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_2",
+      "name": "three_point_identity",
+      "signatureSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Derivative-map identity on real normed E instead of Euclidean gradient identity.",
+        "quantifiers": "All x,y,z versus source x,y in int X and z in X.",
+        "assumptions_regularity": "Source inherited regularity removed in algebraic totalized identity.",
+        "conclusion_metric": "Matches Lemma6.7 exactly after gradient adaptation on admissible data.",
+        "constants_normalization": "D(z,x)+D(x,y)-D(z,y)=(dpsi(y)-dpsi(x))(z-x), signs and argument order preserved.",
+        "probability_feedback": "Deterministic.",
+        "boundary": "Generalized identity is not proof that all chosen points lie in source domain or derivatives exist."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_3",
+      "name": "divergence_nonneg",
+      "signatureSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Ambient psi:E->R; X is a convexity set, not encoded as exact domain.",
+        "quantifiers": "For every x,y in X, differentiated only at base y.",
+        "assumptions_regularity": "ConvexOn includes convex X; source strict convexity weakened to convexity. Ambient DifferentiableAt y replaces differentiability on all int X and y interior.",
+        "conclusion_metric": "Only nonnegativity, matching the stated nonnegative portion of PDF76.",
+        "constants_normalization": "No strong-convexity coefficient, no strict positivity or converse equality.",
+        "probability_feedback": "Deterministic.",
+        "boundary": "Does not formalize stronger equality characterization, local Hessian formula, (6.4), or arbitrary source-domain/extended-real extensions."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_4",
+      "name": "proximal_one_step",
+      "signatureSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real normed E, real-valued loss on all E, V feasible. Source permits extended-real loss finite on V and psi:X->R.",
+        "quantifiers": "Supplied x,p,eta and all u in V. No iteration index, horizon, sequence, or existential minimizer.",
+        "assumptions_regularity": "eta>0, p in V, ConvexOn V f, ambient psi differentiable at x,p, global minimum comparison. Source strict/closed psi and closed V are omitted; source subdifferentiability is replaced by the weaker explicit convex-loss interface. No differentiability of f.",
+        "conclusion_metric": "The one-step display in Thm15.30 proof is retained as a derived conditional inequality. Full regret theorem and source subgradient witness are not asserted.",
+        "constants_normalization": "eta(f(p)-f(u)) <= D(u,x)-D(u,p)-D(p,x). Both negative residuals remain, with eta inverse only in objective.",
+        "probability_feedback": "Deterministic conditional optimization inequality. Algorithm15.8 prescient access to current full loss is a source protocol, not modeled by this signature.",
+        "boundary": "No attainment/uniqueness construction, no x in V required, no nonnegativity of residual divergences without extra convexity of psi, no monotone-rate or telescoping theorem, no source repair."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_5",
+      "name": "divergence_eq_gradient",
+      "signatureSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "verdict": "accepted-with-explicit-delta",
+      "seven_slots": {
+        "objects_spaces": "Real complete inner-product space, includes finite-dimensional Euclidean source; narrower than general normed core.",
+        "quantifiers": "All psi,x,y with differentiability at y.",
+        "assumptions_regularity": "CompleteSpace and InnerProductSpace support Riesz/gradient representation, automatic in source Euclidean type. hd retained.",
+        "conclusion_metric": "Exact source pairing of gradient at y with x-y on differentiable bases.",
+        "constants_normalization": "Gradient occupies first inner-product slot, no omitted coefficient.",
+        "probability_feedback": "Deterministic.",
+        "boundary": "Adapter is not a claim that every normed space admits a gradient vector; it does not establish source-domain membership or psi regularity everywhere."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_6",
+      "name": "nonquadratic_nonsmooth",
+      "signatureSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "verdict": "accepted-as-concrete-canary-interface",
+      "seven_slots": {
+        "objects_spaces": "Concrete real quartic-plus-quadratic psi and abs loss, V=R.",
+        "quantifiers": "Closed seven-part conjunction; all-real comparator u only in sixth component.",
+        "assumptions_regularity": "No input assumptions. Strict convexity, global minimality, and nonsmoothness are conclusions.",
+        "conclusion_metric": "Seven facts independently checked for semantic coverage: strict convexity; min at 0; abs nondifferentiable at 0; two unequal divergences; all-u inequality; numerical bound.",
+        "constants_normalization": "psi=z^4/4+z^2/2, x=1/2,p=0,eta=1; D(1/2,0)=9/64, D(0,1/2)=11/64. Residual RHS=-5u/8; at u=1/2, -1/2<=-5/16.",
+        "probability_feedback": "Deterministic canary; no observation model.",
+        "boundary": "This concrete case shows asymmetry and nonsmooth loss compatibility. A conjunction does not certify proof-term consumption of claim_4, and is not a general existence theorem or full source theorem."
+      },
+      "blind_reconstruction_mismatch": null
+    },
+    {
+      "id": "claim_7",
+      "name": "boundary_outside_initial",
+      "signatureSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "verdict": "accepted-as-concrete-canary-interface",
+      "seven_slots": {
+        "objects_spaces": "Concrete real quadratic psi, abs loss, V=[0,1], reference -1.",
+        "quantifiers": "Closed six-part conjunction; comparator limited to [0,1].",
+        "assumptions_regularity": "No input assumptions. Old point outside V, minimality and divergence value are conclusions.",
+        "conclusion_metric": "All six assertions retained, including -1 not in V and minimum at boundary 0.",
+        "constants_normalization": "psi=z^2/2,eta=1,x=-1,p=0,D(0,-1)=1/2. Residual RHS=u; at u=1/2, -1/2<=1/2.",
+        "probability_feedback": "Deterministic canary.",
+        "boundary": "The old point is outside V but inside ambient source X=R. This does not license old points outside source int X. No separate abs nondifferentiability conjunct, no proof-term dependency certification."
+      },
+      "blind_reconstruction_mismatch": null
+    }
+  ],
+  "source_gaps": [
+    {
+      "id": "nonsmooth-optimality-citation",
+      "location": "Thm15.30 proof PDF277 invoking Thm2.8 PDF23",
+      "finding": "Thm2.8 explicitly assumes differentiability on an open neighborhood. This cited result alone does not deliver the claimed selected subgradient for nonsmooth loss. Preserve SOURCE_GAP; no conclusion that Thm15.30 itself is false is established."
+    },
+    {
+      "id": "update-attainment",
+      "location": "Algorithm15.8 PDF277",
+      "finding": "An argmin selection is written, but no supplied conditions here establish existence on each round. The derived interface conditions on hp+hmin, not an update constructor."
+    },
+    {
+      "id": "constant-rate-proof-exercise",
+      "location": "Thm15.30 proof end PDF278",
+      "finding": "Constant-rate statement proof is left as exercise. A telescoping derivation may be supplied as proposal/library route but must not be reported as an explicit source proof paragraph."
+    },
+    {
+      "id": "eta-indexing",
+      "location": "Theorem15.30 PDF277",
+      "finding": "Printed eta_(t+1)<=eta_t for t=1,...,T reaches eta_(T+1), while algorithm lists only eta_1,...,eta_T. Proof only uses t through T-1. Retain ambiguity, no silent source correction."
+    }
+  ],
+  "source_repair_proposed_or_approved": false,
+  "remaining_boundary": [
+    "Literal whole-carrier Definition6.4 correspondence is not accepted.",
+    "Full extended-real source algorithm, well-definedness, sequence, oracle and regret contracts are not closed.",
+    "Compiler truth, implementation dependency, publication, merge and live state are outside this review."
+  ],
+  "source_to_derived_obligations": [
+    {
+      "id": "source-base-admissibility",
+      "location": "Definition6.4 PDF75 and Algorithm15.8/Theorem15.30 PDF277",
+      "finding": "Original source correctly requires basepoints in int X: x0 by algorithm, later xt by theorem assumption. A total ambient definition needs a separate source-domain/local-extension correspondence; this is an interface-transfer obligation, not an error in the source proof."
+    }
+  ],
+  "bindings": {
+    "source_extraction_directory": "private-maintenance/github-maintenance-goal-20261011/batch36-source-extraction-v2",
+    "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "source_graph_sha256": "6b6571a2100ac4c85585b3bb58376621f5cc8b26dd676e9625731f32212e0d11",
+    "source_coverage_sha256": "ec472fe31d0a82019825c11b5a190719374367c054b0fee7645ab43be6f6a348",
+    "source_contract_sha256": "d46ba57806820e64c616f86602b6edfd7fd51a6e9861616c387cb8c7b604b953",
+    "source_extractor_receipt_sha256": "4d66042f6a28ef7758101634437472dbb8fa7cc70838b01021d41633c741e510",
+    "statement_seal_path": "private-maintenance/github-maintenance-goal-20261011/batch36-preport-statement-seal-v1.json",
+    "statement_seal_sha256": "186c74b0ad98220421598eace110b20156fc02e47a833143b3aaec23a365e617",
+    "blind_input_sha256": "73c197ffc6f5b4c4d69da4761d476962e3451b32ffbe69ca5080ec0d8efa69ef",
+    "blind_reconstruction_json_sha256": "f1a71676d2e603397973ca0c82ba31000448f4d65074bca6b3b441cf6ccf8233",
+    "blind_reconstruction_md_sha256": "6a0feb169a432fac0104b8b9bca38e1bfe9eda8a0eb40d1719367c5cfa1d7d52",
+    "blind_receipt_sha256": "b95c8d607aafa67ca98f04c9547bf48b3457c0847877c48a05e7684bdac106d1"
+  },
+  "acceptance_scope": "Only explicitly derived total-fderiv real-valued interfaces and concrete canary statements. Neither literal whole-carrier Definition6.4 nor full Algorithm15.8/Theorem15.30 equivalence is accepted.",
+  "canary_independent_arithmetic": {
+    "claim_6": "phi derivative is z^3+z; phi(1/2)=9/64, derivative(1/2)=5/8, yielding D(0,1/2)=11/64. Objective minus value at zero is phi(z)+abs(z)-5*z/8, nonnegative separately for z>=0 and z<0. Residual is -5*u/8. Strict convexity follows from second derivative 3*z^2+1>0. These ordinary mathematical checks are not Lean proof checks.",
+    "claim_7": "Dq(a,b)=(a-b)^2/2. On [0,1], objective minus value at zero is z^2/2+2*z>=0. Residual is u. Boundary 0 belongs to V, while -1 does not. These ordinary mathematical checks are not Lean proof checks."
+  },
+  "source_graph_review": "Final v2 independently accepted as bounded source topology with explicit gaps, not theorem closure."
+}
