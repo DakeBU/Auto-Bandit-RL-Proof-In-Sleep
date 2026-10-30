@@ -1,0 +1,118 @@
+{
+  "schema": "abrl.source-statement-map.v1",
+  "actor": "/root/batch35_source_reviewer",
+  "signatureSHA256": "21a68f7467c153a729f2bfafed04c4a5fc936e51975c3f103a7eb29657b74968",
+  "kind": "explicit-derived-interface-not-literal-source-theorem",
+  "source_to_target": [
+    {
+      "source": "Algorithm15.8 x_t in argmin_{z in V} ell_t(z)+B_psi(z;x_{t-1})/eta_t",
+      "target": "p=x_t, f=finite loss representation, h=Bregman penalty representation; hp and hmin",
+      "status": "conceptual correspondence; adapter not supplied or reviewed"
+    },
+    {
+      "source": "Theorem15.30 losses subdifferentiable on V; Definition2.20 and Theorem2.21",
+      "target": "ConvexOn R V f",
+      "status": "restricted convexity supported mathematically; extended-real to finite representation bridge explicit and not Lean-certified here"
+    },
+    {
+      "source": "psi differentiable on int X; x_{t-1},x_t in int X; eta_t>0",
+      "target": "HasFDerivAt h L p with L(v)=<grad psi(x_t)-grad psi(x_{t-1}),v>/eta_t",
+      "status": "conditional specialization, local derivative/extension adapter remains"
+    },
+    {
+      "source": "Theorem15.30 one-step loss comparison before Lemma6.7",
+      "target": "f(p)-f(u)<=L(u-p)",
+      "status": "derived comparison mechanism, not literal author proof: independent segment route avoids selecting g_t"
+    },
+    {
+      "source": "Lemma6.7 three-point identity",
+      "target": "not in sealed signature",
+      "status": "separate source dependency, not discharged by comparison theorem"
+    },
+    {
+      "source": "divide by positive eta_t; weighted telescope; nonnegative reciprocal increments; D^2 max; drop nonpositive terminal term",
+      "target": "not in sealed signature",
+      "status": "full regret route remains outside this interface"
+    },
+    {
+      "source": "constant-rate second conclusion left as exercise",
+      "target": "not in sealed signature",
+      "status": "explicit source gap/exercise, not discharged"
+    },
+    {
+      "source": "Chapter2 p14 first observation about observing current loss",
+      "target": "motivation only",
+      "status": "no claim that generic comparison certifies protocol, oracle access, or negative regret"
+    }
+  ],
+  "source_literal_caveats": [
+    "Theorem15.30 prints eta_{t+1}<=eta_t for t=1,...,T while Algorithm15.8 provides eta_1,...,eta_T. Preserve this indexing as printed, flag convention if reconstructing a full exact theorem; no repair approved here.",
+    "Finite-horizon maximum over 0,...,T-1 presumes nonempty horizon. This target has no horizon and does not address T=0.",
+    "Theorem2.8 assumes a convex differentiable function over an open set containing V; subdifferentiability of ell_t on V is not that differentiability assumption.",
+    "Ambient derivative of generic h at p is part of the derived contract, not an additional approved source hypothesis."
+  ],
+  "remaining_boundary": "Only supplied feasible minimum comparison accepted with explicit delta. Original proof, source repair, full algorithm and full regret theorem remain unaccepted by this review.",
+  "inputs": [
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/packet.json",
+      "sha256": "53cdea67f8b42df322a68e4e823092292fab1b2c995d7d7e0bf7a260577575ae"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/source-pinned.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-023.txt",
+      "sha256": "69f64b9620f038571ac783b57510ecb9d9990f404f073c33820bf70148873645"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-023.png",
+      "sha256": "ee9d15fda9493ec282655b228762625a5b9375bb1f5c814e8bc7543c2b6536ef"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-026.txt",
+      "sha256": "0c909b41f4dbda2a4f76f0801ec0549a6efd4572a283334c227d27c134250334"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-026.png",
+      "sha256": "b235c5a94393ae03209fc405d2eab6b6d072019699c90beff41652dea5d57cca"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-076.txt",
+      "sha256": "0ae13698bc4ff4c87854f124e0d656738f9e688a9695fc5ecfe321da24878cf8"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-076.png",
+      "sha256": "59a5e89bee48033ebbfb004f48c85dcf6a25a1ba3926796eb4a15e7c7015a3b3"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-277.txt",
+      "sha256": "d05e5d5e002e533738b7387cd2b831c9909b9bcebda74be6a22ccd506c03bbc1"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-277.png",
+      "sha256": "4acc6716e5e1a184af00e0f0dcdebf044c25ba315fbb7d9534954bb447876039"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-278.txt",
+      "sha256": "46ca49e33d4e034b92d24ec36db494e7644bc5eac322d7b7efd25688cda94bf8"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-278.png",
+      "sha256": "8ad3bd85254258ecf50152dc0d0d9257d0ed22ef5056d5199c8226d1a0162028"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-blind-input-v1/statement.txt",
+      "sha256": "628ba1426ddd90725628009d614d9cec8311989cdb97329c639e272dd01c9dd2"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-blind-review-v1/reconstruction.json",
+      "sha256": "644d2f4a9c39f303cf0dc31eee80e16042a8b44e4ab7571be1201b4e506b9bbd"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-preport-statement-seal-v1.json",
+      "sha256": "b4a70d9fb2668d74ede2976aa0090381e55f3d3a76ce46b1291a5893ac5416f4"
+    }
+  ],
+  "all_input_hashes_match": true
+}

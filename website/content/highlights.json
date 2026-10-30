@@ -7362,6 +7362,21 @@
         "BanditRL.OnlinePrescientLinear.regret",
         "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineProximal.convex_minimizer_comparison",
+      "title": "Compare a convex loss at a supplied proximal minimum",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 167,
+      "plain": "A convex loss need not be differentiable for this comparison. Minimality of f+h and a derivative of h bound f(p)-f(u) for every feasible u.",
+      "math": "\\begin{aligned}p&\\in\\arg\\min_{z\\in V}(f+h)(z),\\qquad u\\in V,\\\\q(a)&=(1-a)p+au,\\quad 0\\le a\\le1,\\\\f(p)+h(p)&\\le f(q(a))+h(q(a))\\\\&\\le(1-a)f(p)+af(u)+h(q(a)),\\\\H(a)&=a(f(u)-f(p))+h(q(a))-h(p),\\\\0&\\le H\\prime(0)=f(u)-f(p)+Dh(p)[u-p],\\\\f(p)-f(u)&\\le Dh(p)[u-p].\\end{aligned}",
+      "intuition": "Move a small positive distance toward the comparator. Convexity bounds the loss by its endpoint values; only the perturbation is differentiated.",
+      "why": "Provide a reusable loss-comparison ingredient for a later prescient Bregman argument.",
+      "position": "Orabona, arXiv:1912.13213v10,2026-06-21; Chapter2 printed14/PDF26 prescient forward observation -> Section15.5.1, Algorithm15.8/Theorem15.30 printed265–266/PDF277–278. Derived loss-comparison dependency, not the complete source theorem. Theorem2.8 printed11/PDF23 explicitly assumes a differentiable objective and is not applied to a nonsmooth f+h here. PDF SHA cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "Fix u in V and move along q(a)=p+a(u-p), with 0<=a<=1. Convexity of V keeps q(a) feasible. Minimality and convexity of f give f(p)+h(p)<=f(q(a))+h(q(a))<=(1-a)f(p)+a f(u)+h(q(a)). Thus H(a)=a(f(u)-f(p))+h(q(a))-h(p) has a minimum at a=0 on [0,1]. Differentiate h along the affine segment: Hprime(0)=f(u)-f(p)+Dh(p)[u-p]. The feasible positive tangent direction gives Hprime(0)>=0, which is the claimed comparison.",
+      "lean_notes": "Let E be a real normed vector space, V a convex subset, and f,h:E to R. Assume f is convex on V, p belongs to V, p minimizes f+h over V, and h has ambient Frechet derivative Dh(p). Every comparator u belongs to the same V. No derivative of f or convexity of h is needed; V may have a boundary or be a singleton. Finite dimension, completeness, an inner product, closedness and boundedness are not assumed. The implementation uses IsLocalMinOn.hasFDerivWithinAt_nonneg, sub_mem_posTangentConeAt_of_segment_subset, Convex.segment_subset and HasFDerivAt.comp_hasDerivAt_of_eq, together with scalar derivative algebra. No earlier ABRL theorem is a direct proof parent. Three test families supply their own minimizing conditions and derivative data: an absolute-value loss with a shifted quadratic; a boundary minimum on [0,1] that is not a whole-line minimum; and a convex quadratic loss with a nonconvex perturbation. These examples are not additional source theorems. This is a derived real-valued comparison interface associated with the prescient proof, not full Algorithm 15.8 or Theorem 15.30. The minimizer is supplied. Existence, uniqueness, extended-real/domain and subgradient adapters, Bregman specialization, valid current-loss recursion and same-run fixed/variable-step regret bounds remain separate obligations. The source invocation of differentiable Theorem 2.8 does not itself justify the nonsmooth subgradient step. The fixed-step source proof is left as an exercise. No source repair or chapter completion is claimed.",
+      "dependencies": []
     }
   ]
 }

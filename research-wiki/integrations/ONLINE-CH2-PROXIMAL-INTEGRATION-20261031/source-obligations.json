@@ -1,0 +1,160 @@
+{
+  "inheritedPayload": {
+    "generalPrescientSource": "REQUIRED/OPEN",
+    "fullConstantStepSourceExercise": "REQUIRED/OPEN",
+    "requiredForwardObligations": [
+      {
+        "id": "additional:prescient-lookahead-nonpositive-stability",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter5-unbounded-variable-OGD-failure",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter5-DLsqrtT-minimax-optimality",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter3-unbounded-SGD",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter4-adaptive-oracle-like-rates",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter4-square-OGD-improvement",
+        "status": "REQUIRED/OPEN"
+      },
+      {
+        "id": "forward:chapter13-parameter-free-oracle-like-rates",
+        "status": "REQUIRED/OPEN"
+      }
+    ],
+    "historicalNavigation": [
+      "forward:chapter7-FTL-analysis"
+    ],
+    "chapterProofDenominator": null,
+    "chapterComplete": false,
+    "wholeBookComplete": false,
+    "sourceRepairApproved": false,
+    "acceptedMainOwner": {
+      "commit": "17c40c5b4672ca87c9ca3da9729c324d5584e153",
+      "path": "research-wiki/integrations/ONLINE-CH2-NONSMOOTH-INTEGRATION-20261030/whole-original-continuation.json",
+      "sha256": "4f53b46f03a3aa75937dbaad51b6c8007354d36e7b110368a094cd84af565d76"
+    },
+    "boundedProgress": "Seven exact proof declarations and four definitions form one affine/quadratic constant-positive-step producer chain, with five public canaries. This makes progress toward the prescient container; it does not close that general source container or any forward container.",
+    "sourceGaps": [
+      "Theorem15.30 invokes the differentiable first-order optimality theorem under merely subdifferentiable stated losses. This is an applicability gap, not a demonstrated false theorem.",
+      "The printed variable-step condition includes eta_(T+1) beyond the algorithm eta_1..eta_T indexing. Preserve ambiguity.",
+      "General constrained argmin attainment is not supplied.",
+      "The source constant-step proof is left as an exercise."
+    ]
+  },
+  "inheritedPayloadSHA256": "c56ed31bf83b0364d57d2c294b6ca273110f775136b1934d5ff8f8480d8cf3b2",
+  "inheritedOwner": {
+    "commit": "3eee71fbc1e0e20fe1bcdff3834dbf27ab085601",
+    "path": "research-wiki/integrations/ONLINE-CH2-PRESCIENT-INTEGRATION-20261030/source-obligations.json"
+  },
+  "requiredForwardObligations": [
+    {
+      "id": "additional:prescient-lookahead-nonpositive-stability",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter5-unbounded-variable-OGD-failure",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter5-DLsqrtT-minimax-optimality",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter3-unbounded-SGD",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter4-adaptive-oracle-like-rates",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter4-square-OGD-improvement",
+      "status": "REQUIRED/OPEN"
+    },
+    {
+      "id": "forward:chapter13-parameter-free-oracle-like-rates",
+      "status": "REQUIRED/OPEN"
+    }
+  ],
+  "historicalNavigation": [
+    "forward:chapter7-FTL-analysis"
+  ],
+  "chapterProofDenominator": null,
+  "chapterComplete": false,
+  "sourceRepairApproved": false,
+  "fullSourceTheoremComplete": false,
+  "currentBoundedProgress": "One supplied-minimum real-valued comparison, with three actual nonsmooth/boundary/nonconvex-h test families; independent source and BODY review accepted with explicit delta.",
+  "currentRequiredGeneralBridges": [
+    {
+      "id": "Bregman-three-point",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "real-Bregman-proximal-one-step",
+      "status": "required-open",
+      "dependencies": [
+        "minimizer-comparison",
+        "Bregman-three-point"
+      ]
+    },
+    {
+      "id": "extended-real-finite-domain-bridge",
+      "status": "required-open",
+      "dependencies": [
+        "minimizer-comparison"
+      ]
+    },
+    {
+      "id": "attained-current-loss-recursion",
+      "status": "required-open",
+      "dependencies": []
+    },
+    {
+      "id": "same-valid-run-sharp-constant-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "real-Bregman-proximal-one-step",
+        "extended-real-finite-domain-bridge",
+        "attained-current-loss-recursion"
+      ]
+    },
+    {
+      "id": "same-valid-run-variable-telescope",
+      "status": "required-open",
+      "dependencies": [
+        "real-Bregman-proximal-one-step",
+        "extended-real-finite-domain-bridge",
+        "attained-current-loss-recursion"
+      ]
+    },
+    {
+      "id": "general-source-prescient-container",
+      "status": "required-open",
+      "dependencies": [
+        "same-valid-run-sharp-constant-telescope",
+        "same-valid-run-variable-telescope"
+      ]
+    }
+  ],
+  "candidateSupersessionAccepted": false
+}

@@ -1,0 +1,70 @@
+{
+  "status": "bounded-local-purification-reviewed",
+  "productionDeclarations": [
+    "BanditRL.OnlineProximal.convex_minimizer_comparison"
+  ],
+  "productionPrivateHelpers": 0,
+  "publicCanaries": [
+    "BanditRL.OnlineProximalCanary.nonsmooth_shifted_quadratic",
+    "BanditRL.OnlineProximalCanary.boundary_linear_regularizer",
+    "BanditRL.OnlineProximalCanary.nonconvex_regularizer"
+  ],
+  "originalProofBytesUnchanged": true,
+  "compilerBackedActualConsumers": [
+    "BanditRL.OnlineProximalCanary.nonsmooth_shifted_quadratic",
+    "BanditRL.OnlineProximalCanary.boundary_linear_regularizer",
+    "BanditRL.OnlineProximalCanary.nonconvex_regularizer"
+  ],
+  "duplicateAudit": "One shared comparison; all three concrete canaries call it with independently proved minima. The scalar helper H and affine segment q stay local to this proof.",
+  "deadCodeAudit": "No new private declarations or wrapper-only public lemmas. The production interface has three actual checked test consumers; the general Bregman consumer remains planned.",
+  "conjunctConsumerAudit": {
+    "nonsmooth_shifted_quadratic": [
+      false,
+      false,
+      true,
+      true
+    ],
+    "boundary_linear_regularizer": [
+      false,
+      true,
+      false
+    ],
+    "nonconvex_regularizer": [
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "conjunctAuditMeaning": "Zeta-reduced term occurrence excluding binder type annotations; numerical endpoints retain the actual production-derived hb proof through Eq.mp.",
+  "canaryBoundary": "Absolute-value nondifferentiability, boundary-only minimum, and nonconvex perturbation. These are test families, not three printed source results.",
+  "mathematicalSpine": [
+    "Take a feasible segment toward u",
+    "Use minimality plus convexity of f to minimize a smooth scalar majorant H at 0",
+    "Differentiate only h along the segment",
+    "Use the positive tangent direction to obtain Hprime(0)>=0",
+    "Rearrange to the loss comparison"
+  ],
+  "failureHistory": "Original rejected numerical-tail dependency route and repair remain in the retained 270 historical paths. Current source topology v1 typing corrections, canary neutral-signature digest-label correction, and reader provenance correction are retained as separate versions.",
+  "originalPreservation": "293 original changed paths retained; scope continuation draft has 16 complete original source/governance payloads and all historical states. Seven inherited historical digest obligations remain open.",
+  "fullSourceTheoremComplete": false,
+  "chapterComplete": false,
+  "sourceRepairApproved": false,
+  "boundary": "One derived real-valued convex minimizer comparison and three actual test families. Supplied minimum, convex f on convex V, derivative only of h. Not literal or full Theorem15.30, no source repair, chapter or general prescient closure.",
+  "expositionSeal": false,
+  "contributorManifestPending": true,
+  "fullIntegrationAccepted": false,
+  "evidenceBindings": {
+    "batch35-compiled-graph-v1/actual-dependencies.json": "ac202cc2c0fe6267c8b19577ee193ea72fd1a7683f57bb84ec9b031f1c8ea13b",
+    "batch35-compiled-graph-v1/receipt.json": "1345a0dcecf7a49f3c4ec03fe7778584148345244ba0e88954d6c49d24588a11",
+    "batch35-body-review-v1/review-v1.json": "7134ac2abd7e7dc5b78a0071dd61298b9dfa0b66f9b497edd50a6c14a74d3cb3",
+    "batch35-body-review-v1/probe-receipt-v1.json": "895c7aee49d3d2ece3e67ad6199ced06f65ded79fb8475de642e271777559094",
+    "batch35-source-review-v1/review-v2.json": "6a5608324987a0e9049f40cdfe330a34eb4fe9ad6cd41287c0b0dea7530a0a96",
+    "batch35-source-extraction-v2/source-proof-graph.json": "c54c29d132c7d7b1cdbe0e5d167fb2539a7a77db998990d6156cd2b1b312c99f",
+    "batch35-reader-source-review-v1/review-v2.json": "8710669672eaec85ec18a3e27b7b541a030ebf6666866ee1d954cfb692ce5380",
+    "batch35-rendered-prepublication-v1/receipt.json": "b2e5fe8d0bc51493df96f7170ad3a14b8199e4aa5bd1ec181257b6f73b8b0de2"
+  },
+  "independentLocalReviewSHA256": "b0991ddea5c65ea8473a2df5286c6ee2619303ce703183fb77bf5b1dff22a226",
+  "reviewedScope": "One theorem and three canaries, exact seven-file candidate bindings in review-binding.json. Local mathematical purification only; final published integration seal remains pending.",
+  "finalCommittedSourceLinksAccepted": false
+}

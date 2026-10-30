@@ -169,3 +169,4 @@ import Tests.OnlineFTLOscillationCanary
 import Tests.OnlineLearningChapterAuditCanary
 import Tests.OnlineNonsmoothExamplesCanary
 import Tests.OnlinePrescientLinearCanary
+import Tests.OnlineProximalComparisonCanary

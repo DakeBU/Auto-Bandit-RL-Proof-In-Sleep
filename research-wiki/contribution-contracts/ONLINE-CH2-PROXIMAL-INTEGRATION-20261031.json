@@ -1,0 +1,156 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-PROXIMAL-INTEGRATION-20261031",
+  "route": "online-learning / Chapter2 prescient observation / derived nonsmooth proximal comparison",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona,21June2026; Chapter2 post-Theorem2.13 printed14/PDF26; Theorem2.8 printed11/PDF23; Lemma6.7 printed64/PDF76; Algorithm15.8/Theorem15.30 printed265-266/PDF277-278. Derived support interface; PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate exact original PR208 comparison and three canaries, with substantive retained continuations for all293 original paths.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineProximalComparison.lean",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineProximal.convex_minimizer_comparison"
+  ],
+  "reuse_plan": {
+    "classification": "missing",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Original retrieval record and current main checked for the exact comparison. OnlineConvexOptimality.minOn_real_iff_gradient requires a differentiable objective and complete inner-product space, so does not replace this arbitrary normed-space nonsmooth interface. Pinned Mathlib convex-segment, derivative-composition and local-minimum/tangent APIs inspected and actual compiled parents exported."
+    ],
+    "reused_declarations": [
+      "Convex.segment_subset",
+      "sub_mem_posTangentConeAt_of_segment_subset",
+      "IsMinOn.localize",
+      "IsLocalMinOn.hasFDerivWithinAt_nonneg",
+      "HasFDerivAt.comp_hasDerivAt_of_eq"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineProximal.convex_minimizer_comparison"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineProximalCanary.nonsmooth_shifted_quadratic",
+      "BanditRL.OnlineProximalCanary.boundary_linear_regularizer",
+      "BanditRL.OnlineProximalCanary.nonconvex_regularizer"
+    ],
+    "planned_consumers": [
+      "General Bregman one-step comparison; requires explicit derivative, domain and source adapters. Not an actual current Lean dependency."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "One canonical shared minimum-comparison theorem serves three actual canaries; preserve original proof and exact interface without duplicating project foundations."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch35-blind-decoder",
+    "source_reviewer": "independent-batch35-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "One derived real-valued convex minimizer comparison in an arbitrary real normed vector space, with three actual test families. The feasible minimum is supplied; f is convex on V, only h is differentiated, and no convexity of h, finite dimension, completeness, inner product or closed/bounded V is required. This is not literal or full Theorem15.30. Existence/uniqueness, extended-real finite-domain/subgradient and Bregman adapters, valid current-loss recursion and same-run fixed/variable-step regret bounds remain open. The differentiable first-order citation gap and printed step-index convention remain uncorrected; the general fixed-step proof is a required source exercise. Eight forward containers and one historical navigation item are preserved; chapter proof denominator is unknown. No source repair, chapter/book completion or publication acceptance is inferred."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "A generic supplied-minimum segment argument is integrated. General Bregman transport and cross-setting functor certificates remain unproved.",
+    "focus_targets": [
+      "online-ogd"
+    ],
+    "visual_review": "Local interactive graph search/drilldown passed, receipt f0660bab16453f33096c280152b506d651e4563d49c79b59df04cce80a7cd322. Five navigation nodes/four edges, one module parent and zero indexed Test consumers. Actual separate compiled graph has4selected declarations/1420coalesced TYPE/VALUE constant edges and3actual canary VALUE consumers. Navigation index is not full proof semantics. Exact committed-source links pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one derived source-context card, one theorem note and one chapter module/goal/completion addition. Existing chapters,432prior highlights and prior source cards preserved.",
+    "banditrlwiki": "updated: research-wiki/integrations/ONLINE-CH2-PROXIMAL-INTEGRATION-20261031 source, statement, compiled dependency and whole-original continuation packet.",
+    "results_ledger": "no-change-with-reason: no new chapter/global/source theorem closure.",
+    "roadmap": "no-change-with-reason: all eight forward containers and one historical navigation retained.",
+    "website_surfaces": [
+      "Projected OGD reader",
+      "OnlineProximalComparison module/declaration catalog",
+      "Shared declaration graph/search"
+    ]
+  },
+  "truth_boundary": "One derived real-valued convex minimizer comparison in an arbitrary real normed vector space, with three actual test families. The feasible minimum is supplied; f is convex on V, only h is differentiated, and no convexity of h, finite dimension, completeness, inner product or closed/bounded V is required. This is not literal or full Theorem15.30. Existence/uniqueness, extended-real finite-domain/subgradient and Bregman adapters, valid current-loss recursion and same-run fixed/variable-step regret bounds remain open. The differentiable first-order citation gap and printed step-index convention remain uncorrected; the general fixed-step proof is a required source exercise. Eight forward containers and one historical navigation item are preserved; chapter proof denominator is unknown. No source repair, chapter/book completion or publication acceptance is inferred.",
+  "verification": {
+    "focused_checks": [
+      "Four complete public types and three actual canary VALUE dependencies verified; term-only zeta-reduced conjunct probe confirms both numerical endpoints consume production.",
+      "Combined Lean root+Tests9277jobs passed. Full harness library9108/Tests9276,476Python tests with7skips passed on seven unchanged staged mathematical/reader files.",
+      "Tests.lean and Tests/OnlineProximalComparisonCanary.lean are owned test surfaces bound in the packet. affected_files names checker-protected production/publication paths."
+    ],
+    "bandit_check": "Prepublication full harness passed; final complete public-package/candidate gate pending.",
+    "site_build": "Prepublication Lean-verified site built after actual full harness success; no hand-edited generated output.",
+    "site_check": "Prepublication static site and desktop/375px exposition plus interactive graph search/drilldown passed. Final complete-candidate and exact-commit source-link checks remain pending.",
+    "independent_review": "Distinct blind/source/topology/BODY/reader, bounded local mathematical/purification and exact-v3 whole-original public-packet reviews accepted. Review hashes are recorded in review-binding.json. Final complete-candidate/contributor gates, committed-source links, CI, merge and live acceptance remain pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in immutable PR208 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Bounded retention and continuation audit completed for all 293 original changed paths. Original payloads, historical failure/repair states and source obligations are retained with reviewed successors. Seven inherited missing-byte digest obligations remain OPEN; completion here does not claim those bytes recovered or mathematics/source routes closed.",
+      "promoted_fragments": [
+        "BanditRL.OnlineProximal.convex_minimizer_comparison"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "convex-segment-smooth-majorant-positive-tangent"
+      ],
+      "expected_information_gain": "One preserved proof route; separate mandatory blind/source/BODY and conservation reviews.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17;main 3eee71fbc1e0e20fe1bcdff3834dbf27ab085601"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Supplied minimum, feasible segment, convex endpoint majorant, derivative of h, positive tangent inequality.",
+      "selection_reason": "No competing parallel proof-search routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "purified",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Bounded local exposition and purification only: independent review b0991ddea5c65ea8473a2df5286c6ee2619303ce703183fb77bf5b1dff22a226. Exact seven-file SHA256 bindings: {\"BanditRLProof.lean\": \"30186030cc1b4c7893feea0518629bf1abd66e184f63834c1caf5de8abc73c6b\", \"BanditRLProof/OnlineProximalComparison.lean\": \"04dae0024d9a2b61016b4652767f4d678725325a040a02c62680a202ec2593d2\", \"Tests.lean\": \"e1782a27faa433cdb15539c9117b34ef74f7eaee91952c588580fc8a855ec95d\", \"Tests/OnlineProximalComparisonCanary.lean\": \"6f3ae3989db1bef0bbc3b9e82b3c799276708fda83f61d3f2b412e1492c5aae4\", \"website/content/chapters.json\": \"daa0a19e42958d105983dbeee4d896b53278d80deacdcf91c3bdb01935a548b7\", \"website/content/highlights.json\": \"86a99235ee29ec580cc8036a74b51f312d2ecb07ca0e51187858aceb26e753b0\", \"website/content/readings.json\": \"614eae73e16c6ce20a62d38f552d5102bcbb46cb630a98896b57bad21990cc6b\"}. Final committed-source links and published-integration seal remain false in reader-publication.json; final complete-candidate gates pending.",
+      "source_expansion_nodes": [
+        "Algorithm15.8/Theorem15.30 prescient proximal comparison context with explicit source gaps"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineProximal.convex_minimizer_comparison"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
