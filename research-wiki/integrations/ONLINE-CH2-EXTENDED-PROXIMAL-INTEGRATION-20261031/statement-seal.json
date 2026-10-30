@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-30T21:31:39.841537+00:00",
+  "originalHead": "41f1fb26915b3bf7f84035393080991c38aeba64",
+  "acceptedMain": "d582057ac6ef80d19dfc2e321db9d647746d2c42",
+  "declarations": [
+    {
+      "id": "claim_0",
+      "kind": "theorem",
+      "name": "finitePart_convex_of_subdifferentiable",
+      "path": "BanditRLProof/OnlineBregmanExtended.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+      "statement": "theorem finitePart_convex_of_subdifferentiable (f : E → EReal) (V : Set E)\n    (hV : Convex ℝ V) (hp : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ x ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f x).Nonempty) :\n    ConvexOn ℝ V (fun x => (f x).toReal)",
+      "signatureSHA256": "30ccbb6e82f24f456aad683a8ff7d130b4ce61240da8aeeadda1619b1822250b",
+      "sourceModuleSHA256": "adf36bd3172a96308872323af3128fc94733c005ca9c025a050620804f7ed80b"
+    },
+    {
+      "id": "claim_1",
+      "kind": "theorem",
+      "name": "proximal_finitePart_minimizer_iff",
+      "path": "BanditRLProof/OnlineBregmanExtended.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "statement": "theorem proximal_finitePart_minimizer_iff (f : E → EReal) (V : Set E)\n    (ψ : E → ℝ) (η : ℝ) (x p : E) (hp : p ∈ V)\n    (hfin : ∀ z ∈ V, f z ≠ ⊤ ∧ f z ≠ ⊥) :\n    IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p ↔\n      IsMinOn (fun z => (f z).toReal + η⁻¹ * divergence ψ z x) V p",
+      "signatureSHA256": "24c2f539a2e5e931e16d5a4c33603dacdd3822eea074ca1323d75a04d4c4e621",
+      "sourceModuleSHA256": "adf36bd3172a96308872323af3128fc94733c005ca9c025a050620804f7ed80b"
+    },
+    {
+      "id": "claim_2",
+      "kind": "theorem",
+      "name": "proximal_one_step_extended",
+      "path": "BanditRLProof/OnlineBregmanExtended.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "statement": "theorem proximal_one_step_extended (f : E → EReal) (V : Set E)\n    (hV : Convex ℝ V) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (ψ : E → ℝ) (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)\n    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    ∀ u ∈ V, η * ((f p).toReal - (f u).toReal) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "signatureSHA256": "b652833cccb45261614ccdcba98b1daf08fa3a0b7bc4a975b564878d5b61461b",
+      "sourceModuleSHA256": "adf36bd3172a96308872323af3128fc94733c005ca9c025a050620804f7ed80b"
+    },
+    {
+      "id": "claim_3",
+      "kind": "theorem",
+      "name": "restricted_absolute_nonquadratic",
+      "path": "Tests/OnlineBregmanExtendedCanary.lean",
+      "context": "",
+      "statement": "theorem restricted_absolute_nonquadratic :\n    let V : Set ℝ := Icc (-1) 1\n    let f : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    SourceProper f ∧\n      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧\n      f 2 = ⊤ ∧\n      ConvexOn ℝ V (fun z => (f z).toReal) ∧\n      ¬ ConvexOn ℝ (univ : Set ℝ) (fun z => (f z).toReal) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      IsMinOn (fun z => f z + ((divergence ψ z (1 / 2) : ℝ) : EReal)) V 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      divergence ψ (1 / 2) 0 = 9 / 64 ∧\n      divergence ψ 0 (1 / 2) = 11 / 64 ∧\n      (∀ u ∈ V, -|u| ≤ divergence ψ u (1 / 2) - divergence ψ u 0 - divergence ψ 0 (1 / 2)) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "signatureSHA256": "3feb0512108ecbfb1e3e975fca8584b0823bda1a34470639a767830f5721e234",
+      "sourceModuleSHA256": "851436f55c0636e0c09fc936f65f068f5e0b171b18e74da8c05bff35af9599dd"
+    },
+    {
+      "id": "claim_4",
+      "kind": "theorem",
+      "name": "restricted_linear_outside_center",
+      "path": "Tests/OnlineBregmanExtendedCanary.lean",
+      "context": "",
+      "statement": "theorem restricted_linear_outside_center :\n    let V : Set ℝ := Icc 0 1\n    let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤\n    let ψ : ℝ → ℝ := fun z => z ^ 2 / 2\n    SourceProper f ∧\n      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧\n      f (-1) = ⊤ ∧\n      (-1 : ℝ) ∉ V ∧\n      ConvexOn ℝ V (fun z => (f z).toReal) ∧\n      ¬ ConvexOn ℝ (univ : Set ℝ) (fun z => (f z).toReal) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      IsMinOn (fun z => f z + ((divergence ψ z (-1) : ℝ) : EReal)) V 0 ∧\n      divergence ψ 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "signatureSHA256": "7ea880aeef889428a9cab84eb24d087b99871e494b59f5aad7aa03855124eec3",
+      "sourceModuleSHA256": "851436f55c0636e0c09fc936f65f068f5e0b171b18e74da8c05bff35af9599dd"
+    }
+  ],
+  "blindPacketSHA256": "b8ccdf940f81175ac84219e5bcf3d9fd7316a42d470195eefaea6405b18a64dc",
+  "sourceFacingSignaturesFrozenBeforePort": true,
+  "semanticReview": "pending",
+  "binderAudit": "pending-independent-review",
+  "productionEdited": false,
+  "statementChangeAllowedWithoutSuccessorSeal": false
+}

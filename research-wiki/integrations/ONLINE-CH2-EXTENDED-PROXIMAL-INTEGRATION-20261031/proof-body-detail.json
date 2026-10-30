@@ -1,0 +1,234 @@
+{
+  "schema": "abrl-independent-body-review-v1",
+  "at": "2026-10-30T21:50:19.024395+00:00",
+  "reviewer": "batch37_source_reviewer in subsequent BODY phase",
+  "verdict": "accepted",
+  "scope": "Exact compiled bodies/signatures/axioms/dependencies and strong selected-term consumption for three derived bridges and two full canaries. Distinct from candidate, root gate, source theorem, chapter or publication acceptance.",
+  "implementation_access_boundary": "Implementation inspected only after independent source review receipt c8178c57785aa3bd7811c4fbde343b17f497d53fa634a2b4bd09b7c50e991022 was sealed and parent explicitly authorized BODY role.",
+  "source_verdict_unchanged": "accepted-with-explicit-delta; full source root closure false",
+  "proof_reviews": [
+    {
+      "id": "claim_0",
+      "result": "accepted",
+      "body_route": "Proper-support finiteness is proved for each feasible point using subgradient_point_finite. Select a global support at the convex mixture, evaluate at both feasible endpoints, convert only finite values to reals, multiply by nonnegative weights and cancel inner products. No global convexity of total toReal assumed.",
+      "expected_live_provider": "BanditRL.OnlineConvex.subgradient_point_finite",
+      "scope": "Extended finite-domain adaptation of support proof; not duplicate literal globally-real T2.21."
+    },
+    {
+      "id": "claim_1",
+      "result": "accepted",
+      "body_route": "Define penalized F. Rewrite f to its finite real embedding only on V; finite real penalty makes F finite there. Use shared minOn_finitePart_iff with explicit p membership and pointwise equality.",
+      "boundary": "No positivity/differentiability inferred. eta=0/negative valid for static iff. CompleteSpace remains in exact inherited context."
+    },
+    {
+      "id": "claim_2",
+      "result": "accepted",
+      "body_route": "Derive feasible finiteness, restriction convexity and real objective minimality using the first two bridges and shared support-point lemma. Apply existing proximal_one_step to the actual real finite-part minimizer.",
+      "boundary": "Both derivative arguments and eta>0 are passed. Previous x remains unrestricted relative to V/loss domain. Both negative residuals retained. Reused real provider deliberately clears hdx internally, but exact stronger source-instantiation interface retains it; no binder was silently removed or added."
+    },
+    {
+      "id": "claim_3",
+      "result": "accepted",
+      "conjuncts": 12,
+      "body_route": "Properness and global support constructed for restricted absolute loss; outside V support is trivial against top. Nonconvex total finite part contradicted by endpoints 0,2 and midpoint1. Reuse previous genuine nonquadratic canary for strict convexity, minimum and divergence values; transport minimum to restricted EReal objective; derive universal inequality by new extended theorem. Numeric tail transports its u=1/2 specialization.",
+      "boundary": "Minimizer point0, objective11/64, reversed divergence9/64, nonsmooth loss at0, no global finite-part convexity premise."
+    },
+    {
+      "id": "claim_4",
+      "result": "accepted",
+      "conjuncts": 11,
+      "body_route": "Global slope1 support built on [0,1], top branch handled explicitly. Reuse earlier restricted abs minimum via abs(z)=z on nonnegative V; transport to EReal objective. Compute quadratic D, derive universal inequality using extended theorem, then transport u=1/2 specialization to final scalar.",
+      "boundary": "Center-1 outside V and loss domain; minimizer0 with objective1/2. No f(x) evaluation or feasibility assumption smuggled for center."
+    }
+  ],
+  "axiom_audit": {
+    "method": "Independent #print axioms for all five declarations in current compiled environment, also matched parent compiled receipt.",
+    "rows": [
+      {
+        "name": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    ],
+    "unauthorized_axioms": [],
+    "sorryAx_found": false
+  },
+  "exact_signatures_and_bodies": {
+    "all_five_headers_match_seal": true,
+    "original_production_and_canary_bytes_match_W_and_V": true,
+    "inherited_contexts_preserved": true,
+    "root_changes": "Exactly one appended import in each existing shared root.",
+    "bindings_file": "exact-bindings.json"
+  },
+  "dependency_audit": {
+    "compiled_receipt_status": "compiled-probes-passed",
+    "nodes": 6,
+    "direct_coalesced_edges": 1241,
+    "required_value_pairs_passed": 12,
+    "independent_live_production_providers": [
+      {
+        "required_live_providers": [
+          {
+            "provider": "BanditRL.OnlineConvex.subgradient_point_finite",
+            "live_uses": 4
+          }
+        ],
+        "raw_body_direct_project_constants": [
+          "BanditRL.OnlineConvex.SourceProper",
+          "BanditRL.OnlineConvex.SourceSubdifferential",
+          "BanditRL.OnlineConvex.effectiveDomain",
+          "BanditRL.OnlineConvex.subgradient_point_finite"
+        ],
+        "raw_body_constants_include_type_annotations": true,
+        "name": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable"
+      },
+      {
+        "required_live_providers": [
+          {
+            "provider": "BanditRL.OnlineConvex.minOn_finitePart_iff",
+            "live_uses": 1
+          }
+        ],
+        "raw_body_direct_project_constants": [
+          "BanditRL.OnlineBregman.divergence",
+          "BanditRL.OnlineConvex.minOn_finitePart_iff"
+        ],
+        "raw_body_constants_include_type_annotations": true,
+        "name": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff"
+      },
+      {
+        "required_live_providers": [
+          {
+            "provider": "BanditRL.OnlineConvex.subgradient_point_finite",
+            "live_uses": 1
+          },
+          {
+            "provider": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+            "live_uses": 1
+          },
+          {
+            "provider": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+            "live_uses": 1
+          },
+          {
+            "provider": "BanditRL.OnlineBregman.proximal_one_step",
+            "live_uses": 1
+          }
+        ],
+        "raw_body_direct_project_constants": [
+          "BanditRL.OnlineConvex.SourceProper",
+          "BanditRL.OnlineConvex.SourceSubdifferential",
+          "BanditRL.OnlineBregman.divergence",
+          "BanditRL.OnlineConvex.effectiveDomain",
+          "BanditRL.OnlineConvex.subgradient_point_finite",
+          "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+          "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+          "BanditRL.OnlineBregman.proximal_one_step"
+        ],
+        "raw_body_constants_include_type_annotations": true,
+        "name": "BanditRL.OnlineBregman.proximal_one_step_extended"
+      }
+    ],
+    "limitation": "Raw graph has direct TYPE/VALUE constant presence, including annotations, not occurrence counts or full transitive topology. Independent selected core-head tests establish stronger consumption for specific numeric tails; syntax counts are not runtime costs."
+  },
+  "strong_numeric_tail_audit": {
+    "probe_exit_code": 0,
+    "rows": [
+      {
+        "transport_trace": [
+          "Eq.mp",
+          "Eq.mp"
+        ],
+        "transport_core_head": "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "transport_core_argument_count": 20,
+        "selected_proof_argument_live_target_uses": 1,
+        "selected_numeric_tail_index_zero_based": 11,
+        "numeric_tail_head": "Eq.mp",
+        "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+        "general_comparator_conjunct_live_target_uses": 1,
+        "direct_target_head_required": true,
+        "conjunct_count": 12
+      },
+      {
+        "transport_trace": [
+          "Eq.mp",
+          "Eq.mp"
+        ],
+        "transport_core_head": "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "transport_core_argument_count": 20,
+        "selected_proof_argument_live_target_uses": 1,
+        "selected_numeric_tail_index_zero_based": 10,
+        "numeric_tail_head": "Eq.mp",
+        "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+        "general_comparator_conjunct_live_target_uses": 1,
+        "direct_target_head_required": true,
+        "conjunct_count": 11
+      }
+    ],
+    "negative_controls": 7,
+    "positive_controls": 4,
+    "all_controls_passed": true,
+    "annotation_skipping": true,
+    "beta_zeta_reduction": true,
+    "explicit_id_elimination": true,
+    "declaration_unfolding": false,
+    "proof_irrelevance_normalization": false,
+    "exact_core_application_head_required": true,
+    "synthetic_controls_not_claimed_well_typed": true
+  },
+  "probe_revision_record": {
+    "attempt1": "Probe selector reported conjunction length1 because compiled value has explicit id wrapper. This was a probe-method limitation, not a candidate contradiction. Failed probe/log retained.",
+    "final": "Added explicit id elimination and identity controls. Final execution exit0; all eleven controls and both selected tails pass.",
+    "other_diagnostics": "Read-only Python binding reports initially encountered host GBK defaults; repeated with explicit UTF-8. No candidate source/build changed."
+  },
+  "remaining_boundaries": [
+    "Source-domain X and X times int X Bregman realization OPEN",
+    "Interior invariant and ambient-extension/derivative compatibility OPEN",
+    "Argmin attainment and causal current-loss trajectory construction OPEN",
+    "Nonsmooth T2.8 invocation source gap G1530-OPT OPEN",
+    "Literal eta_(T+1) indexing discrepancy G1530-INDEX OPEN",
+    "Variable and fixed telescope source acceptance OPEN, including mandatory omitted fixed-rate exercise",
+    "Eight forward routes plus one navigation-only route retained; chapter coverage null",
+    "Full combined root/Tests/harness and publication/merge/live gates not certified by this BODY review"
+  ],
+  "publication_note": "Original production comment still points to historical docs/contracts path. Parent identified successor publication binding as separate reader work; this BODY acceptance does not validate that link or reader route.",
+  "production_edits_by_reviewer": false,
+  "remote_actions": false,
+  "worktrees_retired": false,
+  "prior_source_review_modified": false
+}

@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "role": "independent source-blind semantic reconstruction",
+  "mathematical_input": "private-maintenance/github-maintenance-goal-20261011/batch37-blind-input-v1/packet.json",
+  "evidence_boundary": "Only the named neutral packet was inspected. This is an interface reconstruction, not source comparison, proof checking, or a compilation claim.",
+  "shared_expansions": {
+    "P": "P f means (for every x in E, f(x) is not bottom) AND (there exist x in E and r in R with f(x)=the finite EReal embedding of r). The finite witness is global and need not lie in V.",
+    "S": "g belongs to S f x exactly when, for every y in E, f(x) + embed(<g,y-x>_R) <= f(y) in EReal. Nonemptiness at x means that such a vector g exists. The test variable y ranges over all E, not only V.",
+    "D": "D(psi,a,b)=psi(a)-psi(b)-fderiv_R(psi,b)(a-b). The second argument b is the derivative base. D is real valued and ordered; no symmetry, nonnegativity, or metric property follows from its definition.",
+    "IsMinOn": "IsMinOn F V p means for every z in V, F(p)<=F(z). Membership p in V is separate. Thus this predicate alone does not assert p in V or existence of an attained minimum within V.",
+    "total_functions": "EReal.toReal sends a finite embedded real r to r and sends both top and bottom to 0. It is not a faithful order conversion at infinities. fderiv is a total operation, taking the zero continuous linear map when there is no Frechet derivative. Real inversion is total, with 0 inverse equal to 0.",
+    "finiteness_inference": "P f plus S f x nonempty forces f(x) finite: bottom is excluded by P; top is incompatible with the support inequality evaluated at the global finite witness. Consequently the hypotheses of claims 0 and 2 force finiteness on V, without forcing global finiteness."
+  },
+  "claims": [
+    {
+      "id": "claim_0",
+      "objects_spaces": "E is any real inner product space with NormedAddCommGroup and InnerProductSpace R instances. Completeness is not assumed. f:E->EReal and V is a subset of E.",
+      "quantifiers": "Universally quantify E and its instances, f, V, and all hypotheses. The support premise is: for every x in V there exists g in E such that for every y in E, f(x)+embed(<g,y-x>)<=f(y).",
+      "assumptions": [
+        "V is convex over R.",
+        "For every y in E, f(y)!=bottom.",
+        "There exist y in E and r in R with f(y)=embed(r).",
+        "For every x in V there exists g in E with the global support inequality stated in quantifiers."
+      ],
+      "conclusion": "q(x)=toReal(f(x)) is convex on V: V is convex and, for x,y in V and real a,b>=0 with a+b=1, q(a*x+b*y)<=a*q(x)+b*q(y).",
+      "constants_normalization": "Ordinary real convexity, with nonnegative weights summing to one. The support pairing is the real inner product with coefficient one.",
+      "probability_feedback": "Deterministic statement. No probability space, random sampling, feedback model, filtration, or oracle complexity is present.",
+      "boundary": [
+        "P and nonempty supports imply finite f on V, which makes toReal faithful there.",
+        "Top values outside V are permitted and become zero under toReal. No global convexity is asserted.",
+        "V may be empty, and the finite witness in P need not be in V.",
+        "No continuity, differentiability, completeness, strict convexity, or minimizer guarantee is assumed or concluded."
+      ]
+    },
+    {
+      "id": "claim_1",
+      "objects_spaces": "E is a complete real inner product space with the declared normed additive group structure. f:E->EReal, psi:E->R, V subset E, eta:R, and x,p:E.",
+      "quantifiers": "Universally quantify all these data. For each data choice satisfying p in V and finiteness of f at every point of V, assert the equivalence below.",
+      "assumptions": [
+        "CompleteSpace E is an explicit typeclass assumption.",
+        "p belongs to V.",
+        "For every z in V, f(z)!=top AND f(z)!=bottom."
+      ],
+      "conclusion": "The following predicates are equivalent: (for every z in V, f(p)+embed(eta^(-1)*[psi(p)-psi(x)-fderiv_R(psi,x)(p-x)]) <= f(z)+embed(eta^(-1)*[psi(z)-psi(x)-fderiv_R(psi,x)(z-x)])) and (for every z in V, toReal(f(p))+eta^(-1)*[psi(p)-psi(x)-fderiv_R(psi,x)(p-x)] <= toReal(f(z))+eta^(-1)*[psi(z)-psi(x)-fderiv_R(psi,x)(z-x)]). The first comparison is in EReal and the second in R.",
+      "constants_normalization": "The regularizer coefficient is eta inverse, not eta. eta is an arbitrary real number, including zero and negatives; at zero its inverse is zero. The derivative base in both D terms is x.",
+      "probability_feedback": "Deterministic equivalence, with no stochastic or feedback assumptions.",
+      "boundary": [
+        "No convexity of V, f, or psi is assumed.",
+        "No positivity or nonzero condition on eta and no differentiability of psi is assumed.",
+        "fderiv makes D well-defined even at nondifferentiability; this does not certify an actual derivative there.",
+        "x need not belong to V. p membership is explicit and separate from IsMinOn, ensuring finiteness at p.",
+        "This equates minimizer predicates for a supplied p; it asserts neither existence nor uniqueness nor a numeric minimum.",
+        "Completeness is part of the written interface even if the order-conversion interpretation does not visibly need it."
+      ]
+    },
+    {
+      "id": "claim_2",
+      "objects_spaces": "E is a complete real inner product space. f:E->EReal, V subset E, psi:E->R, eta:R, and x,p:E.",
+      "quantifiers": "Universally quantify the data and every stated hypothesis. Conclude for every u in V the stated inequality.",
+      "assumptions": [
+        "CompleteSpace E is an explicit typeclass assumption.",
+        "V is convex over R.",
+        "For all y in E, f(y)!=bottom, and there exist y in E and r in R with f(y)=embed(r).",
+        "For every z in V there exists g in E such that for every y in E, f(z)+embed(<g,y-z>)<=f(y).",
+        "eta>0.",
+        "p belongs to V.",
+        "psi is Frechet differentiable at x and at p over R.",
+        "For every z in V, f(p)+embed(eta^(-1)*D(psi,p,x)) <= f(z)+embed(eta^(-1)*D(psi,z,x)) in EReal."
+      ],
+      "conclusion": "For every u in V, eta*(toReal(f(p))-toReal(f(u))) <= D(psi,u,x)-D(psi,u,p)-D(psi,p,x). Expanding D, the right side equals (fderiv_R(psi,p)-fderiv_R(psi,x))(u-p).",
+      "constants_normalization": "eta inverse multiplies D in the minimized objective; eta multiplies the objective-value difference in the conclusion. D's second argument is its derivative base: x, then p, then x in the three terms. No factor 1/2 or strong convexity constant is assumed.",
+      "probability_feedback": "Pointwise deterministic inequality for every feasible comparator u. No random comparator, expectation, high-probability event, feedback, or iteration count is present.",
+      "boundary": [
+        "P and supports imply finite f on V, including p and u, but allow top outside V.",
+        "x may lie outside V, and f(x) may be top. The assumption on psi at x remains explicit.",
+        "No differentiability of f, global differentiability of psi, convexity of psi, strict or strong convexity of psi, or nonnegativity of D is assumed.",
+        "The minimized point p and its membership are supplied hypotheses. Existence and uniqueness of such a p are not conclusions.",
+        "There is no global convexity assertion for toReal composed with f.",
+        "The differentiability assumptions are at precisely x and p, and completeness must not be silently dropped from the interface."
+      ]
+    },
+    {
+      "id": "claim_3",
+      "objects_spaces": "Concrete real line. V=[-1,1]. f(z)=embed(|z|) when z belongs to V and top otherwise. psi(z)=z^4/4+z^2/2.",
+      "quantifiers": "A closed theorem with these let-bound definitions and no external premises. Quantifiers occur in P, the support assertion, convexity predicates, the minimizer predicate, and the comparator inequality.",
+      "assumptions": [
+        "No external hypotheses. All listed properties are conclusions for the concrete definitions."
+      ],
+      "conclusion": [
+        "P expanded: for every z in R, f(z)!=bottom, and there exist z in R and r in R with f(z)=embed(r).",
+        "For every z in [-1,1], there exists g in R such that for every y in R, f(z)+embed(g*(y-z))<=f(y).",
+        "f(2)=top.",
+        "q(z)=toReal(f(z)) is convex on [-1,1].",
+        "q is not convex on all R.",
+        "psi is strictly convex on all R.",
+        "For every z in [-1,1], f(0)+embed(D(psi,0,1/2))<=f(z)+embed(D(psi,z,1/2)). This is IsMinOn at p=0; 0 belongs to V by the concrete interval definition, separately from the predicate.",
+        "The real absolute-value function is not differentiable at 0.",
+        "D(psi,1/2,0)=9/64.",
+        "D(psi,0,1/2)=11/64.",
+        "For every u in [-1,1], -|u|<=D(psi,u,1/2)-D(psi,u,0)-D(psi,0,1/2).",
+        "The explicit real scalar inequality -1/2<=-5/16 holds."
+      ],
+      "constants_normalization": "The objective uses coefficient 1 on D, corresponding to eta=1. The base is x=1/2 and minimizer point is p=0. psi'(z)=z^3+z. The two D values are deliberately ordered and unequal. The three-term right side simplifies to -5*u/8; at u=1/2 it is -5/16.",
+      "probability_feedback": "Entirely deterministic concrete example; no probability or feedback model.",
+      "boundary": [
+        "The total real conversion is q(z)=|z| on [-1,1] and q(z)=0 outside. Global nonconvexity is an explicit conjunct.",
+        "The minimizer is the point 0, not the numeric minimum 0. The EReal objective's attained value at 0 is embed(11/64), and its real-valued restriction has minimum 11/64. This value is inferred from the concrete f(0) and the stated reverse D value.",
+        "The interval includes both endpoints.",
+        "Nondifferentiability is asserted for abs at 0. It does not assert nondifferentiability of psi.",
+        "The scalar inequality is an additional conjunct; identifying it with u=1/2 uses the explicit formulas.",
+        "Uniqueness of the minimizer and algorithmic convergence are not stated conjuncts. Strict convexity is asserted for psi, not for f."
+      ]
+    },
+    {
+      "id": "claim_4",
+      "objects_spaces": "Concrete real line. V=[0,1]. f(z)=embed(z) when z belongs to V and top otherwise. psi(z)=z^2/2.",
+      "quantifiers": "A closed theorem with the indicated let-bound definitions and no external premises. Universal quantifiers remain in P, supports, convexity, IsMinOn, and the comparator inequality.",
+      "assumptions": [
+        "No external hypotheses. The assertions below are the full conclusion conjunction."
+      ],
+      "conclusion": [
+        "P expanded: for every z in R, f(z)!=bottom, and there exist z in R and r in R with f(z)=embed(r).",
+        "For every z in [0,1], there exists g in R such that for every y in R, f(z)+embed(g*(y-z))<=f(y).",
+        "f(-1)=top.",
+        "-1 does not belong to [0,1].",
+        "q(z)=toReal(f(z)) is convex on [0,1].",
+        "q is not convex on all R.",
+        "psi is strictly convex on all R.",
+        "For every z in [0,1], f(0)+embed(D(psi,0,-1))<=f(z)+embed(D(psi,z,-1)). This is IsMinOn at p=0; 0 belongs to V separately by its interval definition.",
+        "D(psi,0,-1)=1/2.",
+        "For every u in [0,1], -u<=D(psi,u,-1)-D(psi,u,0)-D(psi,0,-1).",
+        "The explicit real scalar inequality -1/2<=1/2 holds."
+      ],
+      "constants_normalization": "The objective coefficient on D is 1, corresponding to eta=1. The base is x=-1, outside V, and the minimizer point is p=0. psi'(z)=z and D(psi,a,b)=(a-b)^2/2. The three-term right side simplifies to u, giving 1/2 when u=1/2.",
+      "probability_feedback": "Entirely deterministic concrete example; no probability or feedback model.",
+      "boundary": [
+        "The total real conversion is q(z)=z on [0,1] and q(z)=0 outside. The explicit global nonconvexity conjunct is preserved.",
+        "The minimizer is the point 0, whereas the EReal objective's attained numeric value is embed(1/2). The real restriction has minimum 1/2, inferred using f(0)=0 and the stated D value.",
+        "The interval is closed and includes 0 and 1.",
+        "The base -1 is explicitly infeasible and f(-1)=top; D remains real and differentiable in the needed base because psi is a real polynomial.",
+        "The scalar inequality is a distinct conjunct, consistent with comparator u=1/2.",
+        "The theorem does not assert uniqueness or a convergence guarantee. Symmetry of D in this quadratic example does not make general D symmetric."
+      ]
+    }
+  ],
+  "audit_findings": [
+    "All five declarations have been reconstructed in seven semantic slots without reading proof bodies or source identity.",
+    "The global witness and global test variable in P/S must be retained; neither may be restricted to V.",
+    "IsMinOn does not include membership. Claims 1 and 2 supply hp; concrete membership follows independently in claims 3 and 4.",
+    "Total toReal is finite-faithful on V under the general hypotheses but is zero at top and bottom globally.",
+    "D differentiates at its second argument. Claim 3 explicitly distinguishes 9/64 from 11/64 in opposite orders.",
+    "Claim 0 does not assume completeness. Claims 1 and 2 explicitly do.",
+    "Claim 1 has no differentiability or positive-step assumption; claim 2 has differentiability at x and p and eta>0, but no convexity of psi.",
+    "All 12 concrete conjuncts in claim 3 and all 11 in claim 4 are represented.",
+    "Concrete minimizer points are zero, while the corresponding numeric objective minima are 11/64 and 1/2.",
+    "No source-faithfulness verdict or proof-validity verdict can be inferred from this blind interface-only reconstruction."
+  ]
+}

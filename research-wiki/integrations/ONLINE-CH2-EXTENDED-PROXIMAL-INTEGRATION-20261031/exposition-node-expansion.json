@@ -1,0 +1,538 @@
+{
+  "schema": "abrl-reviewed-exposition-node-expansion-v1",
+  "at": "2026-10-30T21:58:58.401487+00:00",
+  "reviewer": "batch37_source_reviewer",
+  "scope": "Exact five reviewed compressed spines; IDs are actual source graph IDs and compiled declaration names, not prose placeholders.",
+  "source_graph_sha256": "499da81c48787934b455da133266bb1bcd4253a945f616807e34f440270ab978",
+  "compiled_graph_sha256": "cbd33d73c0d939f525356fb34c556752889f30d33fb052353c7068397a736b5b",
+  "compressed_spine_sha256": "33cdf19af8625b5feb1fd3dae894176624f4381262253e8b66cde27625bf16ce",
+  "declarations": [
+    {
+      "declaration": "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+      "scope": "derived-library-support",
+      "steps": [
+        {
+          "step": 1,
+          "summary": "Feasible finiteness from proper global supports",
+          "source_node_ids": [
+            "D2-PROPER",
+            "D2-SUPPORT",
+            "D2-SUBDIFF",
+            "P2-SUPPORT-DOMAIN"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineConvex.subgradient_point_finite",
+            "EReal.coe_toReal"
+          ],
+          "relationship": "Derived finite-point generalization of source observation; source observation includes convexity, shared provider does not need it.",
+          "local_body_bindings_not_graph_nodes": [
+            "hfin"
+          ]
+        },
+        {
+          "step": 2,
+          "summary": "Select support at feasible convex combination",
+          "source_node_ids": [
+            "D2-CONVEX-SET",
+            "T2.21-MIX"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineConvex.SourceSubdifferential"
+          ],
+          "relationship": "Same source proof move on feasible finite part, not literal globally-real T2.21 carrier.",
+          "local_body_bindings_not_graph_nodes": [
+            "z",
+            "hz",
+            "g",
+            "hg"
+          ]
+        },
+        {
+          "step": 3,
+          "summary": "Two endpoint inequalities, finite conversion, weighted cancellation",
+          "source_node_ids": [
+            "T2.21-LEFT",
+            "T2.21-RIGHT",
+            "T2.21-COMBINE",
+            "T2.21"
+          ],
+          "lean_node_names": [
+            "EReal.coe_add",
+            "EReal.coe_le_coe_iff",
+            "mul_le_mul_of_nonneg_left"
+          ],
+          "relationship": "Both endpoint comparisons are AND ingredients. Conclusion remains only ConvexOn V.",
+          "local_body_bindings_not_graph_nodes": [
+            "h1",
+            "h2",
+            "h1r",
+            "h2r",
+            "hcancel",
+            "h1w",
+            "h2w",
+            "hsum"
+          ]
+        }
+      ],
+      "undischarged_source_dependencies": [],
+      "source_expansion_nodes": [
+        "D2-CONVEX-SET",
+        "D2-PROPER",
+        "D2-SUBDIFF",
+        "D2-SUPPORT",
+        "P2-SUPPORT-DOMAIN",
+        "T2.21",
+        "T2.21-COMBINE",
+        "T2.21-LEFT",
+        "T2.21-MIX",
+        "T2.21-RIGHT"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "EReal.coe_add",
+        "EReal.coe_le_coe_iff",
+        "EReal.coe_toReal",
+        "mul_le_mul_of_nonneg_left"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+      "scope": "derived-library-support",
+      "steps": [
+        {
+          "step": 1,
+          "summary": "Express feasible EReal objective as finite embedding",
+          "source_node_ids": [
+            "A15.8-RECEIVE",
+            "A15.8-ARGMIN",
+            "D6.4"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.divergence",
+            "EReal.coe_toReal",
+            "EReal.coe_add"
+          ],
+          "relationship": "Source nodes provide loss-domain/update/formula context only. This static equivalence is not printed in source; total ambient D remains distinct from source-domain Bregman.",
+          "local_body_bindings_not_graph_nodes": [
+            "F",
+            "he"
+          ]
+        },
+        {
+          "step": 2,
+          "summary": "Establish finite penalized values on V",
+          "source_node_ids": [],
+          "lean_node_names": [
+            "EReal.coe_ne_top",
+            "EReal.coe_ne_bot"
+          ],
+          "relationship": "Derived finite-coercion bookkeeping with no separate source proof node.",
+          "local_body_bindings_not_graph_nodes": [
+            "hFfin"
+          ]
+        },
+        {
+          "step": 3,
+          "summary": "Shared minimum-order equivalence and pointwise rewrites",
+          "source_node_ids": [],
+          "lean_node_names": [
+            "BanditRL.OnlineConvex.minOn_finitePart_iff",
+            "EReal.toReal_coe"
+          ],
+          "relationship": "Derived library route; p membership is supplied separately and no argmin attainment follows. Eta arbitrary.",
+          "local_body_bindings_not_graph_nodes": [
+            "hreal"
+          ]
+        }
+      ],
+      "undischarged_source_dependencies": [
+        "A15.8-ARGMIN"
+      ],
+      "source_expansion_nodes": [
+        "A15.8-ARGMIN",
+        "A15.8-RECEIVE",
+        "D6.4"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineConvex.minOn_finitePart_iff",
+        "EReal.coe_add",
+        "EReal.coe_ne_bot",
+        "EReal.coe_ne_top",
+        "EReal.coe_toReal",
+        "EReal.toReal_coe"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineBregman.proximal_one_step_extended",
+      "scope": "derived-library-support",
+      "steps": [
+        {
+          "step": 1,
+          "summary": "Derive feasible finite loss values",
+          "source_node_ids": [
+            "D2-PROPER",
+            "D2-SUPPORT",
+            "P2-SUPPORT-DOMAIN"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineConvex.subgradient_point_finite"
+          ],
+          "relationship": "Derived finite-domain bridge keeps global support quantification.",
+          "local_body_bindings_not_graph_nodes": [
+            "hfin"
+          ]
+        },
+        {
+          "step": 2,
+          "summary": "Convex finite part and actual real minimum",
+          "source_node_ids": [
+            "T2.21",
+            "A15.8-ARGMIN"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+            "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff"
+          ],
+          "relationship": "Source anchors supply mathematical context, while actual proof uses the two new reviewed library bridges; no source optimality repair.",
+          "local_body_bindings_not_graph_nodes": [
+            "hc",
+            "hm"
+          ]
+        },
+        {
+          "step": 3,
+          "summary": "Real comparison gives both signed residuals",
+          "source_node_ids": [
+            "T15.30-LOSS-SUPPORT",
+            "T15.30-VI-USE",
+            "T15.30-THREEPOINT",
+            "L6.7"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.proximal_one_step"
+          ],
+          "relationship": "Conclusion matches source local inequality. Lean route uses the previously proved real comparison, not the source claimed VI witness. Both derivatives, eta>0 and supplied p/minimum remain explicit.",
+          "local_body_bindings_not_graph_nodes": []
+        }
+      ],
+      "undischarged_source_dependencies": [
+        "G1530-OPT",
+        "G1530-INDEX",
+        "G1530-FIXED-EXERCISE",
+        "T15.30-TELESCOPE",
+        "T15.30-MAXBOUND",
+        "T15.30-VARIABLE",
+        "T15.30-FIXED"
+      ],
+      "source_expansion_nodes": [
+        "A15.8-ARGMIN",
+        "D2-PROPER",
+        "D2-SUPPORT",
+        "L6.7",
+        "P2-SUPPORT-DOMAIN",
+        "T15.30-LOSS-SUPPORT",
+        "T15.30-THREEPOINT",
+        "T15.30-VI-USE",
+        "T2.21"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step",
+        "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "BanditRL.OnlineConvex.subgradient_point_finite"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+      "scope": "original-concrete-canary-not-source-example",
+      "steps": [
+        {
+          "step": 1,
+          "summary": "Restricted absolute loss properness and global supports",
+          "source_node_ids": [
+            "D2-PROPER",
+            "D2-SUPPORT"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineConvex.SourceProper",
+            "BanditRL.OnlineConvex.SourceSubdifferential",
+            "BanditRL.OnlineConvex.abs_subgradient_positive",
+            "BanditRL.OnlineConvex.abs_subgradient_zero",
+            "BanditRL.OnlineConvex.abs_subgradient_negative"
+          ],
+          "relationship": "Instantiates definitions with original concrete data; source does not contain this canary.",
+          "local_body_bindings_not_graph_nodes": [
+            "hf",
+            "hs",
+            "hfin"
+          ]
+        },
+        {
+          "step": 2,
+          "summary": "Feasible convexity and global finite-part counterexample",
+          "source_node_ids": [
+            "T2.21"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable"
+          ],
+          "relationship": "Derived bridge instantiated on [-1,1]; midpoint contradiction is original concrete arithmetic, no source node credited.",
+          "local_body_bindings_not_graph_nodes": [
+            "hc",
+            "hn"
+          ]
+        },
+        {
+          "step": 3,
+          "summary": "Quartic potential, true minimum and derivatives",
+          "source_node_ids": [
+            "D6.4",
+            "P6-BREGMAN-ASYMMETRY"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth"
+          ],
+          "relationship": "Source nodes are definition/asymmetry context only. Actual values/minimum/strict convexity come from earlier library canary plus polynomial differentiation.",
+          "local_body_bindings_not_graph_nodes": [
+            "hstrict",
+            "hmin",
+            "hnondiff",
+            "hv",
+            "hmoving",
+            "hd"
+          ]
+        },
+        {
+          "step": 4,
+          "summary": "Transport actual EReal minimum and compare every u",
+          "source_node_ids": [],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+            "BanditRL.OnlineBregman.proximal_one_step_extended"
+          ],
+          "relationship": "Original concrete use of reviewed derived contracts, not source algorithm execution.",
+          "local_body_bindings_not_graph_nodes": [
+            "hmreal",
+            "hm",
+            "hb"
+          ]
+        },
+        {
+          "step": 5,
+          "summary": "Twelve conjuncts and live numeric specialization",
+          "source_node_ids": [],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.divergence_self",
+            "BanditRL.OnlineBregman.proximal_one_step_extended",
+            "Eq.mp"
+          ],
+          "relationship": "Actual numeric core consumes extended comparison. Point0 differs from objective11/64; reverse divergence9/64 retained.",
+          "local_body_bindings_not_graph_nodes": [
+            "hh",
+            "hl",
+            "hr"
+          ]
+        }
+      ],
+      "undischarged_source_dependencies": [],
+      "source_expansion_nodes": [
+        "D2-PROPER",
+        "D2-SUPPORT",
+        "D6.4",
+        "P6-BREGMAN-ASYMMETRY",
+        "T2.21"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.divergence_self",
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.abs_subgradient_negative",
+        "BanditRL.OnlineConvex.abs_subgradient_positive",
+        "BanditRL.OnlineConvex.abs_subgradient_zero",
+        "Eq.mp"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+      "scope": "original-concrete-canary-not-source-example",
+      "steps": [
+        {
+          "step": 1,
+          "summary": "Restricted linear loss, support, and center outside loss domain",
+          "source_node_ids": [
+            "D2-PROPER",
+            "D2-SUPPORT",
+            "A15.8-REQUIRE"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineConvex.SourceProper",
+            "BanditRL.OnlineConvex.SourceSubdifferential"
+          ],
+          "relationship": "Original concrete data. Source initial center may be outside V but must be interior X; concrete ambient polynomial does not prove general source transfer.",
+          "local_body_bindings_not_graph_nodes": [
+            "hf",
+            "hs",
+            "hfin"
+          ]
+        },
+        {
+          "step": 2,
+          "summary": "Feasible convexity and global finite-part counterexample",
+          "source_node_ids": [
+            "T2.21"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable"
+          ],
+          "relationship": "Derived restriction bridge and original midpoint contradiction.",
+          "local_body_bindings_not_graph_nodes": [
+            "hc",
+            "hn"
+          ]
+        },
+        {
+          "step": 3,
+          "summary": "Quadratic potential, actual interval minimum, derivative/divergence",
+          "source_node_ids": [
+            "D6.4"
+          ],
+          "lean_node_names": [
+            "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+            "abs_of_nonneg",
+            "BanditRL.OnlineBregman.divergence_eq_gradient"
+          ],
+          "relationship": "Actual absolute-loss minimum becomes linear-loss minimum because z>=0 on V. Source node is formula context only.",
+          "local_body_bindings_not_graph_nodes": [
+            "hstrict",
+            "hmin",
+            "hmoving",
+            "hd",
+            "hD"
+          ]
+        },
+        {
+          "step": 4,
+          "summary": "Transfer minimum and apply extended comparison",
+          "source_node_ids": [],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+            "BanditRL.OnlineBregman.proximal_one_step_extended"
+          ],
+          "relationship": "Original concrete use of library contracts, no general attainment or causal recursion.",
+          "local_body_bindings_not_graph_nodes": [
+            "hmreal",
+            "hm",
+            "hb"
+          ]
+        },
+        {
+          "step": 5,
+          "summary": "Eleven conjuncts and live numeric specialization",
+          "source_node_ids": [],
+          "lean_node_names": [
+            "BanditRL.OnlineBregman.proximal_one_step_extended",
+            "Eq.mp"
+          ],
+          "relationship": "Actual numeric core consumes extended comparison; point0 differs from objective1/2.",
+          "local_body_bindings_not_graph_nodes": [
+            "hh",
+            "hl",
+            "hr"
+          ]
+        }
+      ],
+      "undischarged_source_dependencies": [],
+      "source_expansion_nodes": [
+        "A15.8-REQUIRE",
+        "D2-PROPER",
+        "D2-SUPPORT",
+        "D6.4",
+        "T2.21"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.divergence_eq_gradient",
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "Eq.mp",
+        "abs_of_nonneg"
+      ]
+    }
+  ],
+  "source_expansion_nodes": [
+    "A15.8-ARGMIN",
+    "A15.8-RECEIVE",
+    "A15.8-REQUIRE",
+    "D2-CONVEX-SET",
+    "D2-PROPER",
+    "D2-SUBDIFF",
+    "D2-SUPPORT",
+    "D6.4",
+    "L6.7",
+    "P2-SUPPORT-DOMAIN",
+    "P6-BREGMAN-ASYMMETRY",
+    "T15.30-LOSS-SUPPORT",
+    "T15.30-THREEPOINT",
+    "T15.30-VI-USE",
+    "T2.21",
+    "T2.21-COMBINE",
+    "T2.21-LEFT",
+    "T2.21-MIX",
+    "T2.21-RIGHT"
+  ],
+  "lean_expansion_nodes": [
+    "BanditRL.OnlineBregman.divergence",
+    "BanditRL.OnlineBregman.divergence_eq_gradient",
+    "BanditRL.OnlineBregman.divergence_self",
+    "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable",
+    "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+    "BanditRL.OnlineBregman.proximal_one_step",
+    "BanditRL.OnlineBregman.proximal_one_step_extended",
+    "BanditRL.OnlineBregmanCanary.boundary_outside_initial",
+    "BanditRL.OnlineBregmanCanary.nonquadratic_nonsmooth",
+    "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+    "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+    "BanditRL.OnlineConvex.SourceProper",
+    "BanditRL.OnlineConvex.SourceSubdifferential",
+    "BanditRL.OnlineConvex.abs_subgradient_negative",
+    "BanditRL.OnlineConvex.abs_subgradient_positive",
+    "BanditRL.OnlineConvex.abs_subgradient_zero",
+    "BanditRL.OnlineConvex.minOn_finitePart_iff",
+    "BanditRL.OnlineConvex.subgradient_point_finite",
+    "EReal.coe_add",
+    "EReal.coe_le_coe_iff",
+    "EReal.coe_ne_bot",
+    "EReal.coe_ne_top",
+    "EReal.coe_toReal",
+    "EReal.toReal_coe",
+    "Eq.mp",
+    "abs_of_nonneg",
+    "mul_le_mul_of_nonneg_left"
+  ],
+  "source_gaps_still_open": [
+    "G1530-OPT",
+    "G1530-INDEX",
+    "G1530-FIXED-EXERCISE"
+  ],
+  "mapping_is_not_implementation_dependency_edges": true,
+  "source_context_nodes_not_claimed_discharged": true,
+  "no_source_node_for_original_canary_arithmetic": true,
+  "all_source_ids_resolve": true,
+  "all_lean_names_resolve_in_actual_compiled_graph": true,
+  "exposition_seal_accepted": false,
+  "fresh_rendered_validation_pending": true
+}
