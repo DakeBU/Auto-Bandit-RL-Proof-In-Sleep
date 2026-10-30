@@ -1,0 +1,187 @@
+{
+  "schema": "abrl.independent-binder-audit.v1",
+  "actor": "/root/batch35_source_reviewer",
+  "date": "2026-10-30",
+  "declaration": "convex_minimizer_comparison",
+  "signatureSHA256": "21a68f7467c153a729f2bfafed04c4a5fc936e51975c3f103a7eb29657b74968",
+  "classification_anchor": "Explicit proposedDerivedTarget in batch35-source-only-v1/packet.json, NOT literal Theorem 15.30",
+  "classification_warning": "SOURCE below means explicit premise of the independently frozen derived-interface contract. It does not attribute the arbitrary real normed-space generalization or generic f+h interface to Orabona. No new standing source assumption is invented.",
+  "verdict_relative_to_explicit_derived_target": "accepted",
+  "literal_theorem_15_30_equivalence": "rejected",
+  "excess_count_relative_to_explicit_derived_target": 0,
+  "project_owned_assumption_bundles": [],
+  "binders": [
+    {
+      "binder": "E : Type*",
+      "classification": "TYPING",
+      "expanded": "Carrier of the real normed vector space expressly chosen by the derived contract.",
+      "literal_source_relation": "GENERALIZATION: source uses finite-dimensional Euclidean R^d. Arbitrary E is not SOURCE or STANDING for literal Theorem 15.30."
+    },
+    {
+      "binder": "[NormedAddCommGroup E]",
+      "classification": "TYPING",
+      "expanded": "Abelian additive group with separating norm and induced metric/topology, norm triangle inequality and compatibility.",
+      "literal_source_relation": "GENERALIZATION of Euclidean carrier. Does not assert finite dimension, completeness, or inner product."
+    },
+    {
+      "binder": "[NormedSpace R E]",
+      "classification": "TYPING",
+      "expanded": "Real scalar multiplication and module laws, compatible with the norm.",
+      "literal_source_relation": "GENERALIZATION of Euclidean scalar/norm conventions, not an audited source standing assumption."
+    },
+    {
+      "binder": "V : Set E",
+      "classification": "TYPING",
+      "expanded": "Feasible subset of E.",
+      "literal_source_relation": "Corresponds to feasible V only after choosing the Euclidean specialization. Source additionally states V subset X and closedness; those are not conclusions of this interface."
+    },
+    {
+      "binder": "f : E -> R",
+      "classification": "TYPING",
+      "expanded": "Total finite real-valued function on E, with values outside V irrelevant to convexity and minimization.",
+      "literal_source_relation": "DERIVED REPRESENTATION: source loss may be extended-real off V. Finite restriction/extension adapter would be needed, not assumed proved here."
+    },
+    {
+      "binder": "h : E -> R",
+      "classification": "TYPING",
+      "expanded": "Total real-valued perturbation, not required convex.",
+      "literal_source_relation": "DERIVED GENERALIZATION: no generic h in literal source. Intended specialization h(z)=B_psi(z;x_previous)/eta needs a derivative/representation adapter."
+    },
+    {
+      "binder": "p : E",
+      "classification": "TYPING",
+      "expanded": "Supplied point.",
+      "literal_source_relation": "Corresponds to a single update x_t after specialization, not an entire iterate sequence."
+    },
+    {
+      "binder": "hp : p in V",
+      "classification": "SOURCE",
+      "expanded": "Feasibility, hence V is nonempty.",
+      "literal_source_relation": "Matches feasibility implicit in Algorithm 15.8 argmin selection, but does not prove update existence."
+    },
+    {
+      "binder": "hf : ConvexOn R V f",
+      "classification": "SOURCE",
+      "expanded": "AND of convexity of V and Jensen inequality for f at every x,y in V and a,b>=0 with a+b=1. Both z=a*x+b*y in V and f(z)<=a*f(x)+b*f(y).",
+      "literal_source_relation": "EXPLICIT DERIVED PREMISE, not a verbatim Theorem 15.30 binder: source states subdifferentiability of losses on V. Subgradient supports imply restricted convexity, via the Definition 2.20/Theorem 2.21 argument with finite values on V."
+    },
+    {
+      "binder": "hmin : IsMinOn (fun z => f z + h z) V p",
+      "classification": "SOURCE",
+      "expanded": "For every z in V, f(p)+h(p)<=f(z)+h(z). Does not itself assert p in V.",
+      "literal_source_relation": "Matches supplied Algorithm 15.8 update minimality after f/h specialization. No optimization result or well-definedness is smuggled in as a new premise beyond the explicit derived target."
+    },
+    {
+      "binder": "hprime : E ->L[R] R",
+      "classification": "TYPING",
+      "expanded": "Supplied additive, real-homogeneous, continuous linear functional, equivalently a bounded real-linear map in this normed setting.",
+      "literal_source_relation": "DERIVED REPRESENTATION: replaces Euclidean gradient pairing only after specialization. No gradient vector is asserted in arbitrary normed E."
+    },
+    {
+      "binder": "hd : HasFDerivAt h hprime p",
+      "classification": "SOURCE",
+      "expanded": "Ambient Frechet differentiability at p: for every epsilon>0 there is delta>0 such that ||x-p||<delta implies |h(x)-h(p)-hprime(x-p)|<=epsilon*||x-p|| for every x in E. Equivalently remainder little-o in x-p at p.",
+      "literal_source_relation": "EXPLICIT DERIVED PREMISE. Source has differentiability of psi on int X, not a generic globally represented h. This is neither SOURCE nor STANDING for a literal unrestricted h version of Theorem 15.30; local Bregman derivative adapter remains needed."
+    }
+  ],
+  "conclusion_binders": [
+    {
+      "binder": "u : E",
+      "role": "Universal feasible comparator, chosen after supplied L; same L works for all u."
+    },
+    {
+      "binder": "u in V",
+      "role": "Conclusion domain restriction, not a hidden global premise."
+    }
+  ],
+  "assumptions_not_present": [
+    "differentiability of f",
+    "convexity of h",
+    "closed V",
+    "compact V",
+    "complete E",
+    "finite dimensional E",
+    "inner product E",
+    "p in interior V",
+    "optimizer existence",
+    "subgradient selection certificate",
+    "first-order comparison inequality as a hypothesis"
+  ],
+  "proof_ingredients_must_stay_edges": [
+    "segment membership",
+    "Jensen bound along segment",
+    "difference quotient comparison",
+    "ambient derivative restricted to the segment",
+    "one-sided limit passage"
+  ],
+  "source_repair_approved": false,
+  "definition_evidence": [
+    "Mathlib/Analysis/Convex/Function.lean:54-56",
+    "Mathlib/Order/Filter/Extr.lean:96-110",
+    "Mathlib/Analysis/Calculus/FDeriv/Defs.lean:97-122"
+  ],
+  "remaining_boundary": "No implementation or compiler review. No faithful full-Theorem15.30 claim. No admission of a new premise or source repair. Any later change to this signature requires a successor seal and fresh dependent review.",
+  "inputs": [
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/packet.json",
+      "sha256": "53cdea67f8b42df322a68e4e823092292fab1b2c995d7d7e0bf7a260577575ae"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/source-pinned.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-023.txt",
+      "sha256": "69f64b9620f038571ac783b57510ecb9d9990f404f073c33820bf70148873645"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-023.png",
+      "sha256": "ee9d15fda9493ec282655b228762625a5b9375bb1f5c814e8bc7543c2b6536ef"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-026.txt",
+      "sha256": "0c909b41f4dbda2a4f76f0801ec0549a6efd4572a283334c227d27c134250334"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-026.png",
+      "sha256": "b235c5a94393ae03209fc405d2eab6b6d072019699c90beff41652dea5d57cca"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-076.txt",
+      "sha256": "0ae13698bc4ff4c87854f124e0d656738f9e688a9695fc5ecfe321da24878cf8"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-076.png",
+      "sha256": "59a5e89bee48033ebbfb004f48c85dcf6a25a1ba3926796eb4a15e7c7015a3b3"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-277.txt",
+      "sha256": "d05e5d5e002e533738b7387cd2b831c9909b9bcebda74be6a22ccd506c03bbc1"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-277.png",
+      "sha256": "4acc6716e5e1a184af00e0f0dcdebf044c25ba315fbb7d9534954bb447876039"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-278.txt",
+      "sha256": "46ca49e33d4e034b92d24ec36db494e7644bc5eac322d7b7efd25688cda94bf8"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-source-only-v1/pdf-page-278.png",
+      "sha256": "8ad3bd85254258ecf50152dc0d0d9257d0ed22ef5056d5199c8226d1a0162028"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-blind-input-v1/statement.txt",
+      "sha256": "628ba1426ddd90725628009d614d9cec8311989cdb97329c639e272dd01c9dd2"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-blind-review-v1/reconstruction.json",
+      "sha256": "644d2f4a9c39f303cf0dc31eee80e16042a8b44e4ab7571be1201b4e506b9bbd"
+    },
+    {
+      "path": "maintenance/github-maintenance-goal-20261011/batch35-preport-statement-seal-v1.json",
+      "sha256": "b4a70d9fb2668d74ede2976aa0090381e55f3d3a76ce46b1291a5893ac5416f4"
+    }
+  ],
+  "all_input_hashes_match": true
+}

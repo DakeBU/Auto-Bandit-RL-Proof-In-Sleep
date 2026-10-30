@@ -765,3 +765,4 @@ import BanditRLProof.OnlineFTLOscillation
 import BanditRLProof.OnlineFTLInitializationRegret
 import BanditRLProof.OnlineNonsmoothExamples
 import BanditRLProof.OnlinePrescientLinear
+import BanditRLProof.OnlineProximalComparison
