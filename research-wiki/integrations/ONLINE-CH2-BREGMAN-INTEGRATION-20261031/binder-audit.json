@@ -1,0 +1,495 @@
+{
+  "schema_version": 1,
+  "actor": "/root/batch36_source_reviewer",
+  "role": "independent anti-anchored source reviewer",
+  "scope": "Explicitly derived real-valued total-fderiv interfaces; not literal whole-carrier Definition6.4 or full Algorithm15.8/Theorem15.30",
+  "statement_seal": {
+    "path": "private-maintenance/github-maintenance-goal-20261011/batch36-preport-statement-seal-v1.json",
+    "sha256": "186c74b0ad98220421598eace110b20156fc02e47a833143b3aaec23a365e617"
+  },
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "mathlib_commit": "5e932f97dd25535344f80f9dd8da3aab83df0fe6",
+  "classification_rules": {
+    "SOURCE": "Explicit condition in sealed derived-interface scope with raw-source relation recorded for each; not automatic literal-source equivalence.",
+    "STANDING": "Only separately audited source-wide assumptions; none silently added.",
+    "TYPING": "Carrier/structure and quantified data with source carrier delta recorded.",
+    "RULED": "Requires human-approved source correction; no such correction used.",
+    "EXCESS": "Proof result or convenience premise unsupported even in bounded derived scope; none found."
+  },
+  "definition_audit": {
+    "kind": "literal-derived-total-fderiv",
+    "literal_whole_carrier_agreement_with_source_Definition6_4": false,
+    "characterized_choice_object": false,
+    "fallback": "No candidate-created default branch, but the referenced Mathlib fderiv returns zero at nondifferentiable points. D then equals psi(x)-psi(y).",
+    "source_domain": "X x int X, psi strictly convex and differentiable on nonempty int X, finite-dimensional Euclidean gradient pairing.",
+    "actual_domain": "Every pair of points in every real normed space, arbitrary ambient real function.",
+    "acceptance_boundary": "Accept this as an explicitly named derived total algebraic interface with source agreement only on admissible differentiable data and inner-product adapter; reject any claim of literal Def6.4 equality across its widened carrier."
+  },
+  "project_owned_assumption_bundles": "Only D is project-owned in these interfaces and is fully expanded; no opaque project Prop/typeclass assumption bundles.",
+  "entries": [
+    {
+      "id": "D",
+      "name": "divergence",
+      "signatureSHA256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "binders": [
+        {
+          "binder": "E : Type*",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal carrier, not restricted to a dimension.",
+          "source_relation": "Derived real-normed generalization of source Euclidean carrier."
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Additive commutative group with compatible norm and induced metric.",
+          "source_relation": "Source Euclidean space supplies this structure."
+        },
+        {
+          "binder": "[NormedSpace R E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Compatible real vector-space scalar multiplication and norm.",
+          "source_relation": "Source Euclidean space supplies this structure; no completeness or inner product here."
+        },
+        {
+          "binder": "psi : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Arbitrary globally real-valued function.",
+          "source_relation": "Explicit total derived-interface carrier; source psi instead has domain X and strict convexity/interior differentiability."
+        },
+        {
+          "binder": "x : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Evaluation point.",
+          "source_relation": "Source x belongs to X; that restriction is not encoded."
+        },
+        {
+          "binder": "y : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Derivative base point.",
+          "source_relation": "Source y belongs to int X; that restriction is not encoded."
+        }
+      ],
+      "external_logical_premises": [],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": null,
+      "contextSHA256": "c8c62dd1ae114281d38743db0cfecc7b9d0865c9cea397a3874079cb26fcfbb1"
+    },
+    {
+      "id": "claim_1",
+      "name": "divergence_self",
+      "signatureSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "binders": [
+        {
+          "binder": "E : Type*",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal carrier, not restricted to a dimension.",
+          "source_relation": "Derived real-normed generalization of source Euclidean carrier."
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Additive commutative group with compatible norm and induced metric.",
+          "source_relation": "Source Euclidean space supplies this structure."
+        },
+        {
+          "binder": "[NormedSpace R E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Compatible real vector-space scalar multiplication and norm.",
+          "source_relation": "Source Euclidean space supplies this structure; no completeness or inner product here."
+        },
+        {
+          "binder": "psi : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Arbitrary globally real-valued function.",
+          "source_relation": "Algebraic derived-interface scope."
+        },
+        {
+          "binder": "x : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Same point in both argument slots.",
+          "source_relation": "Source specialization requires x in int X; derived identity valid over full carrier."
+        }
+      ],
+      "external_logical_premises": [],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": null,
+      "contextSHA256": "c8c62dd1ae114281d38743db0cfecc7b9d0865c9cea397a3874079cb26fcfbb1"
+    },
+    {
+      "id": "claim_2",
+      "name": "three_point_identity",
+      "signatureSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "binders": [
+        {
+          "binder": "E : Type*",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal carrier, not restricted to a dimension.",
+          "source_relation": "Derived real-normed generalization of source Euclidean carrier."
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Additive commutative group with compatible norm and induced metric.",
+          "source_relation": "Source Euclidean space supplies this structure."
+        },
+        {
+          "binder": "[NormedSpace R E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Compatible real vector-space scalar multiplication and norm.",
+          "source_relation": "Source Euclidean space supplies this structure; no completeness or inner product here."
+        },
+        {
+          "binder": "psi : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Arbitrary globally real-valued function.",
+          "source_relation": "Algebraic derived-interface scope."
+        },
+        {
+          "binder": "x : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Universally quantified point.",
+          "source_relation": "Source Lemma6.7 has x,y in int X and z in X; those restrictions are removed in the total algebraic identity."
+        },
+        {
+          "binder": "y : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Universally quantified point.",
+          "source_relation": "Source Lemma6.7 has x,y in int X and z in X; those restrictions are removed in the total algebraic identity."
+        },
+        {
+          "binder": "z : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Universally quantified point.",
+          "source_relation": "Source Lemma6.7 has x,y in int X and z in X; those restrictions are removed in the total algebraic identity."
+        }
+      ],
+      "external_logical_premises": [],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": null,
+      "contextSHA256": "c8c62dd1ae114281d38743db0cfecc7b9d0865c9cea397a3874079cb26fcfbb1"
+    },
+    {
+      "id": "claim_3",
+      "name": "divergence_nonneg",
+      "signatureSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "binders": [
+        {
+          "binder": "E : Type*",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal carrier, not restricted to a dimension.",
+          "source_relation": "Derived real-normed generalization of source Euclidean carrier."
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Additive commutative group with compatible norm and induced metric.",
+          "source_relation": "Source Euclidean space supplies this structure."
+        },
+        {
+          "binder": "[NormedSpace R E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Compatible real vector-space scalar multiplication and norm.",
+          "source_relation": "Source Euclidean space supplies this structure; no completeness or inner product here."
+        },
+        {
+          "binder": "X : Set E",
+          "classification": "TYPING",
+          "expanded_semantics": "Subset on which convexity is assumed.",
+          "source_relation": "Named set is not encoded as full domain of psi."
+        },
+        {
+          "binder": "psi : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Globally real-valued function.",
+          "source_relation": "Restriction agrees with source psi only on declared source domain."
+        },
+        {
+          "binder": "hpsi",
+          "classification": "SOURCE",
+          "expanded_semantics": "Convex X AND forall x,y in X and a,b>=0 with a+b=1, psi(a*x+b*y)<=a*psi(x)+b*psi(y).",
+          "source_relation": "Explicit premise of the derived nonnegativity interface, weaker than source strict convexity. The source first nonnegative assertion explicitly invokes convexity."
+        },
+        {
+          "binder": "x : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Evaluation point.",
+          "source_relation": "Source x in X."
+        },
+        {
+          "binder": "y : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Derivative base point.",
+          "source_relation": "Source y in int X."
+        },
+        {
+          "binder": "hx",
+          "classification": "SOURCE",
+          "expanded_semantics": "x in X.",
+          "source_relation": "Source admissible evaluation point."
+        },
+        {
+          "binder": "hy",
+          "classification": "SOURCE",
+          "expanded_semantics": "y in X.",
+          "source_relation": "Weaker domain condition than source y in int X; ambient differentiability is separate."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "expanded_semantics": "Exists continuous real-linear map L with psi(y+h)=psi(y)+L(h)+o(norm h).",
+          "source_relation": "Source differentiability at admissible interior base; derived statement only requires this at y, not on all int X."
+        }
+      ],
+      "external_logical_premises": [
+        "hpsi",
+        "hx",
+        "hy",
+        "hd"
+      ],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": null,
+      "contextSHA256": "c8c62dd1ae114281d38743db0cfecc7b9d0865c9cea397a3874079cb26fcfbb1"
+    },
+    {
+      "id": "claim_4",
+      "name": "proximal_one_step",
+      "signatureSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "binders": [
+        {
+          "binder": "E : Type*",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal carrier, not restricted to a dimension.",
+          "source_relation": "Derived real-normed generalization of source Euclidean carrier."
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Additive commutative group with compatible norm and induced metric.",
+          "source_relation": "Source Euclidean space supplies this structure."
+        },
+        {
+          "binder": "[NormedSpace R E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Compatible real vector-space scalar multiplication and norm.",
+          "source_relation": "Source Euclidean space supplies this structure; no completeness or inner product here."
+        },
+        {
+          "binder": "V : Set E",
+          "classification": "TYPING",
+          "expanded_semantics": "Feasible set.",
+          "source_relation": "Source V subset X; no source X encoded in this derived interface."
+        },
+        {
+          "binder": "f : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Real-valued ambient loss; only values on V used in objective differences.",
+          "source_relation": "Source loss is extended-real and finite on V. Full extended-real interface is not encoded."
+        },
+        {
+          "binder": "psi : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Real-valued ambient regularizer.",
+          "source_relation": "Source domain/strictness/closedness are not encoded here."
+        },
+        {
+          "binder": "eta : R",
+          "classification": "TYPING",
+          "expanded_semantics": "Step size.",
+          "source_relation": "Source eta_t."
+        },
+        {
+          "binder": "heta",
+          "classification": "SOURCE",
+          "expanded_semantics": "0 < eta.",
+          "source_relation": "Algorithm15.8 requires positive step sizes."
+        },
+        {
+          "binder": "x : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Old/reference point.",
+          "source_relation": "Source x_(t-1) belongs to int X; x_0 need not belong to V."
+        },
+        {
+          "binder": "p : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Selected new point.",
+          "source_relation": "Source x_t."
+        },
+        {
+          "binder": "hp",
+          "classification": "SOURCE",
+          "expanded_semantics": "p in V.",
+          "source_relation": "Membership component of source argmin selection. Also witnesses nonempty V."
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "expanded_semantics": "Convex V AND forall v,w in V and a,b>=0 with a+b=1, f(a*v+b*w)<=a*f(v)+b*f(w).",
+          "source_relation": "Explicit premise of the sealed derived convex-loss interface; source assumes subdifferentiability on V, and Definition2.20/Theorem2.21 explain convexity. This is a weakened assumption, not a claimed literal binder of Thm15.30, and not an assumed optimality proof ingredient."
+        },
+        {
+          "binder": "hdx",
+          "classification": "SOURCE",
+          "expanded_semantics": "Ambient Frechet differentiability of psi at x.",
+          "source_relation": "Source initial interior base plus interior iterates and psi differentiability on int X. No x in V premise."
+        },
+        {
+          "binder": "hdp",
+          "classification": "SOURCE",
+          "expanded_semantics": "Ambient Frechet differentiability of psi at p.",
+          "source_relation": "Source assumes selected iterates in int X. No derivative of f, nor derivative at comparison u."
+        },
+        {
+          "binder": "hmin",
+          "classification": "SOURCE",
+          "expanded_semantics": "For all z in V, f(p)+eta^(-1)*D(p,x) <= f(z)+eta^(-1)*D(z,x).",
+          "source_relation": "Comparison component of source argmin selection, supplied as a condition. Does not establish attainment, uniqueness, feasibility by itself, or a constructed update."
+        },
+        {
+          "binder": "u : E [conclusion quantifier]",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal comparator after all input data.",
+          "source_relation": "Source for every u in V."
+        },
+        {
+          "binder": "u in V [conclusion antecedent]",
+          "classification": "SOURCE",
+          "expanded_semantics": "Feasible comparator.",
+          "source_relation": "Exact source comparator restriction."
+        }
+      ],
+      "external_logical_premises": [
+        "heta",
+        "hp",
+        "hf",
+        "hdx",
+        "hdp",
+        "hmin",
+        "u in V [conclusion antecedent]"
+      ],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": null,
+      "contextSHA256": "c8c62dd1ae114281d38743db0cfecc7b9d0865c9cea397a3874079cb26fcfbb1"
+    },
+    {
+      "id": "claim_5",
+      "name": "divergence_eq_gradient",
+      "signatureSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "binders": [
+        {
+          "binder": "E : Type*",
+          "classification": "TYPING",
+          "expanded_semantics": "Universal carrier.",
+          "source_relation": "Complete-inner generalization, includes Euclidean source."
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Normed additive commutative group.",
+          "source_relation": "Inherited source Euclidean structure."
+        },
+        {
+          "binder": "[InnerProductSpace R E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Compatible real inner product and normed-space structure.",
+          "source_relation": "Source gradient pairing requires inner-product representation."
+        },
+        {
+          "binder": "[CompleteSpace E]",
+          "classification": "TYPING",
+          "expanded_semantics": "Every Cauchy filter converges; used by Mathlib Riesz duality/gradient.",
+          "source_relation": "Automatic for source finite-dimensional Euclidean space; restricts this adapter relative to the general normed core, not an extra source theorem premise."
+        },
+        {
+          "binder": "psi : E -> R",
+          "classification": "TYPING",
+          "expanded_semantics": "Globally real-valued function.",
+          "source_relation": "Derived adapter carrier."
+        },
+        {
+          "binder": "x : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Evaluation point.",
+          "source_relation": "Source evaluation point."
+        },
+        {
+          "binder": "y : E",
+          "classification": "TYPING",
+          "expanded_semantics": "Derivative base point.",
+          "source_relation": "Source interior base."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "expanded_semantics": "Ambient Frechet differentiability of psi at y.",
+          "source_relation": "Source gradient exists at admissible interior base. Retained explicit premise even though totalized gradient is definable without it."
+        }
+      ],
+      "external_logical_premises": [
+        "hd"
+      ],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": null,
+      "contextSHA256": "0632bcc8e20c9d339982f1d92a5e51bac119c382fc0b8099db91bbcf4480f18d"
+    },
+    {
+      "id": "claim_6",
+      "name": "nonquadratic_nonsmooth",
+      "signatureSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "context": "",
+      "binders": [],
+      "external_logical_premises": [],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": 7,
+      "contextSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "claim_7",
+      "name": "boundary_outside_initial",
+      "signatureSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "context": "",
+      "binders": [],
+      "external_logical_premises": [],
+      "excess_count": 0,
+      "verdict": "accepted-for-explicit-derived-interface-scope",
+      "canary_conjunct_count": 6,
+      "contextSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "counts": {
+    "TYPING": 42,
+    "SOURCE": 12,
+    "STANDING": 0,
+    "RULED": 0,
+    "EXCESS": 0
+  },
+  "final_semantic_and_topology_verdict": "accepted-with-explicit-delta",
+  "bindings": {
+    "source_extraction_directory": "private-maintenance/github-maintenance-goal-20261011/batch36-source-extraction-v2",
+    "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "source_graph_sha256": "6b6571a2100ac4c85585b3bb58376621f5cc8b26dd676e9625731f32212e0d11",
+    "source_coverage_sha256": "ec472fe31d0a82019825c11b5a190719374367c054b0fee7645ab43be6f6a348",
+    "source_contract_sha256": "d46ba57806820e64c616f86602b6edfd7fd51a6e9861616c387cb8c7b604b953",
+    "source_extractor_receipt_sha256": "4d66042f6a28ef7758101634437472dbb8fa7cc70838b01021d41633c741e510",
+    "statement_seal_path": "private-maintenance/github-maintenance-goal-20261011/batch36-preport-statement-seal-v1.json",
+    "statement_seal_sha256": "186c74b0ad98220421598eace110b20156fc02e47a833143b3aaec23a365e617",
+    "blind_input_sha256": "73c197ffc6f5b4c4d69da4761d476962e3451b32ffbe69ca5080ec0d8efa69ef",
+    "blind_reconstruction_json_sha256": "f1a71676d2e603397973ca0c82ba31000448f4d65074bca6b3b441cf6ccf8233",
+    "blind_reconstruction_md_sha256": "6a0feb169a432fac0104b8b9bca38e1bfe9eda8a0eb40d1719367c5cfa1d7d52",
+    "blind_receipt_sha256": "b95c8d607aafa67ca98f04c9547bf48b3457c0847877c48a05e7684bdac106d1"
+  },
+  "status": "final-independent-review"
+}

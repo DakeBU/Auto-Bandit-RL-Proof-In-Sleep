@@ -1,0 +1,776 @@
+{
+  "schema": "abrl-source-only-extraction-v1",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "revision": "arXiv:1912.13213v10 [cs.LG] 21 Jun 2026",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "local_pdf": "source-pinned.pdf",
+    "pagination": "PDF pages are one-based; main-text printed page = PDF page - 12",
+    "canonical_research_path": "canonical-repository",
+    "research_head_observed": "601f39c1ab0f119dba63567932a86b7dc791fac1",
+    "research_dirty_state_observed": "git status --short empty; no repository changes by extractor"
+  },
+  "actor": "batch36_source_extractor",
+  "independent_topology_review": {
+    "status": "pending",
+    "extractor_may_self_approve": false
+  },
+  "views": {
+    "source_only": {
+      "nodes": [
+        {
+          "id": "src:D6.3",
+          "pdf_page": 75,
+          "printed_page": 63,
+          "region": "Definition 6.3",
+          "kind": "literal-definition",
+          "claim": "Strict convexity on a convex subset of R^d: strict Jensen inequality for distinct points and 0<alpha<1.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:strict-support",
+          "pdf_page": 75,
+          "printed_page": 63,
+          "region": "Paragraph following Definition 6.3 through Bauschke and Combettes citation",
+          "kind": "literal-source-fact",
+          "claim": "Strong convexity implies strict convexity; differentiable strict convexity gives strict supporting inequality at distinct points. Cites Bauschke and Combettes (2017), Proposition 17.10. External proof not independently checked.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:D6.4",
+          "pdf_page": 75,
+          "printed_page": 63,
+          "region": "Definition 6.4 and displayed definition",
+          "kind": "literal-definition",
+          "claim": "psi:X->R strictly convex, differentiable on nonempty int X. B_psi:X x int X->R; B(a;b)=psi(a)-psi(b)-<grad psi(b),a-b>. No value outside this carrier is defined here.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:nonnegative",
+          "pdf_page": 76,
+          "printed_page": 64,
+          "region": "Opening distance-generating-function paragraph and nonnegativity/strict-support paragraph",
+          "kind": "literal-source-fact",
+          "claim": "B is nonnegative for both arguments in int X by convexity; stronger paragraph explicitly asserts psi(a)>=psi(b)+<grad psi(b),a-b> for all a in X and fixed b in int X, equality only a=b. Therefore B>=0 on the full defined carrier. Reference point dependence and lack of symmetry are stated.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:L6.7",
+          "pdf_page": 76,
+          "printed_page": 64,
+          "region": "Immediate-lemma introductory paragraph, Lemma 6.7, citation and display",
+          "kind": "literal-source-fact",
+          "claim": "For x,y in int X and z in X: B(z;x)+B(x;y)-B(z;y)=<grad psi(y)-grad psi(x),z-x>. Attributed to Chen and Teboulle (1993). No written proof follows on this page or before section 6.4 on the next page.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.7",
+          "pdf_page": 23,
+          "printed_page": 11,
+          "region": "Theorem 2.7 and citation",
+          "kind": "literal-source-fact",
+          "claim": "Convex f:R^d->(-infinity,+infinity], x in int dom f, differentiable at x implies global supporting inequality. Cites Rockafellar (1970), Theorem25.1 and Corollary25.1.1.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.8",
+          "pdf_page": 23,
+          "printed_page": 11,
+          "region": "Theorem 2.8 statement",
+          "kind": "literal-source-fact",
+          "claim": "V nonempty convex, x* in V, f convex and differentiable on an open set containing V. x* minimizes f on V iff <grad f(x*),y-x*>>=0 for all y in V.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.8-sufficiency",
+          "pdf_page": 23,
+          "printed_page": 11,
+          "region": "First proof paragraph of Theorem 2.8 and supporting display",
+          "kind": "author-proof",
+          "claim": "Apply Theorem2.7 to combine the nonnegative gradient pairing with the lower support bound, yielding f(y)>=f(x*).",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.8-necessity",
+          "pdf_page": 23,
+          "printed_page": 11,
+          "region": "Second proof paragraph of Theorem 2.8",
+          "kind": "author-proof",
+          "claim": "Assume a feasible negative gradient pairing. On z(alpha)=alpha y+(1-alpha)x*, the derivative at zero is negative, so a small feasible move decreases f, contradicting minimality.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.13-statement",
+          "pdf_page": 25,
+          "printed_page": 13,
+          "region": "Theorem 2.13 statement with both displays",
+          "kind": "literal-source-fact",
+          "claim": "OGD, losses convex differentiable near V, x1 in V, nonincreasing positive eta for t=1,...,T-1. Variable bound D^2/(2eta_T)+sum eta_t||g_t||^2/2-||x_(T+1)-u||^2/(2eta_T). Constant bound replaces D^2 by ||u-x1||^2 and all eta_t by eta.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.13-start",
+          "pdf_page": 25,
+          "printed_page": 13,
+          "region": "Theorem 2.13 proof first line",
+          "kind": "author-proof",
+          "claim": "Divide Lemma2.12 inequality by eta_t and sum t=1,...,T.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.13-variable",
+          "pdf_page": 26,
+          "printed_page": 14,
+          "region": "Initial variable-step telescoping display",
+          "kind": "author-proof",
+          "claim": "Summation by parts retains -||x_(T+1)-u||^2/(2eta_T); bounds nonnegative reciprocal-step increments by diameter D^2.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.13-fixed",
+          "pdf_page": 26,
+          "printed_page": 14,
+          "region": "Constant-step paragraph and display ending proof",
+          "kind": "author-proof",
+          "claim": "Ordinary telescoping gives initial distance minus final distance, plus eta/2 times gradient-square sum.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:observation-prescience",
+          "pdf_page": 26,
+          "printed_page": 14,
+          "region": "First bullet after Theorem2.13 proof",
+          "kind": "literal-source-fact",
+          "claim": "Gradient-square terms arise from output before observing loss; they become nonpositive if observing loss before output. Explicit cross-reference Section15.5.1.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:observation-unbounded",
+          "pdf_page": 26,
+          "printed_page": 14,
+          "region": "Second bullet after proof",
+          "kind": "literal-source-fact",
+          "claim": "Constant-eta bound holds even with infinite diameter; initial term depends on distance from x1 to u.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:observation-terminal",
+          "pdf_page": 26,
+          "printed_page": 14,
+          "region": "Third bullet after proof",
+          "kind": "literal-source-fact",
+          "claim": "Last term in both bounds is nonpositive and usually discarded, but needed by some advanced proofs.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:observation-variable",
+          "pdf_page": 26,
+          "printed_page": 14,
+          "region": "Fourth bullet after proof",
+          "kind": "literal-source-fact",
+          "claim": "Variable steps require control of iterate-comparator squared distances; bounded-domain assumption is not merely a proof artifact, with Section5.2 cited. Stochastic unbounded-domain behavior is distinguished and referred to Chapter3.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:D2.16",
+          "pdf_page": 28,
+          "printed_page": 16,
+          "region": "Definition2.16 and closed/lower-semicontinuous equivalence paragraph",
+          "kind": "literal-definition",
+          "claim": "Closed means all real sublevel sets are closed. Lower semicontinuity equivalence cites Bauschke and Combettes (2017), Lemma1.24.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:D2.18",
+          "pdf_page": 28,
+          "printed_page": 16,
+          "region": "Definition2.18 and adjacent convex proper paragraph",
+          "kind": "literal-definition",
+          "claim": "Proper means nowhere minus infinity and finite somewhere.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:D2.20",
+          "pdf_page": 28,
+          "printed_page": 16,
+          "region": "Definition2.20",
+          "kind": "literal-definition",
+          "claim": "For proper extended-real f, subgradient g at x supports f globally: f(y)>=f(x)+<g,y-x> for all y in R^d.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:subgradient-domain",
+          "pdf_page": 29,
+          "printed_page": 17,
+          "region": "Opening paragraphs through Rockafellar23.4 citation and footnote",
+          "kind": "literal-source-fact",
+          "claim": "Subdifferentiable means nonempty subdifferential. For proper convex f it is empty off dom f and nonempty on int dom f. Footnote mentions stronger relative-interior theorem but explicitly does not use it.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.21",
+          "pdf_page": 29,
+          "printed_page": 17,
+          "region": "Theorem2.21 and complete proof",
+          "kind": "author-proof",
+          "claim": "For real-valued f with subgradients at every point of convex V, supporting inequalities at convex combinations imply convexity of restriction to V.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.22",
+          "pdf_page": 29,
+          "printed_page": 17,
+          "region": "Gradient/subgradient paragraph and Theorem2.22",
+          "kind": "literal-source-fact",
+          "claim": "Convex extended-real f finite at x is differentiable at x iff subdifferential is singleton gradient. Cites Rockafellar (1970), Theorem25.1.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.23-inclusion",
+          "pdf_page": 29,
+          "printed_page": 17,
+          "region": "Theorem2.23 first statement and proof display",
+          "kind": "author-proof",
+          "claim": "Proper functions: sum of subdifferentials is included in subdifferential of sum; add supporting inequalities. Empty RHS gives a vacuous inclusion.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.23-equality",
+          "pdf_page": 29,
+          "printed_page": 17,
+          "region": "Theorem2.23 moreover clause",
+          "kind": "literal-source-fact",
+          "claim": "Equality requires functions also convex and closed and dom f_m intersect intersection_(i<m) int dom f_i nonempty. This stronger direction cannot be inferred from inclusion alone.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T2.23-continuation",
+          "pdf_page": 30,
+          "printed_page": 18,
+          "region": "Opening proof continuation and Bauschke/Combettes citation",
+          "kind": "author-proof",
+          "claim": "Completes inclusion; equality proof is referred to Bauschke and Combettes (2017), Corollary16.50, not supplied locally.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:E2.25",
+          "pdf_page": 30,
+          "printed_page": 18,
+          "region": "Example2.25 full normal-cone calculation",
+          "kind": "author-proof",
+          "claim": "For nonempty convex V, g in partial iota_V(x) exactly when x in V and <g,y-x><=0 for every y in V. Includes interior normal cone and Euclidean ball illustration.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:OMD-domain-warning",
+          "pdf_page": 77,
+          "printed_page": 65,
+          "region": "Section6.4 opening reformulation through boundary warning",
+          "kind": "literal-source-fact",
+          "claim": "OMD reformulation initially assumes attained unique argmin. The next reference point can lie on boundary X, where Bregman divergence is undefined.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:OMD-6.5",
+          "pdf_page": 77,
+          "printed_page": 65,
+          "region": "Condition (6.5)",
+          "kind": "literal-source-fact",
+          "claim": "Boundary steepness: limiting gradient pairing towards any interior point equals minus infinity.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:OMD-6.6",
+          "pdf_page": 77,
+          "printed_page": 65,
+          "region": "Condition (6.6)",
+          "kind": "literal-source-fact",
+          "claim": "V subset int X is an alternative sufficient condition.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T6.8",
+          "pdf_page": 77,
+          "printed_page": 65,
+          "region": "Theorem6.8 and preceding either-condition paragraph",
+          "kind": "literal-source-fact",
+          "claim": "With Algorithm6.1 initialization and attained argmin every round, (6.5) OR (6.6) ensures next iterates in int X. It concerns linearized OMD, not directly the nonsmooth prescient update.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T6.8-direct",
+          "pdf_page": 77,
+          "printed_page": 65,
+          "region": "Proof case (6.6)",
+          "kind": "author-proof",
+          "claim": "Selected point lies in V, hence int X.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T6.8-induction",
+          "pdf_page": 77,
+          "printed_page": 65,
+          "region": "Proof setup case (6.5)",
+          "kind": "author-proof",
+          "claim": "Induct from interior initial point and suppose previous iterate is interior.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T6.8-steep",
+          "pdf_page": 78,
+          "printed_page": 66,
+          "region": "Proof continuation through contradiction and post-proof interpretation",
+          "kind": "author-proof",
+          "claim": "Assume boundary minimizer, interpolate toward z in int X intersect V. Boundary derivative tends to minus infinity; a small feasible interior step strictly lowers objective, contradicting argmin.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T6.27",
+          "pdf_page": 86,
+          "printed_page": 74,
+          "region": "Theorem6.27 and complete proof",
+          "kind": "author-proof",
+          "claim": "Proper extended-real f on R^d: global argmin equivalent to 0 in partial f, immediately by subgradient definition. Constrained use needs indicator and justified decomposition.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:A15.8",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Algorithm15.8 complete box",
+          "kind": "literal-algorithm",
+          "claim": "Nonempty closed convex V subset X subset R^d; strictly convex psi differentiable on int X; x0 in int X, not stated in V; eta1,...,etaT>0. Receive extended-real loss with V subset dom loss, select xt in argmin_V loss_t+eta_t^-1 B(.;x_(t-1)), then pay loss at xt.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:15.5.1-oracle",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Section15.5.1 introductory two paragraphs",
+          "kind": "literal-source-fact",
+          "claim": "Prescient access observes loss function before prediction, changing oracle compared to gradient-only algorithms. Best response lacks desired specific negative terms, motivating Algorithm15.8. Remark15.16 is cited for oracle distinction, not as a proof dependency.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-premises",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Theorem15.30 statement hypotheses from Let psi through for t=1,...,T, before Then",
+          "kind": "literal-source-premises",
+          "claim": "psi differentiable on int X, closed, strictly convex; nonempty closed convex V subset X; xt in int X, losses subdifferentiable on V; eta_(t+1)<=eta_t for t=1,...,T as printed. Positive eta and x0 in int X inherited from Algorithm15.8. Thus the source supplies all reference-point interiority needed in this theorem. For u in V, u is in X. No source-domain gap is asserted.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-variable",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Theorem15.30 first conclusion beginning Then and its first display",
+          "kind": "literal-source-fact",
+          "claim": "Under src:T15.30-premises and Algorithm15.8, for all u in V, regret <= max_(0<=t<=T-1) B(u;xt)/eta_T - sum_(t=1)^T B(xt;x_(t-1))/eta_t.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-fixed",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Theorem15.30 moreover statement and display",
+          "kind": "literal-source-fact",
+          "claim": "For eta_t=eta, t=1,...,T, regret <= B(u;x0)/eta - sum_(t=1)^T B(xt;x_(t-1))/eta. This is a second theorem conclusion, not a consequence of maximizing a variable-step bound.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-optimality",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "First proof paragraph and first display",
+          "kind": "author-proof",
+          "claim": "Author cites Theorem2.8 and asserts existence of g_t in partial loss_t(xt) with <eta_t g_t+grad psi(xt)-grad psi(x_(t-1)),u-xt>>=0 for all u in V. Citation applicability unresolved.",
+          "status": "source-recorded-gap"
+        },
+        {
+          "id": "src:T15.30-one-step",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Hence paragraph and two-line inequality display",
+          "kind": "author-proof",
+          "claim": "Subgradient support and asserted constrained optimality yield eta_t(loss_t(xt)-loss_t(u)) <= <grad psi(x_(t-1))-grad psi(xt),xt-u> = B(u;x_(t-1))-B(u;xt)-B(xt;x_(t-1)).",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-sum",
+          "pdf_page": 278,
+          "printed_page": 266,
+          "region": "Opening Lemma6.7 citation, division/summation sentence and first display line",
+          "kind": "author-proof",
+          "claim": "Uses Lemma6.7 for last equality, divides by positive eta_t and sums t=1,...,T.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-parts",
+          "pdf_page": 278,
+          "printed_page": 266,
+          "region": "Second display line, weighted telescoping",
+          "kind": "author-proof",
+          "claim": "Exact RHS = B(u;x0)/eta1 - B(u;xT)/etaT + sum_(t=1)^(T-1)(1/eta_(t+1)-1/eta_t)B(u;xt) - sum_(t=1)^T B(xt;x_(t-1))/eta_t. Terminal term retained at this step.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-max",
+          "pdf_page": 278,
+          "printed_page": 266,
+          "region": "Third through fifth display lines and D^2 definition",
+          "kind": "author-proof",
+          "claim": "D^2=max_(0<=t<=T-1)B(u;xt). Drop nonpositive terminal, bound each nonnegative reciprocal increment by D^2, telescope coefficients to D^2/eta_T and retain the negative movement sum.",
+          "status": "source-recorded"
+        },
+        {
+          "id": "src:T15.30-exercise",
+          "pdf_page": 278,
+          "printed_page": 266,
+          "region": "Sentence: The second statement is left as an exercise.",
+          "kind": "source-exercise",
+          "claim": "Fixed-step second statement has no supplied proof here; still a required source obligation.",
+          "status": "open-required"
+        },
+        {
+          "id": "gap:nonsmooth-optimality",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Theorem15.30 first proof paragraph",
+          "kind": "SOURCE_GAP",
+          "claim": "Theorem2.8 assumes differentiability on a neighborhood of V, while Theorem15.30 allows nonsmooth subdifferentiable losses. Need justified constrained nonsmooth optimality and smooth-plus-nonsmooth splitting. Theorem2.23 equality has additional closedness/interior qualifications; loss closedness is not stated in T15.30. Existence of individual subgradients does not by itself justify decomposing an arbitrary composite subgradient.",
+          "status": "open"
+        },
+        {
+          "id": "gap:eta-index",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Theorem15.30 hypothesis versus Algorithm15.8 Require",
+          "kind": "SOURCE_GAP",
+          "claim": "Theorem prints eta_(t+1)<=eta_t for t=1,...,T; algorithm supplies eta1,...,etaT only. Summation proof uses monotonicity only through T-1. Preserve this as an indexing ambiguity, not silently normalized source.",
+          "status": "open"
+        },
+        {
+          "id": "gap:attainment",
+          "pdf_page": 277,
+          "printed_page": 265,
+          "region": "Algorithm15.8 selection step",
+          "kind": "SOURCE_GAP",
+          "claim": "Algorithm prescribes an argmin selection; it does not establish existence. Closed strictly convex psi and closed convex V alone do not establish attainment for every stated loss. No claim of automatic unique minimizer or automatic interiority.",
+          "status": "open"
+        }
+      ],
+      "edges": [
+        {
+          "id": "e:nonnegative",
+          "inputs": [
+            "src:D6.4",
+            "src:strict-support"
+          ],
+          "output": "src:nonnegative",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF76 first two paragraphs",
+          "premise_discharge": "Use psi convex/strictly convex and reference point in int X. First point may be anywhere in X.",
+          "kind": "source-stated-justification"
+        },
+        {
+          "id": "e:t28-sufficient",
+          "inputs": [
+            "src:T2.7"
+          ],
+          "output": "src:T2.8-sufficiency",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF23 first proof paragraph",
+          "premise_discharge": "Open neighborhood and differentiability hypotheses permit supporting inequality; nonnegative pairing is assumed in sufficiency direction.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:t28-both",
+          "inputs": [
+            "src:T2.8-sufficiency",
+            "src:T2.8-necessity"
+          ],
+          "output": "src:T2.8",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF23 iff proof",
+          "premise_discharge": "Both directions required for equivalence. Convex V keeps segments feasible; differentiability drives contradiction.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:ogd-start",
+          "inputs": [
+            "src:T2.13-start"
+          ],
+          "output": "src:T2.13-variable",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF25-26 proof",
+          "premise_discharge": "Named external leaf Lemma2.12 not recursively audited here. eta_t>0 and actual OGD iterates required.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:ogd-fixed",
+          "inputs": [
+            "src:T2.13-start"
+          ],
+          "output": "src:T2.13-fixed",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF26 constant-step proof",
+          "premise_discharge": "Additional premise eta_t=eta; independent telescope, not maximum-distance specialization.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:sum-include",
+          "inputs": [
+            "src:D2.20"
+          ],
+          "output": "src:T2.23-inclusion",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF29-30 proof",
+          "premise_discharge": "Select actual subgradients only when all relevant sets nonempty; otherwise inclusion is vacuous.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:subgrad-convex",
+          "inputs": [
+            "src:D2.20"
+          ],
+          "output": "src:T2.21",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF29 Theorem2.21 proof",
+          "premise_discharge": "Subgradient exists at each convex combination in V; multiply its two supporting inequalities by the convex weights. Source theorem is real-valued; finite restriction of extended-real losses is a separate adaptation.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:normal",
+          "inputs": [
+            "src:D2.20"
+          ],
+          "output": "src:E2.25",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF30 Example2.25",
+          "premise_discharge": "Indicator values enforce x in V; off-V inequality vacuous.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:fermat",
+          "inputs": [
+            "src:D2.20"
+          ],
+          "output": "src:T6.27",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF86 proof",
+          "premise_discharge": "Properness permits global minimization/subgradient equivalence. No decomposition asserted.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:interior-route-direct",
+          "inputs": [
+            "src:OMD-6.6",
+            "src:T6.8-direct"
+          ],
+          "output": "src:T6.8",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF77 direct case",
+          "premise_discharge": "Argmin supplied, hence selected point in V.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:interior-route-steep",
+          "inputs": [
+            "src:OMD-6.5",
+            "src:T6.8-induction",
+            "src:T6.8-steep"
+          ],
+          "output": "src:T6.8",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF77-78 steepness case",
+          "premise_discharge": "Algorithm6.1 initial point in int X intersect V supplies interior feasible z; per-round argmin supplied.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:optimality-citation",
+          "inputs": [
+            "src:A15.8",
+            "src:T2.8",
+            "gap:nonsmooth-optimality"
+          ],
+          "output": "src:T15.30-optimality",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF277 first proof paragraph",
+          "premise_discharge": "UNRESOLVED: citation is recorded but gap is not discharged. This edge is not a valid proved implication.",
+          "kind": "author-citation-with-undischarged-gap"
+        },
+        {
+          "id": "e:one-step",
+          "inputs": [
+            "src:T15.30-optimality",
+            "src:D2.20",
+            "src:L6.7",
+            "src:T15.30-premises",
+            "src:A15.8"
+          ],
+          "output": "src:T15.30-one-step",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF277 final display and PDF278 opening sentence",
+          "premise_discharge": "Given asserted g_t, support inequality gives first step. L6.7 substitution (x,y,z)=(xt,x_(t-1),u), then negate/rearrange. Source-domain conditions are discharged: u in V subset X, xt interior by theorem assumption, previous iterate interior by the same assumption or x0 initialization. No global derivative extension is needed for this literal source step. The upstream nonsmooth gap remains.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:sum",
+          "inputs": [
+            "src:T15.30-one-step",
+            "src:A15.8"
+          ],
+          "output": "src:T15.30-sum",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF278 first display line",
+          "premise_discharge": "Positive eta_t allows division for every t in same selected run.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:parts",
+          "inputs": [
+            "src:T15.30-sum"
+          ],
+          "output": "src:T15.30-parts",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF278 second display line",
+          "premise_discharge": "Finite index rearrangement; no sign inequalities yet.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:max",
+          "inputs": [
+            "src:T15.30-parts",
+            "src:nonnegative",
+            "src:T15.30-premises",
+            "src:A15.8"
+          ],
+          "output": "src:T15.30-max",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF278 remaining display",
+          "premise_discharge": "Positive nonincreasing eta gives nonnegative reciprocal increments. D^2 bounds B(u;xt) for t=0,...,T-1. B(u;xT)>=0 licenses terminal removal. Source-domain conditions are supplied by u in V subset X and the explicit xT interiority assumption.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:variable",
+          "inputs": [
+            "src:T15.30-max"
+          ],
+          "output": "src:T15.30-variable",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF278 conclusion",
+          "premise_discharge": "D^2 definition substituted; nonsmooth citation gap and source indexing ambiguity retained.",
+          "kind": "author-proof"
+        },
+        {
+          "id": "e:fixed-exercise",
+          "inputs": [
+            "src:T15.30-one-step",
+            "src:T15.30-exercise"
+          ],
+          "output": "src:T15.30-fixed",
+          "input_logic": "AND",
+          "consumer_use_site": "PDF278 last proof sentence",
+          "premise_discharge": "OPEN: no written fixed-step proof. Exercise remains a required dependency, not an excluded paragraph.",
+          "kind": "required-exercise-route"
+        }
+      ],
+      "alternative_routes": [
+        {
+          "target": "src:T6.8",
+          "route_edges": [
+            "e:interior-route-direct",
+            "e:interior-route-steep"
+          ],
+          "route_logic": "OR",
+          "note": "Within each route inputs are AND. Alternative sufficient interiority conditions are not jointly required."
+        }
+      ],
+      "semantic_notes": [
+        "Citation-with-gap edges record author reasoning but are not certified implications.",
+        "Variable-step and fixed-step theorem conclusions are both required, not alternative proofs of the same terminal.",
+        "Source topology is independent of the proposed continuous-dual interface."
+      ]
+    },
+    "derived_proposals": {
+      "nodes": [
+        {
+          "id": "derived:three-point-algebra",
+          "kind": "definitional-algebraic-inference",
+          "claim": "Expanding Definition6.4 and cancelling psi values gives Lemma6.7. This reconstruction is not a written author proof. Algebra works for any supplied linear functional D at the two reference points, even without convexity, but its equality with source gradients requires differentiability/domain bridges."
+        },
+        {
+          "id": "derived:real-dual-interface",
+          "kind": "proposed-derived-interface",
+          "status": "proposal-unreviewed",
+          "claim": "Let E be a real normed vector space, V convex, f,psi:E->R, f convex on V, p,u in V, eta>0. Let x in E, not necessarily V, and assume psi Frechet differentiable at x and p. Supply p as an actual global minimizer over V of f(y)+eta^-1 B(y;x), where B(a;b)=psi(a)-psi(b)-Dpsi(b)(a-b). Then eta(f(p)-f(u))<=B(u;x)-B(u;p)-B(p;x). No f differentiability is required."
+        },
+        {
+          "id": "derived:segment",
+          "kind": "proposed-proof-step",
+          "claim": "For 0<s<=1 set p_s=(1-s)p+s u in V. Minimality and convexity give eta s(f(p)-f(u)) <= B(p_s;x)-B(p;x). Divide by s>0."
+        },
+        {
+          "id": "derived:limit",
+          "kind": "proposed-proof-step",
+          "claim": "Let s decrease to zero. Differentiability of psi at p gives eta(f(p)-f(u)) <= (Dpsi(p)-Dpsi(x))(u-p). Continuity/linearity of supplied derivatives suffices. f need not be differentiable."
+        },
+        {
+          "id": "derived:algebra",
+          "kind": "proposed-proof-step",
+          "claim": "Expand B to identify (Dpsi(p)-Dpsi(x))(u-p)=B(u;x)-B(u;p)-B(p;x). This proves the proposed interface in ordinary mathematics, pending independent review and formal certification."
+        },
+        {
+          "id": "derived:fixed-terminal",
+          "kind": "definitional-algebraic-inference",
+          "status": "open-formal-obligation",
+          "claim": "For one same-run sequence satisfying each step, constant eta telescoping gives sum(f_t(x_t)-f_t(u)) <= [B(u;x0)-B(u;xT)-sum B(x_t;x_(t-1))]/eta. Dropping the terminal requires nonnegativity. This is a proposed exercise solution, not source-written proof."
+        },
+        {
+          "id": "derived:total-derivative-boundary",
+          "kind": "extension-boundary",
+          "status": "open-derived-interface-obligation",
+          "claim": "Using a total fderiv function to define B everywhere assigns values beyond the source differentiability domain. Algebra of this extension can be valid without being a literal Definition6.4 on its whole carrier. A theorem matching values on X x int X, or a justified local/global differentiable extension, is required for the proposed interface transfer. This is not a gap in the source Theorem15.30 domain premises: that theorem explicitly assumes later xt interior and Algorithm15.8 supplies interior x0."
+        }
+      ],
+      "edges": [
+        {
+          "id": "d:segment-limit",
+          "inputs": [
+            "derived:segment"
+          ],
+          "output": "derived:limit",
+          "input_logic": "AND",
+          "premises": "Convex V and f on V, selected global minimizer, eta>0, psi differentiable at p and reference derivative at x."
+        },
+        {
+          "id": "d:interface",
+          "inputs": [
+            "derived:limit",
+            "derived:algebra"
+          ],
+          "output": "derived:real-dual-interface",
+          "input_logic": "AND",
+          "premises": "Same p,u,x,eta and functions throughout."
+        },
+        {
+          "id": "d:fixed",
+          "inputs": [
+            "derived:real-dual-interface"
+          ],
+          "output": "derived:fixed-terminal",
+          "input_logic": "AND",
+          "premises": "Needs every step of one same run, common positive eta and u in V; closure not yet formalized."
+        }
+      ],
+      "source_status": "not literal source proof",
+      "alternative_route_relation": "The segment proof is a proposed sufficient route for its separately stated real-valued target. It is not conjoined as a dependency with the original nonsmooth/subgradient source route. No general-source equivalence is claimed."
+    }
+  },
+  "implementation_inspected": false,
+  "prior_graphs_or_verdicts_inspected": false,
+  "extraction_version": 2,
+  "supersedes_directory": "../batch36-source-extraction-v1"
+}

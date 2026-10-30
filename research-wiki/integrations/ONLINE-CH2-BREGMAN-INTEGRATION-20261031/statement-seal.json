@@ -1,0 +1,93 @@
+{
+  "at": "2026-10-30T18:59:05.172659+00:00",
+  "originalHead": "65e21be78abfbd4255798e54265ce418651ef70f",
+  "acceptedMain": "601f39c1ab0f119dba63567932a86b7dc791fac1",
+  "declarations": [
+    {
+      "id": "D",
+      "kind": "def",
+      "name": "divergence",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "def divergence (ψ : E → ℝ) (x y : E) : ℝ :=\n  ψ x - ψ y - fderiv ℝ ψ y (x - y)",
+      "signatureSHA256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    },
+    {
+      "id": "claim_1",
+      "kind": "theorem",
+      "name": "divergence_self",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem divergence_self (ψ : E → ℝ) (x : E) :\n    divergence ψ x x = 0",
+      "signatureSHA256": "3aebd15fc983237623b5044d5cfc9e8757ef4f6eb960624de6126890d4ee3566",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    },
+    {
+      "id": "claim_2",
+      "kind": "theorem",
+      "name": "three_point_identity",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem three_point_identity (ψ : E → ℝ) (x y z : E) :\n    divergence ψ z x + divergence ψ x y - divergence ψ z y =\n      (fderiv ℝ ψ y - fderiv ℝ ψ x) (z - x)",
+      "signatureSHA256": "f095ec4ef6b12ca61ba2ed0f0c403e261c0c00dcc6171e8f5a5042e94c59f657",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    },
+    {
+      "id": "claim_3",
+      "kind": "theorem",
+      "name": "divergence_nonneg",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem divergence_nonneg (X : Set E) (ψ : E → ℝ) (hψ : ConvexOn ℝ X ψ)\n    (x y : E) (hx : x ∈ X) (hy : y ∈ X) (hd : DifferentiableAt ℝ ψ y) :\n    0 ≤ divergence ψ x y",
+      "signatureSHA256": "41a25b841793282b68a5e616fcb1d92fb88e8cd34e65c87cd5e14be7780098d0",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    },
+    {
+      "id": "claim_4",
+      "kind": "theorem",
+      "name": "proximal_one_step",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem proximal_one_step (V : Set E) (f ψ : E → ℝ) (η : ℝ) (hη : 0 < η)\n    (x p : E) (hp : p ∈ V) (hf : ConvexOn ℝ V f)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p)\n    (hmin : IsMinOn (fun z => f z + η⁻¹ * divergence ψ z x) V p) :\n    ∀ u ∈ V, η * (f p - f u) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "signatureSHA256": "6e8cb7b04928c53f505165a3ee92a4ee0964941fadf11a4e62f4772ce3c01913",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    },
+    {
+      "id": "claim_5",
+      "kind": "theorem",
+      "name": "divergence_eq_gradient",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "statement": "theorem divergence_eq_gradient (ψ : E → ℝ) (x y : E)\n    (hd : DifferentiableAt ℝ ψ y) :\n    divergence ψ x y = ψ x - ψ y - inner ℝ (gradient ψ y) (x - y)",
+      "signatureSHA256": "aa62cf89b33dc2efe19f4fc120b754237ca1eaa98ec253fe6bd52b03c3cffab1",
+      "sourceModuleSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    },
+    {
+      "id": "claim_6",
+      "kind": "theorem",
+      "name": "nonquadratic_nonsmooth",
+      "path": "Tests/OnlineBregmanProximalCanary.lean",
+      "context": "",
+      "statement": "theorem nonquadratic_nonsmooth :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) z (1 / 2)) univ 0 ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) (1 / 2) 0 = 9 / 64 ∧\n      divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2) = 11 / 64 ∧\n      (∀ u : ℝ, -|u| ≤ divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u (1 / 2) -\n        divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 4 / 4 + z ^ 2 / 2) 0 (1 / 2)) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "signatureSHA256": "4ffebe71fc0415d244c75a63402d4df4b7cec4c375167007a5f812e7c0605ce0",
+      "sourceModuleSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0"
+    },
+    {
+      "id": "claim_7",
+      "kind": "theorem",
+      "name": "boundary_outside_initial",
+      "path": "Tests/OnlineBregmanProximalCanary.lean",
+      "context": "",
+      "statement": "theorem boundary_outside_initial :\n    StrictConvexOn ℝ univ (fun z : ℝ => z ^ 2 / 2) ∧\n      (-1 : ℝ) ∉ Icc 0 1 ∧\n      IsMinOn (fun z : ℝ => |z| + divergence (fun z : ℝ => z ^ 2 / 2) z (-1)) (Icc 0 1) 0 ∧\n      divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ Icc (0 : ℝ) 1, -|u| ≤ divergence (fun z : ℝ => z ^ 2 / 2) u (-1) -\n        divergence (fun z : ℝ => z ^ 2 / 2) u 0 - divergence (fun z : ℝ => z ^ 2 / 2) 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "signatureSHA256": "782e06e87cdfa1f5a365a5527544a07eac1a19d91015e1ab2a4ffca8ba4d4199",
+      "sourceModuleSHA256": "e36df49d45eeacc25106b3ec935fbd7bb0ee8495c7477bfb3215385056b0b5f0"
+    }
+  ],
+  "blindPacketSHA256": "73c197ffc6f5b4c4d69da4761d476962e3451b32ffbe69ca5080ec0d8efa69ef",
+  "sourceFacingSignaturesFrozenBeforePort": true,
+  "semanticReview": "pending",
+  "binderAudit": "pending-independent-review",
+  "productionEdited": false,
+  "statementChangeAllowedWithoutSuccessorSeal": false
+}
