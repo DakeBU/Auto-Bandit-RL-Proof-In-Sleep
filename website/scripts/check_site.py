@@ -1320,12 +1320,12 @@ def main() -> int:
         teaching_route = reading.get("teaching_route")
         if (
             not isinstance(teaching_route, list)
-            or not 1 <= len(teaching_route) <= 5
+            or not 1 <= len(teaching_route) <= 7
             or any(not isinstance(name, str) or not name.strip() for name in teaching_route)
             or len(teaching_route) != len(set(teaching_route))
         ):
             errors.append(
-                f"readings.json: {reading.get('slug')} needs one to five unique teaching-route declarations"
+                f"readings.json: {reading.get('slug')} needs one to seven unique teaching-route declarations"
             )
         notation = reading.get("notation")
         if not isinstance(notation, list) or not 3 <= len(notation) <= 4:

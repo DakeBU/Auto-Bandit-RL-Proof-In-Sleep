@@ -763,3 +763,4 @@ import BanditRLProof.OnlineGuessingKernelCausal
 import BanditRLProof.OnlineFTLLimitSemantics
 import BanditRLProof.OnlineFTLOscillation
 import BanditRLProof.OnlineFTLInitializationRegret
+import BanditRLProof.OnlineNonsmoothExamples

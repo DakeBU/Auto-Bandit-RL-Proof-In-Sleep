@@ -1,0 +1,266 @@
+{
+  "originalPR": 204,
+  "originalHead": "b1486aa11451556858fda44eabf356ba26ab01b8",
+  "integrationBase": "371ee234290b18715339d442a1e53d1dea333636",
+  "sourcePdfSha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "verdict": "accepted-with-explicit-delta",
+      "binders": [
+        {
+          "binder": "c",
+          "type": "R",
+          "classification": "TYPING",
+          "reason": "Real shift parameter rather than a regularity premise.",
+          "semantic_delta": "SOURCE fixes 10; arbitrary c is a genuine universal generalization"
+        },
+        {
+          "binder": "x inside forall",
+          "type": "carrier",
+          "classification": "TYPING",
+          "reason": "Universal evaluation point in the strengthened conclusion, not an assumed regularity result.",
+          "semantic_delta": "pointwise universal iff is derived"
+        },
+        {
+          "binder": "x/w inside lambda",
+          "type": "carrier",
+          "classification": "TYPING",
+          "reason": "Dummy loss argument; no premise.",
+          "semantic_delta": "none"
+        }
+      ],
+      "seven_slots": {
+        "1_objects_spaces": "Same real absolute-value loss after c=10. Entire real carrier is the ambient reading, not a constrained-set derivative.",
+        "2_quantifiers": "Source gives a single example at shift 10 and no point quantifier. Lean universally quantifies c and every evaluation point x.",
+        "3_assumptions_regularity": "No added sign, nonzero, boundedness or differentiability assumption. All regularity is a conclusion.",
+        "4_conclusion_metric": "Convexity matches contextual source intent. Exact differentiability iff x!=c is stronger than the motivating not-everywhere-differentiable claim. At c=10 it supplies a source witness, plus off-kink information.",
+        "5_constants": "Source shift exactly 10 replaced by arbitrary c; unit absolute-value scaling retained. No rates.",
+        "6_probability_feedback": "Deterministic analytic statement. Source t is a loss index, suppressed pointwise. No horizon, sampling, feedback-strength, filtration, stopping, expectation or confidence assertion is encoded. This does not establish OGD/OSD regret.",
+        "7_boundary": "All real shifts including zero. Nondifferentiable only at the shift, not nowhere differentiable. No subgradient, derivative formula, Lipschitz bound or learning guarantee."
+      },
+      "definition_audit": "Literal formula on R for c=10; other c are a generalized family, not the literal source definition."
+    },
+    {
+      "name": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "verdict": "accepted-with-explicit-delta",
+      "binders": [
+        {
+          "binder": "E",
+          "type": "Type*",
+          "classification": "TYPING",
+          "reason": "Carrier for source Euclidean vectors.",
+          "semantic_delta": "abstract finite-dimensional real inner-product representation"
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "type": "structural instance",
+          "classification": "TYPING",
+          "reason": "Addition, real norm topology and compatible metric needed to interpret the Euclidean carrier.",
+          "semantic_delta": "none"
+        },
+        {
+          "binder": "[InnerProductSpace R E]",
+          "type": "structural instance",
+          "classification": "TYPING",
+          "reason": "Compatible real vector structure and inner product implement the displayed Euclidean pairing; includes module, symmetry, positivity and norm compatibility.",
+          "semantic_delta": "none"
+        },
+        {
+          "binder": "[FiniteDimensional R E]",
+          "type": "structural proposition",
+          "classification": "STANDING",
+          "reason": "The surrounding book game uses R^d (PDF20/printed8), so finite-dimensionality is a source-wide carrier restriction, not a proof ingredient.",
+          "semantic_delta": "No positive-dimension restriction; infinite-dimensional generality is not claimed"
+        },
+        {
+          "binder": "a",
+          "type": "E",
+          "classification": "TYPING",
+          "reason": "Effective feature/normal parameter.",
+          "semantic_delta": "Source prints labelled y_t,z_t; a=y*z is a derived reparameterization, not permission to drop labels silently"
+        },
+        {
+          "binder": "x inside forall",
+          "type": "carrier",
+          "classification": "TYPING",
+          "reason": "Universal evaluation point in the strengthened conclusion, not an assumed regularity result.",
+          "semantic_delta": "pointwise universal iff is derived"
+        },
+        {
+          "binder": "x/w inside lambda",
+          "type": "carrier",
+          "classification": "TYPING",
+          "reason": "Dummy loss argument; no premise.",
+          "semantic_delta": "none"
+        }
+      ],
+      "seven_slots": {
+        "1_objects_spaces": "Finite-dimensional real inner-product E represents Euclidean R^d. The unlabelled formula matches source under a=y*z by real inner-product linearity. Standalone a is derived infrastructure/generalization.",
+        "2_quantifiers": "All E, structures, a and x are universal. Source provides no such exact family or pointwise iff quantification.",
+        "3_assumptions_regularity": "FiniteDimensional reflects Euclidean standing context; no nonzero normal, normalization or positive dimension is smuggled in.",
+        "4_conclusion_metric": "Whole-space convexity agrees with the example. Exact ambient Frechet differentiability iff <a,x>!=1 is a stronger derived classification. This signature has no separate global differentiability iff.",
+        "5_constants": "Margin 1 and floor 0 preserved; arbitrary unnormalized a.",
+        "6_probability_feedback": "Deterministic analytic statement. Source t is a loss index, suppressed pointwise. No horizon, sampling, feedback-strength, filtration, stopping, expectation or confidence assertion is encoded. This does not establish OGD/OSD regret.",
+        "7_boundary": "If a=0 or dim E=0 the loss is constant 1 and smooth. For a!=0 there is a kink hyperplane, but tangent line restrictions can be differentiable there. Infinite-dimensional and constrained-domain claims are outside this signature."
+      },
+      "definition_audit": "Literal displayed source formula only after the explicit effective-normal identification; no fallback/default branch."
+    },
+    {
+      "name": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "verdict": "accepted-with-explicit-delta",
+      "binders": [
+        {
+          "binder": "E",
+          "type": "Type*",
+          "classification": "TYPING",
+          "reason": "Carrier for source Euclidean vectors.",
+          "semantic_delta": "abstract finite-dimensional real inner-product representation"
+        },
+        {
+          "binder": "[NormedAddCommGroup E]",
+          "type": "structural instance",
+          "classification": "TYPING",
+          "reason": "Addition, real norm topology and compatible metric needed to interpret the Euclidean carrier.",
+          "semantic_delta": "none"
+        },
+        {
+          "binder": "[InnerProductSpace R E]",
+          "type": "structural instance",
+          "classification": "TYPING",
+          "reason": "Compatible real vector structure and inner product implement the displayed Euclidean pairing; includes module, symmetry, positivity and norm compatibility.",
+          "semantic_delta": "none"
+        },
+        {
+          "binder": "[FiniteDimensional R E]",
+          "type": "structural proposition",
+          "classification": "STANDING",
+          "reason": "The surrounding book game uses R^d (PDF20/printed8), so finite-dimensionality is a source-wide carrier restriction, not a proof ingredient.",
+          "semantic_delta": "No positive-dimension restriction; infinite-dimensional generality is not claimed"
+        },
+        {
+          "binder": "y",
+          "type": "R",
+          "classification": "TYPING",
+          "reason": "Scalar multiplying the displayed source inner product.",
+          "semantic_delta": "Source does not state a label set; forall real y, including zero/nonbinary labels, is a visible domain interpretation/generalization, not established binary-label source semantics"
+        },
+        {
+          "binder": "z",
+          "type": "E",
+          "classification": "TYPING",
+          "reason": "Source feature vector z_t.",
+          "semantic_delta": "Arbitrary feature includes zero; the source does not state nondegeneracy"
+        },
+        {
+          "binder": "x inside forall",
+          "type": "carrier",
+          "classification": "TYPING",
+          "reason": "Universal evaluation point in the strengthened conclusion, not an assumed regularity result.",
+          "semantic_delta": "pointwise universal iff is derived"
+        },
+        {
+          "binder": "x/w inside lambda",
+          "type": "carrier",
+          "classification": "TYPING",
+          "reason": "Dummy loss argument; no premise.",
+          "semantic_delta": "none"
+        }
+      ],
+      "seven_slots": {
+        "1_objects_spaces": "Displayed labelled formula preserved, on all of abstract finite-dimensional real inner-product E, with y any real scalar. No binary-label or statistical semantics follows from its name.",
+        "2_quantifiers": "All E/structures,y,z are universal. Pointwise forall x occurs in the middle conjunct; global Differentiable iff y*z=0 is outside that binder. Source does not print either iff.",
+        "3_assumptions_regularity": "Only carrier structures. No y!=0, z!=0, positive dimension, event or known regularity premise. Nonzero effective feature is a criterion for recovering intended source nondifferentiability, not an existing public hypothesis.",
+        "4_conclusion_metric": "Convexity plus exact ambient pointwise and global differentiability classification. The latter qualifies source prose: not differentiable everywhere iff y*z!=0. This qualification is derived, not a printed theorem or authorized source rewrite.",
+        "5_constants": "Margin 1, floor 0 and multiplicative label are preserved. The zero in y*z=0 is a vector zero. No asymptotics.",
+        "6_probability_feedback": "Deterministic analytic statement. Source t is a loss index, suppressed pointwise. No horizon, sampling, feedback-strength, filtration, stopping, expectation or confidence assertion is encoded. This does not establish OGD/OSD regret.",
+        "7_boundary": "Zero y or z, and dimension zero, give constant 1. Nonzero y*z gives some but not all nondifferentiable points. Ambient versus tangent/constrained differentiability stays explicit; no gradient, subdifferential or OSD guarantee."
+      },
+      "definition_audit": "Literal algebraic formula on the chosen carrier, with real-label domain explicitly interpreted beyond the unspecified local source label scope."
+    }
+  ],
+  "statementVerdict": {
+    "verdict": "accepted-with-explicit-delta",
+    "literal_source_equivalence": false,
+    "derived_interface_semantics_accepted": true,
+    "blind_reconstruction_accurate": true,
+    "remaining_semantic_delta": "Arbitrary shift, precise pointwise iff classifications, absorbed-label carrier, abstract finite-dimensional inner-product carrier, arbitrary-real label quantification, whole-carrier interpretation and global zero-normal characterization.",
+    "meaning": "Permits explicit publication as derived generalizations/clarifications if independently proved. Does not permit unqualified faithful-equivalence badge or a zero-delta manifest.",
+    "source_statement_repair_verdict": "not-authorized; mathematical qualification independently checked but not a user-approved or author-endorsed correction",
+    "excess_binders": [],
+    "ruled_binders": []
+  },
+  "independentQualification": {
+    "status": "checked at statement/mathematical argument level, not compiler checked",
+    "arguments": [
+      "At x=c, |x-c| has opposite left/right slopes; elsewhere its local affine branch supplies differentiability. Translation and absolute-value convexity give convexity.",
+      "For effective normal a=y*z, max(1-<a,x>,0) is a maximum of two affine functions. If a=0 it is constant 1. If a!=0, x0=a/||a||^2 satisfies <a,x0>=1; along x0+t*a the loss is max(-t*||a||^2,0), whose left and right slopes differ. Away from this hyperplane one strict branch persists locally.",
+      "At a margin point, a tangent direction v with <a,v>=0 yields the constant-zero restriction. Hence the ambient non-differentiability claim does not prohibit tangent derivatives.",
+      "Over R, y*z=0 iff y=0 or z=0. Zero-dimensional carriers force z=0."
+    ],
+    "source_invalid_scope": "The universal interpretation that every parameterized hinge is not everywhere differentiable is refuted by y=0 or z=0. The source paragraph is motivational prose with unspecified quantification, so do not upgrade this to a blanket author-error/SOURCE_INVALID verdict.",
+    "authorization_boundary": "Mathematical checking does not authorize source mutation. No RULED premise or author-endorsed erratum is established."
+  },
+  "sourceRepairApproved": false,
+  "productionAndCanarySignatures": [
+    {
+      "file": "BanditRLProof__OnlineNonsmoothExamples.lean",
+      "moduleSha256": "2532c49a68dc9192ca7b33a3c691a1ad8b3bb16aa37982d60c04749ee9b7f950",
+      "statements": [
+        {
+          "name": "shifted_absolute_convex_differentiable_iff",
+          "signature": "theorem shifted_absolute_convex_differentiable_iff (c : ℝ) :\n    ConvexOn ℝ Set.univ (fun x : ℝ => |x - c|) ∧\n      ∀ x : ℝ, DifferentiableAt ℝ (fun w : ℝ => |w - c|) x ↔ x ≠ c",
+          "sha256": "3f7c2f287cbf4d8dce781c5da41e93069b3a5127db4ed04c62c6c5213aa62f99"
+        },
+        {
+          "name": "hinge_convex_differentiable_iff",
+          "signature": "theorem hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (a : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - inner ℝ a x) 0) ∧\n      ∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - inner ℝ a w) 0) x ↔\n        inner ℝ a x ≠ 1",
+          "sha256": "76645b3a4efa6e934feae48d9aea71bdb77984e1b9b94887f9c69c9f1c3f47a6"
+        },
+        {
+          "name": "labelled_hinge_convex_differentiable_iff",
+          "signature": "theorem labelled_hinge_convex_differentiable_iff {E : Type*} [NormedAddCommGroup E]\n    [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] (y : ℝ) (z : E) :\n    ConvexOn ℝ Set.univ (fun x : E => max (1 - y * inner ℝ z x) 0) ∧\n      (∀ x : E, DifferentiableAt ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) x ↔\n        y * inner ℝ z x ≠ 1) ∧\n      (Differentiable ℝ (fun w : E => max (1 - y * inner ℝ z w) 0) ↔ y • z = 0)",
+          "sha256": "bc70b8f58585e172a9fb9136257368d65ed49676a6678ff630c428f4e1de9735"
+        }
+      ]
+    },
+    {
+      "file": "Tests__OnlineNonsmoothExamplesCanary.lean",
+      "moduleSha256": "5e475f33b86a559e3a999f33736d7b323d634e4d746f6b03cb798a4d6b85acdf",
+      "statements": [
+        {
+          "name": "source_shift_ten",
+          "signature": "theorem source_shift_ten :\n    ConvexOn ℝ Set.univ (fun w : ℝ => |w - 10|) ∧\n      ¬ DifferentiableAt ℝ (fun w : ℝ => |w - 10|) 10 ∧\n      DifferentiableAt ℝ (fun w : ℝ => |w - 10|) 9 ∧\n      DifferentiableAt ℝ (fun w : ℝ => |w - 10|) 11",
+          "sha256": "f3f4ce06bba3baff33c68459154858da8e49bf6b230a45151df0d2e421d072bb"
+        },
+        {
+          "name": "positive_negative_labels",
+          "signature": "theorem positive_negative_labels :\n    ConvexOn ℝ Set.univ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) ∧\n      ConvexOn ℝ Set.univ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0) ∧\n      ¬ DifferentiableAt ℝ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) (1 / 6) ∧\n      ¬ DifferentiableAt ℝ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0) (-1 / 6) ∧\n      DifferentiableAt ℝ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) 0 ∧\n      DifferentiableAt ℝ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0) 0 ∧\n      ¬ Differentiable ℝ (fun w : ℝ => max (1 - 2 * inner ℝ (3 : ℝ) w) 0) ∧\n      ¬ Differentiable ℝ (fun w : ℝ => max (1 - (-2) * inner ℝ (3 : ℝ) w) 0)",
+          "sha256": "a76f658173c88dec093b36fda02eedc9ee05bfeb9461757197b705b7d5485208"
+        },
+        {
+          "name": "zero_label_and_feature",
+          "signature": "theorem zero_label_and_feature (y z : ℝ) :\n    Differentiable ℝ (fun w : ℝ => max (1 - 0 * inner ℝ z w) 0) ∧\n      Differentiable ℝ (fun w : ℝ => max (1 - y * inner ℝ (0 : ℝ) w) 0) ∧\n      ∀ w : ℝ, max (1 - 0 * inner ℝ z w) 0 = 1 ∧\n        max (1 - y * inner ℝ (0 : ℝ) w) 0 = 1",
+          "sha256": "c6f861a6ba497cc7b0eb904a147eedf6beefd9e48ab43f8b9b715a315f5e0a60"
+        },
+        {
+          "name": "plane_ambient_and_tangential",
+          "signature": "theorem plane_ambient_and_tangential :\n    ¬ DifferentiableAt ℝ (fun w : Plane => max (1 - inner ℝ e0 w) 0)\n        (e0 + (3 : ℝ) • e1) ∧\n      DifferentiableAt ℝ (fun w : Plane => max (1 - inner ℝ e0 w) 0) e1 ∧\n      DifferentiableAt ℝ (fun t : ℝ => max (1 - inner ℝ e0 (e0 + (3 + t) • e1)) 0) 0",
+          "sha256": "11f4836c297abfb181f0d8ed038324fad0a7fa2d3f07f139c354a1c9e394f6ec"
+        },
+        {
+          "name": "dimension_zero",
+          "signature": "theorem dimension_zero (y : ℝ) (z : EuclideanSpace ℝ (Fin 0)) :\n    Differentiable ℝ\n        (fun w : EuclideanSpace ℝ (Fin 0) => max (1 - y * inner ℝ z w) 0) ∧\n      ∀ w : EuclideanSpace ℝ (Fin 0), max (1 - y * inner ℝ z w) 0 = 1",
+          "sha256": "c483c0477902fd1f7e73e388a4948dff84cae6ec95c636ebeeede2df59be0486"
+        }
+      ]
+    }
+  ],
+  "exactWholePublicTypesChecked": 8,
+  "fullStatementSealSha256": "62b007ee03b11f52f04687d2c9353c2324633d50fd02c16002c35c0c619aa0e8",
+  "scopeBoundary": "Three derived criteria for two introductory loss families, with five concrete canaries. The stronger iff statements, arbitrary real centers/labels and abstract finite-dimensional carriers are explicit generalizations. Zero labels/features and dimension zero are included. Source statements and source gaps remain unchanged. Chapter2 and the whole book remain incomplete;65 overlapping source containers and154 historical bindings are not proof-completion denominators. No source repair is authorized.",
+  "canonicalModulePaths": {
+    "BanditRLProof__OnlineNonsmoothExamples.lean": "BanditRLProof/OnlineNonsmoothExamples.lean",
+    "Tests__OnlineNonsmoothExamplesCanary.lean": "Tests/OnlineNonsmoothExamplesCanary.lean"
+  }
+}
