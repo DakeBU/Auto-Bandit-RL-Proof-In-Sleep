@@ -7167,6 +7167,59 @@
         "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
         "BanditRL.OnlineLearning.squaredBestRegret"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "title": "Translate the absolute-value kink",
+      "chapter": "online-subgradient-differentiability",
+      "featured": true,
+      "teaching_order": 150,
+      "plain": "The real norm is convex, and affine translation preserves convexity. If x differs from c, the translated argument is nonzero, so the absolute-value derivative applies. A derivative at c would, after composition with t ↦ t+c at zero, give a derivative of |t| at zero, contradicting the standard absolute-value result.",
+      "math": "\\(f_c(x)=|x-c|,\\qquad f_c\\text{ convex},\\qquad f_c\\text{ differentiable at }x\\iff x\\ne c.\\)",
+      "intuition": "Translation moves the unique kink to the chosen center.",
+      "why": "Derive exact differentiability criteria for the introductory convex loss examples.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Section 2.2 opening paragraph, printed page 16 / PDF page 28. PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "The real norm is convex, and affine translation preserves convexity. If x differs from c, the translated argument is nonzero, so the absolute-value derivative applies. A derivative at c would, after composition with t ↦ t+c at zero, give a derivative of |t| at zero, contradicting the standard absolute-value result.",
+      "lean_notes": "Every c and x are real. The convexity proof uses the real norm composed with an affine translation; off-center differentiation and the impossibility of differentiating abs at zero are Mathlib facts. The shift 10 is preserved as the source instance; arbitrary c and the exact iff are derived. The printed shift 10 is the instance c=10. The labelled formula is recovered by a=y·z. Arbitrary real centers and labels, abstract finite-dimensional real inner-product spaces, and the pointwise/global iff conclusions are explicit derived generalizations. Dimension zero and zero effective normals are included. All derivatives are ambient real Fréchet derivatives; a differentiable restriction to a tangent line or constrained set does not imply ambient differentiability. These three derived criteria cover the two introductory loss families. Chapter 2 and the whole book remain incomplete; the overlapping source inventory is not a proof-completion denominator. The source paragraph supplies examples without local proofs. Its label domain and nondifferentiability scope are not explicitly quantified; the precise whole-space classifications below are library results. The pinned source is unchanged.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "title": "Read the hinge kink from its support segment",
+      "chapter": "online-subgradient-differentiability",
+      "featured": true,
+      "teaching_order": 151,
+      "plain": "The hinge is the maximum of an affine function and zero, hence convex. At the unit margin its full subdifferential is the segment from 0 to −a. A singleton would force a=0, contradicting the unit margin. Off the margin, the support is a singleton. Apply the accepted ambient-real-germ equivalence and use the everywhere finite hinge as its real representative.",
+      "math": "\\(h_a(x)=\\max(1-\\langle a,x\\rangle,0),\\qquad h_a\\text{ differentiable at }x\\iff\\langle a,x\\rangle\\ne1.\\)",
+      "intuition": "Ambient differentiability fails exactly on the unit-margin hyperplane.",
+      "why": "Derive exact differentiability criteria for the introductory convex loss examples.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Section 2.2 opening paragraph, printed page 16 / PDF page 28. PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "The hinge is the maximum of an affine function and zero, hence convex. At the unit margin its full subdifferential is the segment from 0 to −a. A singleton would force a=0, contradicting the unit margin. Off the margin, the support is a singleton. Apply the accepted ambient-real-germ equivalence and use the everywhere finite hinge as its real representative.",
+      "lean_notes": "E is a finite-dimensional real inner-product space, a and x are arbitrary. The sourceHinge definition is the real hinge included into EReal. Its finite values allow the ambient real-germ predicate to return ordinary DifferentiableAt for the same real function. No nonzero normal or positive dimension is assumed. The full support equality and singleton equivalence are actually reused inside the proof. The printed shift 10 is the instance c=10. The labelled formula is recovered by a=y·z. Arbitrary real centers and labels, abstract finite-dimensional real inner-product spaces, and the pointwise/global iff conclusions are explicit derived generalizations. Dimension zero and zero effective normals are included. All derivatives are ambient real Fréchet derivatives; a differentiable restriction to a tangent line or constrained set does not imply ambient differentiability. These three derived criteria cover the two introductory loss families. Chapter 2 and the whole book remain incomplete; the overlapping source inventory is not a proof-completion denominator. The source paragraph supplies examples without local proofs. Its label domain and nondifferentiability scope are not explicitly quantified; the precise whole-space classifications below are library results. The pinned source is unchanged.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.affine_convex",
+        "BanditRL.OnlineConvex.convexExtended_coe_iff",
+        "BanditRL.OnlineConvex.theorem_2_22",
+        "BanditRL.OnlineConvex.example_2_27",
+        "BanditRL.OnlineConvex.sourceDifferentiableAt_regular"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff",
+      "title": "Determine when the labelled hinge is smooth everywhere",
+      "chapter": "online-subgradient-differentiability",
+      "featured": true,
+      "teaching_order": 152,
+      "plain": "Put a=y·z, so the labelled loss equals h_a. If a is nonzero, choose x=a/⟨a,a⟩; then ⟨a,x⟩=1 and the preceding criterion gives an ambient kink. If a=0, the loss is constantly 1. This proves the global iff, with zero and negative labels allowed.",
+      "math": "\\(h_{y,z}(x)=\\max(1-y\\langle z,x\\rangle,0),\\qquad h_{y,z}\\text{ differentiable everywhere}\\iff y\\,z=0.\\)",
+      "intuition": "The effective normal controls whether any kink exists.",
+      "why": "Derive exact differentiability criteria for the introductory convex loss examples.",
+      "position": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026), Section 2.2 opening paragraph, printed page 16 / PDF page 28. PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+      "proof_idea": "Put a=y·z, so the labelled loss equals h_a. If a is nonzero, choose x=a/⟨a,a⟩; then ⟨a,x⟩=1 and the preceding criterion gives an ambient kink. If a=0, the loss is constantly 1. This proves the global iff, with zero and negative labels allowed.",
+      "lean_notes": "E is a finite-dimensional real inner-product space, y is any real label and z any feature vector. The effective normal is y • z. Zero label, zero feature, and zero dimension all give the constant 1 loss. The global Differentiable iff is separate from the all-points DifferentiableAt iff. The local source paragraph does not specify a label set. The printed shift 10 is the instance c=10. The labelled formula is recovered by a=y·z. Arbitrary real centers and labels, abstract finite-dimensional real inner-product spaces, and the pointwise/global iff conclusions are explicit derived generalizations. Dimension zero and zero effective normals are included. All derivatives are ambient real Fréchet derivatives; a differentiable restriction to a tangent line or constrained set does not imply ambient differentiability. These three derived criteria cover the two introductory loss families. Chapter 2 and the whole book remain incomplete; the overlapping source inventory is not a proof-completion denominator. The source paragraph supplies examples without local proofs. Its label domain and nondifferentiability scope are not explicitly quantified; the precise whole-space classifications below are library results. The pinned source is unchanged.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.hinge_convex_differentiable_iff"
+      ]
     }
   ]
 }

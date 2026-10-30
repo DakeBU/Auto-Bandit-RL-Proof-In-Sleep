@@ -3590,9 +3590,9 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10,21June2026",
-        "sections": "Section 2.2.1: Theorem 2.22, with separately stated library interpretations",
-        "pages": "printed17/PDF29",
-        "pdf_page": 29,
+        "sections": "Section 2.2 opening examples and Section 2.2.1 Theorem 2.22, with explicit library interpretations and derived criteria",
+        "pages": "printed16–17 / PDF28–29",
+        "pdf_page": 28,
         "url": "https://arxiv.org/pdf/1912.13213v10"
       },
       "notation": [
@@ -3607,6 +3607,10 @@
         {
           "term": "Scope and intermediate hypotheses",
           "meaning": "The eleven proof declarations use finite-dimensional real inner-product spaces, with completeness derived and dimension0 allowed; ambient space has zero and is nonempty. The complete real-germ definition itself has no finite-dimension binder. No arbitrary infinite-dimensional equivalence is claimed. NoBottom, NeBot, finite positive ball, local Lipschitz and continuity premises belong to particular intermediate interfaces, not the full source terminal. The generic support predicate permits all EReal functions; each theorem direction here derives noBottom before finite-part conversion."
+        },
+        {
+          "term": "Effective normal and ambient kink",
+          "meaning": "For a real label y and feature z put a=y·z. Unit margin means ⟨a,x⟩=1. The zero-normal loss is constant 1. Ambient Fréchet differentiability is stronger than smoothness along one tangent direction."
         }
       ],
       "algorithm": {
@@ -3631,7 +3635,10 @@
         "BanditRL.OnlineConvex.singleton_subdifferential_interior",
         "BanditRL.OnlineConvex.singleton_subdifferential_hasGradientAt",
         "BanditRL.OnlineConvex.theorem_2_22",
-        "BanditRL.OnlineConvex.theorem_2_22_gradient"
+        "BanditRL.OnlineConvex.theorem_2_22_gradient",
+        "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+        "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+        "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff"
       ],
       "source_theorems": [
         {
@@ -3655,11 +3662,33 @@
             "label": "Bounded library declarations",
             "boundary": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete."
           }
+        },
+        {
+          "label": "Section 2.2: introductory absolute and labelled hinge examples",
+          "pages": "printed16 / PDF28",
+          "pdf_page": 28,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\(\\ell_t(x)=|x-10|,\\qquad\\ell_t(\\boldsymbol{x})=\\max(1-y_t\\langle\\boldsymbol{z}_t,\\boldsymbol{x}\\rangle,0).\\)",
+          "plain": "The source introduces shifted absolute value and labelled hinge as examples of convex losses that need not be differentiable. It gives no local proof, kink classification or explicit label/nonzero qualification in this paragraph.",
+          "fallback": "The printed examples use center 10 and the labelled inner-product hinge. Precise differentiability criteria are derived below.",
+          "relationship": "For one fixed source loss, write y=y_t and z=z_t; the source pairing ⟨z_t,x⟩ is already the library pairing ⟨z,x⟩. The printed shift 10 is the instance c=10. The labelled formula is recovered by a=y·z. Arbitrary real centers and labels, abstract finite-dimensional real inner-product spaces, and the pointwise/global iff conclusions are explicit derived generalizations. Dimension zero and zero effective normals are included. All derivatives are ambient real Fréchet derivatives; a differentiable restriction to a tangent line or constrained set does not imply ambient differentiability. For the hinge, nonzero effective normal gives a genuine ambient kink on the unit margin; zero effective normal gives a constant function. This mathematical qualification is neither a change to the pinned source nor an author-endorsed correction.",
+          "contract": {
+            "model": "Deterministic convex analysis on the whole real line or a finite-dimensional real inner-product space.",
+            "assumptions": "The printed shift 10 is the instance c=10. The labelled formula is recovered by a=y·z. Arbitrary real centers and labels, abstract finite-dimensional real inner-product spaces, and the pointwise/global iff conclusions are explicit derived generalizations. Dimension zero and zero effective normals are included. All derivatives are ambient real Fréchet derivatives; a differentiable restriction to a tangent line or constrained set does not imply ambient differentiability.",
+            "parameters": "Every real c, every vector a, and every real label y and feature z; all ambient query points.",
+            "regret": "These static loss examples assert no algorithmic, regret or feedback guarantee.",
+            "guarantee": "All three loss forms are convex. Absolute value is differentiable exactly off c; hinge is differentiable exactly off its unit margin; labelled hinge is differentiable everywhere exactly when y • z=0."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Three derived criteria; source and library proof kept separate",
+            "boundary": "These three derived criteria cover the two introductory loss families. Chapter 2 and the whole book remain incomplete; the overlapping source inventory is not a proof-completion denominator. The source paragraph supplies examples without local proofs. Its label domain and nondifferentiability scope are not explicitly quantified; the precise whole-space classifications below are library results. The pinned source is unchanged."
+          }
         }
       ],
       "proof_bridge": {
         "title": "From a singleton support to an ambient derivative",
-        "summary": "This is a proof of the explicitly specified library interpretation. The printed theorem has no local proof and leaves the two interpretation gaps above.",
+        "summary": "This is a proof of the explicitly specified library interpretation. The printed theorem has no local proof and leaves the two interpretation gaps above. The final three steps apply the library results to the introductory loss examples; they are derived proofs, not source proof paragraphs.",
         "steps": [
           {
             "title": "A real germ supplies contact and gradient support",
@@ -3684,6 +3713,24 @@
             "detail": "Use support at x and at y. On the finite neighborhood put F=f.toReal; the two inequalities bound the residual below by zero and above by the product of support displacement and point displacement. Support convergence makes it little-o, yielding the Frechet derivative and the real germ.",
             "math": "\\(0\\le F(y)-F(x)-\\langle g,y-x\\rangle\\le\\|G(y)-g\\|\\,\\|y-x\\|.\\)",
             "fallback": "The total toReal cast is used only after local finiteness has been proved."
+          },
+          {
+            "title": "Translate the absolute-value kink",
+            "detail": "The real norm is convex, and affine translation preserves convexity. If x differs from c, the translated argument is nonzero, so the absolute-value derivative applies. A derivative at c would, after composition with t ↦ t+c at zero, give a derivative of |t| at zero, contradicting the standard absolute-value result.",
+            "math": "\\(f_c(x)=|x-c|,\\qquad f_c\\text{ convex},\\qquad f_c\\text{ differentiable at }x\\iff x\\ne c.\\)",
+            "fallback": "The source example uses c=10. The library theorem proves the exact criterion for every real center."
+          },
+          {
+            "title": "Read the hinge kink from its support segment",
+            "detail": "The hinge is the maximum of an affine function and zero, hence convex. At the unit margin its full subdifferential is the segment from 0 to −a. A singleton would force a=0, contradicting the unit margin. Off the margin, the support is a singleton. Apply the accepted ambient-real-germ equivalence and use the everywhere finite hinge as its real representative.",
+            "math": "\\(h_a(x)=\\max(1-\\langle a,x\\rangle,0),\\qquad h_a\\text{ differentiable at }x\\iff\\langle a,x\\rangle\\ne1.\\)",
+            "fallback": "The actual library route uses the complete hinge support equality (Example 2.27) and the explicit real-germ interpretation of Theorem 2.22. This proof is not printed in the introductory paragraph."
+          },
+          {
+            "title": "Determine when the labelled hinge is smooth everywhere",
+            "detail": "Put a=y·z, so the labelled loss equals h_a. If a is nonzero, choose x=a/⟨a,a⟩; then ⟨a,x⟩=1 and the preceding criterion gives an ambient kink. If a=0, the loss is constantly 1. This proves the global iff, with zero and negative labels allowed.",
+            "math": "\\(h_{y,z}(x)=\\max(1-y\\langle z,x\\rangle,0),\\qquad h_{y,z}\\text{ differentiable everywhere}\\iff y\\,z=0.\\)",
+            "fallback": "For nonzero effective normal the loss is smooth off its margin hyperplane. At a margin point a tangential restriction can still be smooth."
           }
         ],
         "boundary": "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete."
@@ -3709,6 +3756,12 @@
             "detail": "The third new test proves EVERY real g supports at1. Keep all six old indicator/quadratic/boundary tests, including actual gradient2 for the quadratic at1.",
             "math": "\\(\\partial I_{\\{1\\}}(1)=\\mathbb R\\)",
             "fallback": "A singleton domain does not mean a singleton subdifferential."
+          },
+          {
+            "title": "A kink can be smooth along a tangent",
+            "detail": "For a=(1,0), the hinge has no ambient derivative at (1,3). Its restriction t ↦ (1,3+t) is constantly zero and is differentiable at t=0. The canary checks both facts at the same point, together with a separate smooth ambient point. Scalar canaries also check labels ±2 with feature 3, their kinks ±1/6, zero label/feature, and dimension zero.",
+            "math": "\\(h_{(1,0)}(1,3+t)=0,\\qquad\\partial h_{(1,0)}(1,3)=[0,-(1,0)].\\)",
+            "fallback": "Directional smoothness alone does not remove an ambient kink. Zero effective normal removes the kink everywhere."
           }
         ],
         "takeaway": "The library interpretation distinguishes a genuine real germ from a smooth total cast and identifies the gradient when a germ exists.",

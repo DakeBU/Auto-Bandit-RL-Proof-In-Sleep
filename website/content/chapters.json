@@ -651,7 +651,7 @@
       "status": "compiled",
       "summary": "Prove the singleton equivalence and gradient identity for an explicitly specified ambient real-germ interpretation; keep the source interpretation gaps visible.",
       "audience": "Readers of Orabona Theorem 2.22.",
-      "completion_definition": "Eleven theorems and one ambient-real-germ definition. Later source obligations, Chapter 2 and the whole book remain incomplete.",
+      "completion_definition": "Eleven theorems and one ambient-real-germ definition. Later source obligations, Chapter 2 and the whole book remain incomplete. Three additional derived theorems give exact differentiability criteria for the introductory absolute and hinge losses; five concrete canaries check their boundaries.",
       "completion_blockers": [
         "Later source obligations, Chapter 2 and the whole book remain incomplete.",
         "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage."
@@ -660,10 +660,12 @@
         "Keep local real values while differentiating extended-real functions.",
         "Derive domain interior from nonzero normal perturbation and a singleton.",
         "Use actual neighboring supports and compactness to produce a Frechet derivative.",
-        "Distinguish a smooth toReal cast from a genuine real germ, preserving required later results."
+        "Distinguish a smooth toReal cast from a genuine real germ, preserving required later results.",
+        "Locate absolute and hinge kinks, distinguish ambient from tangential differentiability, and include zero effective normals."
       ],
       "module_globs": [
-        "BanditRLProof/OnlineSubgradientDifferentiability.lean"
+        "BanditRLProof/OnlineSubgradientDifferentiability.lean",
+        "BanditRLProof/OnlineNonsmoothExamples.lean"
       ],
       "open_gaps": [
         "The source defines subgradients for proper functions, but Theorem 2.22 prints a wider codomain without reconciling that scope (G-T22-SCOPE). It does not define extended-valued differentiability in the inspected passage (G-T22-DIFF). The library therefore separately specifies a total support predicate and an ambient finite-real-germ interpretation; these are explicit interpretations, not definitions supplied by that passage. The eleven theorems use finite-dimensional real inner-product spaces; the germ definition itself omits finite dimension. No-bottom and ambient interior are derived in the terminal directions, while individual helpers retain their stated local-finiteness, Lipschitz, continuity and nonbottom-filter premises. The source gives no local proof; the construction below is the library proof. Later source obligations, Chapter 2 and the whole book remain incomplete."

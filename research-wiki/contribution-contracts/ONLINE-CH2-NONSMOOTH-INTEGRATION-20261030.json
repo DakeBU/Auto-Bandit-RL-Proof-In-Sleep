@@ -1,0 +1,164 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-NONSMOOTH-INTEGRATION-20261030",
+  "route": "online-learning / Chapter2 introductory nonsmooth losses",
+  "frontier_cell": "online-subgradient-differentiability",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona; Section2.2 opening paragraph, printed16/PDF28;21June2026; PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17. Two introductory examples, three derived library criteria.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate originalPR204 three derived criteria and five canaries; retain all487 original paths,65 overlapping source containers and their required open obligations with exact current continuations.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineNonsmoothExamples.lean",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json",
+    "website/scripts/build_site.py",
+    "website/scripts/check_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+    "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+    "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Accepted main shared convex-analysis declarations and pinned Mathlib absolute derivative; original146 distinct declaration identities re-read from current compiled environment."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.affine_convex",
+      "BanditRL.OnlineConvex.convexExtended_coe_iff",
+      "BanditRL.OnlineConvex.theorem_2_22",
+      "BanditRL.OnlineConvex.example_2_27",
+      "BanditRL.OnlineConvex.sourceDifferentiableAt_regular",
+      "not_differentiableAt_abs_zero"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+      "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+      "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff"
+    ],
+    "known_consumers": [
+      "The plain hinge criterion is an actual VALUE parent of the labelled criterion.",
+      "All three public results have concrete canary VALUE consumers; five canaries are not independent source proofs."
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Preserve original proofs and exact signatures; reuse existing norm/affine, hinge-support and real-germ foundations in the same project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch33-blind-decoder",
+    "source_reviewer": "independent-batch33-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Arbitrary shift, precise pointwise iff classifications, absorbed-label carrier, abstract finite-dimensional inner-product carrier, arbitrary-real label quantification, whole-carrier interpretation and global zero-normal characterization. Three derived criteria for two introductory loss families, with five concrete canaries. The stronger iff statements, arbitrary real centers/labels and abstract finite-dimensional carriers are explicit generalizations. Zero labels/features and dimension zero are included. Source statements and source gaps remain unchanged. Chapter2 and the whole book remain incomplete;65 overlapping source containers and154 historical bindings are not proof-completion denominators. No source repair is authorized."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Static real convex-analysis specialization; no certified cross-setting transport.",
+    "focus_targets": [
+      "online-subgradient-differentiability"
+    ],
+    "visual_review": "Independent local chapter/module/catalog/navigation reviewed at desktop and390px. Fresh-origin graph searches for all3 new theorems, module expansion and6teaching edges checked against actual VALUE edges. Evidence SHA256 4a7f6498ec2f7c5b66ac86cc8e20828f143a2dc638df0e674446a0319b4dbd2e. No transitive-proof or source-proof inference.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: preserve all current cards/notes and append3derived lessons,1source card,3proof steps and a same-point tangent worked example.",
+    "banditrlwiki": "updated: source/statement/compiler/spine packet at research-wiki/integrations/ONLINE-CH2-NONSMOOTH-INTEGRATION-20261030/",
+    "results_ledger": "no-change-with-reason: no chapter or global milestone completed.",
+    "roadmap": "no-change-with-reason: later main-text and forward obligations stay open.",
+    "website_surfaces": [
+      "Singleton and real-germ chapter reader",
+      "Three module declaration lessons",
+      "Shared declaration graph/search"
+    ]
+  },
+  "truth_boundary": "Three derived criteria for two introductory loss families, with five concrete canaries. The stronger iff statements, arbitrary real centers/labels and abstract finite-dimensional carriers are explicit generalizations. Zero labels/features and dimension zero are included. Source statements and source gaps remain unchanged. Chapter2 and the whole book remain incomplete;65 overlapping source containers and154 historical bindings are not proof-completion denominators. No source repair is authorized.",
+  "verification": {
+    "focused_checks": [
+      "Exact original3production and5canary signatures/bodies retained. Eight whole public type witnesses,156selected compiler nodes and10required VALUE pairs passed with standard-only axioms.",
+      "Combined BanditRLProof9106 and Tests9272 jobs passed; jobs include cached/replayed targets.",
+      "Owned test surfaces: Tests.lean imports the complete Tests/OnlineNonsmoothExamplesCanary.lean; five exact original canary signatures/bodies and current file hashes are retained in statement-map and compiled-dependencies. Test files are excluded from affected_files because the exact contributor checker defines that field as protected production surfaces only."
+    ],
+    "bandit_check": "Actual full harness passed on unchanged Lean inputs before builder/checker capacity changes. Final committed candidate harness remains pending.",
+    "site_build": "Passed on nine-file uncommitted candidate with prior actual Lean gate and identical Lean hashes.",
+    "site_check": "Build/check passed on nine-file uncommitted candidate; independent local rendered exposition accepted. Final committed candidate/site and public source links pending.",
+    "independent_review": "Distinct source/blind/body/reader, original conservation, bounded public continuation, local rendered exposition and exercised graph UI reviews accepted. Four historical artifact uses remain OPEN. Final committed candidate, contributor diff gate, public source links and CI/merge/live pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in immutable PR204 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "All original487paths/478blobs retained. Independently accepted public continuation maps65containers/154bindings/146names,8forward+1navigation and4OPEN artifact uses, with historical owners/statuses/failures preserved. Original3proofs/5canaries retained unchanged.",
+      "promoted_fragments": [
+        "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+        "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+        "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "absolute-translation-hinge-support-labelled-zero-normal"
+      ],
+      "expected_information_gain": "One existing proof route; distinct mandatory source, blind, body and conservation reviewers.",
+      "shared_verified_context_digest": "SourcePDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17;main 371ee234290b18715339d442a1e53d1dea333636"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Norm translation, complete support classification, then effective-normal substitution.",
+      "selection_reason": "No competing parallel proof-search routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "purified",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Independent bounded local review sha256 f95d002bd841fece61d85d8bbe816552d8d036c9429f48f420e3749937a8cdea; three new exact signatures, seven lessons/proof steps, source formula/boundaries, desktop/390px and catalog/navigation passed. GitHub source links and final committed candidate publication pending.",
+      "source_expansion_nodes": [
+        "Two introductory examples with five source gaps retained"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.shifted_absolute_convex_differentiable_iff",
+        "BanditRL.OnlineConvex.hinge_convex_differentiable_iff",
+        "BanditRL.OnlineConvex.labelled_hinge_convex_differentiable_iff"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
