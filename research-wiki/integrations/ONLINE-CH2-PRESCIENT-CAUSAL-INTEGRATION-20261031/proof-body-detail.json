@@ -1,0 +1,55 @@
+{
+  "status": "manual-body-reviewed-compiler-dependent-seal-pending",
+  "at": "2026-10-31T00:29:22.236149+00:00",
+  "fileBindingsWandV": {
+    "BanditRLProof/OnlinePrescientBregman.lean": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+    "Tests/OnlinePrescientBregmanCanary.lean": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+    "BanditRLProof.lean": "266402c3de4a04800a5cd79f80c4302058ad454bfab59812fd02d550326477f5",
+    "Tests.lean": "0d3656a5fe9fa3935758396bc5d6bb707539d095d9ba8490ebf9654fa80f7f3a"
+  },
+  "sourceReviewSHA256": "ef982224a17f8d63a2e9b94532158500de87d5ab8b40e4f8b474a0ebf8f9e58f",
+  "definitions": {
+    "advance": "Full literal choose branch and none branch inspected. Existential is feasible membership AND actual IsMinOn. No finite-value, positivity or interior check. No fallback point.",
+    "iterate": "Full recursive body inspected: unconditional initial some, Option bind on same previous state, current eta/loss data at t. No future data, hidden reset or invented successful state."
+  },
+  "lemmaProofs": {
+    "divergence_extension_eq": "interior membership gives neighborhood subset X; EqOn gives eventual equality; fderiv locality plus both point values gives identical D. No extra differentiability inserted.",
+    "advance_some_spec": "Unfold choice branch; successful some equality identifies Classical.choose witness and returns choose_spec, including membership separately.",
+    "advance_none_iff": "Both branch cases; existing witness rules out none and nonexistent witness exactly gives none.",
+    "iterate_prefix": "Natural induction; IH on shorter strict prefix then equality at last data index. Whole-function equality is preserved.",
+    "iterate_succ_some_spec": "Option.bind_eq_some_iff extracts exact predecessor and actual advance success. advance_some_spec supplies membership and full minimization, not just existence.",
+    "iterate_no_recovery": "Induction in offset; bind none remains none. No false mathematical attainment inference.",
+    "iterate_complete_of_step_attained": "Finite induction obtains actual reachable predecessor; hatt applied to that state, advance_none_iff rules out failure; case on selected Option obtains actual successor. Attainment is retained as explicit API input.",
+    "iterate_one_step": "Extract y,hy,pMembership,hm from exact hp; Option.some.inj of hy.symm.trans hx proves y=x. Substitute y then apply proximal_one_step_extended with same loss t, eta t, x,p, membership, both derivatives and actual hm. No assumption smuggling or arbitrary predecessor."
+  },
+  "fullCanaries": [
+    {
+      "name": "closed_strict_regularizer_missing_minimum",
+      "conjuncts": 14,
+      "proof": "Actual real finite f(z)=z globally supported by1; exp continuous sublevel closed, strictly convex and differentiable. D(exp,z,0)=exp z-1-z yields objective exp z-1. For any p<=0, p-1 feasible strictly decreases objective: direct contradiction to minimum. advance_none_iff creates actual none; iterate_no_recovery extends actual first failure. No invalid-interior substitute for nonattainment."
+    },
+    {
+      "name": "interior_extension_boundary_difference",
+      "conjuncts": 9,
+      "proof": "Agreement on nonnegative half-line; equality at interior base via extension lemma. Polynomial derivative computes Dpsi=(a-b)^2. Differentiability of phi at0 would imply abs differentiable after subtracting polynomial; contradiction. Actual fderiv-zero rule gives boundary6 versus4. Not a source-valid boundary divergence."
+    },
+    {
+      "name": "two_distinct_current_losses",
+      "conjuncts": 16,
+      "proof": "Uses prior complete canary components for first proper/support/minimum and ordered movement values. Produces second linear-loss global support including outside-V top case. First exact selected point0 proven by minimum and unique-minimum inequalities. Second objective gap factors as (z-1/2)^2*((z+1/2)^2/4+5/8); obtains actual feasible minimum via finitepart iff and uniqueness. Reachable-state hatt enumerates t=0,1; completeness plus successor spec identifies actual second point1/2. Prefix theorem used on exact first-two whole data functions. Universal bound combines two actual iterate_one_step applications at t=0 and1 with shared h1/h2, preserving both negative movements. Numeric final Eq.mp transports hb evaluated at u=1/2 using exact arithmetic value equalities."
+    },
+    {
+      "name": "boundary_outside_center_run",
+      "conjuncts": 9,
+      "proof": "Prior complete canary supplies proper/support/outside-domain/strict/minimum facts. Direct quadratic comparison proves uniqueness0; successful selected advance0 obtained by none/some case and actual minimum. Actual run1 then supplied to iterate_one_step from initial -1, with both derivatives. Numeric final Eq.mp transports that hb at u=1/2. No finite loss at initial -1 required."
+    }
+  ],
+  "manualAntiFakeConsumerCheck": "Numeric tails do not close by independent norm_num/linarith proof alone: Eq.mp proof argument is the bound instantiated at comparator. Compiled strong selected-term test pending. Shared older canary reuse is explicit and not counted as independent mathematical novelty.",
+  "blockingFindings": [],
+  "notApprovedYet": [
+    "Current imported bodies/signatures, axiom closure and direct dependencies",
+    "Independent strong term-consumption execution",
+    "BODY seal"
+  ],
+  "sourceBoundary": "Literal partial library recursion only; source X/interior validity, attainment, nonsmooth optimality gap, full same-run cumulative source routes and PURIFIED remain open."
+}

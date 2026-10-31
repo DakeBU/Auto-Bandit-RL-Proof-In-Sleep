@@ -1,0 +1,245 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-PRESCIENT-CAUSAL-INTEGRATION-20261031",
+  "route": "online-learning / Chapter2 prescient observation / partial current-whole-loss Bregman recursion",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona,21June2026; Chapter2 printed14/PDF26; Definitions2.18/2.20 printed16-17/PDF28-29; Definition6.4/Lemma6.7 printed63-64/PDF75-76; Algorithm15.8/Theorem15.30 printed265-266/PDF277-278. Derived library interfaces and literal partial definitions; PDF SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate original PR211 eight derived lemmas, two complete literal definitions and four complete canaries, with meaningful continuations for all611original paths and11ignored terminal files.",
+  "affected_files": [
+    "BanditRLProof/OnlinePrescientBregman.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/content/declaration-boundaries.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineBregman.divergence_extension_eq",
+    "BanditRL.OnlinePrescientBregman.advance",
+    "BanditRL.OnlinePrescientBregman.iterate",
+    "BanditRL.OnlinePrescientBregman.advance_some_spec",
+    "BanditRL.OnlinePrescientBregman.advance_none_iff",
+    "BanditRL.OnlinePrescientBregman.iterate_prefix",
+    "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+    "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+    "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+    "BanditRL.OnlinePrescientBregman.iterate_one_step"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current-main/process-memory/Mathlib/library retrieval recorded in research-wiki/integrations/ONLINE-CH2-PRESCIENT-CAUSAL-INTEGRATION-20261031/retrieval-process-memory.json."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineBregman.divergence",
+      "BanditRL.OnlineBregman.proximal_one_step_extended",
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.SourceSubdifferential",
+      "Filter.EventuallyEq.fderiv_eq",
+      "Classical.choose_spec",
+      "Option.bind_eq_some_iff"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineBregman.divergence_extension_eq",
+      "BanditRL.OnlinePrescientBregman.advance",
+      "BanditRL.OnlinePrescientBregman.iterate",
+      "BanditRL.OnlinePrescientBregman.advance_some_spec",
+      "BanditRL.OnlinePrescientBregman.advance_none_iff",
+      "BanditRL.OnlinePrescientBregman.iterate_prefix",
+      "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+      "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+      "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+      "BanditRL.OnlinePrescientBregman.iterate_one_step"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+      "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+      "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+      "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+      "BanditRL.OnlinePrescientBregman.iterate_one_step"
+    ],
+    "planned_consumers": [
+      "Source-valid X/interior generated-run characterization and same-run fixed/variable cumulative bounds; planned only."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Existing affine prescient projection and projected subgradient recursion do not supply arbitrary extended-real partial argmin recursion. New APIs expose actual states and minima to the accepted one-step producer; no foundational project or toolchain fork."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch38-source-blind-decoder",
+    "source_reviewer": "independent-batch38-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Eight derived lemmas and two literal partial definitions support the Chapter 2 prescient dependency. A successful partial state need not satisfy the source interior condition. Transport of the source X/interior regularity to a valid generated run, general attainment and interior preservation, and sharp same-run fixed/variable cumulative bounds including the fixed-step exercise remain open. The printed nonsmooth-optimality citation and stepsize-index discrepancy remain unresolved. All eight Chapter 2 forward containers remain open; its proof denominator is unknown. This is not full Algorithm 15.8, Theorem 15.30, chapter/book completion, or an approved source correction."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Within-setting representative locality and partial-state APIs do not certify transport across distinct feedback models.",
+    "focus_targets": [
+      "online-ogd"
+    ],
+    "visual_review": "Exact precommit chapter/module/catalog/graph and desktop/mobile rendered exposition independently accepted; full literal definitions and guarded source/Lean expansion retained. Direct compiler presence remains distinct from transitive proof topology. Final committed source links and live checks remain separate.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: all15original semantic operations,10notes,1sourcecard and exact complete equation-definition boundary on stable IDs.",
+    "banditrlwiki": "updated: research-wiki/integrations/ONLINE-CH2-PRESCIENT-CAUSAL-INTEGRATION-20261031 carries full original/source/definition/body/reader continuation.",
+    "results_ledger": "no-change-with-reason: no full-source performance or chapter acceptance.",
+    "roadmap": "no-change-with-reason:8requiredforwardcontainers and1historicalnavigation remainopen.",
+    "website_surfaces": [
+      "online-ogd source reader",
+      "OnlinePrescientBregman module/catalogue",
+      "compiled Lean graph",
+      "complete literal definitions"
+    ]
+  },
+  "truth_boundary": "Eight derived lemmas and two literal partial definitions support the Chapter 2 prescient dependency. A successful partial state need not satisfy the source interior condition. Transport of the source X/interior regularity to a valid generated run, general attainment and interior preservation, and sharp same-run fixed/variable cumulative bounds including the fixed-step exercise remain open. The printed nonsmooth-optimality citation and stepsize-index discrepancy remain unresolved. All eight Chapter 2 forward containers remain open; its proof denominator is unknown. This is not full Algorithm 15.8, Theorem 15.30, chapter/book completion, or an approved source correction.",
+  "verification": {
+    "focused_checks": [
+      "Focused3311cached-inclusive jobs passed;12whole publicVALUEs and14named interfaces including2definitions standard-only axioms;18requiredVALUEpairs;11independent strong-term controls; all48canaryconjuncts retained.",
+      "Complete owned Test module Tests/OnlinePrescientBregmanCanary.lean and its Tests.lean import remain preserved in whole-original continuation, exact source/test bindings and actual full Tests validation. They are outside the contributor checker protected/production classification, so affected_files lists only its six changed protected surfaces."
+    ],
+    "bandit_check": "Complete staged package combined root, Tests and full harness passed; exact committed-candidate gate remains mandatory.",
+    "site_build": "Requires actual current combined Lean gate before lean-verified generation.",
+    "site_check": "Corrected staged site build/check and independent desktop/mobile rendered Exposition accepted; committed source-link and live verification remain pending.",
+    "independent_review": "Distinct source-only topology, blind reconstruction, statement/binder/whole-definition/BODY, proof compression and corrected rendered Exposition accepted. Whole-original conservation conditionally accepted with explicit remaining committed/CI/main/live/lifecycle gates. See the portable integration evidence map."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in immutable PR211 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "pending",
+      "reason": "All611original paths and11ignoredterminal files retained. Final candidate continuation review pending;7inherited missing digests remainopen.",
+      "promoted_fragments": [
+        "BanditRL.OnlineBregman.divergence_extension_eq",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.iterate_prefix",
+        "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+        "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+        "BanditRL.OnlinePrescientBregman.iterate_one_step"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "literal-partial-current-loss-recursion-to-actual-minimum-to-existing-signed-proximal-comparison"
+      ],
+      "expected_information_gain": "One preserved proof route with mandatory distinct blind/source/BODY and whole-original conservation reviews.",
+      "shared_verified_context_digest": "PinnedPDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17;main de98daa596a84245d8ca0a4f871a2c0422dab6b3"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Classical feasible selection and Option recursion produce actual predecessors/minima; accepted extended-loss producer supplies signed comparison.",
+      "selection_reason": "No competing parallel proof-search routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "research-wiki/integrations/ONLINE-CH2-PRESCIENT-CAUSAL-INTEGRATION-20261031/rendered-exposition-review.json binds corrected desktop/mobile complete definitions and the independently reviewed guard-preserving source/Lean expansion. Post-integration PURIFIED status is not inferred.",
+      "source_expansion_nodes": [
+        "B38-A15-ARGMIN",
+        "B38-A15-ETA",
+        "B38-A15-INIT",
+        "B38-A15-PAY",
+        "B38-A15-RECEIVE",
+        "B38-BREGMAN",
+        "B38-BREGMAN-ASYMM",
+        "B38-CLOSED",
+        "B38-CVXSET",
+        "B38-GAP-FIXED",
+        "B38-GAP-INDEX",
+        "B38-GAP-OPT",
+        "B38-OMD-ATTAIN",
+        "B38-OMD-BOUNDARY",
+        "B38-OMD-INIT",
+        "B38-ORACLE",
+        "B38-PRESCIENT-OBS",
+        "B38-PROPER",
+        "B38-STRICT",
+        "B38-SUBDIFF",
+        "B38-SUPPORT",
+        "B38-SUPPORT-FINITE",
+        "B38-T1530-ASSUMPTIONS",
+        "B38-T1530-BREGMAN-STEP",
+        "B38-T1530-VI",
+        "B38-T28",
+        "B38-T68-CONTEXT",
+        "B38-T69-CONTEXT",
+        "B38-THREEPOINT"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence_extension_eq",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate.match_1",
+        "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+        "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+        "BanditRL.OnlinePrescientBregman.iterate_one_step",
+        "BanditRL.OnlinePrescientBregman.iterate_prefix",
+        "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+        "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+        "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+        "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+        "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+        "Classical.choose",
+        "Classical.choose_spec",
+        "Filter.EventuallyEq.fderiv_eq",
+        "Nat.recAux",
+        "Option.bind_eq_some_iff",
+        "Real.exp_lt_exp",
+        "fderiv_eq_deriv_mul",
+        "fderiv_zero_of_not_differentiableAt",
+        "not_differentiableAt_abs_zero",
+        "strictConvexOn_exp"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

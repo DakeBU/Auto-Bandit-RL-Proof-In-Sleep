@@ -1,0 +1,761 @@
+{
+  "sealedInterfaces": {
+    "at": "2026-10-31T00:15:52.530524+00:00",
+    "originalHead": "24de0231aa067f141251aac5c20deb58e448ea66",
+    "acceptedMain": "de98daa596a84245d8ca0a4f871a2c0422dab6b3",
+    "declarations": [
+      {
+        "id": "item_0",
+        "kind": "theorem",
+        "name": "divergence_extension_eq",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem divergence_extension_eq (X : Set E) (ψ φ : E → ℝ)\n    (hEq : EqOn ψ φ X) (a b : E) (ha : a ∈ X) (hb : b ∈ interior X) :\n    divergence ψ a b = divergence φ a b",
+        "signatureSHA256": "0b6c6af47f37ba4b605a205639e1e92e71a20b5623336dc168b131da9dffe114",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_1",
+        "kind": "def",
+        "name": "advance",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "def advance (V : Set E) (ψ : E → ℝ) (η : ℝ) (f : E → EReal) (x : E) : Option E := by\n  classical\n  exact if h : ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p\n    then some (Classical.choose h) else none",
+        "signatureSHA256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": true
+      },
+      {
+        "id": "item_2",
+        "kind": "def",
+        "name": "iterate",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "def iterate (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) : ℕ → Option E\n  | 0 => some x0\n  | t + 1 => (iterate V ψ η loss x0 t).bind (advance V ψ (η t) (loss t))",
+        "signatureSHA256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": true
+      },
+      {
+        "id": "item_3",
+        "kind": "theorem",
+        "name": "advance_some_spec",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem advance_some_spec (V : Set E) (ψ : E → ℝ) (η : ℝ)\n    (f : E → EReal) (x p : E) (h : advance V ψ η f x = some p) :\n    p ∈ V ∧ IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+        "signatureSHA256": "04707f6fd917092a6101f04d4feceee8af652ee7899a02046db134ecbcb19f92",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_4",
+        "kind": "theorem",
+        "name": "advance_none_iff",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem advance_none_iff (V : Set E) (ψ : E → ℝ) (η : ℝ)\n    (f : E → EReal) (x : E) :\n    advance V ψ η f x = none ↔ ¬ ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+        "signatureSHA256": "194634cf25e8b2b9bfc7b24e7b74515f42c192d0f47abb2fadf3c8c73460b7ab",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_5",
+        "kind": "theorem",
+        "name": "iterate_prefix",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem iterate_prefix (V : Set E) (ψ : E → ℝ) (η η' : ℕ → ℝ)\n    (loss loss' : ℕ → E → EReal) (x0 : E) (t : ℕ)\n    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :\n    iterate V ψ η loss x0 t = iterate V ψ η' loss' x0 t",
+        "signatureSHA256": "fc630db44a1cc20fa2577ac81bc3bb01db4f08c5ef1b979120a67bc3981c9c7f",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_6",
+        "kind": "theorem",
+        "name": "iterate_succ_some_spec",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem iterate_succ_some_spec (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 p : E) (t : ℕ)\n    (h : iterate V ψ η loss x0 (t + 1) = some p) :\n    ∃ x, iterate V ψ η loss x0 t = some x ∧ p ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+        "signatureSHA256": "c2ac106c46b35802b409724cb1f48cca2fd320275471f0a2b11628de252ffc7c",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_7",
+        "kind": "theorem",
+        "name": "iterate_no_recovery",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem iterate_no_recovery (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (t k : ℕ)\n    (h : iterate V ψ η loss x0 t = none) :\n    iterate V ψ η loss x0 (t + k) = none",
+        "signatureSHA256": "cfa46ffbefee85410349f15531f942b39508048988f53b98033836c67d870f17",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_8",
+        "kind": "theorem",
+        "name": "iterate_complete_of_step_attained",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+        "statement": "theorem iterate_complete_of_step_attained (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (T : ℕ)\n    (hatt : ∀ t < T, ∀ x, iterate V ψ η loss x0 t = some x →\n      ∃ p, p ∈ V ∧\n        IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    ∃ p, iterate V ψ η loss x0 T = some p",
+        "signatureSHA256": "e819d6be4957e0f6bead706d2a7882176ed1a48eaee18b5031837adc2a607ee4",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_9",
+        "kind": "theorem",
+        "name": "iterate_one_step",
+        "path": "BanditRLProof/OnlinePrescientBregman.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "statement": "theorem iterate_one_step (V : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 x p : E) (t : ℕ)\n    (hx : iterate V ψ η loss x0 t = some x)\n    (hp : iterate V ψ η loss x0 (t + 1) = some p)\n    (hη : 0 < η t) (hf : BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p) :\n    ∀ u ∈ V, η t * ((loss t p).toReal - (loss t u).toReal) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+        "signatureSHA256": "40fe2afe44a911b8d5dfe36c88b604de9290bf5208b6b2f1aa5d04c7f1d9ed54",
+        "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_10",
+        "kind": "theorem",
+        "name": "closed_strict_regularizer_missing_minimum",
+        "path": "Tests/OnlinePrescientBregmanCanary.lean",
+        "context": "",
+        "statement": "theorem closed_strict_regularizer_missing_minimum :\n    let V : Set ℝ := Iic 0\n    let f : ℝ → EReal := fun z => (z : EReal)\n    let ψ : ℝ → ℝ := Real.exp\n    V.Nonempty ∧ IsClosed V ∧ Convex ℝ V ∧ (0 : ℝ) ∈ V ∧\n      SourceProper f ∧\n      (∀ z : ℝ, (SourceSubdifferential f z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      (∀ z : ℝ, DifferentiableAt ℝ ψ z) ∧\n      (0 : ℝ) ∈ interior (univ : Set ℝ) ∧\n      (∀ z : ℝ, f z + ((divergence ψ z 0 : ℝ) : EReal) = ((Real.exp z - 1 : ℝ) : EReal)) ∧\n      (¬ ∃ p, p ∈ V ∧ IsMinOn (fun z => f z + ((divergence ψ z 0 : ℝ) : EReal)) V p) ∧\n      advance V ψ 1 f 0 = none ∧\n      (∀ k : ℕ, iterate V ψ (fun _ => 1) (fun _ => f) 0 (k + 1) = none)",
+        "signatureSHA256": "95c624944b64cd81b2c71d4f878de3402f7cc8172cc7192472de39f6432aa6ee",
+        "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_11",
+        "kind": "theorem",
+        "name": "interior_extension_boundary_difference",
+        "path": "Tests/OnlinePrescientBregmanCanary.lean",
+        "context": "",
+        "statement": "theorem interior_extension_boundary_difference :\n    let X : Set ℝ := Ici 0\n    let ψ : ℝ → ℝ := fun z => z ^ 2 + z\n    let φ : ℝ → ℝ := fun z => z ^ 2 + |z|\n    EqOn ψ φ X ∧ ψ (-1) ≠ φ (-1) ∧ (1 : ℝ) ∈ interior X ∧ (2 : ℝ) ∈ X ∧\n      divergence ψ 2 1 = divergence φ 2 1 ∧ divergence ψ 2 1 = 1 ∧\n      divergence ψ 2 0 = 4 ∧ divergence φ 2 0 = 6 ∧ ¬ DifferentiableAt ℝ φ 0",
+        "signatureSHA256": "5ae6c60b04b6bd86276aec0b910950f060754ea43aff96e5bbffc7c3a8069691",
+        "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_12",
+        "kind": "theorem",
+        "name": "two_distinct_current_losses",
+        "path": "Tests/OnlinePrescientBregmanCanary.lean",
+        "context": "",
+        "statement": "theorem two_distinct_current_losses :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      f0 2 = ⊤ ∧ f1 2 = ⊤ ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 0 = some (1 / 2) ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 1 = some 0 ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 2 = some (1 / 2) ∧\n      (∀ (η' : ℕ → ℝ) (loss' : ℕ → ℝ → EReal),\n        η' 0 = 1 → η' 1 = 1 → loss' 0 = f0 → loss' 1 = f1 →\n        iterate V ψ η' loss' (1 / 2) 2 = some (1 / 2)) ∧\n      divergence ψ 0 (1 / 2) = 11 / 64 ∧\n      divergence ψ (1 / 2) 0 = 9 / 64 ∧\n      (∀ u ∈ V, ((f0 0).toReal - (f0 u).toReal) +\n        ((f1 (1 / 2)).toReal - (f1 u).toReal) ≤\n        divergence ψ u (1 / 2) - divergence ψ u (1 / 2) -\n          divergence ψ 0 (1 / 2) - divergence ψ (1 / 2) 0) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+        "signatureSHA256": "173b76076098d3a8a2175ddc1713fc4fcecadb9aac6508cfbbe3590967500d92",
+        "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+        "wholeDefinitionIncluded": false
+      },
+      {
+        "id": "item_13",
+        "kind": "theorem",
+        "name": "boundary_outside_center_run",
+        "path": "Tests/OnlinePrescientBregmanCanary.lean",
+        "context": "",
+        "statement": "theorem boundary_outside_center_run :\n    let V : Set ℝ := Icc 0 1\n    let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤\n    let ψ : ℝ → ℝ := fun z => z ^ 2 / 2\n    SourceProper f ∧\n      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧\n      StrictConvexOn ℝ univ ψ ∧ f (-1) = ⊤ ∧ (-1 : ℝ) ∉ V ∧\n      iterate V ψ (fun _ => 1) (fun _ => f) (-1) 1 = some 0 ∧\n      divergence ψ 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+        "signatureSHA256": "d0dfc7500ddd6f1bae8630e832b1e095d1a6f92e2607776a924d03ae8d113c59",
+        "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+        "wholeDefinitionIncluded": false
+      }
+    ],
+    "blindPacketSHA256": "a303ff5d4c63cf79bbf870dc1f27379eb7e204208d4e9cb7b317ad3108eef18f",
+    "sourceFacingSignaturesFrozenBeforePort": true,
+    "semanticReview": "pending",
+    "binderAudit": "pending-independent-review",
+    "definitionAudit": "pending-independent-review; complete literal definitions sealed",
+    "productionEdited": false,
+    "statementChangeAllowedWithoutSuccessorSeal": false
+  },
+  "originalNativeSealChecks": {
+    "neutralSeal": [
+      {
+        "name": "divergence_extension_eq",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "0b6c6af47f37ba4b605a205639e1e92e71a20b5623336dc168b131da9dffe114",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "advance",
+        "kind": "def",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7",
+        "wholeDefinitionIncluded": true,
+        "exactTextFound": true
+      },
+      {
+        "name": "iterate",
+        "kind": "def",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2",
+        "wholeDefinitionIncluded": true,
+        "exactTextFound": true
+      },
+      {
+        "name": "advance_some_spec",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "04707f6fd917092a6101f04d4feceee8af652ee7899a02046db134ecbcb19f92",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "advance_none_iff",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "194634cf25e8b2b9bfc7b24e7b74515f42c192d0f47abb2fadf3c8c73460b7ab",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "iterate_prefix",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "fc630db44a1cc20fa2577ac81bc3bb01db4f08c5ef1b979120a67bc3981c9c7f",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "iterate_succ_some_spec",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "c2ac106c46b35802b409724cb1f48cca2fd320275471f0a2b11628de252ffc7c",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "iterate_no_recovery",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "cfa46ffbefee85410349f15531f942b39508048988f53b98033836c67d870f17",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "iterate_complete_of_step_attained",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "e819d6be4957e0f6bead706d2a7882176ed1a48eaee18b5031837adc2a607ee4",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "iterate_one_step",
+        "kind": "theorem",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "signatureSHA256": "40fe2afe44a911b8d5dfe36c88b604de9290bf5208b6b2f1aa5d04c7f1d9ed54",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "closed_strict_regularizer_missing_minimum",
+        "kind": "theorem",
+        "file": "Tests/OnlinePrescientBregmanCanary.lean",
+        "signatureSHA256": "95c624944b64cd81b2c71d4f878de3402f7cc8172cc7192472de39f6432aa6ee",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "interior_extension_boundary_difference",
+        "kind": "theorem",
+        "file": "Tests/OnlinePrescientBregmanCanary.lean",
+        "signatureSHA256": "5ae6c60b04b6bd86276aec0b910950f060754ea43aff96e5bbffc7c3a8069691",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "two_distinct_current_losses",
+        "kind": "theorem",
+        "file": "Tests/OnlinePrescientBregmanCanary.lean",
+        "signatureSHA256": "173b76076098d3a8a2175ddc1713fc4fcecadb9aac6508cfbbe3590967500d92",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      },
+      {
+        "name": "boundary_outside_center_run",
+        "kind": "theorem",
+        "file": "Tests/OnlinePrescientBregmanCanary.lean",
+        "signatureSHA256": "d0dfc7500ddd6f1bae8630e832b1e095d1a6f92e2607776a924d03ae8d113c59",
+        "wholeDefinitionIncluded": false,
+        "exactTextFound": true
+      }
+    ],
+    "historicalNormalizedHeaders": [
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlineBregman.divergence_extension_eq",
+        "statement_hash": "989325c00a78f2f6c2b2e186c6cbdfa9132100d252807194d03644d67a96f02a",
+        "exactHeaderSHA256": "0b6c6af47f37ba4b605a205639e1e92e71a20b5623336dc168b131da9dffe114",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "statement_hash": "6c5282eda3994fc5b335f501e3792a16175154574ee3a3edee72e96402c7bd42",
+        "exactHeaderSHA256": "04707f6fd917092a6101f04d4feceee8af652ee7899a02046db134ecbcb19f92",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "statement_hash": "765edcdc571a725c4ba75bada3ed1e969fb8f427067255f842a96d58e623fbf1",
+        "exactHeaderSHA256": "194634cf25e8b2b9bfc7b24e7b74515f42c192d0f47abb2fadf3c8c73460b7ab",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_prefix",
+        "statement_hash": "7d22593e344ce1ad3809ab9edc8cd653e74813e5edc855b42a85a185d475e931",
+        "exactHeaderSHA256": "fc630db44a1cc20fa2577ac81bc3bb01db4f08c5ef1b979120a67bc3981c9c7f",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+        "statement_hash": "6b8dcca367376affe2ee91bb44ec9fc3810d5f4af2d08402b0a582a9bd3ffb78",
+        "exactHeaderSHA256": "c2ac106c46b35802b409724cb1f48cca2fd320275471f0a2b11628de252ffc7c",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+        "statement_hash": "69e7a057bf2bca85cc0b62417dfebb48a0af3d451ea39cfc61c500e477e4ec7d",
+        "exactHeaderSHA256": "cfa46ffbefee85410349f15531f942b39508048988f53b98033836c67d870f17",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+        "statement_hash": "46e97b3a873699bef9cc89328b2658f956ebf58688a97a21c990df8e10843db5",
+        "exactHeaderSHA256": "e819d6be4957e0f6bead706d2a7882176ed1a48eaee18b5031837adc2a607ee4",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+        "statement_hash": "d58f337a831832c0b05ab8d552f67f0f452b9c2aa4461afa04746ca9f70c2717",
+        "exactHeaderSHA256": "40fe2afe44a911b8d5dfe36c88b604de9290bf5208b6b2f1aa5d04c7f1d9ed54",
+        "verifiedInOriginalFile": "BanditRLProof/OnlinePrescientBregman.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/canary-stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+        "statement_hash": "f6ad13f4af679faec84aefc6346f2a4c1357ff3cc137ccb793782c6a5e4d9191",
+        "exactHeaderSHA256": "173b76076098d3a8a2175ddc1713fc4fcecadb9aac6508cfbbe3590967500d92",
+        "verifiedInOriginalFile": "Tests/OnlinePrescientBregmanCanary.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/canary-stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+        "statement_hash": "eeceb38004480d9dd5001ce7d6000e63f12df4053304a30ab0f19c65545096cb",
+        "exactHeaderSHA256": "d0dfc7500ddd6f1bae8630e832b1e095d1a6f92e2607776a924d03ae8d113c59",
+        "verifiedInOriginalFile": "Tests/OnlinePrescientBregmanCanary.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/canary-stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+        "statement_hash": "3da2c54f309f25fcb22564997fe86bac371dd7565c1031c5ffec09b08b55126b",
+        "exactHeaderSHA256": "95c624944b64cd81b2c71d4f878de3402f7cc8172cc7192472de39f6432aa6ee",
+        "verifiedInOriginalFile": "Tests/OnlinePrescientBregmanCanary.lean"
+      },
+      {
+        "contract": "docs/contracts/online-ch2-prescient-causal-v1/canary-stabilized-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+        "statement_hash": "5e1981ce7d3fb7b9408c2854bee2ac7dd543c2076edb0f89fd5ee8aade391a27",
+        "exactHeaderSHA256": "5ae6c60b04b6bd86276aec0b910950f060754ea43aff96e5bbffc7c3a8069691",
+        "verifiedInOriginalFile": "Tests/OnlinePrescientBregmanCanary.lean"
+      }
+    ],
+    "iterateCompleteSourceBlock": {
+      "full_name": "BanditRL.OnlinePrescientBregman.iterate",
+      "file": "BanditRLProof/OnlinePrescientBregman.lean",
+      "file_sha256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "start_line": 33,
+      "end_line": 36,
+      "block_LF_sha256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2",
+      "reason": "Reviewed complete frozen equation-style definition; source-qualified RAW file and full LF block pins exclude the next theorem without changing Lean."
+    },
+    "wholeDefinitionsRetained": true,
+    "definitionSemanticApproval": false,
+    "boundary": "Exact byte/header checks only; eight derived proofs, two definitions and four full canaries remain subject to current independent source/definition/BODY review."
+  },
+  "currentSourceReview": {
+    "schema": "abrl-independent-preport-source-review-v1",
+    "batch": 38,
+    "reviewer": "/root/batch37_source_reviewer",
+    "createdAt": "2026-10-31T00:26:35.629979+00:00",
+    "verdict": "accepted-with-explicit-delta",
+    "boundedPreportSemanticGateAccepted": true,
+    "scope": "Two complete literal library definitions, eight production lemma interfaces, four complete canary propositions; source-only topology independently sealed first.",
+    "phaseOrder": {
+      "topologySealedBeforeBatch38LeanOrBlindReview": true,
+      "topologyReviewSHA256": "4cd12fe00ae92514cf487bb35800e301ba0d77a5a072e7bef2bfd831fae2267c",
+      "sourceOnlyExtractorPrivateRationaleRead": false,
+      "historicalReviewVerdictsUsed": false,
+      "originalTwoModulesReadOnlyAfterTopologySeal": true
+    },
+    "inputBindings": {
+      "batch38-preport-statement-seal-v1.json": "a7c1d9a3a7adbfbc31f2be9e3592c3b8fe8d273da39e7a2f46ca57ab78546f55",
+      "batch38-intake-v1/supporting-definitions.json": "fc3cd8883f42cacef238f51139f8037c48347a668fb186a2dc7dd00260584973",
+      "batch38-blind-input-v1/packet.json": "a303ff5d4c63cf79bbf870dc1f27379eb7e204208d4e9cb7b317ad3108eef18f",
+      "batch38-blind-review-v1/receipt.json": "56d08b152c6bf77ce4684ee8d8d720c63161f04ec8e9a13a56f6984042b26722",
+      "batch38-blind-review-v1/reconstruction.md": "3c54b6ed236450a2d375e7a6305194922e9f5b6dfa4a7eb1dd83bf14ffdcf99a",
+      "batch38-blind-review-v1/slot-results.json": "cbeb779643de460882acae493eef11a5e00fbc5f454cb10b6f67141f61de1461",
+      "batch38-source-extraction-v1/receipt.json": "247372850cb7d85aa3d87ad6fec05f9169c2f9cff12d990500576d0646ca1261",
+      "batch38-source-extraction-v1/source-contract.md": "f4d2a6069bbb2e1c6c7101d35c57c551fe8f7f4d2bd910e7300bef9bcd439ea6",
+      "batch38-source-extraction-v1/coverage.json": "16d4209ca3f0075a311c8c31395e475f9c01da05972980cb22e7df326123b46a",
+      "batch38-source-extraction-v1/source-graph.json": "2401741cca9c65f5d81ac6fcc95e82c50faf822996de80596b8ea841c8a8bddf"
+    },
+    "originalModuleBindings": {
+      "BanditRLProof/OnlinePrescientBregman.lean": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "Tests/OnlinePrescientBregmanCanary.lean": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509"
+    },
+    "reviewArtifacts": {
+      "binder-definition-review.json": "cd6ad34af2914fc096971b6bad6b7d30d3721f820ee4b3c326652799567e710a",
+      "exact-interface-bindings.json": "3ac11c3453df422a9c9b01924566a63203819ff4e5985ea18bd84c542d278fa9",
+      "raw-source-review-pages.json": "91eee75de8ddee89ea59a68ba5552f90c3a3cb99e83b32c8106d0968c4f06c8e",
+      "seal-semantic-review.py": "09a5cca2dc8926f6405862c234719c0b24b02b88f8fcf51d54276cfd9c10116b",
+      "semantic-slot-review.json": "34a02e6e871851119b2ef7670b5c593aa0ef6d38cceb5aaad3a01c218fa188db",
+      "topology-review.json": "4cd12fe00ae92514cf487bb35800e301ba0d77a5a072e7bef2bfd831fae2267c"
+    },
+    "reviewedCounts": {
+      "literalDefinitions": 2,
+      "productionLemmas": 8,
+      "fullCanaries": 4,
+      "canaryConjuncts": [
+        14,
+        9,
+        16,
+        9
+      ],
+      "totalConjuncts": 48,
+      "sourceNodes": 50,
+      "sourceEdges": 18,
+      "sourceCoverageItems": 96
+    },
+    "blockingFindings": [],
+    "requiredPublishedDelta": [
+      "Literal library partial selector/recursion, not characterized source Algorithm15.8. Generic success includes infinite EReal minima and does not check source interior validity.",
+      "Classical arbitrary choice and current whole-loss prefix dependence are not an executable optimizer, measurable selector or output-before-loss nonanticipativity.",
+      "Conditional reachable-state attainment remains an API premise, not a theorem establishing source attainment.",
+      "Extension equality holds at interior bases; boundary total-fderiv values are not source Bregman values.",
+      "Derived one-step applies to actual consecutive same-run states under positive eta, proper global supports and both ambient derivatives. Source X/interior-to-valid-run bridge remains open."
+    ],
+    "remainingOpen": [
+      "B38-GAP-OPT nonsmooth optimality citation gap",
+      "B38-GAP-INDEX eta_(T+1) indexing",
+      "B38-GAP-FIXED omitted fixed-rate source proof",
+      "Source optimizer attainment and interior preservation",
+      "Source-domain ambient-extension valid-run characterization",
+      "Generic same-run fixed and variable cumulative telescopes",
+      "Source erratum approval",
+      "Chapter and full-book completion",
+      "BODY/compiler/axiom/dependency/term-consumption checks",
+      "Publication/rendered/merge/PURIFIED gates"
+    ],
+    "noExcessForClaimedSourceAnchor": true,
+    "fullSourceAlgorithmAccepted": false,
+    "fullSourceTheoremAccepted": false,
+    "sourceRepairApproved": false,
+    "bodyApproved": false,
+    "compilerRun": false,
+    "publicationApproved": false,
+    "mergeApproved": false,
+    "purified": false,
+    "productionMutated": false,
+    "remoteMutated": false
+  },
+  "binderDefinitionAudit": {
+    "schema": "abrl-independent-binder-definition-audit-v1",
+    "classificationPolicy": "SOURCE/STANDING/TYPING/RULED/EXCESS classify source-facing one-step inputs. API_CONDITION identifies explicit hypotheses of separately claimed canonical library contracts; it is not an exception that licenses EXCESS in a claimed source Anchor. No numbered source theorem/algorithm is claimed here.",
+    "typing": [
+      {
+        "items": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "context": "E Type*, NormedAddCommGroup E, NormedSpace Real E",
+        "classification": "TYPING",
+        "note": "Broader normed carrier than finite Euclidean source; no CompleteSpace hidden."
+      },
+      {
+        "items": [
+          9
+        ],
+        "context": "E Type*, NormedAddCommGroup E, InnerProductSpace Real E, CompleteSpace E",
+        "classification": "TYPING",
+        "note": "Exact inherited complete inner-product context preserved. Completeness implicit for source finite Euclidean carrier; explicit in broader derived API."
+      },
+      {
+        "items": [
+          10,
+          11,
+          12,
+          13
+        ],
+        "context": "Concrete Real; no generic section variables",
+        "classification": "TYPING"
+      }
+    ],
+    "logicalInputs": [
+      {
+        "item": 0,
+        "binder": "hEq",
+        "expandedLogicalInput": "forall z, z in X -> psi z = phi z",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Representation-compatibility input for extension-locality API; not an author theorem hypothesis."
+      },
+      {
+        "item": 0,
+        "binder": "ha",
+        "expandedLogicalInput": "a in X",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Required value agreement at first argument; source-domain guard also matches first carrier of D6.4."
+      },
+      {
+        "item": 0,
+        "binder": "hb",
+        "expandedLogicalInput": "b in interior X",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Required neighborhood agreement; source reference-domain guard matches D6.4."
+      },
+      {
+        "item": 3,
+        "binder": "h",
+        "expandedLogicalInput": "advance V psi eta f x = some p",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Successful chosen value, not merely existence; recursively expands literal advance."
+      },
+      {
+        "item": 5,
+        "binder": "hEta",
+        "expandedLogicalInput": "forall s, s<t -> eta s = eta-prime s",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Exact data-prefix comparison."
+      },
+      {
+        "item": 5,
+        "binder": "hLoss",
+        "expandedLogicalInput": "forall s, s<t -> loss s = loss-prime s, equivalently every ambient point equality",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Whole-function prefix equality, not observed-value equality."
+      },
+      {
+        "item": 6,
+        "binder": "h",
+        "expandedLogicalInput": "iterate(...,t+1)=some p",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Actual same recursion successor success."
+      },
+      {
+        "item": 7,
+        "binder": "h",
+        "expandedLogicalInput": "iterate(...,t)=none",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Actual recurrence failure state."
+      },
+      {
+        "item": 8,
+        "binder": "hatt",
+        "expandedLogicalInput": "forall t<T, forall x, A(t)=some x -> exists p, p in V AND forall z in V, Q_t,x(p)<=Q_t,x(z)",
+        "classification": "API_CONDITION",
+        "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+        "justification": "Conditional reachable-state attainment explicitly assumed by this library completeness implication. It is not source-proved and cannot close Algorithm15.8 attainment."
+      },
+      {
+        "item": 9,
+        "binder": "hV",
+        "expandedLogicalInput": "forall a,b in V, forall alpha,beta>=0 with alpha+beta=1, alpha*a+beta*b in V",
+        "classification": "SOURCE",
+        "alsoAPICondition": true,
+        "justification": "Source convex feasible set; API uses standard Convex."
+      },
+      {
+        "item": 9,
+        "binder": "hx",
+        "expandedLogicalInput": "A(t)=some x",
+        "classification": "STANDING",
+        "alsoAPICondition": true,
+        "justification": "Actual predecessor of this chosen library run, corresponding only conditionally to source reference state."
+      },
+      {
+        "item": 9,
+        "binder": "hp",
+        "expandedLogicalInput": "A(t+1)=some p",
+        "classification": "STANDING",
+        "alsoAPICondition": true,
+        "justification": "Actual successor of SAME run; expands to feasible global minimizer based at same predecessor. No optimization conclusion independently assumed as a convenience result."
+      },
+      {
+        "item": 9,
+        "binder": "hEta",
+        "expandedLogicalInput": "0<eta t",
+        "classification": "SOURCE",
+        "alsoAPICondition": true,
+        "justification": "Positive current source stepsize; no monotonicity input for isolated step."
+      },
+      {
+        "item": 9,
+        "binder": "hf.noBottom",
+        "expandedLogicalInput": "forall y, loss t y != bottom",
+        "classification": "SOURCE",
+        "alsoAPICondition": true,
+        "justification": "Source loss carrier excludes minus infinity globally."
+      },
+      {
+        "item": 9,
+        "binder": "hf.finiteWitness",
+        "expandedLogicalInput": "exists y, exists r:Real, loss t y=coe r",
+        "classification": "STANDING",
+        "alsoAPICondition": true,
+        "justification": "Properness from nonempty source V and finite losses there; exact SourceProper part, not global finiteness."
+      },
+      {
+        "item": 9,
+        "binder": "hs",
+        "expandedLogicalInput": "forall z in V, exists g:E, forall y:E, loss t z + coe(inner g (y-z)) <= loss t y",
+        "classification": "SOURCE",
+        "alsoAPICondition": true,
+        "justification": "Subdifferentiability on V with GLOBAL ambient support comparisons; not local subgradient or differentiability."
+      },
+      {
+        "item": 9,
+        "binder": "hdx",
+        "expandedLogicalInput": "exists continuous real-linear L, HasFDerivAt psi L x",
+        "classification": "STANDING",
+        "alsoAPICondition": true,
+        "justification": "Ambient derivative at actual predecessor. Corresponds to source interior differentiability only after a valid X representation/guard; not silently inferred here."
+      },
+      {
+        "item": 9,
+        "binder": "hdp",
+        "expandedLogicalInput": "exists continuous real-linear L, HasFDerivAt psi L p",
+        "classification": "STANDING",
+        "alsoAPICondition": true,
+        "justification": "Separate ambient derivative at actual successor; same source-validity qualification."
+      }
+    ],
+    "noLogicalHypothesisItems": [
+      1,
+      2,
+      4,
+      10,
+      11,
+      12,
+      13
+    ],
+    "expandedProjectDefinitions": [
+      {
+        "original": "SourceProper",
+        "path": "BanditRLProof/OnlineClosedProper.lean",
+        "definition": "def SourceProper (f : E → EReal) : Prop :=\n  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)",
+        "sourceSHA256": "9dc0594237ed9193c7a376ae4df30c157cb60a38c3048097448ab2a28dd99c36"
+      },
+      {
+        "original": "SourceClosed",
+        "path": "BanditRLProof/OnlineClosedProper.lean",
+        "definition": "def SourceClosed (f : E → EReal) : Prop :=\n  ∀ r : ℝ, IsClosed {x | f x ≤ (r : EReal)}",
+        "sourceSHA256": "9dc0594237ed9193c7a376ae4df30c157cb60a38c3048097448ab2a28dd99c36"
+      },
+      {
+        "original": "SourceSubdifferential",
+        "path": "BanditRLProof/OnlineSubgradientBasic.lean",
+        "definition": "def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=\n  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}",
+        "sourceSHA256": "ca1d08447dcb2a25619f8db8828970bee4d23427cc3f9c74c67e80cbc0289d70"
+      },
+      {
+        "original": "divergence",
+        "path": "BanditRLProof/OnlineBregmanProximal.lean",
+        "definition": "def divergence (ψ : E → ℝ) (x y : E) : ℝ :=\n  ψ x - ψ y - fderiv ℝ ψ y (x - y)",
+        "sourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+      }
+    ],
+    "standardExpansionChecks": {
+      "IsMinOn": "forall z in V, Q p <= Q z; does not contain p in V",
+      "EqOn": "forall z in X, psi z=phi z",
+      "Set.Nonempty": "exists member",
+      "DifferentiableAt": "existence of ambient Frechet derivative, not within-set derivative",
+      "Convex": "closed under nonnegative normalized real binary combinations",
+      "SourceClosed": "every REAL sublevel set closed, no convexity/properness",
+      "StrictConvexOn": "convex carrier and strict mixture inequality for distinct endpoints and positive normalized weights; only concrete conclusions in these canaries",
+      "Option.bind": "none propagates; some x invokes supplied step",
+      "EReal.toReal": "both infinities map to zero; finite-domain justification needed before interpreting as real source loss"
+    },
+    "literalDefinitions": [
+      {
+        "name": "advance",
+        "kind": "literal",
+        "wholeBodyMatched": true,
+        "wholeCarrierVerdict": "accepted",
+        "behavior": "Classical decision and choose for feasible attained EReal minimum; else none. No fallback point, no interior filter, no finite-value or eta-positive requirement. This is exactly the advertised library partial selector on all inputs.",
+        "notCharacterizedSourceObject": true,
+        "sourceDelta": "Actual source update restricted to valid X/interior/finite loss/positive eta runs remains separate. Infinite-valued some and outside-domain use must not count as source execution."
+      },
+      {
+        "name": "iterate",
+        "kind": "literal",
+        "wholeBodyMatched": true,
+        "wholeCarrierVerdict": "accepted",
+        "behavior": "Unconditional some x0 at zero, successor bind uses current whole loss and eta, failure absorption. All inputs have Option-valued denotation.",
+        "notCharacterizedSourceObject": true,
+        "sourceDelta": "No X/interior guard and no all-round attainment. Partial library trajectory does not constitute total source algorithm or source-level characterization/uniqueness."
+      }
+    ],
+    "adversarialCases": [
+      {
+        "input": "V empty",
+        "result": "advance none, despite vacuous IsMinOn comparisons; A(0)=some x0 still."
+      },
+      {
+        "input": "Nonempty V with f identically top",
+        "result": "some feasible minimizer possible/required by literal existence test; no finite minimum guaranteed."
+      },
+      {
+        "input": "Feasible attained bottom",
+        "result": "May be selected; generic definitions do not require SourceProper."
+      },
+      {
+        "input": "eta=0 or eta<0",
+        "result": "Definition and generic lemmas remain literal; item9 separately excludes these by positivity."
+      },
+      {
+        "input": "Boundary reference with nondifferentiable extension",
+        "result": "Selector still uses total fderiv formula; none does not diagnose invalid source reference."
+      },
+      {
+        "input": "T=0",
+        "result": "Conditional completeness holds without x0 feasibility/interior."
+      },
+      {
+        "input": "Only visited values of losses match",
+        "result": "Prefix theorem cannot be invoked; requires whole-function equality below t."
+      }
+    ],
+    "sourceAnchorExcessInputs": [],
+    "approvedSourceCorrections": [],
+    "blockingFindings": [],
+    "proofBodiesApproved": false,
+    "compiledSignatureOrAxiomApproval": false
+  },
+  "compiledEvidence": "batch38-compiled-probes-v1/receipt.json",
+  "bodyReviewPending": false,
+  "statementOrDefinitionMutation": false,
+  "bodyReview": "proof-body-review.json"
+}

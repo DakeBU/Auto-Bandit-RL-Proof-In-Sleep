@@ -1,0 +1,931 @@
+{
+  "schema": "abrl-source-lean-reader-expansion-v1",
+  "batch": 38,
+  "sourceGraphSHA256": "2401741cca9c65f5d81ac6fcc95e82c50faf822996de80596b8ea841c8a8bddf",
+  "compiledGraphSHA256": "94fe88d2d2b834d53b951dc68518b0cd664326404087057b26bebcb40c6e2f86",
+  "bodyReceiptSHA256": "385508cc393977ea442cf5fb90d08ed72d0cf1488fb1216e1f23c1f65de5576e",
+  "sourceExpansionNodeIDs": [
+    "B38-A15-ARGMIN",
+    "B38-A15-ETA",
+    "B38-A15-INIT",
+    "B38-A15-PAY",
+    "B38-A15-RECEIVE",
+    "B38-BREGMAN",
+    "B38-BREGMAN-ASYMM",
+    "B38-CLOSED",
+    "B38-CVXSET",
+    "B38-GAP-FIXED",
+    "B38-GAP-INDEX",
+    "B38-GAP-OPT",
+    "B38-OMD-ATTAIN",
+    "B38-OMD-BOUNDARY",
+    "B38-OMD-INIT",
+    "B38-ORACLE",
+    "B38-PRESCIENT-OBS",
+    "B38-PROPER",
+    "B38-STRICT",
+    "B38-SUBDIFF",
+    "B38-SUPPORT",
+    "B38-SUPPORT-FINITE",
+    "B38-T1530-ASSUMPTIONS",
+    "B38-T1530-BREGMAN-STEP",
+    "B38-T1530-VI",
+    "B38-T28",
+    "B38-T68-CONTEXT",
+    "B38-T69-CONTEXT",
+    "B38-THREEPOINT"
+  ],
+  "leanExpansionNodeNames": [
+    "BanditRL.OnlineBregman.divergence",
+    "BanditRL.OnlineBregman.divergence_extension_eq",
+    "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+    "BanditRL.OnlineBregman.proximal_one_step_extended",
+    "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+    "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+    "BanditRL.OnlinePrescientBregman.advance",
+    "BanditRL.OnlinePrescientBregman.advance_none_iff",
+    "BanditRL.OnlinePrescientBregman.advance_some_spec",
+    "BanditRL.OnlinePrescientBregman.iterate",
+    "BanditRL.OnlinePrescientBregman.iterate.match_1",
+    "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+    "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+    "BanditRL.OnlinePrescientBregman.iterate_one_step",
+    "BanditRL.OnlinePrescientBregman.iterate_prefix",
+    "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+    "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+    "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+    "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+    "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+    "Classical.choose",
+    "Classical.choose_spec",
+    "Filter.EventuallyEq.fderiv_eq",
+    "Nat.recAux",
+    "Option.bind_eq_some_iff",
+    "Real.exp_lt_exp",
+    "fderiv_eq_deriv_mul",
+    "fderiv_zero_of_not_differentiableAt",
+    "not_differentiableAt_abs_zero",
+    "strictConvexOn_exp"
+  ],
+  "declarationCount": 14,
+  "productionInterfaceCount": 10,
+  "canaryConjunctCounts": [
+    14,
+    9,
+    16,
+    9
+  ],
+  "mappings": [
+    {
+      "declaration": "BanditRL.OnlineBregman.divergence_extension_eq",
+      "kind": "theorem",
+      "readerMove": "interior-representative-locality",
+      "readerProofStep": "EqOn on X plus an interior base supplies neighborhood equality; fderiv congruence and value substitutions preserve the ordered total formula.",
+      "requiredGuardEnvelope": "EqOn psi phi X; a in X; b in interior X; real normed space. No completeness, convexity or differentiability needed for this total-function equality.",
+      "sourceLinks": [
+        {
+          "id": "B38-BREGMAN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-OMD-BOUNDARY",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Filter.EventuallyEq.fderiv_eq",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        },
+        {
+          "name": "BanditRL.OnlineBregman.divergence",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence"
+      ],
+      "sourceLibraryDelta": "Derived representation lemma; source Definition6.4 does not supply a total extension or prescribe boundary fderiv values."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance",
+      "kind": "definition",
+      "readerMove": "guarded-partial-selection",
+      "readerProofStep": "Form Q(z)=f(z)+coe(eta inverse*D(z,x)); decide existence of p in V with IsMinOn; choose its witness or return none.",
+      "requiredGuardEnvelope": "Literal on whole normed carrier: arbitrary eta including zero/negative, EReal f including both infinities, arbitrary total psi and center; no interior test. Membership and minimization are separate conjuncts.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-BREGMAN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-ETA",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-A15-INIT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Classical.choose",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlineBregman.divergence",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence"
+      ],
+      "sourceLibraryDelta": "Source relation is actual feasible argmin on valid source data. Option tags, arbitrary classical tie selection and off-source behavior are library definitions, not source algorithm characterization."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+      "kind": "theorem",
+      "readerMove": "guarded-partial-selection",
+      "readerProofStep": "Unfold successful branch, identify selected value with p, return choose_spec membership and all feasible comparisons.",
+      "requiredGuardEnvelope": "Actual advance(...)=some p; no merely existential witness substitution. Same whole-carrier semantics as advance.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Classical.choose_spec",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.advance"
+      ],
+      "sourceLibraryDelta": "One-way chosen-value contract. Does not claim all tied minimizers are returned, finite value or source-valid interior."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+      "kind": "theorem",
+      "readerMove": "guarded-partial-selection",
+      "readerProofStep": "Split the same existential guard; none iff no feasible attained minimum exists.",
+      "requiredGuardEnvelope": "No regularity assumptions; all-top objective on nonempty V and attained bottom count as success; empty V gives none.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-OMD-ATTAIN",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-T69-CONTEXT",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.advance"
+      ],
+      "sourceLibraryDelta": "Exact library nonattainment semantics absent from source. T6.9 is context only; its strong-convexity premises do not establish this objective attains a minimum."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate",
+      "kind": "definition",
+      "readerMove": "same-prefix-partial-recursion",
+      "readerProofStep": "Natural recursion starts some x0; at t+1 bind actual state t to advance using eta t and whole loss t.",
+      "requiredGuardEnvelope": "Unconditional some x0, no initial feasibility/interior or finite-loss test. None propagates. Natural data index t corresponds to source round t+1.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-PAY",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PRESCIENT-OBS",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-ORACLE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-INIT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate.match_1",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.iterate.match_1"
+      ],
+      "sourceLibraryDelta": "Fixed classical Option recursion is derived library construction; source has relation-valued selections and no failure protocol."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_prefix",
+      "kind": "theorem",
+      "readerMove": "same-prefix-partial-recursion",
+      "readerProofStep": "Induct on t; equal shorter prefix gives equal predecessor; equal last eta and entire loss function gives equal bind calls.",
+      "requiredGuardEnvelope": "Same V,psi,x0. Both data streams agree at every s<t; loss equality is whole-function equality on E. Equality holds for some or none.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PRESCIENT-OBS",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-ORACLE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Nat.recAux",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.iterate"
+      ],
+      "sourceLibraryDelta": "Derived fixed-selector prefix theorem, not source optimizer uniqueness, arbitrary tie-break invariance or output-before-loss nonanticipativity."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+      "kind": "theorem",
+      "readerMove": "same-prefix-partial-recursion",
+      "readerProofStep": "Use bind_eq_some_iff to extract actual predecessor and actual selected step; apply advance_some_spec to obtain membership and current minimum.",
+      "requiredGuardEnvelope": "A(t+1)=some p, then exists x with A(t)=some x and p in V and IsMinOn Q_t,x V p. Does not impose x in V at t=0.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Option.bind_eq_some_iff",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate"
+      ],
+      "sourceLibraryDelta": "Actual library producer supplies minimization. Source X/interior validity still not established by Option success."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+      "kind": "theorem",
+      "readerMove": "same-prefix-partial-recursion",
+      "readerProofStep": "Induct on offset; bind none is none.",
+      "requiredGuardEnvelope": "Actual A(t)=none; every k natural, including zero. No assertion about independently reinitialized later objectives.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Nat.recAux",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.iterate"
+      ],
+      "sourceLibraryDelta": "Absorption is a library partiality convention absent from source, not source proof of future nonattainment."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+      "kind": "theorem",
+      "readerMove": "same-prefix-partial-recursion",
+      "readerProofStep": "Induct on finite horizon; apply conditional attainment to actual reached state, exclude none via exact iff, then bind selected successor.",
+      "requiredGuardEnvelope": "For all t<T and every x with A(t)=some x, require a feasible actual minimum for Q_t,x. At T=0 conclusion only some x0; no feasibility/interior implied.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-OMD-ATTAIN",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-T68-CONTEXT",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-T69-CONTEXT",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Nat.recAux",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.iterate"
+      ],
+      "sourceLibraryDelta": "Conditional API premise, not source-proved attainment. No transfer of other-algorithm existence/interior results and no unconditional/all-horizon run."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+      "kind": "theorem",
+      "readerMove": "actual-consecutive-one-step",
+      "readerProofStep": "From successful successor obtain y, predecessor equality, membership and minimum; Option injectivity against actual prior equality gives y=x; pass exact minimum to extended-loss comparison.",
+      "requiredGuardEnvelope": "Complete real inner-product E; convex V; A(t)=some x AND A(t+1)=some p in SAME run; eta t positive; no-bottom plus finite ambient witness; every feasible z has a support against ALL ambient y; differentiable psi at BOTH x,p. Feasible loss finiteness then justifies toReal differences. Every u in V.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-ETA",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-CVXSET",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PROPER",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-SUPPORT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-SUBDIFF",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-SUPPORT-FINITE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-BREGMAN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-THREEPOINT",
+          "sourceNodeKind": "SOURCE_IMPLICIT_ALGEBRA",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-T1530-BREGMAN-STEP",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-T1530-ASSUMPTIONS",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-T1530-VI",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-GAP-OPT",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-T28",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-GAP-INDEX",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-GAP-FIXED",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        },
+        {
+          "name": "BanditRL.OnlineBregman.proximal_one_step_extended",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.proximal_one_step_extended",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec"
+      ],
+      "sourceLibraryDelta": "Derived library route avoids using asserted nonsmooth source VI as a binder. Source chain remains blocked at GAP-OPT. Both -D(u,p) and -D(p,x) retained; no source-domain/interior or cumulative closure."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+      "kind": "theorem",
+      "readerMove": "guarded-partial-selection",
+      "readerProofStep": "Compute finite objective exp(z)-1 on V=(-infinity,0]; p-1 strictly improves any feasible p; none iff then actual first failure and absorption.",
+      "requiredGuardEnvelope": "Complete 14 conjuncts; exp closed strictly convex and differentiable, source X=univ and initial0 interior. Exact nonattainment, not invalid interior.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PROPER",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-CLOSED",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-STRICT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-SUPPORT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-INIT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-OMD-ATTAIN",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-T69-CONTEXT",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "Real.exp_lt_exp",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "strictConvexOn_exp",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineConvex.SourceClosed",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_no_recovery",
+        "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum._simp_1_1"
+      ],
+      "sourceLibraryDelta": "New diagnostic counterexample to inferring attainment from listed regularity, not an additional printed theorem or approved author erratum."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+      "kind": "theorem",
+      "readerMove": "interior-representative-locality",
+      "readerProofStep": "Polynomials agree with abs variant on X=[0,infinity); use interior-locality at base1. At boundary0 prove abs variant nondifferentiable and compute total-fderiv default.",
+      "requiredGuardEnvelope": "Complete 9 conjuncts: disagreement at-1, memberships target2/base1, interior D=1, boundary values4 and6, nondifferentiability at0.",
+      "sourceLinks": [
+        {
+          "id": "B38-BREGMAN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-OMD-BOUNDARY",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "BanditRL.OnlineBregman.divergence_extension_eq",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "not_differentiableAt_abs_zero",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "fderiv_zero_of_not_differentiableAt",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "fderiv_eq_deriv_mul",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineBregman.divergence_extension_eq"
+      ],
+      "sourceLibraryDelta": "Boundary total-formula diagnostics are not source-valid Bregman values or a failure of source Definition6.4."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+      "kind": "theorem",
+      "readerMove": "actual-consecutive-one-step",
+      "readerProofStep": "Reuse actual first restricted-abs minimum; factor second objective gap to obtain unique minimum1/2; finitepart transfer and reached-state attainment produce exact states; apply two actual one-step bounds and transport selected numerical comparator.",
+      "requiredGuardEnvelope": "Complete 16 conjuncts. V=[-1,1], psi=z^4/4+z^2/2, restricted abs then -5z/8, eta=1; states1/2,0,1/2. Whole-function prefix, top outside V, nonsmooth abs, movements11/64 and9/64, universal two-step comparison and -1/2<=-5/16 all retained.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PRESCIENT-OBS",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-ORACLE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PROPER",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-SUPPORT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-BREGMAN-ASYMM",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-T1530-BREGMAN-STEP",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-GAP-OPT",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-GAP-FIXED",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        },
+        {
+          "id": "B38-GAP-INDEX",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_prefix",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_absolute_nonquadratic",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained",
+        "BanditRL.OnlinePrescientBregman.iterate_one_step",
+        "BanditRL.OnlinePrescientBregman.iterate_prefix",
+        "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+        "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses._proof_1_3",
+        "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses._simp_1_2"
+      ],
+      "sourceLibraryDelta": "Two concrete transitions do not discharge generic fixed/variable telescopes. Selected final Eq.mp proof argument has two live fully applied iterate_one_step terms; compiled BODY audit, not mere text mention."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+      "kind": "theorem",
+      "readerMove": "actual-consecutive-one-step",
+      "readerProofStep": "Reuse restricted-linear actual minimum; prove uniqueness0 and identify chosen successor from initial-1; apply actual one-step and transport comparator1/2 to numerical inequality.",
+      "requiredGuardEnvelope": "Complete 9 conjuncts. V=[0,1], restricted linear loss, quadratic psi, x0=-1 outside V and loss domain but interior for source X=univ, successor0, movement1/2, universal bound and -1/2<=1/2.",
+      "sourceLinks": [
+        {
+          "id": "B38-A15-INIT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-ARGMIN",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-A15-RECEIVE",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-PROPER",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-SUPPORT",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-T1530-BREGMAN-STEP",
+          "sourceNodeKind": "SOURCE",
+          "relationship": "source-contract-or-formula-alignment; not an implementation dependency or closure claim"
+        },
+        {
+          "id": "B38-OMD-INIT",
+          "sourceNodeKind": "CONTEXT_ONLY",
+          "relationship": "context-only-or-open-gap; NOT discharged by this declaration"
+        }
+      ],
+      "leanImplementationLinks": [
+        {
+          "name": "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": false
+        },
+        {
+          "name": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+          "relationship": "actual direct VALUE constant presence, manually reviewed in body",
+          "strongTermReviewAlsoApplies": true
+        }
+      ],
+      "allDirectProjectValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineBregmanExtendedCanary.restricted_linear_outside_center",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_one_step",
+        "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run._simp_1_2"
+      ],
+      "sourceLibraryDelta": "Do not add OMD initial-feasibility restriction from different algorithm. Exact selected numerical proof argument has one live fully applied iterate_one_step term."
+    }
+  ],
+  "edgeSemantics": "Source links are source-contract/formula alignments or context-only/open-gap references. Lean links are actual compiled direct VALUE presences qualified by manual BODY review. These relations are deliberately not flattened into one proof DAG. No source-context node is claimed to prove a derived library behavior.",
+  "losslessScope": "Maps every sealed production interface and full canary endpoint to reader steps and exact selected graph providers. Direct compiled graph is not a complete transitive closure; compiler-generated helper constants remain explicit cutpoints in allDirectProjectValueProviders.",
+  "sourceRootClosure": false,
+  "chapterDenominator": null
+}

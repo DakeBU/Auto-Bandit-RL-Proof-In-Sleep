@@ -1,0 +1,259 @@
+{
+  "source": "actual imported compiled environment",
+  "production_dependencies": [
+    {
+      "required_live_providers": [
+        {
+          "provider": "Filter.EventuallyEq.fderiv_eq",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlineBregman.divergence"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlineBregman.divergence_extension_eq"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "Classical.choose",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlineBregman.divergence"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.advance"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlinePrescientBregman.advance",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.iterate.match_1",
+        "BanditRL.OnlinePrescientBregman.advance"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.iterate"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "Classical.choose_spec",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlineBregman.divergence"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.advance_some_spec"
+    },
+    {
+      "required_live_providers": [],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlineBregman.divergence"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.advance_none_iff"
+    },
+    {
+      "required_live_providers": [],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.advance"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.iterate_prefix"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlinePrescientBregman.advance_some_spec",
+          "live_uses": 1
+        },
+        {
+          "provider": "Option.bind_eq_some_iff",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec"
+    },
+    {
+      "required_live_providers": [],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.advance"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.iterate_no_recovery"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlinePrescientBregman.advance_none_iff",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.iterate_complete_of_step_attained"
+    },
+    {
+      "required_live_providers": [
+        {
+          "provider": "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+          "live_uses": 1
+        },
+        {
+          "provider": "BanditRL.OnlineBregman.proximal_one_step_extended",
+          "live_uses": 1
+        }
+      ],
+      "raw_body_direct_project_constants": [
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+        "BanditRL.OnlineBregman.proximal_one_step_extended"
+      ],
+      "raw_body_constants_include_type_annotations": true,
+      "name": "BanditRL.OnlinePrescientBregman.iterate_one_step"
+    }
+  ],
+  "method": "Select actual full-canary conjunction components; numeric Eq.mp proof argument; local beta/zeta plus explicit id elimination; skip annotations and known transport type arguments; require live iterate_one_step applications in the selected numeric proof. Two-step linarith composition need not have iterate_one_step at its root. No declaration unfolding or proof-irrelevance normalization.",
+  "full_canary_counts": [
+    {
+      "name": "BanditRL.OnlinePrescientBregmanCanary.closed_strict_regularizer_missing_minimum",
+      "conjunct_count": 14
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregmanCanary.interior_extension_boundary_difference",
+      "conjunct_count": 9
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+      "conjunct_count": 16
+    },
+    {
+      "name": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+      "conjunct_count": 9
+    }
+  ],
+  "controls_are_synthetic_syntax_not_well_typed_theorems": true,
+  "controls": [
+    {
+      "observed": 0,
+      "name": "dead_let_value",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "lambda_domain_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "forall_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "let_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "unused_beta_argument",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "transport_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 0,
+      "name": "identity_type_only",
+      "expected": 0
+    },
+    {
+      "observed": 1,
+      "name": "direct_constant",
+      "expected": 1
+    },
+    {
+      "observed": 1,
+      "name": "identity_value",
+      "expected": 1
+    },
+    {
+      "observed": 1,
+      "name": "used_beta_argument",
+      "expected": 1
+    },
+    {
+      "observed": 1,
+      "name": "used_let_value",
+      "expected": 1
+    }
+  ],
+  "canaries": [
+    {
+      "transport_trace": [
+        "Eq.mp"
+      ],
+      "transport_core_head": "le_of_not_gt",
+      "transport_core_argument_count": 5,
+      "target_application_argument_counts": [
+        22,
+        22
+      ],
+      "selected_proof_argument_live_target_uses": 2,
+      "selected_numeric_tail_index_zero_based": 15,
+      "numeric_tail_head": "Eq.mp",
+      "name": "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+      "general_comparator_conjunct_live_target_uses": 2,
+      "direct_target_head_required": false,
+      "conjunct_count": 16
+    },
+    {
+      "transport_trace": [
+        "Eq.mp",
+        "Eq.mp"
+      ],
+      "transport_core_head": "BanditRL.OnlinePrescientBregman.iterate_one_step",
+      "transport_core_argument_count": 22,
+      "target_application_argument_counts": [
+        22
+      ],
+      "selected_proof_argument_live_target_uses": 1,
+      "selected_numeric_tail_index_zero_based": 8,
+      "numeric_tail_head": "Eq.mp",
+      "name": "BanditRL.OnlinePrescientBregmanCanary.boundary_outside_center_run",
+      "general_comparator_conjunct_live_target_uses": 1,
+      "direct_target_head_required": false,
+      "conjunct_count": 9
+    }
+  ]
+}
