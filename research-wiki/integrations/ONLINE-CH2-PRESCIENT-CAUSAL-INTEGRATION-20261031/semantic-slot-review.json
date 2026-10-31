@@ -1,0 +1,269 @@
+{
+  "schema": "abrl-independent-seven-slot-review-v1",
+  "slotNames": [
+    "objects_and_spaces",
+    "quantifiers_and_order",
+    "assumptions_regularity",
+    "conclusion_metric",
+    "constants_normalization",
+    "probability_feedback_stopping",
+    "boundaries_excluded"
+  ],
+  "decoderSchemaMapping": {
+    "objects_and_spaces": "domain",
+    "quantifiers_and_order": "quantifiers",
+    "assumptions_regularity": "assumptions",
+    "conclusion_metric": "conclusion",
+    "constants_normalization": "construction",
+    "probability_feedback_stopping": "data_timing_and_partiality",
+    "boundaries_excluded": "excluded_claims"
+  },
+  "items": [
+    {
+      "id": "item_0",
+      "name": "divergence_extension_eq",
+      "signatureSHA256": "0b6c6af47f37ba4b605a205639e1e92e71a20b5623336dc168b131da9dffe114",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Real normed space, X subset E, total real psi and phi; no completeness or inner-product requirement.",
+        "quantifiers_and_order": "All X, psi, phi, a, b; EqOn means every z in X.",
+        "assumptions_regularity": "EqOn psi phi X, a in X, b in interior X. No differentiability needed for total fderiv locality.",
+        "conclusion_metric": "Equality of ordered divergence values at (a,b).",
+        "constants_normalization": "Same unscaled value-minus-base-value-minus-base-derivative formula.",
+        "probability_feedback_stopping": "No probability, time or oracle claim.",
+        "boundaries_excluded": "Derived extension-locality lemma. It does not identify a boundary-base value or assert source divergence exists off X times int X."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_1",
+      "name": "advance",
+      "signatureSHA256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Real normed space; arbitrary V, total real psi, real eta, EReal f, x; Option E.",
+        "quantifiers_and_order": "Existence test quantifies a feasible p, with comparisons against every z in V.",
+        "assumptions_regularity": "No logical assumptions. No interior, properness, convexity, smoothness or positive eta test.",
+        "conclusion_metric": "some Classical.choose witness iff feasible minimum exists; otherwise none. Complete literal body sealed.",
+        "constants_normalization": "Real inverse then multiplication then finite EReal embedding. Eta zero gives Q=f, negative eta allowed.",
+        "probability_feedback_stopping": "Noncomputable classical choice, not an executable optimization solver. Current whole f available.",
+        "boundaries_excluded": "Empty V gives none. Attained bottom or all-top nonempty V may give some. Failure means exact nonattainment, not invalid interior or timeout. Not characterized source algorithm."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_2",
+      "name": "iterate",
+      "signatureSHA256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same normed space; eta and whole losses indexed by naturals; arbitrary x0.",
+        "quantifiers_and_order": "Total natural recursion; transition t to t+1 uses precisely eta t and loss t.",
+        "assumptions_regularity": "No assumptions, initial some x0 unconditional.",
+        "conclusion_metric": "A(0)=some x0; A(t+1)=bind A(t) advance(current data). Complete literal body sealed.",
+        "constants_normalization": "Zero-based data index t corresponds to source round t+1; no horizon built into definition.",
+        "probability_feedback_stopping": "none is absorbing through bind, whole current loss used before successor selected; no measurability or standard output-before-loss claim.",
+        "boundaries_excluded": "x0 may be infeasible, outside any source X or loss domain; success need not be source-valid. No uniqueness or all-time success."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_3",
+      "name": "advance_some_spec",
+      "signatureSHA256": "04707f6fd917092a6101f04d4feceee8af652ee7899a02046db134ecbcb19f92",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same arbitrary real normed data; named p in E.",
+        "quantifiers_and_order": "For every p, successful returned value implies all feasible comparisons.",
+        "assumptions_regularity": "Only h: advance(...)=some p.",
+        "conclusion_metric": "p in V AND IsMinOn Q V p; membership is not folded into IsMinOn.",
+        "constants_normalization": "Q=f+coe(eta inverse times D); no sign restriction.",
+        "probability_feedback_stopping": "Classical selector success specification only.",
+        "boundaries_excluded": "No finite optimum, uniqueness, existence guarantee, interior, or stationarity."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_4",
+      "name": "advance_none_iff",
+      "signatureSHA256": "194634cf25e8b2b9bfc7b24e7b74515f42c192d0f47abb2fadf3c8c73460b7ab",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same arbitrary real normed data.",
+        "quantifiers_and_order": "Iff between none and negated existence of p in V satisfying every feasible comparison.",
+        "assumptions_regularity": "No assumptions.",
+        "conclusion_metric": "Exact absence of any feasible attained minimum, both directions.",
+        "constants_normalization": "Same total real inverse and EReal objective.",
+        "probability_feedback_stopping": "Semantic failure, not computational stopping.",
+        "boundaries_excluded": "Infinite attained minima are not failures. Boundary optimizers are not rejected. Empty V included."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_5",
+      "name": "iterate_prefix",
+      "signatureSHA256": "fc630db44a1cc20fa2577ac81bc3bb01db4f08c5ef1b979120a67bc3981c9c7f",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same V, psi, x0; two total step and whole-loss sequences.",
+        "quantifiers_and_order": "Every s<t: step equality and equality of whole functions loss s=loss-prime s.",
+        "assumptions_regularity": "Only two strict-prefix equality conditions.",
+        "conclusion_metric": "Equality of Option outputs at t, including none.",
+        "constants_normalization": "No equality at t or future index; t=0 vacuous.",
+        "probability_feedback_stopping": "Deterministic term-level prefix dependence of fixed classical selector; not ordinary pre-loss nonanticipativity.",
+        "boundaries_excluded": "No visited-point-only or feasible-set-only loss equality theorem; no success or optimizer uniqueness."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_6",
+      "name": "iterate_succ_some_spec",
+      "signatureSHA256": "c2ac106c46b35802b409724cb1f48cca2fd320275471f0a2b11628de252ffc7c",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same real normed recurrence; given t and p.",
+        "quantifiers_and_order": "Success at t+1 implies exists x with success at t and all minimizer comparisons.",
+        "assumptions_regularity": "Only successor success h.",
+        "conclusion_metric": "Existential predecessor from same run AND p in V AND IsMinOn current objective based at that predecessor.",
+        "constants_normalization": "Data index t, state index t+1.",
+        "probability_feedback_stopping": "Preserves actual predecessor, not arbitrary optimizer/existence-only statement.",
+        "boundaries_excluded": "No initial x feasibility, interior, finite value, eta positivity or future success."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_7",
+      "name": "iterate_no_recovery",
+      "signatureSHA256": "cfa46ffbefee85410349f15531f942b39508048988f53b98033836c67d870f17",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same real normed recurrence, naturals t,k.",
+        "quantifiers_and_order": "Every offset k, conditional on none at t.",
+        "assumptions_regularity": "Only A(t)=none.",
+        "conclusion_metric": "A(t+k)=none.",
+        "constants_normalization": "Includes k=0; no finite failure tolerance.",
+        "probability_feedback_stopping": "Absorption is library Option behavior, not an author-prescribed failure protocol.",
+        "boundaries_excluded": "No claim why failure occurred beyond underlying nonattainment; no recovery/reset algorithm."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_8",
+      "name": "iterate_complete_of_step_attained",
+      "signatureSHA256": "e819d6be4957e0f6bead706d2a7882176ed1a48eaee18b5031837adc2a607ee4",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Same real normed recurrence with finite T.",
+        "quantifiers_and_order": "For every t<T and every x: if A(t)=some x then exists feasible minimizer of its current objective; conclusion exists p with A(T)=some p.",
+        "assumptions_regularity": "Reachable-state attainment is an explicit conditional API input.",
+        "conclusion_metric": "Success at horizon T only.",
+        "constants_normalization": "T=0 holds with x0, with no feasibility conclusion; data indices 0 through T-1.",
+        "probability_feedback_stopping": "Finite induction property of library partial recursion, not source existence theorem.",
+        "boundaries_excluded": "No all-horizon attainment, no finiteness/interior/uniqueness; assumption cannot be relabeled as a source-proved result."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_9",
+      "name": "iterate_one_step",
+      "signatureSHA256": "40fe2afe44a911b8d5dfe36c88b604de9290bf5208b6b2f1aa5d04c7f1d9ed54",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Complete real inner-product space; arbitrary total real psi, EReal current loss and same recurrence.",
+        "quantifiers_and_order": "All parameters, actual x and p from same run at t,t+1; all feasible z have some global support; then every u in V.",
+        "assumptions_regularity": "Convex V; both successful-state equalities; eta(t)>0; SourceProper current loss; global support at every z in V; ambient differentiability of psi at x and p.",
+        "conclusion_metric": "eta(t)*(toReal(loss t p)-toReal(loss t u)) <= D(u,x)-D(u,p)-D(p,x).",
+        "constants_normalization": "Coefficients exactly one; two negative residuals; no loss at x, no derivative at u, no absolute value or discarded movement term.",
+        "probability_feedback_stopping": "Current whole loss, consecutive actual same-run states. No probabilistic/filter/adaptive guarantee.",
+        "boundaries_excluded": "Derived library one-step. No psi convexity/closedness, closed V, interior invariant, attainment or full source theorem. Finite feasible losses follow from properness and supports, not global toReal validity."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_10",
+      "name": "closed_strict_regularizer_missing_minimum",
+      "signatureSHA256": "95c624944b64cd81b2c71d4f878de3402f7cc8172cc7192472de39f6432aa6ee",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Concrete real line, V=(-infinity,0], f(z)=coe z, psi=exp.",
+        "quantifiers_and_order": "No hypotheses; fourteen conjuncts, including all z for support/differentiability/objective identity and all k for positive-time failure.",
+        "assumptions_regularity": "All regularity clauses are conclusions, including nonempty closed convex V, proper f, closed strictly convex smooth psi and interior-univ initial 0.",
+        "conclusion_metric": "Entire 14-conjunct statement: objective exp(z)-1, no feasible minimum, advance none and every A(k+1)=none.",
+        "constants_normalization": "Eta=1; exp(z)-1 has unattained infimum -1 on V. For any p<=0, p-1 feasible and strictly smaller objective.",
+        "probability_feedback_stopping": "First transition fails; positive-time absorption. Initial 0 is valid interior of X=univ.",
+        "boundaries_excluded": "Nonattainment counterexample under listed regularity, not invalid-source-interior example or counterexample to a theorem assuming an existing valid run."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_11",
+      "name": "interior_extension_boundary_difference",
+      "signatureSHA256": "5ae6c60b04b6bd86276aec0b910950f060754ea43aff96e5bbffc7c3a8069691",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Concrete real X=[0,infinity), psi=z^2+z, phi=z^2+abs z.",
+        "quantifiers_and_order": "Nine unconditional conjuncts; EqOn all X; exact points -1,0,1,2.",
+        "assumptions_regularity": "All equalities, memberships and nondifferentiability are conclusions.",
+        "conclusion_metric": "Agree on X, disagree at -1; interior-base equality and value1; boundary D values4 versus6; phi not differentiable at0.",
+        "constants_normalization": "At0 psi derivative1 yields6-2=4; phi total fderiv default0 yields6. At1 derivative3 yields1.",
+        "probability_feedback_stopping": "No trajectory or selection claim.",
+        "boundaries_excluded": "Boundary calculation concerns total ambient library expressions, not source Bregman at invalid second argument. It demonstrates need for interior guard."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_12",
+      "name": "two_distinct_current_losses",
+      "signatureSHA256": "173b76076098d3a8a2175ddc1713fc4fcecadb9aac6508cfbbe3590967500d92",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Concrete V=[-1,1], quartic-plus-quadratic psi, interval-restricted abs and -5z/8 losses.",
+        "quantifiers_and_order": "Sixteen unconditional conjuncts; global supports at all feasible z; all alternative sequences matching first two whole functions and rates; every feasible u.",
+        "assumptions_regularity": "Properness, supports, strict convexity and abs nondifferentiability are conclusions; exact complete signatures retained.",
+        "conclusion_metric": "States some(1/2), some0, some(1/2); matching-prefix equality; D(0,1/2)=11/64 and D(1/2,0)=9/64; full two-step inequality and scalar -1/2<=-5/16.",
+        "constants_normalization": "Eta=1; both comparator D(u,1/2) terms retained; movement sum20/64. Loss at2 top for both functions. At u=1/2 the LHS is -1/2.",
+        "probability_feedback_stopping": "Uses distinct current losses at indices0,1; future arbitrary. Numeric tail is separately stated; actual proof consumption reserved for BODY review.",
+        "boundaries_excluded": "No generic cumulative/fixed-variable theorem, future success, symmetry, differentiability of abs or global finite loss."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    },
+    {
+      "id": "item_13",
+      "name": "boundary_outside_center_run",
+      "signatureSHA256": "d0dfc7500ddd6f1bae8630e832b1e095d1a6f92e2607776a924d03ae8d113c59",
+      "sevenSlotReview": {
+        "objects_and_spaces": "Concrete V=[0,1], restricted linear loss, psi=z^2/2; initial x0=-1.",
+        "quantifiers_and_order": "Nine unconditional conjuncts, supports at every feasible z and bound for all feasible u.",
+        "assumptions_regularity": "Properness/supports/strict convexity/outside-domain facts are conclusions.",
+        "conclusion_metric": "f(-1)=top, -1 not in V, A(1)=some0, D(0,-1)=1/2, full signed inequality and -1/2<=1/2.",
+        "constants_normalization": "Eta=1, actual minimizer0 distinct from objective value1/2; loss evaluated at feasible successor/comparator.",
+        "probability_feedback_stopping": "Initial state outside V and loss domain; with source X=univ it is interior and allowed.",
+        "boundaries_excluded": "No source rule requiring x0 in V, no general success for all outside starts, no future run/total algorithm claim."
+      },
+      "blindReconstructionAssessment": "matches exact interface including scope, total-function semantics and all stated conjuncts",
+      "verdict": "accepted-with-explicit-source-boundary",
+      "sourceFaithfulNumberedTheoremClaim": false
+    }
+  ],
+  "blockingFindings": [],
+  "canaryConjunctCounts": [
+    14,
+    9,
+    16,
+    9
+  ],
+  "totalCanaryConjuncts": 48
+}

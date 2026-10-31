@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "packet": "private-maintenance/github-maintenance-goal-20261011/batch38-blind-input-v1/packet.json",
+  "scope": "Independent source-blind reconstruction of packet.json only. Theorem bodies are withheld. This report describes asserted semantics, without certifying proofs or correspondence to any external source.",
+  "seven_slot_schema": {
+    "domain": "Carrier structures, types and total domains.",
+    "quantifiers": "Quantifier scope and equality granularity.",
+    "assumptions": "Exact premises, distinguished from conclusions.",
+    "construction": "Operators, objectives, constants and whole-carrier denotation.",
+    "conclusion": "Literal output or proposition, including every conjunct.",
+    "data_timing_and_partiality": "Timing, initialization, classical choice and Option failure.",
+    "excluded_claims": "Guarantees not asserted."
+  },
+  "notation": [
+    "\\overline{\\mathbb R}=\\mathrm{EReal}=\\mathbb R\\cup\\{-\\infty,+\\infty\\};\\quad\\iota:\\mathbb R\\hookrightarrow\\mathrm{EReal}.",
+    "P(f)\\iff(\\forall x,\\ f(x)\\ne-\\infty)\\land\\exists x\\,\\exists r\\in\\mathbb R,\\ f(x)=\\iota(r).",
+    "C(f)\\iff\\forall r\\in\\mathbb R,\\ \\{x:f(x)\\le\\iota(r)\\}\\text{ is closed}.",
+    "S(f,x)=\\{g:\\forall y\\in E,\\ f(x)+\\iota(\\langle g,y-x\\rangle_{\\mathbb R})\\le f(y)\\}.",
+    "D_\\psi(a,b)=\\psi(a)-\\psi(b)-(\\mathrm{fderiv}\\ \\mathbb R\\ \\psi\\ b)(a-b).",
+    "Q_{\\eta,f,x}(z)=f(z)+\\iota(\\eta^{-1}D_\\psi(z,x)).",
+    "U=\\mathrm{item}_1,\\quad A_{V,\\psi,\\eta,\\ell,x_0}(t)=\\mathrm{item}_2(V,\\psi,\\eta,\\ell,x_0,t).",
+    "\\mathrm{IsMinOn}(Q,V,p)\\iff\\forall z\\in V,\\ Q(p)\\le Q(z).\\quad p\\in V\\text{ is a separate conjunct}."
+  ],
+  "common_caveats": [
+    "All functions in these signatures are total on the whole carrier. D uses the ambient Fréchet derivative, not a derivative within a feasible set.",
+    "fderiv is total. At a point without DifferentiableAt its value is the zero continuous linear map. D still denotes a real number there, without asserting a genuine differential approximation. At differentiable points it is the actual derivative.",
+    "No nonnegativity, symmetry, convexity, uniqueness or finite optimal value follows just from D or IsMinOn. A noncomputable section adds no mathematical assumptions.",
+    "P excludes −∞ everywhere and gives one finite value, but permits +∞ elsewhere. C means closed real sublevel sets, not convexity or properness. S is a supporting inequality against every y in E, not just V. With P, nonempty S at x forces f(x) finite by comparison with a finite-value witness.",
+    "Real inverse is total: 0⁻¹=0, so unrestricted η=0 makes Q=f; η<0 yields a negative inverse weight. Items 1–8 do not impose positivity. Item_9 imposes it only at the selected time.",
+    "Q adds a finite real embedding to f, so an infinite value remains the same infinity. Attained −∞ is a minimum; if Q is +∞ throughout nonempty V, every feasible point is a minimum. Empty V has no feasible minimizer even though IsMinOn comparisons alone are vacuous.",
+    "Classical.choose specifies a witness, not an effective solver or a unique optimizer. Option itself is total; none means no attained feasible minimum. The chosen witness has no specified tie-break.",
+    "bind propagates none; some x invokes the update at x. A(0)=some x0 requires neither feasibility nor finite loss. Transition t→t+1 uses η(t) and the entire loss(t) function. No oracle, feedback or measurability protocol is stated.",
+    "EReal.toReal sends both infinite endpoints to 0 and is not a faithful real-valued representation on all EReal. Item_9's P and S force finite feasible losses. Concrete comparisons in items 12–13 likewise evaluate losses on their finite feasible portions.",
+    "All concrete conjuncts appear below. Separately noted simplifications do not replace the literal expressions."
+  ],
+  "ambiguities_and_limits": [
+    {
+      "id": "A1",
+      "detail": "No source identity or original mathematical text was supplied or consulted. Source fidelity is unassessed."
+    },
+    {
+      "id": "A2",
+      "detail": "Theorem bodies are withheld. Signatures are reconstructed as assertions, without proof certification or inferred source intent."
+    },
+    {
+      "id": "A3",
+      "detail": "Classical choice has no specified tie-break when multiple minimizers exist. Concrete exact-output signatures do not themselves assert uniqueness."
+    },
+    {
+      "id": "A4",
+      "detail": "The packet requests seven slots without naming them. This artifact states its chosen seven-slot schema explicitly."
+    }
+  ],
+  "verdict": "semantic_reconstruction_only; source_fidelity_not_assessed; proof_correctness_not_assessed",
+  "items": [
+    {
+      "id": "item_0",
+      "natural_language": "Two total real-valued functions that agree on X have equal D-values from a base point b in the interior of X to any a in X.",
+      "latex": "\\forall X,\\psi,\\phi,a,b,\\quad [(\\forall z\\in X,\\psi(z)=\\phi(z))\\land a\\in X\\land b\\in\\operatorname{int}X]\\Rightarrow D_\\psi(a,b)=D_\\phi(a,b).",
+      "slots": {
+        "domain": "E is any real normed additive commutative group with a real normed-space structure. X ⊆ E; ψ,φ:E→ℝ; a,b∈E.",
+        "quantifiers": "Universally quantified in E, its stated structures, X, ψ, φ, a, b. Equality on X is pointwise universal.",
+        "assumptions": "Exactly EqOn ψ φ X, a∈X, and b∈interior X. No completeness, convexity or differentiability hypotheses.",
+        "construction": "Dψ(a,b)=ψ(a)−ψ(b)−(fderiv ℝ ψ b)(a−b), with the whole-carrier Fréchet derivative convention. Interior membership makes ψ and φ agree on a neighborhood of b.",
+        "conclusion": "The two displayed real D-values are equal, including when fderiv uses its nondifferentiability default.",
+        "data_timing_and_partiality": "No update, choice or time index. Functions are defined on all E. The assertion uses an ambient interior point, not a derivative within X.",
+        "excluded_claims": "No global equality of ψ and φ; no equality for a∉X or for arbitrary boundary bases; no nonnegativity, strict positivity, convexity, differentiability or genuine divergence axioms."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_1",
+      "natural_language": "The total Option-valued map returns some classically selected member of V attaining a minimum of the extended-real objective, if such a member exists, and returns none otherwise.",
+      "latex": "Q_{\\eta,f,x}(z)=f(z)+\\iota(\\eta^{-1}D_\\psi(z,x)),\\qquad U(V,\\psi,\\eta,f,x)=\\begin{cases}\\operatorname{some}(\\operatorname{choose}\\{p:p\\in V\\land\\forall z\\in V,\\ Q(p)\\le Q(z)\\}),&\\exists p\\in V,\\forall z\\in V,\\ Q(p)\\le Q(z),\\\\ \\operatorname{none},&\\text{otherwise.}\\end{cases}",
+      "slots": {
+        "domain": "E is any real normed space as in item_0; V⊆E; ψ:E→ℝ; η∈ℝ; f:E→EReal; x∈E. Output Option E.",
+        "quantifiers": "The definition applies to every listed input. Its existence test quantifies p∈E, and minimum comparison quantifies every z∈V.",
+        "assumptions": "No hypotheses at all on V, ψ, η, f, or x. V may be empty; x need not belong to V; f may take either infinity; ψ need not be differentiable.",
+        "construction": "Classical existential decision followed by Classical.choose of a witness. Q uses real inverse and real multiplication before coercion to EReal. η=0 gives η⁻¹=0 and Q=f. Negative η gives negative inverse weight. Real-valued D remains defined everywhere.",
+        "conclusion": "some p means a selected witness with p∈V and Q(p)≤Q(z) for every z∈V. none means no such witness. Extended-real minima include attained −∞ and, if all feasible objective values are +∞, any feasible point.",
+        "data_timing_and_partiality": "This is noncomputable classical selection, not an executable solver or convergence procedure. Option exposes absence of a minimizer, not computational timeout. Fixed inputs denote a fixed selected value, without a specified selection rule. No time indexing.",
+        "excluded_claims": "No unique minimizer, finite optimal value, finite f(p), properness, convexity, coercivity, continuity, positivity of η, differentiability, feasibility of x, termination of a numerical method or guarantee of some. Empty V necessarily returns none. Different descriptions of an equivalent optimization problem need not have an asserted common selected point."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_2",
+      "natural_language": "The Option-valued trajectory starts at some x0 and at transition t uses step size η(t) and loss function loss(t), propagating none through Option.bind.",
+      "latex": "A(0)=\\operatorname{some}(x_0),\\qquad A(t+1)=A(t)\\mathbin{\\mathrm{bind}}\\bigl(x\\mapsto U(V,\\psi,\\eta(t),\\ell_t,x)\\bigr).",
+      "slots": {
+        "domain": "E, V and ψ as in item_1; η:ℕ→ℝ; loss:ℕ→E→EReal; x0∈E. A:ℕ→Option E.",
+        "quantifiers": "Defined for all natural t and all total input sequences η,loss. Recursion has base 0 and successor t+1.",
+        "assumptions": "No hypotheses, including no x0∈V, nonempty V, positive η(t), smoothness or attainment assumptions.",
+        "construction": "Natural-number recursion. bind sends none to none and some x to item_1(V,ψ,η(t),loss(t),x). A(0)=some x0 even if x0∉V or a loss is infinite there.",
+        "conclusion": "Each time has a denoting Option value. Successful successors are chosen minima as in item_1. Failure is retained at subsequent recursion steps.",
+        "data_timing_and_partiality": "A(t+1) consumes η(t) and the entire total loss function loss(t), with anchor from A(t). A(t) can depend on indices 0,…,t−1; it does not use η(t) or loss(t) yet. Classical choice remains noncomputable.",
+        "excluded_claims": "No guarantee all iterates succeed, no initial feasibility requirement, no computational algorithm or oracle-access model, no unique trajectory independent of the chosen selection mechanism, and no regret, stability or convergence conclusion."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_3",
+      "natural_language": "If the selected update equals some p, then p is feasible and is a global minimizer of the stated extended-real objective over V.",
+      "latex": "U(V,\\psi,\\eta,f,x)=\\operatorname{some}(p)\\Rightarrow p\\in V\\ \\land\\ \\forall z\\in V,\\ Q_{\\eta,f,x}(p)\\le Q_{\\eta,f,x}(z).",
+      "slots": {
+        "domain": "E is a real normed space; V⊆E, ψ:E→ℝ, η∈ℝ, f:E→EReal, x,p∈E.",
+        "quantifiers": "Universal in all inputs and p; the minimum compares against every z∈V.",
+        "assumptions": "The sole nonstructural hypothesis is item_1 V ψ η f x = some p.",
+        "construction": "Q(z)=f(z)+ι(η⁻¹Dψ(z,x)); real inverse permits η=0 and η<0. D uses total fderiv. This is the specification of the classically chosen witness.",
+        "conclusion": "Both conjuncts hold: p∈V and IsMinOn Q V p. The latter means Q(p)≤Q(z) for every z∈V.",
+        "data_timing_and_partiality": "No time index. Successful Option result is the premise; the theorem does not establish that one exists.",
+        "excluded_claims": "No unique minimizer, no finiteness, no differentiability, no convexity, no stronger optimality condition and no assertion that every minimizer is the selected p. Infinite minimum values remain admissible."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_4",
+      "natural_language": "The update is none exactly when no feasible point attains the extended-real minimum.",
+      "latex": "U(V,\\psi,\\eta,f,x)=\\operatorname{none}\\iff\\neg\\exists p\\in V,\\ \\forall z\\in V,\\ Q_{\\eta,f,x}(p)\\le Q_{\\eta,f,x}(z).",
+      "slots": {
+        "domain": "E and inputs as in item_1.",
+        "quantifiers": "Universal in V,ψ,η,f,x. The right side negates existence of any p∈V satisfying all feasible comparisons.",
+        "assumptions": "No additional assumptions.",
+        "construction": "The objective and classical existence test are exactly those of item_1; unrestricted η includes zero and negative values; infinite f-values and default fderiv are permitted.",
+        "conclusion": "Both directions of the equivalence: none excludes any feasible minimizer; absence of a feasible minimizer forces none.",
+        "data_timing_and_partiality": "Failure refers to semantic nonattainment/absence of a feasible witness, including empty V. There is no numerical execution, failure tolerance or timeout.",
+        "excluded_claims": "Does not characterize failure as infeasibility alone, as unboundedness alone, or as lack of smoothness. Does not require finite infima or exclude attained infinite minima."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_5",
+      "natural_language": "At time t the trajectory is unchanged when step sizes and whole loss functions agree at all indices strictly less than t.",
+      "latex": "[(\\forall s<t,\\eta(s)=\\eta'(s))\\land(\\forall s<t,\\ell_s=\\ell'_s)]\\Rightarrow A_{\\eta,\\ell}(t)=A_{\\eta',\\ell'}(t).",
+      "slots": {
+        "domain": "E a real normed space; shared V⊆E, ψ:E→ℝ, x0∈E; η,η':ℕ→ℝ; loss,loss':ℕ→E→EReal; t∈ℕ.",
+        "quantifiers": "Universal in inputs and t; both assumptions quantify every natural s<t. Equality loss s=loss' s is equality as functions on the entire carrier E.",
+        "assumptions": "Exactly the two strict-prefix equality assumptions. V,ψ,x0 are identical parameters on both sides.",
+        "construction": "Both sides use the same Option recursion and classical selection definition. No η sign or loss finiteness restriction.",
+        "conclusion": "Equality of Option E outputs at t, whether some or none.",
+        "data_timing_and_partiality": "Only indices below t matter. For t=0, assumptions are vacuous and both outputs are some x0. Neither equality at t nor any equality after t is needed.",
+        "excluded_claims": "No claim that pointwise agreement only at visited points is sufficient; no feedback/oracle model, measurability or adaptation theorem; no success, minimizer uniqueness or equality after time t."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_6",
+      "natural_language": "A successful successor has a successful predecessor x, and the successor p is feasible and minimizes the time-t objective anchored at x.",
+      "latex": "A(t+1)=\\operatorname{some}(p)\\Rightarrow\\exists x,\\ A(t)=\\operatorname{some}(x)\\land p\\in V\\land\\forall z\\in V,\\ \\ell_t(p)+\\iota(\\eta(t)^{-1}D_\\psi(p,x))\\le\\ell_t(z)+\\iota(\\eta(t)^{-1}D_\\psi(z,x)).",
+      "slots": {
+        "domain": "E a real normed space; V,ψ,η,loss,x0 as in item_2; p∈E; t∈ℕ.",
+        "quantifiers": "Universal in inputs, t,p. Conclusion existentially quantifies predecessor x∈E and universally compares every z∈V.",
+        "assumptions": "The sole nonstructural premise is A(t+1)=some p.",
+        "construction": "Uses the bind transition with loss t and η t. η t may be zero or negative; EReal objectives may attain infinite minima.",
+        "conclusion": "All three components: existence of x with A(t)=some x, p∈V, and IsMinOn of the stated objective at p.",
+        "data_timing_and_partiality": "Identifies the exact data index t and anchor x for transition t→t+1. Some at the successor rules out none at the predecessor.",
+        "excluded_claims": "No assertion x∈V, particularly at t=0; no explicit predecessor formula, finite value, unique optimization solution, differentiability, positivity or future success."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_7",
+      "natural_language": "Once the trajectory is none at t, it stays none at every time t+k for natural k.",
+      "latex": "A(t)=\\operatorname{none}\\Rightarrow\\forall k\\in\\mathbb N,\\ A(t+k)=\\operatorname{none}.",
+      "slots": {
+        "domain": "E and trajectory inputs as in item_2; t,k∈ℕ.",
+        "quantifiers": "Universal in all inputs, t and k; k=0 is included.",
+        "assumptions": "The sole premise is A(t)=none.",
+        "construction": "Propagation follows the absorbing none behavior in Option.bind; each subsequent objective is bypassed when its anchor Option is none.",
+        "conclusion": "A(t+k)=none for the given arbitrary natural offset k.",
+        "data_timing_and_partiality": "No recovery or reset branch exists. A(0)=some x0 makes the t=0 failure premise impossible for this definition.",
+        "excluded_claims": "No claim that failure occurs, no cause classification, no failure time bound, and no success guarantees for arbitrary data before a failed time."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_8",
+      "natural_language": "If every actually reached successful state before T has an attainable next-step minimum, the trajectory succeeds at T.",
+      "latex": "[\\forall t<T,\\forall x\\in E,\\ A(t)=\\operatorname{some}(x)\\Rightarrow\\exists p\\in V,\\ \\forall z\\in V,\\ Q_{\\eta(t),\\ell_t,x}(p)\\le Q_{\\eta(t),\\ell_t,x}(z)]\\Rightarrow\\exists p\\in E,\\ A(T)=\\operatorname{some}(p).",
+      "slots": {
+        "domain": "E a real normed space; V,ψ,η,loss,x0 as in item_2; finite horizon T∈ℕ.",
+        "quantifiers": "Premise: every natural t<T, every x∈E, and a conditional existential feasible minimizer p. Conclusion: exists p∈E.",
+        "assumptions": "Exactly conditional attainment at successful states actually equal to A(t), for t<T. No assumption about arbitrary unreachable x.",
+        "construction": "Uses A(0)=some x0 and item_1's existence-sensitive choice under bind. Extended-real infinite minima satisfy attainment, too. η is unrestricted.",
+        "conclusion": "Existence of p with A(T)=some p. At T=0 this holds with p=x0 and an empty range of attainment requirements.",
+        "data_timing_and_partiality": "Finite-horizon guarantee only. Reachable-state attainment prevents a first failure before or at T; requirements use losses at 0,…,T−1.",
+        "excluded_claims": "No uniform attainment for all x, no blanket feasible/nonempty/convex/closed V requirement, no finite objective claim, no unique p stated as an optimization solution, and no success after T. In particular the conclusion does not state p∈V for T=0."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_9",
+      "natural_language": "Under the stated convexity, properness, subgradient, positive-step and differentiability assumptions, consecutive successful states satisfy a one-step comparison inequality against every feasible u.",
+      "latex": "\\begin{gathered}A(t)=\\operatorname{some}(x),\\quad A(t+1)=\\operatorname{some}(p),\\quad \\eta(t)>0,\\quad P(\\ell_t),\\\\ V\\text{ convex},\\quad\\forall z\\in V,\\ S(\\ell_t,z)\\ne\\varnothing,\\quad \\psi\\text{ differentiable at }x,p\\\\ \\Longrightarrow\\quad\\forall u\\in V,\\quad \\eta(t)\\bigl(\\operatorname{toReal}(\\ell_t(p))-\\operatorname{toReal}(\\ell_t(u))\\bigr)\\le D_\\psi(u,x)-D_\\psi(u,p)-D_\\psi(p,x).\\end{gathered}",
+      "slots": {
+        "domain": "E is a complete real inner product space, with NormedAddCommGroup, InnerProductSpace ℝ E and CompleteSpace E. V⊆E; ψ:E→ℝ; η:ℕ→ℝ; loss:ℕ→E→EReal; x0,x,p∈E; t∈ℕ.",
+        "quantifiers": "Universal in every parameter and every u∈V. hs quantifies every z∈V and asserts existence of a vector g whose supporting inequality holds for all y∈E.",
+        "assumptions": "All eight named hypotheses: hV convexity of V; hx A(t)=some x; hp A(t+1)=some p; hη 0<η(t); hf P(loss t); hs nonempty S at every z∈V; hdx differentiability of ψ at x; hdp differentiability at p.",
+        "construction": "D uses ambient derivatives at its second argument. Every base appearing on the right is x or p, where differentiability is assumed; differentiability at u is unnecessary. P excludes −∞ globally and supplies one finite value somewhere in E. Together with nonempty S, it rules out +∞ at feasible z: test the supporting inequality at that finite-value point. Thus loss t is finite on V, including p by successful-update feasibility.",
+        "conclusion": "Precisely η(t) times the difference of real projections of losses at p and u is bounded by Dψ(u,x)−Dψ(u,p)−Dψ(p,x), with coefficients 1 and the displayed ordering.",
+        "data_timing_and_partiality": "Uses current loss t and step η(t), successor p and prior x. x0 and x need not be assumed feasible. Success is a premise, not established by this theorem. No classical selector uniqueness is added.",
+        "excluded_claims": "No convexity/strict convexity/closedness/coercivity or nonnegativity assumption on ψ, no global differentiability of ψ, no loss smoothness, no closed V, no finite loss at an outside x, no existence of successors for arbitrary inputs, no telescoped regret or rate stated. Do not substitute a general extended-real subtraction for the literal toReal difference."
+      },
+      "conjuncts": []
+    },
+    {
+      "id": "item_10",
+      "natural_language": "For V=(−∞,0], f(z)=z in EReal and ψ(z)=exp(z), all fourteen conjuncts below hold, including the objective identity and failure to attain a minimum despite the listed regularity properties.",
+      "latex": "V=(-\\infty,0],\\quad f(z)=\\iota(z),\\quad\\psi(z)=e^z.\\quad Q(z)=f(z)+\\iota(D_\\psi(z,0))=\\iota(e^z-1),\\quad \\neg\\exists p\\in V\\,\\forall z\\in V,\\ Q(p)\\le Q(z),\\quad U(V,\\psi,1,f,0)=\\operatorname{none},\\quad\\forall k\\in\\mathbb N,\\ A(k+1)=\\operatorname{none}.",
+      "slots": {
+        "domain": "Concrete carrier ℝ with V=Iic 0; total f:ℝ→EReal given by finite embedding of z; total ψ=Real.exp.",
+        "quantifiers": "No premises. Universal quantifiers in the conjuncts range over all z∈ℝ, all sublevel thresholds r∈ℝ in C, and all k∈ℕ; minimum comparison is over V.",
+        "assumptions": "No external assumptions: nonemptiness, closedness, convexity, properness, subgradient existence and regularity are conclusions within the conjunction.",
+        "construction": "η is constantly 1 and loss constantly f. Anchor and x0 are 0. The objective equals the finite embedding of exp(z)−1 on all ℝ. C is closedness of real sublevel sets of embedded ψ.",
+        "conclusion": "All 14 numbered conjuncts below, including no feasible minimizer, one-step none, and none at every strictly positive time.",
+        "data_timing_and_partiality": "A(0)=some 0 by definition; the theorem's failure claim begins at k+1. Failure is nonattainment, not a computational failure. The initial point is feasible and interior to univ, not asserted interior to V.",
+        "excluded_claims": "No uniqueness or attained optimizer; regularity listed does not imply success. No assertion of compact V or coercivity; no counterexample to statements with added assumptions. The text does not separately state an infimum value, rate, or numerical stopping behavior."
+      },
+      "conjuncts": [
+        "V\\ne\\varnothing.",
+        "V\\text{ is closed}.",
+        "V\\text{ is convex over }\\mathbb R.",
+        "0\\in V.",
+        "P(f):\\ (\\forall z,\\ f(z)\\ne-\\infty)\\land\\exists z,r\\in\\mathbb R,\\ f(z)=\\iota(r).",
+        "\\forall z\\in\\mathbb R,\\ S(f,z)\\ne\\varnothing.",
+        "C(\\iota\\circ\\psi):\\ \\forall r\\in\\mathbb R,\\ \\{z:\\iota(\\psi(z))\\le\\iota(r)\\}\\text{ is closed}.",
+        "\\psi\\text{ is strictly convex on }\\mathbb R.",
+        "\\forall z\\in\\mathbb R,\\ \\psi\\text{ is differentiable at }z.",
+        "0\\in\\operatorname{int}(\\mathbb R).",
+        "\\forall z\\in\\mathbb R,\\ f(z)+\\iota(D_\\psi(z,0))=\\iota(e^z-1).",
+        "\\neg\\exists p\\in V,\\ \\forall z\\in V,\\ f(p)+\\iota(D_\\psi(p,0))\\le f(z)+\\iota(D_\\psi(z,0)).",
+        "U(V,\\psi,1,f,0)=\\operatorname{none}.",
+        "\\forall k\\in\\mathbb N,\\ A_{V,\\psi,\\eta\\equiv1,\\ell\\equiv f,0}(k+1)=\\operatorname{none}."
+      ]
+    },
+    {
+      "id": "item_11",
+      "natural_language": "The two concrete extensions agree on the nonnegative half-line, give the same D at an interior base, and give different D at the boundary base 0, where φ is not differentiable.",
+      "latex": "X=[0,\\infty),\\quad\\psi(z)=z^2+z,\\quad\\phi(z)=z^2+|z|;\\quad D_\\psi(2,1)=D_\\phi(2,1)=1,\\quad D_\\psi(2,0)=4,\\quad D_\\phi(2,0)=6,\\quad\\neg\\operatorname{DifferentiableAt}(\\phi,0).",
+      "slots": {
+        "domain": "Concrete carrier ℝ; X=Ici 0; ψ,φ are total real functions on ℝ.",
+        "quantifiers": "No premises. EqOn quantifies all z∈X; the remaining statements use the literal points −1,0,1,2.",
+        "assumptions": "All properties are conclusions, not assumptions. Equality of the functions is only asserted on X.",
+        "construction": "At the nondifferentiable base 0, fderiv φ 0 is the zero continuous linear map, hence Dφ(2,0) has the stated total-function value 6. D is not undefined there and is not using a one-sided derivative.",
+        "conclusion": "All 9 numbered conjuncts below, retaining the inequality at −1, both membership claims and each exact D-value.",
+        "data_timing_and_partiality": "No iteration or choice. Interior-base equality is a local property; the boundary computation uses ambient total extensions.",
+        "excluded_claims": "No global equality of functions, no ambient derivative of φ at 0, no within-set derivative substitution, and no theorem saying every boundary pair must give unequal D. No optimizer or trajectory claim."
+      },
+      "conjuncts": [
+        "\\forall z\\in X,\\ \\psi(z)=\\phi(z).",
+        "\\psi(-1)\\ne\\phi(-1).",
+        "1\\in\\operatorname{int}X.",
+        "2\\in X.",
+        "D_\\psi(2,1)=D_\\phi(2,1).",
+        "D_\\psi(2,1)=1.",
+        "D_\\psi(2,0)=4.",
+        "D_\\phi(2,0)=6.",
+        "\\neg\\operatorname{DifferentiableAt}(\\phi,0)."
+      ]
+    },
+    {
+      "id": "item_12",
+      "natural_language": "The concrete interval-restricted losses and quartic-plus-quadratic ψ satisfy all sixteen conjuncts below, including the exact first two updates, strict-prefix invariance, asymmetric D-values and the full two-step comparison inequality.",
+      "latex": "\\begin{gathered}V=[-1,1],\\quad\\psi(z)=z^4/4+z^2/2,\\quad f_0(z)=\\begin{cases}\\iota(|z|)&z\\in V\\\\+\\infty&z\\notin V,\\end{cases}\\quad f_1(z)=\\begin{cases}\\iota(-5z/8)&z\\in V\\\\+\\infty&z\\notin V,\\end{cases}\\\\ \\ell_t=\\begin{cases}f_0&t=0\\\\f_1&t\\ne0,\\end{cases}\\quad\\eta(t)=1,\\quad x_0=1/2.\\end{gathered}",
+      "slots": {
+        "domain": "Concrete carrier ℝ; V=Icc (−1) 1; ψ total real polynomial; f0,f1 total EReal functions with +∞ outside V; loss total on ℕ×ℝ.",
+        "quantifiers": "No premises. Universal quantifiers range over z∈V for subgradients, all alternative η':ℕ→ℝ and loss':ℕ→ℝ→EReal with four prefix equations, and all u∈V for the comparison inequality.",
+        "assumptions": "P f0 and P f1, nonempty subgradients on V, and strict convexity of ψ are stated conclusions. No differentiability of the absolute-value loss is required; its nondifferentiability at 0 is explicitly asserted.",
+        "construction": "Original η≡1; loss at 0 is f0, at every later index is f1. Trajectory starts at 1/2. Alternative data need only match η' 0=η' 1=1, loss' 0=f0, loss' 1=f1 as whole functions, to share the time-2 output.",
+        "conclusion": "All 16 conjuncts below. In particular the inequality retains both equal Dψ(u,1/2) terms before subtraction and both movement terms; its right side simplifies to −20/64=−5/16. The last numerical comparison is a separate conjunct.",
+        "data_timing_and_partiality": "Times 0,1,2 have outputs some(1/2), some 0, some(1/2). Time 2 uses only indices 0 and 1. Alternatives after index 1 are unrestricted, including zero/negative steps and arbitrary EReal losses.",
+        "excluded_claims": "No claim of uniqueness of minimizers is explicitly included, despite exact selected outputs. No future trajectory after time 2 is stated, no global finite losses, no differentiability of abs, no symmetry of D, no general rate or bound at arbitrary horizons."
+      },
+      "conjuncts": [
+        "P(f_0).",
+        "P(f_1).",
+        "\\forall z\\in V,\\ S(f_0,z)\\ne\\varnothing.",
+        "\\forall z\\in V,\\ S(f_1,z)\\ne\\varnothing.",
+        "\\psi\\text{ is strictly convex on }\\mathbb R.",
+        "\\neg\\operatorname{DifferentiableAt}(|\\cdot|,0).",
+        "f_0(2)=+\\infty.",
+        "f_1(2)=+\\infty.",
+        "A(0)=\\operatorname{some}(1/2).",
+        "A(1)=\\operatorname{some}(0).",
+        "A(2)=\\operatorname{some}(1/2).",
+        "\\forall\\eta':\\mathbb N\\to\\mathbb R,\\ \\forall\\ell':\\mathbb N\\to(\\mathbb R\\to\\overline{\\mathbb R}),\\quad [\\eta'(0)=1\\land\\eta'(1)=1\\land\\ell'_0=f_0\\land\\ell'_1=f_1]\\Rightarrow A_{V,\\psi,\\eta',\\ell',1/2}(2)=\\operatorname{some}(1/2).",
+        "D_\\psi(0,1/2)=11/64.",
+        "D_\\psi(1/2,0)=9/64.",
+        "\\forall u\\in V,\\ [\\operatorname{toReal}(f_0(0))-\\operatorname{toReal}(f_0(u))]+[\\operatorname{toReal}(f_1(1/2))-\\operatorname{toReal}(f_1(u))]\\le D_\\psi(u,1/2)-D_\\psi(u,1/2)-D_\\psi(0,1/2)-D_\\psi(1/2,0).",
+        "-1/2\\le-5/16."
+      ]
+    },
+    {
+      "id": "item_13",
+      "natural_language": "The concrete update starts from the infeasible point −1 and succeeds at time 1 with 0; all nine conjuncts below include the outside-domain infinite loss, exact D-value and comparison inequality.",
+      "latex": "V=[0,1],\\quad f(z)=\\begin{cases}\\iota(z)&z\\in V\\\\+\\infty&z\\notin V,\\end{cases}\\quad\\psi(z)=z^2/2,\\quad\\eta\\equiv1,\\quad\\ell\\equiv f,\\quad x_0=-1;\\qquad A(1)=\\operatorname{some}(0).",
+      "slots": {
+        "domain": "Concrete carrier ℝ; V=Icc 0 1; f total EReal-valued with +∞ outside V; ψ total real quadratic.",
+        "quantifiers": "No premises. Subgradient nonemptiness ranges over all z∈V; the one-step inequality ranges over all u∈V.",
+        "assumptions": "Properness, subgradient existence, strict convexity and infeasibility of −1 are conclusions in the conjunction.",
+        "construction": "η≡1 and loss≡f. A(0)=some(−1) by the definition even though f(−1)=+∞ and −1∉V. The minimization uses the whole-carrier ψ and evaluates f at candidate z∈V, not a requirement of finite f at the anchor.",
+        "conclusion": "All 9 conjuncts below, including time-1 success, Dψ(0,−1)=1/2, the full inequality and the final standalone scalar comparison.",
+        "data_timing_and_partiality": "The update at time 1 uses data index 0 and anchor −1. Classical choice selects the explicitly stated result 0. Initial infeasibility does not produce none at initialization.",
+        "excluded_claims": "No blanket claim that all infeasible starts succeed, no general existence or uniqueness claim, no future trajectory claim, and no finite f at −1. No initial feasibility is silently inserted."
+      },
+      "conjuncts": [
+        "P(f).",
+        "\\forall z\\in V,\\ S(f,z)\\ne\\varnothing.",
+        "\\psi\\text{ is strictly convex on }\\mathbb R.",
+        "f(-1)=+\\infty.",
+        "-1\\notin V.",
+        "A_{V,\\psi,\\eta\\equiv1,\\ell\\equiv f,-1}(1)=\\operatorname{some}(0).",
+        "D_\\psi(0,-1)=1/2.",
+        "\\forall u\\in V,\\ -u\\le D_\\psi(u,-1)-D_\\psi(u,0)-D_\\psi(0,-1).",
+        "-1/2\\le1/2."
+      ]
+    }
+  ],
+  "input_sha256": "a303ff5d4c63cf79bbf870dc1f27379eb7e204208d4e9cb7b317ad3108eef18f"
+}

@@ -1,0 +1,184 @@
+{
+  "at": "2026-10-31T00:17:21.240481+00:00",
+  "acceptedMain": "de98daa596a84245d8ca0a4f871a2c0422dab6b3",
+  "commands": [
+    {
+      "command": [
+        "local-user-profile\\anaconda3\\python.exe",
+        "-X",
+        "utf8",
+        "tools/check_process_memory.py",
+        "check"
+      ],
+      "exitCode": 0,
+      "stdout": "00-stdout.txt",
+      "stdoutSHA256": "9eaf787390c5f1bf4dea8a4f7b1cf06937163fda2f17afdffafddbb4672c10bb",
+      "stderr": "00-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile\\anaconda3\\python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "search-memory",
+        "prescient"
+      ],
+      "exitCode": 0,
+      "stdout": "01-stdout.txt",
+      "stdoutSHA256": "eb4d6ed9fa6ef9ed76039d56b5844ac31d8bce8188df456efde0a0b7d15aab1f",
+      "stderr": "01-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile\\anaconda3\\python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "search-memory",
+        "Bregman"
+      ],
+      "exitCode": 0,
+      "stdout": "02-stdout.txt",
+      "stdoutSHA256": "58973a6e2d18cf3bb55fd846a3c1ff5ddd6cbc69e1b01cd6059c92b434e64c2a",
+      "stderr": "02-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile\\anaconda3\\python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "iterate_prefix",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "03-stdout.txt",
+      "stdoutSHA256": "be605931f875291903cd5978821f01c1c66c45593c2ab3b76d18850a47aeb76c",
+      "stderr": "03-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile\\anaconda3\\python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "proximal_one_step_extended",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "04-stdout.txt",
+      "stdoutSHA256": "de0a296a6101900cd1834bbb6e1cc7d564e26c5a2914faf7646931e8d9fbf941",
+      "stderr": "04-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile\\anaconda3\\python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "advance_proximal_minimizer",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "05-stdout.txt",
+      "stdoutSHA256": "3b2f13b1e205f876d1d3df3fafba07dbbd83aaeb0c7561b497ce7153f1ef4ab1",
+      "stderr": "05-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "mathlibCommit": "5e932f97dd25535344f80f9dd8da3aab83df0fe6",
+  "searches": [
+    {
+      "command": [
+        "rg",
+        "-n",
+        "fderiv_eq|fderiv_zero_of_not_differentiableAt",
+        "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Analysis\\Calculus\\FDeriv",
+        "-g",
+        "*.lean"
+      ],
+      "exitCode": 0,
+      "path": "api-search-0.txt",
+      "sha256": "1077eede6b7d3ada94e93f756b0245fed166b64b35f12fcc36d107067126fd51"
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "bind_eq_some_iff|bind_none",
+        "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Data\\Option",
+        "-g",
+        "*.lean"
+      ],
+      "exitCode": 1,
+      "path": "api-search-1.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "Bregman|[Pp]rescient|argmin|arg min|Option",
+        "canonical-repository\\research-wiki\\mathlib\\theorem-cards.md",
+        "canonical-repository\\research-wiki\\lml"
+      ],
+      "exitCode": 1,
+      "path": "api-search-2.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "decision": "adapt_existing",
+  "reason": "Reuse accepted extended-real proximal one-step, canonical divergence/properness/global-support definitions, Option recursion and local fderiv congruence. Existing affine prescient projection is a total quadratic/affine specialization, while current subgradient recursion chooses a support before projected update; neither supplies arbitrary extended-real current-whole-loss partial argmin recursion. The causal and partiality interfaces have distinct actual consumers in the four complete canaries and final same-run one-step. No duplicate foundational library, dependency change or generalized new search theorem is introduced.",
+  "dependencySourceBindings": {
+    "BanditRLProof/OnlineBregmanExtended.lean": {
+      "gitBlob": "cdee459209f4c14fd5906c306c3ddb86e3e86f93",
+      "gitBytesSHA256": "a10c75f09c3e2e6828d79c84158845467ced2229ee795ad003cf8d704cf40b0c"
+    },
+    "BanditRLProof/OnlineBregmanProximal.lean": {
+      "gitBlob": "e40e3e295f5a86a1fcd976bf3d8f5391a16419b8",
+      "gitBytesSHA256": "d352d82e7fa462ca87f7c3ca1a7c1f5e39e75f1c1b8fd8f26cad8c0365e1ab59"
+    },
+    "BanditRLProof/OnlinePrescientLinear.lean": {
+      "gitBlob": "aaa8db0b65bed60a1f07d890713720c2c275f21e",
+      "gitBytesSHA256": "a7098ef90e812a20616963756f203609758ccc9701d6a30bfe0152cefe3849bc"
+    },
+    "BanditRLProof/OnlineSubgradientDescent.lean": {
+      "gitBlob": "39e166580e79ff4cc835826aa35043730d8a8705",
+      "gitBytesSHA256": "703f2da983f585659fba457cba49f105210982d03e2d2369fc000f0d88e3ccee"
+    },
+    "BanditRLProof/OnlineClosedProper.lean": {
+      "gitBlob": "3aab9a8af9e1566d34969cfb0b2e0e54e432c286",
+      "gitBytesSHA256": "0524722fb25231dc3c9096f9574c9a4342b401c5c2208a07a97453234968ae75"
+    },
+    "BanditRLProof/OnlineSubgradientBasic.lean": {
+      "gitBlob": "c37ca8e2fb69ef4346dc4dcd6d17faa0b580839f",
+      "gitBytesSHA256": "0909561292bec87909286cbf59d6e12dab22bc9658931327491cca84660d517d"
+    },
+    "Tests/OnlineBregmanExtendedCanary.lean": {
+      "gitBlob": "fdb7b0c83fafb9e9a12579a764796b4cbd2d010d",
+      "gitBytesSHA256": "851436f55c0636e0c09fc936f65f068f5e0b171b18e74da8c05bff35af9599dd"
+    }
+  },
+  "upstreamCandidacy": "Local fderiv congruence already in Mathlib; new specialized divergence wrapper and recursive interfaces remain project-local. No novelty or minimality claim.",
+  "processMemory": {
+    "path": "runs/process_memory.json",
+    "sha256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "usedIDs": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH",
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE"
+    ]
+  },
+  "schedulerChanged": false,
+  "productionEdited": false,
+  "sourceOrProofAcceptance": false
+}

@@ -1,0 +1,219 @@
+{
+  "originalHead": "24de0231aa067f141251aac5c20deb58e448ea66",
+  "acceptedMain": "de98daa596a84245d8ca0a4f871a2c0422dab6b3",
+  "declarations": [
+    {
+      "id": "item_0",
+      "kind": "theorem",
+      "name": "divergence_extension_eq",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem divergence_extension_eq (X : Set E) (ψ φ : E → ℝ)\n    (hEq : EqOn ψ φ X) (a b : E) (ha : a ∈ X) (hb : b ∈ interior X) :\n    divergence ψ a b = divergence φ a b",
+      "signatureSHA256": "0b6c6af47f37ba4b605a205639e1e92e71a20b5623336dc168b131da9dffe114",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_1",
+      "kind": "def",
+      "name": "advance",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "def advance (V : Set E) (ψ : E → ℝ) (η : ℝ) (f : E → EReal) (x : E) : Option E := by\n  classical\n  exact if h : ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p\n    then some (Classical.choose h) else none",
+      "signatureSHA256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": true,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_2",
+      "kind": "def",
+      "name": "iterate",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "def iterate (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) : ℕ → Option E\n  | 0 => some x0\n  | t + 1 => (iterate V ψ η loss x0 t).bind (advance V ψ (η t) (loss t))",
+      "signatureSHA256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": true,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_3",
+      "kind": "theorem",
+      "name": "advance_some_spec",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem advance_some_spec (V : Set E) (ψ : E → ℝ) (η : ℝ)\n    (f : E → EReal) (x p : E) (h : advance V ψ η f x = some p) :\n    p ∈ V ∧ IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+      "signatureSHA256": "04707f6fd917092a6101f04d4feceee8af652ee7899a02046db134ecbcb19f92",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_4",
+      "kind": "theorem",
+      "name": "advance_none_iff",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem advance_none_iff (V : Set E) (ψ : E → ℝ) (η : ℝ)\n    (f : E → EReal) (x : E) :\n    advance V ψ η f x = none ↔ ¬ ∃ p, p ∈ V ∧\n      IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+      "signatureSHA256": "194634cf25e8b2b9bfc7b24e7b74515f42c192d0f47abb2fadf3c8c73460b7ab",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_5",
+      "kind": "theorem",
+      "name": "iterate_prefix",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem iterate_prefix (V : Set E) (ψ : E → ℝ) (η η' : ℕ → ℝ)\n    (loss loss' : ℕ → E → EReal) (x0 : E) (t : ℕ)\n    (hη : ∀ s < t, η s = η' s) (hloss : ∀ s < t, loss s = loss' s) :\n    iterate V ψ η loss x0 t = iterate V ψ η' loss' x0 t",
+      "signatureSHA256": "fc630db44a1cc20fa2577ac81bc3bb01db4f08c5ef1b979120a67bc3981c9c7f",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_6",
+      "kind": "theorem",
+      "name": "iterate_succ_some_spec",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem iterate_succ_some_spec (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 p : E) (t : ℕ)\n    (h : iterate V ψ η loss x0 (t + 1) = some p) :\n    ∃ x, iterate V ψ η loss x0 t = some x ∧ p ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p",
+      "signatureSHA256": "c2ac106c46b35802b409724cb1f48cca2fd320275471f0a2b11628de252ffc7c",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_7",
+      "kind": "theorem",
+      "name": "iterate_no_recovery",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem iterate_no_recovery (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (t k : ℕ)\n    (h : iterate V ψ η loss x0 t = none) :\n    iterate V ψ η loss x0 (t + k) = none",
+      "signatureSHA256": "cfa46ffbefee85410349f15531f942b39508048988f53b98033836c67d870f17",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_8",
+      "kind": "theorem",
+      "name": "iterate_complete_of_step_attained",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]",
+      "statement": "theorem iterate_complete_of_step_attained (V : Set E) (ψ : E → ℝ) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (T : ℕ)\n    (hatt : ∀ t < T, ∀ x, iterate V ψ η loss x0 t = some x →\n      ∃ p, p ∈ V ∧\n        IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    ∃ p, iterate V ψ η loss x0 T = some p",
+      "signatureSHA256": "e819d6be4957e0f6bead706d2a7882176ed1a48eaee18b5031837adc2a607ee4",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_9",
+      "kind": "theorem",
+      "name": "iterate_one_step",
+      "path": "BanditRLProof/OnlinePrescientBregman.lean",
+      "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "statement": "theorem iterate_one_step (V : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 x p : E) (t : ℕ)\n    (hx : iterate V ψ η loss x0 t = some x)\n    (hp : iterate V ψ η loss x0 (t + 1) = some p)\n    (hη : 0 < η t) (hf : BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hdx : DifferentiableAt ℝ ψ x) (hdp : DifferentiableAt ℝ ψ p) :\n    ∀ u ∈ V, η t * ((loss t p).toReal - (loss t u).toReal) ≤\n      divergence ψ u x - divergence ψ u p - divergence ψ p x",
+      "signatureSHA256": "40fe2afe44a911b8d5dfe36c88b604de9290bf5208b6b2f1aa5d04c7f1d9ed54",
+      "sourceModuleSHA256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_10",
+      "kind": "theorem",
+      "name": "closed_strict_regularizer_missing_minimum",
+      "path": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "",
+      "statement": "theorem closed_strict_regularizer_missing_minimum :\n    let V : Set ℝ := Iic 0\n    let f : ℝ → EReal := fun z => (z : EReal)\n    let ψ : ℝ → ℝ := Real.exp\n    V.Nonempty ∧ IsClosed V ∧ Convex ℝ V ∧ (0 : ℝ) ∈ V ∧\n      SourceProper f ∧\n      (∀ z : ℝ, (SourceSubdifferential f z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      (∀ z : ℝ, DifferentiableAt ℝ ψ z) ∧\n      (0 : ℝ) ∈ interior (univ : Set ℝ) ∧\n      (∀ z : ℝ, f z + ((divergence ψ z 0 : ℝ) : EReal) = ((Real.exp z - 1 : ℝ) : EReal)) ∧\n      (¬ ∃ p, p ∈ V ∧ IsMinOn (fun z => f z + ((divergence ψ z 0 : ℝ) : EReal)) V p) ∧\n      advance V ψ 1 f 0 = none ∧\n      (∀ k : ℕ, iterate V ψ (fun _ => 1) (fun _ => f) 0 (k + 1) = none)",
+      "signatureSHA256": "95c624944b64cd81b2c71d4f878de3402f7cc8172cc7192472de39f6432aa6ee",
+      "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_11",
+      "kind": "theorem",
+      "name": "interior_extension_boundary_difference",
+      "path": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "",
+      "statement": "theorem interior_extension_boundary_difference :\n    let X : Set ℝ := Ici 0\n    let ψ : ℝ → ℝ := fun z => z ^ 2 + z\n    let φ : ℝ → ℝ := fun z => z ^ 2 + |z|\n    EqOn ψ φ X ∧ ψ (-1) ≠ φ (-1) ∧ (1 : ℝ) ∈ interior X ∧ (2 : ℝ) ∈ X ∧\n      divergence ψ 2 1 = divergence φ 2 1 ∧ divergence ψ 2 1 = 1 ∧\n      divergence ψ 2 0 = 4 ∧ divergence φ 2 0 = 6 ∧ ¬ DifferentiableAt ℝ φ 0",
+      "signatureSHA256": "5ae6c60b04b6bd86276aec0b910950f060754ea43aff96e5bbffc7c3a8069691",
+      "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_12",
+      "kind": "theorem",
+      "name": "two_distinct_current_losses",
+      "path": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "",
+      "statement": "theorem two_distinct_current_losses :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      StrictConvexOn ℝ univ ψ ∧\n      ¬ DifferentiableAt ℝ (abs : ℝ → ℝ) 0 ∧\n      f0 2 = ⊤ ∧ f1 2 = ⊤ ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 0 = some (1 / 2) ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 1 = some 0 ∧\n      iterate V ψ (fun _ => 1) loss (1 / 2) 2 = some (1 / 2) ∧\n      (∀ (η' : ℕ → ℝ) (loss' : ℕ → ℝ → EReal),\n        η' 0 = 1 → η' 1 = 1 → loss' 0 = f0 → loss' 1 = f1 →\n        iterate V ψ η' loss' (1 / 2) 2 = some (1 / 2)) ∧\n      divergence ψ 0 (1 / 2) = 11 / 64 ∧\n      divergence ψ (1 / 2) 0 = 9 / 64 ∧\n      (∀ u ∈ V, ((f0 0).toReal - (f0 u).toReal) +\n        ((f1 (1 / 2)).toReal - (f1 u).toReal) ≤\n        divergence ψ u (1 / 2) - divergence ψ u (1 / 2) -\n          divergence ψ 0 (1 / 2) - divergence ψ (1 / 2) 0) ∧\n      (-1 / 2 : ℝ) ≤ -5 / 16",
+      "signatureSHA256": "173b76076098d3a8a2175ddc1713fc4fcecadb9aac6508cfbbe3590967500d92",
+      "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    },
+    {
+      "id": "item_13",
+      "kind": "theorem",
+      "name": "boundary_outside_center_run",
+      "path": "Tests/OnlinePrescientBregmanCanary.lean",
+      "context": "",
+      "statement": "theorem boundary_outside_center_run :\n    let V : Set ℝ := Icc 0 1\n    let f : ℝ → EReal := fun z => if z ∈ V then (z : EReal) else ⊤\n    let ψ : ℝ → ℝ := fun z => z ^ 2 / 2\n    SourceProper f ∧\n      (∀ z ∈ V, (SourceSubdifferential f z).Nonempty) ∧\n      StrictConvexOn ℝ univ ψ ∧ f (-1) = ⊤ ∧ (-1 : ℝ) ∉ V ∧\n      iterate V ψ (fun _ => 1) (fun _ => f) (-1) 1 = some 0 ∧\n      divergence ψ 0 (-1) = 1 / 2 ∧\n      (∀ u ∈ V, -u ≤ divergence ψ u (-1) - divergence ψ u 0 - divergence ψ 0 (-1)) ∧\n      (-1 / 2 : ℝ) ≤ 1 / 2",
+      "signatureSHA256": "d0dfc7500ddd6f1bae8630e832b1e095d1a6f92e2607776a924d03ae8d113c59",
+      "sourceModuleSHA256": "dd82154724a08ad41dcb1889980d3678fe1b98c5769918bf869cc10cc07b0509",
+      "wholeDefinitionIncluded": false,
+      "exactOriginalTextMatched": true,
+      "exactModuleHashMatched": true
+    }
+  ],
+  "supportingDefinitions": {
+    "head": "24de0231aa067f141251aac5c20deb58e448ea66",
+    "definitions": [
+      {
+        "original": "SourceProper",
+        "path": "BanditRLProof/OnlineClosedProper.lean",
+        "definition": "def SourceProper (f : E → EReal) : Prop :=\n  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)",
+        "sourceSHA256": "9dc0594237ed9193c7a376ae4df30c157cb60a38c3048097448ab2a28dd99c36"
+      },
+      {
+        "original": "SourceClosed",
+        "path": "BanditRLProof/OnlineClosedProper.lean",
+        "definition": "def SourceClosed (f : E → EReal) : Prop :=\n  ∀ r : ℝ, IsClosed {x | f x ≤ (r : EReal)}",
+        "sourceSHA256": "9dc0594237ed9193c7a376ae4df30c157cb60a38c3048097448ab2a28dd99c36"
+      },
+      {
+        "original": "SourceSubdifferential",
+        "path": "BanditRLProof/OnlineSubgradientBasic.lean",
+        "definition": "def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=\n  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}",
+        "sourceSHA256": "ca1d08447dcb2a25619f8db8828970bee4d23427cc3f9c74c67e80cbc0289d70"
+      },
+      {
+        "original": "divergence",
+        "path": "BanditRLProof/OnlineBregmanProximal.lean",
+        "definition": "def divergence (ψ : E → ℝ) (x y : E) : ℝ :=\n  ψ x - ψ y - fderiv ℝ ψ y (x - y)",
+        "sourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+      }
+    ]
+  },
+  "signatureHashConvention": "SHA256 exact LF-normalized statement UTF-8; scoped context separately bound by full original module hash",
+  "wholeOriginal611PathReviewClaimed": false
+}

@@ -768,3 +768,4 @@ import BanditRLProof.OnlinePrescientLinear
 import BanditRLProof.OnlineProximalComparison
 import BanditRLProof.OnlineBregmanProximal
 import BanditRLProof.OnlineBregmanExtended
+import BanditRLProof.OnlinePrescientBregman

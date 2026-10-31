@@ -172,3 +172,4 @@ import Tests.OnlinePrescientLinearCanary
 import Tests.OnlineProximalComparisonCanary
 import Tests.OnlineBregmanProximalCanary
 import Tests.OnlineBregmanExtendedCanary
+import Tests.OnlinePrescientBregmanCanary

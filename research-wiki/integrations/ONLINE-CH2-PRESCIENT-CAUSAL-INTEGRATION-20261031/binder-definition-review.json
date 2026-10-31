@@ -1,0 +1,287 @@
+{
+  "schema": "abrl-independent-binder-definition-audit-v1",
+  "classificationPolicy": "SOURCE/STANDING/TYPING/RULED/EXCESS classify source-facing one-step inputs. API_CONDITION identifies explicit hypotheses of separately claimed canonical library contracts; it is not an exception that licenses EXCESS in a claimed source Anchor. No numbered source theorem/algorithm is claimed here.",
+  "typing": [
+    {
+      "items": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "context": "E Type*, NormedAddCommGroup E, NormedSpace Real E",
+      "classification": "TYPING",
+      "note": "Broader normed carrier than finite Euclidean source; no CompleteSpace hidden."
+    },
+    {
+      "items": [
+        9
+      ],
+      "context": "E Type*, NormedAddCommGroup E, InnerProductSpace Real E, CompleteSpace E",
+      "classification": "TYPING",
+      "note": "Exact inherited complete inner-product context preserved. Completeness implicit for source finite Euclidean carrier; explicit in broader derived API."
+    },
+    {
+      "items": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "context": "Concrete Real; no generic section variables",
+      "classification": "TYPING"
+    }
+  ],
+  "logicalInputs": [
+    {
+      "item": 0,
+      "binder": "hEq",
+      "expandedLogicalInput": "forall z, z in X -> psi z = phi z",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Representation-compatibility input for extension-locality API; not an author theorem hypothesis."
+    },
+    {
+      "item": 0,
+      "binder": "ha",
+      "expandedLogicalInput": "a in X",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Required value agreement at first argument; source-domain guard also matches first carrier of D6.4."
+    },
+    {
+      "item": 0,
+      "binder": "hb",
+      "expandedLogicalInput": "b in interior X",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Required neighborhood agreement; source reference-domain guard matches D6.4."
+    },
+    {
+      "item": 3,
+      "binder": "h",
+      "expandedLogicalInput": "advance V psi eta f x = some p",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Successful chosen value, not merely existence; recursively expands literal advance."
+    },
+    {
+      "item": 5,
+      "binder": "hEta",
+      "expandedLogicalInput": "forall s, s<t -> eta s = eta-prime s",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Exact data-prefix comparison."
+    },
+    {
+      "item": 5,
+      "binder": "hLoss",
+      "expandedLogicalInput": "forall s, s<t -> loss s = loss-prime s, equivalently every ambient point equality",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Whole-function prefix equality, not observed-value equality."
+    },
+    {
+      "item": 6,
+      "binder": "h",
+      "expandedLogicalInput": "iterate(...,t+1)=some p",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Actual same recursion successor success."
+    },
+    {
+      "item": 7,
+      "binder": "h",
+      "expandedLogicalInput": "iterate(...,t)=none",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Actual recurrence failure state."
+    },
+    {
+      "item": 8,
+      "binder": "hatt",
+      "expandedLogicalInput": "forall t<T, forall x, A(t)=some x -> exists p, p in V AND forall z in V, Q_t,x(p)<=Q_t,x(z)",
+      "classification": "API_CONDITION",
+      "sourceAnchorClassification": "NOT_APPLICABLE: canonical library contract, not a premise added to numbered source theorem",
+      "justification": "Conditional reachable-state attainment explicitly assumed by this library completeness implication. It is not source-proved and cannot close Algorithm15.8 attainment."
+    },
+    {
+      "item": 9,
+      "binder": "hV",
+      "expandedLogicalInput": "forall a,b in V, forall alpha,beta>=0 with alpha+beta=1, alpha*a+beta*b in V",
+      "classification": "SOURCE",
+      "alsoAPICondition": true,
+      "justification": "Source convex feasible set; API uses standard Convex."
+    },
+    {
+      "item": 9,
+      "binder": "hx",
+      "expandedLogicalInput": "A(t)=some x",
+      "classification": "STANDING",
+      "alsoAPICondition": true,
+      "justification": "Actual predecessor of this chosen library run, corresponding only conditionally to source reference state."
+    },
+    {
+      "item": 9,
+      "binder": "hp",
+      "expandedLogicalInput": "A(t+1)=some p",
+      "classification": "STANDING",
+      "alsoAPICondition": true,
+      "justification": "Actual successor of SAME run; expands to feasible global minimizer based at same predecessor. No optimization conclusion independently assumed as a convenience result."
+    },
+    {
+      "item": 9,
+      "binder": "hEta",
+      "expandedLogicalInput": "0<eta t",
+      "classification": "SOURCE",
+      "alsoAPICondition": true,
+      "justification": "Positive current source stepsize; no monotonicity input for isolated step."
+    },
+    {
+      "item": 9,
+      "binder": "hf.noBottom",
+      "expandedLogicalInput": "forall y, loss t y != bottom",
+      "classification": "SOURCE",
+      "alsoAPICondition": true,
+      "justification": "Source loss carrier excludes minus infinity globally."
+    },
+    {
+      "item": 9,
+      "binder": "hf.finiteWitness",
+      "expandedLogicalInput": "exists y, exists r:Real, loss t y=coe r",
+      "classification": "STANDING",
+      "alsoAPICondition": true,
+      "justification": "Properness from nonempty source V and finite losses there; exact SourceProper part, not global finiteness."
+    },
+    {
+      "item": 9,
+      "binder": "hs",
+      "expandedLogicalInput": "forall z in V, exists g:E, forall y:E, loss t z + coe(inner g (y-z)) <= loss t y",
+      "classification": "SOURCE",
+      "alsoAPICondition": true,
+      "justification": "Subdifferentiability on V with GLOBAL ambient support comparisons; not local subgradient or differentiability."
+    },
+    {
+      "item": 9,
+      "binder": "hdx",
+      "expandedLogicalInput": "exists continuous real-linear L, HasFDerivAt psi L x",
+      "classification": "STANDING",
+      "alsoAPICondition": true,
+      "justification": "Ambient derivative at actual predecessor. Corresponds to source interior differentiability only after a valid X representation/guard; not silently inferred here."
+    },
+    {
+      "item": 9,
+      "binder": "hdp",
+      "expandedLogicalInput": "exists continuous real-linear L, HasFDerivAt psi L p",
+      "classification": "STANDING",
+      "alsoAPICondition": true,
+      "justification": "Separate ambient derivative at actual successor; same source-validity qualification."
+    }
+  ],
+  "noLogicalHypothesisItems": [
+    1,
+    2,
+    4,
+    10,
+    11,
+    12,
+    13
+  ],
+  "expandedProjectDefinitions": [
+    {
+      "original": "SourceProper",
+      "path": "BanditRLProof/OnlineClosedProper.lean",
+      "definition": "def SourceProper (f : E → EReal) : Prop :=\n  (∀ x, f x ≠ ⊥) ∧ ∃ x, ∃ r : ℝ, f x = (r : EReal)",
+      "sourceSHA256": "9dc0594237ed9193c7a376ae4df30c157cb60a38c3048097448ab2a28dd99c36"
+    },
+    {
+      "original": "SourceClosed",
+      "path": "BanditRLProof/OnlineClosedProper.lean",
+      "definition": "def SourceClosed (f : E → EReal) : Prop :=\n  ∀ r : ℝ, IsClosed {x | f x ≤ (r : EReal)}",
+      "sourceSHA256": "9dc0594237ed9193c7a376ae4df30c157cb60a38c3048097448ab2a28dd99c36"
+    },
+    {
+      "original": "SourceSubdifferential",
+      "path": "BanditRLProof/OnlineSubgradientBasic.lean",
+      "definition": "def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=\n  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}",
+      "sourceSHA256": "ca1d08447dcb2a25619f8db8828970bee4d23427cc3f9c74c67e80cbc0289d70"
+    },
+    {
+      "original": "divergence",
+      "path": "BanditRLProof/OnlineBregmanProximal.lean",
+      "definition": "def divergence (ψ : E → ℝ) (x y : E) : ℝ :=\n  ψ x - ψ y - fderiv ℝ ψ y (x - y)",
+      "sourceSHA256": "8708aa5e15ff334ce8070cc976634ebaf8dc63314d3da95b502640f68350288f"
+    }
+  ],
+  "standardExpansionChecks": {
+    "IsMinOn": "forall z in V, Q p <= Q z; does not contain p in V",
+    "EqOn": "forall z in X, psi z=phi z",
+    "Set.Nonempty": "exists member",
+    "DifferentiableAt": "existence of ambient Frechet derivative, not within-set derivative",
+    "Convex": "closed under nonnegative normalized real binary combinations",
+    "SourceClosed": "every REAL sublevel set closed, no convexity/properness",
+    "StrictConvexOn": "convex carrier and strict mixture inequality for distinct endpoints and positive normalized weights; only concrete conclusions in these canaries",
+    "Option.bind": "none propagates; some x invokes supplied step",
+    "EReal.toReal": "both infinities map to zero; finite-domain justification needed before interpreting as real source loss"
+  },
+  "literalDefinitions": [
+    {
+      "name": "advance",
+      "kind": "literal",
+      "wholeBodyMatched": true,
+      "wholeCarrierVerdict": "accepted",
+      "behavior": "Classical decision and choose for feasible attained EReal minimum; else none. No fallback point, no interior filter, no finite-value or eta-positive requirement. This is exactly the advertised library partial selector on all inputs.",
+      "notCharacterizedSourceObject": true,
+      "sourceDelta": "Actual source update restricted to valid X/interior/finite loss/positive eta runs remains separate. Infinite-valued some and outside-domain use must not count as source execution."
+    },
+    {
+      "name": "iterate",
+      "kind": "literal",
+      "wholeBodyMatched": true,
+      "wholeCarrierVerdict": "accepted",
+      "behavior": "Unconditional some x0 at zero, successor bind uses current whole loss and eta, failure absorption. All inputs have Option-valued denotation.",
+      "notCharacterizedSourceObject": true,
+      "sourceDelta": "No X/interior guard and no all-round attainment. Partial library trajectory does not constitute total source algorithm or source-level characterization/uniqueness."
+    }
+  ],
+  "adversarialCases": [
+    {
+      "input": "V empty",
+      "result": "advance none, despite vacuous IsMinOn comparisons; A(0)=some x0 still."
+    },
+    {
+      "input": "Nonempty V with f identically top",
+      "result": "some feasible minimizer possible/required by literal existence test; no finite minimum guaranteed."
+    },
+    {
+      "input": "Feasible attained bottom",
+      "result": "May be selected; generic definitions do not require SourceProper."
+    },
+    {
+      "input": "eta=0 or eta<0",
+      "result": "Definition and generic lemmas remain literal; item9 separately excludes these by positivity."
+    },
+    {
+      "input": "Boundary reference with nondifferentiable extension",
+      "result": "Selector still uses total fderiv formula; none does not diagnose invalid source reference."
+    },
+    {
+      "input": "T=0",
+      "result": "Conditional completeness holds without x0 feasibility/interior."
+    },
+    {
+      "input": "Only visited values of losses match",
+      "result": "Prefix theorem cannot be invoked; requires whole-function equality below t."
+    }
+  ],
+  "sourceAnchorExcessInputs": [],
+  "approvedSourceCorrections": [],
+  "blockingFindings": [],
+  "proofBodiesApproved": false,
+  "compiledSignatureOrAxiomApproval": false
+}
