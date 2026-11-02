@@ -38,6 +38,8 @@ This repository has two connected contributions:
 
 `BanditRLProof` remains the mature internal Lean namespace. **BanditRLlib** is the public library and website name; renaming the namespace would unnecessarily break existing code.
 
+[License and reuse scope](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/attribution/#license) · [Apache 2.0 text](LICENSE) · [Scope and exceptions](LICENSE_SCOPE.md)
+
 ## 📰 News
 
 - **2026-10 — Proof digestion + evidence memory.** BanditRLlib now seals source-facing theorem interfaces before proof search, salvages verified fragments from failed routes, separates mathematical refutation from API/environment failure, keeps scheduler changes matched-experiment gated, audits common blind spots across parallel proof routes, and requires an Exposition Seal before PURIFIED reader release.
