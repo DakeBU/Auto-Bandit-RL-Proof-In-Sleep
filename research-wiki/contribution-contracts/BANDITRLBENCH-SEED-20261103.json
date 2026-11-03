@@ -1,0 +1,99 @@
+{
+  "schema_version": "2.0",
+  "id": "BANDITRLBENCH-SEED-20261103",
+  "route": "BanditRLBench development seed",
+  "frontier_cell": "banditrlbench-seed",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "BanditRLBench original development cores with pinned existing library anchors",
+    "version": "0.0.1",
+    "anchor": "benchmarks/banditrlbench/cores.json; CONTRACT.md; VERIFICATION.md",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/tree/ee8c0b805c785220ee31799012325f4179dad875"
+  },
+  "target": "Start source-bound NL and bounded Lean QA tracks with a shared development registry and honest reader/evidence boundaries.",
+  "affected_files": [
+    "website/scripts/build_site.py",
+    "website/scripts/banditrlbench.py",
+    "website/scripts/test_banditrlbench.py"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "RealMeanRegretPullCount",
+      "ConcentrationConfidenceSchedule",
+      "Existing site layout/navigation and QA seed policy"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "NL reader",
+      "Lean companion",
+      "Prompt exports"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse existing mathematical declarations and site shell; original tiny QA registry and solutions. No duplicate production theorem wrapper."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "Codex /root",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "Not source-facing mathematics; no theorem, definition or algorithm guarantee changes.",
+    "remaining_semantic_delta": "No production theorem changes; NL seed gold admission pending; formal subtargets do not certify entire NL solutions."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Benchmark reader overlay only; no certified graph or mathematical dependency changes.",
+    "focus_targets": [
+      "banditrlbench/index.html",
+      "banditrlbench/non-lean/index.html",
+      "banditrlbench/lean/index.html"
+    ],
+    "visual_review": "Actual headless Edge preview at desktop 1440 and mobile 390 widths for overview/NL/Lean; no document overflow. Formalizer visually inspected overview and opened NL solution. Unverified site, no current-root certification.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "banditrlwiki": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "results_ledger": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "roadmap": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "website_surfaces": [
+      "README benchmark entry",
+      "BanditRLBench overview",
+      "NL and Lean readers"
+    ]
+  },
+  "truth_boundary": "Four public dev cores, two small formal subtargets; independent gold admission, graph export, RL coverage, isolated evaluation, grouped test split and all model results remain pending. No production theorem changes or main/deployment claim.",
+  "verification": {
+    "focused_checks": [
+      "python website/scripts/banditrlbench.py validate",
+      "python -m unittest website.scripts.test_banditrlbench",
+      "lake env lean benchmarks/banditrlbench/lean/Reference.lean",
+      "git diff --check"
+    ],
+    "bandit_check": "Not a fresh full-root build; reference environment is recorded in VERIFICATION.md.",
+    "site_build": "Passed unverified website preview.",
+    "site_check": "Passed check_site.py --allow-unverified; no stale verified badge.",
+    "independent_review": "Distinct bounded automated content review accepted current four answers and two subtargets; self-contained export clarification applied. Gold admission remains pending. See VERIFICATION.md."
+  },
+  "contributor": {
+    "name": "Codex /root for Dake Bu",
+    "role": "BanditRLBench original seed and reader implementation"
+  }
+}

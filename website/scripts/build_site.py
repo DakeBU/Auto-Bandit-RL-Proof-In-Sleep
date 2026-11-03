@@ -809,6 +809,7 @@ def layout(
 ) -> str:
     root = page_root(page_path)
     start_items = [
+        ("banditrlbench", "BanditRLBench", "banditrlbench/index.html"),
         ("overview", "Overview", "index.html"),
         ("math-2-0", "Math 2.0 mission", "math-2-0/index.html"),
         ("installation", "Installation", "installation/index.html"),
@@ -6098,6 +6099,8 @@ def main() -> int:
         generated_at,
     )
     build_workflow(output, args.lean_verified, generated_at)
+    from banditrlbench import build_pages as build_bench_pages
+    build_bench_pages(output, args.lean_verified, generated_at, layout, write_page)
     build_attribution(output, args.lean_verified, generated_at)
     build_source_access(output, args.lean_verified, generated_at)
     build_search_index(output, declarations)
