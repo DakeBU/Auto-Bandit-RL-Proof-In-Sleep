@@ -584,8 +584,8 @@ def check_workflow() -> list[str]:
         "if: github.ref == 'refs/heads/main' && "
         "github.event_name != 'pull_request'"
     )
-    if text.count(branch_build_guard) != 2:
-        errors.append("documentation workflow must guard public build and check to main")
+    if branch_build_guard in text:
+        errors.append("documentation workflow must test public source mode on PRs as well as main")
     if text.count(branch_publish_guard) != 2:
         errors.append("documentation workflow must guard upload and deploy to main")
     return errors
