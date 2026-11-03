@@ -11,11 +11,12 @@
     "anchor": "benchmarks/banditrlbench/cores.json; CONTRACT.md; VERIFICATION.md",
     "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/tree/ee8c0b805c785220ee31799012325f4179dad875"
   },
-  "target": "Start source-bound NL and bounded Lean QA tracks with a shared development registry and honest reader/evidence boundaries.",
+  "target": "Publish BanditRLlib and BanditRLBench as peer public identities, with prominent README/homepage entry points and separately gated NL/Lean development tracks.",
   "affected_files": [
     "website/scripts/build_site.py",
     "website/scripts/banditrlbench.py",
-    "website/scripts/test_banditrlbench.py"
+    "website/scripts/test_banditrlbench.py",
+    "website/scripts/check_site.py"
   ],
   "declarations": [],
   "reuse_plan": {
@@ -76,7 +77,8 @@
     "website_surfaces": [
       "README benchmark entry",
       "BanditRLBench overview",
-      "NL and Lean readers"
+      "NL and Lean readers",
+      "Homepage dual identity and peer library/benchmark cards"
     ]
   },
   "truth_boundary": "Four public dev cores, two small formal subtargets; independent gold admission, graph export, RL coverage, isolated evaluation, grouped test split and all model results remain pending. No production theorem changes or main/deployment claim.",
@@ -85,7 +87,9 @@
       "python website/scripts/banditrlbench.py validate",
       "python -m unittest website.scripts.test_banditrlbench",
       "lake env lean benchmarks/banditrlbench/lean/Reference.lean",
-      "git diff --check"
+      "git diff --check",
+      "GitHub Actions exact-candidate Lean/library/Tests/harness plus benchmark reference compilation before merge",
+      "Main CI, Pages deploy and live README/homepage/track payload verification"
     ],
     "bandit_check": "Not a fresh full-root build; reference environment is recorded in VERIFICATION.md.",
     "site_build": "Passed unverified website preview.",

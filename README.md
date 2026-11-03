@@ -1,4 +1,17 @@
-# 🧭 Auto-Bandit-RL-Proof-In-Sleep
+# BanditRLlib · BanditRLBench
+
+### Reusable Lean mathematics and source-bound QA for sequential learning
+
+**Understand proofs, reuse verified mathematics, and develop training and evaluation tasks for bandit and reinforcement-learning models.**
+
+[**Read BanditRLlib**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/) ·
+[**Explore BanditRLBench**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/)
+
+[**Without Lean**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/non-lean/) ·
+[**Lean companion**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/lean/) ·
+[**Dataset and contribution guide**](benchmarks/banditrlbench/)
+
+BanditRLBench starts with four public development cores and two bounded Lean companions. Independent gold admission, broader RL coverage and measured model evaluation remain future work. **ABRL / Auto-Bandit-RL-Proof-In-Sleep** is the proof-gated construction system behind the library.
 
 ## 🧠 A Target-Faithful Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
 
