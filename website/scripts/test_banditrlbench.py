@@ -2,6 +2,7 @@
 import copy
 import unittest
 from website.scripts import banditrlbench as bench
+from website.scripts.check_site import LinkCollector, check_benchmark_source_bindings
 
 class SeedTests(unittest.TestCase):
     def setUp(self):
@@ -34,5 +35,33 @@ class SeedTests(unittest.TestCase):
         for row in formal:
             for field in ('core_id','contract_hash','family_id','split','source_commit'):
                 self.assertEqual(row[field],nl[row['core_id']][field])
+
+    def evidence_collector(self):
+        collector=LinkCollector()
+        for core in self.data['cores']:
+            collector.feed(f'<a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/{core["source_commit"]}/{core["source_file"]}" data-benchmark-core="{core["core_id"]}" data-benchmark-contract="{core["contract_hash"]}" data-benchmark-snapshot="{core["source_commit"]}">Frozen source</a>')
+        return collector
+
+    def test_frozen_evidence_is_not_current_declaration_certificate(self):
+        collector=self.evidence_collector()
+        self.assertEqual(collector.source_links,[])
+        self.assertEqual(collector.source_link_count,0)
+        self.assertEqual(check_benchmark_source_bindings(collector,'banditrlbench/non-lean/index.html',self.data['cores']),[])
+        self.assertTrue(check_benchmark_source_bindings(collector,'index.html',self.data['cores']))
+
+    def test_frozen_evidence_rejects_wrong_hash_url_and_missing_core(self):
+        for field in ('href','data-benchmark-contract','data-benchmark-snapshot'):
+            collector=self.evidence_collector()
+            collector.benchmark_source_links[0][field]='invalid'
+            self.assertTrue(check_benchmark_source_bindings(collector,'banditrlbench/non-lean/index.html',self.data['cores']))
+        collector=self.evidence_collector()
+        collector.benchmark_source_links.pop()
+        self.assertTrue(check_benchmark_source_bindings(collector,'banditrlbench/non-lean/index.html',self.data['cores']))
+
+    def test_unmarked_historical_link_stays_in_current_source_gate(self):
+        collector=LinkCollector()
+        collector.feed('<a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/old/BanditRLProof/Test.lean">source</a>')
+        self.assertEqual(len(collector.source_links),1)
+        self.assertEqual(collector.benchmark_source_links,[])
 
 if __name__=='__main__':unittest.main()

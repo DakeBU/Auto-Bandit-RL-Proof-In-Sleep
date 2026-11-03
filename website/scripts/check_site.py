@@ -53,6 +53,7 @@ class LinkCollector(HTMLParser):
         self.mathjax_count = 0
         self.source_link_count = 0
         self.source_links: list[str] = []
+        self.benchmark_source_links: list[dict[str, str]] = []
         self.site_sidebar_count = 0
         self.nav_group_count = 0
         self.nav_group_ids: list[str] = []
@@ -235,8 +236,11 @@ class LinkCollector(HTMLParser):
             ("/blob/" in values.get("href", "") and "/BanditRLProof" in values.get("href", ""))
             or "/source-access/" in values.get("href", "")
         ):
-            self.source_link_count += 1
-            self.source_links.append(values["href"])
+            if any(key.startswith("data-benchmark-") for key in values):
+                self.benchmark_source_links.append(values)
+            else:
+                self.source_link_count += 1
+                self.source_links.append(values["href"])
         if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
             self._stack.append((tag, classes))
 
@@ -697,6 +701,28 @@ def expected_navigation_groups(books: list[dict], chapter_slugs: set[str]) -> se
                     owners.setdefault(ref, book["id"])
     groups.update(owner + "-book" for owner in set(owners.values()) if owner != "bandit")
     return groups
+
+
+
+def check_benchmark_source_bindings(collector, page_path, cores):
+    """Frozen QA evidence is not a current-library declaration certificate."""
+    rows = collector.benchmark_source_links
+    expected = {c['core_id']: c for c in cores if page_path == 'banditrlbench/non-lean/index.html'
+                or (page_path == 'banditrlbench/lean/index.html' and c['lean']['reference_status'] != 'planned')}
+    if page_path not in ('banditrlbench/non-lean/index.html', 'banditrlbench/lean/index.html'):
+        expected = {}
+    errors = []
+    if sorted(row.get('data-benchmark-core', '') for row in rows) != sorted(expected):
+        errors.append(f'{page_path}: missing, duplicate or misplaced frozen benchmark evidence')
+    for row in rows:
+        core = expected.get(row.get('data-benchmark-core'))
+        if core is None:
+            continue
+        url = f"{GITHUB_REPO}/blob/{core['source_commit']}/{core['source_file']}"
+        if (row.get('href') != url or row.get('data-benchmark-contract') != core['contract_hash']
+                or row.get('data-benchmark-snapshot') != core['source_commit']):
+            errors.append(f"{page_path}: frozen source binding mismatch for {core['core_id']}")
+    return errors
 
 
 def main() -> int:
@@ -2082,13 +2108,19 @@ def main() -> int:
 
     totals = Counter()
     source_links: list[str] = []
-    for collector in pages.values():
+    try:
+        from .banditrlbench import load as load_benchmark
+    except ImportError:
+        from banditrlbench import load as load_benchmark
+    benchmark_cores = load_benchmark()["cores"]
+    for page, collector in pages.items():
         totals["mermaid"] += collector.mermaid_count
         totals["diagram_regions"] += collector.diagram_region_count
         totals["accessible_diagram_regions"] += collector.accessible_diagram_region_count
         totals["mathjax"] += collector.mathjax_count
         totals["source_links"] += collector.source_link_count
         source_links.extend(collector.source_links)
+        errors.extend(check_benchmark_source_bindings(collector, page.relative_to(output).as_posix(), benchmark_cores))
     if totals["mermaid"] < 7:
         errors.append(f"expected at least 7 rendered Mermaid blocks, found {totals['mermaid']}")
     if totals["diagram_regions"] != totals["mermaid"]:
