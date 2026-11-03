@@ -1,0 +1,7 @@
+# Frozen benchmark evidence in public snapshots
+
+The first main release build at b3c0517a3a991656cd827c25babd305bb53870b9 passed library/Tests/harness and reference compilation, but deployment correctly stopped at the production source-link check. The original PR checked the non-public preview mode only. Its frozen QA source URLs were incorrectly grouped with current-library declaration certificates.
+
+The fix preserves exact frozen URLs. Each QA source anchor now carries its core ID, shared contract hash and source snapshot. The checker validates these against the source-blob-validated benchmark registry and permits them only on the two explicit reader routes with exactly the expected cores. They do not count as current declaration source certificates. Current-library source links retain their original strict current-commit and unique declaration-target requirements. Unmarked old links, wrong hashes/URLs/snapshots and misplaced/missing QA evidence are rejected.
+
+PR and main now run the same public-snapshot build/check mode. Only successful main builds may upload/deploy Pages. Eight regression tests cover prompt leakage, source/contract mutation, shared views, rejection of moving branch references and the narrow historical-evidence boundary. Independent content review and actual production-mode verification are recorded separately; this explanation does not itself certify a deployment.

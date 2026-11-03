@@ -57,22 +57,13 @@ jobs:
 
       - name: Build the literate formalization website
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            python3 website/scripts/build_site.py \
-              --lean-verified \
-              --public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
-          else
-            python3 website/scripts/build_site.py --lean-verified
-          fi
+          python3 website/scripts/build_site.py --lean-verified \
+            --public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
 
       - name: Check links, mappings, formulas, and diagrams
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            python3 website/scripts/check_site.py \
-              --expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
-          else
-            python3 website/scripts/check_site.py
-          fi
+          python3 website/scripts/check_site.py \
+            --expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
 
       - name: Check offline inline math and dynamic reader formulas
         run: |

@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import html
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -17,6 +18,8 @@ def contract_hash(core):
 def validate(data):
     seen, families = set(), {}
     for core in data['cores']:
+        if not re.fullmatch(r'[0-9a-f]{40}', core['source_commit']):
+            raise ValueError('Source snapshot must be an immutable full Git commit')
         if core['core_id'] in seen or core['contract_hash'] != contract_hash(core):
             raise ValueError('Duplicate identity or changed mathematical contract')
         seen.add(core['core_id'])
@@ -64,7 +67,7 @@ def build_pages(output, verified, generated_at, layout, write_page):
             question=core['question'] if track=='non-lean' else core['lean']['question']
             source=f'https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/{core["source_commit"]}/{core["source_file"]}'
             limitations=('This formal reference proves the listed subtarget only. It does not certify the full natural-language answer or a submitted model proof.' if track=='lean' else 'Natural-language answer: development candidate, not independently admitted gold.')
-            listing+=f'<article class="info-card" id="{core["core_id"]}"><p class="eyebrow">{core["core_id"]} · public dev · {escape(core["family_id"])}</p><h2>{escape(core["title"])}</h2><h3>Assumptions</h3><ul>'+''.join('<li>'+escape(a)+'</li>' for a in core['assumptions'])+f'</ul><p>{escape(question)}</p><details><summary>Solution and assessment rubric</summary><p>{escape(core["answer"])}</p><ol>'+''.join('<li>'+escape(a)+'</li>' for a in core['rubric'])+f'</ol><p>{escape(limitations)}</p></details><details><summary>Source, graph and verification boundary</summary><p><a href="{source}">Pinned source</a> · <code>{escape(core["source_declaration"])}</code></p><p>{escape(core["graph_evidence"])}</p><p>Contract: <code>{core["contract_hash"]}</code>. NL review: {escape(core["nl_review"])}.</p>'+('<p><a href="../Reference.lean">Reference proof and axiom commands</a>. Reference status: '+escape(core['lean']['reference_status'])+'. See repository verification receipt for the actual compiler environment.</p>' if track=='lean' else '')+'</details></article>'
+            listing+=f'<article class="info-card" id="{core["core_id"]}"><p class="eyebrow">{core["core_id"]} · public dev · {escape(core["family_id"])}</p><h2>{escape(core["title"])}</h2><h3>Assumptions</h3><ul>'+''.join('<li>'+escape(a)+'</li>' for a in core['assumptions'])+f'</ul><p>{escape(question)}</p><details><summary>Solution and assessment rubric</summary><p>{escape(core["answer"])}</p><ol>'+''.join('<li>'+escape(a)+'</li>' for a in core['rubric'])+f'</ol><p>{escape(limitations)}</p></details><details><summary>Source, graph and verification boundary</summary><p><a href="{source}" data-benchmark-core="{core["core_id"]}" data-benchmark-contract="{core["contract_hash"]}" data-benchmark-snapshot="{core["source_commit"]}">Frozen benchmark source ({core["source_commit"][:7]})</a> · <code>{escape(core["source_declaration"])}</code></p><p>{escape(core["graph_evidence"])}</p><p>Contract: <code>{core["contract_hash"]}</code>. NL review: {escape(core["nl_review"])}.</p>'+('<p><a href="../Reference.lean">Reference proof and axiom commands</a>. Reference status: '+escape(core['lean']['reference_status'])+'. See repository verification receipt for the actual compiler environment.</p>' if track=='lean' else '')+'</details></article>'
         emit(f'banditrlbench/{track}/index.html','BanditRLBench · '+title,f'<section class="hero"><p class="eyebrow">BanditRLBench</p><h1 class="page-title">{title}</h1></section>'+nav+intro+listing)
     destination=output/'banditrlbench'
     (destination/'cores.json').write_bytes(DATA.read_bytes())
