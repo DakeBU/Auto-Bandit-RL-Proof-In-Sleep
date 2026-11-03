@@ -27,6 +27,13 @@ class SeedTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Source'):
             bench.validate(data)
 
+    def test_moving_branch_is_not_a_frozen_source_even_with_new_contract(self):
+        data=copy.deepcopy(self.data)
+        data['cores'][0]['source_commit']='main'
+        data['cores'][0]['contract_hash']=bench.contract_hash(data['cores'][0])
+        with self.assertRaisesRegex(ValueError,'immutable'):
+            bench.validate(data)
+
     def test_track_views_share_core_contracts_and_exclude_planned(self):
         nl={row['core_id']:row for row in bench.prompts(self.data,'non-lean')}
         formal=bench.prompts(self.data,'lean')

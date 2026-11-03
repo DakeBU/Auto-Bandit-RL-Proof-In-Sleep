@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import html
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -17,6 +18,8 @@ def contract_hash(core):
 def validate(data):
     seen, families = set(), {}
     for core in data['cores']:
+        if not re.fullmatch(r'[0-9a-f]{40}', core['source_commit']):
+            raise ValueError('Source snapshot must be an immutable full Git commit')
         if core['core_id'] in seen or core['contract_hash'] != contract_hash(core):
             raise ValueError('Duplicate identity or changed mathematical contract')
         seen.add(core['core_id'])
