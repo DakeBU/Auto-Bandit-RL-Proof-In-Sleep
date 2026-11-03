@@ -1,6 +1,6 @@
-# BanditRLlib · BanditRLBench
+# 🧭 BanditRLlib · BanditRLBench
 
-### Reusable Lean mathematics and source-bound QA for sequential learning
+### 📚 Reusable Lean mathematics and source-bound QA for sequential learning
 
 **Understand proofs, reuse verified mathematics, and develop training and evaluation tasks for bandit and reinforcement-learning models.**
 
