@@ -1,0 +1,128 @@
+{
+  "version": "0.0.1-seed",
+  "status": "development-only; bounded content review complete, independent gold admission pending",
+  "source_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+  "cores": [
+    {
+      "core_id": "BRB-001",
+      "title": "From actions to pull counts",
+      "assumptions": [
+        "K is a positive finite number of arms; means are fixed real numbers.",
+        "An arbitrary action sequence is observed for a finite horizon T."
+      ],
+      "question": "Let Δ_i=max_j μ_j−μ_i and N_i(T) count the choices of arm i. Derive the gap-weighted pull-count identity for pseudo-regret. Does the identity require independent rewards or a causal policy?",
+      "family_id": "regret-accounting",
+      "split": "dev",
+      "source_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+      "contract_hash": "4172494802d81beecd073af34f00e4d7241f0795e55161b437e344629f9cb2f0",
+      "answer": "R_T=T μ_*−Σ_{t<T} μ_{A_t}=Σ_{t<T}(μ_*−μ_{A_t})=Σ_i Δ_i N_i(T). Partition the finite time set by the chosen arm. This is a deterministic identity for any action trace; no reward law, independence or policy causality is used. It alone provides no useful bound on N_i(T), realized reward fluctuations or regret rate.",
+      "rubric": [
+        "Expand the finite time sum correctly.",
+        "Group each time exactly once by its chosen arm.",
+        "Separate deterministic accounting from statistical or causal assumptions and from a rate theorem."
+      ],
+      "source_file": "BanditRLProof/RealMeanRegretPullCount.lean",
+      "source_declaration": "BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount",
+      "source_sha256": "33641e8b11f57bbc3b8c1ebfef6de5452f0fbfc47cade99c87f5c5fff5c0adc7",
+      "graph_evidence": "source-bound declaration anchor; no compiled dependency graph exported for this seed",
+      "nl_review": "pending-independent-review",
+      "lean": {
+        "question": "Prove the exact library identity realMeanRegret mean action n = ∑ a : Fin K, realMeanGap mean a * (pullCount action a n : ℝ).",
+        "reference_status": "reference-authored",
+        "reference_declaration": "BanditRLBench.BRB_001"
+      },
+      "limitations": "Public development example; no hidden-test, model-score or whole-library coverage claim."
+    },
+    {
+      "core_id": "BRB-002",
+      "title": "When may expectation cross the sum?",
+      "assumptions": [
+        "Fix finite arm means μ_i∈ℝ and finite horizon T; Δ_i=μ_*−μ_i and pathwise pseudo-regret is R_T=Σ_i Δ_i N_i(T).",
+        "A measure space, finite arm set and random action trace are fixed.",
+        "For every arm, its real-valued finite-horizon pull count is integrable."
+      ],
+      "question": "Derive the expected pseudo-regret decomposition from its pathwise version. Identify the analytic condition needed, and explain whether the conclusion is a realized-regret concentration bound.",
+      "family_id": "expected-regret-accounting",
+      "split": "dev",
+      "source_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+      "contract_hash": "7d0c2f360d88bba4402c149bd6c71a3fea9e07d2a4d422e2a6d6598a7190320d",
+      "answer": "Each gap is a constant, so its product with an integrable pull count is integrable. The finite sum is integrable, expectation commutes with this sum, and constants factor out: E[R_T]=Σ_i Δ_i E[N_i(T)]. This is an integral identity under the stated integrability premises, not a tail bound for realized rewards. Reward noise needs separate analysis. The abstract library theorem even permits a general measure; probability semantics require choosing a probability measure.",
+      "rubric": [
+        "Establish term and sum integrability.",
+        "Apply finite-sum integral linearity and constant multiplication.",
+        "Do not infer a tail bound, independent samples or probability-space semantics from a general measure identity."
+      ],
+      "source_file": "BanditRLProof/RealMeanRegretPullCount.lean",
+      "source_declaration": "BanditRLProof.integral_realMeanRegret_eq_sum_gap_mul_integral_pullCount",
+      "source_sha256": "33641e8b11f57bbc3b8c1ebfef6de5452f0fbfc47cade99c87f5c5fff5c0adc7",
+      "graph_evidence": "source-bound declaration anchor; no compiled dependency graph exported for this seed",
+      "nl_review": "pending-independent-review",
+      "lean": {
+        "question": "State and prove the library Bochner integral identity, retaining the pull-count integrability premise; do not add independence.",
+        "reference_status": "planned",
+        "reference_declaration": null
+      },
+      "limitations": "Public development example; no hidden-test, model-score or whole-library coverage claim."
+    },
+    {
+      "core_id": "BRB-003",
+      "title": "An infinite confidence budget",
+      "assumptions": [
+        "δ>0.",
+        "Bad events B_n, n≥0, satisfy P(B_n)≤δ/2^(n+1) under the same probability law."
+      ],
+      "question": "Bound the probability that any B_n occurs. Is event independence needed? Distinguish the deterministic budget calculation from the statistical guarantee that supplies each event bound.",
+      "family_id": "confidence-schedules",
+      "split": "dev",
+      "source_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+      "contract_hash": "b7aff5365b53330baeefac5bf10d574d21d53b27d851a35f5489a40f80c1f99c",
+      "answer": "Countable subadditivity gives P(∪_n B_n)≤Σ_n P(B_n)≤Σ_n δ/2^(n+1)=δ. Independence between the events is unnecessary. The geometric-series identity only allocates a budget; it does not prove P(B_n)≤δ/2^(n+1). For adaptive histories, the algorithm must supply applicable conditional bounds or unconditional event bounds for the actual process, not fixed-design statements silently applied after selection.",
+      "rubric": [
+        "Use countable subadditivity under one law.",
+        "Sum the schedule from n=0 with correct normalization.",
+        "Reject a need for event independence and distinguish the missing statistical supplier."
+      ],
+      "source_file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "source_declaration": "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare",
+      "source_sha256": "4fb65a20d59c2524f5f765766ac6a332b17cd4c2b430ccf283938b483a47c3f2",
+      "graph_evidence": "source-bound declaration anchor; no compiled dependency graph exported for this seed",
+      "nl_review": "pending-independent-review",
+      "lean": {
+        "question": "Prove only the deterministic ENNReal sum for geometricConfidenceShare; the event-probability argument is outside this reference.",
+        "reference_status": "reference-authored",
+        "reference_declaration": "BanditRLBench.BRB_003"
+      },
+      "limitations": "Public development example; no hidden-test, model-score or whole-library coverage claim."
+    },
+    {
+      "core_id": "BRB-004",
+      "title": "A confidence interval is not an unbiased estimate",
+      "assumptions": [
+        "μ is a real mean and r>0.",
+        "An estimate satisfies |estimate−μ|≤r with probability one."
+      ],
+      "question": "Does this guarantee imply that estimate is unbiased? Give a counterexample. Does it imply that successive estimation errors are independent?",
+      "family_id": "estimator-semantics",
+      "split": "dev",
+      "source_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+      "contract_hash": "86a99a09ddaf1b5243af6cd64157915c5f31d9851e653b4d0ac59fbc94fcba40",
+      "answer": "No. The deterministic estimate μ+r/2 has error r/2≤r with probability one but expectation μ+r/2, hence nonzero bias. This is a logical countermodel, not an implementable estimator when μ is unknown. To refute independence, reuse the same fair random sign S∈{−1,1} at two times and set both errors to r S/2. Both estimates satisfy the interval and are unbiased, but P(error_1>0,error_2>0)=1/2≠1/4. Neither unbiasedness nor independence follows from interval coverage.",
+      "rubric": [
+        "Exhibit a positive-radius counterexample and compute its bias.",
+        "Give a joint law violating independence while preserving both intervals.",
+        "Explain that an analysis countermodel need not be an executable unknown-mean procedure."
+      ],
+      "source_file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
+      "source_declaration": "BanditRLProof.Concentration.geometricConfidenceShare",
+      "source_sha256": "4fb65a20d59c2524f5f765766ac6a332b17cd4c2b430ccf283938b483a47c3f2",
+      "graph_evidence": "Context-only schedule anchor. Counterexample solution is an original elementary derivation; no theorem-dependency edge is claimed.",
+      "nl_review": "pending-independent-review",
+      "lean": {
+        "question": "Formalize the two-point joint-error counterexample and expectation. This is an unimplemented target, not a consequence of the schedule declaration.",
+        "reference_status": "planned",
+        "reference_declaration": null
+      },
+      "limitations": "Public development example; no hidden-test, model-score or whole-library coverage claim."
+    }
+  ]
+}

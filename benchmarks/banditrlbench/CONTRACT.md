@@ -1,0 +1,9 @@
+# Shared mathematical cores and two tracks
+
+One core identifies one natural-language mathematical contract: ordered assumptions, question, family, split and frozen source commit. Its SHA-256 is recomputed by the validator. A Lean companion reuses the identity and split, and states its exact subtarget. A formal subtarget is not certification of the entire NL answer. BRB-003 formally checks only the schedule sum, not event-probability bounds or adaptive confidence suppliers.
+
+Source anchors bind exact Git blobs. They are not compiled proof-dependency edges. BRB-004's schedule anchor is contextual: the bias/dependence counterexamples are original elementary derivations, not consequences of that declaration. Source inspection, independent mathematical review, formal alignment, reference compilation and isolated prediction grading are separate evidence states.
+
+All seed families are public development data. Preserve a family and all target/solution aliases in one split. There is no held-out test set and no contamination-free claim. Future train/test admission requires a reviewed family/solution-leakage audit, not a random row split. Question or premise changes require an explicit successor and fresh review; never silently repair an answer by changing the question.
+
+Contributors use a personal branch and propose bounded topic/core additions with source identities, assumptions, answer/rubric, graph evidence, review status and any formal subtarget. Without Lean, contribute NL questions and request compilation separately. Do not mark code read from source as compiler-checked or infer reviewer participation. Keep the current four-core seed out of performance or whole-graph completeness claims.

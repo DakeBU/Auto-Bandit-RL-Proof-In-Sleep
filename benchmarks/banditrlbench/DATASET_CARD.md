@@ -1,0 +1,11 @@
+# BanditRLBench development seed
+
+Version: 0.0.1. Date: 2026-11-03. Intended use: develop training examples and evaluations of sequential-learning mathematics and reasoning. Language: English. Public core count: four; NL views: four; authored Lean views: two. View counts must not be added to core counts. The seed covers bandit/probability bookkeeping and semantic counterexamples; RL and broad graph coverage are not yet implemented.
+
+Sources: pinned repository commit ee8c0b805c785220ee31799012325f4179dad875, exact source files and Git-blob SHA-256 values in cores.json. Questions, solutions and rubrics are original restatements/derivations, not copied textbook passages. Original content uses the repository license; third-party and upstream source rights remain separate. The licensing PR is independent of this branch.
+
+Splits: public dev only. No test-set secrecy or pretraining-contamination claims. Prompts omit answers/rubrics by default; downloadable registry includes public solutions. Independent review/admission is pending. A reference compilation verifies its formal proposition only, not every answer, source correspondence, graph completeness or model response.
+
+Assessment: each rubric item is scored 0 (absent/incorrect), 1 (materially incomplete), or 2 (correct and justified). Report item scores and their sum, plus source/model/track/prompt/decoding/tool configuration. Treat a false main conclusion or an invalid counterexample as a substantive failure regardless of fluent prose. This is a manual assessment protocol, not a calibrated automatic grader. No observed model baseline or human agreement estimate exists.
+
+Keep closed-book, supplied-text retrieval, graph retrieval and Lean-assisted protocols separate. Any automated judge must be independently calibrated and preserve raw predictions and decisions. Lean-assisted evaluation requires an isolated pinned environment, resource caps, no solution access, and real compilation of each prediction; the reference command alone is not such an evaluator. Follow-up priorities: independent admission, source/graph manifest export, grouped splits, a sandboxed formal evaluator, and wider bandit/RL questions.

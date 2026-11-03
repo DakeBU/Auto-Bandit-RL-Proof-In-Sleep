@@ -809,6 +809,7 @@ def layout(
 ) -> str:
     root = page_root(page_path)
     start_items = [
+        ("banditrlbench", "BanditRLBench", "banditrlbench/index.html"),
         ("overview", "Overview", "index.html"),
         ("math-2-0", "Math 2.0 mission", "math-2-0/index.html"),
         ("installation", "Installation", "installation/index.html"),
@@ -2329,15 +2330,25 @@ def build_index(
     body = f"""
 <section class="hero" id="overview">
   <p class="eyebrow">Sequential learning · human understanding · Lean</p>
-  <h1>BanditRLlib</h1>
+  <h1>BanditRLlib · BanditRLBench</h1>
   <p class="hero-purpose">Understand why a learning guarantee holds—and where it breaks.</p>
   <p class="lede">Read the proof ideas, follow their Lean evidence, and explore how they connect across bandits, reinforcement learning and online learning.</p>
   <div class="hero-actions">
     <a class="button primary" href="{href_from(page_path, 'books/index.html')}">Explore the Books</a>
+    <a class="button primary" href="{href_from(page_path, 'banditrlbench/index.html')}">Explore BanditRLBench</a>
     <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
   </div>
   <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'math-2-0/index.html')}">Our Math 2.0 mission</a></p>
+</section>
+
+<section id="library-and-benchmark">
+  <p class="eyebrow">Two connected contributions</p>
+  <h2>Reusable mathematics and reasoning assessment</h2>
+  <div class="card-grid">
+    <article class="info-card"><h3>BanditRLlib</h3><p>Learn sequential-learning theory, inspect exact Lean statements and reuse checked proof ingredients.</p><a href="{href_from(page_path, 'books/index.html')}">Read the library →</a></article>
+    <article class="info-card"><h3>BanditRLBench</h3><p>Develop and evaluate AI knowledge and mathematical reasoning through source-bound questions. Start with the public development seed; gold admission and model results remain pending.</p><p><a href="{href_from(page_path, 'banditrlbench/non-lean/index.html')}">Without Lean →</a> · <a href="{href_from(page_path, 'banditrlbench/lean/index.html')}">Lean companion →</a></p></article>
+  </div>
 </section>
 
 <section id="three-roles" class="audience-paths" aria-labelledby="three-roles-title">
@@ -6098,6 +6109,8 @@ def main() -> int:
         generated_at,
     )
     build_workflow(output, args.lean_verified, generated_at)
+    from banditrlbench import build_pages as build_bench_pages
+    build_bench_pages(output, args.lean_verified, generated_at, layout, write_page)
     build_attribution(output, args.lean_verified, generated_at)
     build_source_access(output, args.lean_verified, generated_at)
     build_search_index(output, declarations)

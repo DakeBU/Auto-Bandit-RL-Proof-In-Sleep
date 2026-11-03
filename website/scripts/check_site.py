@@ -714,6 +714,17 @@ def main() -> int:
         raise SystemExit(f"site output does not exist: {output}")
 
     errors: list[str] = []
+    home = (output / "index.html").read_text(encoding="utf-8")
+    for marker in ("BanditRLlib · BanditRLBench", 'id="library-and-benchmark"',
+                   'href="banditrlbench/index.html"',
+                   'href="banditrlbench/non-lean/index.html"',
+                   'href="banditrlbench/lean/index.html"'):
+        if marker not in home:
+            errors.append(f"homepage benchmark entry missing: {marker}")
+    for route in ("banditrlbench/index.html", "banditrlbench/non-lean/index.html",
+                  "banditrlbench/lean/index.html"):
+        if not (output / route).is_file():
+            errors.append(f"benchmark reader missing: {route}")
     manifest_path = output / "site-manifest.json"
     if not manifest_path.exists():
         errors.append("missing site-manifest.json")
