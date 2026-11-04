@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Match the supported platform of the pinned Playwright browser gate.
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
@@ -44,6 +45,14 @@ jobs:
       - name: Build the Lean library and tests
         run: python3 tools/bandit.py check
 
+      - name: Validate BanditRLBench and compile its reference subtargets
+        run: |
+          python3 website/scripts/banditrlbench.py validate
+          python3 -m unittest website.scripts.test_banditrlbench
+          python3 -m unittest tools.test_banditrlbench
+          lake env lean benchmarks/banditrlbench/lean/Reference.lean
+          python3 tools/banditrlbench.py canary --library . --output _out/brb-canary --trusted-local
+
       - name: Validate result-free evaluation protocols
         run: |
           python3 tools/validate_target_drift_suite_v2.py
@@ -51,22 +60,13 @@ jobs:
 
       - name: Build the literate formalization website
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            python3 website/scripts/build_site.py \
-              --lean-verified \
-              --public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
-          else
-            python3 website/scripts/build_site.py --lean-verified
-          fi
+          python3 website/scripts/build_site.py --lean-verified \
+            --public-snapshot-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
 
       - name: Check links, mappings, formulas, and diagrams
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            python3 website/scripts/check_site.py \
-              --expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
-          else
-            python3 website/scripts/check_site.py
-          fi
+          python3 website/scripts/check_site.py \
+            --expect-public-base-url https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep
 
       - name: Check offline inline math and dynamic reader formulas
         run: |

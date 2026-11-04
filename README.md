@@ -1,4 +1,17 @@
-# 🧭 Auto-Bandit-RL-Proof-In-Sleep
+# 🧭 BanditRLlib · BanditRLBench
+
+### 📚 Reusable Lean mathematics and source-bound QA for sequential learning
+
+**Understand proofs, reuse verified mathematics, and develop training and evaluation tasks for bandit and reinforcement-learning models.**
+
+[**Read BanditRLlib**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/) ·
+[**Explore BanditRLBench**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/)
+
+[**Without Lean**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/non-lean/) ·
+[**Lean companion**](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/lean/) ·
+[**Dataset and contribution guide**](benchmarks/banditrlbench/)
+
+BanditRLBench starts with four public development cores and two bounded Lean companions. Independent gold admission, broader RL coverage and measured model evaluation remain future work. **ABRL / Auto-Bandit-RL-Proof-In-Sleep** is the proof-gated construction system behind the library.
 
 ## 🧠 A Target-Faithful Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
 
@@ -11,7 +24,8 @@
 [Frontier](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlwiki/frontier/) ·
 [Live Formalization](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/ide/) ·
 [Lean declarations](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/declarations/) ·
-[How to contribute](CONTRIBUTING.md)
+[How to contribute](CONTRIBUTING.md) ·
+[**BanditRLBench**](benchmarks/banditrlbench/) · [Run and train](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/run/) · [Expert review](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/review/) · [Without Lean](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/non-lean/) · [Lean companion](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlbench/lean/)
 
 **BanditRLlib is human-understanding infrastructure for sequential learning:**
 learn why a guarantee holds, follow its Lean evidence, and see where its
@@ -39,6 +53,10 @@ This repository has two connected contributions:
 `BanditRLProof` remains the mature internal Lean namespace. **BanditRLlib** is the public library and website name; renaming the namespace would unnecessarily break existing code.
 
 ## 📰 News
+
+- **2026-11-04 — BanditRLBench workflows.** Readable formula proofs, exact Lean Graph locations, prompt-only run bundles, expert-review packets and trusted-local Lean replay with positive/negative canaries. Public dev only; isolated untrusted-code evaluation and held-out tests remain open.
+
+- **2026-11-03 — BanditRLBench starts.** A source-bound development seed for sequential-learning QA now has [natural-language and Lean tracks](benchmarks/banditrlbench/), with explicit review and verification boundaries.
 
 - **2026-10 — Proof digestion + evidence memory.** BanditRLlib now seals source-facing theorem interfaces before proof search, salvages verified fragments from failed routes, separates mathematical refutation from API/environment failure, keeps scheduler changes matched-experiment gated, audits common blind spots across parallel proof routes, and requires an Exposition Seal before PURIFIED reader release.
 - **2026-09 — Harness self-comparison.** Structured logs can compare hierarchical and master–worker runs and prepare a bounded GPT diagnosis; zero valid matched pairs means no winner is claimed.

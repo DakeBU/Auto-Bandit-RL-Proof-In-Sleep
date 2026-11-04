@@ -6794,3 +6794,24 @@ tbody tr:hover {
 }
 
 .book-breadcrumb + .hero { padding-top: 1.5rem; }
+
+/* QA readers keep the exercise, proof and graph location in a readable column. */
+.bench-reader { max-width: 78rem; }
+.bench-reader nav { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-block: 1rem 2rem; }
+.bench-task { max-width: 54rem; padding: 1.6rem 0 2.4rem; border-bottom: 1px solid var(--line); scroll-margin-top: 2rem; }
+.bench-task p, .bench-task li, .bench-proof { max-width: 68ch; line-height: 1.85; }
+.bench-task h3 { margin-top: 1.4rem; }
+.bench-task details { margin-block: 1.2rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: .5rem; }
+.bench-task summary { cursor: pointer; font-weight: 600; padding-block: .3rem; }
+.bench-location { border-left: 3px solid var(--accent); padding-left: 1rem; margin-block: 1.5rem; }
+.bench-reader code { overflow-wrap: anywhere; }
+.bench-reader pre { max-width: 100%; overflow-x: auto; }
+.bench-reader pre code { overflow-wrap: normal; white-space: pre; }
+.bench-equation { display: block; font-size: 1.05rem; }
+.lean-graph-detail { scroll-margin-top: 7rem; }
+.bench-task mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-block: .25rem; }
+@media (max-width: 640px) {
+  .bench-task { padding-block: 1.2rem 1.8rem; }
+  .bench-task details { padding: .7rem; }
+  .bench-reader .math-statement { padding: .7rem; }
+}
