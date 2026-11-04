@@ -1,0 +1,379 @@
+{
+  "schema": "abrl.phase2.binder-review.v1",
+  "verdict": "accepted-for-declared-conditional-library-scope",
+  "recursive_expansions": {
+    "SourceProper": "(forall z, loss(z) != bottom) AND (exists z, exists r:R, loss(z)=coe r). Both parts are used to justify finite comparisons; no convexity/closedness embedded.",
+    "SourceSubdifferential": "g belongs iff forall y in the entire ambient E, loss(z)+coe(inner g (y-z))<=loss(y). hs is forall played t, forall feasible z, exists g satisfying that test. It is not a selected optimality vector.",
+    "advance": "If exists p in V with IsMinOn [loss+coe(eta^-1*D)] V p, choose that witness and return some p; otherwise none. IsMinOn alone lacks membership, supplied separately. No existence/uniqueness/finite minimum is proved by the definition.",
+    "iterate": "I0=some x0. I(t+1)=I(t).bind(advance with eta(t),loss(t)). hseq binds every I(t) through T to the stated x(t). Its zero clause gives x(0)=x0; successor spec proves membership and actual global constrained minimization.",
+    "IsMinOn": "For every comparison z in V, objective(p)<=objective(z). The producer also establishes p in V. The global comparison is not a desired regret inequality.",
+    "divergence": "psi(a)-psi(b)-fderiv R psi b (a-b). Total library formula; fderiv defaults outside differentiability. Every derivative base used in the five proofs is licensed by hinterior and hd.",
+    "StrictConvexOn": "Convex X AND the strict weighted Jensen inequality for distinct points in X with positive weights summing to one. No uniform modulus.",
+    "Convex": "Every nonnegative weighted combination with weights summing to one stays in the set.",
+    "DifferentiableOn": "DifferentiableWithinAt at every point of int X; openness of int X upgrades it to ambient DifferentiableAt at all visited states.",
+    "SourceClosed": "Every real sublevel set of the embedded regularizer is closed; occurs only as a canary conclusion, not an input to the five general interfaces."
+  },
+  "interfaces": [
+    {
+      "name": "iterate_divergence_sum",
+      "binders": [
+        {
+          "binder": "E, NormedAddCommGroup, InnerProductSpace, CompleteSpace",
+          "classification": "TYPING",
+          "reason": "Chosen complete real inner-product ambient; explicit generalization of Euclidean source. Completeness is an inherited API condition, not a new empirical or optimality hypothesis."
+        },
+        {
+          "binder": "V, X, psi, eta, loss, x0, x, T, u",
+          "classification": "TYPING",
+          "reason": "Objects and indexing carriers. Ambient psi/Option run are disclosed representation deltas; total schedules do not require unplayed values to satisfy positivity or monotonicity."
+        },
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "reason": "Convex feasible V; used for the finite-part/segment proof. No closedness or boundedness is hidden."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "reason": "Differentiability on int X, expressed for ambient representative. It does not demand loss differentiability."
+        },
+        {
+          "binder": "hseq",
+          "classification": "SOURCE",
+          "reason": "Conditional algorithm-execution relation, instantiated to this exact Option selector. This classification is only for the stated conditional helper scope. The full source-to-selected-run wrapper and total existence are NOT audited or supplied."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "reason": "Every state 0..T interior; source explicitly assumes t=1..T and initializes interior x0. Not derived from closed/strict data."
+        },
+        {
+          "binder": "hη",
+          "classification": "SOURCE",
+          "reason": "Strictly positive played steps, or positive constant eta. No extra future step condition."
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "reason": "Properness represents source no-bottom carrier plus a finite witness from nonempty V and V subset dom loss. In the actual interface it is an explicit conditional input; formal source transport remains open."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "reason": "The printed subdifferentiability premise uses global ambient supporting vectors at all feasible points. It is not a hypothesis of the desired optimality inequality."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "reason": "Arbitrary feasible comparator. It also supplies V nonemptiness; x0 need not be feasible."
+        }
+      ],
+      "hidden_bundles_fully_expanded": true,
+      "undisclosed_or_forbidden_excess": [],
+      "scope_caution": "Classifications do not establish equivalence with the full printed algorithm/theorem premise set."
+    },
+    {
+      "name": "iterate_fixed_sharp",
+      "binders": [
+        {
+          "binder": "E, NormedAddCommGroup, InnerProductSpace, CompleteSpace",
+          "classification": "TYPING",
+          "reason": "Chosen complete real inner-product ambient; explicit generalization of Euclidean source. Completeness is an inherited API condition, not a new empirical or optimality hypothesis."
+        },
+        {
+          "binder": "V, X, psi, eta, loss, x0, x, T, u",
+          "classification": "TYPING",
+          "reason": "Objects and indexing carriers. Ambient psi/Option run are disclosed representation deltas; total schedules do not require unplayed values to satisfy positivity or monotonicity."
+        },
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "reason": "Convex feasible V; used for the finite-part/segment proof. No closedness or boundedness is hidden."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "reason": "Differentiability on int X, expressed for ambient representative. It does not demand loss differentiability."
+        },
+        {
+          "binder": "hseq",
+          "classification": "SOURCE",
+          "reason": "Conditional algorithm-execution relation, instantiated to this exact Option selector. This classification is only for the stated conditional helper scope. The full source-to-selected-run wrapper and total existence are NOT audited or supplied."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "reason": "Every state 0..T interior; source explicitly assumes t=1..T and initializes interior x0. Not derived from closed/strict data."
+        },
+        {
+          "binder": "hη",
+          "classification": "SOURCE",
+          "reason": "Strictly positive played steps, or positive constant eta. No extra future step condition."
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "reason": "Properness represents source no-bottom carrier plus a finite witness from nonempty V and V subset dom loss. In the actual interface it is an explicit conditional input; formal source transport remains open."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "reason": "The printed subdifferentiability premise uses global ambient supporting vectors at all feasible points. It is not a hypothesis of the desired optimality inequality."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "reason": "Arbitrary feasible comparator. It also supplies V nonemptiness; x0 need not be feasible."
+        }
+      ],
+      "hidden_bundles_fully_expanded": true,
+      "undisclosed_or_forbidden_excess": [],
+      "scope_caution": "Classifications do not establish equivalence with the full printed algorithm/theorem premise set."
+    },
+    {
+      "name": "iterate_variable_sharp",
+      "binders": [
+        {
+          "binder": "E, NormedAddCommGroup, InnerProductSpace, CompleteSpace",
+          "classification": "TYPING",
+          "reason": "Chosen complete real inner-product ambient; explicit generalization of Euclidean source. Completeness is an inherited API condition, not a new empirical or optimality hypothesis."
+        },
+        {
+          "binder": "V, X, psi, eta, loss, x0, x, T, u",
+          "classification": "TYPING",
+          "reason": "Objects and indexing carriers. Ambient psi/Option run are disclosed representation deltas; total schedules do not require unplayed values to satisfy positivity or monotonicity."
+        },
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "reason": "Convex feasible V; used for the finite-part/segment proof. No closedness or boundedness is hidden."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "reason": "Differentiability on int X, expressed for ambient representative. It does not demand loss differentiability."
+        },
+        {
+          "binder": "hseq",
+          "classification": "SOURCE",
+          "reason": "Conditional algorithm-execution relation, instantiated to this exact Option selector. This classification is only for the stated conditional helper scope. The full source-to-selected-run wrapper and total existence are NOT audited or supplied."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "reason": "Every state 0..T interior; source explicitly assumes t=1..T and initializes interior x0. Not derived from closed/strict data."
+        },
+        {
+          "binder": "hη",
+          "classification": "SOURCE",
+          "reason": "Strictly positive played steps, or positive constant eta. No extra future step condition."
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "reason": "Properness represents source no-bottom carrier plus a finite witness from nonempty V and V subset dom loss. In the actual interface it is an explicit conditional input; formal source transport remains open."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "reason": "The printed subdifferentiability premise uses global ambient supporting vectors at all feasible points. It is not a hypothesis of the desired optimality inequality."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "reason": "Arbitrary feasible comparator. It also supplies V nonemptiness; x0 need not be feasible."
+        },
+        {
+          "binder": "hT",
+          "classification": "TYPING",
+          "reason": "Positive-horizon boundary required for last step and nonempty max. Not a printed explicit binder; disclosed well-formedness convention."
+        },
+        {
+          "binder": "hmono",
+          "classification": "SOURCE",
+          "reason": "Positive nonincreasing used schedule, with explicit source-index delta: t+1<T only. No repair approval of the literal source range."
+        },
+        {
+          "binder": "M",
+          "classification": "TYPING",
+          "reason": "Arbitrary real cap parameter of the declared auxiliary generalized inequality; no sign restriction."
+        },
+        {
+          "binder": "hbound",
+          "classification": "EXCESS",
+          "reason": "Relative to a literal Theorem15.30 Anchor, a supplied cap is not a source hypothesis. Accepted ONLY as the explicitly declared canonical helper parameter. The source-shaped max corollary constructs this bound internally by le_sup' and exposes no hbound binder.",
+          "permitted_scope": "Canonical library helper, not literal source Anchor"
+        }
+      ],
+      "hidden_bundles_fully_expanded": true,
+      "undisclosed_or_forbidden_excess": [],
+      "scope_caution": "Classifications do not establish equivalence with the full printed algorithm/theorem premise set."
+    },
+    {
+      "name": "iterate_fixed_regret",
+      "binders": [
+        {
+          "binder": "E, NormedAddCommGroup, InnerProductSpace, CompleteSpace",
+          "classification": "TYPING",
+          "reason": "Chosen complete real inner-product ambient; explicit generalization of Euclidean source. Completeness is an inherited API condition, not a new empirical or optimality hypothesis."
+        },
+        {
+          "binder": "V, X, psi, eta, loss, x0, x, T, u",
+          "classification": "TYPING",
+          "reason": "Objects and indexing carriers. Ambient psi/Option run are disclosed representation deltas; total schedules do not require unplayed values to satisfy positivity or monotonicity."
+        },
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "reason": "Convex feasible V; used for the finite-part/segment proof. No closedness or boundedness is hidden."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "reason": "Differentiability on int X, expressed for ambient representative. It does not demand loss differentiability."
+        },
+        {
+          "binder": "hseq",
+          "classification": "SOURCE",
+          "reason": "Conditional algorithm-execution relation, instantiated to this exact Option selector. This classification is only for the stated conditional helper scope. The full source-to-selected-run wrapper and total existence are NOT audited or supplied."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "reason": "Every state 0..T interior; source explicitly assumes t=1..T and initializes interior x0. Not derived from closed/strict data."
+        },
+        {
+          "binder": "hη",
+          "classification": "SOURCE",
+          "reason": "Strictly positive played steps, or positive constant eta. No extra future step condition."
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "reason": "Properness represents source no-bottom carrier plus a finite witness from nonempty V and V subset dom loss. In the actual interface it is an explicit conditional input; formal source transport remains open."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "reason": "The printed subdifferentiability premise uses global ambient supporting vectors at all feasible points. It is not a hypothesis of the desired optimality inequality."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "reason": "Arbitrary feasible comparator. It also supplies V nonemptiness; x0 need not be feasible."
+        },
+        {
+          "binder": "hVX",
+          "classification": "SOURCE",
+          "reason": "V subset X supplies comparator domain."
+        },
+        {
+          "binder": "hc",
+          "classification": "SOURCE",
+          "reason": "Strict convexity of psi on X; recursively entails convex X and convex psi. Used to prove terminal nonnegativity."
+        }
+      ],
+      "hidden_bundles_fully_expanded": true,
+      "undisclosed_or_forbidden_excess": [],
+      "scope_caution": "Classifications do not establish equivalence with the full printed algorithm/theorem premise set."
+    },
+    {
+      "name": "iterate_variable_regret",
+      "binders": [
+        {
+          "binder": "E, NormedAddCommGroup, InnerProductSpace, CompleteSpace",
+          "classification": "TYPING",
+          "reason": "Chosen complete real inner-product ambient; explicit generalization of Euclidean source. Completeness is an inherited API condition, not a new empirical or optimality hypothesis."
+        },
+        {
+          "binder": "V, X, psi, eta, loss, x0, x, T, u",
+          "classification": "TYPING",
+          "reason": "Objects and indexing carriers. Ambient psi/Option run are disclosed representation deltas; total schedules do not require unplayed values to satisfy positivity or monotonicity."
+        },
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "reason": "Convex feasible V; used for the finite-part/segment proof. No closedness or boundedness is hidden."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "reason": "Differentiability on int X, expressed for ambient representative. It does not demand loss differentiability."
+        },
+        {
+          "binder": "hseq",
+          "classification": "SOURCE",
+          "reason": "Conditional algorithm-execution relation, instantiated to this exact Option selector. This classification is only for the stated conditional helper scope. The full source-to-selected-run wrapper and total existence are NOT audited or supplied."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "reason": "Every state 0..T interior; source explicitly assumes t=1..T and initializes interior x0. Not derived from closed/strict data."
+        },
+        {
+          "binder": "hη",
+          "classification": "SOURCE",
+          "reason": "Strictly positive played steps, or positive constant eta. No extra future step condition."
+        },
+        {
+          "binder": "hf",
+          "classification": "SOURCE",
+          "reason": "Properness represents source no-bottom carrier plus a finite witness from nonempty V and V subset dom loss. In the actual interface it is an explicit conditional input; formal source transport remains open."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "reason": "The printed subdifferentiability premise uses global ambient supporting vectors at all feasible points. It is not a hypothesis of the desired optimality inequality."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "reason": "Arbitrary feasible comparator. It also supplies V nonemptiness; x0 need not be feasible."
+        },
+        {
+          "binder": "hT",
+          "classification": "TYPING",
+          "reason": "Positive-horizon boundary required for last step and nonempty max. Not a printed explicit binder; disclosed well-formedness convention."
+        },
+        {
+          "binder": "hmono",
+          "classification": "SOURCE",
+          "reason": "Positive nonincreasing used schedule, with explicit source-index delta: t+1<T only. No repair approval of the literal source range."
+        },
+        {
+          "binder": "hVX",
+          "classification": "SOURCE",
+          "reason": "V subset X supplies comparator domain."
+        },
+        {
+          "binder": "hc",
+          "classification": "SOURCE",
+          "reason": "Strict convexity of psi on X; recursively entails convex X and convex psi. Used to prove terminal nonnegativity."
+        }
+      ],
+      "hidden_bundles_fully_expanded": true,
+      "undisclosed_or_forbidden_excess": [],
+      "scope_caution": "Classifications do not establish equivalence with the full printed algorithm/theorem premise set."
+    },
+    {
+      "name": "fixed_signed_run",
+      "external_logical_inputs": [],
+      "local_let_bindings": "TYPING: concrete definitions, no assumptions.",
+      "nested_quantifiers": "Conclusions to prove, not theorem inputs: properness/support/SourceClosed/strict convexity/differentiability/run and all scalar/regret comparisons.",
+      "top_level_conjunct_count": 16,
+      "excess_public_hypotheses": []
+    },
+    {
+      "name": "decreasing_signed_run",
+      "external_logical_inputs": [],
+      "local_let_bindings": "TYPING: concrete definitions, no assumptions.",
+      "nested_quantifiers": "Conclusions to prove, not theorem inputs: properness/support/SourceClosed/strict convexity/differentiability/run and all scalar/regret comparisons.",
+      "top_level_conjunct_count": 22,
+      "excess_public_hypotheses": []
+    }
+  ],
+  "STANDING_assumptions_used": [],
+  "RULED_repairs_used": [],
+  "literal_source_anchor_equivalence_accepted": false,
+  "no_assumed_proof_results": "Finite loss values, finite-part convexity, true proximal comparison, one-step bound, weighted telescope and terminal nonnegativity are derived dependencies, not public inputs."
+}
