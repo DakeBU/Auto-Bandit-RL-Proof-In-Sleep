@@ -1,0 +1,280 @@
+{
+  "schema": "abrl.source-contract.extractor.v1",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "date": "2026-06-21",
+    "path": "historical-worktrees/research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "title_page_verified": true
+  },
+  "status": {
+    "extraction": "SOURCE_ONLY_EXTRACTED",
+    "independent_topology_review": "PENDING_V2_RECHECK",
+    "extractor_self_approval": false,
+    "statement_seal": "NOT_PERFORMED_NO_LEAN_SIGNATURE_INSPECTED",
+    "proof_seal": "NOT_CLAIMED",
+    "chapter_completion": "NOT_CLAIMED",
+    "prior_v1_independent_review": "accepted-with-explicit-gaps",
+    "source_repairs_approved": []
+  },
+  "scope": [
+    "Algorithm 15.8",
+    "Theorem 15.30 first claim (nonincreasing steps)",
+    "Theorem 15.30 second claim (constant step, proof left as exercise)",
+    "Printed proof and explicitly identified source dependencies"
+  ],
+  "definition_kind": "literal algorithm relation on source-admissible attained trajectories; no total off-domain algorithm invented",
+  "notation": {
+    "B": "B_psi(a;b) = psi(a) - psi(b) - <grad psi(b), a-b>",
+    "B_domain": "X x int(X)",
+    "R_T": "sum_{t=1}^T (ell_t(x_t)-ell_t(u))",
+    "D_squared": "D^2 := max_{0 <= s <= T-1} B_psi(u;x_s); a proof-local notation, not a global diameter assumption",
+    "indices": "x_0 initialization; x_1,...,x_T decisions; the comparator u is fixed and universally quantified in V"
+  },
+  "assumptions": [
+    {
+      "id": "A-space",
+      "classification": "TYPING",
+      "text": "Finite-dimensional Euclidean ambient R^d; X is the domain of psi. Strict convexity invokes the convex-domain convention of Definition 6.3.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 Require"
+        },
+        {
+          "pdf_page_1_based": 75,
+          "printed_page": 63,
+          "anchor": "Definitions 6.3 and 6.4"
+        }
+      ]
+    },
+    {
+      "id": "A-V",
+      "classification": "SOURCE",
+      "text": "V is nonempty, closed and convex, V subset X. Algorithm prints V ⊂ X ⊆ R^d; theorem prints V ⊆ X. No boundedness or full-dimensionality premise.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 Require; Theorem 15.30 opening"
+        }
+      ]
+    },
+    {
+      "id": "A-psi",
+      "classification": "SOURCE",
+      "text": "psi:X -> R strictly convex and differentiable on int X; Theorem 15.30 additionally says closed. The algorithm does not itself list closedness of psi.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 Require; Theorem 15.30 opening"
+        }
+      ]
+    },
+    {
+      "id": "A-init",
+      "classification": "SOURCE",
+      "text": "x_0 in int X. Source does not require x_0 in V.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 Require"
+        }
+      ]
+    },
+    {
+      "id": "A-loss",
+      "classification": "SOURCE",
+      "text": "ell_t:R^d -> (-infinity,+infinity], V subset dom ell_t; Theorem 15.30 requires ell_t subdifferentiable on V. Do not replace this with loss differentiability, global convexity, bounded gradients, or closed losses.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 line 2; Theorem 15.30 assumptions"
+        }
+      ]
+    },
+    {
+      "id": "A-step",
+      "classification": "SOURCE",
+      "text": "eta_1,...,eta_T > 0. Theorem literally adds eta_{t+1} <= eta_t for t=1,...,T; its proof only uses this for t=1,...,T-1.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 Require; Theorem 15.30 assumptions"
+        }
+      ]
+    },
+    {
+      "id": "A-interior",
+      "classification": "SOURCE",
+      "text": "Theorem requires x_t in int X for t=1,...,T, in addition to the algorithm initial x_0 in int X. Comparator u need only lie in V subset X, including boundary points.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Theorem 15.30 assumptions"
+        }
+      ]
+    },
+    {
+      "id": "A-update",
+      "classification": "SOURCE",
+      "text": "For t=1,...,T choose x_t in argmin_{x in V} [ell_t(x)+(1/eta_t)B_psi(x;x_{t-1})]. Membership entails x_t in V and global minimization over V.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Algorithm 15.8 line 3"
+        }
+      ]
+    },
+    {
+      "id": "A-constant",
+      "classification": "SOURCE",
+      "text": "For the second claim eta_t=eta for all t=1,...,T, with eta>0 inherited. It is printed as Moreover under the same theorem.",
+      "source": [
+        {
+          "pdf_page_1_based": 277,
+          "printed_page": 265,
+          "anchor": "Theorem 15.30 second claim"
+        }
+      ]
+    }
+  ],
+  "feedback": {
+    "order": [
+      "receive entire current loss ell_t",
+      "choose x_t using current ell_t and prior state x_{t-1}",
+      "pay ell_t(x_t)"
+    ],
+    "model": "prescient function-level feedback; not ordinary predict-then-observe online feedback or a gradients-only oracle",
+    "probability": "deterministic pathwise inequality; no filtration, probabilistic event, confidence parameter or independence assumption printed",
+    "adaptivity": "No stochastic/adversarial nonanticipativity restriction added. The loss is available before the current decision.",
+    "source": [
+      {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Algorithm 15.8 lines 2-4; section 15.5.1 first paragraph"
+      },
+      {
+        "pdf_page_1_based": 263,
+        "printed_page": 251,
+        "anchor": "Remark 15.16"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "T15.30-variable",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem 15.30 first display"
+      },
+      "formula": "forall u in V: R_T(u) <= (max_{0 <= s <= T-1} B_psi(u;x_s))/eta_T - sum_{t=1}^T B_psi(x_t;x_{t-1})/eta_t",
+      "negative_terms": "Every movement term is retained with its own eta_t. The terminal comparator term appears in the exact telescoping equality but is dropped for the displayed theorem.",
+      "proof_status": "Printed proof, with unresolved citation bridge G-optimality."
+    },
+    {
+      "id": "T15.30-constant",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem 15.30 second display"
+      },
+      "formula": "forall u in V: R_T(u) <= B_psi(u;x_0)/eta - (1/eta) sum_{t=1}^T B_psi(x_t;x_{t-1})",
+      "negative_terms": "Retains the entire movement sum. It does not replace the initial divergence by the previous-state maximum.",
+      "proof_status": "Explicitly left as an exercise at PDF278 printed p266. A plausible telescope route is recorded only as an unprinted exercise obligation."
+    }
+  ],
+  "horizon_conventions": {
+    "positive": "Printed variable-step formula requires T>=1 to define eta_T and a nonempty max over 0,...,T-1. This is implicit expression well-formedness, not an explicit printed T>=1 binder. T=1 has empty correction sum.",
+    "zero": "Algorithm loop can be interpreted as empty when T=0, but the theorem gives no zero-horizon convention. The variable-step expression then has an undefined eta_0 and empty maximum. A constant-step extension would need an explicit convention and is not a printed claim.",
+    "off_by_one": "Literal eta_{T+1} <= eta_T is requested by the theorem t=1,...,T phrase while the algorithm only supplies eta_1,...,eta_T. Do not silently normalize this source discrepancy."
+  },
+  "well_definedness": {
+    "attainment": "The update is an argmin selection. Nonempty closed V and strictly convex closed psi alone do not constitute a printed proof that each composite objective attains its infimum. No total selector, fallback point, or existence theorem is given here.",
+    "uniqueness": "The source uses membership in argmin; it supplies no separate existence/uniqueness theorem in this section. Do not assert an audited unique-total map.",
+    "interiority": "Interiority of every chosen iterate is a theorem assumption, not a consequence proved from the algorithm. x_0 need not be feasible.",
+    "extended_values": "All evaluated losses are finite because x_t,u lie in V subset dom ell_t. B is finite on X x int X. The definition of closed functions appears in Definition 2.16; extending psi outside X by +infinity is a possible convention, not explicitly implemented here."
+  },
+  "unresolved_source_obligations": [
+    "G-optimality",
+    "G-attainment",
+    "G-horizon-index",
+    "EX-constant"
+  ],
+  "no_implementation_evidence": true,
+  "revision": {
+    "version": 2,
+    "predecessor_directory": "private-maintenance/github-maintenance-goal-20261011\\batch39-source-extraction-v1",
+    "predecessor_receipt_sha256": "1ad18f458a6b8260894dfe613a78d61b03f05289bca4b6eee19937e40a1f05b5",
+    "change_scope": [
+      "R5-root-obligations",
+      "R6-coverage-boundary"
+    ],
+    "phase1_input_review": {
+      "path": "private-maintenance/github-maintenance-goal-20261011\\batch39-source-review-v1\\phase1-topology-review.json",
+      "sha256": "fb2fb57521bbcfd91473d0dd365fc8c324731b585059e1ae5759c2b73095b3af",
+      "verdict": "accepted-with-explicit-gaps",
+      "applies_to": "v1 only"
+    },
+    "source_repairs_approved": [],
+    "reviewer_derived_witnesses_imported_as_source": false,
+    "independent_recheck": "PENDING"
+  },
+  "root_obligations": [
+    {
+      "id": "RO-A15.8-attainment",
+      "root": "A15.8",
+      "obligation": "G-attainment",
+      "role": "execution_well_definedness",
+      "relation": "ROOT_OBLIGATION_ANNOTATION",
+      "is_proof_premise": false,
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Algorithm15.8 line3 and theorem interiority assumption"
+      },
+      "note": "Root-visible execution boundary: an attained update relation is not a total algorithm. This is not a new hypothesis or missing inference in the conditional regret telescope.",
+      "resolved": false
+    },
+    {
+      "id": "RO-variable-index",
+      "root": "T15.30-variable",
+      "obligation": "G-horizon-index",
+      "role": "statement_boundary",
+      "relation": "ROOT_OBLIGATION_ANNOTATION",
+      "is_proof_premise": false,
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem15.30 joint t=1,...,T quantifier and first display"
+      },
+      "note": "Root-visible literal eta_(T+1) discrepancy and positive-horizon well-formedness. No normalized range or zero-horizon extension approved.",
+      "resolved": false
+    },
+    {
+      "id": "RO-constant-index",
+      "root": "T15.30-constant",
+      "obligation": "G-horizon-index",
+      "role": "inherited_statement_boundary",
+      "relation": "ROOT_OBLIGATION_ANNOTATION",
+      "is_proof_premise": false,
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem15.30 Moreover claim under inherited theorem assumptions"
+      },
+      "note": "Root-visible inherited statement boundary. The constant-step formula does not use a maximum, but its source theorem retains the joint index wording and gives no T=0 extension.",
+      "resolved": false
+    }
+  ]
+}

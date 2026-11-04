@@ -1,0 +1,435 @@
+{
+  "schema_version": 1,
+  "review_kind": "independent_source_blind_semantic_reconstruction",
+  "input": {
+    "path": "private-maintenance/github-maintenance-goal-20261011/batch39-blind-input-v1/packet.json",
+    "sha256": "2384e92997470d016eda3b730ee47e8506e1ee4d88bee7c2c74405c6f1bd28c4",
+    "sha256_verified": true,
+    "permitted_source": "Only packet.json",
+    "exact_declaration_ids": [
+      "item_0",
+      "item_1",
+      "item_2",
+      "item_3",
+      "item_4",
+      "item_5",
+      "item_6"
+    ]
+  },
+  "scope": "Statements and complete supporting definitions only. No surrounding files, Git history, source identities, prior reviews, other agents' work, or proof bodies were inspected. No source-review verdict is requested or given.",
+  "notation": {
+    "EReal": "ℝ∪{−∞,+∞}",
+    "iota": "The standard embedding ℝ→EReal",
+    "ell": "loss",
+    "x0": "The separate initialization parameter; hseq forces x(0)=x0.",
+    "D": "Dψ(first argument, second argument), derivative at the second argument.",
+    "R_T": "R_T(u)=\\sum_{t=0}^{T-1}[\\operatorname{toReal}\\ell_t(x_{t+1})-\\operatorname{toReal}\\ell_t(u)].",
+    "toReal": "EReal.toReal is a total map: a finite embedded r maps to r, while both +∞ and −∞ map to 0. Thus the displayed real differences are not an unrestricted extended-real subtraction. For t<T, P(ℓ_t) together with the global supporting-vector condition on V forces ℓ_t to be finite on V. Reachability places x_{t+1} in V and u∈V, so these particular positive-horizon summands use finite values. No finiteness of ℓ_t(x0), or of values outside V, is asserted."
+  },
+  "supporting_definitions": {
+    "P": {
+      "domain": "An extended-real function f:E→ℝ∪{−∞,+∞} on a compatible carrier.",
+      "expansion": "P(f) \\iff [\\forall z\\in E,\\ f(z)\\ne-\\infty]\\ \\land\\ [\\exists z\\in E\\ \\exists r\\in\\mathbb R,\\ f(z)=r].",
+      "meaning": "No value is −∞, and at least one value is finite. Other values may be +∞. This is not global real-valuedness, boundedness, continuity, or convexity."
+    },
+    "C": {
+      "domain": "An extended-real function on a topological carrier E.",
+      "expansion": "C(f)\\iff \\forall r\\in\\mathbb R,\\ \\{z\\in E:f(z)\\le r\\}\\text{ is closed}.",
+      "meaning": "Only real sublevel thresholds are quantified. It does not assert convexity or finite values."
+    },
+    "S": {
+      "domain": "f:E→EReal and x∈E, with E a real complete inner product space in this packet.",
+      "expansion": "S(f,x)=\\{g\\in E:\\forall y\\in E,\\ f(x)+\\langle g,y-x\\rangle\\le f(y)\\}.",
+      "meaning": "The finite real inner product is embedded in EReal before addition and comparison. The test ranges over all E, not only V. Nonemptiness at z means ∃g, followed by ∀y; g may depend on z and on the loss index. Combined with P(f), nonemptiness at z forces f(z) finite, because the finite witness in P rules out f(z)=+∞."
+    },
+    "D": {
+      "domain": "ψ:E→ℝ, x,y∈E, on a real normed space with the structures required by fderiv.",
+      "expansion": "D_\\psi(x,y)=\\psi(x)-\\psi(y)-(\\mathrm{fderiv}_{\\mathbb R}\\psi(y))(x-y).",
+      "meaning": "The derivative is taken at the second argument and applied to first minus second. This is a total definition: Lean's fderiv is the zero continuous linear map where the function is not Fréchet differentiable. No differentiability, convexity, positivity, symmetry, or coercivity is a premise of the definition itself."
+    },
+    "A": {
+      "domain": "V⊆E, ψ:E→ℝ, η∈ℝ, f:E→EReal, x∈E; output Option E.",
+      "expansion": "Q_{\\eta,f,x}(z)=f(z)+\\iota(\\eta^{-1}D_\\psi(z,x)),\\qquad W=\\{p\\in E:p\\in V\\ \\land\\ \\forall z\\in V,\\ Q_{\\eta,f,x}(p)\\le Q_{\\eta,f,x}(z)\\}. \\quad A(V,\\psi,\\eta,f,x)=\\begin{cases}\\mathrm{some}(\\operatorname{choose}(W\\ne\\varnothing)),&W\\ne\\varnothing,\\\\ \\mathrm{none},&W=\\varnothing.\\end{cases}",
+      "meaning": "ι embeds a real into EReal. Membership p∈V is explicitly required in addition to IsMinOn. The chosen point is a noncomputable classical witness. This definition does not prove a minimizer exists or is unique, nor require a finite minimum. If all objective values on a nonempty V are +∞, every point of V can satisfy the displayed minimization predicate. No η>0 assumption is built in; real inversion is total, with 0⁻¹=0."
+    },
+    "I": {
+      "domain": "V⊆E, ψ:E→ℝ, η:ℕ→ℝ, loss:ℕ→E→EReal, x0∈E; output ℕ→Option E.",
+      "expansion": "I_0=\\mathrm{some}(x_0),\\qquad I_{t+1}=\\begin{cases}A(V,\\psi,\\eta_t,\\ell_t,p),&I_t=\\mathrm{some}(p),\\\\ \\mathrm{none},&I_t=\\mathrm{none}.\\end{cases}",
+      "meaning": "The update from t to t+1 uses loss t and η t. Initial membership x0∈V is not checked. A failed update makes every later value none. Reaching some(x_t) is a premise or concrete conjunct, not an unconditional guarantee. An arbitrary sequence of minimizers need not equal this particular classical-choice sequence."
+    }
+  },
+  "declarations": [
+    {
+      "id": "item_0",
+      "seven_slots": {
+        "objects_spaces": "E is any real complete inner product space (NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E), not necessarily finite dimensional. V,X⊆E, ψ:E→ℝ, loss ℓ:ℕ→E→EReal, x0∈E, x:ℕ→E, horizon T∈ℕ, comparator u∈E. All sums over range T mean t=0,…,T−1. The schedule η has domain all ℕ.",
+        "quantifier_order": "Universally quantified inputs in the displayed dependency order: E and its structures; V,X and the relevant set premises; ψ and its premises; η and its relevant premises; ℓ,x0,x,T; horizon/reachability/interior/step/loss/support premises; then arbitrary u∈V. Each support premise has order ∀t<T ∀z∈V ∃g∈E ∀y∈E. Reachability is a hypothesis for the specified classical choice, not an existential conclusion.",
+        "assumptions": [
+          "V is convex over ℝ.",
+          "ψ is DifferentiableOn ℝ on interior X. Since interior X is open, ψ has a Fréchet derivative at each visited x_t under the interior premise.",
+          "η:ℕ→ℝ and ∀t<T, η_t>0.",
+          "∀t≤T, I(V,ψ,schedule,ℓ,x0,t)=some(x_t). Hence x_0=x0, and x_1,…,x_T∈V whenever those successors exist.",
+          "∀t≤T, x_t∈interior X, including both endpoints.",
+          "∀t<T, [∀z∈E, ℓ_t(z)≠−∞] and [∃z∈E ∃r∈ℝ, ℓ_t(z)=r]. The finite witness can depend on t.",
+          "∀t<T ∀z∈V ∃g∈E ∀y∈E, ℓ_t(z)+ι(⟨g,y−z⟩)≤ℓ_t(y). The vector g can depend on both t and z.",
+          "u∈V."
+        ],
+        "conclusion": "\\sum_{t=0}^{T-1}[\\operatorname{toReal}\\ell_t(x_{t+1})-\\operatorname{toReal}\\ell_t(u)]\\le\\sum_{t=0}^{T-1}\\frac{D_\\psi(u,x_t)-D_\\psi(u,x_{t+1})}{\\eta_t}-\\sum_{t=0}^{T-1}\\frac{D_\\psi(x_{t+1},x_t)}{\\eta_t}.",
+        "constants_normalization": "Unit coefficient on both sums. η_t⁻¹ multiplies the divergence in the update, and both differences and movements are divided by the same η_t. No averaging by T, no 1/2 normalization of D, and no schedule monotonicity.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "EReal.toReal is a total map: a finite embedded r maps to r, while both +∞ and −∞ map to 0. Thus the displayed real differences are not an unrestricted extended-real subtraction. For t<T, P(ℓ_t) together with the global supporting-vector condition on V forces ℓ_t to be finite on V. Reachability places x_{t+1} in V and u∈V, so these particular positive-horizon summands use finite values. No finiteness of ℓ_t(x0), or of values outside V, is asserted.",
+          "T=0 is permitted. All sums are empty and the conclusion is 0≤0. The positivity, loss, and supporting-vector conditions are vacuous; x_0=x0∈interior X and u∈V are still required.",
+          "Neither convexity nor strict/strong convexity of ψ is assumed; neither V⊆X nor X convexity is assumed. Dψ may have either sign. No nonnegativity of a terminal or movement divergence may be added to this interface.",
+          "There is no premise x0∈V. No assertion that every initialization reaches the horizon, that a minimizer exists for arbitrary inputs, that choices are unique, or that future t>T states are reached.",
+          "A theorem statement is not evidence that its proof is valid. No proof or source-review verdict is supplied by this reconstruction."
+        ]
+      }
+    },
+    {
+      "id": "item_1",
+      "seven_slots": {
+        "objects_spaces": "E is any real complete inner product space (NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E), not necessarily finite dimensional. V,X⊆E, ψ:E→ℝ, loss ℓ:ℕ→E→EReal, x0∈E, x:ℕ→E, horizon T∈ℕ, comparator u∈E. All sums over range T mean t=0,…,T−1. The positive step η is one real number.",
+        "quantifier_order": "Universally quantified inputs in the displayed dependency order: E and its structures; V,X and the relevant set premises; ψ and its premises; η and its relevant premises; ℓ,x0,x,T; horizon/reachability/interior/step/loss/support premises; then arbitrary u∈V. Each support premise has order ∀t<T ∀z∈V ∃g∈E ∀y∈E. Reachability is a hypothesis for the specified classical choice, not an existential conclusion.",
+        "assumptions": [
+          "V is convex over ℝ.",
+          "ψ is DifferentiableOn ℝ on interior X. Since interior X is open, ψ has a Fréchet derivative at each visited x_t under the interior premise.",
+          "η∈ℝ and η>0; the recursion uses the constant schedule t↦η.",
+          "∀t≤T, I(V,ψ,schedule,ℓ,x0,t)=some(x_t). Hence x_0=x0, and x_1,…,x_T∈V whenever those successors exist.",
+          "∀t≤T, x_t∈interior X, including both endpoints.",
+          "∀t<T, [∀z∈E, ℓ_t(z)≠−∞] and [∃z∈E ∃r∈ℝ, ℓ_t(z)=r]. The finite witness can depend on t.",
+          "∀t<T ∀z∈V ∃g∈E ∀y∈E, ℓ_t(z)+ι(⟨g,y−z⟩)≤ℓ_t(y). The vector g can depend on both t and z.",
+          "u∈V."
+        ],
+        "conclusion": "\\sum_{t=0}^{T-1}[\\operatorname{toReal}\\ell_t(x_{t+1})-\\operatorname{toReal}\\ell_t(u)]\\le \\frac{D_\\psi(u,x_0)}{\\eta}-\\frac{D_\\psi(u,x_T)}{\\eta}-\\frac{\\sum_{t=0}^{T-1}D_\\psi(x_{t+1},x_t)}{\\eta},\\quad x_0=x0.",
+        "constants_normalization": "Same positive η in all updates. Both the terminal divergence and the sum of movements are subtracted with coefficient 1/η. They are signed expressions, not automatically nonnegative penalties.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "EReal.toReal is a total map: a finite embedded r maps to r, while both +∞ and −∞ map to 0. Thus the displayed real differences are not an unrestricted extended-real subtraction. For t<T, P(ℓ_t) together with the global supporting-vector condition on V forces ℓ_t to be finite on V. Reachability places x_{t+1} in V and u∈V, so these particular positive-horizon summands use finite values. No finiteness of ℓ_t(x0), or of values outside V, is asserted.",
+          "T=0 is permitted. Reachability gives x_0=x0 and the conclusion is 0≤Dψ(u,x0)/η−Dψ(u,x0)/η=0. Loss and supporting-vector premises are vacuous, but η>0, x0∈interior X, and u∈V remain.",
+          "Neither convexity nor strict/strong convexity of ψ is assumed; neither V⊆X nor X convexity is assumed. Dψ may have either sign. No nonnegativity of a terminal or movement divergence may be added to this interface.",
+          "There is no premise x0∈V. No assertion that every initialization reaches the horizon, that a minimizer exists for arbitrary inputs, that choices are unique, or that future t>T states are reached.",
+          "A theorem statement is not evidence that its proof is valid. No proof or source-review verdict is supplied by this reconstruction."
+        ]
+      }
+    },
+    {
+      "id": "item_2",
+      "seven_slots": {
+        "objects_spaces": "E is any real complete inner product space (NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E), not necessarily finite dimensional. V,X⊆E, ψ:E→ℝ, loss ℓ:ℕ→E→EReal, x0∈E, x:ℕ→E, horizon T∈ℕ, comparator u∈E. All sums over range T mean t=0,…,T−1. The schedule η has domain all ℕ.",
+        "quantifier_order": "Universally quantified inputs in the displayed dependency order: E and its structures; V,X and the relevant set premises; ψ and its premises; η and its relevant premises; ℓ,x0,x,T; horizon/reachability/interior/step/loss/support premises; then arbitrary u∈V; then arbitrary real M satisfying the previous-state upper bound. Each support premise has order ∀t<T ∀z∈V ∃g∈E ∀y∈E. Reachability is a hypothesis for the specified classical choice, not an existential conclusion.",
+        "assumptions": [
+          "V is convex over ℝ.",
+          "ψ is DifferentiableOn ℝ on interior X. Since interior X is open, ψ has a Fréchet derivative at each visited x_t under the interior premise.",
+          "T>0.",
+          "η:ℕ→ℝ and ∀t<T, η_t>0.",
+          "∀t∈ℕ, t+1<T ⇒ η_{t+1}≤η_t. This compares η_0,…,η_{T−1} only.",
+          "∀t≤T, I(V,ψ,schedule,ℓ,x0,t)=some(x_t). Hence x_0=x0, and x_1,…,x_T∈V whenever those successors exist.",
+          "∀t≤T, x_t∈interior X, including both endpoints.",
+          "∀t<T, [∀z∈E, ℓ_t(z)≠−∞] and [∃z∈E ∃r∈ℝ, ℓ_t(z)=r]. The finite witness can depend on t.",
+          "∀t<T ∀z∈V ∃g∈E ∀y∈E, ℓ_t(z)+ι(⟨g,y−z⟩)≤ℓ_t(y). The vector g can depend on both t and z.",
+          "u∈V.",
+          "M∈ℝ and ∀t<T, Dψ(u,x_t)≤M. M is not assumed nonnegative and does not bound the terminal value Dψ(u,x_T)."
+        ],
+        "conclusion": "\\sum_{t=0}^{T-1}[\\operatorname{toReal}\\ell_t(x_{t+1})-\\operatorname{toReal}\\ell_t(u)]\\le\\frac{M}{\\eta_{T-1}}-\\frac{D_\\psi(u,x_T)}{\\eta_{T-1}}-\\sum_{t=0}^{T-1}\\frac{D_\\psi(x_{t+1},x_t)}{\\eta_t}.",
+        "constants_normalization": "M bounds exactly Dψ(u,x_0),…,Dψ(u,x_{T−1}); it is not a norm radius and need not be ≥0. The leading term and terminal term use η_{T−1}, but each movement uses its own η_t.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "EReal.toReal is a total map: a finite embedded r maps to r, while both +∞ and −∞ map to 0. Thus the displayed real differences are not an unrestricted extended-real subtraction. For t<T, P(ℓ_t) together with the global supporting-vector condition on V forces ℓ_t to be finite on V. Reachability places x_{t+1} in V and u∈V, so these particular positive-horizon summands use finite values. No finiteness of ℓ_t(x0), or of values outside V, is asserted.",
+          "Zero horizon is excluded. At T=1 the monotonicity premise is vacuous, the last schedule index is 0, and the set of previous states is {x_0}.",
+          "Neither convexity nor strict/strong convexity of ψ is assumed; neither V⊆X nor X convexity is assumed. Dψ may have either sign. No nonnegativity of a terminal or movement divergence may be added to this interface.",
+          "There is no premise x0∈V. No assertion that every initialization reaches the horizon, that a minimizer exists for arbitrary inputs, that choices are unique, or that future t>T states are reached.",
+          "No positivity at η_T or later, and no comparison η_T≤η_{T−1}, is required. Natural subtraction T−1 is a genuine previous index because T>0.",
+          "A theorem statement is not evidence that its proof is valid. No proof or source-review verdict is supplied by this reconstruction.",
+          "The terminal divergence is retained with a minus sign. It cannot be dropped based on this statement's assumptions."
+        ]
+      }
+    },
+    {
+      "id": "item_3",
+      "seven_slots": {
+        "objects_spaces": "E is any real complete inner product space (NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E), not necessarily finite dimensional. V,X⊆E, ψ:E→ℝ, loss ℓ:ℕ→E→EReal, x0∈E, x:ℕ→E, horizon T∈ℕ, comparator u∈E. All sums over range T mean t=0,…,T−1. The positive step η is one real number.",
+        "quantifier_order": "Universally quantified inputs in the displayed dependency order: E and its structures; V,X and the relevant set premises; ψ and its premises; η and its relevant premises; ℓ,x0,x,T; horizon/reachability/interior/step/loss/support premises; then arbitrary u∈V. Each support premise has order ∀t<T ∀z∈V ∃g∈E ∀y∈E. Reachability is a hypothesis for the specified classical choice, not an existential conclusion.",
+        "assumptions": [
+          "V is convex over ℝ.",
+          "V⊆X.",
+          "ψ is strictly convex on X: X is convex, and for distinct a,b∈X and positive real α,β with α+β=1, ψ(αa+βb)<αψ(a)+βψ(b).",
+          "ψ is DifferentiableOn ℝ on interior X. Since interior X is open, ψ has a Fréchet derivative at each visited x_t under the interior premise.",
+          "η∈ℝ and η>0; the recursion uses the constant schedule t↦η.",
+          "∀t≤T, I(V,ψ,schedule,ℓ,x0,t)=some(x_t). Hence x_0=x0, and x_1,…,x_T∈V whenever those successors exist.",
+          "∀t≤T, x_t∈interior X, including both endpoints.",
+          "∀t<T, [∀z∈E, ℓ_t(z)≠−∞] and [∃z∈E ∃r∈ℝ, ℓ_t(z)=r]. The finite witness can depend on t.",
+          "∀t<T ∀z∈V ∃g∈E ∀y∈E, ℓ_t(z)+ι(⟨g,y−z⟩)≤ℓ_t(y). The vector g can depend on both t and z.",
+          "u∈V."
+        ],
+        "conclusion": "\\sum_{t=0}^{T-1}[\\operatorname{toReal}\\ell_t(x_{t+1})-\\operatorname{toReal}\\ell_t(u)]\\le \\frac{D_\\psi(u,x_0)}{\\eta}-\\frac{\\sum_{t=0}^{T-1}D_\\psi(x_{t+1},x_t)}{\\eta},\\quad x_0=x0.",
+        "constants_normalization": "Same positive η throughout. The terminal term is absent from this conclusion; the movement sum remains subtracted. Strict convexity supplies no named modulus.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "EReal.toReal is a total map: a finite embedded r maps to r, while both +∞ and −∞ map to 0. Thus the displayed real differences are not an unrestricted extended-real subtraction. For t<T, P(ℓ_t) together with the global supporting-vector condition on V forces ℓ_t to be finite on V. Reachability places x_{t+1} in V and u∈V, so these particular positive-horizon summands use finite values. No finiteness of ℓ_t(x0), or of values outside V, is asserted.",
+          "T=0 is permitted. Reachability gives x_0=x0∈interior X; the conclusion is 0≤Dψ(u,x0)/η. Loss and supporting-vector premises are vacuous, but η>0, strict convexity, V⊆X, and u∈V remain.",
+          "Strict convexity and containment are explicit here. No strong-convexity modulus or quantitative lower bound in a norm is supplied.",
+          "There is no premise x0∈V. No assertion that every initialization reaches the horizon, that a minimizer exists for arbitrary inputs, that choices are unique, or that future t>T states are reached.",
+          "A theorem statement is not evidence that its proof is valid. No proof or source-review verdict is supplied by this reconstruction."
+        ]
+      }
+    },
+    {
+      "id": "item_4",
+      "seven_slots": {
+        "objects_spaces": "E is any real complete inner product space (NormedAddCommGroup E, InnerProductSpace ℝ E, CompleteSpace E), not necessarily finite dimensional. V,X⊆E, ψ:E→ℝ, loss ℓ:ℕ→E→EReal, x0∈E, x:ℕ→E, horizon T∈ℕ, comparator u∈E. All sums over range T mean t=0,…,T−1. The schedule η has domain all ℕ.",
+        "quantifier_order": "Universally quantified inputs in the displayed dependency order: E and its structures; V,X and the relevant set premises; ψ and its premises; η and its relevant premises; ℓ,x0,x,T; horizon/reachability/interior/step/loss/support premises; then arbitrary u∈V. Each support premise has order ∀t<T ∀z∈V ∃g∈E ∀y∈E. Reachability is a hypothesis for the specified classical choice, not an existential conclusion.",
+        "assumptions": [
+          "V is convex over ℝ.",
+          "V⊆X.",
+          "ψ is strictly convex on X: X is convex, and for distinct a,b∈X and positive real α,β with α+β=1, ψ(αa+βb)<αψ(a)+βψ(b).",
+          "ψ is DifferentiableOn ℝ on interior X. Since interior X is open, ψ has a Fréchet derivative at each visited x_t under the interior premise.",
+          "T>0.",
+          "η:ℕ→ℝ and ∀t<T, η_t>0.",
+          "∀t∈ℕ, t+1<T ⇒ η_{t+1}≤η_t. This compares η_0,…,η_{T−1} only.",
+          "∀t≤T, I(V,ψ,schedule,ℓ,x0,t)=some(x_t). Hence x_0=x0, and x_1,…,x_T∈V whenever those successors exist.",
+          "∀t≤T, x_t∈interior X, including both endpoints.",
+          "∀t<T, [∀z∈E, ℓ_t(z)≠−∞] and [∃z∈E ∃r∈ℝ, ℓ_t(z)=r]. The finite witness can depend on t.",
+          "∀t<T ∀z∈V ∃g∈E ∀y∈E, ℓ_t(z)+ι(⟨g,y−z⟩)≤ℓ_t(y). The vector g can depend on both t and z.",
+          "u∈V."
+        ],
+        "conclusion": "M_T(u):=\\max_{0\\le t<T}D_\\psi(u,x_t),\\qquad \\sum_{t=0}^{T-1}[\\operatorname{toReal}\\ell_t(x_{t+1})-\\operatorname{toReal}\\ell_t(u)]\\le\\frac{M_T(u)}{\\eta_{T-1}}-\\sum_{t=0}^{T-1}\\frac{D_\\psi(x_{t+1},x_t)}{\\eta_t}.",
+        "constants_normalization": "The maximum is a genuine maximum over the nonempty finite range 0,…,T−1, with no default value. It includes x_0 and excludes x_T. The numerator depends on u. The leading divisor is the last used step η_{T−1}.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "EReal.toReal is a total map: a finite embedded r maps to r, while both +∞ and −∞ map to 0. Thus the displayed real differences are not an unrestricted extended-real subtraction. For t<T, P(ℓ_t) together with the global supporting-vector condition on V forces ℓ_t to be finite on V. Reachability places x_{t+1} in V and u∈V, so these particular positive-horizon summands use finite values. No finiteness of ℓ_t(x0), or of values outside V, is asserted.",
+          "Zero horizon is excluded. At T=1 the monotonicity premise is vacuous, the last schedule index is 0, and the set of previous states is {x_0}.",
+          "Strict convexity and containment are explicit here. No strong-convexity modulus or quantitative lower bound in a norm is supplied.",
+          "There is no premise x0∈V. No assertion that every initialization reaches the horizon, that a minimizer exists for arbitrary inputs, that choices are unique, or that future t>T states are reached.",
+          "No positivity at η_T or later, and no comparison η_T≤η_{T−1}, is required. Natural subtraction T−1 is a genuine previous index because T>0.",
+          "A theorem statement is not evidence that its proof is valid. No proof or source-review verdict is supplied by this reconstruction.",
+          "No separate free M or global uniform radius is assumed. The finite maximum is neither a supremum over V nor a maximum over all future iterates. No terminal term appears."
+        ]
+      }
+    },
+    {
+      "id": "item_5",
+      "seven_slots": {
+        "objects_spaces": {
+          "V": "V=[-1,1]\\subset\\mathbb R.",
+          "psi": "\\psi(z)=z^4/4+z^2/2,\\quad \\psi'(z)=z^3+z,\\quad D_\\psi(a,b)=a^4/4+a^2/2-b^4/4-b^2/2-(b^3+b)(a-b).",
+          "f0": "f_0(z)=|z|\\ (z\\in[-1,1]),\\quad f_0(z)=+\\infty\\ (z\\notin[-1,1]).",
+          "loss": "\\ell_0=f_0,\\qquad \\ell_t=f_1\\text{ for every }t\\ge1.",
+          "x": "x_1=0,\\qquad x_t=1/2\\text{ for every }t\\ne1;\\quad x_0=x_2=1/2.",
+          "f1": "f_1(z)=-5z/8\\ (z\\in[-1,1]),\\quad f_1(z)=+\\infty\\text{ otherwise}.",
+          "schedule": "η_t=1 for every natural t; initialization 1/2; horizon 2."
+        },
+        "quantifier_order": "This is a closed proposition under local let-definitions, with no external hypotheses. Its sixteen top-level conjuncts are all asserted. Support clauses have ∀z∈V ∃g∈ℝ ∀y∈ℝ; closed-sublevel clause has ∀r∈ℝ; reachability has ∀t≤2; each of the three bounds independently has ∀u∈V. There is no shared existential comparator.",
+        "assumptions": "No hypotheses are supplied to this theorem. The properness, support, closed-sublevel, convexity, differentiability, reachability, identities, and inequalities below are conclusions of the conjunction rather than assumptions.",
+        "conclusion": {
+          "regret_expansion": "R_5(u)=[f_0(0)-f_0(u)]+[f_1(1/2)-f_1(u)]=-5/16-|u|+5u/8\\quad(u\\in[-1,1]).",
+          "full_conjunction": [
+            {
+              "id": "P_f0",
+              "assertion": "∀z∈ℝ, f0(z)≠−∞, and ∃z∈ℝ ∃r∈ℝ, f0(z)=r. Here z=0,r=0 is a finite witness."
+            },
+            {
+              "id": "P_f1",
+              "assertion": "∀z∈ℝ, f1(z)≠−∞, and ∃z∈ℝ ∃r∈ℝ, f1(z)=r. Here z=0,r=0 is a finite witness."
+            },
+            {
+              "id": "support_f0",
+              "assertion": "\\forall z\\in[-1,1]\\ \\exists g\\in\\mathbb R\\ \\forall y\\in\\mathbb R,\\quad |z|+g(y-z)\\le f_0(y). Equivalently the test is |z|+g(y−z)≤|y| for every y∈[−1,1]; outside that interval the right side is +∞."
+            },
+            {
+              "id": "support_f1",
+              "assertion": "∀z∈[−1,1] ∃g∈ℝ ∀y∈ℝ, (−5/8 z)+g(y−z)≤f1(y). Equivalently this is (−5/8 z)+g(y−z)≤−5/8 y for all y∈[−1,1]; outside V the right side is +∞."
+            },
+            {
+              "id": "closed_sublevels_psi",
+              "assertion": "\\forall r\\in\\mathbb R,\\quad \\{z\\in\\mathbb R:z^4/4+z^2/2\\le r\\}\\text{ is closed}."
+            },
+            {
+              "id": "strict_convexity_psi",
+              "assertion": "\\mathbb R\\text{ is convex, and }\\forall a\\ne b\\in\\mathbb R\\ \\forall\\alpha,\\beta>0,\\ \\alpha+\\beta=1\\Rightarrow \\psi(\\alpha a+\\beta b)<\\alpha\\psi(a)+\\beta\\psi(b)."
+            },
+            {
+              "id": "differentiability_psi",
+              "assertion": "ψ is DifferentiableOn ℝ on all ℝ, equivalently differentiable at every real point."
+            },
+            {
+              "id": "reachability",
+              "assertion": "I_0=\\mathrm{some}(1/2),\\ I_1=\\mathrm{some}(0),\\ I_2=\\mathrm{some}(1/2)\\text{ for the constant schedule }1. Equivalently the two chosen A updates return 0 and 1/2, respectively. The first objective on V is |z|+Dψ(z,1/2); the second is −5z/8+Dψ(z,0). These are assertions about the actual classical-choice results, not merely existence of alternative minimizers."
+            },
+            {
+              "id": "terminal_divergence",
+              "assertion": "D_\\psi(-1/2,x_2)=D_\\psi(-1/2,1/2)=5/8."
+            },
+            {
+              "id": "movement_0",
+              "assertion": "D_\\psi(x_1,x_0)=D_\\psi(0,1/2)=11/64."
+            },
+            {
+              "id": "movement_1",
+              "assertion": "D_\\psi(x_2,x_1)=D_\\psi(1/2,0)=9/64."
+            },
+            {
+              "id": "variable_form_bound",
+              "assertion": "\\forall u\\in[-1,1],\\quad R_5(u)\\le [D_\\psi(u,x_0)-D_\\psi(u,x_1)]+[D_\\psi(u,x_1)-D_\\psi(u,x_2)]-[D_\\psi(x_1,x_0)+D_\\psi(x_2,x_1)]=-5/16."
+            },
+            {
+              "id": "constant_terminal_bound",
+              "assertion": "\\forall u\\in[-1,1],\\quad R_5(u)\\le D_\\psi(u,1/2)-D_\\psi(u,x_2)-[D_\\psi(x_1,x_0)+D_\\psi(x_2,x_1)]=-5/16."
+            },
+            {
+              "id": "constant_without_terminal_bound",
+              "assertion": "\\forall u\\in[-1,1],\\quad R_5(u)\\le D_\\psi(u,1/2)-[D_\\psi(x_1,x_0)+D_\\psi(x_2,x_1)]=D_\\psi(u,1/2)-5/16."
+            },
+            {
+              "id": "numeric_bound_1",
+              "assertion": "-9/8\\le-5/16."
+            },
+            {
+              "id": "numeric_bound_2",
+              "assertion": "-9/8\\le5/16."
+            }
+          ]
+        },
+        "constants_normalization": "The quartic regularizer has coefficients 1/4 and 1/2, not merely the quadratic term. f1 slope is −5/8. Both steps have η=1. The two movements sum to 20/64=5/16. At u=−1/2, R5=−9/8, the retained-terminal right side is −5/16, and the terminal-omitted right side is 5/16. The final two scalar inequalities are literal conjuncts, consistent with this specialization.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "Only the fixed positive horizon 2 is asserted, not a family of horizons. Loss and x are defined at all natural indices, but no recursion equality for t>2 is asserted.",
+          "All losses appearing in the three comparator inequalities are finite because u,x1,x2∈V. The functions remain +∞ outside V, and toReal(+∞)=0 must not be mistaken for a finite outside-domain loss.",
+          "C is asserted for the real-valued regularizer embedded in EReal, not explicitly for f0 or f1.",
+          "No uniqueness conjunct, general existence theorem, probabilistic guarantee, norm-based rate, or proof-validity certificate is present."
+        ]
+      }
+    },
+    {
+      "id": "item_6",
+      "seven_slots": {
+        "objects_spaces": {
+          "V": "V=[-1,1]\\subset\\mathbb R.",
+          "psi": "\\psi(z)=z^4/4+z^2/2,\\quad \\psi'(z)=z^3+z,\\quad D_\\psi(a,b)=a^4/4+a^2/2-b^4/4-b^2/2-(b^3+b)(a-b).",
+          "f0": "f_0(z)=|z|\\ (z\\in[-1,1]),\\quad f_0(z)=+\\infty\\ (z\\notin[-1,1]).",
+          "loss": "\\ell_0=f_0,\\qquad \\ell_t=f_1\\text{ for every }t\\ge1.",
+          "x": "x_1=0,\\qquad x_t=1/2\\text{ for every }t\\ne1;\\quad x_0=x_2=1/2.",
+          "f1": "f_1(z)=-5z/4\\ (z\\in[-1,1]),\\quad f_1(z)=+\\infty\\text{ otherwise}.",
+          "schedule": "\\eta_0=1,\\quad\\eta_t=1/2\\text{ for every }t\\ge1;\\quad x0=1/2,\\ T=2."
+        },
+        "quantifier_order": "A closed proposition under local let-definitions, with no external hypotheses. All twenty-two top-level conjuncts below are asserted. Each support clause is ∀z∈V ∃g∈ℝ ∀y∈ℝ. Each of the two bound clauses independently quantifies ∀u∈V. The maxima use exactly t=0,1.",
+        "assumptions": "No theorem hypotheses. The regularity, schedule, reachability, identities, and inequalities are all conjunctive conclusions.",
+        "conclusion": {
+          "regret_expansion": "R_6(u)=[f_0(0)-f_0(u)]+[f_1(1/2)-f_1(u)]=-5/8-|u|+5u/4\\quad(u\\in[-1,1]).",
+          "max_expansion": "M_2(u)=\\max\\{D_\\psi(u,1/2),D_\\psi(u,0)\\};\\quad D_\\psi(u,0)=u^4/4+u^2/2,\\quad D_\\psi(u,1/2)=u^4/4+u^2/2-5u/8+11/64.",
+          "full_conjunction": [
+            {
+              "id": "P_f0",
+              "assertion": "∀z∈ℝ, f0(z)≠−∞, and ∃z∈ℝ ∃r∈ℝ, f0(z)=r. Here z=0,r=0 is a finite witness."
+            },
+            {
+              "id": "P_f1",
+              "assertion": "∀z∈ℝ, f1(z)≠−∞, and ∃z∈ℝ ∃r∈ℝ, f1(z)=r. Here z=0,r=0 is a finite witness."
+            },
+            {
+              "id": "support_f0",
+              "assertion": "\\forall z\\in[-1,1]\\ \\exists g\\in\\mathbb R\\ \\forall y\\in\\mathbb R,\\quad |z|+g(y-z)\\le f_0(y). Equivalently the test is |z|+g(y−z)≤|y| for every y∈[−1,1]; outside that interval the right side is +∞."
+            },
+            {
+              "id": "support_f1",
+              "assertion": "∀z∈[−1,1] ∃g∈ℝ ∀y∈ℝ, (−5/4 z)+g(y−z)≤f1(y). Equivalently this is (−5/4 z)+g(y−z)≤−5/4 y for all y∈[−1,1]; outside V the right side is +∞."
+            },
+            {
+              "id": "closed_sublevels_psi",
+              "assertion": "\\forall r\\in\\mathbb R,\\quad \\{z\\in\\mathbb R:z^4/4+z^2/2\\le r\\}\\text{ is closed}."
+            },
+            {
+              "id": "strict_convexity_psi",
+              "assertion": "\\mathbb R\\text{ is convex, and }\\forall a\\ne b\\in\\mathbb R\\ \\forall\\alpha,\\beta>0,\\ \\alpha+\\beta=1\\Rightarrow \\psi(\\alpha a+\\beta b)<\\alpha\\psi(a)+\\beta\\psi(b)."
+            },
+            {
+              "id": "differentiability_psi",
+              "assertion": "ψ is DifferentiableOn ℝ on all ℝ, equivalently differentiable at every real point."
+            },
+            {
+              "id": "eta_0",
+              "assertion": "\\eta_0=1."
+            },
+            {
+              "id": "eta_1",
+              "assertion": "\\eta_1=1/2."
+            },
+            {
+              "id": "eta_positive",
+              "assertion": "\\forall t<2,\\ \\eta_t>0\\quad\\text{(that is, }\\eta_0>0\\text{ and }\\eta_1>0\\text{)}."
+            },
+            {
+              "id": "eta_monotone",
+              "assertion": "\\forall t\\in\\mathbb N,\\ t+1<2\\Rightarrow\\eta_{t+1}\\le\\eta_t\\quad\\text{(only }\\eta_1\\le\\eta_0\\text{)}."
+            },
+            {
+              "id": "reachability",
+              "assertion": "I_0=\\mathrm{some}(1/2),\\ I_1=\\mathrm{some}(0),\\ I_2=\\mathrm{some}(1/2). The actual classical-choice A updates return 0 and 1/2. The first objective on V is |z|+Dψ(z,1/2); the second is −5z/4+2Dψ(z,0), because η1⁻¹=2."
+            },
+            {
+              "id": "terminal_divergence",
+              "assertion": "D_\\psi(-1/2,x_2)=D_\\psi(-1/2,1/2)=5/8."
+            },
+            {
+              "id": "middle_divergence",
+              "assertion": "D_\\psi(-1/2,x_1)=D_\\psi(-1/2,0)=9/64."
+            },
+            {
+              "id": "weighted_movement_sum",
+              "assertion": "D_\\psi(x_1,x_0)/\\eta_0+D_\\psi(x_2,x_1)/\\eta_1=11/64+2(9/64)=29/64."
+            },
+            {
+              "id": "max_minus_half",
+              "assertion": "\\max\\{D_\\psi(-1/2,x_0),D_\\psi(-1/2,x_1)\\}=\\max\\{5/8,9/64\\}=5/8."
+            },
+            {
+              "id": "max_plus_half",
+              "assertion": "\\max\\{D_\\psi(1/2,x_0),D_\\psi(1/2,x_1)\\}=\\max\\{0,9/64\\}=9/64."
+            },
+            {
+              "id": "initial_zero_divergence",
+              "assertion": "D_\\psi(1/2,x_0)=D_\\psi(1/2,1/2)=0."
+            },
+            {
+              "id": "max_with_terminal_bound",
+              "assertion": "\\forall u\\in[-1,1],\\quad R_6(u)\\le M_2(u)/\\eta_1-D_\\psi(u,x_2)/\\eta_1-29/64=2M_2(u)-2D_\\psi(u,1/2)-29/64."
+            },
+            {
+              "id": "max_without_terminal_bound",
+              "assertion": "\\forall u\\in[-1,1],\\quad R_6(u)\\le M_2(u)/\\eta_1-29/64=2M_2(u)-29/64."
+            },
+            {
+              "id": "numeric_bound_1",
+              "assertion": "-7/4\\le-29/64."
+            },
+            {
+              "id": "numeric_bound_2",
+              "assertion": "-1/2\\le-11/64."
+            }
+          ]
+        },
+        "constants_normalization": "The second loss slope is −5/4, twice the item_5 slope, and its step is 1/2. The second movement is consequently weighted by 2. At u=−1/2, R6=−7/4 and the retained-terminal bound is −29/64. At u=1/2, R6=−1/2 and both displayed right sides equal 2(9/64)−29/64=−11/64, since the terminal divergence is zero. These substitutions explain the numerical conjuncts without adding a new theorem claim.",
+        "probability_feedback_semantics": "Entirely deterministic. There is no probability space, random variable, expectation, high-probability event, sampling rule, filtration, measurability, independence, unbiasedness, bandit feedback, or oracle model. The left side uses ℓ_t(x_{t+1}), evaluated after the update using ℓ_t, minus ℓ_t(u). No bound for ℓ_t(x_t) is stated. A consumes the entire loss function as a mathematical argument; no implementable feedback access guarantee follows.",
+        "boundaries": [
+          "The maximum contains previous states x0 and x1, not terminal x2. Here x2 happens to equal x0, which does not change the stated index set.",
+          "Only reachability through 2 is asserted. The total schedule and x definitions do not certify future reachability.",
+          "The positive and monotone schedule conditions in the conjunction concern the used range only, despite the given schedule itself being globally positive and nonincreasing.",
+          "C concerns only the embedded regularizer. No uniqueness, arbitrary-input existence, or probabilistic assertion is a conjunct.",
+          "This reconstruction expands the proposition and simplifies arithmetic; it does not inspect or validate any Lean proof."
+        ]
+      }
+    }
+  ],
+  "semantic_findings": [
+    "All five general interfaces are conditional on finite-horizon reachability of a partial, noncomputable classical-choice recursion.",
+    "Items 0,1,2 contain no convexity assumption on ψ and retain signed expressions. Item 0 has no monotonic-schedule hypothesis.",
+    "Only items 2 and 4 require T>0. Their monotonicity compares adjacent used steps, and their last divisor is η(T−1).",
+    "The explicit M in item 2 and the finite maximum in item 4 cover previous states t<T, excluding terminal x_T.",
+    "Items 3 and 4 add V⊆X and strict convexity of ψ on X. They omit the terminal divergence but retain movement subtraction.",
+    "The supporting-vector test is global in y; with P it ensures losses are finite on V, despite total EReal.toReal mapping infinities to zero.",
+    "The concrete interfaces contain respectively sixteen and twenty-two top-level conjuncts. Their negative numerical right sides and movement constants are preserved.",
+    "No interface gives stochastic or bandit-feedback semantics, and no statement alone certifies proof correctness."
+  ],
+  "proof_validity_assessed": false,
+  "source_review_verdict": null
+}

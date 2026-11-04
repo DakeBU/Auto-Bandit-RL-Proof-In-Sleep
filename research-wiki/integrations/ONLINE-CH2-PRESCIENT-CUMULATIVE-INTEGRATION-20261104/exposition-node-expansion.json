@@ -1,0 +1,635 @@
+{
+  "schema": "abrl-source-lean-reader-expansion-v1",
+  "batch": 39,
+  "status": "draft-awaiting-independent-review",
+  "sourceGraphSHA256": "9d5a2e17b62c541b60b63650d23900f10635feb460e831398f0fb7042eb55efb",
+  "compiledGraphSHA256": "cd08aa908ff42d0fa9263916be5adb39e92a1abd63c635834138ab0c3f3b9255",
+  "bodyReceiptSHA256": "71323a488056e5df1998912e52757e537f9d9d57cc9f4e67116b0ab28c1ed609",
+  "sourceExpansionNodeIDs": [
+    "A15.8",
+    "B-nonnegative",
+    "D2.18",
+    "D2.20",
+    "D6.4",
+    "EX-constant",
+    "G-attainment",
+    "G-horizon-index",
+    "G-optimality",
+    "L6.7",
+    "P-bound",
+    "P-final",
+    "P-inverse-telescope",
+    "P-max",
+    "P-one-step",
+    "P-sum",
+    "P-telescope",
+    "T15.30-constant",
+    "T15.30-variable"
+  ],
+  "leanExpansionNodeNames": [
+    "BanditRL.OnlineBregman.divergence",
+    "BanditRL.OnlineBregman.divergence.eq_1",
+    "BanditRL.OnlineBregman.divergence_nonneg",
+    "BanditRL.OnlineBregman.divergence_self",
+    "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+    "BanditRL.OnlineConvex.SourceClosed",
+    "BanditRL.OnlineConvex.SourceProper",
+    "BanditRL.OnlineConvex.SourceSubdifferential",
+    "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+    "BanditRL.OnlinePrescientBregman.advance",
+    "BanditRL.OnlinePrescientBregman.advance_none_iff",
+    "BanditRL.OnlinePrescientBregman.advance_some_spec",
+    "BanditRL.OnlinePrescientBregman.iterate",
+    "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+    "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+    "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+    "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp._simp_1_1",
+    "BanditRL.OnlinePrescientBregman.iterate_one_step",
+    "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+    "BanditRL.OnlinePrescientBregman.iterate_variable_regret._proof_1_1",
+    "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+    "BanditRL.OnlinePrescientBregman.iterate_variable_sharp._simp_1_1",
+    "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_3",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_4",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_5",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._simp_1_2",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run._proof_1_2",
+    "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run._simp_1_1",
+    "Finset.le_sup'",
+    "Finset.sum_le_sum",
+    "Finset.sum_range_sub'",
+    "Finset.sum_sub_distrib",
+    "StrictConvexOn.convexOn",
+    "le_div_iff₀"
+  ],
+  "mappings": [
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+      "readerMove": "sum-actual-transition",
+      "readerProofStep": "For each t in range T, take actual states at t,t+1 from hseq, prove both derivatives from hd/hinterior, invoke iterate_one_step with properness and all feasible global supports, divide by positive eta(t), sum inequalities and distribute subtraction. No desired one-step bound supplied.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem iterate_divergence_sum (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      (∑ t ∈ range T, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / η t) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "signatureSHA256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.18",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.20",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "L6.7",
+          "sourceNodeKind": "CITED_LEMMA",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-one-step",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-optimality",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "P-sum",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_one_step",
+        "Finset.sum_le_sum",
+        "Finset.sum_sub_distrib",
+        "le_div_iff₀"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+      "readerMove": "fixed-telescope",
+      "readerProofStep": "Instantiate shared theorem with constant eta. Option.some injectivity of the t=0 recursion proves x(0)=x0. sum_range_sub' telescopes and sum_div pulls the common denominator. Empty T=0 case is included.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem iterate_fixed_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - divergence ψ u (x T) / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "signatureSHA256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.18",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.20",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "L6.7",
+          "sourceNodeKind": "CITED_LEMMA",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-one-step",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-optimality",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "P-sum",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-telescope",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "T15.30-constant",
+          "sourceNodeKind": "TARGET",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "EX-constant",
+          "sourceNodeKind": "EXERCISE_OBLIGATION",
+          "relationship": "source-exercise-library-conditional-derivation"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp._simp_1_1",
+        "Finset.sum_range_sub'"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+      "readerMove": "variable-telescope",
+      "readerProofStep": "Instantiate shared theorem, then weighted_potential_sum with a(t)=2D(u,x(t)), C=2M. Bound each previous potential by multiplying hbound by positive 2; cancel 2, subtract the unchanged movement sum. weighted_potential_sum induction uses C-a(t)>=0, never C>=0.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem iterate_variable_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) (M : ℝ)\n    (hbound : ∀ t < T, divergence ψ u (x t) ≤ M) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      M / η (T - 1) - divergence ψ u (x T) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "signatureSHA256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.18",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.20",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "L6.7",
+          "sourceNodeKind": "CITED_LEMMA",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-one-step",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-optimality",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "P-sum",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-telescope",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-bound",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-inverse-telescope",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-horizon-index",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "T15.30-variable",
+          "sourceNodeKind": "TARGET",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_sharp._simp_1_1"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+      "readerMove": "terminal-nonnegativity",
+      "readerProofStep": "Use fixed sharp. V subset X and strict convexity produce convexity; terminal state interior gives membership and true derivative. divergence_nonneg and eta>0 prove nonnegative terminal quotient, then linarith drops only this term.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem iterate_fixed_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "signatureSHA256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.18",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.20",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "L6.7",
+          "sourceNodeKind": "CITED_LEMMA",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-one-step",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-optimality",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "B-nonnegative",
+          "sourceNodeKind": "PRINTED_FACT",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "T15.30-constant",
+          "sourceNodeKind": "TARGET",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "EX-constant",
+          "sourceNodeKind": "EXERCISE_OBLIGATION",
+          "relationship": "source-exercise-library-conditional-derivation"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence_nonneg",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+        "StrictConvexOn.convexOn"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+      "readerMove": "terminal-nonnegativity",
+      "readerProofStep": "Define M by sup' over nonempty range T. le_sup' supplies hbound internally. Invoke variable sharp; show T-1<T and positive last step. Prove terminal divergence nonnegative and remove only its quotient.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem iterate_variable_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "signatureSHA256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.18",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D2.20",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "L6.7",
+          "sourceNodeKind": "CITED_LEMMA",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-one-step",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-optimality",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "B-nonnegative",
+          "sourceNodeKind": "PRINTED_FACT",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-max",
+          "sourceNodeKind": "PRINTED_NOTATION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-final",
+          "sourceNodeKind": "PRINTED_PROOF_STEP",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-horizon-index",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "T15.30-variable",
+          "sourceNodeKind": "TARGET",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence_nonneg",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_regret._proof_1_1",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+        "Finset.le_sup'",
+        "StrictConvexOn.convexOn"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+      "readerMove": "fixed-diagnostic",
+      "readerProofStep": "Complete16-conjunct fixed schedule test: actual selected trajectory, finite/subgradient/convexity facts, exact divergences, all universal bound interfaces and two separately selected numeric specializations.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem fixed_signed_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧ DifferentiableOn ℝ ψ univ ∧\n      (∀ t ≤ 2, iterate V ψ (fun _ => 1) loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (-1 / 2) (x 2) = 5 / 8 ∧\n      divergence ψ (x 1) (x 0) = 11 / 64 ∧\n      divergence ψ (x 2) (x 1) = 9 / 64 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        (∑ t ∈ range 2, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / 1) -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / 1) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 - divergence ψ u (x 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (-9 / 8 : ℝ) ≤ -5 / 16 ∧ (-9 / 8 : ℝ) ≤ 5 / 16",
+        "context": "",
+        "signatureSHA256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "T15.30-constant",
+          "sourceNodeKind": "TARGET",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "EX-constant",
+          "sourceNodeKind": "EXERCISE_OBLIGATION",
+          "relationship": "source-exercise-library-conditional-derivation"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineConvex.SourceClosed",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+        "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run._proof_1_2",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run._simp_1_1",
+        "Finset.sum_sub_distrib"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+      "readerMove": "decreasing-diagnostic",
+      "readerProofStep": "Complete22-conjunct decreasing schedule test: new second objective, positive monotone steps, actual trajectory, exact movement/maxima including initial0 versus maximum9/64, universal sharp/final bounds and two selected numerical specializations. This is an endpoint diagnostic, not a counterexample to every initial-only bound.",
+      "requiredGuardEnvelope": {
+        "exactStatement": "theorem decreasing_signed_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 4 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let η : ℕ → ℝ := fun t => if t = 0 then 1 else 1 / 2\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧ DifferentiableOn ℝ ψ univ ∧\n      η 0 = 1 ∧ η 1 = 1 / 2 ∧\n      (∀ t < 2, 0 < η t) ∧\n      (∀ t, t + 1 < 2 → η (t + 1) ≤ η t) ∧\n      (∀ t ≤ 2, iterate V ψ η loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (-1 / 2) (x 2) = 5 / 8 ∧\n      divergence ψ (-1 / 2) (x 1) = 9 / 64 ∧\n      (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) = 29 / 64 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (-1 / 2) (x t))) = 5 / 8 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (1 / 2) (x t))) = 9 / 64 ∧\n      divergence ψ (1 / 2) (x 0) = 0 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        divergence ψ u (x 2) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (-7 / 4 : ℝ) ≤ -29 / 64 ∧ (-1 / 2 : ℝ) ≤ -11 / 64",
+        "context": "",
+        "signatureSHA256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+        "binderReview": "binder-review.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A15.8",
+          "sourceNodeKind": "ALGORITHM",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "D6.4",
+          "sourceNodeKind": "DEFINITION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "P-max",
+          "sourceNodeKind": "PRINTED_NOTATION",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "T15.30-variable",
+          "sourceNodeKind": "TARGET",
+          "relationship": "source-context-or-formula-alignment-not-a-Lean-dependency"
+        },
+        {
+          "id": "G-attainment",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        },
+        {
+          "id": "G-horizon-index",
+          "sourceNodeKind": "SOURCE_GAP",
+          "relationship": "open-source-obligation-not-discharged"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineBregman.divergence_self",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineConvex.SourceClosed",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_3",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_4",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_5",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._simp_1_2",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+        "Finset.le_sup'",
+        "Finset.sum_sub_distrib"
+      ],
+      "allDirectDependencies": "compiled-dependencies.json",
+      "remainingBoundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+    }
+  ],
+  "additionalSourceContextNodes": [
+    "C-Bauschke2017",
+    "C-Chen1993",
+    "C-Rockafellar1970",
+    "C-strict-support",
+    "CTX-after",
+    "CTX-negative",
+    "CTX-oracle",
+    "D2.16",
+    "D6.3",
+    "P-optimality",
+    "P-subgradient",
+    "P-three-point",
+    "P-variational",
+    "R15.16",
+    "T2.7",
+    "T2.8",
+    "T2.8-necessary",
+    "T2.8-sufficient"
+  ],
+  "sourceContextCoverage": "All37 nodes remain available in the independently source-only-reviewed graph. This mapping expands the steps used to explain the seven library/test interfaces; unused source context is not a claimed proof dependency.",
+  "sourceGapClosure": false,
+  "renderedExpositionAccepted": false,
+  "assumptionsPreserved": true,
+  "boundaryPreserved": true
+}

@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-04T15:01:33.020418+00:00",
+  "acceptedMain": "e8779deed29c7bcde86c2816ae909d3a6c50f2da",
+  "commands": [
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/check_process_memory.py",
+        "check"
+      ],
+      "exitCode": 0,
+      "stdout": "0-stdout.txt",
+      "stdoutSHA256": "9eaf787390c5f1bf4dea8a4f7b1cf06937163fda2f17afdffafddbb4672c10bb",
+      "stderr": "0-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "search-memory",
+        "prescient"
+      ],
+      "exitCode": 0,
+      "stdout": "1-stdout.txt",
+      "stdoutSHA256": "823dfae76223608c60ed8979332e7aae2bbd7cb62010b3cc959ec5249be9f03a",
+      "stderr": "1-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "search-memory",
+        "Bregman"
+      ],
+      "exitCode": 0,
+      "stdout": "2-stdout.txt",
+      "stdoutSHA256": "4e660eafb58dbac76f97747bdfbf6ce5d0929b834f7e669e4f55d1c0c2420ffb",
+      "stderr": "2-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "iterate_one_step",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "3-stdout.txt",
+      "stdoutSHA256": "f03adca8788108826b61aecdef183e3adde4ef59ad3892e43ba7c0605925cbff",
+      "stderr": "3-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "weighted_potential_sum",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "4-stdout.txt",
+      "stdoutSHA256": "a4a95a21a6f83e5e4e742417b7c64e39835f7d0202b43f86e018f9c529509990",
+      "stderr": "4-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "local-user-profile/anaconda3/python.exe",
+        "-X",
+        "utf8",
+        "tools/bandit.py",
+        "list-lean-decls",
+        "divergence_nonneg",
+        "--statement"
+      ],
+      "exitCode": 0,
+      "stdout": "5-stdout.txt",
+      "stdoutSHA256": "72aaadd374b8920f3be1fed0a5fb581aaa4070eb0e6a155e64bd7373375db8a6",
+      "stderr": "5-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "iterate_(divergence_sum|fixed_sharp|variable_sharp|fixed_regret|variable_regret)|weighted_potential_sum",
+        "BanditRLProof"
+      ],
+      "exitCode": 0,
+      "stdout": "6-stdout.txt",
+      "stdoutSHA256": "27a05a47703d2161314ae1ef9d63023a06a30f4acaa9d4e6e292679bdaf8c767",
+      "stderr": "6-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "rg",
+        "-n",
+        "sum_range_sub'|le_csSup",
+        "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Algebra\\Order"
+      ],
+      "exitCode": 0,
+      "stdout": "7-stdout.txt",
+      "stdoutSHA256": "6593ed9458e3c9f8b5fdd523d42bfdd61fcf28fd2feb879c53b81cf80efb16a3",
+      "stderr": "7-stderr.txt",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "processMemorySnapshotSHA256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+  "mathlibCommit": "5e932f97dd25535344f80f9dd8da3aab83df0fe6",
+  "classification": "adapt_existing",
+  "decision": "Exact original cumulative interfaces adapt accepted actual-transition and canonical weighted-potential producers. Current main has the producers but not these five same-run cumulative interfaces. No external library/toolchain introduced.",
+  "scope": "Local accepted source/declaration registry, curated process memory and pinned Mathlib search. No remote literature search or new scientific novelty claim.",
+  "processMemory": {
+    "usedIDs": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "meaning": "Atomic source binder audit and existing short validation checkout applied. No scheduler or EXP3 behavior change."
+  },
+  "canonicality": "Main has weighted_potential_sum used by OGD/subgradient/source modules, divergence_nonneg and iterate_one_step. The five new interfaces compose these producers on the actual Option run; they are not duplicates of generic potential algebra or arbitrary scalar loss wrappers.",
+  "localMathlibFindings": [
+    {
+      "path": "Mathlib/Algebra/BigOperators/Group/Finset/Basic.lean",
+      "line": 900,
+      "kind": "to_additive telescope",
+      "declaration": "Finset.sum_range_sub'",
+      "explanation": "Additive counterpart of prod_range_div', used by actual fixed-sharp proof."
+    },
+    {
+      "path": "Mathlib/Data/Finset/Lattice/Fold.lean",
+      "line": 728,
+      "declaration": "Finset.le_sup'",
+      "explanation": "Bounds a previous-state divergence by the nonempty finite maximum."
+    }
+  ],
+  "originalReceiptSHA256": "2d953cba1d9311519607f2100193356fe28f64df499f84d61e6cd82c1cbc372f"
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "abrl.phase2.preport-proof-body-review.v1",
+  "verdict": "accepted-by-complete-static-body-review",
+  "complete_five_bodies": [
+    {
+      "name": "iterate_divergence_sum",
+      "review": "For each t in range T, take actual states at t,t+1 from hseq, prove both derivatives from hd/hinterior, invoke iterate_one_step with properness and all feasible global supports, divide by positive eta(t), sum inequalities and distribute subtraction. No desired one-step bound supplied.",
+      "body_defect_found": false
+    },
+    {
+      "name": "iterate_fixed_sharp",
+      "review": "Instantiate shared theorem with constant eta. Option.some injectivity of the t=0 recursion proves x(0)=x0. sum_range_sub' telescopes and sum_div pulls the common denominator. Empty T=0 case is included.",
+      "body_defect_found": false
+    },
+    {
+      "name": "iterate_variable_sharp",
+      "review": "Instantiate shared theorem, then weighted_potential_sum with a(t)=2D(u,x(t)), C=2M. Bound each previous potential by multiplying hbound by positive 2; cancel 2, subtract the unchanged movement sum. weighted_potential_sum induction uses C-a(t)>=0, never C>=0.",
+      "body_defect_found": false
+    },
+    {
+      "name": "iterate_fixed_regret",
+      "review": "Use fixed sharp. V subset X and strict convexity produce convexity; terminal state interior gives membership and true derivative. divergence_nonneg and eta>0 prove nonnegative terminal quotient, then linarith drops only this term.",
+      "body_defect_found": false
+    },
+    {
+      "name": "iterate_variable_regret",
+      "review": "Define M by sup' over nonempty range T. le_sup' supplies hbound internally. Invoke variable sharp; show T-1<T and positive last step. Prove terminal divergence nonnegative and remove only its quotient.",
+      "body_defect_found": false
+    }
+  ],
+  "complete_two_canaries": [
+    {
+      "name": "fixed_signed_run",
+      "conjunct_count": 16,
+      "body_review": "Complete body inspected. Reuses exact producer conjunction for proper restricted absolute/linear losses, supports, strict convexity, actual states and movements. It independently differentiates psi and derives closed sublevels by continuity. It constructs hseq by t=0,1,2 cases; hshared/hsharp/hprinted actually call the three new production interfaces. Terminal divergence and two movement equalities are proved; final constructor accounts for all 16 conjuncts.",
+      "upstream_run_check": "Inspected complete two_distinct_current_losses proof: minima at 0 and 1/2 have direct inequalities/factorization, uniqueness establishes equality with the classical selected outputs. Its producer restricted_absolute_nonquadratic and nonquadratic_nonsmooth were checked, including properness/global supports, true EReal/finite minimizer transport, strict convexity and first minimum."
+    },
+    {
+      "name": "decreasing_signed_run",
+      "conjunct_count": 22,
+      "body_review": "Complete body inspected. Reuses only applicable fixed-run facts, changes f1 to -5z/4, proves its properness/global support and actual second objective minimum. The factorization is (z-1/2)^2*((z+1/2)^2/2+5/4); the positive factor proves uniqueness. none is ruled out by an explicit attained minimizer; some p is identified by uniqueness. It constructs states through 2 and played positivity/nonincrease. Both maxima are proved with upper bounds and attained witnesses. hsharp and hprinted call variable_sharp and variable_regret. All 22 constructor entries accounted for."
+    }
+  ],
+  "four_numeric_branches": [
+    {
+      "canary": "fixed_signed_run",
+      "branch": "hnumSharp",
+      "comparator": "-1/2",
+      "left": "-9/8",
+      "right": "-5/16",
+      "intended_production_theorem": "iterate_fixed_sharp",
+      "body_use_verified": "Branch specializes hsharp/hprinted, then convert/rw/norm_num transports equality. It is not discharged as an unrelated standalone arithmetic inequality.",
+      "kernel_VALUE_dependency_status": "PENDING current compiled audit; source-body use verified only."
+    },
+    {
+      "canary": "fixed_signed_run",
+      "branch": "hnumPrinted",
+      "comparator": "-1/2",
+      "left": "-9/8",
+      "right": "5/16",
+      "intended_production_theorem": "iterate_fixed_regret",
+      "body_use_verified": "Branch specializes hsharp/hprinted, then convert/rw/norm_num transports equality. It is not discharged as an unrelated standalone arithmetic inequality.",
+      "kernel_VALUE_dependency_status": "PENDING current compiled audit; source-body use verified only."
+    },
+    {
+      "canary": "decreasing_signed_run",
+      "branch": "hnumSharp",
+      "comparator": "-1/2",
+      "left": "-7/4",
+      "right": "-29/64",
+      "intended_production_theorem": "iterate_variable_sharp",
+      "body_use_verified": "Branch specializes hsharp/hprinted, then convert/rw/norm_num transports equality. It is not discharged as an unrelated standalone arithmetic inequality.",
+      "kernel_VALUE_dependency_status": "PENDING current compiled audit; source-body use verified only."
+    },
+    {
+      "canary": "decreasing_signed_run",
+      "branch": "hnumPrinted",
+      "comparator": "1/2",
+      "left": "-1/2",
+      "right": "-11/64",
+      "intended_production_theorem": "iterate_variable_regret",
+      "body_use_verified": "Branch specializes hsharp/hprinted, then convert/rw/norm_num transports equality. It is not discharged as an unrelated standalone arithmetic inequality.",
+      "kernel_VALUE_dependency_status": "PENDING current compiled audit; source-body use verified only."
+    }
+  ],
+  "dependency_route": "subgradient_point_finite -> finitePart_convex_of_subdifferentiable and proximal_finitePart_minimizer_iff -> convex_minimizer_comparison by feasible segment -> proximal_one_step -> proximal_one_step_extended -> iterate_one_step -> new cumulative results. No use of source Theorem2.8 to obtain a selected nonsmooth subgradient.",
+  "dependency_byte_checks": "phase2-independent-byte-checks.json",
+  "current_kernel_validation": false,
+  "axiom_audit_executed": false,
+  "required_mathematical_body_repairs": [],
+  "next_validation": "Exact candidate focused build, combined root/Tests/full harness, axioms and compiler VALUE/numeric-branch dependencies remain required separately."
+}
