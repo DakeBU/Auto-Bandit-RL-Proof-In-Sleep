@@ -35,7 +35,7 @@ runner correctly rejected it rather than treating axiom output as success.
 Seventeen unit regressions cover gold exclusion, source/contract drift, immutable
 source commits, fixed target/response binding, reviewer completion, empty-answer
 credit, axiom/dependency output rejection, graph-node existence and notation-only
-projection. The full offline formula test compiled 918 unique formulas from 71
+projection. The full offline formula test compiled 919 unique formulas from 71
 pages without errors. Actual headless Edge inspections at 1440 and 390 widths
 covered five Bench routes, expanded proofs and direct graph selection; no page
 overflow or math error occurred. The formalizer inspected desktop/mobile formula

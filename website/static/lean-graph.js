@@ -839,7 +839,11 @@
       count.textContent = "Requested node is absent from this snapshot";
       return;
     }
-    activateNode(match.id, {searchMode: true, shard: match.shard});
+    if (!(await loadGraphSlice(match.shard, "focus"))) return;
+    revealSearchResult(match.id);
     setMobileCanvasOpen(true);
+    // A permalink should land at the selected mathematics, including on a
+    // phone where the introductory statistics occupy several screens.
+    requestAnimationFrame(() => detail.scrollIntoView({block: "start"}));
   });
 })();
