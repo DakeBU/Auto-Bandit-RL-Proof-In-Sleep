@@ -1,0 +1,713 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CH1-SOURCE-CLOSURE-V1",
+  "status": "SOURCE_FREEZE_PENDING_INDEPENDENT_REVIEW",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "pdf_url": "https://arxiv.org/pdf/1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "printed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "pdf_pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "availability": "Public version URL. Reviewed PDF retained as external maintenance evidence under this exact digest; no personal local path published."
+  },
+  "base_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+  "scope": "Chapter1 main-text definitions, formal results, unnumbered guarantees and required dependencies. History and independent Exercises1.1/1.2 separate. Formal results are not excluded for omitted/exercise proofs.",
+  "status_axes": {
+    "current_proof_body_review": "pending",
+    "current_runtime_compile": "pending",
+    "current_canary": "pending",
+    "current_combined_root_tests_harness": "pending",
+    "current_site": "pending",
+    "current_reader_exposition": "pending",
+    "chapter_acceptance": "pending",
+    "book_acceptance": "pending",
+    "source_freeze": "SOURCE_FREEZE_PENDING_INDEPENDENT_REVIEW",
+    "source_object_inventory": "Source-only reviewer found no missing mandatory object; durable authored freeze unaccepted",
+    "current_statement_binding": "text fingerprints only; no elaboration",
+    "packet_commit": "not committed",
+    "packet_merge": "not merged",
+    "source_repair": "not required for literal definition; no replacement approved"
+  },
+  "required_source_object_count": 17,
+  "count_semantics": "Original17 stable acceptance-object IDs; arbitrary internal helper count is not an unknown source-target denominator or completion fraction.",
+  "required_source_objects": [
+    {
+      "id": "C1-GAME",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed1-3/PDF13-15",
+      "frozenAcceptanceRequirement": "Legal squared-loss prediction game, strict-past feedback, unknown current target, bounded scalar outputs and observations. Pathwise guarantee must cover adversary choosing after observing deterministic prediction. IID and adversarial regimes stay distinct.",
+      "sourceDeps": [],
+      "originalSourceNodeIDs": [
+        "C1-game",
+        "C1-adaptive-order",
+        "C1-remove-stochasticity"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-GAME",
+        "originalPointer": "/rows/0",
+        "targetIDs": [
+          "A040",
+          "A038",
+          "A021",
+          "A020",
+          "A045",
+          "A008"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-IID-MEAN",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed1-2/PDF13-14",
+      "frozenAcceptanceRequirement": "For a fixed unknown IID law on [0,1], population mean is feasible and optimal fixed squared-loss prediction; its expected cumulative loss is T times variance. Minimum of expected fixed loss remains outside expectation.",
+      "sourceDeps": [
+        "D-iid-model",
+        "D-population-variance"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-iid",
+        "C1-population-opt",
+        "C1-expected-min"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-IID-MEAN",
+        "originalPointer": "/rows/1",
+        "targetIDs": [
+          "A017",
+          "A018",
+          "A016",
+          "A009"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-IID-LOWER",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed1/PDF13",
+      "frozenAcceptanceRequirement": "Every legal measurable causal learner has expected cumulative loss at least T times variance under the IID model. Derive fresh-target independence from history and independent private randomness; do not assume expected-loss conclusion.",
+      "sourceDeps": [
+        "D-iid-model",
+        "D-population-variance"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-stochastic-nonnegative"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-IID-LOWER",
+        "originalPointer": "/rows/2",
+        "targetIDs": [
+          "A044",
+          "A002",
+          "A007",
+          "A003"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-EQ1.1-1.2",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed1/PDF13",
+      "frozenAcceptanceRequirement": "Represent total expected excess and average expected excess exactly. For T>0 average equals total/T; total little-o(T) iff average tends to zero on one all-time process. Success is a criterion, not a theorem for every strategy.",
+      "sourceDeps": [
+        "C1-IID-MEAN",
+        "C1-IID-LOWER",
+        "D-normalization"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-eq11",
+        "C1-eq12",
+        "C1-stochastic-success"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-EQ1.1-1.2",
+        "originalPointer": "/rows/3",
+        "targetIDs": [
+          "A043",
+          "A028",
+          "A004",
+          "A046"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-REGRET",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed2/PDF14",
+      "frozenAcceptanceRequirement": "Best-fixed hindsight square-loss regret and arbitrary fixed-comparator difference of sums. General feasible V subset R^d, losses defined at every evaluated prediction; footnote W containing V typed explicitly. Comparator is not learner input.",
+      "sourceDeps": [
+        "D-empirical-minimum"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-best-regret",
+        "C1-fixed-competitor",
+        "C1-general-game",
+        "C1-comparator-regret",
+        "C1-footnote1"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-REGRET",
+        "originalPointer": "/rows/4",
+        "targetIDs": [
+          "A005",
+          "A027",
+          "A048",
+          "A047",
+          "A006"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-NOREGRET",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed2/PDF14",
+      "frozenAcceptanceRequirement": "Represent literal ordinary nonpositive-limit criterion for each fixed comparator without assuming all learners satisfy it. Keep finite ordinary limit existence distinct from eventual epsilon upper control; no uniform-in-comparator limit is printed.",
+      "sourceDeps": [
+        "C1-REGRET"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-ordinary-no-regret"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-NOREGRET",
+        "originalPointer": "/rows/5",
+        "targetIDs": [
+          "A031",
+          "A030",
+          "A037",
+          "A010"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "Remark1.1",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed2/PDF14",
+      "frozenAcceptanceRequirement": "Retain loss-sequence dependence despite suppressed notation. This is required semantic coverage, not an extra theorem-count credit.",
+      "sourceDeps": [
+        "C1-REGRET"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-remark11"
+      ],
+      "originalIDMapping": {
+        "sourceID": "Remark1.1",
+        "originalPointer": "/rows/6",
+        "targetIDs": [
+          "A005"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-MEAN-PREFIX",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed3/PDF15",
+      "frozenAcceptanceRequirement": "For each positive horizon, arithmetic mean lies in [0,1] and uniquely minimizes cumulative squared error there. Produce existence, feasibility and full characterization before using argmin; no uniqueness at empty horizon.",
+      "sourceDeps": [
+        "C1-GAME",
+        "D-empirical-minimum"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-mean-minimizer"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-MEAN-PREFIX",
+        "originalPointer": "/rows/7",
+        "targetIDs": [
+          "A011",
+          "A013",
+          "A012",
+          "A014",
+          "A027"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-FTL",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed3,6/PDF15,18",
+      "frozenAcceptanceRequirement": "Any initial point a in [0,1], then exact mean of strict-past observations. Preserve causal feasibility, and running count/mean summary equivalent to this predictor. Half initialization is a specialization. No gradient or tunable rate is required.",
+      "sourceDeps": [
+        "C1-MEAN-PREFIX",
+        "D-running-state"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-FTL-arbitrary-init",
+        "C1-running-average",
+        "C1-tracking-rationale"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-FTL",
+        "originalPointer": "/rows/8",
+        "targetIDs": [
+          "A021",
+          "A020",
+          "A019",
+          "A023",
+          "A022",
+          "A026",
+          "A025",
+          "A024"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "Lemma1.2",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed4/PDF16",
+      "frozenAcceptanceRequirement": "For arbitrary real losses on V and chosen feasible minimizers for every positive prefix, sum of current-leader losses is no greater than loss of final leader. No convexity, uniqueness, compactness, or stochasticity premise.",
+      "sourceDeps": [
+        "D-BTL-induction"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-BTL-premises",
+        "C1-BTL"
+      ],
+      "originalIDMapping": {
+        "sourceID": "Lemma1.2",
+        "originalPointer": "/rows/9",
+        "targetIDs": [
+          "A029"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "Theorem1.3",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed4-6/PDF16-18",
+      "frozenAcceptanceRequirement": "For every legal target sequence and positive horizon, actual FTL initialized at exactly 1/2 has true interval-best regret at most 4+4 ln T.",
+      "sourceDeps": [
+        "C1-REFINED-REGRET",
+        "C1-HARMONIC"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-T13-premises",
+        "C1-T13",
+        "C1-T13-close"
+      ],
+      "originalIDMapping": {
+        "sourceID": "Theorem1.3",
+        "originalPointer": "/rows/10",
+        "targetIDs": [
+          "A049",
+          "A033"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-STABILITY",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed5/PDF17",
+      "frozenAcceptanceRequirement": "Same half-initialized predictor: first leader-loss difference at most 1/4; each later difference at most 4/t. Preserve printed factorization, feasibility, mean-difference and triangle chain as source topology even if native proof differs.",
+      "sourceDeps": [
+        "C1-MEAN-PREFIX",
+        "C1-FTL",
+        "D-source-stability"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-T13-first",
+        "C1-T13-factor",
+        "C1-T13-mean-diff",
+        "C1-T13-stability"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-STABILITY",
+        "originalPointer": "/rows/11",
+        "targetIDs": [
+          "A015",
+          "A042",
+          "A036"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-REFINED-REGRET",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed5/PDF17",
+      "frozenAcceptanceRequirement": "Same actual half-initialized predictor, true best fixed comparator, regret at most 1/4 + 4 sum from t=2 to T of 1/t, including empty tail at T=1.",
+      "sourceDeps": [
+        "Lemma1.2",
+        "C1-MEAN-PREFIX",
+        "C1-STABILITY",
+        "D-BTL-regret"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-T13-BTL",
+        "C1-T13-sum"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-REFINED-REGRET",
+        "originalPointer": "/rows/12",
+        "targetIDs": [
+          "A041",
+          "A034"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-LOG-UNAVOIDABLE",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed4/PDF16",
+      "frozenAcceptanceRequirement": "Logarithmic dependence is unavoidable in the legal guessing game. Retain as mandatory unproved-in-chapter assertion: a causal learner lower bound of order log T, not a positive constant or an analytic harmonic inequality alone. Source prints no sharp constant or full minimax proof.",
+      "sourceDeps": [
+        "C1-GAME",
+        "C1-REGRET",
+        "D-log-lower"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-minimax-boundary"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-LOG-UNAVOIDABLE",
+        "originalPointer": "/rows/13",
+        "targetIDs": [
+          "A001"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-HARMONIC",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed5-6/PDF17-18",
+      "frozenAcceptanceRequirement": "For T>=1, sum from 1 to T of 1/t <= 1 + integral from 2 to T+1 of 1/(s-1) ds = 1 + ln T. Preserve rectangle comparison and endpoint evaluation.",
+      "sourceDeps": [
+        "D-harmonic-integral"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-figure11",
+        "C1-harmonic-picture",
+        "C1-harmonic"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-HARMONIC",
+        "originalPointer": "/rows/14",
+        "targetIDs": [
+          "A050"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-SUCCESS",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed3-4,6/PDF15-16,18",
+      "frozenAcceptanceRequirement": "Same actual half-initialized FTL wins in the best-fixed-regret sense: logarithmic bound implies upper sublinearity, and true-best ordinary zero-average needs its own lower control. Fixed-comparator consequence is upper epsilon only unless convergence is separately supplied. IID zero excess also requires its own nonnegative/decomposition bridge.",
+      "sourceDeps": [
+        "Theorem1.3",
+        "C1-REGRET",
+        "D-log-decay",
+        "D-best-regret-lower-control"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-proof-summary"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-SUCCESS",
+        "originalPointer": "/rows/15",
+        "targetIDs": [
+          "A039",
+          "A032",
+          "A035"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "accepted-static-contract-with-explicit-delta",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    },
+    {
+      "id": "C1-FTL-ANY-INITIAL-GUARANTEE",
+      "requiredMainText": true,
+      "sourceAnchor": "Printed3-4,6/PDF15-16,18",
+      "frozenAcceptanceRequirement": "The any-legal-initial FTL family retains winning/sublinear best-fixed performance. Do not replace this source family by its half-initial special case; first-round correction and bound must be proved for same subsequent trajectory.",
+      "sourceDeps": [
+        "C1-FTL",
+        "C1-REFINED-REGRET",
+        "C1-HARMONIC",
+        "D-initial-correction",
+        "D-log-decay",
+        "D-best-regret-lower-control"
+      ],
+      "originalSourceNodeIDs": [
+        "C1-FTL-arbitrary-init",
+        "G-arbitrary-initialization",
+        "C1-proof-summary"
+      ],
+      "originalIDMapping": {
+        "sourceID": "C1-FTL-ANY-INITIAL-GUARANTEE",
+        "originalPointer": "/rows/16",
+        "targetIDs": [
+          "G001",
+          "G002",
+          "G003",
+          "G004"
+        ],
+        "reconciliation_path": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/chapter-source-reconciliation.json"
+      },
+      "sourceInventoryVerdict": "covered-with-explicit-requirement",
+      "proofClosureVerdict": "not-recertified-by-source-only-audit",
+      "existingStaticDisposition": "sealed-statement-only-body-and-current-compiler-pending",
+      "acceptance_status": "pending independent freeze and current proof evidence review"
+    }
+  ],
+  "necessary_source_dependencies": [
+    {
+      "id": "D-iid-model",
+      "statement": "Measurable [0,1]-supported IID observations, causal history measurable predictors, independent complete private seed when randomized; derive independence of current observation.",
+      "sourceStatus": "Source omits formal probability setup.",
+      "sourceDeps": [
+        "C1-game",
+        "C1-iid"
+      ]
+    },
+    {
+      "id": "D-population-variance",
+      "statement": "Squared-error bias-variance identity, feasible mean, integrability, expected fixed minimum T variance, causal loss lower bound.",
+      "sourceStatus": "Unproved main-text assertion.",
+      "sourceDeps": [
+        "D-iid-model"
+      ]
+    },
+    {
+      "id": "D-normalization",
+      "statement": "Positive-horizon division and equivalence of little-o total and ordinary zero average.",
+      "sourceStatus": "Unexpanded algebra/analysis.",
+      "sourceDeps": [
+        "C1-eq11",
+        "C1-eq12"
+      ]
+    },
+    {
+      "id": "D-empirical-minimum",
+      "statement": "Finite square completion, nonnegative squared deviation, feasibility of arithmetic mean, positive-horizon uniqueness and value of interval minimum.",
+      "sourceStatus": "Unproved main-text characterization.",
+      "sourceDeps": [
+        "C1-game"
+      ]
+    },
+    {
+      "id": "D-running-state",
+      "statement": "Recurrence for count and average, exact trajectory agreement with prefix mean, valid initial handling.",
+      "sourceStatus": "Derived proof of printed summary property; no bit-complexity theorem required.",
+      "sourceDeps": [
+        "C1-FTL-arbitrary-init"
+      ]
+    },
+    {
+      "id": "D-BTL-induction",
+      "statement": "T=1 reflexive base; T>=2 cancel common last summand Eq1.3; IH at T-1; prefix minimizer inequality against final feasible leader; chain; discharge IH by induction.",
+      "sourceStatus": "Printed complete induction; IH is local, not public assumption.",
+      "sourceDeps": [
+        "C1-BTL-premises",
+        "C1-BTL-base",
+        "C1-BTL-IH",
+        "C1-BTL-cancel",
+        "C1-BTL-prefix",
+        "C1-BTL-opt",
+        "C1-BTL-chain"
+      ]
+    },
+    {
+      "id": "D-BTL-regret",
+      "statement": "Use produced positive-prefix means in BTL; subtract terminal attained minimum to upper-bound regret by successive-leader loss differences.",
+      "sourceStatus": "Printed first display of proof.",
+      "sourceDeps": [
+        "C1-BTL",
+        "C1-mean-minimizer",
+        "C1-best-regret",
+        "C1-T13-premises"
+      ]
+    },
+    {
+      "id": "D-source-stability",
+      "statement": "First term singleton mean y1 and half start gives <=1/4. Later difference factors as (old+new-2y)(old-new), bounded by 2 abs(old-new); expand two means, triangle inequality and bounded prefix sum to <=4/t.",
+      "sourceStatus": "Printed source route, not a claim of matching native proof-term edges.",
+      "sourceDeps": [
+        "C1-T13-premises",
+        "G-mean-feasible",
+        "C1-mean-minimizer"
+      ]
+    },
+    {
+      "id": "D-harmonic-integral",
+      "statement": "Decreasing reciprocal rectangle comparison for t>=2, integral of 1/(s-1) on [2,T+1], T>=1.",
+      "sourceStatus": "Printed picture and integral, including T=1 zero integral.",
+      "sourceDeps": [
+        "C1-figure11",
+        "C1-harmonic-picture"
+      ]
+    },
+    {
+      "id": "D-log-decay",
+      "statement": "(constant + 4 ln T)/T tends to zero along positive natural horizons; fixed comparator regret <= true-best regret.",
+      "sourceStatus": "Unexpanded analytic bridge.",
+      "sourceDeps": [
+        "C1-harmonic",
+        "C1-comparator-regret",
+        "C1-best-regret"
+      ]
+    },
+    {
+      "id": "D-best-regret-lower-control",
+      "statement": "Provide actual FTL true-best lower control/variance identity sufficient for ordinary normalized zero; alternatively prove direct convergence. Do not assume arbitrary algorithm regret nonnegative. IID success uses its separate nonnegative excess.",
+      "sourceStatus": "Necessary for stronger zero-limit guarantee; not inferred from finite upper bound alone.",
+      "sourceDeps": [
+        "C1-FTL-arbitrary-init",
+        "C1-mean-minimizer"
+      ]
+    },
+    {
+      "id": "D-initial-correction",
+      "statement": "For T>0 same later predictions cancel: regret(a)=regret(1/2)+(a-y1)^2-(1/2-y1)^2. Legal a gives first-term <=1 and refined 1+4 tail; correction/T tends zero.",
+      "sourceStatus": "Derived bridge for retained any-initial source guarantee.",
+      "sourceDeps": [
+        "C1-FTL-arbitrary-init",
+        "C1-T13-first",
+        "C1-T13-sum"
+      ]
+    },
+    {
+      "id": "D-log-lower",
+      "statement": "For every measurable bounded causal policy and positive horizon, produce a legal target sequence with regret Omega(log T); deterministic case or seed expectation with witness chosen outside expectation. Binary observations suffice as legal adversary subset. Need actual learner-dependent regret lower-bound producer and attained comparator identification, not just harmonic growth.",
+      "sourceStatus": "Source provides no proof or precise constant. Existing derived contract inspected separately below.",
+      "sourceDeps": [
+        "C1-game",
+        "C1-best-regret",
+        "D-empirical-minimum"
+      ]
+    }
+  ],
+  "source_dependency_reference": "Original C1-* and G-* node IDs resolve in research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/source-proof-graph.json; supplemental D-* resolve here.",
+  "missing_mandatory_source_objects_identified": [],
+  "missing_proof_obligations_identified_by_source_only_audit": [],
+  "proof_status_boundary": "No missing source obligation identified is not proof acceptance. Exact current proof/semantic/runtime binding pending.",
+  "source_repair_required": false,
+  "lower_bound_contract_review": {
+    "record": "chapter-source-reconciliation.json /claims/13, lines369-378",
+    "name": "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower",
+    "terminal_lines": [
+      542,
+      549
+    ],
+    "exact_contract": "For any probability space of private seeds, any A: seed -> List Bool -> real, measurable in seed for every history and pointwise [0,1]-valued, every T>0 has a deterministic binary vector v of length T with log(T+2)/6 <= integral_seed pathRegret(A(seed),v).",
+    "causal_semantics": "causalPredict passes only reversed strict-prefix observations to A. pathRegret uses shared comparatorRegret against empiricalMean of same finite binaryValues path. Terminal invokes randomized_harmonic_lower, then log_add_one_le_harmonic.",
+    "rate_verdict": "Actual recorded Omega(log T) learner-regret lower bound, not merely positive/nonzero or analytic harmonic seed.",
+    "model_verdict": "Restricting a scalar-history causal learner to binary histories gives the quantified policy; binary path is legal in [0,1]. Seed expectation witness order is correct. Deterministic policies specialize to trivial seed. No sharp minimax coefficient or high-probability claim is required by the printed qualitative assertion.",
+    "remaining": "No proof-body/dependency audit or compilation rerun performed; exact formal restriction adapter for any wider claimed policy representation must be checked if such representation is claimed. Do not invent arbitrary external protocol coverage as source premise."
+  },
+  "ordinary_limit_boundary": {
+    "definition": "Retain ordinary finite nonpositive comparator limits as literalLimitNoRegret representation.",
+    "bound": "Theorem1.3 is a best-in-hindsight finite upper bound; it never asserts universal ordinary fixed-comparator convergence.",
+    "dyadic_boundary": "Recorded bounded actual-FTL dyadic obstruction is consistent with theorem and literal definition; it blocks only invalid implication.",
+    "repair": "No author/source repair is needed to represent the definition faithfully. Alternative upper-epsilon predicate remains separately labelled, not a replacement.",
+    "proof_review": "Counterexample proof itself not recertified here."
+  },
+  "packet_files": {
+    "no-regret-source-adjudication.json": "531eac7075acb65e2034a17bc71c2ffebcbb9ec7d3e19d3bb824e3cd14c90927",
+    "paragraph-coverage.json": "270c59a394908e83c708acd3cdb4dbb5082d8e29431f31641b9269846bdfed2b",
+    "provenance.json": "6a79caedb64b68a958a85d3a607f0389e9c9bf9dd82ae1e347d77d8be320956f",
+    "publication-plan.json": "e3c49e2f3710f951d27392ce6172b116de2105e8a252908ecedb77483ec90e00",
+    "statement-bindings.json": "e667104284ea8be98132887885449935dc3397908b5c9cddcaaffd1b79dddb84"
+  },
+  "independent_freeze_review": {
+    "required": true,
+    "status": "pending",
+    "reviewer": null,
+    "review_artifact": null
+  },
+  "chapter_complete": false,
+  "book_complete": false
+}
