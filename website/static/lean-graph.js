@@ -829,5 +829,17 @@
     if (!app.contains(event.target)) hideSuggestions();
   });
 
-  loadGraphSlice(app.dataset.graphOverviewSource, "overview");
+  // Exact node permalinks load only the indexed module shard. Query data never
+  // becomes a fetch URL; unknown nodes retain the normal readable overview.
+  loadGraphSlice(app.dataset.graphOverviewSource, "overview").then(async (loaded) => {
+    const id = new URLSearchParams(window.location.search).get("node");
+    if (!loaded || !id || !(await ensureSearchData())) return;
+    const match = searchNodes.find((node) => node.id === id);
+    if (!match) {
+      count.textContent = "Requested node is absent from this snapshot";
+      return;
+    }
+    activateNode(match.id, {searchMode: true, shard: match.shard});
+    setMobileCanvasOpen(true);
+  });
 })();

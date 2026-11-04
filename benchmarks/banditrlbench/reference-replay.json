@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "command": "trusted-local-lean-replay",
+  "dataset_version": "0.0.1-seed",
+  "registry_sha256": "ee9a744a7f1217b46ddb3de531743a819e4075c2c6728678807a3a708fd33540",
+  "runner_commit": "d416a6f8fe4377cbdbe1240c33a31c5a755ccb28",
+  "runner_dirty": true,
+  "created_at": "2026-11-04T05:56:47.279848+00:00",
+  "mode": "lean-assisted",
+  "model": "reference-canary",
+  "agent": "bundled-reference",
+  "split": "dev",
+  "held_out": false,
+  "model_called_by_runner": false,
+  "access_policy": "Declared by operator; not mechanically enforced by this local runner.",
+  "environment": {
+    "library_commit": "f7e3ec872aea7c82dc2bcc4a825058b358c0f987",
+    "library_dirty": false,
+    "toolchain": "leanprover/lean4:v4.29.1",
+    "lake_manifest_sha256": "87c3e616f86244550ef39e7415186b11c1d4cf4bef20173196a619d9d4d48f48",
+    "compiled_artifacts": "Trusted prebuilt imports; run the full library gate before replay."
+  },
+  "predictions_sha256": "89ac18c7fbfe3fdd81e8f28d483482e7a6a9dfae77366e011d4ef677714bdc6c",
+  "sandbox": false,
+  "result_scope": "Fixed formal subtargets only; no NL correctness certification",
+  "results": [
+    {
+      "core_id": "BRB-001",
+      "status": "kernel-checked",
+      "prediction_sha256": "08d4a51181c97a5c60cc0793450d1b3b16c92937a2f8efcf6510933fc45b3fdc",
+      "contract_hash": "4172494802d81beecd073af34f00e4d7241f0795e55161b437e344629f9cb2f0",
+      "target_sha256": "fbdae6c087b80ae8064992204b3c715df1b50809ce8bbd87f38d67215cad7112",
+      "log_sha256": "c40f6f6a10b5ff50882217e1dddcaa66e823ac79e3b73d67b2cd050f4d8f29cb",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "dependencies": {
+        "type_constants": [
+          "Real",
+          "HMul.hMul",
+          "Finset.univ",
+          "instDecidableEqFin",
+          "Nat.cast",
+          "Fin.fintype",
+          "BanditRLProof.realMeanGap",
+          "Nat",
+          "Real.instMul",
+          "BanditRLProof.pullCount",
+          "Real.instAddCommMonoid",
+          "BanditRLProof.ActionTrace",
+          "Fin",
+          "Eq",
+          "BanditRLProof.realMeanRegret",
+          "Finset.sum",
+          "instHMul",
+          "Real.instNatCast"
+        ],
+        "value_constants": [
+          "Real",
+          "Nat",
+          "BanditRLProof.ActionTrace",
+          "Fin",
+          "BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount"
+        ]
+      }
+    },
+    {
+      "core_id": "BRB-003",
+      "status": "kernel-checked",
+      "prediction_sha256": "11459bd3f394e029fc3e3735f7679445eaeb9ddf957fe31b9e4777e4531de1d0",
+      "contract_hash": "b7aff5365b53330baeefac5bf10d574d21d53b27d851a35f5489a40f80c1f99c",
+      "target_sha256": "b7f8a8fb0a7b92ce2dce311b5eb541ebf13c3504cc276b3ae42e45c4f38aad6b",
+      "log_sha256": "b9bf8983dad0a81cc5c105e87e5e77551b36a4279893f1c7a07b03577a92959b",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "dependencies": {
+        "type_constants": [
+          "Real.instLE",
+          "Real",
+          "ENNReal.instAddCommMonoid",
+          "Real.instZero",
+          "ENNReal.ofReal",
+          "LE.le",
+          "BanditRLProof.Concentration.geometricConfidenceShare",
+          "tsum",
+          "Nat",
+          "ENNReal",
+          "Zero.toOfNat0",
+          "ENNReal.instTopologicalSpace",
+          "OfNat.ofNat",
+          "Eq",
+          "SummationFilter.unconditional"
+        ],
+        "value_constants": [
+          "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare",
+          "Real.instLE",
+          "Real",
+          "Real.instZero",
+          "LE.le",
+          "Zero.toOfNat0",
+          "OfNat.ofNat"
+        ]
+      }
+    }
+  ]
+}

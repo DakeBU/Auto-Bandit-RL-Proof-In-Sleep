@@ -1,0 +1,112 @@
+{
+  "schema_version": "2.0",
+  "id": "BANDITRLBENCH-WORKFLOWS-20261104",
+  "route": "BanditRLBench readable QA and reproducible development workflows",
+  "frontier_cell": "banditrlbench-workflows",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Original QA workflow implementation; existing frozen cores and fixed formal subtargets",
+    "version": "2026-11-04",
+    "anchor": "benchmarks/banditrlbench/targets.json; ENVIRONMENT.md; notation.json; reference-replay.json",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/tree/ee8c0b805c785220ee31799012325f4179dad875"
+  },
+  "target": "Render QA mathematics readably; expose real exact graph locations; prepare prompt-only runs, response-bound expert reviews and trusted-local fixed-target proof replays with negative controls.",
+  "affected_files": [
+    ".github/workflows/documentation.yml",
+    "website/scripts/banditrlbench.py",
+    "website/scripts/banditrlbench_reader.py",
+    "website/scripts/test_banditrlbench.py",
+    "website/scripts/test_math_browser.py",
+    "website/static/lean-graph.js",
+    "website/static/site.css"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Existing QA sealed cores and Reference.lean",
+      "Existing local MathJax reader and offline browser corpus gate",
+      "Existing Lean Graph indexed module shards and source declaration pages",
+      "Lean.Util.FoldConsts getUsedConstantsAsSet"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "QA readers",
+      "Expert graph review",
+      "Prompt-only training/evaluation preparation",
+      "Trusted-local reference and prediction replay"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse existing theorem subtargets and graph IDs; separate navigation/source correspondence from measured direct constants in compiled reference proof values. No production Lean declaration changes."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "Codex /root",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "Not required: non-source-facing infrastructure; no theorem, sealed mathematical question, premise or algorithm guarantee changed.",
+    "remaining_semantic_delta": "Notation-only literal substitutions; the formal target seals are compared with the existing compiler-checked Reference.lean signatures. New expert gold admission remains pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "QA navigation and operational evidence only; no new mathematical mechanism or formal transport.",
+    "focus_targets": [
+      "banditrlbench/non-lean/index.html",
+      "banditrlbench/lean/index.html",
+      "banditrlbench/run/index.html",
+      "banditrlbench/review/index.html",
+      "lean-graph/index.html?node=declaration:BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount"
+    ],
+    "visual_review": "Headless Edge desktop 1440/mobile 390: all five Bench routes, expanded solutions/source evidence, rendered proof formulas and exact graph node selection. No document overflow. Offline full-site corpus: 918 unique formulas, no errors. Local preview remains unverified until exact-candidate CI.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "banditrlwiki": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "results_ledger": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "roadmap": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "website_surfaces": [
+      "README Bench workflows News and entry links",
+      "Readable formula proofs",
+      "Exact Lean Graph node links",
+      "Run/train guide",
+      "Expert review guide",
+      "Machine-readable graph-location overlay"
+    ]
+  },
+  "truth_boundary": "Public dev only, no dataset expansion, new theorem or model experiment. Actual local compilation uses the recorded existing prebuilt environment; full exact-candidate CI required before integration. Trusted replay is not a security sandbox; isolated untrusted execution, Harbor adapter, held-out split, expert gold and leaderboard remain open.",
+  "verification": {
+    "focused_checks": [
+      "python -m unittest website.scripts.test_banditrlbench tools.test_banditrlbench",
+      "python tools/banditrlbench.py canary --trusted-local --library C:/qb261009/news --output <new-local-directory>",
+      "Offline math-browser test across full unique formula corpus",
+      "Public-snapshot site build/check after source commit",
+      "Desktop/mobile browser checks and exact graph node selection",
+      "git diff --check"
+    ],
+    "bandit_check": "No new production Lean code; CI runs the full library/Tests/harness before fixed-target reference and negative-control replay.",
+    "site_build": "Local public-mode unverified preview built; never used --lean-verified locally without full gate.",
+    "site_check": "Focused HTML contract issues corrected; clean public-mode gate will run after committing.",
+    "independent_review": "No new source-facing mathematics; no independent expert admission is claimed. Existing seed review remains historical; new operational changes are tested, not self-labelled expert-admitted."
+  },
+  "contributor": {
+    "name": "Codex /root for Dake Bu",
+    "role": "QA readability, graph provenance and operational harness implementation"
+  }
+}
