@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Match the supported platform of the pinned Playwright browser gate.
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6

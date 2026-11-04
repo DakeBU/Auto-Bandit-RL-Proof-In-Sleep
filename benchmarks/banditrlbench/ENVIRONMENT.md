@@ -8,6 +8,12 @@ the frozen Git blobs (normalizing Windows line endings). Imported `.olean`
 artifacts remain a trusted build input; a source hash alone does not certify
 them. Every replay records the library commit, dirty state and manifest hash.
 
+The documentation build runner is pinned to Ubuntu 24.04 with Playwright 1.58.0.
+An actual 2026-11-04 CI attempt passed the full library, Bench canaries and site
+checks, then failed before browser execution because `ubuntu-latest` supplied
+Ubuntu 26.04, unsupported by that Playwright version. The runner pin preserves
+the browser gate rather than skipping it; see Actions run 41786531446.
+
 ## What runs today
 
 - Python prompt preparation and response-bound expert-review packets, without
