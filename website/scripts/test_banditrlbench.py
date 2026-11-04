@@ -3,6 +3,10 @@ import copy
 import unittest
 from website.scripts import banditrlbench as bench
 from website.scripts.check_site import LinkCollector, check_benchmark_source_bindings
+from website.scripts.banditrlbench_reader import prose, graph_locations
+import json
+import tempfile
+from pathlib import Path
 
 class SeedTests(unittest.TestCase):
     def setUp(self):
@@ -70,5 +74,32 @@ class SeedTests(unittest.TestCase):
         collector.feed('<a href="https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/old/BanditRLProof/Test.lean">source</a>')
         self.assertEqual(len(collector.source_links),1)
         self.assertEqual(collector.benchmark_source_links,[])
+
+    def test_notation_is_presentational_and_every_formula_has_fallback(self):
+        notation=json.loads((bench.ROOT/'benchmarks/banditrlbench/notation.json').read_text())
+        original=copy.deepcopy(self.data)
+        for core in self.data['cores']:
+            corpus=' '.join(core['assumptions']+[core['question'],core['answer']])
+            for entry in notation[core['core_id']]:
+                self.assertIn(entry[0],corpus)
+            rendered=prose(core['answer'],notation[core['core_id']])
+            self.assertIn('data-math-statement',rendered)
+            self.assertIn('math-fallback-note',rendered)
+            self.assertIn('data-scroll-label',rendered)
+            self.assertIn('overflow-hint',rendered)
+        self.assertEqual(self.data,original)
+
+    def test_graph_location_requires_real_node_and_keeps_context_separate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); (root/'lean-graph').mkdir()
+            path=root/'lean-graph/graph.json'
+            nodes=[dict(id='declaration:'+c['source_declaration'],parent='module:'+c['source_file'],url='../modules/x/index.html',status='source') for c in self.data['cores']]
+            path.write_text(json.dumps(dict(nodes=nodes,edges=[])))
+            locations=graph_locations(self.data,root)
+            self.assertEqual(locations[-1]['source_relation'],'context-only')
+            self.assertEqual(len(locations),4)
+            path.write_text(json.dumps(dict(nodes=nodes[:-1],edges=[])))
+            with self.assertRaisesRegex(ValueError,'absent'):
+                graph_locations(self.data,root)
 
 if __name__=='__main__':unittest.main()

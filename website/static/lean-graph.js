@@ -829,5 +829,21 @@
     if (!app.contains(event.target)) hideSuggestions();
   });
 
-  loadGraphSlice(app.dataset.graphOverviewSource, "overview");
+  // Exact node permalinks load only the indexed module shard. Query data never
+  // becomes a fetch URL; unknown nodes retain the normal readable overview.
+  loadGraphSlice(app.dataset.graphOverviewSource, "overview").then(async (loaded) => {
+    const id = new URLSearchParams(window.location.search).get("node");
+    if (!loaded || !id || !(await ensureSearchData())) return;
+    const match = searchNodes.find((node) => node.id === id);
+    if (!match) {
+      count.textContent = "Requested node is absent from this snapshot";
+      return;
+    }
+    if (!(await loadGraphSlice(match.shard, "focus"))) return;
+    revealSearchResult(match.id);
+    setMobileCanvasOpen(true);
+    // A permalink should land at the selected mathematics, including on a
+    // phone where the introductory statistics occupy several screens.
+    requestAnimationFrame(() => detail.scrollIntoView({block: "start"}));
+  });
 })();

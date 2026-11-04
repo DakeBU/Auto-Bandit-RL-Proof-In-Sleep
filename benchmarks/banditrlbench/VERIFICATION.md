@@ -13,3 +13,37 @@ Registry/source checks, export-leakage and contract-mutation tests, site preview
 - Headless Edge screenshots of overview/NL/Lean pages at 1440 and 390 widths show no page overflow. Overview and opened NL solution were visually inspected. Common website shell is retained.
 - Distinct automated content reviewer `/root/frontier_launch_review` found no blocking mathematical defect in the four candidate answers and two existing-lemma applications. It verified pinned source hashes and selected file equality, not transitive/current-root compilation. Its clarity request for a self-contained BRB-002 prompt was applied. This bounded review is not expert gold admission, model scoring or certification of every future contribution.
 - All added publication prose is English. No cross-library promotion was added. The contribution manifest and diff gates are checked on committed source before push.
+
+
+## 2026-11-04 operational increment
+
+The original seed is merged (#271/#272). This increment preserves every sealed
+NL question and production theorem. Fixed formal signatures are SHA-256 sealed
+in `targets.json` and checked against the existing `Reference.lean` signatures.
+`notation.json` changes only the presentation of literal expressions.
+
+Actual local canary command:
+`python tools/banditrlbench.py canary --trusted-local --library C:/qb261009/news --output C:/qb261104/canary-final`.
+Replay ran from clean runner commit e31c6648fbdea45d84619693e944730461efcffb; exact runner-file hashes are in the receipt. Both references kernel-checked; empty, wrong-type and placeholder controls failed
+as intended. `reference-replay.json` records the real prebuilt library commit,
+dirty state, toolchain, manifest, proof/target hashes, axioms and direct type/value
+constants. This is a trusted reference replay, not a fresh whole-root build or a
+sandboxed model trial. `canary-check.json` records expected versus actual outcomes.
+The wrong-type proof produced a compiler error and a `sorryAx` diagnostic; the
+runner correctly rejected it rather than treating axiom output as success.
+
+Seventeen unit regressions cover gold exclusion, source/contract drift, immutable
+source commits, fixed target/response binding, reviewer completion, empty-answer
+credit, axiom/dependency output rejection, graph-node existence and notation-only
+projection. The full offline formula test compiled 919 unique formulas from 71
+pages without errors. Actual headless Edge inspections at 1440 and 390 widths
+covered five Bench routes, expanded proofs and direct graph selection; no page
+overflow or math error occurred. The formalizer inspected desktop/mobile formula
+and workflow screenshots. These are interface/harness checks, not expert gold or
+an independent mathematical review. CI also tests both actual QA tracks and
+valid/absent graph permalinks.
+
+Full current-candidate library/Tests/harness, site checks, canaries and browser
+math gate remain mandatory in CI. Publication status is reported separately from
+these local observations. Gold admission, grouped held-out split, untrusted-code
+sandbox, tested Harbor integration and model performance remain open.

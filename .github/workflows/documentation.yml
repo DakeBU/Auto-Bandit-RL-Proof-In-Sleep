@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Match the supported platform of the pinned Playwright browser gate.
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out the repository
         uses: actions/checkout@v6
@@ -48,7 +49,9 @@ jobs:
         run: |
           python3 website/scripts/banditrlbench.py validate
           python3 -m unittest website.scripts.test_banditrlbench
+          python3 -m unittest tools.test_banditrlbench
           lake env lean benchmarks/banditrlbench/lean/Reference.lean
+          python3 tools/banditrlbench.py canary --library . --output _out/brb-canary --trusted-local
 
       - name: Validate result-free evaluation protocols
         run: |

@@ -120,6 +120,8 @@ def main():
             for route, _ in pages:
                 if 'proximal-bouncy-particle' in route:
                     sample.append(route)
+                if route in ('banditrlbench/non-lean/index.html', 'banditrlbench/lean/index.html'):
+                    sample.append(route)
             for width in (1280, 390):
                 page.set_viewport_size({'width': width, 'height': 900})
                 for route in dict.fromkeys(sample):
@@ -130,6 +132,10 @@ def main():
                         failures.append({'path': route, 'error': 'No rendered formulas'})
                     if page.locator('mjx-merror, [data-mjx-error]').count():
                         failures.append({'path': route, 'error': page.locator('mjx-merror').all_text_contents()})
+                    if route.startswith('banditrlbench/'):
+                        page.locator('.bench-task details').evaluate_all('(nodes) => nodes.forEach(n => n.open = true)')
+                        assert page.locator('.bench-task .bench-equation mjx-container[display="true"]').count(), 'QA proof equation must render'
+                        assert not page.evaluate('document.documentElement.scrollWidth > innerWidth'), 'QA page overflows'
                     if 'proximal-bouncy-particle' in route:
                         note = page.locator('li').filter(has_text='absolutely continuous').first
                         note.evaluate('(node) => { for (let p = node.parentElement; p; p = p.parentElement) if (p.matches("details")) p.open = true; }')
@@ -138,6 +144,17 @@ def main():
                         note.scroll_into_view_if_needed()
                         if args.report:
                             page.screenshot(path=str(args.report.with_name(f'pbps-math-{width}.png')), full_page=False)
+
+            page.goto(base + '/banditrlbench/non-lean/index.html', wait_until='domcontentloaded')
+            page.locator('#BRB-001 .bench-location a').first.click()
+            page.wait_for_function('document.querySelector("[data-graph-detail]")?.textContent.includes("realMeanRegret_eq_sum_gap_mul_pullCount")')
+            assert page.locator('.lean-graph-node.is-selected').get_attribute('data-node-id') == 'declaration:BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount'
+            page.wait_for_function('''() => {
+                const rect = document.querySelector('[data-graph-detail]').getBoundingClientRect();
+                return rect.top >= 70 && rect.top < innerHeight;
+            }''')
+            page.goto(base + '/lean-graph/index.html?node=declaration:DOES_NOT_EXIST', wait_until='domcontentloaded')
+            page.wait_for_function('document.querySelector("[data-graph-count]")?.textContent.includes("absent")')
 
             if (root / 'live/index.html').exists() and (root / 'data/research-workspaces.json').exists():
                 page.goto(base + '/live/index.html', wait_until='domcontentloaded')

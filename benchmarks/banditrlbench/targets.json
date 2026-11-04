@@ -1,0 +1,14 @@
+{
+  "BRB-001": {
+    "target_sha256": "fbdae6c087b80ae8064992204b3c715df1b50809ce8bbd87f38d67215cad7112",
+    "imports": ["BanditRLProof.RealMeanRegretPullCount"],
+    "signature": "{K : Nat} (mean : Fin K → ℝ) (action : BanditRLProof.ActionTrace (Fin K)) (n : Nat) :\n    BanditRLProof.realMeanRegret mean action n =\n      ∑ a : Fin K, BanditRLProof.realMeanGap mean a *\n        (BanditRLProof.pullCount action a n : ℝ)",
+    "reference_proof": "by\n  exact BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount mean action n"
+  },
+  "BRB-003": {
+    "target_sha256": "b7f8a8fb0a7b92ce2dce311b5eb541ebf13c3504cc276b3ae42e45c4f38aad6b",
+    "imports": ["BanditRLProof.ConcentrationConfidenceSchedule"],
+    "signature": "{delta : ℝ} (h : 0 ≤ delta) :\n    ∑' n, ENNReal.ofReal (BanditRLProof.Concentration.geometricConfidenceShare delta n) =\n      ENNReal.ofReal delta",
+    "reference_proof": "by\n  exact BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare h"
+  }
+}
