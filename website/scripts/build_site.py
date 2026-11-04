@@ -1201,7 +1201,7 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         else:
             refs = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in book["chapter_refs"])
             mapping_title = "Remaining source mapping" if book["status"] == "source-mapped" else "Planned source mapping"
-            mapping_text = ("The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits; neither this chapter nor the whole book is complete."
+            mapping_text = ("The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits. A mapped route alone does not establish completion of its source chapter or the whole book."
                             if book["status"] == "source-mapped" else
                             "Next: freeze source versions, chapter contracts, assumptions and theorem locators; retrieve existing declarations and prove only the missing interfaces. Chapter numbers, page coverage and completion totals will appear after that audit.")
             body += f'''<section id="existing-reading"><h2>Existing shared reading</h2><p>These links reuse established pages with their original sources and exact Lean boundaries. They do not certify a chapter of the new book.</p>{'<ol class="shared-route">' + refs + '</ol>' if refs else '<p>No chapter references registered yet.</p>'}</section>
