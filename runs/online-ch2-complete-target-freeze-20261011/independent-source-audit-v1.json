@@ -1,0 +1,1345 @@
+{
+  "schema_version": 1,
+  "actor": "/root/adaptive_decoder",
+  "requested_model": "GPT-6 Astra",
+  "requested_effort": "medium",
+  "runtime_attestation": null,
+  "independence_boundary": "Distinct actor from formalizer proposal; same actor authored H0 inventory/forward/reconciliation drafts being checked. Source-exposed automated review, not source-blind, human or absolute external independence.",
+  "verdict": "repair-before-target-freeze",
+  "source": {
+    "path": "E:/ABRL/worktrees/research-online-ogd/tmp/pdfs/orabona-v10.pdf",
+    "sha256_before": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "sha256_after": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "unchanged": true
+  },
+  "inputs": [
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-source-audit-20261011/chapter2-source-audit-review-20261011-v1.md",
+      "sha256": "de8f89550720a90c321c59f64c811c1ed84cf0f48178debcf5ec803358be143a"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-source-audit-20261011/chapter2-exhaustive-freeze-proposal-20261011-v1.json",
+      "sha256": "690204fe6aa9cf9e2532c71d58f824ad95c02edc6794d8944b989ddac49125c2"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-source-audit-20261011/chapter2-source-audit-manifest-20261011-v1.json",
+      "sha256": "302553d077531384317802345a0b78bf61df21e16b16e90bc5080a28b71534cf"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/chapter2-source-inventory-20261011-v1.md",
+      "sha256": "896e9052a0367adffde95f91545ac6d3d005d2a9a9d320416ba16dfb8c60f1d8"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/chapter2-source-inventory-20261011-v1.json",
+      "sha256": "ad83f3bed4115f389f13cea5c42ef902be962c1b2d7c6fed4d8b3d5be7bb4bbd"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/chapter2-target-reconciliation-candidate-20261011-v2.md",
+      "sha256": "cd1e31d93b97d529bf31c2da5ba36af1e3f460e0dccca6922edd577f572389b3"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/chapter2-target-reconciliation-candidate-20261011-v2.json",
+      "sha256": "afba5a79b507421f6bf4ba1547745adf6831dc7f00e43cee1649b35c5de16c53"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/forward-precise-source-candidates-20261011-v1.md",
+      "sha256": "4d98705c5419e37a0bf1dd1d6391c4cd5f67601ebd5fd32462b340abd4063902"
+    },
+    {
+      "path": "E:/ABRL/worktrees/research-online-book/runs/online-ch2-adaptive-osd-20261010/forward-precise-source-candidates-20261011-v1.json",
+      "sha256": "784f8c5cadab21a27c9e434228fce0979df5a59a14f2bba9ad6f7a8ea7a0674e"
+    }
+  ],
+  "repair_decisions": [
+    {
+      "id": "R01",
+      "source_id": "unnumbered:game-regret",
+      "pdf_pages": [
+        20,
+        21
+      ],
+      "required_action": "Add explicit average-performance branch: for every fixed comparator u, a pathwise upper bound R_T(u)=o(T) implies limsup average(loss_algorithm-loss_u)<=0. This is one-sided no-regret, not equality of average losses, not attained minimization, and not a stochastic optimality theorem. Preserve adversarial feedback order.",
+      "kind": "add child target",
+      "decision": "repair",
+      "recommendation": "Retain child, but write eventual-upper-bound/epsilon form or extended-real limsup, since normalized regret can diverge to minus infinity. Ordinary real-valued limit-to-zero is stronger than one-sided no-regret. No equality of losses follows.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 20,
+          "printed_page": 8,
+          "text_sha256": "de7e87a2145f38d2b096e40bd76249a7996b112820ca2363edf801982936f5a7"
+        },
+        {
+          "pdf_page": 21,
+          "printed_page": 9,
+          "text_sha256": "5ee8163a999f3dcf92544df9f77338a23e636173d093136273d10ba693816902"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R02",
+      "source_id": "Proposition 2.11",
+      "pdf_pages": [
+        24,
+        25
+      ],
+      "required_action": "Make Euclidean projection definition closure explicit: existence and uniqueness of the nearest point for every input, feasibility, norm/squared-norm argmin equivalence, variational condition, and distance contraction. Do not present the named projection as assumed universal argmin attainment.",
+      "kind": "split definition/guarantee closure",
+      "decision": "accept",
+      "recommendation": "Retain existence, uniqueness, feasibility, norm/squared norm equivalence and variational inequality as definition/proof dependencies. Do not count each as a new independent numbered theorem.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 24,
+          "printed_page": 12,
+          "text_sha256": "a80e5c0474df4c2c153786cb0bc4f69602e48e21874917d726d933964103d22a"
+        },
+        {
+          "pdf_page": 25,
+          "printed_page": 13,
+          "text_sha256": "3ad18f76e0a1973b18682c5cc00139f3ab2ee470f6d3eaf0f5bd859f21a73d60"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R03",
+      "source_id": "unnumbered:relative-interior-footnote",
+      "pdf_pages": [
+        29
+      ],
+      "required_action": "Retain the finite-dimensional proper-convex subgradient-existence claim for x in relative interior(dom f), with affine-hull/ambient-extension details. The footnote says it is not needed in the book, not that its stated mathematics is false or disposable. Keep as explicit main-text mathematical side branch, separate from ordinary-interior producer and Theorem2.23 sum-rule premises.",
+      "kind": "retain required side branch pending external scope approval",
+      "decision": "accept",
+      "recommendation": "Retain relative-interior mathematical side branch. It is source-stated despite not needed later. Required ambient extension must be specified, with finite-dimensional proper convex assumptions.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 29,
+          "printed_page": 17,
+          "text_sha256": "38f58d214ab8616aef7b7147338f7fd91ecdcf159b5286ea47092cf4ece81c46"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R04",
+      "source_id": "unnumbered:closed-iff-lsc",
+      "pdf_pages": [
+        28
+      ],
+      "required_action": "Retain both Euclidean and arbitrary Hausdorff-domain branches for extended-real f, with closed real sublevel sets iff lower semicontinuity. A Euclidean terminal alone does not cover the stated generality. No replacement by continuity, properness, or finite values.",
+      "kind": "split generality branches",
+      "decision": "accept",
+      "recommendation": "Retain Hausdorff branch. General topological lower semicontinuity versus closed real sublevels actually holds more broadly; source Hausdorff statement is sufficient and must not be weakened to Euclidean-only.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 28,
+          "printed_page": 16,
+          "text_sha256": "fc5f1c36f2124f1a4c04c2b56159420778760dc35f58924907058720a09214f5"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R05",
+      "source_id": "unnumbered:weighted-distance-identity",
+      "pdf_pages": [
+        26
+      ],
+      "required_action": "Exact displayed summation-by-parts equality includes factor1/2 and terminal distance. For T>=1 and positive steps retain the equality separately from its monotone-diameter inequality consequence. No missing-half source correction is justified by pixels. Equality has no monotonicity or diameter premise.",
+      "kind": "retain exact equality producer target",
+      "decision": "accept",
+      "recommendation": "Pixels PDF26 confirm factor1/2. Exact algebraic identity has no diameter/monotonicity requirement. Keep exact equality, followed by distinct monotone bound.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 26,
+          "printed_page": 14,
+          "text_sha256": "eac8e5e65f9b5aec237ad52ad7169f93c47d75ed8b1002f4b4d261a973c3ebb7"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R06",
+      "source_id": "unnumbered:step-size-algebraic-minimization",
+      "pdf_pages": [
+        27
+      ],
+      "required_action": "For a>=0,S>=0, optimize a^2/(2 eta)+eta S/2 over eta>0: if a>0,S>0 unique eta=a/sqrt(S), value a sqrt(S); if a=S=0 every eta positive attains0; if exactly one zero infimum0 is unattained. Gradients held fixed in the algebra; they may depend on the actual run/eta, so no causal implementation follows from hindsight algebra.",
+      "kind": "freeze full attainment split",
+      "decision": "accept",
+      "recommendation": "Positive a,S unique minimizer; both zero all positive steps minimize; exactly one zero infimum0 unattained. Distinguish fixed-coefficient optimization from eta-dependent actual trajectory.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_sha256": "58d92553fab2263042b09fc29b3175d989cc324d326c5a512b2b59f397326220"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R07",
+      "source_id": "unnumbered:diameter-gradient-coarse-tuning",
+      "pdf_pages": [
+        27
+      ],
+      "required_action": "For Eq2.1 explicitly T>=1,D>0,L>0 for displayed positive eta; keep D=0,L=0,T=0 algorithm/bound branches separately. D bounds pairwise distances; L bounds realized gradient norms. Distinguish genuine diameter and upper bound parameters.",
+      "kind": "freeze denominator and zero branches",
+      "decision": "repair",
+      "recommendation": "Keep positive D,L,T source formula. For degeneracy do not evaluate D/(L sqrt T) or set illegal eta0: state separate valid arbitrary-positive-step bound when D=0 or realized gradients vanish, and empty regret at T=0. Mark these well-formedness extensions, not additional printed branches.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_sha256": "58d92553fab2263042b09fc29b3175d989cc324d326c5a512b2b59f397326220"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R08",
+      "source_id": "Example 2.15",
+      "pdf_pages": [
+        27,
+        28
+      ],
+      "required_action": "Retain unbounded V=R^d and nonnegative Huber threshold qualification with delta=0 branch. Gradient bound delta R for ||z_t||<=R. Horizon-dependent eta=c/sqrt(T), c>0, yields comparator average excess bound (||u-x1||^2/(2c)+c delta^2 R^2/2)/sqrt(T). State fresh-horizon runs or explicit schedule, not an unsupported single varying-step unbounded trajectory.",
+      "kind": "assumption and asymptotic contract",
+      "decision": "repair",
+      "recommendation": "Retain delta>=0 qualification and explicit horizon-dependent family. State one-sided average-excess upper convergence, not equality of average performance. Quantify bounded z_t along each horizon family; no unsupported single unbounded varying-step run.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_sha256": "58d92553fab2263042b09fc29b3175d989cc324d326c5a512b2b59f397326220"
+        },
+        {
+          "pdf_page": 28,
+          "printed_page": 16,
+          "text_sha256": "fc5f1c36f2124f1a4c04c2b56159420778760dc35f58924907058720a09214f5"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R09",
+      "source_id": "Theorem 2.22",
+      "pdf_pages": [
+        29
+      ],
+      "required_action": "Literal theorem says convex and finite at x, singleton subdifferential iff differentiable at x. Do not silently strengthen to interior-domain or global properness. Freeze ambient extended-real differentiability semantics and prove equivalence to source meaning separately; a custom predicate name is not definition closure.",
+      "kind": "semantic representation review",
+      "decision": "repair",
+      "recommendation": "Retain literal finite-at-x and convex assumptions. Freeze exact ambient extended-real differentiability definition, including finite neighborhood requirement, and source-equivalence proof obligation. No predicate-name-based acceptance.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 29,
+          "printed_page": 17,
+          "text_sha256": "38f58d214ab8616aef7b7147338f7fd91ecdcf159b5286ea47092cf4ece81c46"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R10",
+      "source_id": "Theorem 2.23",
+      "pdf_pages": [
+        29,
+        30
+      ],
+      "required_action": "Freeze both sum inclusion and equality, including empty constituent/vacuous branch. Equality uses closed convex proper functions and full last domain intersect first m-1 ordinary interiors. Do not substitute relative interior here merely because nearby footnote uses it. Specify finite nonempty family and extended-real addition conventions.",
+      "kind": "preserve separate branches",
+      "decision": "accept",
+      "recommendation": "Retain both inclusion/equality and m>=1 interpretation. Proper constituents can have disjoint domains, making F improper; inclusion must handle empty supports without silently assuming F proper. Ordinary interiors remain source equality condition.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 29,
+          "printed_page": 17,
+          "text_sha256": "38f58d214ab8616aef7b7147338f7fd91ecdcf159b5286ea47092cf4ece81c46"
+        },
+        {
+          "pdf_page": 30,
+          "printed_page": 18,
+          "text_sha256": "669b3f91ea4bda1846f3fb238276bc15d1f337a66b0aef3b1a51a747b6a2317d"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R11",
+      "source_id": "Theorem 2.26",
+      "pdf_pages": [
+        30
+      ],
+      "required_action": "Finite max family must be nonempty for real/proper finite maximum interpretation. At x common domain each function is continuous. Preserve convex-hull of union over active subgradients, not just one chosen active gradient. Record nonempty index qualification as source clarification.",
+      "kind": "explicit omitted well-formedness premise",
+      "decision": "accept",
+      "recommendation": "Retain I finite nonempty and continuity at common-domain point, whole active subgradient union and convex hull. Nonempty qualification is explicit source well-formedness clarification.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 30,
+          "printed_page": 18,
+          "text_sha256": "669b3f91ea4bda1846f3fb238276bc15d1f337a66b0aef3b1a51a747b6a2317d"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R12",
+      "source_id": "Theorem 2.28",
+      "pdf_pages": [
+        30
+      ],
+      "required_action": "General proper f and affine A,b give A-transpose partial f(Ax+b) subset partial(f composed affine)(x). Source does not assume convexity, continuity, or affine full rank; composition may have empty domain, so do not silently require it proper without handling vacuity.",
+      "kind": "preserve assumption economy",
+      "decision": "accept",
+      "recommendation": "Retain proper outer f only, arbitrary affine map, no extra convexity. Empty affine image-domain branch needs clear support convention and vacuity, not hidden proper composition premise.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 30,
+          "printed_page": 18,
+          "text_sha256": "669b3f91ea4bda1846f3fb238276bc15d1f337a66b0aef3b1a51a747b6a2317d"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R13",
+      "source_id": "Theorem 2.30",
+      "pdf_pages": [
+        31
+      ],
+      "required_action": "Freeze L>=0 convention and empty-interior branch; source equivalence is only on interior(dom f), with all subgradients there and Euclidean norm. Do not promote to boundary or arbitrary norm without separate dual-norm theorem.",
+      "kind": "freeze conventions and domain",
+      "decision": "accept",
+      "recommendation": "Use declared L>=0 convention, every subgradient on ordinary interior, Euclidean norm and empty-interior vacuity. Negative L/dimension-zero quirks must not be silently read into conventional Lipschitz constant.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 31,
+          "printed_page": 19,
+          "text_sha256": "548bb33ca21e813960b1a93afd0cfb17c55da5695377fe6e9b10722f2562b39a"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R14",
+      "source_id": "unnumbered:unit-exponents",
+      "pdf_pages": [
+        32,
+        33
+      ],
+      "required_action": "Split algebraic exponent rules from modeling conventions: loss/decision/gradient/step exponents and both regret terms; dimensionless transcendental arguments via unit normalization; probabilities dimensionless; density reciprocal units for the integration reference coordinate. Density claim requires measure/coordinate convention and in d dimensions inverse volume units. These are not all discharged by two exponent declarations.",
+      "kind": "retain four typed/modeling branches",
+      "decision": "repair",
+      "recommendation": "Retain all four branches but label dimensional transcendental/probability/density parts typed modeling conventions, not untyped real-analysis theorems. Density units require a reference measure/coordinate and change-of-variable rule; inverse variable means inverse volume in multiple dimensions. Freeze concrete representation before proof denominator.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 32,
+          "printed_page": 20,
+          "text_sha256": "9d84074c879672a1d98ff97fc4687de5c2e322c1f7dd908ee116a79b2e74a47d"
+        },
+        {
+          "pdf_page": 33,
+          "printed_page": 21,
+          "text_sha256": "49b4535d054929f5ca79b643a28e6d2d691a88e73867319b1df55a0d3ca28b0a"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R15",
+      "source_id": "unnumbered:coordinate-rescaling",
+      "pdf_pages": [
+        33,
+        34
+      ],
+      "required_action": "Retain actual gradient chain rule, incorrect fixed-numerical-step path changes by10^6 after meter/kilometer conversion, and corrected eta-prime=eta/10^6 trajectory invariance. Keep unprojected V=R^d context of this display; projected extension needs domain rescaling.",
+      "kind": "preserve exact numerical and trajectory branches",
+      "decision": "accept",
+      "recommendation": "Retain unprojected change of coordinates with xprime=x/1000,gprime=1000g, wrong update factor10^6, corrected eta/10^6 and actual trajectory. Projected extension is a separate optional generalization.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 33,
+          "printed_page": 21,
+          "text_sha256": "49b4535d054929f5ca79b643a28e6d2d691a88e73867319b1df55a0d3ca28b0a"
+        },
+        {
+          "pdf_page": 34,
+          "printed_page": 22,
+          "text_sha256": "99c43c39e0c96e905d92cdcea129df41dd1e735ecca2eb24dc936d443c962a21"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R16",
+      "source_id": "unnumbered:minimizer-free-regret",
+      "pdf_pages": [
+        35
+      ],
+      "required_action": "Retain min-versus-comparator distinction, attainment-equivalence when a minimizer exists, and inf/sup extended-real representation when it does not. Infinite-diameter bound is vacuous while fixed-step comparator bound remains finite. Neither statement proves convergence to an unattained offline infimum on its own.",
+      "kind": "split history mathematics from rhetoric",
+      "decision": "repair",
+      "recommendation": "Retain literal min requires attainment and comparator definition avoids it; explicitly distinguish optional infimum/supremum representation extension from printed source. Infinite diameter vacuity is about the diameter bound, not every varying-step trajectory failing.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 35,
+          "printed_page": 23,
+          "text_sha256": "61c8a8550a8200629e78803cc66df89f503b6c5130a6723a82ebbb331834571f"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R17",
+      "source_id": "forward:offline-no-minimizer",
+      "pdf_pages": [
+        35,
+        37,
+        38
+      ],
+      "required_action": "Literal Chapter2 pointer is Example3.2. Pixels37 show Example3.2 explicitly assumes argmin F nonempty. Example3.5 on PDF38 is the justified proposed corrected target (logistic loss, separable finite data, no finite minimizer). Preserve literal locator plus separately labelled correction, never silently rewrite source. Require strict separability, N>=1,R>0,T>=1, regularized-minimum attainment, and epsilon-comparator argument for expected suboptimality tending to inf F.",
+      "kind": "proposed source-pointer correction pending external approval",
+      "decision": "accept",
+      "recommendation": "Accept diagnosis and recommend explicit pointer correction3.2->3.5; this report does not approve rewriting source/canonical contracts. Retain literal pointer and counterevidence. Expected infimum convergence is a derived epsilon-comparator branch; strict separability, finite nonempty sample, positive denominators and regularized attainment retained.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 35,
+          "printed_page": 23,
+          "text_sha256": "61c8a8550a8200629e78803cc66df89f503b6c5130a6723a82ebbb331834571f"
+        },
+        {
+          "pdf_page": 37,
+          "printed_page": 25,
+          "text_sha256": "c76a9ed2211fb5a4ab09a67f102a32fe767107c70d78b924da68aff72535ba59"
+        },
+        {
+          "pdf_page": 38,
+          "printed_page": 26,
+          "text_sha256": "e54caacceac4c0e9cea866773a9728000089bee993c3dbaa335afb3b3e2c9a8a"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R18",
+      "source_id": "forward:square-OGD-improvement",
+      "pdf_pages": [
+        27
+      ],
+      "required_action": "Source says the sqrt(T) upper-bound analysis is suboptimal compared with Chapter1 and promises Chapter4 tuning. An upper bound alone is not an algorithmic lower bound. Keep precise sharp1+ln T candidate and actual eta=1/(2t) trajectory for later full source adjudication, not automatic proof acceptance.",
+      "kind": "keep forward open",
+      "decision": "repair",
+      "recommendation": "Retain sharp Example4.11 and actual schedule eta1/(2t), plus separately mandatory generic Theorem4.7. Cor4.8 open-neighborhood L-Lipschitz with L2 is not satisfied by endpoint square losses; use on-domain gradient bound2 in4.7. A sqrt T upper bound alone is no lower bound.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 27,
+          "printed_page": 15,
+          "text_sha256": "58d92553fab2263042b09fc29b3175d989cc324d326c5a512b2b59f397326220"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R19",
+      "source_id": "unnumbered:actual-OSD-performance-transfer",
+      "pdf_pages": [
+        31,
+        32
+      ],
+      "required_action": "Retain actual causal output, feasibility, any legal selected subgradient, fixed and variable sharp regret branches, terminal residuals, and tuning. Algorithm2.2 source assumes subdifferentiability on V, not a pre-proved regret or a fixed selector supplied with its own conclusion.",
+      "kind": "algorithm guarantee closure",
+      "decision": "accept",
+      "recommendation": "Retain all legal selected subgradients, causal output, feasibility, both sharp residual bounds and tuning. Policy law must be premise about lawful feedback with existence producer, never assumed desired regret.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 31,
+          "printed_page": 19,
+          "text_sha256": "548bb33ca21e813960b1a93afd0cfb17c55da5695377fe6e9b10722f2562b39a"
+        },
+        {
+          "pdf_page": 32,
+          "printed_page": 20,
+          "text_sha256": "9d84074c879672a1d98ff97fc4687de5c2e322c1f7dd908ee116a79b2e74a47d"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R20",
+      "source_id": "unnumbered:extended-domain-indicator",
+      "pdf_pages": [
+        21,
+        22
+      ],
+      "required_action": "Domain is f<+infinity and may include -infinity; indicator embedding and finite-loss equivalence require explicit arithmetic convention/proper or finite loss qualifications when adding. Preserve Definition2.3 full extended-real epigraph scope and Theorem2.4 no-minus-infinity restriction distinctly.",
+      "kind": "definition closure and arithmetic conventions",
+      "decision": "accept",
+      "recommendation": "Retain full epigraph scope including minus infinity separately from no-minus-infinity characterization. Indicator finite-loss claim needs finite losses/proper arithmetic, not arbitrary addition of opposite infinities.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 21,
+          "printed_page": 9,
+          "text_sha256": "5ee8163a999f3dcf92544df9f77338a23e636173d093136273d10ba693816902"
+        },
+        {
+          "pdf_page": 22,
+          "printed_page": 10,
+          "text_sha256": "c4a8a87ae3d011b8e23c734ca645a161735084a41b028bde0c1d04152c7ab4a2"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    },
+    {
+      "id": "R21",
+      "source_id": "Example 2.6",
+      "pdf_pages": [
+        22,
+        23
+      ],
+      "required_action": "Every norm on R^d is convex, not only Euclidean norm. Preserve all four following closure bullets and their proof-left-as-exercise status as mandatory main-text mathematics. Nonnegative combination needs full extended-real arithmetic conventions; affine transformation means precomposition; monotone composition is explicitly real-valued; supremum family including empty-family convention needs precise contract.",
+      "kind": "retain all five exercise-deferred main claims",
+      "decision": "accept",
+      "recommendation": "Retain arbitrary norm, not merely Euclidean; four closure bullets mandatory despite proof-left-as-exercise. Freeze 0*infinity/opposite infinities and empty supremum conventions. Do not narrow them silently to real-valued functions except the explicitly real-valued monotone-composition bullet.",
+      "source_page_fingerprints": [
+        {
+          "pdf_page": 22,
+          "printed_page": 10,
+          "text_sha256": "c4a8a87ae3d011b8e23c734ca645a161735084a41b028bde0c1d04152c7ab4a2"
+        },
+        {
+          "pdf_page": 23,
+          "printed_page": 11,
+          "text_sha256": "f763ae8608f89d4e4c4856e7be701f877d4168804649cc54158baefa441be627"
+        }
+      ],
+      "decision_scope": "source target recommendation only; not Lean/BODY/FINAL acceptance"
+    }
+  ],
+  "additional_forward_repairs": [
+    {
+      "id": "F01-entropy-gradient-monotonicity",
+      "decision": "repair",
+      "owner": "parameter-free -> KT13.4 -> entropy6.33",
+      "pages": [
+        47,
+        92,
+        223
+      ],
+      "statement": "Add explicit Theorem4.3 first branch: proper convex f is lambda-strongly convex on dom partial f iff <g_x-g_y,x-y> >=lambda||x-y||^2 for every x,y in dom partial f and their subgradients. Lemma6.33 proof explicitly invokes4.3; current28 dependency rows omit that edge. Need appropriate restricted-domain entropy specialization and Eq6.4/Bernoulli endpoint continuation.",
+      "boundary": "Source dependency missing from enumerated graph; no claim entire4.3 second Hessian branch required by this route."
+    },
+    {
+      "id": "F02-pnorm-route",
+      "decision": "repair",
+      "owner": "parameter-free retained Lp branch",
+      "pages": [
+        94,
+        95,
+        96,
+        228
+      ],
+      "statement": "If retained Lp bound remains in Chapter2 target scope, add Lemma6.35: psi=||x||_p^2/2 is(p-1)-strongly convex for1<=p<=2, plus actual constrained p-ball OMD and variable-step bound at eta=sqrt(p-1)/(Lq sqrt(2t)). Section6.7 displayed fixed-step whole-space bound alone is insufficient.",
+      "boundary": "Retain branch pending ownership decision; do not silently delete it or mark28 rows exhaustive."
+    },
+    {
+      "id": "F03-adaptive-summation",
+      "decision": "repair",
+      "owner": "adaptive -> Lemma4.13",
+      "pages": [
+        51,
+        52
+      ],
+      "statement": "Lemma4.13 is named in target dependencies but absent as its own28-row dependency contract. Bind a0..aT>=0, continuous nonnegative nonincreasing f on[0,infinity), sum a_t f(a0+sum_{i<=t}a_i)<=integral_a0^(sum a_i)f; inverse-sqrt singular-at0 specialization requires offset/limit and zero-energy handling.",
+      "boundary": "Existing adaptive package may supply it, but this audit does not reaccept that package."
+    },
+    {
+      "id": "F04-omd-direction-constant",
+      "decision": "repair",
+      "owner": "parameter-free Eq13.2",
+      "pages": [
+        228
+      ],
+      "statement": "Keep exact sqrt(2T) direction contribution and printed schedule. Diameter2 substitution into generic C2 bound does not supply this constant. Require a source-qualified sharp directional producer or explicit source correction review.",
+      "boundary": "No counterexample or correction proven in this audit."
+    },
+    {
+      "id": "F05-ftrl-finiteness",
+      "decision": "repair",
+      "owner": "FTRL-unbounded",
+      "pages": [
+        112,
+        113,
+        114
+      ],
+      "statement": "Lemma7.1 printed extended-real losses make cancellation and infinity-minus-infinity nontrivial; freeze finite-loss specialization or lawful extended equality. Cor7.6 needs explicit positive eta,mu and minimizer/existence/closedness route. Preserve sharp correction term without imposing monotonicity where not mathematically needed.",
+      "boundary": "Do not infer general algorithm existence from argmin notation."
+    },
+    {
+      "id": "F06-lookahead-alternate",
+      "decision": "repair",
+      "owner": "lookahead alternative BTRL",
+      "pages": [
+        277,
+        278,
+        279
+      ],
+      "statement": "Theorem15.30 primary route retained, including fixed-step proof left as exercise. If15.31 alternate route retained as mandatory, resolve x_(T+1) terminal regularizer/loss and bind7.47 exact target; draft merely names7.47. Negative stability does not mean total regret nonpositive.",
+      "boundary": "No independent review of7.47 in this pass, so no certification of alternate chain."
+    }
+  ],
+  "retention": {
+    "all73_original_rows_retained": true,
+    "all32_numbered_navigation_retained": true,
+    "both_algorithm_boxes_retained": true,
+    "five_main_exercise_deferred_claims_retained": true,
+    "five_standalone_problems_separate": true,
+    "average_no_regret_child": "retain with R01 repair",
+    "Hausdorff_and_relative_interior_branches": "retain source mathematical side branches",
+    "History_math_claims": "retain min/attainment, unbounded fixed/varying scope, FTRL and offline nonattainment",
+    "attribution_rhetoric": "context, not invented proof obligation"
+  },
+  "forward_container_decisions": [
+    {
+      "id": "SGD-varying",
+      "decision": "retain-open",
+      "source_pages": [
+        36,
+        37
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter3-unbounded-SGD",
+      "dependencies": [
+        "C2 fixed OSD bound",
+        "Jensen2.9",
+        "conditional expectation/independence",
+        "hinge2.27",
+        "harmonic and inverse-square-root sums"
+      ],
+      "review_issues": [
+        "This is stochastic iid weighted averaging on an unbounded domain, not adversarial varying-step OGD. Require T>=1,N>=1,R>0 for printed denominators; R=0 needs separate branch.",
+        "Theorem3.1 leaves measurability/integrability details implicit. Exact conditional-expectation contract and independent algorithm randomness must be frozen; do not replace with supplied expected-regret assumptions alone."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "no-minimizer",
+      "decision": "retain-open",
+      "source_pages": [
+        38
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "extra-history:offline-no-minimizer",
+      "dependencies": [
+        "SGD-varying:Theorem3.1",
+        "logistic convexity and gradient bound",
+        "C2 fixed OSD bound",
+        "regularized minimizer attainment",
+        "epsilon-comparator limit"
+      ],
+      "review_issues": [
+        "Literal wrong pointer versus proposed correction must receive independent review. No silent substitution.",
+        "R>0,N>=1,T>=1 denominator conditions; preserve no assumption argmin F nonempty. Logistic-specific terminal not found."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "square-improvement",
+      "decision": "retain-open",
+      "source_pages": [
+        49,
+        50
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter4-square-OGD-improvement",
+      "dependencies": [
+        "strong-convexity4.1-4.2",
+        "Lemma2.31",
+        "actual Algorithm2.2",
+        "harmonic upper bound",
+        "square curvature2 and gradient<=2"
+      ],
+      "review_issues": [
+        "Bind Example4.11 directly through Theorem4.7 and on-domain gradient bound. Square losses are not2-Lipschitz on any open neighborhood of [0,1] when labels hit endpoints, so plugging L=2 directly into Corollary4.8 changes its premise.",
+        "Existing mean-predictor theorem has4+4 ln T, not the printed1+ln T. Need actual eta_t=1/(2t) trajectory identity and sharp guarantee; name reuse alone insufficient."
+      ],
+      "mandatory_extra": "Generic Theorem4.7 remains mandatory separately from square specialization.",
+      "certified": false
+    },
+    {
+      "id": "minimax",
+      "decision": "retain-open",
+      "source_pages": [
+        62,
+        63
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter5-DLsqrtT-minimax-optimality",
+      "dependencies": [
+        "A.14-p1",
+        "finite-horizon causal Rademacher independence",
+        "diameter attainment",
+        "finite probabilistic method"
+      ],
+      "review_issues": [
+        "L nonnegative/positive is implicit in norm bound and construction; freeze convention. Preserve exists sequence and comparator after arbitrary algorithm, every positive horizon.",
+        "No dedicated Theorem5.1 terminal found in scoped library/contracts search; unrelated bandit lower bounds do not establish this source statement."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "oracle-impossibility",
+      "decision": "retain-open",
+      "source_pages": [
+        68,
+        69,
+        70
+      ],
+      "all_anchor_pages_read_this_pass": false,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter5-oracle-distance-energy-rate-impossibility",
+      "dependencies": [
+        "Theorem5.5",
+        "Theorem5.7",
+        "Lambert-definition-A.1",
+        "A.4",
+        "A.17",
+        "KL-quartic",
+        "translation and asymptotic contradiction"
+      ],
+      "review_issues": [
+        "Theorem5.8 is not a zero-budget theorem; epsilon_T is strictly positive. No blanket impossibility without its online/adversary/comparator quantifiers.",
+        "Theorem5.7 uses all-prefix nondecreasing budgets while5.8 states a fixed-horizon guarantee. A prefix guarantee can be obtained by zero-padding later losses; freeze that bridge rather than assuming it.",
+        "The displayed lower bound has sqrt(2 W(...)) minus1 outside the square root, and denominator5 epsilon_T inside W. Visually checked."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "unbounded-failure",
+      "decision": "retain-open",
+      "source_pages": [
+        64
+      ],
+      "all_anchor_pages_read_this_pass": false,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter5-unbounded-variable-OGD-failure",
+      "dependencies": [
+        "explicit causal power-step trajectory",
+        "finite-sum/integral bounds",
+        "phi positivity and limit"
+      ],
+      "review_issues": [
+        "Existing same-project terminal is a reuse candidate, not fresh BODY/FINAL acceptance. Nontrivial ambient dimension is necessary for stated positive lower bound."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "adaptive",
+      "decision": "retain-open",
+      "source_pages": [
+        51,
+        52
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter4-adaptive-oracle-like-rates",
+      "dependencies": [
+        "C2 actual OSD transfer",
+        "Lemma4.13",
+        "inverse-root limiting specialization",
+        "weighted potential",
+        "positive benchmark and degenerate infimum split"
+      ],
+      "review_issues": [
+        "The min identity has unattained degenerate cases when exactly one of D and energy is zero. Existing infimum candidate must retain source-repair review, not silently relabel min.",
+        "This is the current adaptive package ownership edge; do not duplicate its proof or count it as a new Chapter2 theorem."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "FTRL-unbounded",
+      "decision": "retain-open",
+      "source_pages": [
+        111,
+        114
+      ],
+      "all_anchor_pages_read_this_pass": false,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "extra-history:chapter7-FTRL-unbounded",
+      "dependencies": [
+        "Lemma7.1",
+        "Lemma7.5",
+        "Theorem6.9",
+        "Lemma4.2",
+        "Theorem6.27",
+        "sum-rule2.23",
+        "dual Cauchy-Schwarz",
+        "inverse-root sum"
+      ],
+      "review_issues": [
+        "Existing generic FTL selector is not FTRL regularization/existence/stability. Need proper/closed/subdifferentiable sum and attainment conditions reconciled from Lemma7.5; Corollary7.6 compact statement does not spell all of them out.",
+        "Positive eta,mu,L and alpha conventions explicit in candidate; monotonicity is guaranteed by displayed schedule for the simplified bound. Do not silently drop the correction sum for arbitrary schedules."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "parameter-free",
+      "decision": "retain-open",
+      "source_pages": [
+        225,
+        226,
+        227,
+        228
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "forward:chapter13-parameter-free-oracle-like-rates",
+      "dependencies": [
+        "KT13.4",
+        "duality13.5",
+        "conjugate13.6",
+        "magnitude-direction12.16",
+        "C2 linearization",
+        "Euclidean directional learner sharp bound",
+        "A.1",
+        "A.6-upper",
+        "A.8-10",
+        "A.11-12",
+        "A.13",
+        "entropy6.33"
+      ],
+      "review_issues": [
+        "Minimal proposed Chapter2 Euclidean edge is scalar KT plus magnitude/direction Eq13.2. Coordinatewise and Lp variants are recorded, not automatically claimed necessary for this narrower edge; later whole-Chapter13 obligations remain untouched.",
+        "Exact directional learner constant in Eq13.2 needs its own audit; cannot infer it merely by substituting diameter2 into the generic C2 bound.",
+        "Primitive gamma/Lambert infrastructure and these source-specific terminals were not located in the scoped shared-library search."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    },
+    {
+      "id": "lookahead",
+      "decision": "retain-open",
+      "source_pages": [
+        277,
+        278
+      ],
+      "all_anchor_pages_read_this_pass": true,
+      "prior_source_packet_read_by_same_actor": true,
+      "ownership": "additional:prescient-lookahead-nonpositive-stability",
+      "dependencies": [
+        "Bregman6.4",
+        "three-point6.7",
+        "extended proximal optimality",
+        "sum-rule2.23",
+        "nonnegative Bregman",
+        "weighted potential",
+        "alternate BTRL:7.47"
+      ],
+      "review_issues": [
+        "Source proof invokes differentiable Theorem2.8 while ell_t is merely subdifferentiable; the existing extended proximal source package is a candidate repair/qualification route requiring its receipts.",
+        "Whole-function current lookahead must be explicit; this cannot be branded an ordinary causal output-before-current-loss algorithm.",
+        "15.31 terminal x_(T+1) and its hypotheses need separate source audit if alternative BTRL route is adopted. No automatic requirement to prove entire15.5.1 to satisfy narrower negative-stability edge."
+      ],
+      "mandatory_extra": null,
+      "certified": false
+    }
+  ],
+  "dependency_decisions": [
+    {
+      "id": "strong-convexity4.1-4.2",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        46,
+        47
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Theorem5.5",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        66,
+        67
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "",
+      "dependencies": [
+        "A.17",
+        "KL-quartic"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Theorem5.7",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        68
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "L>0 implicit; zero wealth needs zero bet branch.",
+      "dependencies": [
+        "causal adversary"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "KL-quartic",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        67
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Unnumbered main proof inequality, required for5.5 and5.8 constants.",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Lambert-definition-A.1",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        303
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.4",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        303
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Stated without proof in source; required for5.8 asymptotic, not dispensable.",
+      "dependencies": [
+        "Lambert-definition-A.1"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.6-upper",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        304
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Full lower constant not required by selected KT upper-bound route; remains a later appendix obligation.",
+      "dependencies": [
+        "Lambert-definition-A.1",
+        "A.5"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.5",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        303
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Fraction is inside logarithm; rendering/extraction must be checked if this exact route is formalized.",
+      "dependencies": [
+        "Lambert-definition-A.1"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.14-p1",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        308
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Full printed theorem is complex-coefficient p in(0,infinity) Khintchine with A_p/B_p; p=1 lower half is exact sufficient dependency for5.1, not whole appendix completion.",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.15",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        308,
+        309
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Needed by binomial-tail lemma; exact radical visually inspected.",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.17",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        309,
+        310
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Endpoint separate;0 log0=0.",
+      "dependencies": [
+        "A.15",
+        "Robbins-factorial"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Robbins-factorial",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        310
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "External attribution Robbins1955; exact displayed weakening is needed, not outside paper lookup.",
+      "dependencies": [
+        "factorial and exponential"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Lemma7.1",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        112
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "Extended-real finite/arithmetic conditions require reconciliation; do not erase sharp identity.",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Lemma7.5",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        113,
+        114
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "",
+      "dependencies": [
+        "Theorem6.9",
+        "strong-convexity4.1-4.2",
+        "Theorem6.27",
+        "C2 sum-rule2.23"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Theorem6.9",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        78
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "",
+      "dependencies": [
+        "strong-convexity4.1-4.2",
+        "A.3"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.3",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        303
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "For selected Euclidean FTRL route finite-dimensional compact sublevel specialization sufficient; full Hausdorff theorem not inferred.",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Theorem6.27",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        86
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "KT13.4",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        222,
+        223
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "T>=1 for displayed exponent. Gamma recurrence at c=+-1 is referred to standalone Problem13.1 but is a mandatory proof dependency when using this main theorem; not excluded as an exercise.",
+      "dependencies": [
+        "A.8-10",
+        "A.11-12",
+        "A.13",
+        "entropy6.33"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "duality13.5",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        223,
+        224
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "Convex conjugate and biconjugacy, not merely scalar algebra.",
+      "dependencies": [
+        "Fenchel6.12-6.13"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "conjugate13.6",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        225
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "At y=0 exact value -beta retained. AppendixA.7 duplicates related conjugate formula and has division-by-zero representation at zero; not needed as additional dependency for this route.",
+      "dependencies": [
+        "Lambert-definition-A.1",
+        "A.6-upper",
+        "Fenchel6.12-6.13"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "magnitude-direction12.16",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        215,
+        216
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "The zero comparator is a distinct branch, no division by zero.",
+      "dependencies": [
+        "C2 global support",
+        "dual norm inequality"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Fenchel6.12-6.13",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        80,
+        81
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "Use exact proper specialization required by13.5; not all statements of Chapter6 advanced.",
+      "dependencies": [
+        "C2 closed/proper/convex"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "entropy6.33",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        92
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "Needed for exponent in13.4; alternate direct Bernoulli inequality could replace only with proved equivalent dependency.",
+      "dependencies": [
+        "strong-convexity4.1-4.2",
+        "Jensen2.9"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.8-10",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        306
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "Gamma recurrence and Gamma(1/2)=sqrt(pi) also used in KT proof; no blanket assertion all primitive API missing.",
+      "dependencies": [],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.11-12",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        306,
+        307
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "Only d=2 final ratio bound required by selected KT route; full general result remains outside proof advancement.",
+      "dependencies": [
+        "A.8-10"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "A.13",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        307,
+        308
+      ],
+      "anchor_pages_fresh_read": false,
+      "scope": "n=2 specialization required by13.4; proof uses trigamma series and convex midpoint-integral bound.",
+      "dependencies": [
+        "A.8-10",
+        "Jensen2.9"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "Bregman6.4",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        75
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "Nonnegative under stated convexity; second slot interior matters.",
+      "dependencies": [
+        "C2 first-order support"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    },
+    {
+      "id": "three-point6.7",
+      "decision": "retain-required-candidate",
+      "source_pages": [
+        76
+      ],
+      "anchor_pages_fresh_read": true,
+      "scope": "",
+      "dependencies": [
+        "Bregman6.4"
+      ],
+      "certified": false,
+      "review_boundary": "Retention/ownership checked; no blanket fresh theorem certification. Pages not reread in this pass retain prior-candidate status, not accepted status."
+    }
+  ],
+  "historical_required_open_containers": 8,
+  "historical_pending_future_claims": 6,
+  "future_status_boundary": "Reading/enumeration here changes neither historical open/future metadata nor mathematical acceptance. All10 containers/28 dependencies retained, additional explicit edges required.",
+  "proof_denominator": null,
+  "target_set_frozen": false,
+  "chapter_accepted": false,
+  "chapter_complete": false,
+  "compiler_run": false,
+  "canonical_modified": false,
+  "OSD_BODY_acceptance": false,
+  "required_next_gate": [
+    "Incorporate21 row decisions and six forward-chain repair records without deleting original mathematical scope.",
+    "Freeze concrete dimensional-model conventions and extended-real/algorithm well-formedness qualifications, marked separately from literal source.",
+    "Read and adjudicate all still-unreviewed later dependency statements/branches, including alternate7.47 if retained; close graph ownership without equating metadata rows to proof counts.",
+    "Distinct final target-freeze approval must precede next proof; subsequent exact producer/BODY/FINAL evidence is a separate gate."
+  ],
+  "read_page_text_fingerprints": {
+    "20": "de7e87a2145f38d2b096e40bd76249a7996b112820ca2363edf801982936f5a7",
+    "21": "5ee8163a999f3dcf92544df9f77338a23e636173d093136273d10ba693816902",
+    "22": "c4a8a87ae3d011b8e23c734ca645a161735084a41b028bde0c1d04152c7ab4a2",
+    "23": "f763ae8608f89d4e4c4856e7be701f877d4168804649cc54158baefa441be627",
+    "24": "a80e5c0474df4c2c153786cb0bc4f69602e48e21874917d726d933964103d22a",
+    "25": "3ad18f76e0a1973b18682c5cc00139f3ab2ee470f6d3eaf0f5bd859f21a73d60",
+    "26": "eac8e5e65f9b5aec237ad52ad7169f93c47d75ed8b1002f4b4d261a973c3ebb7",
+    "27": "58d92553fab2263042b09fc29b3175d989cc324d326c5a512b2b59f397326220",
+    "28": "fc5f1c36f2124f1a4c04c2b56159420778760dc35f58924907058720a09214f5",
+    "29": "38f58d214ab8616aef7b7147338f7fd91ecdcf159b5286ea47092cf4ece81c46",
+    "30": "669b3f91ea4bda1846f3fb238276bc15d1f337a66b0aef3b1a51a747b6a2317d",
+    "31": "548bb33ca21e813960b1a93afd0cfb17c55da5695377fe6e9b10722f2562b39a",
+    "32": "9d84074c879672a1d98ff97fc4687de5c2e322c1f7dd908ee116a79b2e74a47d",
+    "33": "49b4535d054929f5ca79b643a28e6d2d691a88e73867319b1df55a0d3ca28b0a",
+    "34": "99c43c39e0c96e905d92cdcea129df41dd1e735ecca2eb24dc936d443c962a21",
+    "35": "61c8a8550a8200629e78803cc66df89f503b6c5130a6723a82ebbb331834571f",
+    "36": "858cca35812b3d046817d8dceb13336e5faf6520669c6b9ff84456dc4350388a",
+    "37": "c76a9ed2211fb5a4ab09a67f102a32fe767107c70d78b924da68aff72535ba59",
+    "38": "e54caacceac4c0e9cea866773a9728000089bee993c3dbaa335afb3b3e2c9a8a",
+    "46": "128cf57adf157c418c77d50c01d963dac7f5acff7b52604c0d652de3cfd314f3",
+    "47": "22c5f1ced5b8f89590a896899fe52a92f971f68cd0460d45592507b666812a11",
+    "49": "712103c7ae4d312801c4d88db8629cba1985613baccdc0916da728f25aae1aa5",
+    "50": "b9a2fa1602c53e04fe9015d869b457904fe96d24d2b24bb3e17828ee6ef45039",
+    "51": "c9cbb1fb0550d08e8fa485df98f4222c5e5764ea75be6c320fe416a7bf802b26",
+    "52": "5edfcec0fb2f7a1d50009d176bff3c27e49f0427ccb1e4e98605aaee303f2946",
+    "306": "d516dcb8afebd77e52287ff1b4fb74d626730cc801079b07a810f0c930a4fe63",
+    "307": "c98b564636ef34d43c30fd3f486861edb9762702881f76148d5a002e2e7ab6fe",
+    "62": "784374426b6fae1ae292f456cd414a331ede6d094e3e4fc5f98cf4188e414c37",
+    "63": "d0f0a88224ae28a89d0bfd94031ce182f4cbe8e553175cb163c4f6e07003ca5f",
+    "68": "1b2f6755d021adc95645856c0ea10e9dae5e37d45db33d7bff30390628da145a",
+    "69": "d43ec26fbe3259d5670f5104402c99b04635fe0d92dc5ce6fba6220d7c5b24f1",
+    "75": "ae4dbed223f5ecd6eebcd11501d905af6ccaa96a9a0a232e8a6f0f33570eceda",
+    "76": "d338998f41271e52e5fb340bea751e87432100f43a13d7c51a04f672a96a1ef1",
+    "78": "6e7f7af0336efa1d8e02cbd8251daf6dc55742622eae7e31d2df6d8066793be9",
+    "86": "586c1b158175aa8b0ff8cbd9deb83b4a5eca53c8602820ea5a8049dd312d00bc",
+    "215": "3ead38e90432a19bf0d6e6f1c9309740eb9c25d001e8b438dee245e3a174d45e",
+    "216": "84dd8fafe57df087cb03cf0905e76bb0034362f3f5b23514cd4ae575a18d461f",
+    "92": "d0c851419a31c663478399dba74fcdd6515007da8dcc4eb92b1878530f6af16c",
+    "94": "8f91c19b73984eaaf99779014723c69bec3322073fc0f8c2ae9e8cce41743fa8",
+    "95": "a8efc6e47406f9b057f8c943194d3f777001206aececa0795b004d2977b7d36d",
+    "96": "620abd1a4655a7aee9d381dd3fdd41e11d5baf961aaac0d056ee6f2d1e26db78",
+    "222": "a8de018f8b16d3213f17d9ecacd67f0040f873279e87e93af12dcc683e09d140",
+    "223": "38f4f09e2f0c1e4e403e19e19ebae80cf5d85142d7a6436e6102af52f810c536",
+    "224": "30ffed7ade0d23cf62367bf76f6e6d7aaa2b9a5c309b496303749e75341c3a83",
+    "225": "fd80486902a74c59db7e2589754312e785f60729bc951bb791b1ee1deabffbec",
+    "226": "8ff19cb4845899b0e03aff6a5aa4cdf27296f5c23f0590a0e12d9cc6ed1b1c86",
+    "227": "0d088da168b07e6fd20c8cbca27f002be802abd0b1c3a78efc2960f161624049",
+    "228": "7b3abcf517c83560bdde8e7ce06f0921f12b6d1f8589e54f484c94578900f67c",
+    "112": "5983e9b62e80380c1a1737699af8d51de26c1f234361a1344aaf35876215055e",
+    "113": "785527c3b7c02fd65f1a0c5318e8c3dc3fc83cd08829111a376906cc7f945e9c",
+    "277": "010505d7e51600c47d5e1395c188e3a773c6ac359cb842a6e2ec927ddecb4bd2",
+    "114": "55f193e885a2c5cf0086e3b35bd4f004760a8758044e57f8e591c7008f2ed2ab",
+    "278": "db4ffd9599284629d769cde07fee8c8d869cc4d9449b229c75807a28c912b695",
+    "279": "75ceef71935660009cf6823bf0c85c567d708f13c93cefc0c9487598cf00e75f"
+  },
+  "visual_checks": {
+    "pages": [
+      26,
+      29
+    ],
+    "files": [
+      "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-source-audit-20261011/page-026.png",
+      "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-source-audit-20261011/page-029.png"
+    ]
+  },
+  "report_path": "E:/ABRL/worktrees/research-online-book/tmp/online-ch2-source-independent-audit-20261011/independent-source-audit-v1.md",
+  "report_sha256": "32a6754c4654f62969f8e6cabeaa57eee3472bd038aeabc2a06c621ea9b2472c"
+}
