@@ -174,3 +174,4 @@ import Tests.OnlineBregmanProximalCanary
 import Tests.OnlineBregmanExtendedCanary
 import Tests.OnlinePrescientBregmanCanary
 import Tests.OnlinePrescientBregmanRegretCanary
+import Tests.OnlineWeierstrassExtendedCanary
