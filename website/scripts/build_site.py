@@ -17,6 +17,8 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
+from ipaddress import ip_address
 
 try:
     from .book_registry import build_registry, membership_index
@@ -1684,6 +1686,61 @@ def build_textbook_spine(
         )
 
 
+def validate_proof_step_references(step: dict[str, Any]) -> list[dict[str, str]]:
+    """Validate optional external proof references before rendering any link."""
+    if "references" not in step:
+        return []
+    references = step["references"]
+    if not isinstance(references, list):
+        raise ValueError("Proof-step references must be a list")
+    allowed_urls = {
+        "https://arxiv.org/pdf/1912.13213v10#page=17",
+        "https://github.com/leanprover-community/mathlib4/blob/5e932f97dd25535344f80f9dd8da3aab83df0fe6/Mathlib/NumberTheory/Harmonic/Bounds.lean#L33-L57",
+    }
+    for reference in references:
+        if not isinstance(reference, dict):
+            raise ValueError("Proof-step reference must be an object")
+        label, url = reference.get("label"), reference.get("url")
+        if not isinstance(label, str) or not label.strip():
+            raise ValueError("Proof-step reference needs a nonempty label")
+        if not isinstance(url, str) or not url.strip():
+            raise ValueError("Proof-step reference needs a nonempty URL")
+        if any(char.isspace() or ord(char) < 32 or ord(char) == 127 for char in url) or "\\" in url:
+            raise ValueError("Proof-step reference URL contains whitespace or backslash")
+        try:
+            parsed = urlsplit(url)
+            host = parsed.hostname
+            port = parsed.port
+            if (parsed.scheme != "https" or not parsed.netloc or not host
+                    or parsed.username is not None or parsed.password is not None):
+                raise ValueError("Expected an HTTPS URL with a host and no credentials")
+            if ":" in host:
+                ip_address(host)
+            else:
+                labels = host.removesuffix(".").split(".")
+                if not all(re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?", part) for part in labels):
+                    raise ValueError("Invalid HTTPS hostname")
+            if parsed.netloc.endswith(":") or (port is not None and not 1 <= port <= 65535):
+                raise ValueError("Invalid HTTPS port")
+        except ValueError as error:
+            raise ValueError("Invalid proof-step HTTPS URL") from error
+        if url not in allowed_urls:
+            raise ValueError("Unreviewed proof-step reference URL")
+    return references
+
+
+def render_proof_step_references(step: dict[str, Any]) -> str:
+    references = validate_proof_step_references(step)
+    if not references:
+        return ""
+    links = " · ".join(
+        f'<a href="{html.escape(reference["url"], quote=True)}">'
+        f'{html.escape(reference["label"])}</a>'
+        for reference in references
+    )
+    return '<p class="proof-bridge-references">' + links + '</p>'
+
+
 def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[str, Any]) -> str:
     primary = reading["primary"]
     companion = reading.get("companion")
@@ -1766,7 +1823,8 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
             f'<p>{html.escape(step["detail"])}</p>'
             '</div>'
             f'{render_math_statement(f"Step {index} equation", step["math"], step["fallback"])}'
-            '</li>'
+            + render_proof_step_references(step)
+            + '</li>'
             for index, step in enumerate(proof_bridge["steps"], start=1)
         )
         proof_bridge_html = f"""
@@ -5763,6 +5821,7 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 required = ("title", "detail", "math", "fallback")
                 if any(not str(step.get(key, "")).strip() for key in required):
                     raise SystemExit(f"reading {reading['slug']} has an incomplete proof-bridge step")
+                validate_proof_step_references(step)
                 normalized = normalize_math_source(step["math"])
                 if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
                     raise SystemExit(f"reading {reading['slug']} proof bridge has unbalanced mathematical delimiters")
