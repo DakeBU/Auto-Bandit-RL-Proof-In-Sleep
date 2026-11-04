@@ -19,7 +19,8 @@
     "website/scripts/test_banditrlbench.py",
     "website/scripts/test_math_browser.py",
     "website/static/lean-graph.js",
-    "website/static/site.css"
+    "website/static/site.css",
+    "website/scripts/build_site.py"
   ],
   "declarations": [],
   "reuse_plan": {
@@ -102,7 +103,7 @@
     ],
     "bandit_check": "No new production Lean code; CI runs the full library/Tests/harness before fixed-target reference and negative-control replay.",
     "site_build": "Local public-mode unverified preview built; never used --lean-verified locally without full gate.",
-    "site_check": "Focused HTML contract issues corrected; clean public-mode gate will run after committing.",
+    "site_check": "Passed clean production-mode check_site.py --allow-unverified --expect-public-base-url: links, mappings, formulas, source identities and workflow checks.",
     "independent_review": "No new source-facing mathematics; no independent expert admission is claimed. Existing seed review remains historical; new operational changes are tested, not self-labelled expert-admitted."
   },
   "contributor": {
