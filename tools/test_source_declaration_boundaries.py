@@ -110,6 +110,40 @@ class SourceDeclarationBoundaryTests(unittest.TestCase):
         self.assertEqual(site.compact_statement([ordinary], 0),
                          "theorem plain (n : Nat := 2) : n = n")
 
+    def test_graph_keeps_exact_multiline_statement_beyond_preview_limit(self):
+        header = (
+            "theorem long_result :\n"
+            "    /- " + "source context " * 80 + "-/\n"
+            "    let x := 2\n"
+            "    let y := x + 1\n"
+            "    y = 3"
+        )
+        self.file.write_text(header + " := by rfl\n", encoding="utf-8")
+        module = site.scan_module(self.file, [])
+        module.update(chapter="example", chapter_title="Example")
+        declaration = module["declarations"][0]
+        declaration.update(chapter="example", chapter_title="Example", module_slug=module["slug"], module=module["name"])
+        self.assertEqual(declaration["statement"], header)
+        chapter = dict(slug="example", short_title="Example", title="Example",
+                       status="partial", summary="Example")
+        report = dict(graph=dict(counts=dict(project_nodes=0, edges=0)),
+                      benchmark_contract=dict(root_count=0), benchmarks=[])
+        output = self.root / "generated"
+        with patch.object(site, "SITE_REGISTRY", {"books": [], "settings": []}), \
+             patch.object(site, "SITE_MEMBERSHIPS", {}), \
+             patch.object(site, "layout", return_value=""), \
+             patch.object(site, "write_page"):
+            site.build_lean_graph(output, [module], [declaration], [chapter], [], [],
+                                  {"chapters": []}, report,
+                                  {"cng_candidate": {"status": "prototype"}}, False, "test")
+        graph = json.loads((output / "lean-graph/graph.json").read_text(encoding="utf-8"))
+        node = next(n for n in graph["nodes"]
+                    if n["id"] == "declaration:" + declaration["full_name"])
+        self.assertEqual(node["statement"], declaration["statement"])
+        self.assertGreater(len(node["statement"]), 900)
+        shard = json.loads((output / "lean-graph" / node["shard"]).read_text(encoding="utf-8"))
+        self.assertEqual(next(n for n in shard["nodes"] if n["id"] == node["id"])["statement"], header)
+
     def test_missing_optional_config_keeps_default_statements(self):
         module = site.scan_lean_tree()[0]
         self.assertEqual(module, site.scan_module(self.file, []))

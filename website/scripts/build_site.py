@@ -4565,7 +4565,7 @@ def build_lean_graph(
             "parent": parent,
             "order": order,
             "meta": meta or [],
-            "statement": compact(statement, 900),
+            "statement": statement,
             "missing": missing or [],
             "search": compact(f"{label} {subtitle} {description} {kind} {status}", 1400).lower(),
         }
