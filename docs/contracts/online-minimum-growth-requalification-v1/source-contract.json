@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-MINIMUM-GROWTH-REQUALIFICATION-V1",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      "Definition4.1 printed34/PDF46",
+      "Definition2.18 printed16/PDF28"
+    ]
+  },
+  "classification": "derived conditional dependency, not a numbered source theorem restatement",
+  "base": "c4e873c549854225c3527cd080b99879bc4bb102",
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+  "exact_header": "theorem stronglyConvex_minimum_growth {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hV : Convex ℝ V)\n    (hdom : V ⊆ effectiveDomain f) (hlam : 0 ≤ lam)\n    (hstrong : ∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n    (p : E) (hp : p ∈ V) (hmin : IsMinOn f V p)\n    (q : E) (hq : q ∈ V) :\n    (f p).toReal + (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal",
+  "core_canary": [
+    {
+      "path": "BanditRLProof/OnlineStrongConvexMinimum.lean",
+      "sha256": "55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317",
+      "bytes": 2181,
+      "imports": [
+        "import BanditRLProof.OnlineClosedProper",
+        "import Mathlib.Analysis.Convex.Strong"
+      ]
+    },
+    {
+      "path": "Tests/OnlineStrongConvexMinimumCanary.lean",
+      "sha256": "da204780365f4de3b284296ae8e03de0588151c43109816488aba41c4dde5562",
+      "bytes": 3685,
+      "imports": [
+        "import BanditRLProof.OnlineStrongConvexMinimum",
+        "import Mathlib.Tactic"
+      ]
+    }
+  ],
+  "historical_evidence": [
+    {
+      "path": "tmp/online-ch2-b4-next-strong-convex-header-20261011/neutral-complete-header-v1.txt",
+      "sha256": "ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590",
+      "scope": "historical; no new acceptance inferred"
+    },
+    {
+      "path": "tmp/online-ch2-b4-next-strong-convex-blind-20261011/fresh-blind-v1.json",
+      "sha256": "9d84f60e2a5f272922a68bb8c1745d98de4c7779e154a5e53fde4c4560525152",
+      "scope": "historical; no new acceptance inferred"
+    },
+    {
+      "path": "tmp/online-ch2-b4-next-strong-convex-source-review-20261011/source-header-review-v1.json",
+      "sha256": "0a23a79c8f1c9a32059441af10f204c1bbe6afcdc27ed28cb684c52a07ed0665",
+      "scope": "historical; no new acceptance inferred"
+    },
+    {
+      "path": "tmp/online-ch2-b4-next-strong-convex-source-review-20261011/source-topology-review-v2.json",
+      "sha256": "7522a6a6cc07e7957f5be0bb3e1040469b424fc9f8af60d5cc11ba2c8ae569bf",
+      "scope": "historical; no new acceptance inferred"
+    },
+    {
+      "path": "tmp/online-ch2-b4-strong-convex-growth-body-review-20261011/candidate-body-review-v1.json",
+      "sha256": "fb4ae375df5851672eb0f3d4bcadbb50956ce8205608c3efe35800812882d6a7",
+      "scope": "historical; no new acceptance inferred"
+    },
+    {
+      "path": "tmp/online-ch2-b4-strong-convex-growth-body-review-20261011/candidate-integration-eligibility-v1.json",
+      "sha256": "4ebbc3a046f4c8dcb0dcbc2e8e6cddb5e2df4d8b3ed2c0e3bd8be798b3e5e065",
+      "scope": "historical; no new acceptance inferred"
+    },
+    {
+      "path": "tmp/online-ch2-b4-strong-convex-growth-canary-review-20261011/canary-compiled-body-review-v1.json",
+      "sha256": "a1f4a5e8da0d013da87f18bd958705fd921ec86854369a78e24e41b7801a9856",
+      "scope": "historical; no new acceptance inferred"
+    }
+  ],
+  "source_and_Lean_delta": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. This is a derived conditional consequence of Definition4.1 (printed34/PDF46), with properness from Definition2.18 (printed16/PDF28), generalized from the source finite-dimensional setting to an arbitrary real normed space. It is not a direct restatement of Lemma7.1.",
+  "boundary": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, the source-support obligation for Theorem 6.9, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete.",
+  "native_proof": "SourceProper excludes negative infinity, while V is contained in effectiveDomain f, excluding positive infinity on V. Thus f(p) and f(q) are finite, and their real values preserve order. Set c = (λ/2)‖q − p‖² and g = f(q) − f(p) ≥ 0. Suppose g < c. Then c > 0 and a = (g + c)/(2c) lies strictly between 0 and 1. Convexity places a p + (1 − a)q in V. Minimality and strong convexity give f(p) ≤ a f(p) + (1 − a)f(q) − c a(1 − a). Composing these extended-real inequalities and converting their finite endpoints yields 0 ≤ (1 − a)(g − ca). But ca = (g + c)/2 > g and 1 − a > 0, a contradiction. If λ = 0 or p = q, the nonnegative gap cannot be smaller than c = 0.",
+  "target_freeze": {
+    "source_rows": 73,
+    "effective_targets": 172,
+    "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "targets_deleted": false
+  },
+  "current_static_review_sha256": "70a0452f70f59dd0ff7a25ed132558b9a53a72b6c4d9d6c351a8d5d519ad7ef4",
+  "current_focused": {
+    "validation_file": "c2-minimum-focused-current-v1/validation.json",
+    "sha256": "a2e9bde91da7d4fbc6687af6282d62deaedf46bcfd0b035bd935d8d7c34f7421",
+    "source_review_file": "c2-minimum-focused-independent-review-v1.json",
+    "source_review_sha256": "50f2f0826628d40e5a9b94da1ce23acd0dc28c570bbf684e6970ac7d9f835d24",
+    "complete_current_TYPE_VALUE": {
+      "BanditRL.OnlineConvex.stronglyConvex_minimum_growth-TYPE.txt": {
+        "sha256": "33487883e6f3b30ad09191f7ee7d3e911a430222309c9069d1080ed8ba718061",
+        "bytes": 187842
+      },
+      "BanditRL.OnlineConvex.stronglyConvex_minimum_growth-VALUE.txt": {
+        "sha256": "f0255afcc1a8c2458688dfa0d939b91c77bd0166b95106e0ceb363087ab86795",
+        "bytes": 1367016926
+      },
+      "BanditRL.Tests.OnlineStrongConvexMinimumCanary.interval_zero_extended_domain-TYPE.txt": {
+        "sha256": "942f566dd5df61d04e415c377e11fdcaa53e8aa015dbb78f280de9f35ba489f9",
+        "bytes": 14788
+      },
+      "BanditRL.Tests.OnlineStrongConvexMinimumCanary.interval_zero_extended_domain-VALUE.txt": {
+        "sha256": "29e60066185ccc06e56f1bc5b29e55971febc47781d14b5ce1dc90f37aad2d37",
+        "bytes": 2705023
+      },
+      "BanditRL.Tests.OnlineStrongConvexMinimumCanary.square_two_exact_growth-TYPE.txt": {
+        "sha256": "4ac0aa75e286e0bfb90be817b967cc58b96f4683315827a9b3276f9f0787ae0e",
+        "bytes": 23877
+      },
+      "BanditRL.Tests.OnlineStrongConvexMinimumCanary.square_two_exact_growth-VALUE.txt": {
+        "sha256": "18a07a1e32ce96de7ef36df935833046857ae5a8a6fb1a767715bfa31bf21e4b",
+        "bytes": 38084733
+      }
+    },
+    "historical_comparisons": [
+      {
+        "declaration": "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+        "TYPE_count": 85,
+        "VALUE_count": 383,
+        "historical_TYPE_set_equal": true,
+        "historical_VALUE_set_equal": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexMinimumCanary.square_two_exact_growth",
+        "TYPE_count": 35,
+        "VALUE_count": 276,
+        "historical_TYPE_set_equal": true,
+        "historical_VALUE_set_equal": true,
+        "actual_full_application_operands_checked": true,
+        "first_conjunction_hg_checked": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexMinimumCanary.interval_zero_extended_domain",
+        "TYPE_count": 47,
+        "VALUE_count": 262,
+        "historical_TYPE_set_equal": true,
+        "historical_VALUE_set_equal": true,
+        "actual_full_application_operands_checked": true,
+        "first_conjunction_hg_checked": true
+      }
+    ],
+    "historical_normalized_whole_VALUE_equality_claim": false,
+    "scope": "Current complete streams and bounded provider/application/axiom audit; historical TYPE/VALUE constant sets and available raw core type agree. No historical whole VALUE equality claimed. Large proof streams remain private, not copied into repository."
+  },
+  "combined_gates": "pending",
+  "reader_acceptance": "pending",
+  "chapter2_accepted": false,
+  "book_accepted": false,
+  "historical_semantic_roles": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/strongconvex_growth_formalizer",
+    "blind_decoder": "Distinct prior fresh blind actor; runs/online-ch2-b4-strong-convex-growth-20261011/archive/tmp/online-ch2-b4-next-strong-convex-blind-20261011/fresh-blind-v1.json SHA256 9d84f60e2a5f272922a68bb8c1745d98de4c7779e154a5e53fde4c4560525152; header only",
+    "source_reviewer": "Distinct prior source reviewer; runs/online-ch2-b4-strong-convex-growth-20261011/archive/tmp/online-ch2-b4-next-strong-convex-source-review-20261011/source-header-review-v1.json SHA256 0a23a79c8f1c9a32059441af10f204c1bbe6afcdc27ed28cb684c52a07ed0665; header/topology only; production BODY mathematical/semantic review: runs/online-ch2-b4-strong-convex-growth-20261011/archive/tmp/online-ch2-b4-strong-convex-growth-body-review-20261011/candidate-body-review-v1.json SHA256 fb4ae375df5851672eb0f3d4bcadbb50956ce8205608c3efe35800812882d6a7",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "General real normed ambient explicitly generalizes the source finite-dimensional setting. Derived consequence of Definition4.1, not an invented numbered theorem or Chapter4 closure. hp/hmin/hq are CONDITIONAL_TARGET. Proof uses a direct interior segment contradiction; finite EReal endpoint conversions proved without silently totalizing infinity. No attainment/uniqueness or algorithm performance claim. Exact sealed header ded5adebef211f810552abbc4eced856dd9fff59f268989e9c1ff5a4ecd3d590; lifecycle fingerprint 4b4f2471e1d85ac984e1171e838809cdf8e3203a1a11816689a31ab4adba85ad."
+  },
+  "publication_epoch": "Focused compilation independently accepted; combined and rendered reader gates remain separate immutable later receipts."
+}
