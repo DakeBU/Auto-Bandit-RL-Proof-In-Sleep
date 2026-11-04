@@ -8100,6 +8100,22 @@
         "BanditRL.OnlineConvex.effectiveDomain",
         "BanditRL.OnlineConvex.extendedIndicator"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+      "title": "Finite regret accounting with an explicit terminal gap",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 360,
+      "source_match": "extension",
+      "plain": "Let E be any type. For every natural index t, let ψₜ and ℓₜ be total real-valued functions on E. Let x be any E-valued sequence, u and z any points of E, and T a positive natural number. No norm, convexity, minimization rule or feasibility condition is assumed. Set yₜ = xₜ for t ≠ T and y_T = z. Define Gₜ(v) = ψₜ(v) + ∑ᵢ₌₀ᵗ ℓᵢ(v), including the current loss. For all t < T, yₜ = xₜ, so changing z does not change the regret on the left. The regret equals the initial/comparator regularizer difference, the successive potential drops, the regularizer-change sum, and the explicit terminal gap. An empty regularizer-change sum at T = 1 is zero.",
+      "math": "y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T,\\end{cases}\\qquad G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v)\\qquad \\begin{aligned}\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))={}&\\psi_{T-1}(u)-\\psi_0(y_0)\\\\&+\\sum_{t=0}^{T-1}(G_t(y_t)-G_t(y_{t+1}))\\\\&+\\sum_{t=0}^{T-2}(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1}))\\\\&+G_{T-1}(z)-G_{T-1}(u).\\end{aligned}",
+      "intuition": "The changing regularizer leaves a drift sum, and replacing the final point leaves a terminal gap. Neither disappears by telescoping.",
+      "why": "Derived finite-real terminal-accounting subclause of repairs for Theorems 7.47 and 15.31, not a restatement of Lemma 7.1. Derived finite-real accounting for Theorem 7.47 printed 129–130/PDF 141–142 and Theorem 15.31 printed 266–267/PDF 278–279; Orabona v10. Not literal Lemma 7.1.",
+      "position": "This identity does not establish an argmin trajectory, a nonpositive terminal gap, or a regret bound after deleting that gap. It is not the literal Lemma 7.1 statement: the source adapter must preserve its strict-past objective, ψ_(T+1), minimum of the initial regularizer and first-T iterate independence. Extended-real cases still require a finite-value branch, a separate one-sided +∞ comparator branch, and an explicit disposition of undefined infinity subtraction.",
+      "proof_idea": "Expand the inclusive cumulative potential to obtain Gₙ₊₁(v) = Gₙ(v) + ψₙ₊₁(v) − ψₙ(v) + ℓₙ₊₁(v). All operations are ordinary real arithmetic. For a prefix of n + 1 rounds, retain the last term Gₙ(yₙ₊₁) − Gₙ(u). The one-round case follows by expanding G₀ and cancelling terms. Extend the identity by one round. Expand each finite sum at its last index and substitute the recurrence for G. The intermediate potential terms cancel; the change from ψₙ to ψₙ₊₁ remains as the explicit regularizer-change summand. Use T > 0 to set n = T − 1, then substitute y_T = z. This gives the displayed terminal gap without assigning it a sign.",
+      "lean_notes": "Each canary proves its first conjunct by an actual application of finite_regret_identity, then checks the displayed rational values. The production proof uses finite-sum induction and real arithmetic. It imports Mathlib only; the preceding cumulative producer is not a proof parent. Take T = 1, ψₜ(v) = v²/2, ℓₜ(v) = (v − 1)²/2, xₜ = u = 1/2 and z = 2/3. The theorem gives 0 = 0 − 1/36 + 0 + 1/36. Deleting the positive terminal gap would assert the false inequality 0 ≤ −1/36. This refutes unconditional algebraic deletion, not a source algorithm with an established argmin trajectory. Take T = 2, ψₜ(v) = (t + 1)v²/2, ℓ₀(v) = v and ℓ₁(v) = −2v + 1. Let x₀ = 0, x₁ = 1, x₂ = 100, u = 3 and z = 2. The four blocks give 1 = 9 − 7/2 − 1/2 − 4. The terminal splice has y₂ = 2 although x₂ = 100; no update rule is asserted.",
+      "dependencies": []
     }
   ]
 }

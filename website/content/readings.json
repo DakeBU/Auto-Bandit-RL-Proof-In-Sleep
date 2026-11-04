@@ -1953,6 +1953,29 @@
             "boundary": "This construction does not establish closedness, positive curvature, a global source subgradient, or an attained minimum of F. Applying Theorem 6.9 to F still requires its remaining premises, including its printed nonempty subgradient-domain premise. Algorithm-specific support witnesses, constrained attainment, interior membership, trajectories and regret bounds remain separate obligations."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Finite regret accounting with an explicit terminal gap",
+          "pages": "Derived finite-real accounting for Theorem 7.47 printed 129–130/PDF 141–142 and Theorem 15.31 printed 266–267/PDF 278–279; Orabona v10. Not literal Lemma 7.1.",
+          "pdf_page": 141,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=141",
+          "math": "y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T,\\end{cases}\\qquad G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v)\\qquad \\begin{aligned}\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))={}&\\psi_{T-1}(u)-\\psi_0(y_0)\\\\&+\\sum_{t=0}^{T-1}(G_t(y_t)-G_t(y_{t+1}))\\\\&+\\sum_{t=0}^{T-2}(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1}))\\\\&+G_{T-1}(z)-G_{T-1}(u).\\end{aligned}",
+          "plain": "The regret equals the initial/comparator regularizer difference, the successive potential drops, the regularizer-change sum, and the explicit terminal gap. An empty regularizer-change sum at T = 1 is zero.",
+          "fallback": "Set yₜ = xₜ for t ≠ T and y_T = z. Define Gₜ(v) = ψₜ(v) + ∑ᵢ₌₀ᵗ ℓᵢ(v), including the current loss. For all t < T, yₜ = xₜ, so changing z does not change the regret on the left.",
+          "relationship": "Derived finite-real terminal-accounting subclause of repairs for Theorems 7.47 and 15.31, not a restatement of Lemma 7.1. Expand the inclusive cumulative potential to obtain Gₙ₊₁(v) = Gₙ(v) + ψₙ₊₁(v) − ψₙ(v) + ℓₙ₊₁(v). All operations are ordinary real arithmetic. For a prefix of n + 1 rounds, retain the last term Gₙ(yₙ₊₁) − Gₙ(u). The one-round case follows by expanding G₀ and cancelling terms. Extend the identity by one round. Expand each finite sum at its last index and substitute the recurrence for G. The intermediate potential terms cancel; the change from ψₙ to ψₙ₊₁ remains as the explicit regularizer-change summand. Use T > 0 to set n = T − 1, then substitute y_T = z. This gives the displayed terminal gap without assigning it a sign.",
+          "contract": {
+            "model": "Let E be any type. For every natural index t, let ψₜ and ℓₜ be total real-valued functions on E. Let x be any E-valued sequence, u and z any points of E, and T a positive natural number. No norm, convexity, minimization rule or feasibility condition is assumed.",
+            "assumptions": "Set yₜ = xₜ for t ≠ T and y_T = z. Define Gₜ(v) = ψₜ(v) + ∑ᵢ₌₀ᵗ ℓᵢ(v), including the current loss. For all t < T, yₜ = xₜ, so changing z does not change the regret on the left.",
+            "parameters": "T > 0; arbitrary x, u and terminal point z. At T = 1 the regularizer-change sum is empty.",
+            "regret": "Exact real-valued regret accounting, with terminal gap retained; no inequality after deleting the gap.",
+            "guarantee": "The regret equals the initial/comparator regularizer difference, the successive potential drops, the regularizer-change sum, and the explicit terminal gap. An empty regularizer-change sum at T = 1 is zero."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled finite-real accounting identity",
+            "boundary": "This identity does not establish an argmin trajectory, a nonpositive terminal gap, or a regret bound after deleting that gap. It is not the literal Lemma 7.1 statement: the source adapter must preserve its strict-past objective, ψ_(T+1), minimum of the initial regularizer and first-T iterate independence. Extended-real cases still require a finite-value branch, a separate one-sided +∞ comparator branch, and an explicit disposition of undefined infinity subtraction."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {

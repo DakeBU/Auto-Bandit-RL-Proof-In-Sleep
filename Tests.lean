@@ -182,3 +182,4 @@ import Tests.OnlineStrongConvexAttainmentCanary
 import Tests.OnlineStrongConvexSubgradientIffCanary
 import Tests.OnlinePrescientBregmanSourceCanary
 import Tests.OnlineCumulativeStrongConvexCanary
+import Tests.OnlineCumulativePotentialCanary

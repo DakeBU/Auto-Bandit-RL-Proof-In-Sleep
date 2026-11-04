@@ -778,3 +778,4 @@ import BanditRLProof.OnlineStrongConvexAttainment
 import BanditRLProof.OnlineStrongConvexSubgradientIff
 import BanditRLProof.OnlinePrescientBregmanSource
 import BanditRLProof.OnlineCumulativeStrongConvex
+import BanditRLProof.OnlineCumulativePotential
