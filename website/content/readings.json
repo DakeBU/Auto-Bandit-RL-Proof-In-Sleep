@@ -1815,6 +1815,29 @@
             "boundary": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. Theorem 6.9 explicitly assumes a nonempty subgradient domain; verifying this premise for concrete algorithmic objectives and proving corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Derived source-vector growth in the original norm",
+          "pages": "Definition 2.20, printed 16–17 / PDF 28–29; Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}\\bar f=f\\circ e^{-1},\\quad g\\in\\partial\\bar f(e(p)),\\quad L(z)=\\langle g,e(z)\\rangle.\\\\f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).\\end{gathered}",
+          "plain": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+          "fallback": "An algebraic coordinate vector support gives the exact quadratic lower bound in the original chosen norm.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 2.20 and the forward implication associated with Definition 4.1 and Lemma 4.2. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This adapter uses one supplied global source subgradient and represents the source coordinates through an algebraic linear equivalence. It retains the separately chosen original norm. The source segment-and-limit proof remains distinct from this library reuse through Support growth. The coordinate equivalence e gives finite dimensionality of E. Define the real linear map L(v) = ⟨g, e(v)⟩. Every linear map from this finite-dimensional normed space is continuous, so L supplies the continuous covector required by Support growth. Evaluate the supplied global subgradient inequality at e(z); cancel e⁻¹(e(z)) and use e(z) − e(p) = e(z − p). This yields f(p) + L(z − p) ≤ f(z) for each z ∈ V. Apply stronglyConvex_support_growth with this internally constructed L and support proof. The pairing uses coordinates, but the curvature term remains ‖q − p‖²_E. Neither an isometry nor a separate continuity or finite-dimensionality premise is added.",
+          "contract": {
+            "model": "Finite coordinate representation of an arbitrary real normed space; supplied global source vector support, literal convex finite-domain set.",
+            "assumptions": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+            "parameters": "λ ≥ 0; algebraic coordinates e, supplied global subgradient g and feasible p, q. The penalty uses the original E norm.",
+            "regret": "Pointwise support growth only, not a regret bound.",
+            "guarantee": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled source-vector growth adapter",
+            "boundary": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {
