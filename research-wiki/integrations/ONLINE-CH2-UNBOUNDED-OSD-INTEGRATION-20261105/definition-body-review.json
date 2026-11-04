@@ -1,0 +1,119 @@
+{
+  "schema": "abrl.definition-body-review.v1",
+  "phase": 3,
+  "verdict": "ACCEPTED_ON_EXACT_SOURCE_RESTRICTIONS",
+  "definitions": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "lines": [
+        15,
+        15
+      ],
+      "kind": "literal_reindexing",
+      "source_restriction": "0<alpha<1;Lean s=source round-1",
+      "body": "Positive(s+1) real power;all-alpha extension not source decay claim."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.phi",
+      "lines": [
+        16,
+        16
+      ],
+      "kind": "literal_on_source_carrier",
+      "source_restriction": "(0,1)",
+      "body": "Exact formula with nonzero denominators;phi_range supplies codomain. Totalized phi(1)=1 is not source limit.",
+      "source_characterization": "Formula,range,left-limit and numeric theorem reviewed together;not whole-R identity."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "lines": [
+        17,
+        17
+      ],
+      "kind": "literal_finite_prefix_after_reindexing",
+      "source_restriction": "s<T;admissible horizon",
+      "body": "Negative iff s<ceil(T/2);zero horizon/off-prefix extension not source theorem."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "lines": [
+        19,
+        19
+      ],
+      "kind": "literal_scalar_coordinate_specialization",
+      "source_restriction": "v=1 scalar or source coordinate unit vector",
+      "body": "Finite sign*inner product;unit-direction extension regularity proved."
+    }
+  ],
+  "supporting_body_review": [
+    {
+      "file": "validation-worktree/BanditRLProof/OnlineHinge.lean",
+      "lines": [
+        23,
+        46
+      ],
+      "name": "affine_subdifferential",
+      "finding": "Global support singleton equality proved via y=x+(g-a),inner-self positivity and converse linearity."
+    },
+    {
+      "file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        36,
+        47
+      ],
+      "name": "currentSubgradient_affine",
+      "finding": "Nonempty support,dif_pos,choose_spec,singleton equality. Fallback inactive,not globally legitimized."
+    },
+    {
+      "file": "validation-worktree/BanditRLProof/OnlineGradientDescent.lean",
+      "lines": [
+        36,
+        54
+      ],
+      "name": "project_existsUnique/project",
+      "finding": "Actual exists-unique theorem precedes choice. Two variational inequalities force norm difference zero. Definition still chooses existence witness."
+    },
+    {
+      "file": "validation-worktree/BanditRLProof/OnlineGradientDescent.lean",
+      "lines": [
+        76,
+        93
+      ],
+      "name": "project_spec/project_eq_of_variational",
+      "finding": "Choose_spec gives full membership/minimum-distance characterization;variational uniqueness proves equality criterion."
+    },
+    {
+      "file": "validation-worktree/BanditRLProof/OnlineHuber.lean",
+      "lines": [
+        202,
+        211
+      ],
+      "name": "fullSpace/project_fullSpace",
+      "finding": "univ carrier and variational criterion at p=x prove identity."
+    },
+    {
+      "file": "validation-worktree/BanditRLProof/OnlineSubgradientDescent.lean",
+      "lines": [
+        29,
+        39
+      ],
+      "name": "selector/step/iterate/regret",
+      "finding": "Current function/point only;pre-update scoring. No regularity Prop bundle added to Anchor binders."
+    },
+    {
+      "file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        257,
+        271,
+        481,
+        506
+      ],
+      "name": "finite affine loss rewrites",
+      "finding": "Actual losses rewritten finite affine;EReal.toReal_coe used explicitly in both regret calculations."
+    }
+  ],
+  "general_fallback_source_certified": false,
+  "whole_carrier_phi_source_certified": false,
+  "source_repair_approved": false,
+  "definition_kind_notes": "Source restrictions literal;no quotient or new choice-defined witness object. Existing projection characterized with uniqueness. Source OSD general selection need not be unique;affine branch is unique."
+}

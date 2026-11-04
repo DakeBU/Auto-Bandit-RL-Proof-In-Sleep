@@ -1,0 +1,170 @@
+{
+  "originalSourceOnlyContract": {
+    "schema": "abrl.source-only-contract.v1",
+    "source": {
+      "author": "Francesco Orabona",
+      "title": "A Modern Introduction to Online Learning",
+      "revision": "arXiv:1912.13213v10",
+      "path": "private-abrl/worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+      "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+      "target": "Theorem 5.4, Section 5.2",
+      "printed_pages": [
+        52,
+        53
+      ],
+      "pdf_pages": [
+        64,
+        65
+      ],
+      "page_numbers_are_one_based": true
+    },
+    "status": "SOURCE_EXTRACTED_AWAITING_INDEPENDENT_TOPOLOGY_REVIEW",
+    "scope": {
+      "primary": "Entire Section 5.2 including Theorem 5.4 statement, proof, and first two post-proof interpretive sentences.",
+      "supplements": [
+        "phi range (declared codomain)",
+        "left limit at alpha=1",
+        "1-ln 2>=0.3"
+      ],
+      "forward_reference": "Fourth bullet on printed p14/PDF26, captured in full including Chapter 3 distinction.",
+      "standing": "Selected game, regret, convexity, properness, subgradient, Lipschitz and Algorithm 2.2 definitions.",
+      "excluded": "Neighboring Section 5.3, upper-bound results in Chapter 2, prospective results in Chapters 7 and 13."
+    },
+    "exact_statement_normalized": "Let alpha in (0,1), phi:(0,1)->(0,1-ln 2) defined as phi(alpha):=1/(2-alpha)+((1/2)^(1-alpha)-1)/(1-alpha), and T>=2/((1-alpha)phi(alpha)). For unprojected OSD with stepsizes eta_t=t^(-alpha) and x_1=0, there exists a sequence of T convex and 1-Lipschitz losses such that Regret_T(0)>=(1/2)phi(alpha)T^(2-alpha). Also, lim_{alpha->1}phi(alpha)=1-ln 2>=0.3.",
+    "quantifier_contract": {
+      "dimension": "Every positive integer d, implicit in proof cases d=1 and d>=2.",
+      "alpha": "For every real alpha with 0<alpha<1.",
+      "horizon": "For each integer T satisfying T>=2/((1-alpha)*phi(alpha)); source infers T>=2.",
+      "losses": "There exists a sequence (ell_1,...,ell_T) of convex 1-Lipschitz functions R^d->R. Witness depends on T through ceil/floor split.",
+      "algorithm": "Run unprojected OSD from zero with eta_t=t^(-alpha), t=1,...,T.",
+      "comparator": "Only u=0 in the lower-bound conclusion.",
+      "conclusion": "Regret_T(0)>=(1/2)*phi(alpha)*T^(2-alpha).",
+      "horizon_not_interchangeable": "For each T there is a length-T witness. Source does not produce one infinite sequence simultaneously witnessing every horizon.",
+      "rate": "For fixed alpha in (0,1), exponent 2-alpha in (1,2), positive alpha-dependent coefficient. Not an alpha-uniform constant 0.3.",
+      "dimension_dependence": "No d factor; first-coordinate embedding preserves regret and Euclidean Lipschitz constant."
+    },
+    "input_classification": [
+      {
+        "input": "0<alpha<1",
+        "class": "SOURCE"
+      },
+      {
+        "input": "T>=2/((1-alpha)*phi(alpha))",
+        "class": "SOURCE"
+      },
+      {
+        "input": "eta_t=t^(-alpha), x_1=0, no projection",
+        "class": "SOURCE"
+      },
+      {
+        "input": "T is integer, rounds indexed 1..T, predictions through x_{T+1}",
+        "class": "TYPING"
+      },
+      {
+        "input": "positive dimension d and Euclidean space R^d",
+        "class": "TYPING",
+        "source_evidence": "Proof case split and Algorithm 2.2"
+      },
+      {
+        "input": "OSD update and comparator regret convention",
+        "class": "STANDING"
+      },
+      {
+        "input": "convex and 1-Lipschitz losses",
+        "class": "EXISTENTIAL_OUTPUT_CONSTRAINT",
+        "note": "Not arbitrary externally given losses and not a new premise supplying the lower bound."
+      }
+    ],
+    "phi": {
+      "definition_kind": "literal",
+      "formula": "1/(2-alpha)+((1/2)^(1-alpha)-1)/(1-alpha)",
+      "domain": "(0,1)",
+      "declared_range": "(0,1-ln 2)",
+      "range_is_conclusion_obligation": true,
+      "endpoint_limit": "lim_{alpha->1-} phi(alpha)=1-ln 2",
+      "endpoint_value": "undefined in source",
+      "numerical_supplement": "1-ln 2>=0.3",
+      "gaps": [
+        "G-PHI-RANGE",
+        "G-PHI-LIMIT",
+        "G-PHI-NUMERIC"
+      ]
+    },
+    "witness": {
+      "m": "ceil(T/2)",
+      "n": "floor(T/2)",
+      "loss_1d": "ell_t(x)=-x if 1<=t<=m, +x if m+1<=t<=T",
+      "loss_d": "ell_t(x)=-x_1 if 1<=t<=m, +x_1 otherwise",
+      "adversary": "Deterministic, fixed before play, horizon-dependent. No stochastic/expectation/high-probability claim.",
+      "subgradient": "Unique slopes -1,+1 in d=1, or -e_1,+e_1 in positive dimension.",
+      "iterate_boundary": "Both expressions agree at t=m+1. The update at round T defines x_{T+1}, but regret sums x_1,...,x_T."
+    },
+    "probability_and_feedback": {
+      "probability_mode": "Deterministic",
+      "confidence": "None",
+      "filtration": "Not needed for this witness",
+      "feedback": "Subgradient available after each output/loss, as Algorithm 2.2. Not bandit-only scalar-loss feedback."
+    },
+    "not_source_hypotheses": [
+      "phi range proof",
+      "integral comparisons",
+      "exact regret identity",
+      "loss-witness admissibility",
+      "coordinate-embedding invariance",
+      "final lower-bound event"
+    ],
+    "source_gaps": [
+      "G-PHI-RANGE",
+      "G-PHI-LIMIT",
+      "G-PHI-NUMERIC"
+    ],
+    "unexpanded_but_stated_or_implicit_steps": [
+      "P-T2",
+      "P-ADMISSIBLE",
+      "P-EMBED",
+      "I-BOUNDS",
+      "I-HALF",
+      "I-COARSE",
+      "I-ABSORB"
+    ],
+    "statement_signature": "Not inspected or constructed in this source-only task. No Statement Seal or implementation equivalence claimed.",
+    "formalization_credit": {
+      "source_results_in_scope": 1,
+      "source_result": "Theorem 5.4 including its phi supplements",
+      "standing_definitions_and_proof_steps_are_additional_results": false
+    },
+    "independence": {
+      "implementation_lean_read": false,
+      "candidate_packets_read": false,
+      "prior_reviews_read": false,
+      "other_agents_outputs_read": false,
+      "memory_read": false,
+      "topology_self_approved": false
+    }
+  },
+  "sourceTitle": "A Modern Introduction to Online Learning",
+  "author": "Francesco Orabona",
+  "version": "arXiv:1912.13213v10",
+  "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "anchor": "Theorem5.4 printed52-53/PDF64-65; Chapter2 required forward reference printed14/PDF26.",
+  "sourceResultCount": 1,
+  "sourceAnchorComponents": [
+    "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+    "BanditRL.OnlineUnboundedOSD.phi_range",
+    "BanditRL.OnlineUnboundedOSD.phi_limit"
+  ],
+  "canonicalSupportingTheorems": 8,
+  "witnessDefinitions": 4,
+  "completeCanaries": 2,
+  "sourceRestrictions": "phi literal only on (0,1); finite-prefix horizon-specific losses; fixed causal pre-update learner; coordinate-free positive finite dimension. Generic empty-support fallback inactive on actual finite affine witness.",
+  "sourceProofCorrespondence": "source-proof-correspondence.json",
+  "sourceGapsRemainAsOmissionLocations": [
+    "G-PHI-RANGE",
+    "G-PHI-LIMIT",
+    "G-PHI-NUMERIC"
+  ],
+  "libraryCompletionsAcceptedLocally": true,
+  "sourceCorrectionsApproved": false,
+  "chapterProofDenominator": null,
+  "fullProjectGatePassed": false
+}

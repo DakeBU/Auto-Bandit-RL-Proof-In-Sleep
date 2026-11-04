@@ -1,0 +1,325 @@
+{
+  "startedAt": "2026-11-04T22:40:00.224428+00:00",
+  "sourceBindings": {
+    "BanditRLProof/OnlineUnboundedOSD.lean": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+    "Tests/OnlineUnboundedOSDCanary.lean": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+    "BanditRLProof.lean": "5fb20ebb609d4cafe743ed65f0d9ef75abf22279e4e8994cadec19c466530e60",
+    "Tests.lean": "3f69980057db21c3b54b82c37ae70ccbec50d78d4cf2990a93423b06a23bd717",
+    "website/content/chapters.json": "5c7a1eb1ded4193b1d2e0fa33aa36def8f12fc8b0a41d582458bab4cb668884e",
+    "website/content/readings.json": "89cf7a35ab10a3b0ac00cd0cbbf06310dc815b8e9e9a2bd52a513357c7cdd38d",
+    "website/content/highlights.json": "2977390a259f075d9a3feb46a06b736fadb9a656dd078bbe6407678e3818fb89"
+  },
+  "probeBindings": {
+    "audit-five-numeric-branches-v1.lean": "88967d24cd3f8098504a69e55de4a57c8d67ab2a8ca0cb6eee098373f53f4406",
+    "canary-public-probe-v1.lean": "e83796336dec35db4ed3a31e65ad476d50028fe831974888cb652ae9e18885d5",
+    "export-selected-dependencies-v1.lean": "27310982cf4bdd9c90100bee6789848cf87701817392a57ec26562d06a79a9dd",
+    "production-public-probe-v1.lean": "48d17637caa5a02762d471be69a73dc065f6af4351e074d471f27e99b7dbf3d7"
+  },
+  "cwd": "validation-worktree",
+  "commands": [
+    {
+      "label": "production-public-values",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch41-validation-probes-v1\\production-public-probe-v1.lean"
+      ],
+      "exitCode": 0,
+      "logSHA256": "682afb0d1e3fe12b4230a3c5a84967dda385a481f50bb59cea37feedb1b034c5"
+    },
+    {
+      "label": "canary-public-values",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch41-validation-probes-v1\\canary-public-probe-v1.lean"
+      ],
+      "exitCode": 0,
+      "logSHA256": "86fd43176100f0e7893acd89d87d8f9150b99721af369b2ae3b81a2c3a239394"
+    },
+    {
+      "label": "actual-dependencies",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "--run",
+        "private-maintenance/github-maintenance-goal-20261011\\batch41-validation-probes-v1\\export-selected-dependencies-v1.lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v2\\actual-dependencies.json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "numeric-branches",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "--run",
+        "private-maintenance/github-maintenance-goal-20261011\\batch41-validation-probes-v1\\audit-five-numeric-branches-v1.lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v2\\numeric-branches.json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fullProjectGatePassed": false,
+  "sourceAcceptanceInferred": false,
+  "selectedDeclarations": 17,
+  "publicValues": 13,
+  "compiledNodes": 17,
+  "directCoalescedEdges": 3240,
+  "requiredValuePairsPassed": 25,
+  "numericBranchesPassed": 5,
+  "axiomChecks": [
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_currentSubgradient_affine",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_step_affine_fullSpace",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_iterate_affine_prefix",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_powerSteps_pos",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_phi_limit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_switching_loss_regular",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_phi_range",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_switching_scalar_regret_identity",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_switching_scalar_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_switching_vector_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.batch41_probe_theorem_5_4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSDCanary.batch41_probe_scalar_actual_two_rounds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSDCanary.batch41_probe_finiteDim_source_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "graphSHA256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+  "numericBranchesSHA256": "8b4f3277c27aed5058d5578e03e5042d9f56d9e7c0cd6854bf1d31d8fd6e2789",
+  "limitation": "Direct TYPE/VALUE constant presence, not occurrence counts or full transitive topology. Five numeric or existential conjunction branches separately inspected. No full project/source/chapter acceptance.",
+  "finishedAt": "2026-11-04T22:41:09.062396+00:00",
+  "status": "compiled-probes-passed",
+  "inputsUnchanged": true
+}

@@ -1,0 +1,230 @@
+{
+  "status": "current-main-reuse-search-complete",
+  "receipt": {
+    "at": "2026-11-04T22:01:11.868739+00:00",
+    "status": "current-main-retrieval-complete-no-source-edit",
+    "base": "fd8f9cac006e27c47cba9b9b20530556c44ec23f",
+    "originalHead": "2e06e21d2acb0bf41142b19266d66d89364e17a0",
+    "commands": [
+      {
+        "name": "curated-unbounded",
+        "command": [
+          "local-user-profile/anaconda3/python.exe",
+          "-X",
+          "utf8",
+          "tools/bandit.py",
+          "search-memory",
+          "unbounded"
+        ],
+        "cwd": "canonical-repository",
+        "exitCode": 0,
+        "seconds": 4.794880199995532,
+        "output": "curated-unbounded.log",
+        "bytes": 567577,
+        "sha256": "58be8f87bb08758cd03f81310fa6b4ff9d6fc2ca38edbc4fe7a80b735d4a2e0f",
+        "interpretation": "Search output only"
+      },
+      {
+        "name": "existing-subgradient",
+        "command": [
+          "local-user-profile/anaconda3/python.exe",
+          "-X",
+          "utf8",
+          "tools/bandit.py",
+          "list-lean-decls",
+          "OnlineSubgradientDescent",
+          "--statement"
+        ],
+        "cwd": "canonical-repository",
+        "exitCode": 0,
+        "seconds": 4.872957300001872,
+        "output": "existing-subgradient.log",
+        "bytes": 21075,
+        "sha256": "674216ef0caa4497be7881173f1738a3e6478948ad08b81d965af576d8a7f8c2",
+        "interpretation": "Search output only"
+      },
+      {
+        "name": "existing-target-search",
+        "command": [
+          "rg",
+          "-n",
+          "OnlineUnboundedOSD|switching_scalar_regret_identity|theorem_5_4",
+          "BanditRLProof",
+          "Tests"
+        ],
+        "cwd": "canonical-repository",
+        "exitCode": 1,
+        "seconds": 0.031592100000125356,
+        "output": "existing-target-search.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "interpretation": "No matches"
+      },
+      {
+        "name": "mathlib-support",
+        "command": [
+          "rg",
+          "-n",
+          "theorem (sum_le_integral_Ico|integral_le_sum_Ico)|theorem.*slope_le_of_hasDerivAt|theorem rpow_one_add_lt_one_add_mul_self|theorem log_two_lt_d9",
+          ".lake/packages/mathlib/Mathlib/Analysis"
+        ],
+        "cwd": "canonical-repository",
+        "exitCode": 0,
+        "seconds": 0.6669933999946807,
+        "output": "mathlib-support.log",
+        "bytes": 311,
+        "sha256": "a4206e483208ed6dcd091a927e6cbd3474049ff18d3c28629ccf80c2c5a92f9a",
+        "interpretation": "Search output only"
+      }
+    ],
+    "toolchainBindings": [
+      {
+        "path": "lean-toolchain",
+        "sha256": "7dc000621e0046d1aada809e2b7177e64454645cf4c741e9daaf79c99ec2e7a2",
+        "originalAndMainIdentical": true
+      },
+      {
+        "path": "lakefile.lean",
+        "sha256": "d6968740ad039493bf7a645a62278b967d3ef2543604ece8bfe5d3aeb26ca67f",
+        "originalAndMainIdentical": true
+      },
+      {
+        "path": "lake-manifest.json",
+        "sha256": "0e3f2484ec3c7570c47f2c633c4db9c17a1e468b8c7da47d0d08ec56b3324750",
+        "originalAndMainIdentical": true
+      }
+    ],
+    "curatedProcessMemorySHA256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "curatedProcessEntries": [
+      {
+        "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+        "scope": [
+          "scheduler",
+          "harness-comparison"
+        ],
+        "instruction": "Do not change the default hierarchical/master-worker scheduling policy from unmatched runs. Require the configured minimum number of matched experiments on the same frozen target and route-packet hash with reviewer-owned verdicts.",
+        "processOnly": true
+      },
+      {
+        "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+        "scope": [
+          "source-fidelity",
+          "SafeVerify",
+          "metadata"
+        ],
+        "instruction": "Record source-facing assumptions as atomic Lean-facing assumption items rather than one opaque prose blob so statement-fence checks can bind each assumption explicitly.",
+        "processOnly": true
+      },
+      {
+        "id": "ABRL-NK-WINDOWS-PATH-LENGTH",
+        "scope": [
+          "windows",
+          "build-system",
+          "module-paths"
+        ],
+        "instruction": "A long generated module/output path can prevent .olean creation even when direct Lean source compilation succeeds; this is environment evidence, not a theorem or proof-route refutation.",
+        "processOnly": true
+      },
+      {
+        "id": "ABRL-NK-EXP3-API-SHAPE",
+        "scope": [
+          "Exp3",
+          "Lean API",
+          "finite-set algebra"
+        ],
+        "instruction": "The recorded EXP3 route initially failed on explicit Finset nonempty-witness and ENNReal algebra/API shape obligations; the theorem route was retained and repaired, so the failure must not retire the mathematics.",
+        "processOnly": true
+      }
+    ],
+    "decision": "Integrate the preserved original theorem into the existing project after source gates; reuse existing causal selector/update/regret, affine subgradient uniqueness, full-space projection and pinned Mathlib analysis primitives. No second Book project, duplicate algorithm or new foundational API is proposed.",
+    "sourceReviewPending": true,
+    "semanticAcceptance": false,
+    "compilationRun": false,
+    "sourceWorktreeMutations": false,
+    "remoteMutations": false,
+    "scriptSHA256": "7c20f322ad01d1488c93cd874d40d03344975f7188507ec855d078f426d4c03f"
+  },
+  "exactReceiptSHA256": "31c642994d2f028f7b06227a711e1f6709fdb9ffa4841dd142e61eba2dc4cb57",
+  "decision": "Reuse canonical affine subdifferential, causal OSD recursion, full-space projection, and pinned Mathlib analytic APIs. Keep the same Lean project and public roots.",
+  "processEvidenceIsNotMathematicalAuthority": true,
+  "currentProcessMemory": {
+    "path": "runs/process_memory.json",
+    "sha256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "usedIDs": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "entries": [
+      {
+        "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+        "kind": "standing_instruction",
+        "status": "active",
+        "scope": [
+          "scheduler",
+          "harness-comparison"
+        ],
+        "instruction": "Do not change the default hierarchical/master-worker scheduling policy from unmatched runs. Require the configured minimum number of matched experiments on the same frozen target and route-packet hash with reviewer-owned verdicts.",
+        "process_only": true,
+        "evidence": [
+          {
+            "file": "runs/harness-comparison/latest.json",
+            "needle": "\"matched_experiments\": []",
+            "evidence_kind": "deterministic_harness_report"
+          },
+          {
+            "file": "runs/harness-comparison/latest.json",
+            "needle": "\"minimum_matched_experiments\": 2",
+            "evidence_kind": "deterministic_harness_report"
+          }
+        ],
+        "expires_when": "Replace only after the deterministic harness-comparison policy itself is intentionally versioned and independently reviewed."
+      },
+      {
+        "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+        "kind": "standing_instruction",
+        "status": "active",
+        "scope": [
+          "source-fidelity",
+          "SafeVerify",
+          "metadata"
+        ],
+        "instruction": "Record source-facing assumptions as atomic Lean-facing assumption items rather than one opaque prose blob so statement-fence checks can bind each assumption explicitly.",
+        "process_only": true,
+        "evidence": [
+          {
+            "file": "runs/trials.jsonl",
+            "needle": "SafeVerify metadata guard failed",
+            "evidence_kind": "reviewed_trial_failure"
+          }
+        ],
+        "expires_when": "Retire only when the statement-fence format mechanically derives atomic assumptions from the elaborated interface."
+      },
+      {
+        "id": "ABRL-NK-WINDOWS-PATH-LENGTH",
+        "kind": "negative_knowledge",
+        "status": "active",
+        "scope": [
+          "windows",
+          "build-system",
+          "module-paths"
+        ],
+        "classification": "ENV_BLOCKED",
+        "statement": "A long generated module/output path can prevent .olean creation even when direct Lean source compilation succeeds; this is environment evidence, not a theorem or proof-route refutation.",
+        "route_effect": "diagnostic-only",
+        "invalidation_keys": [
+          "filesystem path length policy",
+          "module filename",
+          "build worktree root"
+        ],
+        "evidence": [
+          {
+            "file": "runs/trials.jsonl",
+            "needle": "path too long",
+            "evidence_kind": "reviewed_trial_failure"
+          }
+        ]
+      }
+    ]
+  }
+}
