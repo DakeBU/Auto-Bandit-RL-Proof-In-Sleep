@@ -1792,6 +1792,29 @@
             "boundary": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, the source-support obligation for Theorem 6.9, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Derived quadratic growth above a supplied support",
+          "pages": "Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+g(q-p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad q\\in V.\\\\F(x)=f(x)-g(x-p),\\qquad F(p)\\le F(z)\\ (z\\in V).\\\\F(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le F(q).\\end{gathered}",
+          "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+          "fallback": "A supplied feasible affine support of a strongly convex objective has the exact quadratic strengthening, with the same lambda/2 coefficient.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This library statement keeps only the forward implication at one supplied support, restricted to V, and generalizes the finite-dimensional vector pairing to a continuous real covector on an arbitrary normed space. Continuity is stronger than algebraic necessity. No inner-product norm is imposed. The affine-tilt implementation below is distinct from the source segment-and-limit proof. Define the extended-real function F(x) = f(x) − g(x − p), including outside V. The subtracted term is always real. Since f never equals negative infinity, neither does F; the feasible point p supplies a finite witness. Thus F is proper and finite on V. For a feasible segment, linearity gives g(a x + (1 − a)y − p) = a g(x − p) + (1 − a)g(y − p). Subtracting this identity from the strong interpolation inequality preserves the same λ/2 penalty, so F satisfies the same strong-convexity hypothesis. The supplied support gives F(p) ≤ F(z) for every z ∈ V, using g(0) = 0. This proves a minimum of the tilt internally; no minimum premise is added. Apply stronglyConvex_minimum_growth to F and simplify its finite endpoint values to recover the quadratic support bound for f.",
+          "contract": {
+            "model": "One proper extended-real objective and one supplied V-local continuous linear support; no algorithmic cumulative objective is produced.",
+            "assumptions": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+            "parameters": "λ ≥ 0, supplied p ∈ V and continuous linear g, with local support on V; q is any feasible point. No minimum premise.",
+            "regret": "Pointwise quadratic support inequality; no regret guarantee.",
+            "guarantee": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. The source-support obligation in Theorem 6.9 and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled conditional support growth",
+            "boundary": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. The source-support obligation in Theorem 6.9 and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {

@@ -7862,6 +7862,26 @@
         "BanditRL.OnlineConvex.SourceProper",
         "BanditRL.OnlineConvex.effectiveDomain"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+      "title": "Quadratic growth above a supplied affine support",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 346,
+      "source_match": "extension",
+      "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+      "math": "\\begin{gathered}f(p)+g(q-p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad q\\in V.\\\\F(x)=f(x)-g(x-p),\\qquad F(p)\\le F(z)\\ (z\\in V).\\\\F(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le F(q).\\end{gathered}",
+      "intuition": "Subtract the supporting affine function. The support point becomes a true minimum of the tilted objective, while strong convexity retains its curvature.",
+      "why": "Advances the conditional analytic support step used by corrected FTRL/BTRL stability, without pretending to produce actual algorithmic supports.",
+      "position": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. The source-support obligation in Theorem 6.9 and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete.",
+      "proof_idea": "Define the extended-real function F(x) = f(x) − g(x − p), including outside V. The subtracted term is always real. Since f never equals negative infinity, neither does F; the feasible point p supplies a finite witness. Thus F is proper and finite on V. For a feasible segment, linearity gives g(a x + (1 − a)y − p) = a g(x − p) + (1 − a)g(y − p). Subtracting this identity from the strong interpolation inequality preserves the same λ/2 penalty, so F satisfies the same strong-convexity hypothesis. The supplied support gives F(p) ≤ F(z) for every z ∈ V, using g(0) = 0. This proves a minimum of the tilt internally; no minimum premise is added. Apply stronglyConvex_minimum_growth to F and simplify its finite endpoint values to recover the quadratic support bound for f.",
+      "lean_notes": "The public header explicitly supplies local support hsupport. The proof derives finite values, properness and strong convexity of the affine tilt, and its attained minimum at p, before invoking the actual Minimum growth theorem. The nonzero-support square and boundary extended-domain canaries distinguish this statement from a zero-support or global-finiteness shortcut. The source-support existence and vector/norm interfaces are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
     }
   ]
 }

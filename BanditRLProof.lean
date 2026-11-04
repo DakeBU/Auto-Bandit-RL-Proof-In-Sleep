@@ -772,3 +772,4 @@ import BanditRLProof.OnlinePrescientBregman
 import BanditRLProof.OnlinePrescientBregmanRegret
 import BanditRLProof.OnlineWeierstrassExtended
 import BanditRLProof.OnlineStrongConvexMinimum
+import BanditRLProof.OnlineStrongConvexSupport
