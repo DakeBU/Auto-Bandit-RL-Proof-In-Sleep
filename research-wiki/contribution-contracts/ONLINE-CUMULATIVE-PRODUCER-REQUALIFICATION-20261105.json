@@ -1,0 +1,152 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CUMULATIVE-PRODUCER-REQUALIFICATION-20261105",
+  "route": "online-learning/chapter-2/cumulative-objective-producer",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "Orabona arXiv:1912.13213v10; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Definition4.1 printed34/PDF46; Algorithm7.1 printed99/PDF111; Lemma7.5 printed101/PDF113; Corollary7.6 printed102/PDF114; Algorithm15.9/Theorem15.31 printed266/PDF278; downstream Theorem7.47 printed129-130/PDF141-142",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=113"
+  },
+  "target": "Produce properness, exact domain and original-norm strong interpolation for the actual regularizer-plus-prefix-losses-plus-indicator objective under explicit sufficient conditions.",
+  "affected_files": [
+    "BanditRLProof/OnlineCumulativeStrongConvex.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Exact historical OnlineCumulativeStrongConvex",
+      "Current OnlinePrescientBregmanSource sourceProper_of_domain",
+      "SourceProper/effectiveDomain/extendedIndicator"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "BanditRL.OnlineConvex.SourceProper",
+      "BanditRL.OnlineConvex.effectiveDomain",
+      "BanditRL.OnlineConvex.extendedIndicator"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "BanditRL.Tests.OnlineCumulativeStrongConvexCanary.twoLoss_actual_producer_tight_support",
+      "BanditRL.Tests.OnlineCumulativeStrongConvexCanary.emptyPrefix_zeroCurvature_actual_producer"
+    ],
+    "planned_consumers": [
+      "Actual constrained cumulative objectives after remaining closedness/support/attainment premises"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the exact historical producer with the already present shared properness helper. No duplicate helper or whole historical stack transplant."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "verdict": "accepted",
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/cumulative_neutral_decoder_20261012",
+    "source_reviewer": "/root/support_reader_source_review_20261012",
+    "remaining_semantic_delta": "This is a derived sufficient-condition producer, not the full numbered source theorem. Regularizer-supplied curvature and convex component losses are stronger than assuming curvature of the total objective in Lemma7.5/7.47/15.31. Algorithm15.9 already prints a common-domain condition; common finiteness is a restriction relative to broader extended-real Algorithm7.1 branches, not a newly discovered omission there. Algorithm7.1 has psi:X to R with V subset X, while Corollary7.6 uses psi:V to R; arbitrary real extension outside V has no effect after the indicator. The below-top domain condition alone admits bottom; separate global no-bottom makes the included losses finite on V and prevents mixed-infinity addition. Zero n and zero lambda are allowed. No minimizer, support, finite-dimensionality, strict curvature, closedness or attainment is assumed or produced."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "No new categorical claim.",
+    "focus_targets": [
+      "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex"
+    ],
+    "visual_review": "Future actual graph validation must preserve canonical declaration identity and distinguish formal proof edges from teaching overlays.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one source card and extension teaching note; seven curated previews unchanged.",
+    "banditrlwiki": "no-change-with-reason: no new complete algorithmic bound",
+    "results_ledger": "no-change-with-reason: current leaf acceptance remains separate from publication",
+    "roadmap": "no-change-with-reason: all 73 original source rows and 172 overlapping effective records retained; no parent theorem closure",
+    "website_surfaces": [
+      "Existing online-ogd source cards and extension collection."
+    ]
+  },
+  "truth_boundary": "This construction does not establish closedness, positive curvature, a global source subgradient, or an attained minimum of F. Applying Theorem 6.9 to F still requires its remaining premises, including its printed nonempty subgradient-domain premise. Algorithm-specific support witnesses, constrained attainment, interior membership, trajectories and regret bounds remain separate obligations.",
+  "verification": {
+    "focused_checks": [
+      "Actual original exits [0,0,0,0,1]; reviewed id-wrapper bounded audit repair0. Whole headers and six current streams (451598953B) match historical actual scratch report, not a historical canonical replay. Actual F, no-bottom/domain operands, properness first conjunct and canary producer/Support calls independently accepted; providers post-only."
+    ],
+    "bandit_check": "Pending combined current gate.",
+    "site_build": "Pending matched current gate.",
+    "site_check": "Pending current reader review.",
+    "independent_review": "Historical roles, current static842d607e, readerb0ec31a8 and focused28773885 accepted; exact publication/full gates/UI remain pending."
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Formalizer with separately identified historical decoder and source/BODY reviewer."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "IMPLEMENTATION_FAILED",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "Private audit walker id-wrapper failure repaired by exact reviewed bounded change and one audit command0. Original failure, diagnostics and validator keyset repair retained. No mathematical/source change or proof stream rerun.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "cumulative:3dc5acad32e68f814463be52e5baa886c9c4fa7efb9991e9544304523a4aa8fa"
+      ],
+      "expected_information_gain": "One existing proof route, distinct independent reviews.",
+      "shared_verified_context_digest": "82cdceb43f717458bfe1f90b1f538731543747c6"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "One bounded sufficient-condition construction.",
+      "canonical_route": "Finite prefix sum, indicator domain and shared properness helper",
+      "selection_reason": "Exact historical proof reuse."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 1,
+      "exposition_evidence": "Actual F and sufficient-condition scope visible; both canaries retain supplied support and non-minimizer boundaries.",
+      "source_expansion_nodes": [
+        "CUMULATIVE-ACTUAL-OBJECTIVE",
+        "COMMON-FINITE-DOMAIN",
+        "REGULARIZER-CURVATURE"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.extendedIndicator"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

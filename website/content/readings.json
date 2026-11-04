@@ -1930,6 +1930,29 @@
             "boundary": "These are four derived library transports and two conditional valid-run bounds supporting the Chapter 2 prescient dependency. Supplied minimizers are the algorithm update relation, not an assumed regret inequality. Closedness and strict convexity do not guarantee universal attainment or interior preservation. All eight Chapter 2 forward containers remain open, with an unknown chapter proof denominator. No full Algorithm 15.8, Theorem 15.30, chapter/book completion, whole-carrier literal-definition seal or source-repair approval follows."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Strong convexity of a constrained cumulative objective",
+          "pages": "Definition4.1 printed34/PDF46; Algorithm7.1 printed99/PDF111; Lemma7.5 printed101/PDF113; Corollary7.6 printed102/PDF114; Algorithm15.9/Theorem15.31 printed266/PDF278; downstream Theorem7.47 printed129-130/PDF141-142",
+          "pdf_page": 113,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=113",
+          "math": "F(x)=\\psi(x)+\\sum_{i=0}^{n-1}\\ell_i(x)+\\iota_V(x)\\qquad F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\frac{\\lambda}{2}a(1-a)\\|x-y\\|_E^2",
+          "plain": "This actual F is proper, its effective domain is exactly V, and on V it equals the real-valued regularizer plus the sum of the real loss values. It satisfies the same λ-strong interpolation inequality as the regularizer. The interpolation inequality holds for every x,y ∈ V and every real 0 < a < 1. Both n = 0 and λ = 0 are permitted.",
+          "fallback": "Add the regularizer, the strict-past loss prefix and the indicator of V. The indicator is zero on V and +∞ outside V.",
+          "relationship": "This is a sufficient-condition construction for cumulative objectives used in FTRL arguments. Requiring the regularizer to supply the curvature and the component losses to be convex is stronger than merely assuming curvature of their total. The common finite domain is already explicit in Algorithm 15.9; it selects a sufficient branch of the broader extended-real formulation of Algorithm 7.1. A real extension of ψ outside V does not affect the constrained objective. For each included loss, combine the below-top domain condition with the global exclusion of bottom. On V the loss is then the coercion of its real part. The domain condition alone would not exclude bottom. Induct over the finite prefix to exclude bottom from the sum and compute its finite values on V. Adding the indicator gives +∞ outside V and the real-sum identity inside V, so dom F = V. Apply the existing properness theorem to this actual F, its derived exclusion of bottom and the nonempty set V. Properness is produced from these premises, rather than supplied as an assumption about F. Sum the convexity inequalities of the real loss restrictions and add the strong convexity inequality for ψ. Rewrite the finite identities to recover the displayed inequality with exactly the original-norm quadratic penalty.",
+          "contract": {
+            "model": "A real normed space E, a nonempty constraint set V, a real-valued regularizer ψ and extended-real losses. The quadratic penalty uses the original norm on E.",
+            "assumptions": "Let n be a natural number and λ ≥ 0. The regularizer is λ-strongly convex on V. Each included loss ℓᵢ, for i < n, is globally different from −∞, finite on V, and has a convex real restriction on V. Convexity of V follows from the regularizer assumption. No finite-dimensionality, completeness or inner-product structure is required.",
+            "parameters": "n ≥ 0 and λ ≥ 0; λ = 0 and empty prefix allowed.",
+            "regret": "Cumulative objective construction only, not a regret bound.",
+            "guarantee": "This actual F is proper, its effective domain is exactly V, and on V it equals the real-valued regularizer plus the sum of the real loss values. It satisfies the same λ-strong interpolation inequality as the regularizer."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled cumulative-objective producer",
+            "boundary": "This construction does not establish closedness, positive curvature, a global source subgradient, or an attained minimum of F. Applying Theorem 6.9 to F still requires its remaining premises, including its printed nonempty subgradient-domain premise. Algorithm-specific support witnesses, constrained attainment, interior membership, trajectories and regret bounds remain separate obligations."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {
