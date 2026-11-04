@@ -1838,6 +1838,29 @@
             "boundary": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Theorem 6.9: existence and uniqueness of a minimizer",
+          "pages": "Theorem 6.9, printed 66 / PDF 78",
+          "pdf_page": 78,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=78",
+          "math": "\\begin{gathered}\\lambda>0,\\quad \\operatorname{dom}\\partial(f\\circ e^{-1})\\ne\\varnothing,\\\\f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2,\\\\\\exists!p\\in\\operatorname{dom}f,\\quad \\forall q\\in E,\\ f(p)\\le f(q).\\end{gathered}",
+          "plain": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+          "fallback": "Positive curvature, properness, closedness and a source support point yield a unique finite global minimizer.",
+          "relationship": "The source derives coercivity and then compact sublevels. This proof directly bounds the one sublevel needed by A.3, without adding a compactness or coercivity premise. The source and implementation proof routes remain separately recorded. Choose a point y and a source subgradient from the assumed nonempty subgradient domain. The coordinate pairing defines a continuous linear functional L on the original space. Source-vector growth supplies a quadratic lower bound in the original norm. On the sublevel S = {x : f(x) ≤ f(y)}, quadratic growth and the operator-norm bound imply (λ/2)‖x−y‖² ≤ ‖L‖‖x−y‖. Thus S lies in the closed ball of radius 2‖L‖/λ about y. Closedness of f makes S closed, and finite dimensionality makes that ball compact. Apply A.3 to the nonempty compact sublevel. Properness and the finite upper bound ensure its minimizer has finite value. Points outside the sublevel have value greater than f(y), so the same point minimizes f globally. Apply the existing minimum-growth inequality at the attained minimizer. Any other minimizer has zero value gap, so λ > 0 forces their distance to be zero. Public frozen target dependency:Theorem6.9 is at docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/135; its A.3 dependency is /effective_targets/136.",
+          "contract": {
+            "model": "Finite-dimensional real normed space with algebraic Euclidean coordinates; extended-real objective.",
+            "assumptions": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+            "parameters": "Strictly positive λ; original E norm; global interpolation on effectiveDomain f; literal printed nonempty source-subgradient domain.",
+            "regret": "Global minimizer existence and uniqueness, not a regret bound.",
+            "guarantee": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled Theorem 6.9: unique global minimizer",
+            "boundary": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
+          },
+          "statement_provenance": "source-restatement"
         }
       ],
       "worked_example": {
