@@ -7827,6 +7827,126 @@
       ]
     },
     {
+      "full_name": "BanditRL.OnlineConvex.source_weierstrass_extended",
+      "title": "Extended-real Weierstrass attainment",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 370,
+      "source_match": "closest-source",
+      "plain": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+      "math": "\\begin{gathered}X\\text{ Hausdorff},\\quad f:X\\to[-\\infty,+\\infty]\\text{ lower semicontinuous},\\\\V\\text{ compact},\\quad V\\cap\\{x:f(x)<+\\infty\\}\\ne\\varnothing\\\\\\Longrightarrow\\quad\\exists p\\in V,\\ \\forall q\\in V,\\ f(p)\\le f(q).\\end{gathered}",
+      "intuition": "Compactness and lower semicontinuity supply an actual minimizing point. Extended order still permits a minimum value of negative infinity, so properness must not be inserted into this appendix theorem.",
+      "why": "Maps the frozen necessary A3 dependency needed after a strongly convex objective produces a compact sublevel; it does not assume or establish that later sublevel construction.",
+      "position": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate.",
+      "proof_idea": "Choose a point in V intersect dom f. Its membership in V proves that V is nonempty; its function value is below positive infinity, with negative infinity allowed. Global lower semicontinuity restricts to the same V. Apply Mathlib LowerSemicontinuousOn.exists_isMinOn to this nonempty compact set and the restricted lower semicontinuity to obtain p in V with f(p) <= f(q) for every q in V. The public statement retains the source Hausdorff and domain-intersection premises even though this Mathlib result needs less. For the boundary example f(x)=-infinity and V={0}, all premises hold and the attained minimum is -infinity, so properness or a finite-value conclusion cannot be inserted.",
+      "lean_notes": "The local definition effectiveDomain f is {x | f(x)<positive infinity}. The external provider is Mathlib LowerSemicontinuousOn.exists_isMinOn. The bottom-valued singleton canary constructs all premises and genuinely calls the source theorem for its attainment conjunct; it also records that the objective is not SourceProper. The imported declaration preserves the reviewed source assumptions and proof dependency. No proof or property is supplied as a new public assumption.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+      "title": "Quadratic growth at a supplied feasible minimum",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 345,
+      "source_match": "extension",
+      "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+      "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
+      "intuition": "Strong convexity prevents a point far from an attained minimum from having almost the same objective value.",
+      "why": "Supplies quadratic growth once an actual feasible minimum has been obtained, as needed in later stability and attainment arguments.",
+      "position": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, verification of Theorem 6.9’s printed nonempty-subgradient-domain premise for concrete applications, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete.",
+      "proof_idea": "SourceProper excludes negative infinity, while V is contained in effectiveDomain f, excluding positive infinity on V. Thus f(p) and f(q) are finite, and their real values preserve order. Set c = (λ/2)‖q − p‖² and g = f(q) − f(p) ≥ 0. Suppose g < c. Then c > 0 and a = (g + c)/(2c) lies strictly between 0 and 1. Convexity places a p + (1 − a)q in V. Minimality and strong convexity give f(p) ≤ a f(p) + (1 − a)f(q) − c a(1 − a). Composing these extended-real inequalities and converting their finite endpoints yields 0 ≤ (1 − a)(g − ca). But ca = (g + c)/2 > g and 1 − a > 0, a contradiction. If λ = 0 or p = q, the nonnegative gap cannot be smaller than c = 0.",
+      "lean_notes": "The header retains SourceProper, a convex set V contained in effectiveDomain f, nonnegative λ and the exact half coefficient. The minimum p and the memberships p, q ∈ V are supplied premises. No completeness, closedness, differentiability, subgradient or finite-dimensionality assumption is added. Finite endpoint conversion precedes real arithmetic. The square-loss canary uses λ = 2 and obtains equality. The interval-indicator canary uses λ = 0, permits positive infinity outside V and calls the same theorem. Both consumers use the actual growth result.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+      "title": "Quadratic growth above a supplied affine support",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 346,
+      "source_match": "extension",
+      "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+      "math": "\\begin{gathered}f(p)+g(q-p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad q\\in V.\\\\F(x)=f(x)-g(x-p),\\qquad F(p)\\le F(z)\\ (z\\in V).\\\\F(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le F(q).\\end{gathered}",
+      "intuition": "Subtract the supporting affine function. The support point becomes a true minimum of the tilted objective, while strong convexity retains its curvature.",
+      "why": "Advances the conditional analytic support step used by corrected FTRL/BTRL stability, without pretending to produce actual algorithmic supports.",
+      "position": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. Theorem 6.9 explicitly assumes a nonempty subgradient domain; verifying this premise for concrete algorithmic objectives and proving corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete.",
+      "proof_idea": "Define the extended-real function F(x) = f(x) − g(x − p), including outside V. The subtracted term is always real. Since f never equals negative infinity, neither does F; the feasible point p supplies a finite witness. Thus F is proper and finite on V. For a feasible segment, linearity gives g(a x + (1 − a)y − p) = a g(x − p) + (1 − a)g(y − p). Subtracting this identity from the strong interpolation inequality preserves the same λ/2 penalty, so F satisfies the same strong-convexity hypothesis. The supplied support gives F(p) ≤ F(z) for every z ∈ V, using g(0) = 0. This proves a minimum of the tilt internally; no minimum premise is added. Apply stronglyConvex_minimum_growth to F and simplify its finite endpoint values to recover the quadratic support bound for f.",
+      "lean_notes": "The public header explicitly supplies local support hsupport. The proof derives finite values, properness and strong convexity of the affine tilt, and its attained minimum at p, before invoking the actual Minimum growth theorem. The nonzero-support square and boundary extended-domain canaries distinguish this statement from a zero-support or global-finiteness shortcut. The source-support existence and vector/norm interfaces are separate obligations.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+      "title": "Source vector supports in an arbitrary chosen norm",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 347,
+      "source_match": "extension",
+      "plain": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+      "math": "\\begin{gathered}\\bar f=f\\circ e^{-1},\\quad g\\in\\partial\\bar f(e(p)),\\quad L(z)=\\langle g,e(z)\\rangle.\\\\f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).\\end{gathered}",
+      "intuition": "A vector describes a linear supporting functional through coordinates; it does not choose the norm that measures curvature.",
+      "why": "Makes the actual nonzero loss or difference-loss vector usable in the conditional strong-convexity step for Lemma7.5 and Theorem7.47. The algorithmic support and minimizer producers remain separate.",
+      "position": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete.",
+      "proof_idea": "The coordinate equivalence e gives finite dimensionality of E. Define the real linear map L(v) = ⟨g, e(v)⟩. Every linear map from this finite-dimensional normed space is continuous, so L supplies the continuous covector required by Support growth. Evaluate the supplied global subgradient inequality at e(z); cancel e⁻¹(e(z)) and use e(z) − e(p) = e(z − p). This yields f(p) + L(z − p) ≤ f(z) for each z ∈ V. Apply stronglyConvex_support_growth with this internally constructed L and support proof. The pairing uses coordinates, but the curvature term remains ‖q − p‖²_E. Neither an isometry nor a separate continuity or finite-dimensionality premise is added.",
+      "lean_notes": "Both examples use E = R² with the sup norm, V = [−1,1]², f(x) = (x₀² + x₁²)/2 + x₀ on V and positive infinity outside, p = 0 and q = (1,1). With ordinary coordinates and g = (1,0), the original squared norm is 1 and the coordinate Euclidean squared norm is 2. The correct bound is 3/2 ≤ 2, while the incorrectly substituted norm still gives 2 ≤ 2; this example alone does not refute that substitution. Scaling coordinates to e′ = 2e and g′ = g/2 preserves the pairing and the original-norm penalty, but makes the coordinate squared norm 8. The wrong bound becomes 5 ≤ 2, which the second example refutes. Both canaries construct global support, including outside V, and genuinely invoke the adapter. Mathlib supplies LinearEquiv.finiteDimensional and LinearMap.toContinuousLinearMap; these are external proof dependencies, not new source assumptions.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_existsUnique_minimizer",
+      "title": "Positive curvature gives a unique minimizer",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 348,
+      "source_match": "closest-source",
+      "plain": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+      "math": "\\begin{gathered}\\lambda>0,\\quad \\operatorname{dom}\\partial(f\\circ e^{-1})\\ne\\varnothing,\\\\f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2,\\\\\\exists!p\\in\\operatorname{dom}f,\\quad \\forall q\\in E,\\ f(p)\\le f(q).\\end{gathered}",
+      "intuition": "A supporting affine function plus a positive quadratic penalty confines a nonempty sublevel to a bounded region.",
+      "why": "Supplies a finite unique minimizer once an actual objective satisfies the printed hypotheses.",
+      "position": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone.",
+      "proof_idea": "Choose a point y and a source subgradient from the assumed nonempty subgradient domain. The coordinate pairing defines a continuous linear functional L on the original space. Source-vector growth supplies a quadratic lower bound in the original norm. On the sublevel S = {x : f(x) ≤ f(y)}, quadratic growth and the operator-norm bound imply (λ/2)‖x−y‖² ≤ ‖L‖‖x−y‖. Thus S lies in the closed ball of radius 2‖L‖/λ about y. Closedness of f makes S closed, and finite dimensionality makes that ball compact. Apply A.3 to the nonempty compact sublevel. Properness and the finite upper bound ensure its minimizer has finite value. Points outside the sublevel have value greater than f(y), so the same point minimizes f globally. Apply the existing minimum-growth inequality at the attained minimizer. Any other minimizer has zero value gap, so λ > 0 forces their distance to be zero. The source derives coercivity and then compact sublevels. This proof directly bounds the one sublevel needed by A.3, without adding a compactness or coercivity premise. The source and implementation proof routes remain separately recorded.",
+      "lean_notes": "A quadratic on an unbounded closed halfline has its unique minimum at 2, using support at the non-minimizing point 0. A proper closed affine function with global support and λ = 0 has no minimum, showing why strict positivity matters. Finite dimensionality follows from e. The actual proof invokes source-vector growth, A.3 and minimum growth; no isometry, supplied minimizer or compact domain is added.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+        "BanditRL.OnlineConvex.source_weierstrass_extended",
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+      "title": "Strong convexity: definition and full subgradient iff",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 349,
+      "source_match": "closest-source",
+      "plain": "Strong convexity is defined for a proper function on a convex subset of its effective domain. It requires a quadratic improvement of the ordinary convex interpolation inequality. This definition does not require subgradients to exist. On a convex set where a global source subgradient exists at every point, the interpolation inequality is equivalent to the quadratic supporting inequality for every such subgradient. The curvature modulus may be zero. Finite-dimensional coordinates supply the pairing, while the quadratic term uses the original norm; the coordinate map need not be an isometry. The iff quantifies every feasible p,q and every global source subgradient g at p.",
+      "math": "e(V)\\subseteq\\operatorname{dom}\\partial(f\\circ e^{-1}),\\qquad \\text{strong interpolation}\\ \\Longleftrightarrow\\ f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).",
+      "intuition": "At an interpolated point, one global support controls both endpoints. Their weighted linear terms cancel, leaving the exact quadratic interpolation penalty.",
+      "why": "Completes the converse direction that a forward support-growth adapter alone does not prove.",
+      "position": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete.",
+      "proof_idea": "Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct. On printed page 35 / PDF page 47, the second equality in the converse proof must be an inequality. The valid chain is 0 = the weighted pairing ≤ af(x)+(1−a)f(y)−f(z)−(λ/2)a(1−a)‖x−y‖². The statement of Lemma4.2 is unchanged and no equality or saturation hypothesis is added.",
+      "lean_notes": "The first closed experimental consumer uses E=R^2 with the sup norm, e=2 times ordinary coordinates, V=[-1,1]^2, and globally finite f(x)=(x0^2+x1^2)/2+x0. For every p it explicitly produces the global covector (p+(1,0))/2. It characterizes every global support algebraically and proves the quadratic growth premise independently, then its first conjunction genuinely applies the iff CONVERSE to obtain interpolation. At q=(1,1), original squared norm1 differs from coordinate squared norm8; pairing1 and f(q)=2 refute a substituted coordinate penalty5<=2. The same example at x=q,y=-q,a=1/2 has weighted residual1/2, so equality to0 is false. The second consumer proves f(t)=-t^2 proper with an EMPTY global subdifferential at every point. Support-indexed lambda0 growth is vacuous, but midpoint interpolation would require0<=-1. This is a counterexample to removing the all-point support premise, not to Lemma4.2. The concrete quadratic is globally finite; the canaries do not test top outside V, empty V, d0 or exhaustive edge coverage. Definition 4.1 has only the finite-domain premise; the all-point source-support assumption is specific to this iff. The standalone definition mapping uses an existing inline predicate, not a new named Lean definition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
+    },
+    {
       "full_name": "BanditRL.OnlineConvex.sourceProper_of_domain",
       "title": "Choose one finite feasible value to establish properness.",
       "chapter": "online-ogd",

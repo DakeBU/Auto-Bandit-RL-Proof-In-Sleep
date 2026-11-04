@@ -1,0 +1,843 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_FREEZE_PENDING_INDEPENDENT_REVIEW",
+  "base_commit": "ee8c0b805c785220ee31799012325f4179dad875",
+  "meaning": "54 mapped declarations: 53 repository header fingerprints and one external pinned Mathlib dependency. Mapping count is not a proof denominator. Header matching does not certify inherited context or bodies.",
+  "bindings": [
+    {
+      "name": "BanditRL.OnlineLearning.GuessingLower.randomized_log_lower",
+      "sourceIDs": [
+        "C1-LOG-UNAVOIDABLE"
+      ],
+      "module": "BanditRLProof.OnlineGuessingLogLower",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingLogLower.lean",
+      "normalized_statement": "theorem randomized_log_lower {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (A : Ω → List Bool → ℝ) (hA : ∀ h, Measurable (fun ω => A ω h)) (hbound : ∀ ω h, A ω h ∈ Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : ∃ v : List.Vector Bool T, Real.log ((T : ℝ) + 2) / 6 ≤ ∫ ω, pathRegret (A ω) v.toList ∂μ",
+      "statement_hash": "32bd5e443de1ec751e5c4c8d9c99134fc3319f1777ef7cc397966ae963221828",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "fc09f0bc73a78056667bce705c2e272977c9c2aa",
+      "source_git_bytes_sha256": "5f4b6bd8e3300d8b94862aa95f1d46e68ccea11e3b6261bebbf9d60aa6c9a5b1"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ae_predictable_private_seed_expectedFixed_excess",
+      "sourceIDs": [
+        "C1-IID-LOWER"
+      ],
+      "module": "BanditRLProof.OnlineGuessingAECausal",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingAECausal.lean",
+      "normalized_statement": "theorem ae_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, AEStronglyMeasurable[F t] (prediction t) μ) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "ba4a2317c32fef15e0dc2b76c82237a5590ba451f229942454897981fdaf5351",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "d993cf00c037c5165e67ac09fd5fb9ef736cfb94",
+      "source_git_bytes_sha256": "f4d44e48352e08073e90f4b915e22aa4641f566f44160a61df65c41ba424fdab"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.causal_kernel_realization_and_expectedFixed_excess",
+      "sourceIDs": [
+        "C1-IID-LOWER"
+      ],
+      "module": "BanditRLProof.OnlineGuessingKernelCausal",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingKernelCausal.lean",
+      "normalized_statement": "theorem causal_kernel_realization_and_expectedFixed_excess (κ : (t : ℕ) → Kernel (KernelDecisionHistory t) I) [∀ t, IsMarkovKernel (κ t)] : ∃ f : KernelDecisionSampler, (∀ t, Measurable (Function.uncurry (f t))) ∧ (∀ t h, (volume : Measure I).map (f t h) = κ t h) ∧ (∀ t, Measurable (kernelCausalPolicy f t)) ∧ (∀ t (u : ℕ → I) (y : ℕ → ℝ) (i : Fin t), kernelGeneratedActions f t (fun j => u j) (fun j => y j) i = kernelGeneratedPrediction f (i : ℕ) (u, y)) ∧ (∀ t (ω ω' : (ℕ → I) × (ℕ → ℝ)), (∀ i, i ≤ t → ω.1 i = ω'.1 i) → (∀ i, i < t → ω.2 i = ω'.2 i) → kernelGeneratedPrediction f t ω = kernelGeneratedPrediction f t ω') ∧ ∀ ν : ProbabilityMeasure (ℕ → ℝ), (∀ t, (kernelGameLaw ν).map (fun ω => (kernelGeneratedHistory f t ω, kernelGeneratedPrediction f t ω)) = (kernelGameLaw ν).map (kernelGeneratedHistory f t) ⊗ₘ κ t) ∧ (∀ t, condDistrib (kernelGeneratedPrediction f t) (kernelGeneratedHistory f t) (kernelGameLaw ν) =ᵐ[(kernelGameLaw ν).map (kernelGeneratedHistory f t)] κ t) ∧ (iIndepFun (fun t (y : ℕ → ℝ) => y t) (ν : Measure (ℕ → ℝ)) → (∀ t, IdentDistrib (fun y : ℕ → ℝ => y t) (fun y : ℕ → ℝ => y 0) (ν : Measure (ℕ → ℝ)) (ν : Measure (ℕ → ℝ))) → (∀ t, ∀ᵐ y ∂(ν : Measure (ℕ → ℝ)), y t ∈ Set.Icc (0 : ℝ) 1) → ∀ T : ℕ, expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T = (∑ t ∈ Finset.range T, ∫ ω, ((kernelGeneratedPrediction f t ω : ℝ) - ∫ ω, ω.2 0 ∂(kernelGameLaw ν))^2 ∂(kernelGameLaw ν)) ∧ 0 ≤ expectedFixedRegret (kernelGameLaw ν) (fun t ω => ω.2 t) (fun t ω => (kernelGeneratedPrediction f t ω : ℝ)) T)",
+      "statement_hash": "376138ab1ad5ebbd2c83a48200d8f893c386e23e1d0f8d358b05bac922a9e02d",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "74c27371f8077b0a8da6db320af350d06a4c8bbf",
+      "source_git_bytes_sha256": "e4e207c116caf5e92ba5cb22d65289207bba0f19c0277999eee5caa5fb1708d0"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.centered_total_sublinear_iff_average",
+      "sourceIDs": [
+        "C1-EQ1.1-1.2"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDSuccess",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "normalized_statement": "theorem centered_total_sublinear_iff_average (total : ℕ → ℝ) (c : ℝ) : (fun T => total T - (T : ℝ) * c) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => total T / (T : ℝ) - c) atTop (nhds (0 : ℝ))",
+      "statement_hash": "2b5efc191557a8571fe2bba1d5e0fb6d36697e2e139593f2db1f603c286b94d9",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "3685cc73619de0eb1debb833ff498e6f8b38c47e",
+      "source_git_bytes_sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.comparatorRegret_eq_sum",
+      "sourceIDs": [
+        "C1-REGRET",
+        "Remark1.1"
+      ],
+      "module": "BanditRLProof.OnlineLearningRegret",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningRegret.lean",
+      "normalized_statement": "theorem comparatorRegret_eq_sum {X : Type*} (loss : ℕ → X → ℝ) (prediction : ℕ → X) (u : X) (T : ℕ) : comparatorRegret loss prediction u T = ∑ t ∈ Finset.range T, (loss t (prediction t) - loss t u)",
+      "statement_hash": "f8ffca682a58d76117d4b9ca4d99397c76c82ea95662c82efab255ef8f20a9a6",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "10e3439ce3f433b8507265f87bd14f7a39bbc405",
+      "source_git_bytes_sha256": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.comparatorRegret_le_squaredBestRegret",
+      "sourceIDs": [
+        "C1-REGRET"
+      ],
+      "module": "BanditRLProof.OnlineSquareMinimum",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineSquareMinimum.lean",
+      "normalized_statement": "theorem comparatorRegret_le_squaredBestRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) (u : ℝ) (hu : u ∈ Set.Icc (0 : ℝ) 1) : comparatorRegret (fun t x => (x - y t)^2) prediction u T ≤ squaredBestRegret y prediction T",
+      "statement_hash": "fce6774e1cf7be26cce27db6b6010fa0fa7480ff25125224329d75c21bd366ab",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "ab62f1f846f6e5235f4d8af031449fce7cb74cec",
+      "source_git_bytes_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.completed_predictable_private_seed_expectedFixed_excess",
+      "sourceIDs": [
+        "C1-IID-LOWER"
+      ],
+      "module": "BanditRLProof.OnlineGuessingCompletedCausal",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "normalized_statement": "theorem completed_predictable_private_seed_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (F : ℕ → MeasurableSpace Ω) (hF : ∀ t, F t ≤ privateSeedPastInformation S Y t) (prediction : ℕ → Ω → ℝ) (hP : ∀ t, @Measurable _ _ (eventuallyMeasurableSpace (F t) (ae μ)) _ (prediction t)) (hpb : ∀ t, ∀ᵐ ω ∂μ, prediction t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y prediction T = (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y prediction T",
+      "statement_hash": "622f106e02e67b96148091282549b263d6c57c20e1ca313279fb15f5eb8d9753",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "6c34235cc22d3005c576acb4a781de4a64779fd0",
+      "source_git_bytes_sha256": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.completed_predictable_private_seed_independent",
+      "sourceIDs": [
+        "C1-GAME"
+      ],
+      "module": "BanditRLProof.OnlineGuessingCompletedCausal",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingCompletedCausal.lean",
+      "normalized_statement": "theorem completed_predictable_private_seed_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (t : ℕ) (F : MeasurableSpace Ω) (hF : F ≤ privateSeedPastInformation S Y t) (P : Ω → ℝ) (hP : @Measurable _ _ (eventuallyMeasurableSpace F (ae μ)) _ P) : IndepFun P (Y t) μ",
+      "statement_hash": "a7f2430c83efaf370b428370b651aaa07923e2819aa190ee60c534ef51f45bfd",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "6c34235cc22d3005c576acb4a781de4a64779fd0",
+      "source_git_bytes_sha256": "ef88487377f0dd6e9d6877810348c40277b25b0a76cb3943edae18d1c95fbf93"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.constant_mean_expectedFixed_excess_zero",
+      "sourceIDs": [
+        "C1-IID-MEAN"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDBenchmark",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "normalized_statement": "theorem constant_mean_expectedFixed_excess_zero {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ expectedFixedRegret μ Y (fun _ _ => ∫ ω, Y 0 ω ∂μ) T = 0",
+      "statement_hash": "987320017eb2b53146c544e9d8031f61270e6f293aabf0aaf7d5c19ca4ce9086",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "c62ed19a6e5ada780eb66143108d98f30db29a8a",
+      "source_git_bytes_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+      "sourceIDs": [
+        "C1-NOREGRET"
+      ],
+      "module": "BanditRLProof.OnlineFTLOscillation",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLOscillation.lean",
+      "normalized_statement": "theorem dyadic_meanPredict_obstruction : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) ∧ Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (¬ ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧ ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2) (meanPredict dyadicObservation)",
+      "statement_hash": "ff24eefc87da8732c13c81c288f44b5cf03c14836121d98c177ac3dc464df288",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "eae8b45a57cec3ad96204dbe1bbb682e8182705e",
+      "source_git_bytes_sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_decomposition",
+      "sourceIDs": [
+        "C1-MEAN-PREFIX"
+      ],
+      "module": "BanditRLProof.OnlineLearningMean",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningMean.lean",
+      "normalized_statement": "theorem empiricalMean_decomposition (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (u - y t)^2) = (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) + n * (u - empiricalMean y n)^2",
+      "statement_hash": "86985f2eb2dc1083236ddf29983479fcc47fd9a972adfe7f7df4dafc77511661",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "f2dc4d3a8250d60c5c375ca616ee6358e470f258",
+      "source_git_bytes_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_mem",
+      "sourceIDs": [
+        "C1-MEAN-PREFIX"
+      ],
+      "module": "BanditRLProof.OnlineLearningMean",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningMean.lean",
+      "normalized_statement": "theorem empiricalMean_mem (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (hy : ∀ t < n, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y n ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "992c36a6441257fa7cda705063d6eae7bb5af05afbd55c23ed7831be92ac010c",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "f2dc4d3a8250d60c5c375ca616ee6358e470f258",
+      "source_git_bytes_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_minimizes",
+      "sourceIDs": [
+        "C1-MEAN-PREFIX"
+      ],
+      "module": "BanditRLProof.OnlineLearningMean",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningMean.lean",
+      "normalized_statement": "theorem empiricalMean_minimizes (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) : (∑ t ∈ Finset.range n, (empiricalMean y n - y t)^2) ≤ ∑ t ∈ Finset.range n, (u - y t)^2",
+      "statement_hash": "8bf7977ff009a066a0c1b500e990c38ff7e96bace6da227eae326c9a7f35dfc4",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "f2dc4d3a8250d60c5c375ca616ee6358e470f258",
+      "source_git_bytes_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_unique",
+      "sourceIDs": [
+        "C1-MEAN-PREFIX"
+      ],
+      "module": "BanditRLProof.OnlineLearningMean",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningMean.lean",
+      "normalized_statement": "theorem empiricalMean_unique (y : ℕ → ℝ) (n : ℕ) (hn : 0 < n) (u : ℝ) (hu : (∑ t ∈ Finset.range n, (u-y t)^2) ≤ ∑ t ∈ Finset.range n, (empiricalMean y n-y t)^2) : u = empiricalMean y n",
+      "statement_hash": "4fc3831d6dbf633adb4c9271972a91f89132d0cbbbb8c432c306856bdf342f7c",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "f2dc4d3a8250d60c5c375ca616ee6358e470f258",
+      "source_git_bytes_sha256": "a5b45d3c13814bd396e20b424a4b8d4455c7abc8b25bd0e1179b01592c8601a2"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.empiricalMean_update",
+      "sourceIDs": [
+        "C1-STABILITY"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem empiricalMean_update (y : ℕ → ℝ) (t : ℕ) (ht : 0 < t) : empiricalMean y (t+1) = empiricalMean y t + (y t - empiricalMean y t) / (t+1)",
+      "statement_hash": "977acfbc5fab5fdfb7f66249404f094224056bdfd44e3443042af7e2de62fec8",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.expectedFixedMinimum_eq_variance",
+      "sourceIDs": [
+        "C1-IID-MEAN"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDBenchmark",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "normalized_statement": "theorem expectedFixedMinimum_eq_variance {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedMinimum μ Y T = (T : ℝ) * variance (Y 0) μ",
+      "statement_hash": "6947bc35fb200e340a82a020662f8aa063b28993368a06c07982c21f8d7e07d5",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "c62ed19a6e5ada780eb66143108d98f30db29a8a",
+      "source_git_bytes_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.expected_fixed_prefix_decomposition",
+      "sourceIDs": [
+        "C1-IID-MEAN"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDBenchmark",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "normalized_statement": "theorem expected_fixed_prefix_decomposition {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (u : ℝ) : (∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) = (T : ℝ) * variance (Y 0) μ + (T : ℝ) * (u - ∫ ω, Y 0 ω ∂μ)^2",
+      "statement_hash": "d98658b9d611c1a452c79cdfd740d16cc931c98441054685983e316a252ce9d4",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "c62ed19a6e5ada780eb66143108d98f30db29a8a",
+      "source_git_bytes_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.expected_fixed_prefix_minimum",
+      "sourceIDs": [
+        "C1-IID-MEAN"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDBenchmark",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "normalized_statement": "theorem expected_fixed_prefix_minimum {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : (∫ ω, Y 0 ω ∂μ) ∈ Set.Icc (0 : ℝ) 1 ∧ IsLeast ((fun u : ℝ => ∫ ω, ∑ t ∈ Finset.range T, (u - Y t ω)^2 ∂μ) '' Set.Icc (0 : ℝ) 1) ((T : ℝ) * variance (Y 0) μ)",
+      "statement_hash": "759cb8b62c15804a6c911547593d0175dd7df1d118f0b6dd0d2df9c4890233a0",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "c62ed19a6e5ada780eb66143108d98f30db29a8a",
+      "source_git_bytes_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_average_tendsto_zero",
+      "sourceIDs": [
+        "C1-FTL-ANY-INITIAL-GUARANTEE"
+      ],
+      "module": "BanditRLProof.OnlineFTLInitializationRegret",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "normalized_statement": "theorem ftlPredict_bestRegret_average_tendsto_zero (initial : ℝ) (y : ℕ → ℝ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : Tendsto (fun T : ℕ => squaredBestRegret y (ftlPredict initial y) T / (T : ℝ)) atTop (nhds (0 : ℝ))",
+      "statement_hash": "25f6376f56a529764c6ad0fb63a8e4e75533e3aeb553a1a2978e9c2039dc1060",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "2ff49486e549a3b0aebe6c03d7a00ace01268341",
+      "source_git_bytes_sha256": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+      "existing_seal": {
+        "id": "G004",
+        "sha256": "58d31c87e905148a82f97d528d8eb2dd4909ff099204fe70f48c1fcf1c6eab57",
+        "repositoryNormalizedStatementHash": "25f6376f56a529764c6ad0fb63a8e4e75533e3aeb553a1a2978e9c2039dc1060"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_initial_correction",
+      "sourceIDs": [
+        "C1-FTL-ANY-INITIAL-GUARANTEE"
+      ],
+      "module": "BanditRLProof.OnlineFTLInitializationRegret",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "normalized_statement": "theorem ftlPredict_bestRegret_initial_correction (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) : squaredBestRegret y (ftlPredict initial y) T = squaredBestRegret y (meanPredict y) T + ((initial - y 0)^2 - ((1 : ℝ) / 2 - y 0)^2)",
+      "statement_hash": "215d0187299363a61224017a1c56a9331d521fcdd778da43d855d6426dc426ca",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "2ff49486e549a3b0aebe6c03d7a00ace01268341",
+      "source_git_bytes_sha256": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+      "existing_seal": {
+        "id": "G001",
+        "sha256": "e7cf3c37efedda17658e78fe3559a6fba15156aba3a088d8941712f1b5da45e1",
+        "repositoryNormalizedStatementHash": "215d0187299363a61224017a1c56a9331d521fcdd778da43d855d6426dc426ca"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_bestRegret_refined",
+      "sourceIDs": [
+        "C1-FTL-ANY-INITIAL-GUARANTEE"
+      ],
+      "module": "BanditRLProof.OnlineFTLInitializationRegret",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "normalized_statement": "theorem ftlPredict_bestRegret_refined (initial : ℝ) (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (ftlPredict initial y) T ≤ (1 : ℝ) + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "2dd706bffd4ef9fd2133aee0653f8cf3252b5f5249e8538866049aaaf8783d27",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "2ff49486e549a3b0aebe6c03d7a00ace01268341",
+      "source_git_bytes_sha256": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+      "existing_seal": {
+        "id": "G002",
+        "sha256": "6eff44dbcfe83bc3e49c793007c65bbde0baed741343bfa1e898c423651aafa2",
+        "repositoryNormalizedStatementHash": "2dd706bffd4ef9fd2133aee0653f8cf3252b5f5249e8538866049aaaf8783d27"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_half",
+      "sourceIDs": [
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlPredict_half (y : ℕ → ℝ) (t : ℕ) : ftlPredict ((1 : ℝ) / 2) y t = meanPredict y t",
+      "statement_hash": "a650da685a744497382454eccf2588635306c3d4c40da0a99e63d13c9b07943c",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_mem",
+      "sourceIDs": [
+        "C1-GAME",
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlPredict_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : ftlPredict initial y t ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "7ac94c60a908f84d05c6324b5cc2b3be366b622a58c16ee97bcee2ea27b2c397",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_prefix",
+      "sourceIDs": [
+        "C1-GAME",
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlPredict_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlPredict initial y t = ftlPredict initial z t",
+      "statement_hash": "ae2d1e1cecdb9badfb5cf4aab7f3a26ea23939f1d8c3acd6c6e9f1ff7418c0cf",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlPredict_upperNoRegret",
+      "sourceIDs": [
+        "C1-FTL-ANY-INITIAL-GUARANTEE"
+      ],
+      "module": "BanditRLProof.OnlineFTLInitializationRegret",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLInitializationRegret.lean",
+      "normalized_statement": "theorem ftlPredict_upperNoRegret (initial : ℝ) (y : ℕ → ℝ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (ftlPredict initial y)",
+      "statement_hash": "81eea12628cc1949b8f232b898517eaf1a1066fc89da10dd46d6a267bf47ee0b",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "2ff49486e549a3b0aebe6c03d7a00ace01268341",
+      "source_git_bytes_sha256": "bff3a313509aa19051a6f3f2cb912aec33ff61f5de8f88d9edd16e7964e3b614",
+      "existing_seal": {
+        "id": "G003",
+        "sha256": "2db92b9a0eeb3ca2157af5a06ef0f5f1a5cad13806d3126117e80298c589b2e2",
+        "repositoryNormalizedStatementHash": "81eea12628cc1949b8f232b898517eaf1a1066fc89da10dd46d6a267bf47ee0b"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState_eq_predict",
+      "sourceIDs": [
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlState_eq_predict (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) : ftlState initial y t = (t, ftlPredict initial y t)",
+      "statement_hash": "31d9a9d7df19f4dab2dbc615bf2bd407cccde96fd352beda09150b6a07eb40b3",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState_first",
+      "sourceIDs": [
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlState_first (initial : ℝ) (y : ℕ → ℝ) : ftlState initial y 1 = (1, y 0)",
+      "statement_hash": "1a110f28387d6c6435b72bdbee196cdea8a6bd9cbb9de1d23edff22f20ee283e",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState_half",
+      "sourceIDs": [
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlState_half (y : ℕ → ℝ) (t : ℕ) : ftlState ((1 : ℝ) / 2) y t = (t, meanPredict y t)",
+      "statement_hash": "1ead854b9a1230a8fb3869f3bb5ca191e58a6edbcb1de2bace1236d6d56f85db",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState_mem",
+      "sourceIDs": [
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlState_mem (initial : ℝ) (y : ℕ → ℝ) (t : ℕ) (hi : initial ∈ Set.Icc (0 : ℝ) 1) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : (ftlState initial y t).2 ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "c11845cd50b05c93213dc292654dd155a0c4b0e3d3e776dffefe340aafedc0f0",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.ftlState_prefix",
+      "sourceIDs": [
+        "C1-FTL"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTLState",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTLState.lean",
+      "normalized_statement": "theorem ftlState_prefix (initial : ℝ) (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : ftlState initial y t = ftlState initial z t",
+      "statement_hash": "683b0a71ce0933ba9f760728f39a87120b109dec635e0aa0a0e6978d872347ae",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "716fa7193c33cf6bc13575b4472e3d2bc516372d",
+      "source_git_bytes_sha256": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.guessing_prefix_minimum",
+      "sourceIDs": [
+        "C1-REGRET",
+        "C1-MEAN-PREFIX"
+      ],
+      "module": "BanditRLProof.OnlineSquareMinimum",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineSquareMinimum.lean",
+      "normalized_statement": "theorem guessing_prefix_minimum (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : empiricalMean y T ∈ Set.Icc (0 : ℝ) 1 ∧ ∀ u ∈ Set.Icc (0 : ℝ) 1, (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ ∑ t ∈ Finset.range T, (u - y t)^2",
+      "statement_hash": "f3d29917e7133f5e923766fa2e4cfb3e644ec4215b1386267e49c857b0d424cb",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "ab62f1f846f6e5235f4d8af031449fce7cb74cec",
+      "source_git_bytes_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.history_policy_normalized_expectedFixed_excess",
+      "sourceIDs": [
+        "C1-EQ1.1-1.2"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDBenchmark",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDBenchmark.lean",
+      "normalized_statement": "theorem history_policy_normalized_expectedFixed_excess {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (policy : (t : ℕ) → ((↑(Finset.range t) : Type) → ℝ) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t z ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) (hT : 0 < T) : (∫ ω, ∑ t ∈ Finset.range T, (policy t (fun i => Y i ω) - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ = expectedFixedRegret μ Y (fun t ω => policy t (fun i => Y i ω)) T / (T : ℝ)",
+      "statement_hash": "ec880ad8f0b9a17ba62060d5fea3cca99f6f57bb331fc862d505dabdcc0f2ec0",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "c62ed19a6e5ada780eb66143108d98f30db29a8a",
+      "source_git_bytes_sha256": "3581c9b284a86301ad2696db5e48af4473d7ef96e3f6f111730a11ca00aba7b7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.lemma_1_2",
+      "sourceIDs": [
+        "Lemma1.2"
+      ],
+      "module": "BanditRLProof.OnlineLearningFoundations",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFoundations.lean",
+      "normalized_statement": "theorem lemma_1_2 {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (leader : ℕ → X) (T : ℕ) (hmem : ∀ n, 0 < n → n ≤ T → leader n ∈ V) (hmin : ∀ n, 0 < n → n ≤ T → ∀ u ∈ V, (∑ t ∈ Finset.range n, loss t (leader n)) ≤ ∑ t ∈ Finset.range n, loss t u) : (∑ t ∈ Finset.range T, loss t (leader (t + 1))) ≤ ∑ t ∈ Finset.range T, loss t (leader T)",
+      "statement_hash": "e87a9e3d0823f50c666d2f290d9a82acea7259a846b0d4698f6bcd339fa6cc0d",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "f683946bfa8c0635417839951cf4298826793a02",
+      "source_git_bytes_sha256": "1ddd99831395cf74993f7d52cdacd2b7d30c48458e4e2480e3229a56c797fe6a"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges",
+      "sourceIDs": [
+        "C1-NOREGRET"
+      ],
+      "module": "BanditRLProof.OnlineNoRegretSemantics",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineNoRegretSemantics.lean",
+      "normalized_statement": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hc : ∀ u ∈ V, ∃ a : ℝ, Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) : LimitNoRegret V loss prediction ↔ NoRegret V loss prediction",
+      "statement_hash": "31eb9d73b92d48583b3a61908ae4c54acdc91f1f2de25bc7a46bf414acd0ea74",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "718b283fc178abfa4f68bc86f8f5c8cedcf050c9",
+      "source_git_bytes_sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret",
+      "sourceIDs": [
+        "C1-NOREGRET"
+      ],
+      "module": "BanditRLProof.OnlineNoRegretSemantics",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineNoRegretSemantics.lean",
+      "normalized_statement": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X) (loss : ℕ → X → ℝ) (prediction : ℕ → X) (hL : LimitNoRegret V loss prediction) : NoRegret V loss prediction",
+      "statement_hash": "e7a2e29af6e060ce2f0eb77c4aa9a9ca156863e29260ea312d629c359cae307a",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "718b283fc178abfa4f68bc86f8f5c8cedcf050c9",
+      "source_git_bytes_sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero",
+      "sourceIDs": [
+        "C1-SUCCESS"
+      ],
+      "module": "BanditRLProof.OnlineFTLLimitSemantics",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLLimitSemantics.lean",
+      "normalized_statement": "theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ)) atTop (nhds (0 : ℝ))",
+      "statement_hash": "80dc80f444a9a8e7c3314da200b0cc6f59f63dcc902ec05a2dbd56f775d64029",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "eb28547256679b94e1bcbf32adc15590a33adcbf",
+      "source_git_bytes_sha256": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_bound",
+      "sourceIDs": [
+        "Theorem1.3"
+      ],
+      "module": "BanditRLProof.OnlineSquareMinimum",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineSquareMinimum.lean",
+      "normalized_statement": "theorem meanPredict_bestRegret_bound (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ 4 + 4 * Real.log T",
+      "statement_hash": "1a1df7575ed5f865435d0c80206d0aa74ea7415aca07a22f347817fab66a63d2",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "ab62f1f846f6e5235f4d8af031449fce7cb74cec",
+      "source_git_bytes_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_bestRegret_refined",
+      "sourceIDs": [
+        "C1-REFINED-REGRET"
+      ],
+      "module": "BanditRLProof.OnlineSquareMinimum",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineSquareMinimum.lean",
+      "normalized_statement": "theorem meanPredict_bestRegret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y (meanPredict y) T ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "1f42f6f8dc9b7fadcf162457167680eef99c17013ebc9156be9d9392b5190e26",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "ab62f1f846f6e5235f4d8af031449fce7cb74cec",
+      "source_git_bytes_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_iid_success",
+      "sourceIDs": [
+        "C1-SUCCESS"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDSuccess",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "normalized_statement": "theorem meanPredict_iid_success {Ω : Type u} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) : Tendsto (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧ (fun T => expectedFixedRegret μ Y (fun t ω => meanPredict (fun i => Y i ω) t) T) =o[atTop] (fun T : ℕ => (T : ℝ))",
+      "statement_hash": "5ecb5bab6e32438a9b116822bfcfc397a27118432bdb8b2374e16251782aab13",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "3685cc73619de0eb1debb833ff498e6f8b38c47e",
+      "source_git_bytes_sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_initial_stability",
+      "sourceIDs": [
+        "C1-STABILITY"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem meanPredict_initial_stability (y : ℕ → ℝ) (hy : y 0 ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y 0 - y 0)^2 - (empiricalMean y 1 - y 0)^2 ≤ (1 : ℝ) / 4",
+      "statement_hash": "69df4ba9a809f58eb9bad35094f8a2f1fead1adfddb4de3f8f314a63458cf4eb",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges",
+      "sourceIDs": [
+        "C1-NOREGRET"
+      ],
+      "module": "BanditRLProof.OnlineFTLOscillation",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineFTLOscillation.lean",
+      "normalized_statement": "theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔ ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)",
+      "statement_hash": "f5f7c19e4558ed9c406cc50676605a5ae1559a67869ee9642a7b2f84c4532e88",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "eae8b45a57cec3ad96204dbe1bbb682e8182705e",
+      "source_git_bytes_sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_mem",
+      "sourceIDs": [
+        "C1-GAME"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem meanPredict_mem (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i < t, y i ∈ Set.Icc (0 : ℝ) 1) : meanPredict y t ∈ Set.Icc (0 : ℝ) 1",
+      "statement_hash": "025b2fc1672399669d691b8522e05cfe8a12857203c5f0b1fbb7af859744c1cf",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_noRegret",
+      "sourceIDs": [
+        "C1-SUCCESS"
+      ],
+      "module": "BanditRLProof.OnlineLearningAsymptotic",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningAsymptotic.lean",
+      "normalized_statement": "theorem meanPredict_noRegret (y : ℕ → ℝ) (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) : NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+      "statement_hash": "756e9a5cef8df9a724f2e5f28829afb9cab1c676ce2160660d073d57f499648f",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "bcc026d9d8f1f8e1f1c3024ebad146c9d150505e",
+      "source_git_bytes_sha256": "0caf208525b1b3e91e378b0a74338c7c26e581fbd1514c7ac9427d4f7e6b03e0"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_prefix",
+      "sourceIDs": [
+        "C1-GAME"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem meanPredict_prefix (y z : ℕ → ℝ) (t : ℕ) (h : ∀ i < t, y i = z i) : meanPredict y t = meanPredict z t",
+      "statement_hash": "f5e768e5dbd0bc79df7086c19b9d8d07e4b13b627f3d2f032c603c0aaf9bde3f",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_regret_refined",
+      "sourceIDs": [
+        "C1-REFINED-REGRET"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem meanPredict_regret_refined (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ (1 : ℝ) / 4 + ∑ t ∈ Finset.range (T - 1), 4 / ((t : ℝ) + 2)",
+      "statement_hash": "fb0f95d7729dcf9c8f9a92f78a080642b6b05f1198083bacc764b4458efd4d27",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.meanPredict_stability",
+      "sourceIDs": [
+        "C1-STABILITY"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem meanPredict_stability (y : ℕ → ℝ) (t : ℕ) (hy : ∀ i ≤ t, y i ∈ Set.Icc (0 : ℝ) 1) : (meanPredict y t - y t)^2 - (empiricalMean y (t+1) - y t)^2 ≤ 4 / (t+1)",
+      "statement_hash": "89ee23556afbd24e6566e6e44b7180c5763f6dd8a1ce882c951dde1c8a8178ae",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.normalized_excess",
+      "sourceIDs": [
+        "C1-EQ1.1-1.2"
+      ],
+      "module": "BanditRLProof.OnlineLearningHistory",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningHistory.lean",
+      "normalized_statement": "theorem normalized_excess (total variance : ℝ) (T : ℕ) (hT : 0 < T) : total / T - variance = (total - T * variance) / T",
+      "statement_hash": "0b4900a9c7b826254353d3b4e0ba435f8df192e75c435fd1f8b4348fe26c7568",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "33cf32f3aee8a43227e6bc548bea392e5f0d5578",
+      "source_git_bytes_sha256": "7adbeb4472db77bd2bc85bed897d9b1e6aa113c90b2f00eabc39d7b2ca50988f"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_expectedFixed_excess",
+      "sourceIDs": [
+        "C1-IID-LOWER"
+      ],
+      "module": "BanditRLProof.OnlineGuessingRandomizedIID",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "normalized_statement": "theorem randomized_history_policy_expectedFixed_excess {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) (T : ℕ) : expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T = (∑ t ∈ Finset.range T, ∫ ω, (policy t (S ω, fun i => Y i ω) - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) ∧ 0 ≤ expectedFixedRegret μ Y (fun t ω => policy t (S ω, fun i => Y i ω)) T",
+      "statement_hash": "65b2dbf8795c2d28058ba3d293ec741c60479aa1908ddeb22939bc3e3d4793b5",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "088cad05e0a706ee909c260659787088c50647a2",
+      "source_git_bytes_sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_independent",
+      "sourceIDs": [
+        "C1-GAME"
+      ],
+      "module": "BanditRLProof.OnlineGuessingRandomizedIID",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingRandomizedIID.lean",
+      "normalized_statement": "theorem randomized_history_policy_independent {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (t : ℕ) : IndepFun (fun ω => policy t (S ω, fun i => Y i ω)) (Y t) μ",
+      "statement_hash": "c8614b26d8b09f914405f790b21840b17477d23f0555bbdfd6d69c2cb1b51949",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "088cad05e0a706ee909c260659787088c50647a2",
+      "source_git_bytes_sha256": "5b00b2f3dcd8afd08fd1a29eb0a0f6376dc1bcc5c784feeb1d6efd4040f0e0d3"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.randomized_history_policy_success_iff",
+      "sourceIDs": [
+        "C1-EQ1.1-1.2"
+      ],
+      "module": "BanditRLProof.OnlineGuessingIIDSuccess",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineGuessingIIDSuccess.lean",
+      "normalized_statement": "theorem randomized_history_policy_success_iff {Ω : Type u} {Seed : Type v} [MeasurableSpace Ω] [MeasurableSpace Seed] (μ : Measure Ω) [IsProbabilityMeasure μ] (Y : ℕ → Ω → ℝ) (hY : ∀ t, Measurable (Y t)) (hlaw : ∀ t, IdentDistrib (Y t) (Y 0) μ μ) (hb : ∀ t, ∀ᵐ ω ∂μ, Y t ω ∈ Set.Icc (0 : ℝ) 1) (hind : iIndepFun Y μ) (S : Ω → Seed) (hS : Measurable S) (hseed : IndepFun S (fun ω t => Y t ω) μ) (policy : (t : ℕ) → (Seed × ((↑(Finset.range t) : Type) → ℝ)) → ℝ) (hp : ∀ t, Measurable (policy t)) (hpb : ∀ t s z, (∀ i, z i ∈ Set.Icc (0 : ℝ) 1) → policy t (s, z) ∈ Set.Icc (0 : ℝ) 1) : let prediction := fun t ω => policy t (S ω, fun i => Y i ω) (∀ T, 0 ≤ expectedFixedRegret μ Y prediction T) ∧ ((fun T => expectedFixedRegret μ Y prediction T) =o[atTop] (fun T : ℕ => (T : ℝ)) ↔ Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ))) ∧ (Tendsto (fun T => (∫ ω, ∑ t ∈ Finset.range T, (prediction t ω - Y t ω)^2 ∂μ) / (T : ℝ) - variance (Y 0) μ) atTop (nhds (0 : ℝ)) ↔ Tendsto (fun T => (∑ t ∈ Finset.range T, ∫ ω, (prediction t ω - ∫ ω, Y 0 ω ∂μ)^2 ∂μ) / (T : ℝ)) atTop (nhds (0 : ℝ)))",
+      "statement_hash": "0444ad4add6822a4a7bf0b91fc13cda6dd313d1d5bfd88f0e075abcde66e16c3",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "3685cc73619de0eb1debb833ff498e6f8b38c47e",
+      "source_git_bytes_sha256": "eca206ce6e2eaccab97b1c9a0912cd639304f049e190bfbc94fe2f5a7bb3821b"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.squaredBestRegret_eq_comparatorRegret",
+      "sourceIDs": [
+        "C1-REGRET"
+      ],
+      "module": "BanditRLProof.OnlineSquareMinimum",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineSquareMinimum.lean",
+      "normalized_statement": "theorem squaredBestRegret_eq_comparatorRegret (y prediction : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : squaredBestRegret y prediction T = comparatorRegret (fun t x => (x - y t)^2) prediction (empiricalMean y T) T",
+      "statement_hash": "060150e9c35e4c06bc6b27772449fbeb186c57a55139ac90429d1e5ae3cb07f2",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "ab62f1f846f6e5235f4d8af031449fce7cb74cec",
+      "source_git_bytes_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.squaredLoss_minimum_eq",
+      "sourceIDs": [
+        "C1-REGRET"
+      ],
+      "module": "BanditRLProof.OnlineSquareMinimum",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineSquareMinimum.lean",
+      "normalized_statement": "theorem squaredLoss_minimum_eq (y : ℕ → ℝ) (T : ℕ) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : sInf ((fun u : ℝ => ∑ t ∈ Finset.range T, (u - y t)^2) '' Set.Icc (0 : ℝ) 1) = ∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2",
+      "statement_hash": "03a1a42885cc8d743340fe199b327b40518d2b365a0f1663d58db3758046a395",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "ab62f1f846f6e5235f4d8af031449fce7cb74cec",
+      "source_git_bytes_sha256": "7bbfb2538dcdaed8c208571c248723d89ed8980e5e899339aa4c3b48a55c3210"
+    },
+    {
+      "name": "BanditRL.OnlineLearning.theorem_1_3",
+      "sourceIDs": [
+        "Theorem1.3"
+      ],
+      "module": "BanditRLProof.OnlineLearningFTL",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "file": "BanditRLProof/OnlineLearningFTL.lean",
+      "normalized_statement": "theorem theorem_1_3 (y : ℕ → ℝ) (T : ℕ) (hT : 0 < T) (hy : ∀ t < T, y t ∈ Set.Icc (0 : ℝ) 1) : (∑ t ∈ Finset.range T, (meanPredict y t - y t)^2) - (∑ t ∈ Finset.range T, (empiricalMean y T - y t)^2) ≤ 4 + 4 * Real.log T",
+      "statement_hash": "d0f480716b07bdd880d0056a5865b565501f5ad43226ecdeab0d27e8cc608afd",
+      "hash_method": "sha256 UTF-8 whitespace-normalized header extracted by tools/abrl_lifecycle.py:lean_declaration_header; whole-file context separately pinned",
+      "source_git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "source_git_bytes_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    {
+      "name": "harmonic_le_one_add_log",
+      "sourceIDs": [
+        "C1-HARMONIC"
+      ],
+      "module": "Mathlib.NumberTheory.Harmonic.Bounds",
+      "historical_dependency_binding": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/compiled-dependencies.json",
+      "binding_status": "source text only; proof/compiled revalidation pending",
+      "external_file": "Mathlib/NumberTheory/Harmonic/Bounds.lean",
+      "statement_hash": null,
+      "external_boundary": "Pinned Mathlib harmonic bound; exact external header fingerprint awaits existing-runtime evidence. No dependency checkout/install or invented fingerprint.",
+      "pin": "lake-manifest.json",
+      "pin_git_bytes_sha256": "0e3f2484ec3c7570c47f2c633c4db9c17a1e468b8c7da47d0d08ec56b3324750"
+    }
+  ],
+  "historical_statement_map": "research-wiki/integrations/ONLINE-CH1-AUDIT-INTEGRATION-20261025/statement-map.json",
+  "g001_g004_existing_fingerprints_matched": true
+}

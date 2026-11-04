@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-A3-REQUALIFICATION-V1",
+  "status": "SOURCE_REUSE_APPROVED_CURRENT_PACKAGE_GATES_PENDING",
+  "base_commit": "eafb50264ce8f8a576e5333d64e7a00a21b05cdf",
+  "source": {
+    "version": "Orabona v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "PDF_page": 303,
+    "printed_page": 291,
+    "attribution": "TheoremA.3; printed citation Bauschke et al.2003 Theorem1.29. Referenced external work not independently reverified."
+  },
+  "source_target": "dependency:A.3",
+  "target_freeze": {
+    "artifact": "effective-targets-frozen-v3.2.json",
+    "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "target_pointer": "/effective_targets/136",
+    "original_source_rows": 73,
+    "effective_target_records": 172,
+    "not_proof_percentage": true,
+    "all_other_targets_and_repairs_preserved": true
+  },
+  "declaration": "BanditRL.OnlineConvex.source_weierstrass_extended",
+  "source_interface": {
+    "ambient": "Arbitrary Hausdorff topological X; T2Space retained.",
+    "function": "f:X→EReal, bottom and top both allowed.",
+    "regularity": "Global LowerSemicontinuous f, not only restricted lsc.",
+    "feasible_set": "Arbitrary compact V, no convexity or norm.",
+    "domain": "V intersects effectiveDomain f={x | f x<top}. Bottom counts as in domain.",
+    "quantification": "All f,V meeting exact source premises; no supplied attained minimum.",
+    "conclusion": "A point p in V with IsMinOn f V p, equivalent to achieving infimum in extended order."
+  },
+  "header_sha256": "140528e4aa94cbbb9efc48ca0b4acfe54dfa0aa2e44f70c2117f878ced89579d",
+  "core_Git_sha256": "290bd822307ce7607330d9d505a48d5f1757f7ac8c7095733541b4086acffb05",
+  "canary_Git_sha256": "d85e9c17412d9322bb462ad46a7aed06f327848c1bad7a88846ce157ac7d20ce",
+  "historical_semantic_roles": {
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/dual_neutral_decoder_20261012",
+    "source_reviewer": "/root/support_tool_review_20261012"
+  },
+  "historical_seven_slots": "Exact arbitrary topological/Hausdorff ambient, global lower semicontinuity, compact V, actual V intersect domain nonempty and extended-order IsMinOn conclusion. Bottom allowed, no properness or finite-value premise. Namespace is supplied only by reviewed context.",
+  "blind_reconstruction": {
+    "artifact": "neutral-declaration-20261012-s3/reconstruction-v1.json",
+    "sha256": "2236a90a3c7a63bdd8875a17762520ffd0819e46d0cd30a20145a7956565f7b9"
+  },
+  "source_and_native_topology": {
+    "source": "Theorem A.3 supplies the stated compact-attainment result and cites an external theorem; no complete source proof is printed in this source region.",
+    "native_nodes": [
+      "domain-intersection witness",
+      "V.Nonempty",
+      "global-to-restricted lower semicontinuity",
+      "Mathlib compact attainment",
+      "extended-order minimizing point"
+    ],
+    "actual_external_provider": "LowerSemicontinuousOn.exists_isMinOn",
+    "source_vs_Lean": "All source assumptions retained; Mathlib sufficient conditions are weaker. No properness/no-bottom/finite-minimum premise. Source graph and compiled provider graph remain distinct."
+  },
+  "reuse": "Exact existing18-line A3 module and real bottom singleton consumer; no new proof route or duplicate foundational module.",
+  "current_dependencies": [
+    {
+      "path": "BanditRLProof/OnlineConvexExtended.lean",
+      "git_blob": "29f4c7b3f5514e3d7ac02aa434f7bc44fbd79e47"
+    },
+    {
+      "path": "BanditRLProof/OnlineClosedProper.lean",
+      "git_blob": "3aab9a8af9e1566d34969cfb0b2e0e54e432c286"
+    },
+    {
+      "path": "lean-toolchain",
+      "git_blob": "33e0c088939ad08c9f2b1befa3118a423b06ad7d"
+    },
+    {
+      "path": "lake-manifest.json",
+      "git_blob": "ad8c59f8f02db9be97e7dd633bbf60f2dab011f1"
+    }
+  ],
+  "evidence": [
+    {
+      "artifact": "c2-a3-bounded-requalification-plan-v1.json",
+      "sha256": "37d22ce5f994f4b2c4b15b2834fd9c95e01c9d4b6dc9529a1979ff662bcfdcd6",
+      "availability": "Retained external maintenance evidence; no public download URL implied."
+    },
+    {
+      "artifact": "c2-a3-current-base-review-addendum-v1.json",
+      "sha256": "ec8aad06c94d08b5074565986370719a6a0b5cacd0955692157a5319cc4757aa",
+      "availability": "Retained external maintenance evidence; no public download URL implied."
+    },
+    {
+      "role": "header_source",
+      "artifact": "online-b4-next-attainment-header-source-review-20261012/A3-header-source-verdict-v1.json",
+      "sha256": "b22604b403dc1395a5a5d0b52267da80d6d2051f392128c9209719b3782aa047",
+      "availability": "Retained historical external review; scope is the exact scratch/header/body evidence, not a current runtime pass."
+    },
+    {
+      "role": "core_BODY",
+      "artifact": "online-b4-next-weierstrass-body-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "7b2be78a48142dd8efbb69c5d01afc222c94fedf3ce592a3d55aa8f63a9122a0",
+      "availability": "Retained historical external review; scope is the exact scratch/header/body evidence, not a current runtime pass."
+    },
+    {
+      "role": "canary_BODY",
+      "artifact": "online-b4-next-weierstrass-canary-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "6cd6a2b3715721ff2e5c78f98413608acecb643463b10aff3eedbd81bb56cbef",
+      "availability": "Retained historical external review; scope is the exact scratch/header/body evidence, not a current runtime pass."
+    },
+    {
+      "role": "canary_context_delta",
+      "artifact": "online-b4-next-weierstrass-canary-source-review-20261012/context-delta-v2-source-verdict-v1.json",
+      "sha256": "3de77c3c9db2e5c5208b3cd11f37b701c4c01fe3748064219f4f2a99199fbbf1",
+      "availability": "Retained historical external review; scope is the exact scratch/header/body evidence, not a current runtime pass."
+    }
+  ],
+  "boundary": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate. Current canonical compilation, imported proof bindings, shared-project gates and reader acceptance are pending for this integration.",
+  "historical_failures_preserved": "Historical core captures seal a fixed source/lib+IR list and compiler/runtime files; they do not claim the later exact runtime-membership profile. Canary authoritative V2 captures separately check all19 portable Lean runtime members and hashes plus source/lib+IR companion membership before and after each child. OS loader/system DLLs are outside the portable seal. Its two implicit topology/T2 provider instances are exported and independently source-inspected, not separately asserted equal to independently elaborated expected-instance Exprs.",
+  "chapter2_accepted": false,
+  "book_accepted": false,
+  "current_gate_status": {
+    "focused": "pending",
+    "imported_type_value_provider_axioms": "pending",
+    "combined_project": "pending",
+    "site": "pending",
+    "reader": "pending"
+  },
+  "publication": "Source/header review carried forward under exact current-base review; all current execution and reader decisions require separate evidence."
+}

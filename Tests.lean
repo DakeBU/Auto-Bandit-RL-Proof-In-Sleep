@@ -174,4 +174,10 @@ import Tests.OnlineBregmanProximalCanary
 import Tests.OnlineBregmanExtendedCanary
 import Tests.OnlinePrescientBregmanCanary
 import Tests.OnlinePrescientBregmanRegretCanary
+import Tests.OnlineWeierstrassExtendedCanary
+import Tests.OnlineStrongConvexMinimumCanary
+import Tests.OnlineStrongConvexSupportCanary
+import Tests.OnlineStrongConvexSourceSubgradientCanary
+import Tests.OnlineStrongConvexAttainmentCanary
+import Tests.OnlineStrongConvexSubgradientIffCanary
 import Tests.OnlinePrescientBregmanSourceCanary
