@@ -1,0 +1,606 @@
+{
+  "prose": "# Independent source-withheld reconstruction\n\nStatus: **blind-reconstructed**. This is a reconstruction of typed propositions, not a source-fidelity verdict or a compilation result.\n\nInput: `private-maintenance/github-maintenance-goal-20261011/batch40-neutral-input-v1/packet.md`\nSHA256: **8dda98b68b24fea20b35610d7f71622c2dc40ff974fdd15e978e533709356461**\n\n## Scope and actual exposure\n\nI read only the designated packet and `canonical-repository/.agents/skills/bandit-semantic-roundtrip/SKILL.md` as task evidence. I did not inspect repository source, implementation proofs, other maintenance packets, prior verdicts, external sources, or web results. I received inherited generic ABRL workspace instructions, the supplied memory summary, environment and skills catalog, plus the parent task and its follow-up. Those generic instructions included project and historical research-topic cues. The packet itself exposes declaration names, namespaces and one import. Therefore this is **source-withheld independent reconstruction**, not a claim of absolute absence of all related contextual cues. No generic memory was used to supply mathematical assumptions or conclusions. No memory file was opened.\n\nThe separate source reviewer must compare against the original source. No source identity, intended verdict or source-specific argument was requested. No missing mathematical context prevents the reconstruction below. The textual packet does not establish that its statements compile or that its omitted proofs are valid.\n\n## All eight project-defined functions and predicates\n\nUse \\(\\overline{\\mathbb R}=\\mathbb R\\cup\\{-\\infty,+\\infty\\}\\) for `EReal`. Real values are embedded in this extended type when an extended-valued expression requires them.\n\n1. **effectiveDomain**: \\(\\operatorname{dom}_{<+\\infty} f=\\{z\\in E:f(z)<+\\infty\\}\\). This definition by itself includes points with value \\(-\\infty\\). It is the finite-real domain only when a separate no-\\(-\\infty\\) condition holds.\n\n2. **extendedIndicator**: \\(\\iota_V(z)=0\\) if \\(z\\in V\\), and \\(+\\infty\\) otherwise. It has no \\(-\\infty\\) values.\n\n3. **SourceClosed**: for every real \\(r\\), the set \\(\\{z:f(z)\\le r\\}\\) is closed in the supplied topology on \\(E\\). There are no convexity or properness requirements inside this predicate. In the two regret declarations, its argument is \\(z\\mapsto\\psi(z)+\\iota_X(z)\\), so the required closed sets are precisely \\(\\{z\\in X:\\psi(z)\\le r\\}\\).\n\n4. **SourceProper**: \\(f(z)\\ne-\\infty\\) for every \\(z\\in E\\), and there are \\(z_*\\in E\\), \\(r_*\\in\\mathbb R\\) with \\(f(z_*)=r_*\\). Values \\(+\\infty\\) away from the finite witness are allowed. Convexity and closedness are not part of this predicate.\n\n5. **SourceSubdifferential**:\n   \\[\n   \\partial_s f(z)=\\left\\{g\\in E:\\ \\forall y\\in E,\\quad\n   f(z)+\\langle g,y-z\\rangle\\le f(y)\\right\\}.\n   \\]\n   The inequality is in \\(\\overline{\\mathbb R}\\), with the inner product embedded from \\(\\mathbb R\\). Support is required for all \\(y\\in E\\), not merely for \\(y\\in V\\) or \\(X\\). No domain restriction is separately built into the definition. Under SourceProper, nonemptiness of this set at \\(z\\) forces \\(f(z)\\) to be a real value: a \\(+\\infty\\) value would contradict the inequality at the finite properness witness, and properness excludes \\(-\\infty\\).\n\n6. **divergence**: write \\(L_y=D_{\\mathrm{tot}}\\psi(y)=\\mathrm{fderiv}_{\\mathbb R}\\psi(y)\\), a continuous real-linear map \\(E\\to\\mathbb R\\). Then\n   \\[\n   B_\\psi(a,b)=\\psi(a)-\\psi(b)-L_b(a-b).\n   \\]\n   This definition uses Lean's total derivative operator. It is defined even without a differentiability hypothesis, so the name alone does not certify a derivative exists at \\(b\\), nonnegativity, symmetry, a metric, or a squared norm. The first arguments of \\(B_\\psi\\) below are important.\n\n7. **advance**: define\n   \\[\n   Q_{\\eta,f,x}(z)=f(z)+\n      \\operatorname{embed}_{\\mathbb R}^{\\overline{\\mathbb R}}\n      \\bigl(\\eta^{-1}B_\\psi(z,x)\\bigr).\n   \\]\n   If there exists \\(p\\in V\\) satisfying \\(\\forall z\\in V,\\ Q_{\\eta,f,x}(p)\\le Q_{\\eta,f,x}(z)\\), `advance` returns `some` classical choice of such a witness. Otherwise it returns `none`. The definition alone assumes neither positivity of \\(\\eta\\), finiteness of objective values, uniqueness nor existence. Real inversion is total, so \\(\\eta=0\\) does not make the expression syntactically undefined. This is a classical mathematical choice, not an executable minimization procedure.\n\n8. **iterate**: \\(I(0)=\\operatorname{some}(x_0)\\). At time \\(t+1\\), if \\(I(t)=\\operatorname{some}(y)\\), then \\(I(t+1)=\\operatorname{advance}(V,\\psi,\\eta_t,f_t,y)\\). If \\(I(t)=\\operatorname{none}\\), then \\(I(t+1)=\\operatorname{none}\\). A failed step is therefore absorbing. The initial value is not automatically tested for feasibility.\n\nFor standard notation, `IsMinOn Q V p` means \\(Q(p)\\le Q(z)\\) for all \\(z\\in V\\); the packet supplies \\(p\\in V\\) separately where needed. `StrictConvexOn ℝ S h` includes convexity of \\(S\\) and the strict Jensen inequality for distinct \\(a,b\\in S\\) and positive real weights \\(\\alpha,\\beta\\) with \\(\\alpha+\\beta=1\\). The real function `EReal.toReal` agrees with the value at finite real inputs and maps either infinity to zero. Thus finiteness must be justified before interpreting a `toReal` difference as an extended-loss difference.\n\n## 1. sourceProper_of_domain\n\n**Typed scope.** \\(E\\) is an arbitrary type. Universally quantify \\(f:E\\to\\overline{\\mathbb R}\\), \\(V\\subseteq E\\), then proofs that \\(V\\ne\\varnothing\\), \\(\\forall z,\\ f(z)\\ne-\\infty\\), and \\(V\\subseteq\\{z:f(z)<+\\infty\\}\\). There is no algebraic, norm, topology or convexity assumption.\n\n**Reconstruction.** If \\(f\\) never takes \\(-\\infty\\) and is below \\(+\\infty\\) throughout a nonempty set \\(V\\), then \\(f\\) is proper in the specified sense:\n\\[\n\\left[V\\ne\\varnothing,\\ \n \\forall z\\in E,\\ f(z)\\ne-\\infty,\\ \n \\forall z\\in V,\\ f(z)<+\\infty\\right]\n\\Longrightarrow\n\\left[\n \\forall z\\in E,\\ f(z)\\ne-\\infty,\\ \n \\exists z_*\\in E\\ \\exists r_*\\in\\mathbb R,\\ f(z_*)=r_*\n\\right].\n\\]\nThe conclusion requires only a finite witness somewhere in \\(E\\), though the assumptions provide one in \\(V\\). No closedness, convexity or optimizer is established.\n\n## 2. penalized_strictConvex\n\n**Typed scope.** \\(E\\) is a real inner-product space with its normed additive group structure. There is no completeness or finite-dimensionality hypothesis. Universally quantify \\(V,X\\subseteq E\\), \\(V\\) convex, \\(V\\subseteq X\\), \\(\\psi:E\\to\\mathbb R\\) strictly convex on \\(X\\), \\(f:E\\to\\overline{\\mathbb R}\\) proper as expanded above, and\n\\(\\forall z\\in V\\ \\exists g_z\\in E\\ \\forall y\\in E,\\ f(z)+\\langle g_z,y-z\\rangle\\le f(y)\\).\nThen quantify \\(\\eta>0\\) and arbitrary \\(x\\in E\\).\n\n**Reconstruction.** The following real-valued function is strictly convex on \\(V\\):\n\\[\nH(z)=\\operatorname{toReal}(f(z))+\n \\frac{\\psi(z)-\\psi(x)-L_x(z-x)}{\\eta}.\n\\]\nExplicitly, \\(V\\) is convex, and for distinct \\(a,b\\in V\\) and \\(\\alpha,\\beta>0\\) with \\(\\alpha+\\beta=1\\),\n\\[\nH(\\alpha a+\\beta b)<\\alpha H(a)+\\beta H(b).\n\\]\nThe properness and supporting-vector assumptions force \\(f\\) finite throughout \\(V\\), so its real conversion is faithful there. The support vector may depend on \\(z\\); it is not one common vector for all \\(z\\).\n\n**Boundaries.** \\(V\\) need not be nonempty. Empty and singleton sets make the strict inequality obligation vacuous. The anchor \\(x\\) need not belong to \\(V\\), \\(X\\), or its interior. Differentiability at \\(x\\) is not assumed. The derivative term is a linear functional in the variable \\(z\\), but this statement does not assert nonnegativity of \\(B_\\psi\\). No minimizer existence or global strict convexity of \\(H\\) is concluded.\n\n## 3. advance_eq_some_of_minimizer\n\n**Typed scope.** The preceding real inner-product structure is supplemented by `CompleteSpace E`. Retain all assumptions of declaration 2. Quantify \\(x,p\\in E\\) with \\(p\\in V\\) and the explicit minimum assumption\n\\[\n\\forall z\\in V,\\quad\n f(p)+\\operatorname{embed}\\!\\left(\\frac{B_\\psi(p,x)}{\\eta}\\right)\n \\le\n f(z)+\\operatorname{embed}\\!\\left(\\frac{B_\\psi(z,x)}{\\eta}\\right).\n\\]\n\n**Reconstruction.**\n\\[\n\\operatorname{advance}(V,\\psi,\\eta,f,x)=\\operatorname{some}(p).\n\\]\nThe claim identifies the classical choice with the supplied minimizer. It implies that any two points satisfying these same minimizer conditions must agree. The conclusion is conditional on the supplied \\(p\\) and its minimum property; it does not construct a minimizer from closedness, compactness or coercivity. Membership \\(p\\in V\\) makes \\(V\\) nonempty for this instance. No location or differentiability condition is imposed on \\(x\\). Completeness is part of the typed contract even if a separate mathematical analysis might find it dispensable.\n\n## 4. iterate_eq_of_source_updates\n\n**Typed scope.** \\(E\\) is a complete real inner-product space. Quantify convex \\(V\\subseteq X\\), strictly convex \\(\\psi:E\\to\\mathbb R\\) on \\(X\\), sequences\n\\(\\eta:\\mathbb N\\to\\mathbb R\\),\n\\(f:\\mathbb N\\to(E\\to\\overline{\\mathbb R})\\),\n\\(x:\\mathbb N\\to E\\), an initial point \\(x_0\\in E\\), and a horizon \\(T\\in\\mathbb N\\).\nAssume \\(x(0)=x_0\\). For every \\(t<T\\), assume:\n\\[\n\\eta_t>0,\\qquad\n[\\forall y\\in E,\\ f_t(y)\\ne-\\infty]\\ \\land\\\n[\\exists y\\in E\\ \\exists r\\in\\mathbb R,\\ f_t(y)=r],\n\\]\n\\[\n\\forall z\\in V\\ \\exists g\\in E\\ \\forall y\\in E,\\quad\n f_t(z)+\\langle g,y-z\\rangle\\le f_t(y),\n\\]\n\\[\nx(t+1)\\in V,\\qquad\n\\forall z\\in V,\\quad\nQ_{\\eta_t,f_t,x(t)}(x(t+1))\n \\le Q_{\\eta_t,f_t,x(t)}(z).\n\\]\n\n**Reconstruction.**\n\\[\n\\forall t\\in\\mathbb N,\\quad\nt\\le T\\Longrightarrow\n\\operatorname{iterate}(V,\\psi,\\eta,f,x_0,t)=\\operatorname{some}(x(t)).\n\\]\nThus a supplied sequence of exact updates agrees with the optional recursion through and including time \\(T\\). Updates use indices \\(0,\\ldots,T-1\\), producing states \\(1,\\ldots,T\\).\n\n**Boundaries.** \\(T=0\\) is allowed. Then all indexed positivity, properness, support and minimum assumptions are vacuous, and the conclusion is just initialization. No initial feasibility or interior condition is required. When \\(T>0\\), the update assumptions imply \\(V\\) is nonempty and the positive-time states through \\(T\\) are feasible. No conclusion is made about later recursion values, stepsizes or losses. No guarantee constructs the supplied sequence or minimizers. No regret bound occurs in this declaration.\n\n## Common full assumptions for declarations 5 and 6\n\nHere \\(E\\) is a **finite-dimensional real inner-product space**. Quantify \\(V,X\\subseteq E\\), \\(\\psi:E\\to\\mathbb R\\), losses \\(f_t:E\\to\\overline{\\mathbb R}\\), an initial point \\(x_0\\), a full sequence \\(x:\\mathbb N\\to E\\), and horizon \\(T\\). The declarations require:\n\n- \\(V\\) is convex, nonempty and closed, and \\(V\\subseteq X\\).\n- \\(\\psi\\) is strictly convex on \\(X\\), including convexity of \\(X\\).\n- For every real \\(r\\), \\(\\{z\\in X:\\psi(z)\\le r\\}\\) is closed.\n- \\(\\psi\\) is differentiable on \\(\\operatorname{int}X\\).\n- \\(x(0)=x_0\\) and \\(x(t)\\in\\operatorname{int}X\\) for **all \\(t\\le T\\)**.\n- For each \\(t<T\\), \\(f_t(z)\\ne-\\infty\\) for **all \\(z\\in E\\)**, and \\(f_t(z)<+\\infty\\) for all \\(z\\in V\\). Consequently all evaluated comparator and feasible next-state losses are finite real values.\n- For each \\(t<T\\) and each \\(z\\in V\\), there exists \\(g\\in E\\) such that the global supporting inequality \\(f_t(z)+\\langle g,y-z\\rangle\\le f_t(y)\\) holds for every \\(y\\in E\\).\n- For every \\(t<T\\), \\(x(t+1)\\in V\\) and is an exact minimum of \\(Q_{\\eta_t,f_t,x(t)}\\) over \\(V\\), with the constant stepsize substituted in declaration 5.\n- Finally a comparator \\(u\\in E\\) with \\(u\\in V\\) is quantified.\n\nThe underscore prefixes on the closedness hypothesis names do **not** remove those hypotheses from the theorem. The comparator can be on the boundary of \\(X\\). The initial point is interior to \\(X\\), but need not be in \\(V\\). Feasibility of all subsequent states through the horizon is explicitly assumed. Because the centers are interior, differentiability on the interior supports the usual derivative interpretation of \\(L_{x(t)}\\). No differentiability at \\(u\\) is required.\n\n## 5. source_fixed_regret\n\n**Additional binders and assumptions.** One real number \\(\\eta>0\\) is used for every update. The horizon \\(T\\in\\mathbb N\\) can be zero. At every \\(t<T\\),\n\\[\nx(t+1)\\in V,\\quad\n\\forall z\\in V,\\quad\nf_t(x(t+1))+\\operatorname{embed}\\!\\left(\\eta^{-1}B_\\psi(x(t+1),x(t))\\right)\n\\le f_t(z)+\\operatorname{embed}\\!\\left(\\eta^{-1}B_\\psi(z,x(t))\\right).\n\\]\n\n**Reconstruction.** Under all common assumptions and these fixed-step conditions,\n\\[\n\\sum_{t=0}^{T-1}\n \\bigl[\\operatorname{toReal}(f_t(x(t+1)))\n       -\\operatorname{toReal}(f_t(u))\\bigr]\n\\le\n\\frac{B_\\psi(u,x_0)}{\\eta}\n-\\frac{1}{\\eta}\\sum_{t=0}^{T-1}B_\\psi(x(t+1),x(t)).\n\\]\nThe left side is a deterministic cumulative comparator difference at the **post-update** states \\(x(t+1)\\). It is not the sum of losses at \\(x(t)\\). The correction on the right is negative with coefficient exactly \\(1/\\eta\\). No factor \\(1/2\\), expectation, averaging by \\(T\\), big-O bound or additional terminal term appears.\n\n**Boundaries.** For \\(T=0\\), both sums are empty, so the stated conclusion is \\(0\\le B_\\psi(u,x_0)/\\eta\\), with the remaining non-indexed and initial-interior assumptions still present. The statement has no \\(-B_\\psi(u,x(T))/\\eta\\) term. It neither proves an update exists nor bounds regret at pre-update plays, and it gives no explicit rate without additional control of the divergence and stepsize.\n\n## 6. source_variable_regret\n\n**Additional binders and assumptions.** Quantify \\(\\eta:\\mathbb N\\to\\mathbb R\\) and a horizon \\(T\\in\\mathbb N\\) with \\(T>0\\).\n\\[\n\\forall t<T,\\ \\eta_t>0,\\qquad\n\\forall t\\in\\mathbb N,\\quad t+1<T\\Longrightarrow\\eta_{t+1}\\le\\eta_t.\n\\]\nThus nonincrease is required only between consecutive indices inside the finite horizon. All updates use \\(Q_{\\eta_t,f_t,x(t)}\\).\n\n**Reconstruction.** Under all common assumptions and these variable-step conditions,\n\\[\n\\sum_{t=0}^{T-1}\n \\bigl[\\operatorname{toReal}(f_t(x(t+1)))\n       -\\operatorname{toReal}(f_t(u))\\bigr]\n\\le\n\\frac{\\max_{0\\le t<T}B_\\psi(u,x(t))}{\\eta_{T-1}}\n-\\sum_{t=0}^{T-1}\\frac{B_\\psi(x(t+1),x(t))}{\\eta_t}.\n\\]\nThe numerator is the maximum of a finite nonempty set of real values, exactly the `Finset.sup'` over `range T`. It includes \\(x(0)\\) and excludes \\(x(T)\\). It is not a global supremum over \\(V\\), not a supremum over all times, and not a supplied uniform diameter bound.\n\n**Boundaries.** \\(T=0\\) is excluded. The denominator is \\(\\eta_{T-1}\\), which is positive because \\(T>0\\) implies \\(T-1<T\\). Natural subtraction is truncated in Lean, but that distinction causes no ambiguity under \\(T>0\\). For \\(T=1\\), monotonicity has no instances, and the maximum contains just \\(B_\\psi(u,x(0))\\). No conditions concern \\(\\eta_T\\), later stepsizes, later losses or later state behavior. The statement does not assert a sublinear rate or a uniform finite bound across horizons.\n\n## Binder and dependency summary\n\n| Declaration | Structure on E | Data and main dependent witnesses | Horizon/comparator |\n|---|---|---|---|\n| sourceProper_of_domain | Type only | f, V; nonempty V, global exclusion of bottom, domain containment | None |\n| penalized_strictConvex | NormedAddCommGroup; InnerProductSpace over R | V, X, psi, f; properness and a support vector for each z in V; eta > 0; arbitrary center x | None |\n| advance_eq_some_of_minimizer | Above plus CompleteSpace | Same data; p in V and its objective-minimum proof | None |\n| iterate_eq_of_source_updates | Complete real inner-product space | V, X, psi, eta sequence, loss sequence, x0, full x sequence; assumptions depend on t < T; minimum is centered at x(t) | T arbitrary natural; output for every t <= T |\n| source_fixed_regret | FiniteDimensional real inner-product space | Common closedness/interior/support/domain/update data; scalar eta > 0 | T arbitrary natural; every supplied u in V |\n| source_variable_regret | FiniteDimensional real inner-product space | Same common data; positive finite-prefix stepsizes and finite-prefix nonincrease | T > 0; every supplied u in V |\n\nAll data binders are universal theorem parameters. Existential witnesses in properness and subdifferentials are nested in their respective predicates; supporting vectors can depend on both time and point. The supplied trajectory is universally quantified subject to all its hypotheses. Nothing asserts that a trajectory can be selected before losses are revealed. The regret inequalities hold for each comparator under the assumptions, but do not assert that the comparator minimizing cumulative loss exists.\n\n## Seven-slot comparison and limits\n\nThe accompanying JSON compares each typed declaration against this reconstruction in the seven requested slots. “Aligned” there means alignment of the reconstruction with the supplied signature only. A comparison to the unavailable original source is **not assessed** in every slot.\n\n1. **Objects/spaces:** The first result is type-only; strict-convexity uses a real inner-product space; update identification and iteration add completeness; the regret claims require finite dimension.\n2. **Quantifiers/order:** All data are universal, supports are \\(\\forall t<T\\,\\forall z\\in V\\,\\exists g\\,\\forall y\\in E\\), and exact minimizers are assumptions. The fixed comparator is quantified after trajectory assumptions.\n3. **Assumptions/regularity:** The regret contracts include both closedness assumptions, differentiability on the interior, all states through \\(T\\) interior, and finite losses on \\(V\\). Early contracts do not require differentiability or an interior anchor.\n4. **Conclusion/metric:** The conclusions are properness, strict convexity, equality of an optional choice, finite-prefix recursion equality, and two post-update loss-difference inequalities, respectively.\n5. **Constants/normalization/asymptotics:** Every divergence coefficient is exactly the reciprocal stated stepsize. There is no implicit normalization by \\(T\\), strong-convexity constant, asymptotic rate or omitted negative correction in the reconstructed formulas.\n6. **Probability/feedback/filtration/stopping:** There is no probability space, random variable, expectation, high-probability event, filtration, predictability, stopping-time or feedback-information condition in any declaration. The current loss enters the update producing the state on which that loss is evaluated. No delayed-feedback or standard play-before-observe guarantee follows from the signatures.\n7. **Boundaries/exclusions:** Finite-prefix restrictions, empty-set/vacuous cases, optional failure, total derivative semantics, extended infinities and the exclusion of the zero horizon for the variable-step maximum remain explicit.\n\nNot proved by these signatures: source fidelity; Lean compilation; existence of updates from the other assumptions; a computational solver; behavior after the specified horizon; stochastic or adversarial-information guarantees; regret at pre-update plays; sublinear regret; a global divergence diameter bound; a sharper terminal-divergence inequality; or validity under omitted closedness, support, interior, positivity or dimensional hypotheses.\n",
+  "slots": {
+    "schema_version": 1,
+    "status": "blind-reconstructed",
+    "review_kind": "source-withheld independent reconstruction",
+    "packet": {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch40-neutral-input-v1/packet.md",
+      "sha256": "8dda98b68b24fea20b35610d7f71622c2dc40ff974fdd15e978e533709356461"
+    },
+    "scope": "Comparison of supplied typed statements with their natural-language and LaTeX reconstruction only. Original-source comparison is not assessed.",
+    "definition_expansions": [
+      {
+        "name": "effectiveDomain",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "extendedIndicator",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "SourceClosed",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "SourceProper",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "SourceSubdifferential",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "divergence",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "advance",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      },
+      {
+        "name": "iterate",
+        "location": "reconstruction.md: All eight project-defined functions and predicates"
+      }
+    ],
+    "declarations": [
+      {
+        "name": "sourceProper_of_domain",
+        "binder_dependency_typing": [
+          "E : Type*",
+          "f : E -> EReal",
+          "V : Set E",
+          "hV : V.Nonempty",
+          "hbot : forall z : E, f z != bottom",
+          "hdom : V subset effectiveDomain f"
+        ],
+        "slots": [
+          {
+            "slot": 1,
+            "name": "objects_spaces",
+            "typed_statement_reconstruction": "E is an arbitrary type; f is extended-real-valued; V is a subset of E.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 2,
+            "name": "quantifiers_order",
+            "typed_statement_reconstruction": "All data universal. Global no-bottom assumption precedes the existence conclusion of a point and real value. Nonemptiness of V supplies a point in the finite-valued region.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 3,
+            "name": "assumptions_regularity",
+            "typed_statement_reconstruction": "V nonempty; no bottom value anywhere in E; f(z) < top for z in V.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 4,
+            "name": "conclusion_metric",
+            "typed_statement_reconstruction": "SourceProper f: no bottom anywhere and exists z in E, r in R with f(z)=embed(r).",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 5,
+            "name": "constants_normalization_asymptotics",
+            "typed_statement_reconstruction": "No numerical constant, metric, probability or rate.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 6,
+            "name": "probability_feedback_filtration_stopping",
+            "typed_statement_reconstruction": "No probabilistic or information structure.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 7,
+            "name": "boundaries_excluded_regimes",
+            "typed_statement_reconstruction": "effectiveDomain alone includes bottom. Global hbot is essential to reading this as finite-valued on V. No convexity, topology, minimizer or closedness. An empty E cannot satisfy hV.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          }
+        ]
+      },
+      {
+        "name": "penalized_strictConvex",
+        "binder_dependency_typing": [
+          "E : Type*",
+          "NormedAddCommGroup E",
+          "InnerProductSpace R E",
+          "V X : Set E",
+          "hV : Convex R V",
+          "hVX : V subset X",
+          "psi : E -> R",
+          "hpsi : StrictConvexOn R X psi",
+          "f : E -> EReal",
+          "hf : SourceProper f",
+          "hs : forall z in V, exists g : E, forall y : E, f z + embed(inner g (y-z)) <= f y",
+          "eta : R",
+          "heta : 0 < eta",
+          "x : E"
+        ],
+        "slots": [
+          {
+            "slot": 1,
+            "name": "objects_spaces",
+            "typed_statement_reconstruction": "Real inner-product space; sets V subset X; real psi; extended-real f; real-valued penalized function.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 2,
+            "name": "quantifiers_order",
+            "typed_statement_reconstruction": "All data universal; for each z in V a support vector may depend on z, then its inequality holds for every y in E; center x arbitrary.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 3,
+            "name": "assumptions_regularity",
+            "typed_statement_reconstruction": "V convex; psi strictly convex on X; f never bottom and finite somewhere; nonempty global-support subdifferential at every z in V; eta positive.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 4,
+            "name": "conclusion_metric",
+            "typed_statement_reconstruction": "StrictConvexOn V of z |-> toReal(f(z)) + eta^(-1) [psi(z)-psi(x)-fderiv(psi,x)(z-x)].",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 5,
+            "name": "constants_normalization_asymptotics",
+            "typed_statement_reconstruction": "Coefficient exactly eta^(-1). No strong-convexity modulus, 1/2 factor, normalization or rate.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 6,
+            "name": "probability_feedback_filtration_stopping",
+            "typed_statement_reconstruction": "No probability or feedback condition.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 7,
+            "name": "boundaries_excluded_regimes",
+            "typed_statement_reconstruction": "No completeness, finite dimension, differentiability, closedness or feasibility of x. Empty/singleton V permits vacuous strict inequalities; properness itself requires E inhabited. Properness plus support forces f finite on V. toReal maps infinities to zero outside that justified region. No existence of a minimizer or nonnegativity of divergence is asserted.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          }
+        ]
+      },
+      {
+        "name": "advance_eq_some_of_minimizer",
+        "binder_dependency_typing": [
+          "E : Type*",
+          "NormedAddCommGroup E",
+          "InnerProductSpace R E",
+          "CompleteSpace E",
+          "V X : Set E",
+          "hV : Convex R V",
+          "hVX : V subset X",
+          "psi : E -> R",
+          "hpsi : StrictConvexOn R X psi",
+          "f : E -> EReal",
+          "hf : SourceProper f",
+          "hs : forall z in V, SourceSubdifferential f z is nonempty",
+          "eta : R",
+          "heta : 0 < eta",
+          "x p : E",
+          "hp : p in V",
+          "hmin : forall z in V, Q(p) <= Q(z), where Q(z)=f(z)+embed(eta^(-1)*divergence psi z x)"
+        ],
+        "slots": [
+          {
+            "slot": 1,
+            "name": "objects_spaces",
+            "typed_statement_reconstruction": "Complete real inner-product space; same V, X, psi, f and eta; optional output in Option E.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 2,
+            "name": "quantifiers_order",
+            "typed_statement_reconstruction": "All data and candidate p universal subject to hp and hmin. No existential minimizer is in the conclusion.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 3,
+            "name": "assumptions_regularity",
+            "typed_statement_reconstruction": "All strict-convexity declaration assumptions, plus completeness, p in V and p an exact minimizer of the extended objective.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 4,
+            "name": "conclusion_metric",
+            "typed_statement_reconstruction": "advance V psi eta f x = some p. In particular all supplied minimizers under the same conditions must coincide.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 5,
+            "name": "constants_normalization_asymptotics",
+            "typed_statement_reconstruction": "Positive eta and exact reciprocal penalty; equality, not an approximation tolerance.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 6,
+            "name": "probability_feedback_filtration_stopping",
+            "typed_statement_reconstruction": "No probability or information assumptions. Classical choice is not a randomized or computational solver.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 7,
+            "name": "boundaries_excluded_regimes",
+            "typed_statement_reconstruction": "p in V prevents empty V here. No requirement x in X/V or differentiable psi at x. This is conditional identification of a chosen minimum, not an existence theorem. Finite objective values on V follow from properness plus supports. Completeness is retained as a stated assumption.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          }
+        ]
+      },
+      {
+        "name": "iterate_eq_of_source_updates",
+        "binder_dependency_typing": [
+          "E : Type*",
+          "NormedAddCommGroup E",
+          "InnerProductSpace R E",
+          "CompleteSpace E",
+          "V X : Set E",
+          "hV : Convex R V",
+          "hVX : V subset X",
+          "psi : E -> R",
+          "hpsi : StrictConvexOn R X psi",
+          "eta : N -> R",
+          "loss : N -> E -> EReal",
+          "x0 : E",
+          "x : N -> E",
+          "T : N",
+          "hinit : x(0)=x0",
+          "heta : forall t<T, eta(t)>0",
+          "hf : forall t<T, SourceProper(loss(t))",
+          "hs : forall t<T, forall z in V, SourceSubdifferential(loss(t),z) is nonempty",
+          "hmin : forall t<T, x(t+1) in V and forall z in V, Q_t(x(t+1)) <= Q_t(z)"
+        ],
+        "slots": [
+          {
+            "slot": 1,
+            "name": "objects_spaces",
+            "typed_statement_reconstruction": "Complete real inner-product space; full natural-indexed stepsize, loss and state sequences; finite horizon; optional iteration.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 2,
+            "name": "quantifiers_order",
+            "typed_statement_reconstruction": "Data universal. Assumptions apply for each t<T; support quantifiers are forall t<T, forall z in V, exists g, forall y in E. Conclusion forall t<=T.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 3,
+            "name": "assumptions_regularity",
+            "typed_statement_reconstruction": "Convex V subset X, strictly convex psi on X, initialized x sequence; positive stepsizes, proper losses, global supports on V, and exact feasible updates for every index before T.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 4,
+            "name": "conclusion_metric",
+            "typed_statement_reconstruction": "iterate V psi eta loss x0 t = some(x(t)) for all t<=T.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 5,
+            "name": "constants_normalization_asymptotics",
+            "typed_statement_reconstruction": "Exact equality; penalty eta(t)^(-1) at update t. No monotonicity or convergence rate.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 6,
+            "name": "probability_feedback_filtration_stopping",
+            "typed_statement_reconstruction": "No randomness, filtration, stopping or feedback constraints. Updates refer to loss(t) and state x(t).",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 7,
+            "name": "boundaries_excluded_regimes",
+            "typed_statement_reconstruction": "T=0 allowed and all time-indexed assumptions then vacuous; initial feasibility and interior location absent. If T>0, updates imply V nonempty. No control after T, no assertion that minimizers/trajectory exist, and no regret bound. Option failure is absorbing in the definition but is ruled out only on this prefix.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          }
+        ]
+      },
+      {
+        "name": "source_fixed_regret",
+        "binder_dependency_typing": [
+          "E : Type*",
+          "NormedAddCommGroup E",
+          "InnerProductSpace R E",
+          "FiniteDimensional R E",
+          "V X : Set E",
+          "hV : Convex R V",
+          "hVn : V.Nonempty",
+          "_hVc : IsClosed V",
+          "hVX : V subset X",
+          "psi : E -> R",
+          "hpsi : StrictConvexOn R X psi",
+          "_hpsic : forall r:R, IsClosed {z in X | psi(z)<=r}",
+          "hd : DifferentiableOn R psi (interior X)",
+          "eta : R",
+          "heta : eta>0",
+          "loss : N -> E -> EReal",
+          "x0 : E",
+          "x : N -> E",
+          "T : N",
+          "hinit : x(0)=x0",
+          "hinterior : forall t<=T, x(t) in interior X",
+          "hbot : forall t<T, forall z:E, loss(t,z)!=bottom",
+          "hdom : forall t<T, forall z in V, loss(t,z)<top",
+          "hs : forall t<T, forall z in V, exists g:E, forall y:E, loss(t,z)+embed(inner g (y-z))<=loss(t,y)",
+          "hmin : forall t<T, x(t+1) in V and Q_t(x(t+1))<=Q_t(z) for every z in V",
+          "u : E",
+          "hu : u in V"
+        ],
+        "slots": [
+          {
+            "slot": 1,
+            "name": "objects_spaces",
+            "typed_statement_reconstruction": "Finite-dimensional real inner-product space; real psi; extended losses; finite trajectory prefix; comparator u in V.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 2,
+            "name": "quantifiers_order",
+            "typed_statement_reconstruction": "All data universally quantified; all interior conditions use t<=T, all loss/update conditions use t<T; u quantified after those assumptions. Supports depend on t and z and hold globally in y.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 3,
+            "name": "assumptions_regularity",
+            "typed_statement_reconstruction": "Nonempty closed convex V subset X; psi strictly convex on X; all real sublevels of psi+indicator X closed; psi differentiable on interior X; eta>0; initialization; all states through T interior; no bottom losses globally and no top losses on V before T; global supports on V; supplied exact feasible minimizers.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 4,
+            "name": "conclusion_metric",
+            "typed_statement_reconstruction": "Sum_{t=0}^{T-1} [toReal(loss(t,x(t+1)))-toReal(loss(t,u))] <= divergence(psi,u,x0)/eta - [Sum_{t=0}^{T-1} divergence(psi,x(t+1),x(t))]/eta.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 5,
+            "name": "constants_normalization_asymptotics",
+            "typed_statement_reconstruction": "Exactly reciprocal eta; cumulative unnormalized sum; negative movement-divergence correction retained; no terminal -divergence(psi,u,x(T))/eta term; no asymptotic rate.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 6,
+            "name": "probability_feedback_filtration_stopping",
+            "typed_statement_reconstruction": "Deterministic post-update loss difference. No expectations, high-probability event, feedback timing, nonanticipation, filtration or stopping-time hypotheses.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 7,
+            "name": "boundaries_excluded_regimes",
+            "typed_statement_reconstruction": "T=0 allowed; empty sums yield 0<=divergence(psi,u,x0)/eta. x0 need not be feasible; u need not be interior; x(T) must be interior. Feasible evaluated losses are finite, so toReal is faithful there. Closedness hypotheses remain despite underscore names. No unconditional minimizer existence, pre-update regret, uniform rate or later-horizon control.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          }
+        ]
+      },
+      {
+        "name": "source_variable_regret",
+        "binder_dependency_typing": [
+          "E : Type*",
+          "NormedAddCommGroup E",
+          "InnerProductSpace R E",
+          "FiniteDimensional R E",
+          "V X : Set E",
+          "hV : Convex R V",
+          "hVn : V.Nonempty",
+          "_hVc : IsClosed V",
+          "hVX : V subset X",
+          "psi : E -> R",
+          "hpsi : StrictConvexOn R X psi",
+          "_hpsic : forall r:R, IsClosed {z in X | psi(z)<=r}",
+          "hd : DifferentiableOn R psi (interior X)",
+          "eta : N -> R",
+          "loss : N -> E -> EReal",
+          "x0 : E",
+          "x : N -> E",
+          "T : N",
+          "hT : 0<T",
+          "heta : forall t<T, 0<eta(t)",
+          "hinit : x(0)=x0",
+          "hinterior : forall t<=T, x(t) in interior X",
+          "hmono : forall t:N, t+1<T -> eta(t+1)<=eta(t)",
+          "hbot : forall t<T, forall z:E, loss(t,z)!=bottom",
+          "hdom : forall t<T, forall z in V, loss(t,z)<top",
+          "hs : forall t<T, forall z in V, exists g:E, forall y:E, loss(t,z)+embed(inner g (y-z))<=loss(t,y)",
+          "hmin : forall t<T, x(t+1) in V and Q_t(x(t+1))<=Q_t(z) for every z in V",
+          "u : E",
+          "hu : u in V"
+        ],
+        "slots": [
+          {
+            "slot": 1,
+            "name": "objects_spaces",
+            "typed_statement_reconstruction": "Finite-dimensional real inner-product space; real psi; extended losses; positive finite horizon; variable stepsizes; comparator in V; finite nonempty maximum of real divergences.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 2,
+            "name": "quantifiers_order",
+            "typed_statement_reconstruction": "All data universal; positive stepsizes for t<T; nonincrease only if t+1<T; states interior for t<=T; support nesting forall t<T, forall z in V, exists g, forall y in E.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 3,
+            "name": "assumptions_regularity",
+            "typed_statement_reconstruction": "All common regret assumptions plus T>0, positive finite-prefix stepsizes and nonincreasing adjacent stepsizes inside that prefix. Exact update t uses eta(t).",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 4,
+            "name": "conclusion_metric",
+            "typed_statement_reconstruction": "Sum_{t=0}^{T-1} [toReal(loss(t,x(t+1)))-toReal(loss(t,u))] <= max_{0<=t<T} divergence(psi,u,x(t))/eta(T-1) - Sum_{t=0}^{T-1} divergence(psi,x(t+1),x(t))/eta(t).",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 5,
+            "name": "constants_normalization_asymptotics",
+            "typed_statement_reconstruction": "Finite max divided by final used stepsize eta(T-1); each correction divided by its own eta(t); no averaging, 1/2 factor, global diameter or asymptotic rate.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 6,
+            "name": "probability_feedback_filtration_stopping",
+            "typed_statement_reconstruction": "Deterministic post-update comparison. No probability, expectation, filtration, stopping-time or causality guarantee.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          },
+          {
+            "slot": 7,
+            "name": "boundaries_excluded_regimes",
+            "typed_statement_reconstruction": "T=0 excluded; T=1 has vacuous monotonicity and singleton max. Natural T-1 is protected by T>0 and eta(T-1)>0. Max includes state 0, excludes state T. No constraint on eta(T) or later values. Comparator may lie on boundary; initial point need not be feasible. No optimizer existence, pre-update regret or uniform all-horizon bound.",
+            "reconstruction_alignment": "aligned",
+            "original_source_comparison": "not-assessed"
+          }
+        ]
+      }
+    ],
+    "probability_claims_present": false,
+    "compilation_performed": false,
+    "proof_bodies_inspected": false,
+    "source_fidelity_certified": false,
+    "missing_context_questions": [],
+    "source_review_required": true
+  },
+  "receipt": {
+    "schema_version": 1,
+    "created_at_utc": "2026-11-04T18:18:55.1512239Z",
+    "actor": {
+      "role": "blind decoder",
+      "task": "/root/batch40_blind_decoder",
+      "independence": "Distinct actor from formalizer and source reviewer",
+      "model_change_requested": false
+    },
+    "status": "blind-reconstructed",
+    "review_characterization": "source-withheld independent reconstruction, not absolute absence of all related contextual cues",
+    "packet": {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch40-neutral-input-v1/packet.md",
+      "expected_sha256": "8dda98b68b24fea20b35610d7f71622c2dc40ff974fdd15e978e533709356461",
+      "observed_sha256": "8dda98b68b24fea20b35610d7f71622c2dc40ff974fdd15e978e533709356461",
+      "hash_match": true
+    },
+    "instruction_input": {
+      "path": "canonical-repository/.agents/skills/bandit-semantic-roundtrip/SKILL.md"
+    },
+    "actual_context_exposure": {
+      "inherited": [
+        "Generic ABRL workspace AGENTS instructions supplied in the user message",
+        "Developer-provided memory summary containing ABRL and historical research-topic cues, without opening memory files or using it to reconstruct mathematics",
+        "Environment context, available skills catalog, and general tool/developer instructions",
+        "Parent task assignment and parent follow-up about accurately disclosing context exposure"
+      ],
+      "packet_visible": [
+        "Declaration names and namespaces",
+        "One import name",
+        "The eight definitions and six typed signatures",
+        "Packet prose describing allowed reconstruction scope"
+      ],
+      "mathematical_evidence_used": [
+        "Only the designated neutral packet, interpreted using standard mathematical/Lean notation"
+      ],
+      "files_read_for_evidence": [
+        "canonical-repository/.agents/skills/bandit-semantic-roundtrip/SKILL.md",
+        "private-maintenance/github-maintenance-goal-20261011/batch40-neutral-input-v1/packet.md"
+      ],
+      "generated_output_read_for_validation": [
+        "semantic-slots.json"
+      ],
+      "not_read": [
+        "Original mathematical source or its identity",
+        "Implementation proof bodies",
+        "Other maintenance packets",
+        "Prior review verdicts",
+        "Repository source outside the explicitly authorized skill",
+        "Memory files"
+      ],
+      "no_web_or_source_search": true,
+      "generic_memory_used_as_mathematical_evidence": false
+    },
+    "coverage": {
+      "typed_declarations": 6,
+      "project_definitions_expanded": 8,
+      "semantic_slots_per_declaration": 7,
+      "total_slot_records": 42,
+      "binder_dependency_typing": true,
+      "natural_language_reconstruction": true,
+      "latex_reconstruction": true,
+      "vacuity_domain_infinity_index_boundaries": true,
+      "not_proved_limits": true
+    },
+    "verification": {
+      "packet_hash_verified": true,
+      "semantic_slots_json_parsed": true,
+      "counts_verified": true,
+      "output_hashes_computed": true,
+      "compilation_performed": false,
+      "proof_validity_verified": false,
+      "source_fidelity_certified": false
+    },
+    "missing_context_questions": [],
+    "source_comparison": {
+      "status": "not-assessed",
+      "reason": "Original source intentionally withheld. Separate source reviewer must compare source, typed packet and reconstruction."
+    },
+    "filesystem_action": {
+      "mode": "create-only private outputs",
+      "preexisting_target_files_found": false,
+      "lean_edits": false,
+      "remote_changes": false,
+      "source_repository_edits": false
+    },
+    "outputs": [
+      {
+        "path": "private-maintenance/github-maintenance-goal-20261011/batch40-blind-review-v1/reconstruction.md",
+        "sha256": "fb013e28808c5c88e28153ce0c8969af929b6d3dbade1388c78e0698beec8e98"
+      },
+      {
+        "path": "private-maintenance/github-maintenance-goal-20261011/batch40-blind-review-v1/semantic-slots.json",
+        "sha256": "50afab655b65262cded3bd98b36fc1dde6ae6b190b3660b9e79a460949fbf3e2"
+      },
+      {
+        "path": "private-maintenance/github-maintenance-goal-20261011/batch40-blind-review-v1/receipt.json",
+        "sha256_recording": "Reported separately after creation; no self-referential checksum"
+      }
+    ],
+    "remaining_gate": "Independent source reviewer must assess source fidelity. This receipt is not an accepted verdict."
+  },
+  "exposure": "Independent source-withheld reconstruction with inherited generic cues disclosed; not absolute blindness."
+}

@@ -1,0 +1,492 @@
+{
+  "schema": "abrl.batch40.phase2.binder_audit.v1",
+  "reviewer": "/root/batch40_source_reviewer",
+  "endpoint_taxonomy": [
+    "SOURCE",
+    "STANDING",
+    "TYPING",
+    "RULED",
+    "EXCESS"
+  ],
+  "library_taxonomy_note": "LIBRARY applies only to four explicitly derived non-Anchor nodes; does not license those premises as endpoint hypotheses.",
+  "declarations": [
+    {
+      "declaration": "sourceProper_of_domain",
+      "level": "B_DERIVED_LIBRARY_NODE_CANDIDATE",
+      "header_sha256": "7d1fa327795250123c8ce284cf8ac236e2355d902ec44a0204ddaf01fb748dc3",
+      "data_and_typeclass_binders": {
+        "E": "arbitrary Type",
+        "f": "E->EReal",
+        "V": "Set E"
+      },
+      "logical_binders": [
+        {
+          "binder": "hV",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V nonempty",
+          "source_or_role": "Provides finite witness in feasible set"
+        },
+        {
+          "binder": "hbot",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For all z, f(z)!=bottom",
+          "source_or_role": "Source codomain representation"
+        },
+        {
+          "binder": "hdom",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For all z in V, f(z)<top",
+          "source_or_role": "With hbot gives finite witness"
+        }
+      ],
+      "source_anchor_taxonomy_applicable": false,
+      "note": "Derived properness adapter, not a separately printed source theorem."
+    },
+    {
+      "declaration": "penalized_strictConvex",
+      "level": "B_DERIVED_LIBRARY_NODE_CANDIDATE",
+      "header_sha256": "9e4859b3bdfc7bea0945a2eecdb5b0d3bc157aed8b3199b9f0887aa0ee57d312",
+      "data_and_typeclass_binders": {
+        "E": "Type, NormedAddCommGroup, InnerProductSpace R",
+        "V,X": "Set E",
+        "psi": "E->R",
+        "f": "E->EReal",
+        "eta": "R",
+        "x": "arbitrary E"
+      },
+      "logical_binders": [
+        {
+          "binder": "hV",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V convex",
+          "source_or_role": "Source geometry"
+        },
+        {
+          "binder": "hVX",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V subset X",
+          "source_or_role": "Source domain"
+        },
+        {
+          "binder": "hpsi",
+          "classification": "LIBRARY",
+          "expanded_meaning": "X convex plus psi strict Jensen on X",
+          "source_or_role": "StrictConvexOn expansion"
+        },
+        {
+          "binder": "hf",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For all z f(z)!=bottom AND exists z,real a with f(z)=a",
+          "source_or_role": "Explicit library premise, derivable from source nonempty finite feasible domain. Not a proposed extra endpoint binder."
+        },
+        {
+          "binder": "hs",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every z in V exists g with support inequality for every y in E",
+          "source_or_role": "Global support; with properness forces finite values on V and yields convex finite restriction."
+        },
+        {
+          "binder": "heta",
+          "classification": "LIBRARY",
+          "expanded_meaning": "0<eta",
+          "source_or_role": "Positive reciprocal coefficient"
+        }
+      ],
+      "source_anchor_taxonomy_applicable": false,
+      "note": "No completeness, finite dimension, center interiority or differentiability. Strictness uses affine algebra; no nonnegativity/attainment conclusion."
+    },
+    {
+      "declaration": "advance_eq_some_of_minimizer",
+      "level": "B_DERIVED_LIBRARY_NODE_CANDIDATE",
+      "header_sha256": "3a1f4a3dbda64b04a2a8f0b6eb1bc62d29f66776282df29b62085763bde3b1a2",
+      "data_and_typeclass_binders": {
+        "E": "Type, NormedAddCommGroup, InnerProductSpace R, CompleteSpace",
+        "V,X": "Set E",
+        "psi": "E->R",
+        "f": "E->EReal",
+        "eta": "R",
+        "x,p": "E"
+      },
+      "logical_binders": [
+        {
+          "binder": "hV",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V convex",
+          "source_or_role": "Source geometry"
+        },
+        {
+          "binder": "hVX",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V subset X",
+          "source_or_role": "Source domain"
+        },
+        {
+          "binder": "hpsi",
+          "classification": "LIBRARY",
+          "expanded_meaning": "X convex plus psi strict Jensen on X",
+          "source_or_role": "StrictConvexOn expansion"
+        },
+        {
+          "binder": "hf",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For all z f(z)!=bottom AND exists z,real a with f(z)=a",
+          "source_or_role": "Explicit library premise, derivable from source nonempty finite feasible domain. Not a proposed extra endpoint binder."
+        },
+        {
+          "binder": "hs",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every z in V exists g with support inequality for every y in E",
+          "source_or_role": "Global support; with properness forces finite values on V and yields convex finite restriction."
+        },
+        {
+          "binder": "heta",
+          "classification": "LIBRARY",
+          "expanded_meaning": "0<eta",
+          "source_or_role": "Positive reciprocal coefficient"
+        },
+        {
+          "binder": "hp",
+          "classification": "LIBRARY",
+          "expanded_meaning": "p in V",
+          "source_or_role": "Supplied feasible candidate"
+        },
+        {
+          "binder": "hmin",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every z in V, f(p)+embed(inverse(eta)*B(p,x))<=f(z)+embed(inverse(eta)*B(z,x))",
+          "source_or_role": "Exact supplied-minimizer relation"
+        }
+      ],
+      "source_anchor_taxonomy_applicable": false,
+      "note": "Conditional choice identification/uniqueness, not existence. Completeness is a library restriction, satisfied by source finite-dimensional instances. Necessity of this typeclass remains purification question."
+    },
+    {
+      "declaration": "iterate_eq_of_source_updates",
+      "level": "B_DERIVED_LIBRARY_NODE_CANDIDATE",
+      "header_sha256": "5c941bb6a7e573d66e325896d88be742992d3c0143c384721e6c3248865a0d6b",
+      "data_and_typeclass_binders": {
+        "E": "Type, NormedAddCommGroup, InnerProductSpace R, CompleteSpace",
+        "V,X": "Set E",
+        "psi": "E->R",
+        "eta": "N->R",
+        "loss": "N->E->EReal",
+        "x0": "E",
+        "x": "N->E",
+        "T": "N"
+      },
+      "logical_binders": [
+        {
+          "binder": "hV",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V convex",
+          "source_or_role": "Source geometry"
+        },
+        {
+          "binder": "hVX",
+          "classification": "LIBRARY",
+          "expanded_meaning": "V subset X",
+          "source_or_role": "Source domain"
+        },
+        {
+          "binder": "hpsi",
+          "classification": "LIBRARY",
+          "expanded_meaning": "X convex plus psi strict Jensen on X",
+          "source_or_role": "StrictConvexOn expansion"
+        },
+        {
+          "binder": "hinit",
+          "classification": "LIBRARY",
+          "expanded_meaning": "x(0)=x0",
+          "source_or_role": "Recursion initialization"
+        },
+        {
+          "binder": "heta",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every t<T, 0<eta(t)",
+          "source_or_role": "Finite used prefix"
+        },
+        {
+          "binder": "hf",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every t<T, loss(t) nowhere bottom and finite somewhere",
+          "source_or_role": "Expanded properness of each used loss"
+        },
+        {
+          "binder": "hs",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every t<T and z in V exists g supporting loss(t) globally for all y in E",
+          "source_or_role": "Global time/point dependent support"
+        },
+        {
+          "binder": "hmin",
+          "classification": "LIBRARY",
+          "expanded_meaning": "For every t<T, x(t+1) in V AND Q_t(x(t+1))<=Q_t(z) for every z in V",
+          "source_or_role": "Exact source-update relation on supplied sequence"
+        }
+      ],
+      "source_anchor_taxonomy_applicable": false,
+      "note": "Conclusion every t<=T optional iterate equals some(x(t)); T=0 only initialization. No run-existence or post-T guarantee."
+    },
+    {
+      "declaration": "source_fixed_regret",
+      "level": "A_SOURCE_ANCHOR_CONDITIONAL_VALID_RUN",
+      "header_sha256": "5d6fbacecc4078582dcee340badd4f09609c7aec404382b76b85257d5b3d5624",
+      "data_and_typeclass_binders": {
+        "E and typeclasses": "TYPING: Type, NormedAddCommGroup, InnerProductSpace R, FiniteDimensional R; coordinate-invariant finite-dimensional representation of R^d.",
+        "V,X": "TYPING: sets in E",
+        "psi": "TYPING: ambient E->R representative of source function on X",
+        "eta": "TYPING: scalar real for fixed or N->R for variable",
+        "loss": "TYPING: N->E->EReal; only t<T used",
+        "x0,x": "TYPING: initial state and universal supplied trajectory",
+        "T": "TYPING: natural finite horizon",
+        "u": "TYPING: ambient comparator"
+      },
+      "logical_binders": [
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "expanded_meaning": "V is convex",
+          "source_or_role": "Algorithm15.8/Theorem15.30"
+        },
+        {
+          "binder": "hVn",
+          "classification": "SOURCE",
+          "expanded_meaning": "V is nonempty",
+          "source_or_role": "Algorithm15.8/Theorem15.30"
+        },
+        {
+          "binder": "_hVc",
+          "classification": "SOURCE",
+          "expanded_meaning": "V is closed",
+          "source_or_role": "Printed source assumption. Underscore or possible proof nonuse does not remove it."
+        },
+        {
+          "binder": "hVX",
+          "classification": "SOURCE",
+          "expanded_meaning": "V subset X",
+          "source_or_role": "Algorithm15.8/Theorem15.30"
+        },
+        {
+          "binder": "hpsi.strictness",
+          "classification": "SOURCE",
+          "expanded_meaning": "Strict Jensen inequality for psi on X",
+          "source_or_role": "Definition6.3 and Theorem15.30"
+        },
+        {
+          "binder": "hpsi.convex_domain",
+          "classification": "STANDING",
+          "expanded_meaning": "X is convex",
+          "source_or_role": "StrictConvexOn contains this field; source Definition6.3 is on convex sets."
+        },
+        {
+          "binder": "_hpsic",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every real a, {z in X: psi(z)<=a} is closed",
+          "source_or_role": "Theorem15.30 closed generator, expanded via Definition2.16 and indicator X. Not global ambient psi closedness or closed X."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "expanded_meaning": "psi differentiable within interior X at every point there",
+          "source_or_role": "Source differentiability on interior X. This set is open, so actual ambient derivative exists at each such point."
+        },
+        {
+          "binder": "hinit",
+          "classification": "TYPING",
+          "expanded_meaning": "x(0)=x0",
+          "source_or_role": "Identification of trajectory index zero with source initialization."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<=T, x(t) in interior X",
+          "source_or_role": "Initial interiority from algorithm plus all update interiorities from theorem."
+        },
+        {
+          "binder": "hbot",
+          "classification": "TYPING",
+          "expanded_meaning": "For all t<T and all z in E, loss(t,z) is not bottom",
+          "source_or_role": "Representation of source loss codomain (-infinity,+infinity] in EReal."
+        },
+        {
+          "binder": "hdom",
+          "classification": "SOURCE",
+          "expanded_meaning": "For all t<T and all z in V, loss(t,z)<top",
+          "source_or_role": "Algorithm15.8 domain containment; with hbot gives finite values on V."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "expanded_meaning": "For all t<T and z in V exists g in E such that for every y in E, loss(t,z)+embed(inner(g,y-z))<=loss(t,y)",
+          "source_or_role": "Global Definition2.20. Properness follows from hVn,hbot,hdom; no extra properness binder is inserted."
+        },
+        {
+          "binder": "hmin.feasibility",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<T, x(t+1) in V",
+          "source_or_role": "Membership in source argmin set."
+        },
+        {
+          "binder": "hmin.minimum",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<T and z in V, Q_t(x(t+1))<=Q_t(z), Q_t(z)=loss(t,z)+embed(inverse(eta_t)*B(z,x(t)))",
+          "source_or_role": "Exact Algorithm15.8 update characterization; not an assumed first-order optimality, one-step inequality, or telescope."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "expanded_meaning": "u in V",
+          "source_or_role": "Every source comparator."
+        },
+        {
+          "binder": "heta",
+          "classification": "SOURCE",
+          "expanded_meaning": "0<eta",
+          "source_or_role": "Positive source rates; scalar represents constant-rate case."
+        }
+      ],
+      "excess_binders": [],
+      "ruled_binders": [],
+      "producer_assumption_smuggling_found": false,
+      "statement_delta": "D3: fixed T=0 extension"
+    },
+    {
+      "declaration": "source_variable_regret",
+      "level": "A_SOURCE_ANCHOR_CONDITIONAL_VALID_RUN",
+      "header_sha256": "6fe100d19d2662080084fc8c18427fd2f456d7bbedc71165143134e8fc4f4424",
+      "data_and_typeclass_binders": {
+        "E and typeclasses": "TYPING: Type, NormedAddCommGroup, InnerProductSpace R, FiniteDimensional R; coordinate-invariant finite-dimensional representation of R^d.",
+        "V,X": "TYPING: sets in E",
+        "psi": "TYPING: ambient E->R representative of source function on X",
+        "eta": "TYPING: scalar real for fixed or N->R for variable",
+        "loss": "TYPING: N->E->EReal; only t<T used",
+        "x0,x": "TYPING: initial state and universal supplied trajectory",
+        "T": "TYPING: natural finite horizon",
+        "u": "TYPING: ambient comparator"
+      },
+      "logical_binders": [
+        {
+          "binder": "hV",
+          "classification": "SOURCE",
+          "expanded_meaning": "V is convex",
+          "source_or_role": "Algorithm15.8/Theorem15.30"
+        },
+        {
+          "binder": "hVn",
+          "classification": "SOURCE",
+          "expanded_meaning": "V is nonempty",
+          "source_or_role": "Algorithm15.8/Theorem15.30"
+        },
+        {
+          "binder": "_hVc",
+          "classification": "SOURCE",
+          "expanded_meaning": "V is closed",
+          "source_or_role": "Printed source assumption. Underscore or possible proof nonuse does not remove it."
+        },
+        {
+          "binder": "hVX",
+          "classification": "SOURCE",
+          "expanded_meaning": "V subset X",
+          "source_or_role": "Algorithm15.8/Theorem15.30"
+        },
+        {
+          "binder": "hpsi.strictness",
+          "classification": "SOURCE",
+          "expanded_meaning": "Strict Jensen inequality for psi on X",
+          "source_or_role": "Definition6.3 and Theorem15.30"
+        },
+        {
+          "binder": "hpsi.convex_domain",
+          "classification": "STANDING",
+          "expanded_meaning": "X is convex",
+          "source_or_role": "StrictConvexOn contains this field; source Definition6.3 is on convex sets."
+        },
+        {
+          "binder": "_hpsic",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every real a, {z in X: psi(z)<=a} is closed",
+          "source_or_role": "Theorem15.30 closed generator, expanded via Definition2.16 and indicator X. Not global ambient psi closedness or closed X."
+        },
+        {
+          "binder": "hd",
+          "classification": "SOURCE",
+          "expanded_meaning": "psi differentiable within interior X at every point there",
+          "source_or_role": "Source differentiability on interior X. This set is open, so actual ambient derivative exists at each such point."
+        },
+        {
+          "binder": "hinit",
+          "classification": "TYPING",
+          "expanded_meaning": "x(0)=x0",
+          "source_or_role": "Identification of trajectory index zero with source initialization."
+        },
+        {
+          "binder": "hinterior",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<=T, x(t) in interior X",
+          "source_or_role": "Initial interiority from algorithm plus all update interiorities from theorem."
+        },
+        {
+          "binder": "hbot",
+          "classification": "TYPING",
+          "expanded_meaning": "For all t<T and all z in E, loss(t,z) is not bottom",
+          "source_or_role": "Representation of source loss codomain (-infinity,+infinity] in EReal."
+        },
+        {
+          "binder": "hdom",
+          "classification": "SOURCE",
+          "expanded_meaning": "For all t<T and all z in V, loss(t,z)<top",
+          "source_or_role": "Algorithm15.8 domain containment; with hbot gives finite values on V."
+        },
+        {
+          "binder": "hs",
+          "classification": "SOURCE",
+          "expanded_meaning": "For all t<T and z in V exists g in E such that for every y in E, loss(t,z)+embed(inner(g,y-z))<=loss(t,y)",
+          "source_or_role": "Global Definition2.20. Properness follows from hVn,hbot,hdom; no extra properness binder is inserted."
+        },
+        {
+          "binder": "hmin.feasibility",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<T, x(t+1) in V",
+          "source_or_role": "Membership in source argmin set."
+        },
+        {
+          "binder": "hmin.minimum",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<T and z in V, Q_t(x(t+1))<=Q_t(z), Q_t(z)=loss(t,z)+embed(inverse(eta_t)*B(z,x(t)))",
+          "source_or_role": "Exact Algorithm15.8 update characterization; not an assumed first-order optimality, one-step inequality, or telescope."
+        },
+        {
+          "binder": "hu",
+          "classification": "SOURCE",
+          "expanded_meaning": "u in V",
+          "source_or_role": "Every source comparator."
+        },
+        {
+          "binder": "heta",
+          "classification": "SOURCE",
+          "expanded_meaning": "For every t<T, 0<eta(t)",
+          "source_or_role": "Positive source rates; scalar represents constant-rate case."
+        },
+        {
+          "binder": "hT",
+          "classification": "TYPING",
+          "expanded_meaning": "0<T",
+          "source_or_role": "Printed maximum and last rate require nonempty horizon."
+        },
+        {
+          "binder": "hmono",
+          "classification": "SOURCE",
+          "expanded_meaning": "For t+1<T, eta(t+1)<=eta(t)",
+          "source_or_role": "Matches proof-used source comparisons. Final printed extra comparison omitted, explicit delta D2; no RULED correction authorized."
+        }
+      ],
+      "excess_binders": [],
+      "ruled_binders": [],
+      "producer_assumption_smuggling_found": false,
+      "statement_delta": "D2: printed extra unused rate comparison omitted"
+    }
+  ],
+  "endpoint_excess_count": 0,
+  "human_approved_source_corrections": [],
+  "proof_bodies_read": false
+}

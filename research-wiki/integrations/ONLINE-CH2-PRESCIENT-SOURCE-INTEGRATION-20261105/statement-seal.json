@@ -1,0 +1,171 @@
+{
+  "originalSealSnapshot": {
+    "head": "2f039d55ad2f9a9f9b97027287709804689cf46d",
+    "productionSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+    "testSHA256": "1cd6d7f26f4c9fed1fa476e1f5360823d3e3b3f743eedfe100c840cf9a345a40",
+    "headers": [
+      {
+        "name": "sourceProper_of_domain",
+        "header": "theorem sourceProper_of_domain (f : E → EReal) (V : Set E)\n    (hV : V.Nonempty) (hbot : ∀ z, f z ≠ ⊥)\n    (hdom : V ⊆ effectiveDomain f) :\n    SourceProper f",
+        "sha256": "7d1fa327795250123c8ce284cf8ac236e2355d902ec44a0204ddaf01fb748dc3",
+        "line": 22
+      },
+      {
+        "name": "penalized_strictConvex",
+        "header": "theorem penalized_strictConvex (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (η : ℝ) (hη : 0 < η) (x : E) :\n    StrictConvexOn ℝ V (fun z => (f z).toReal + η⁻¹ * divergence ψ z x)",
+        "sha256": "9e4859b3bdfc7bea0945a2eecdb5b0d3bc157aed8b3199b9f0887aa0ee57d312",
+        "line": 35
+      },
+      {
+        "name": "advance_eq_some_of_minimizer",
+        "header": "theorem advance_eq_some_of_minimizer (V X : Set E) (hV : Convex ℝ V)\n    (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V)\n    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    advance V ψ η f x = some p",
+        "sha256": "3a1f4a3dbda64b04a2a8f0b6eb1bc62d29f66776282df29b62085763bde3b1a2",
+        "line": 67
+      },
+      {
+        "name": "iterate_eq_of_source_updates",
+        "header": "theorem iterate_eq_of_source_updates (V X : Set E) (hV : Convex ℝ V)\n    (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hinit : x 0 = x0) (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) :\n    ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t)",
+        "sha256": "5c941bb6a7e573d66e325896d88be742992d3c0143c384721e6c3248865a0d6b",
+        "line": 97
+      },
+      {
+        "name": "source_fixed_regret",
+        "header": "theorem source_fixed_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal)\n    (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0)\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + ((η⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+        "sha256": "5d6fbacecc4078582dcee340badd4f09609c7aec404382b76b85257d5b3d5624",
+        "line": 130
+      },
+      {
+        "name": "source_variable_regret",
+        "header": "theorem source_variable_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hη : ∀ t < T, 0 < η t)\n    (hinit : x 0 = x0) (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "sha256": "6fe100d19d2662080084fc8c18427fd2f456d7bbedc71165143134e8fc4f4424",
+        "line": 160
+      }
+    ],
+    "definitions": [
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlineConvexExtended.lean",
+        "sha256": "398ae0704cba6f78cd3e1b95bfa346e32e55243b199811444aabaaec38f34cde"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlineConvexExtended.lean",
+        "sha256": "ad4c0c242b56e72593aea855b56216b9bad9136cf825ea9434f2e86496cc0819"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlineClosedProper.lean",
+        "sha256": "f541de1de90251a5e610bf9ae422137ea02e414d5786c58510027cc20d1bd26e"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlineClosedProper.lean",
+        "sha256": "66869882855609288ac3ef171d00cba06a1961f229b87781dc536414f9fa440e"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlineSubgradientBasic.lean",
+        "sha256": "32c2f5b1b8136a9fc65dd58ea766def91102fd0db167c007d9457a404dba83fe"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlineBregmanProximal.lean",
+        "sha256": "cfb82f372effe3af8dbf78c1032a0376a288361659c165312a270511053fb491"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "sha256": "77e7c82a0b4f2fef253b605c7c201e79267438f80c8edb00d84d03a79c98dcf7"
+      },
+      {
+        "kind": "definition",
+        "file": "BanditRLProof/OnlinePrescientBregman.lean",
+        "sha256": "c5f4a473a26961efb119e68482c517c3856332bfe21ff10932821ce1967cc6a2"
+      }
+    ],
+    "neutralPacketSHA256": "8dda98b68b24fea20b35610d7f71622c2dc40ff974fdd15e978e533709356461",
+    "originalProofBytesUnchanged": true,
+    "sourceReviewPending": true
+  },
+  "currentExactGuards": [
+    {
+      "exactStatement": "theorem sourceProper_of_domain (f : E → EReal) (V : Set E)\n    (hV : V.Nonempty) (hbot : ∀ z, f z ≠ ⊥)\n    (hdom : V ⊆ effectiveDomain f) :\n    SourceProper f",
+      "context": "namespace BanditRL.OnlineConvex\nvariable {E : Type*}",
+      "signatureSHA256": "7d1fa327795250123c8ce284cf8ac236e2355d902ec44a0204ddaf01fb748dc3",
+      "sourceModule": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sourceModuleSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "binderReview": "binder-review.json"
+    },
+    {
+      "exactStatement": "theorem penalized_strictConvex (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (η : ℝ) (hη : 0 < η) (x : E) :\n    StrictConvexOn ℝ V (fun z => (f z).toReal + η⁻¹ * divergence ψ z x)",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+      "signatureSHA256": "9e4859b3bdfc7bea0945a2eecdb5b0d3bc157aed8b3199b9f0887aa0ee57d312",
+      "sourceModule": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sourceModuleSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "binderReview": "binder-review.json"
+    },
+    {
+      "exactStatement": "theorem advance_eq_some_of_minimizer (V X : Set E) (hV : Convex ℝ V)\n    (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (f : E → EReal) (hf : BanditRL.OnlineConvex.SourceProper f)\n    (hs : ∀ z ∈ V, (BanditRL.OnlineConvex.SourceSubdifferential f z).Nonempty)\n    (η : ℝ) (hη : 0 < η) (x p : E) (hp : p ∈ V)\n    (hmin : IsMinOn (fun z => f z + ((η⁻¹ * divergence ψ z x : ℝ) : EReal)) V p) :\n    advance V ψ η f x = some p",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "signatureSHA256": "3a1f4a3dbda64b04a2a8f0b6eb1bc62d29f66776282df29b62085763bde3b1a2",
+      "sourceModule": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sourceModuleSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "binderReview": "binder-review.json"
+    },
+    {
+      "exactStatement": "theorem iterate_eq_of_source_updates (V X : Set E) (hV : Convex ℝ V)\n    (hVX : V ⊆ X) (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hinit : x 0 = x0) (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) :\n    ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t)",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "signatureSHA256": "5c941bb6a7e573d66e325896d88be742992d3c0143c384721e6c3248865a0d6b",
+      "sourceModule": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sourceModuleSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "binderReview": "binder-review.json"
+    },
+    {
+      "exactStatement": "theorem source_fixed_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℝ) (hη : 0 < η) (loss : ℕ → E → EReal)\n    (x0 : E) (x : ℕ → E) (T : ℕ) (hinit : x 0 = x0)\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + ((η⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]",
+      "signatureSHA256": "5d6fbacecc4078582dcee340badd4f09609c7aec404382b76b85257d5b3d5624",
+      "sourceModule": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sourceModuleSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "binderReview": "binder-review.json"
+    },
+    {
+      "exactStatement": "theorem source_variable_regret (V X : Set E) (hV : Convex ℝ V)\n    (hVn : V.Nonempty) (_hVc : IsClosed V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hψ : StrictConvexOn ℝ X ψ)\n    (_hψc : BanditRL.OnlineConvex.SourceClosed (fun z =>\n      (ψ z : EReal) + BanditRL.OnlineConvex.extendedIndicator X z))\n    (hd : DifferentiableOn ℝ ψ (interior X))\n    (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hη : ∀ t < T, 0 < η t)\n    (hinit : x 0 = x0) (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hbot : ∀ t < T, ∀ z, loss t z ≠ ⊥)\n    (hdom : ∀ t < T, V ⊆ BanditRL.OnlineConvex.effectiveDomain (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (hmin : ∀ t < T, x (t + 1) ∈ V ∧\n      IsMinOn (fun z => loss t z + (((η t)⁻¹ * divergence ψ z (x t) : ℝ) : EReal))\n        V (x (t + 1))) (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+      "context": "namespace BanditRL.OnlinePrescientBregman\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]",
+      "signatureSHA256": "6fe100d19d2662080084fc8c18427fd2f456d7bbedc71165143134e8fc4f4424",
+      "sourceModule": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+      "sourceModuleSHA256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+      "binderReview": "binder-review.json"
+    },
+    {
+      "exactStatement": "theorem fixed_source_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧\n      StrictConvexOn ℝ V (fun z => (f0 z).toReal + divergence ψ z (1 / 2)) ∧\n      advance V ψ 1 f0 (1 / 2) = some 0 ∧\n      (∀ t ≤ 2, iterate V ψ (fun _ => 1) loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (x 1) (x 0) = 11 / 64 ∧\n      divergence ψ (x 2) (x 1) = 9 / 64 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (-9 / 8 : ℝ) ≤ 5 / 16",
+      "context": "namespace BanditRL.OnlinePrescientBregmanSourceCanary\nset_option autoImplicit false",
+      "signatureSHA256": "f33741c2662e28c440ae3ba34e2bc3938ccd7e6792e07beff8d04cd83065fc40",
+      "sourceModule": "Tests/OnlinePrescientBregmanSourceCanary.lean",
+      "sourceModuleSHA256": "1cd6d7f26f4c9fed1fa476e1f5360823d3e3b3f743eedfe100c840cf9a345a40",
+      "binderReview": "statement-audit.json; complete exact8/6conjunct Test signature"
+    },
+    {
+      "exactStatement": "theorem decreasing_source_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 4 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let η : ℕ → ℝ := fun t => if t = 0 then 1 else 1 / 2\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    (∀ t ≤ 2, iterate V ψ η loss (1 / 2) t = some (x t)) ∧\n      (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) = 29 / 64 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (-1 / 2) (x t))) = 5 / 8 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (1 / 2) (x t))) = 9 / 64 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (-1 / 2 : ℝ) ≤ -11 / 64",
+      "context": "namespace BanditRL.OnlinePrescientBregmanSourceCanary",
+      "signatureSHA256": "728f3a391e710538d63617eae19543429a17cf3f607261bd583eea2ddc1cbe7a",
+      "sourceModule": "Tests/OnlinePrescientBregmanSourceCanary.lean",
+      "sourceModuleSHA256": "1cd6d7f26f4c9fed1fa476e1f5360823d3e3b3f743eedfe100c840cf9a345a40",
+      "binderReview": "statement-audit.json; complete exact8/6conjunct Test signature"
+    }
+  ],
+  "currentBinderReview": "binder-review.json",
+  "currentSourceReview": "source-review.json",
+  "currentBodyReview": "proof-body-review.json",
+  "sourceFacingEndpoints": [
+    "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+    "BanditRL.OnlinePrescientBregman.source_variable_regret"
+  ],
+  "derivedLibraryNodes": [
+    "BanditRL.OnlineConvex.sourceProper_of_domain",
+    "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+    "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+    "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates"
+  ],
+  "allOriginalSignaturesRetained": true,
+  "originalSnapshotPendingFlagsAreHistorical": true
+}

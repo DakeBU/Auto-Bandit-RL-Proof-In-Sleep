@@ -1,0 +1,210 @@
+{
+  "startedAt": "2026-11-04T18:43:33.237392+00:00",
+  "sourceBindings": {
+    "BanditRLProof/OnlinePrescientBregmanSource.lean": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+    "Tests/OnlinePrescientBregmanSourceCanary.lean": "1cd6d7f26f4c9fed1fa476e1f5360823d3e3b3f743eedfe100c840cf9a345a40",
+    "BanditRLProof.lean": "54c7a1224555a32cf581d21a9f973f03a9a79b013345da1251d393d2932e3c5d",
+    "Tests.lean": "44b93c9a6db151037a42de84a33f8f5c17ce468fd65e174034d124ea70ae6359"
+  },
+  "probeBindings": {
+    "audit-two-numeric-branches-v1.lean": "125a414a128a9adc67d498235635a1745b2b04dd7d5a97cecd30fbe8385516ae",
+    "canary-public-probe-v1.lean": "d7f3ae448b137779af2b1e234eab461ca6a22a0b40cad6edd6249fb609f5bcb4",
+    "export-selected-dependencies-v1.lean": "918202b39c836df6dcdcba3a489077120293328a7eb4afa9fe592c546be38622",
+    "six-public-probe-v1.lean": "5bc88c6ec49bfb21e62bc9218102bda684b3587365c822cd728d80b50ba98a09"
+  },
+  "cwd": "validation-worktree",
+  "commands": [
+    {
+      "label": "production-public-values",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch40-validation-probes-v1\\six-public-probe-v1.lean"
+      ],
+      "exitCode": 0,
+      "logSHA256": "a95c4dcad388a58f270a9f79432e2e6a04d000d7dd30f2335193c0cd31bdb5c9"
+    },
+    {
+      "label": "canary-public-values",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch40-validation-probes-v1\\canary-public-probe-v1.lean"
+      ],
+      "exitCode": 0,
+      "logSHA256": "7c72c6c6e001d4f6f288afc5ad3bcb5ff1b30454f80d06f99babc1413c7fb06b"
+    },
+    {
+      "label": "actual-dependencies",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "--run",
+        "private-maintenance/github-maintenance-goal-20261011\\batch40-validation-probes-v1\\export-selected-dependencies-v1.lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch40-compiled-probes-v1\\actual-dependencies.json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "numeric-branches",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "--run",
+        "private-maintenance/github-maintenance-goal-20261011\\batch40-validation-probes-v1\\audit-two-numeric-branches-v1.lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch40-compiled-probes-v1\\numeric-branches.json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fullProjectGatePassed": false,
+  "sourceAcceptanceInferred": false,
+  "selectedDeclarations": 8,
+  "publicValues": 8,
+  "compiledNodes": 8,
+  "directCoalescedEdges": 1431,
+  "requiredValuePairsPassed": 22,
+  "numericBranchesPassed": 2,
+  "axiomChecks": [
+    {
+      "declaration": "BanditRL.OnlineConvex.sourceProper_of_domain",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.source_variable_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanSourceCanary.fixed_source_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanSourceCanary.decreasing_source_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlineConvex.batch40_probe_sourceProper_of_domain",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch40_probe_penalized_strictConvex",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch40_probe_advance_eq_some_of_minimizer",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch40_probe_iterate_eq_of_source_updates",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch40_probe_source_fixed_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch40_probe_source_variable_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanSourceCanary.batch40_probe_fixed_source_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanSourceCanary.batch40_probe_decreasing_source_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "graphSHA256": "88b9a261774b5479a00873d21bceb7b25b8867ca6f434ed555fd89851375539a",
+  "numericBranchesSHA256": "c7495c6028140e7398de2c9cc07ebae2ac01f6aced07451ad52aca122fa6cf4d",
+  "limitation": "Direct TYPE/VALUE constant presence, not occurrence counts or full transitive topology. Two numeric conjunction branches separately inspected. No full project/source/chapter acceptance.",
+  "finishedAt": "2026-11-04T18:45:04.872772+00:00",
+  "status": "compiled-probes-passed",
+  "inputsUnchanged": true
+}
