@@ -255,6 +255,49 @@ class LinkCollector(HTMLParser):
             self.math_tex_sources[-1] += data
 
 
+def check_graph_exact_statement_payloads(output: Path, shard_paths: list[Path]) -> list[str]:
+    errors: list[str] = []
+    root = output / "lean-graph"
+    try:
+        canonical = {node["id"]: node.get("statement", "")
+                     for node in json.loads((root / "graph.json").read_text(encoding="utf-8"))["nodes"]}
+        references: dict[str, set[str]] = {}
+        for path in shard_paths:
+            for node in json.loads(path.read_text(encoding="utf-8")).get("nodes", []):
+                if "statement_source" not in node:
+                    continue
+                source = node["statement_source"]
+                if (not isinstance(source, str) or
+                        not re.fullmatch(r"statements/[0-9a-f]{32}\.json", source) or
+                        "statement" in node or not str(node.get("id", "")).startswith("declaration:")):
+                    errors.append("Invalid deferred exact statement reference")
+                    continue
+                references.setdefault(source, set()).add(node["id"])
+        actual = {path.relative_to(root).as_posix() for path in (root / "statements").glob("*.json")}
+        if actual != set(references):
+            errors.append("Exact statement payload files do not match references")
+        for source, ids in references.items():
+            path = root / source
+            if not path.exists():
+                continue
+            if path.stat().st_size > 1_200_000:
+                errors.append("Exact statement payload exceeds 1.2 MB")
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(payload, dict):
+                raise ValueError("Exact statement payload must be an object")
+            statements = payload.get("statements")
+            if type(payload.get("schema_version")) is not int or payload["schema_version"] != 1 or not isinstance(statements, dict) or set(statements) != ids:
+                errors.append("Exact statement payload declaration IDs do not match references")
+                continue
+            for node_id, statement in statements.items():
+                if (not isinstance(statement, str) or not statement or node_id not in canonical or
+                        statement != canonical[node_id]):
+                    errors.append("Exact statement payload differs from canonical declaration")
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        errors.append(f"Invalid exact statement payload: {error}")
+    return errors
+
+
 def parse_pages(output: Path) -> dict[Path, LinkCollector]:
     parsed: dict[Path, LinkCollector] = {}
     for path in sorted(output.rglob("*.html")):
@@ -984,6 +1027,7 @@ def main() -> int:
             if edge.get("source") not in shard_node_ids or edge.get("target") not in shard_node_ids:
                 errors.append(f"{shard_path.relative_to(output)}: edge references a missing node")
                 break
+    errors.extend(check_graph_exact_statement_payloads(output, graph_shard_paths))
     if lean_graph_search_path.exists():
         try:
             lean_graph_search = json.loads(lean_graph_search_path.read_text(encoding="utf-8"))

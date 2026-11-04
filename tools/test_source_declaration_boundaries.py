@@ -1,4 +1,5 @@
 """Source-qualified catalogue ranges must preserve complete actual definitions."""
+import copy
 import hashlib
 import json
 import tempfile
@@ -7,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from website.scripts import build_site as site
+from website.scripts import check_site as site_check
 
 
 class SourceDeclarationBoundaryTests(unittest.TestCase):
@@ -95,6 +97,133 @@ class SourceDeclarationBoundaryTests(unittest.TestCase):
         self.configure()
         with self.assertRaisesRegex(ValueError, "Invalid"):
             site.scan_lean_tree()
+
+    def test_result_let_signature_preserves_copyable_source_header(self):
+        header = (
+            "theorem pair (n : Nat := 2) :\n"
+            "    /- The result has two local values. -/\n"
+            "    let x := n\n"
+            "    let y := x + 1\n"
+            "    y = n + 1"
+        )
+        source = header + " := by rfl\ntheorem next : True := by trivial\n"
+        self.assertEqual(site.compact_statement(source.splitlines(), 0), header)
+        ordinary = "theorem plain (n : Nat := 2) : n = n := by rfl"
+        self.assertEqual(site.compact_statement([ordinary], 0),
+                         "theorem plain (n : Nat := 2) : n = n")
+
+    def test_graph_keeps_exact_multiline_statement_beyond_preview_limit(self):
+        header = (
+            "theorem long_result :\n"
+            "    /- " + "source context " * 80 + "-/\n"
+            "    let x := 2\n"
+            "    let y := x + 1\n"
+            "    y = 3"
+        )
+        self.file.write_text(header + " := by rfl\n", encoding="utf-8")
+        module = site.scan_module(self.file, [])
+        module.update(chapter="example", chapter_title="Example")
+        declaration = module["declarations"][0]
+        declaration.update(chapter="example", chapter_title="Example", module_slug=module["slug"], module=module["name"])
+        self.assertEqual(declaration["statement"], header)
+        chapter = dict(slug="example", short_title="Example", title="Example",
+                       status="partial", summary="Example")
+        report = dict(graph=dict(counts=dict(project_nodes=0, edges=0)),
+                      benchmark_contract=dict(root_count=0), benchmarks=[])
+        output = self.root / "generated"
+        with patch.object(site, "SITE_REGISTRY", {"books": [], "settings": []}), \
+             patch.object(site, "SITE_MEMBERSHIPS", {}), \
+             patch.object(site, "layout", return_value=""), \
+             patch.object(site, "write_page"):
+            site.build_lean_graph(output, [module], [declaration], [chapter], [], [],
+                                  {"chapters": []}, report,
+                                  {"cng_candidate": {"status": "prototype"}}, False, "test")
+        graph = json.loads((output / "lean-graph/graph.json").read_text(encoding="utf-8"))
+        node = next(n for n in graph["nodes"]
+                    if n["id"] == "declaration:" + declaration["full_name"])
+        self.assertEqual(node["statement"], declaration["statement"])
+        self.assertGreater(len(node["statement"]), 900)
+        shard = json.loads((output / "lean-graph" / node["shard"]).read_text(encoding="utf-8"))
+        self.assertEqual(next(n for n in shard["nodes"] if n["id"] == node["id"])["statement"], header)
+
+    def test_oversized_graph_branch_defers_and_checks_exact_statements(self):
+        header = "theorem large :\n    /- " + "context " * 850 + "-/\n    let x := 2\n    x = 2"
+        self.file.write_text(header + " := by rfl\n", encoding="utf-8")
+        module = site.scan_module(self.file, [])
+        original = module["declarations"][0]
+        declarations = []
+        for index in range(150):
+            declaration = copy.deepcopy(original)
+            declaration["full_name"] = f"Example.large{index}"
+            declaration["anchor"] = f"decl-{index}"
+            declaration.update(chapter="example", chapter_title="Example",
+                               module_slug=module["slug"], module=module["name"])
+            declarations.append(declaration)
+        module.update(chapter="example", chapter_title="Example", declarations=declarations)
+        chapter = dict(slug="example", short_title="Example", title="Example",
+                       status="partial", summary="Example")
+        report = dict(graph=dict(counts=dict(project_nodes=0, edges=0)),
+                      benchmark_contract=dict(root_count=0), benchmarks=[])
+        output = self.root / "deferred"
+        with patch.object(site, "SITE_REGISTRY", {"books": [], "settings": []}), \
+             patch.object(site, "SITE_MEMBERSHIPS", {}), \
+             patch.object(site, "layout", return_value=""), patch.object(site, "write_page"):
+            site.build_lean_graph(output, [module], declarations, [chapter], [], [],
+                                  {"chapters": []}, report,
+                                  {"cng_candidate": {"status": "prototype"}}, False, "test")
+        root = output / "lean-graph"
+        shards = [root / "overview.json"] + list((root / "views").glob("*.json")) + list((root / "modules").glob("*.json"))
+        sidecars = list((root / "statements").glob("*.json"))
+        self.assertEqual(len(sidecars), 1)
+        self.assertTrue(all(p.stat().st_size <= 1_200_000 for p in shards + sidecars))
+        payload = json.loads(sidecars[0].read_text(encoding="utf-8"))
+        self.assertEqual(payload["statements"]["declaration:Example.large0"], header)
+        self.assertEqual(site_check.check_graph_exact_statement_payloads(output, shards), [])
+        original_text = sidecars[0].read_text(encoding="utf-8")
+        for replacement in ({"schema_version": 1, "statements": {}},
+                            {"schema_version": 1, "statements": {**payload["statements"], "declaration:extra": header}},
+                            {"schema_version": 1, "statements": {**payload["statements"], "declaration:Example.large0": "wrong"}},
+                            {"schema_version": 1, "statements": {**payload["statements"], "declaration:Example.large0": 7}}):
+            sidecars[0].write_text(json.dumps(replacement), encoding="utf-8")
+            self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
+        sidecars[0].write_text(original_text + " " * 1_200_000, encoding="utf-8")
+        self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
+        sidecars[0].unlink()
+        self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
+        sidecars[0].write_text(original_text, encoding="utf-8")
+        orphan = root / "statements" / ("0" * 32 + ".json")
+        orphan.write_text(original_text, encoding="utf-8")
+        self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
+        orphan.unlink()
+        branch = next(p for p in shards if '"statement_source"' in p.read_text())
+        original_branch = branch.read_text()
+        for source in ("../escape.json", 7):
+            data = json.loads(original_branch)
+            next(n for n in data["nodes"] if "statement_source" in n)["statement_source"] = source
+            branch.write_text(json.dumps(data), encoding="utf-8")
+            self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
+        data = json.loads(original_branch)
+        next(n for n in data["nodes"] if "statement_source" in n)["statement"] = header
+        branch.write_text(json.dumps(data), encoding="utf-8")
+        self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
+
+    def test_graph_script_url_tracks_content_on_normal_page_render(self):
+        script = self.root / "website/static/lean-graph.js"
+        script.parent.mkdir(parents=True)
+        script.write_bytes(b"old graph loader")
+        def render():
+            return site.layout("lean-graph/index.html", "Graph", "", [], "lean-graph",
+                               False, "test", has_math=False,
+                               extra_scripts=("static/lean-graph.js", "static/other.js"))
+        first = render()
+        old_hash = hashlib.sha256(script.read_bytes()).hexdigest()[:16]
+        self.assertIn(f"static/lean-graph.js?v={old_hash}", first)
+        self.assertIn(f"static/other.js?v={site.ASSET_VERSION}", first)
+        script.write_bytes(b"new graph loader")
+        second = render()
+        new_hash = hashlib.sha256(script.read_bytes()).hexdigest()[:16]
+        self.assertNotEqual(old_hash, new_hash)
+        self.assertEqual(second, first.replace(old_hash, new_hash))
 
     def test_missing_optional_config_keeps_default_statements(self):
         module = site.scan_lean_tree()[0]

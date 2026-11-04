@@ -1495,7 +1495,8 @@
         "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
         "BanditRL.OnlineGradientDescentSource.equation_2_1",
         "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
-        "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+        "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+        "BanditRL.OnlineConvex.source_weierstrass_extended"
       ],
       "source_theorems": [
         {
@@ -1747,6 +1748,167 @@
           "statement_provenance": "derived-support"
         },
         {
+          "label": "Appendix A.3: extended-real compact attainment",
+          "pages": "Appendix Theorem A.3, printed291 / PDF303; necessary Chapter2 dependency",
+          "pdf_page": 303,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=303",
+          "math": "\\begin{gathered}X\\text{ Hausdorff},\\quad f:X\\to[-\\infty,+\\infty]\\text{ lower semicontinuous},\\\\V\\text{ compact},\\quad V\\cap\\{x:f(x)<+\\infty\\}\\ne\\varnothing\\\\\\Longrightarrow\\quad\\exists p\\in V,\\ \\forall q\\in V,\\ f(p)\\le f(q).\\end{gathered}",
+          "plain": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+          "fallback": "A globally lower-semicontinuous extended-real function attains its minimum on the source-qualified compact set, including a possible bottom value.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Theorem A.3, printed291/PDF303, cites Bauschke et al. (2003), Theorem1.29; that external work is not independently audited here. The source theorem is represented with its Hausdorff, global lower-semicontinuity, compactness and domain-intersection premises. The proof below reuses Mathlib rather than attributing an unprinted derivation to the book. Choose a point in V intersect dom f. Its membership in V proves that V is nonempty; its function value is below positive infinity, with negative infinity allowed. Global lower semicontinuity restricts to the same V. Apply Mathlib LowerSemicontinuousOn.exists_isMinOn to this nonempty compact set and the restricted lower semicontinuity to obtain p in V with f(p) <= f(q) for every q in V. The public statement retains the source Hausdorff and domain-intersection premises even though this Mathlib result needs less. For the boundary example f(x)=-infinity and V={0}, all premises hold and the attained minimum is -infinity, so properness or a finite-value conclusion cannot be inserted.",
+          "contract": {
+            "model": "Hausdorff topological X; extended-real f admits bottom and top.",
+            "assumptions": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+            "parameters": "Compact V meeting effectiveDomain f; no metric, dimension or curvature parameter.",
+            "regret": "Necessary appendix dependency only; no regret or stability conclusion.",
+            "guarantee": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "A.3 compact-domain attainment",
+            "boundary": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Derived quadratic growth at a supplied minimum",
+          "pages": "Definition 4.1, printed 34 / PDF 46; Definition 2.18, printed 16 / PDF 28",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
+          "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+          "fallback": "A supplied feasible minimum of a strongly convex extended-real objective has quadratic growth on the convex feasible set where the objective is finite.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. This is a derived conditional consequence of Definition 4.1, with properness from Definition 2.18, generalized from the source finite-dimensional setting to an arbitrary real normed space. It is not a direct restatement of Lemma 7.1. The implementation uses the following alternative segment argument; the source-support proof remains distinct. SourceProper excludes negative infinity, while V is contained in effectiveDomain f, excluding positive infinity on V. Thus f(p) and f(q) are finite, and their real values preserve order. Set c = (λ/2)‖q − p‖² and g = f(q) − f(p) ≥ 0. Suppose g < c. Then c > 0 and a = (g + c)/(2c) lies strictly between 0 and 1. Convexity places a p + (1 − a)q in V. Minimality and strong convexity give f(p) ≤ a f(p) + (1 − a)f(q) − c a(1 − a). Composing these extended-real inequalities and converting their finite endpoints yields 0 ≤ (1 − a)(g − ca). But ca = (g + c)/2 > g and 1 − a > 0, a contradiction. If λ = 0 or p = q, the nonnegative gap cannot be smaller than c = 0.",
+          "contract": {
+            "model": "One proper extended-real objective on a convex feasible set where f is finite; no algorithmic run or selected cumulative objective is asserted.",
+            "assumptions": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+            "parameters": "λ ≥ 0, a supplied attained minimum p, and any feasible comparator q. The coefficient is exactly λ/2.",
+            "regret": "No regret bound is asserted by this lemma.",
+            "guarantee": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, verification of Theorem 6.9’s printed nonempty-subgradient-domain premise for concrete applications, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled conditional minimum growth",
+            "boundary": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, verification of Theorem 6.9’s printed nonempty-subgradient-domain premise for concrete applications, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Derived quadratic growth above a supplied support",
+          "pages": "Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+g(q-p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad q\\in V.\\\\F(x)=f(x)-g(x-p),\\qquad F(p)\\le F(z)\\ (z\\in V).\\\\F(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le F(q).\\end{gathered}",
+          "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+          "fallback": "A supplied feasible affine support of a strongly convex objective has the exact quadratic strengthening, with the same lambda/2 coefficient.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This library statement keeps only the forward implication at one supplied support, restricted to V, and generalizes the finite-dimensional vector pairing to a continuous real covector on an arbitrary normed space. Continuity is stronger than algebraic necessity. No inner-product norm is imposed. The affine-tilt implementation below is distinct from the source segment-and-limit proof. Define the extended-real function F(x) = f(x) − g(x − p), including outside V. The subtracted term is always real. Since f never equals negative infinity, neither does F; the feasible point p supplies a finite witness. Thus F is proper and finite on V. For a feasible segment, linearity gives g(a x + (1 − a)y − p) = a g(x − p) + (1 − a)g(y − p). Subtracting this identity from the strong interpolation inequality preserves the same λ/2 penalty, so F satisfies the same strong-convexity hypothesis. The supplied support gives F(p) ≤ F(z) for every z ∈ V, using g(0) = 0. This proves a minimum of the tilt internally; no minimum premise is added. Apply stronglyConvex_minimum_growth to F and simplify its finite endpoint values to recover the quadratic support bound for f.",
+          "contract": {
+            "model": "One proper extended-real objective and one supplied V-local continuous linear support; no algorithmic cumulative objective is produced.",
+            "assumptions": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+            "parameters": "λ ≥ 0, supplied p ∈ V and continuous linear g, with local support on V; q is any feasible point. No minimum premise.",
+            "regret": "Pointwise quadratic support inequality; no regret guarantee.",
+            "guarantee": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. Theorem 6.9 explicitly assumes a nonempty subgradient domain; verifying this premise for concrete algorithmic objectives and proving corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled conditional support growth",
+            "boundary": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. Theorem 6.9 explicitly assumes a nonempty subgradient domain; verifying this premise for concrete algorithmic objectives and proving corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Derived source-vector growth in the original norm",
+          "pages": "Definition 2.20, printed 16–17 / PDF 28–29; Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}\\bar f=f\\circ e^{-1},\\quad g\\in\\partial\\bar f(e(p)),\\quad L(z)=\\langle g,e(z)\\rangle.\\\\f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).\\end{gathered}",
+          "plain": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+          "fallback": "An algebraic coordinate vector support gives the exact quadratic lower bound in the original chosen norm.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 2.20 and the forward implication associated with Definition 4.1 and Lemma 4.2. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This adapter uses one supplied global source subgradient and represents the source coordinates through an algebraic linear equivalence. It retains the separately chosen original norm. The source segment-and-limit proof remains distinct from this library reuse through Support growth. The coordinate equivalence e gives finite dimensionality of E. Define the real linear map L(v) = ⟨g, e(v)⟩. Every linear map from this finite-dimensional normed space is continuous, so L supplies the continuous covector required by Support growth. Evaluate the supplied global subgradient inequality at e(z); cancel e⁻¹(e(z)) and use e(z) − e(p) = e(z − p). This yields f(p) + L(z − p) ≤ f(z) for each z ∈ V. Apply stronglyConvex_support_growth with this internally constructed L and support proof. The pairing uses coordinates, but the curvature term remains ‖q − p‖²_E. Neither an isometry nor a separate continuity or finite-dimensionality premise is added.",
+          "contract": {
+            "model": "Finite coordinate representation of an arbitrary real normed space; supplied global source vector support, literal convex finite-domain set.",
+            "assumptions": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+            "parameters": "λ ≥ 0; algebraic coordinates e, supplied global subgradient g and feasible p, q. The penalty uses the original E norm.",
+            "regret": "Pointwise support growth only, not a regret bound.",
+            "guarantee": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled source-vector growth adapter",
+            "boundary": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Theorem 6.9: existence and uniqueness of a minimizer",
+          "pages": "Theorem 6.9, printed 66 / PDF 78",
+          "pdf_page": 78,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=78",
+          "math": "\\begin{gathered}\\lambda>0,\\quad \\operatorname{dom}\\partial(f\\circ e^{-1})\\ne\\varnothing,\\\\f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2,\\\\\\exists!p\\in\\operatorname{dom}f,\\quad \\forall q\\in E,\\ f(p)\\le f(q).\\end{gathered}",
+          "plain": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+          "fallback": "Positive curvature, properness, closedness and a source support point yield a unique finite global minimizer.",
+          "relationship": "The source derives coercivity and then compact sublevels. This proof directly bounds the one sublevel needed by A.3, without adding a compactness or coercivity premise. The source and implementation proof routes remain separately recorded. Choose a point y and a source subgradient from the assumed nonempty subgradient domain. The coordinate pairing defines a continuous linear functional L on the original space. Source-vector growth supplies a quadratic lower bound in the original norm. On the sublevel S = {x : f(x) ≤ f(y)}, quadratic growth and the operator-norm bound imply (λ/2)‖x−y‖² ≤ ‖L‖‖x−y‖. Thus S lies in the closed ball of radius 2‖L‖/λ about y. Closedness of f makes S closed, and finite dimensionality makes that ball compact. Apply A.3 to the nonempty compact sublevel. Properness and the finite upper bound ensure its minimizer has finite value. Points outside the sublevel have value greater than f(y), so the same point minimizes f globally. Apply the existing minimum-growth inequality at the attained minimizer. Any other minimizer has zero value gap, so λ > 0 forces their distance to be zero. Public frozen target dependency:Theorem6.9 is at docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/135; its A.3 dependency is /effective_targets/136.",
+          "contract": {
+            "model": "Finite-dimensional real normed space with algebraic Euclidean coordinates; extended-real objective.",
+            "assumptions": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+            "parameters": "Strictly positive λ; original E norm; global interpolation on effectiveDomain f; literal printed nonempty source-subgradient domain.",
+            "regret": "Global minimizer existence and uniqueness, not a regret bound.",
+            "guarantee": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled Theorem 6.9: unique global minimizer",
+            "boundary": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Definition 4.1: strong convexity on the finite domain",
+          "pages": "Definition 4.1, printed 34 / PDF 46",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\lambda\\ge0,\\quad V\\subseteq\\operatorname{dom}f,\\qquad f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2.",
+          "plain": "Strong convexity is defined for a proper function on a convex subset of its effective domain. It requires a quadratic improvement of the ordinary convex interpolation inequality. This definition does not require subgradients to exist.",
+          "fallback": "Quadratic interpolation on a convex subset of the effective domain.",
+          "relationship": "Definition 4.1 assumes λ ≥ 0, proper f and a convex set V contained in dom f. The quantifiers are every x,y ∈ V and every real a with 0 < a < 1. The formal representation is the existing inline hstrong interpolation predicate together with hf,hV,hdom,hlam, as recorded in the current minimum-growth header. Its later minimizer binders are not part of this definition. That existing header allows arbitrary normed E; the source finite-dimensional context is a specialization. No all-point subgradient premise is added. Public target dependency:strong-convexity4.1-4.2 is docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/121.",
+          "contract": {
+            "model": "Proper extended-real function on a finite-dimensional real normed space; the quadratic penalty uses the original E norm, and the algebraic coordinate map need not preserve norms.",
+            "assumptions": "λ ≥ 0; f is proper; V is convex and V ⊆ dom f. No subgradient-existence premise belongs to this definition. Every x,y ∈ V and 0<a<1.",
+            "parameters": "λ ≥ 0, including zero; original E norm.",
+            "regret": "Definition and pointwise characterization only, not a regret guarantee.",
+            "guarantee": "This definition requires V ⊆ dom f, not V ⊆ dom ∂f. The stronger all-point support premise belongs only to the iff lemma. The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Definition 4.1: compiled inline representation",
+            "boundary": "This definition requires V ⊆ dom f, not V ⊆ dom ∂f. The stronger all-point support premise belongs only to the iff lemma. The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Lemma 4.2: the full subgradient characterization",
+          "pages": "Lemma 4.2 and proof, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "e(V)\\subseteq\\operatorname{dom}\\partial(f\\circ e^{-1}),\\qquad \\text{strong interpolation}\\ \\Longleftrightarrow\\ f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).",
+          "plain": "On a convex set where a global source subgradient exists at every point, the interpolation inequality is equivalent to the quadratic supporting inequality for every such subgradient. The curvature modulus may be zero. Finite-dimensional coordinates supply the pairing, while the quadratic term uses the original norm; the coordinate map need not be an isometry.",
+          "fallback": "Quadratic interpolation is equivalent to every global subgradient lower bound when a support exists at every feasible point.",
+          "relationship": "The source forward proof evaluates support along a segment, divides by the positive interpolation weight and takes its limit to zero. The current body reuses the already reviewed source-vector growth result. In the converse, choose one support at the interpolated point and use it for both endpoint inequalities; their weighted linear terms cancel. On printed page 35 / PDF page 47, the second equality in the converse proof must be an inequality. The valid chain is 0 = the weighted pairing ≤ af(x)+(1−a)f(y)−f(z)−(λ/2)a(1−a)‖x−y‖². The statement of Lemma4.2 is unchanged and no equality or saturation hypothesis is added. Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct. Public target: docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/121.",
+          "contract": {
+            "model": "Proper extended-real function on a finite-dimensional real normed space; the quadratic penalty uses the original E norm, and the algebraic coordinate map need not preserve norms.",
+            "assumptions": "λ ≥ 0; proper f; convex V ⊆ dom ∂f. Every p ∈ V has an actual global source subgradient. This stronger set inclusion belongs to the iff lemma, not Definition4.1. Every p,q ∈ V and every global coordinate subgradient g at e(p) for f composed with e inverse. The coordinate map need not be an isometry.",
+            "parameters": "λ ≥ 0, including zero; original E norm.",
+            "regret": "Definition and pointwise characterization only, not a regret guarantee.",
+            "guarantee": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled full Lemma 4.2 iff",
+            "boundary": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
           "label": "Chapter 2 prescient dependency: source hypotheses and the actual valid run",
           "pages": "printed14,16-17,63,265-266 / PDF26,28-29,75,277-278",
           "pdf_page": 277,
@@ -1766,6 +1928,29 @@
             "status": "compiled",
             "label": "Conditional source-to-recursion transport",
             "boundary": "These are four derived library transports and two conditional valid-run bounds supporting the Chapter 2 prescient dependency. Supplied minimizers are the algorithm update relation, not an assumed regret inequality. Closedness and strict convexity do not guarantee universal attainment or interior preservation. All eight Chapter 2 forward containers remain open, with an unknown chapter proof denominator. No full Algorithm 15.8, Theorem 15.30, chapter/book completion, whole-carrier literal-definition seal or source-repair approval follows."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Strong convexity of a constrained cumulative objective",
+          "pages": "Definition4.1 printed34/PDF46; Algorithm7.1 printed99/PDF111; Lemma7.5 printed101/PDF113; Corollary7.6 printed102/PDF114; Algorithm15.9/Theorem15.31 printed266/PDF278; downstream Theorem7.47 printed129-130/PDF141-142",
+          "pdf_page": 113,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=113",
+          "math": "F(x)=\\psi(x)+\\sum_{i=0}^{n-1}\\ell_i(x)+\\iota_V(x)\\qquad F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\frac{\\lambda}{2}a(1-a)\\|x-y\\|_E^2",
+          "plain": "This actual F is proper, its effective domain is exactly V, and on V it equals the real-valued regularizer plus the sum of the real loss values. It satisfies the same λ-strong interpolation inequality as the regularizer. The interpolation inequality holds for every x,y ∈ V and every real 0 < a < 1. Both n = 0 and λ = 0 are permitted.",
+          "fallback": "Add the regularizer, the strict-past loss prefix and the indicator of V. The indicator is zero on V and +∞ outside V.",
+          "relationship": "This is a sufficient-condition construction for cumulative objectives used in FTRL arguments. Requiring the regularizer to supply the curvature and the component losses to be convex is stronger than merely assuming curvature of their total. The common finite domain is already explicit in Algorithm 15.9; it selects a sufficient branch of the broader extended-real formulation of Algorithm 7.1. A real extension of ψ outside V does not affect the constrained objective. For each included loss, combine the below-top domain condition with the global exclusion of bottom. On V the loss is then the coercion of its real part. The domain condition alone would not exclude bottom. Induct over the finite prefix to exclude bottom from the sum and compute its finite values on V. Adding the indicator gives +∞ outside V and the real-sum identity inside V, so dom F = V. Apply the existing properness theorem to this actual F, its derived exclusion of bottom and the nonempty set V. Properness is produced from these premises, rather than supplied as an assumption about F. Sum the convexity inequalities of the real loss restrictions and add the strong convexity inequality for ψ. Rewrite the finite identities to recover the displayed inequality with exactly the original-norm quadratic penalty.",
+          "contract": {
+            "model": "A real normed space E, a nonempty constraint set V, a real-valued regularizer ψ and extended-real losses. The quadratic penalty uses the original norm on E.",
+            "assumptions": "Let n be a natural number and λ ≥ 0. The regularizer is λ-strongly convex on V. Each included loss ℓᵢ, for i < n, is globally different from −∞, finite on V, and has a convex real restriction on V. Convexity of V follows from the regularizer assumption. No finite-dimensionality, completeness or inner-product structure is required.",
+            "parameters": "n ≥ 0 and λ ≥ 0; λ = 0 and empty prefix allowed.",
+            "regret": "Cumulative objective construction only, not a regret bound.",
+            "guarantee": "This actual F is proper, its effective domain is exactly V, and on V it equals the real-valued regularizer plus the sum of the real loss values. It satisfies the same λ-strong interpolation inequality as the regularizer."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled cumulative-objective producer",
+            "boundary": "This construction does not establish closedness, positive curvature, a global source subgradient, or an attained minimum of F. Applying Theorem 6.9 to F still requires its remaining premises, including its printed nonempty subgradient-domain premise. Algorithm-specific support witnesses, constrained attainment, interior membership, trajectories and regret bounds remain separate obligations."
           },
           "statement_provenance": "derived-support"
         }
@@ -5956,7 +6141,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Four derived initialized-FTL results",
-            "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. Their count is not a proof denominator. Exercises 1.1 and 1.2 are separate; the mandatory proof-leaf total is unknown, and chapter/book completion is not claimed."
+            "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. The source acceptance contract fixes these 17 mandatory objects and 13 explicit dependency obligations. Internal proof-helper count is not a source-target denominator. Exercises 1.1 and 1.2 are separate. Current Chapter 1 main-text acceptance is recorded only by the separately reviewed successor evidence receipt at docs/contracts/online-ch1-source-closure-v1/acceptance-evidence.json, bound to source/rendered candidate af0821053ed64b4b54084fa180b1337d5c79dbc0. That decision covers exactly the frozen main-text requirements and preserves the stated model and metric boundaries. It does not accept independent exercises, Chapter 2, later chapters or the whole book."
           },
           "statement_provenance": "derived-support"
         }
@@ -6005,9 +6190,19 @@
           },
           {
             "title": "Actual stability and finite regret",
-            "detail": "For t>0 use the running-mean recurrence and interval bounds in the difference of squares. Treat the initial-half prediction separately. Lean stability uses a recurrence and squared-distance coefficient calculation instead of the source factor/absolute-value/triangle route. Figure 1.1 illustrates the later harmonic-sum/integral comparison, whose bound is supplied by harmonic_le_one_add_log. The displayed refined chain is the source/teaching branch: insert feasible empirical minimizers into Be-the-Leader, split off the first quarter, and sum the positive-round tail. The actual retained theorem_1_3 instead instantiates Be-the-Leader on Set.univ with empiricalMean_minimizes, applies the coarser 4/(t+1) stability bound to every round, and uses harmonic_le_one_add_log. It does not call meanPredict_regret_refined.",
-            "math": "\\begin{gathered}(p_0-y_0)^2-(a_1-y_0)^2\\le\\tfrac14,\\qquad (p_t-y_t)^2-(a_{t+1}-y_t)^2\\le\\frac4{t+1}\\\\R_T\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s\\le4+4\\log T\\end{gathered}",
-            "fallback": "The initial round has a quarter bound; subsequent stability terms decay reciprocally. The finite tail refines the same source logarithmic upper bound."
+            "detail": "For t>0 use the running-mean recurrence and interval bounds in the difference of squares. Treat the initial-half prediction separately. Lean stability uses a recurrence and squared-distance coefficient calculation instead of the source factor/absolute-value/triangle route. Figure 1.1 illustrates the later harmonic-sum/integral comparison, whose bound is supplied by harmonic_le_one_add_log. The displayed refined chain is the source/teaching branch: insert feasible empirical minimizers into Be-the-Leader, split off the first quarter, and sum the positive-round tail. The actual retained theorem_1_3 instead instantiates Be-the-Leader on Set.univ with empiricalMean_minimizes, applies the coarser 4/(t+1) stability bound to every round, and uses harmonic_le_one_add_log. It does not call meanPredict_regret_refined. For T>=1, write H_T=sum from s=1 to T of 1/s. For each s=2,...,T, the decreasing curve 1/(x-1) on [s,s+1] lies above the rectangle of height 1/s. Add these areas and the first term 1. Substituting u=x-1 gives the integral of 1/u from 1 to T, equal to ln T. Multiplication by4 gives4+4 ln T. At T=1 the tail sum and both integrals are zero. This positive-horizon argument makes no claim about an improper integral at T=0.",
+            "math": "\\begin{gathered}(p_0-y_0)^2-(a_1-y_0)^2\\le\\tfrac14,\\qquad (p_t-y_t)^2-(a_{t+1}-y_t)^2\\le\\frac4{t+1}\\quad(t>0),\\\\ H_T:=\\sum_{s=1}^{T}\\frac1s,\\qquad T\\ge1,\\\\ H_T\\le1+\\int_{2}^{T+1}\\frac{dx}{x-1}\\\\ =1+\\int_{1}^{T}\\frac{du}{u}=1+\\ln T,\\\\ R_T\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s\\le4H_T\\le4+4\\ln T.\\end{gathered}",
+            "fallback": "For T>=1, the first harmonic term is1. Each later reciprocal1/s is bounded by the area under1/(x-1) on[s,s+1]. Thus H_T<=1+integral from2 toT+1 of1/(x-1)=1+integral from1 toT of1/u=1+lnT. The half-initial quarter-plus-tail bound is at most4H_T, hence4+4lnT. At T=1 the tail and integrals vanish.",
+            "references": [
+              {
+                "label": "Source proof: Figure 1.1 and harmonic comparison (printed pp.5–6)",
+                "url": "https://arxiv.org/pdf/1912.13213v10#page=17"
+              },
+              {
+                "label": "Reused Mathlib fact: harmonic_le_one_add_log",
+                "url": "https://github.com/leanprover-community/mathlib4/blob/5e932f97dd25535344f80f9dd8da3aab83df0fe6/Mathlib/NumberTheory/Harmonic/Bounds.lean#L33-L57"
+              }
+            ]
           },
           {
             "title": "Fixed comparators and explicit evaluation domains",
@@ -6070,7 +6265,7 @@
             "fallback": "A proved half-initial ordinary limit and a constant-over-horizon correction give the general-initial ordinary best-regret limit."
           }
         ],
-        "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. Their count is not a proof denominator. Exercises 1.1 and 1.2 are separate; the mandatory proof-leaf total is unknown, and chapter/book completion is not claimed. The stochastic and logarithmic-lower-bound cards retain their own causal information models, expectation benchmarks and non-sharp derived constants. No arbitrary protocol reduction, high-probability or full minimax conclusion is added."
+        "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. The source acceptance contract fixes these 17 mandatory objects and 13 explicit dependency obligations. Internal proof-helper count is not a source-target denominator. Exercises 1.1 and 1.2 are separate. Current Chapter 1 main-text acceptance is recorded only by the separately reviewed successor evidence receipt at docs/contracts/online-ch1-source-closure-v1/acceptance-evidence.json, bound to source/rendered candidate af0821053ed64b4b54084fa180b1337d5c79dbc0. That decision covers exactly the frozen main-text requirements and preserves the stated model and metric boundaries. It does not accept independent exercises, Chapter 2, later chapters or the whole book. The stochastic and logarithmic-lower-bound cards retain their own causal information models, expectation benchmarks and non-sharp derived constants. No arbitrary protocol reduction, high-probability or full minimax conclusion is added."
       }
     },
     {
