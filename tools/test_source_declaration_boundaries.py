@@ -207,6 +207,24 @@ class SourceDeclarationBoundaryTests(unittest.TestCase):
         branch.write_text(json.dumps(data), encoding="utf-8")
         self.assertTrue(site_check.check_graph_exact_statement_payloads(output, shards))
 
+    def test_graph_script_url_tracks_content_on_normal_page_render(self):
+        script = self.root / "website/static/lean-graph.js"
+        script.parent.mkdir(parents=True)
+        script.write_bytes(b"old graph loader")
+        def render():
+            return site.layout("lean-graph/index.html", "Graph", "", [], "lean-graph",
+                               False, "test", has_math=False,
+                               extra_scripts=("static/lean-graph.js", "static/other.js"))
+        first = render()
+        old_hash = hashlib.sha256(script.read_bytes()).hexdigest()[:16]
+        self.assertIn(f"static/lean-graph.js?v={old_hash}", first)
+        self.assertIn(f"static/other.js?v={site.ASSET_VERSION}", first)
+        script.write_bytes(b"new graph loader")
+        second = render()
+        new_hash = hashlib.sha256(script.read_bytes()).hexdigest()[:16]
+        self.assertNotEqual(old_hash, new_hash)
+        self.assertEqual(second, first.replace(old_hash, new_hash))
+
     def test_missing_optional_config_keeps_default_statements(self):
         module = site.scan_lean_tree()[0]
         self.assertEqual(module, site.scan_module(self.file, []))

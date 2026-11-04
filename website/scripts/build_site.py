@@ -806,6 +806,12 @@ def teaching_chapters_for_book(book_id: str, *, owned_only: bool = False) -> lis
             and (not owned_only or primary_teaching_book(chapters[ref]["slug"])["id"] == book_id)]
 
 
+def extra_script_version(script: str) -> str:
+    if script == "static/lean-graph.js":
+        return hashlib.sha256((ROOT / "website" / script).read_bytes()).hexdigest()[:16]
+    return ASSET_VERSION
+
+
 def layout(
     page_path: str,
     title: str,
@@ -993,7 +999,7 @@ def layout(
   <script src="{root}/static/math-reader.js?v=20261021-2"></script>
   <script defer src="{root}/static/vendor/mathjax@3.2.2/tex-mml-chtml.js"></script>"""
     extra_script_tags = "".join(
-        f'\n  <script src="{root}/{html.escape(script)}?v={ASSET_VERSION}"></script>'
+        f'\n  <script src="{root}/{html.escape(script)}?v={extra_script_version(script)}"></script>'
         for script in extra_scripts
     )
     page_shell_class = "page-shell wide-page" if wide else "page-shell"
