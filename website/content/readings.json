@@ -1495,7 +1495,8 @@
         "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
         "BanditRL.OnlineGradientDescentSource.equation_2_1",
         "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
-        "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+        "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+        "BanditRL.OnlineConvex.source_weierstrass_extended"
       ],
       "source_theorems": [
         {
@@ -1745,6 +1746,29 @@
             "boundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Appendix A.3: extended-real compact attainment",
+          "pages": "Appendix Theorem A.3, printed291 / PDF303; necessary Chapter2 dependency",
+          "pdf_page": 303,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=303",
+          "math": "\\begin{gathered}X\\text{ Hausdorff},\\quad f:X\\to[-\\infty,+\\infty]\\text{ lower semicontinuous},\\\\V\\text{ compact},\\quad V\\cap\\{x:f(x)<+\\infty\\}\\ne\\varnothing\\\\\\Longrightarrow\\quad\\exists p\\in V,\\ \\forall q\\in V,\\ f(p)\\le f(q).\\end{gathered}",
+          "plain": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+          "fallback": "A globally lower-semicontinuous extended-real function attains its minimum on the source-qualified compact set, including a possible bottom value.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Theorem A.3, printed291/PDF303, cites Bauschke et al. (2003), Theorem1.29; that external work is not independently audited here. The source theorem is represented with its Hausdorff, global lower-semicontinuity, compactness and domain-intersection premises. The proof below reuses Mathlib rather than attributing an unprinted derivation to the book. Choose a point in V intersect dom f. Its membership in V proves that V is nonempty; its function value is below positive infinity, with negative infinity allowed. Global lower semicontinuity restricts to the same V. Apply Mathlib LowerSemicontinuousOn.exists_isMinOn to this nonempty compact set and the restricted lower semicontinuity to obtain p in V with f(p) <= f(q) for every q in V. The public statement retains the source Hausdorff and domain-intersection premises even though this Mathlib result needs less. For the boundary example f(x)=-infinity and V={0}, all premises hold and the attained minimum is -infinity, so properness or a finite-value conclusion cannot be inserted.",
+          "contract": {
+            "model": "Hausdorff topological X; extended-real f admits bottom and top.",
+            "assumptions": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+            "parameters": "Compact V meeting effectiveDomain f; no metric, dimension or curvature parameter.",
+            "regret": "Necessary appendix dependency only; no regret or stability conclusion.",
+            "guarantee": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate. Current canonical compilation, imported proof bindings, shared-project gates and reader acceptance are pending for this integration."
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "A.3 source-mapped integration candidate",
+            "boundary": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate. Current canonical compilation, imported proof bindings, shared-project gates and reader acceptance are pending for this integration."
+          },
+          "statement_provenance": "source-restatement"
         }
       ],
       "worked_example": {
