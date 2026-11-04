@@ -1,0 +1,165 @@
+{
+  "sourceTitle": "Online Learning: A Modern Introduction Using Convex Optimization",
+  "author": "Francesco Orabona",
+  "version": "arXiv:1912.13213v10",
+  "versionDate": "2026-06-21",
+  "pdfURL": "https://arxiv.org/pdf/1912.13213v10",
+  "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "sourceOnlyAnchors": [
+    "prescient-alg",
+    "prescient-variable-conclusion",
+    "prescient-constant-conclusion",
+    "ch2-forward"
+  ],
+  "sourceStatementsAndDefinitions": [
+    {
+      "id": "domain-indicator",
+      "kind": "SOURCE_CONVENTION",
+      "printed_page": 9,
+      "pdf_page": 21,
+      "region": "paragraphs after Definition 2.2",
+      "claim": "dom f={x:f(x)<+infinity}; indicator i_V is 0 on V and +infinity off V. The source permits extended-real-valued functions."
+    },
+    {
+      "id": "closed",
+      "kind": "DEFINITION",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Definition 2.16",
+      "claim": "A function f:R^d->[-infinity,+infinity] is closed iff every sublevel {x:f(x)<=alpha}, alpha real, is closed."
+    },
+    {
+      "id": "proper",
+      "kind": "DEFINITION",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Definition 2.18",
+      "claim": "Proper means nowhere -infinity and finite somewhere."
+    },
+    {
+      "id": "global-subgradient",
+      "kind": "DEFINITION",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Definition 2.20",
+      "claim": "For proper f:R^d->(-infinity,+infinity], g in R^d is a subgradient at x when f(y)>=f(x)+<g,y-x> for every y in R^d."
+    },
+    {
+      "id": "strict-convex",
+      "kind": "DEFINITION",
+      "printed_page": 63,
+      "pdf_page": 75,
+      "region": "Definition 6.3",
+      "claim": "f:V->R, V convex; strict inequality at nontrivial convex combinations of distinct points defines strict convexity."
+    },
+    {
+      "id": "bregman-def",
+      "kind": "DEFINITION",
+      "printed_page": 63,
+      "pdf_page": 75,
+      "region": "Definition 6.4",
+      "claim": "psi:X->R strictly convex, differentiable on nonempty int X, X=dom psi; B_psi:X times int X->R; B(x;y)=psi(x)-psi(y)-<grad psi(y),x-y>."
+    },
+    {
+      "id": "prescient-alg",
+      "kind": "ALGORITHM",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Algorithm 15.8 entire box",
+      "claim": "Receive l_t before choosing x_t in argmin over V of l_t(x)+B(x;x_(t-1))/eta_t, then pay l_t(x_t), t=1,...,T."
+    },
+    {
+      "id": "prescient-assumptions",
+      "kind": "STATEMENT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Theorem 15.30 hypotheses",
+      "claim": "psi differentiable in int X, closed, strictly convex; V subset X nonempty closed convex; x_t in int X, l_t subdifferentiable on V, eta_(t+1)<=eta_t for t=1,...,T, with Algorithm15.8 requirements inherited."
+    },
+    {
+      "id": "gap-nonsmooth-optimality",
+      "kind": "SOURCE_GAP",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "first proof sentence citing Theorem2.8",
+      "claim": "The cited theorem covers a convex DIFFERENTIABLE objective on an open set containing V. Here l_t is only subdifferentiable on V, and V need not lie inside int X. It does not literally establish a single g_t in partial l_t(x_t) satisfying the asserted inequality for all u in V.",
+      "disposition": "Unresolved source bridge. Do not turn the asserted conclusion into an extra public source hypothesis.",
+      "possible_repairs": "A separately proved nonsmooth constrained optimality bridge under exact assumptions, or a separately proved direct argmin/convex-segment one-step inequality. Neither proof is supplied here."
+    },
+    {
+      "id": "prescient-variable-conclusion",
+      "kind": "STATEMENT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Theorem15.30 first conclusion",
+      "claim": "For every u in V, sum_(t=1)^T l_t(x_t)-sum_(t=1)^T l_t(u) <= max_(0<=t<=T-1) B(u;x_t)/etaT - sum_(t=1)^T B(x_t;x_(t-1))/eta_t."
+    },
+    {
+      "id": "prescient-constant-conclusion",
+      "kind": "STATEMENT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Theorem15.30 moreover clause",
+      "claim": "If eta_t=eta for every t=1,...,T, regret <= B(u;x0)/eta - (1/eta)*sum_(t=1)^T B(x_t;x_(t-1))."
+    },
+    {
+      "id": "gap-constant-exercise",
+      "kind": "SOURCE_GAP_EXERCISE",
+      "printed_page": 266,
+      "pdf_page": 278,
+      "region": "sentence immediately after D^2 definition",
+      "claim": "The second statement is left as an exercise.",
+      "disposition": "Intentional omitted proof. A constant-rate specialization of the pre-max telescoping identity and deletion of the nonpositive terminal term is a DERIVED completion, not a displayed source proof."
+    }
+  ],
+  "sourceAssumptions": {
+    "algorithm_requirements": [
+      "Nonempty closed convex V subset X subset R^d (algorithm box prints subset sign for V versus X; theorem prints subseteq).",
+      "psi:X->R strictly convex and differentiable on int X.",
+      "x0 in int X; x0 in V is NOT stated.",
+      "eta1,...,etaT>0.",
+      "At round t, l_t:R^d->(-infinity,+infinity] and V subset dom l_t.",
+      "Each x_t is selected from the displayed constrained argmin and loss is paid after receipt and update."
+    ],
+    "theorem_additions": [
+      "psi is closed.",
+      "For t=1,...,T, x_t in int X and l_t subdifferentiable on V.",
+      "eta_(t+1)<=eta_t, printed for t=1,...,T."
+    ],
+    "standing_definitions": [
+      "Definition6.4 identifies X as dom psi, with nonempty interior; strict convexity presupposes convex X.",
+      "Definition2.20 is a global subgradient on R^d, not only a support on V.",
+      "Definition2.18 properness and Definition2.16 closedness have their exact extended-real meanings."
+    ],
+    "not_assumed": [
+      "V bounded/compact",
+      "u interior",
+      "x0 feasible",
+      "loss differentiable",
+      "loss globally convex",
+      "loss globally closed",
+      "strong convexity",
+      "Lipschitz loss",
+      "gradient norm bound",
+      "a probability event or filtration"
+    ],
+    "horizon_endpoints": {
+      "T": "The printed source uses T rounds, etaT and a maximum over 0,...,T-1, which require a positive finite horizon for that expression. No T=0 convention is printed.",
+      "updates": "x0 is given, x1,...,xT are updates; no x_(T+1) occurs.",
+      "maximum": "B(u;x0),...,B(u;x_(T-1)); xT is excluded.",
+      "terminal": "-B(u;xT)/etaT appears in the proof and is discarded by nonnegativity.",
+      "monotonicity": "Statement literally includes t=T and thus eta_(T+1), although Algorithm15.8 supplies only eta1,...,etaT and proof uses only t<=T-1. Record this endpoint mismatch; do not silently claim exact textual identity after normalization.",
+      "constant_case": "eta_t=eta for t=1,...,T and eta>0 inherited. Direct constant-step specialization belongs before the maximum bound."
+    },
+    "sequence_semantics": "Conditional regret guarantee for a supplied sequence of attained interior updates. Source does not provide a general existence/interiority theorem for all data satisfying just the algorithm Require line. Uniqueness can be derived after establishing strict convexity of the update objective, but does not imply existence."
+  },
+  "sourceExtraction": "source-proof-graph.json",
+  "literalSourceIndexDelta": "The printed monotonicity runs through t=T and mentions eta_(T+1). Lean compares only adjacent played rates. The source is not silently corrected.",
+  "exactLeanContract": "statement-seal.json and statement-audit.json",
+  "sourceVersusLean": "semantic-slot-review.json",
+  "definitionScope": "definition-review.json and definition-body-review.json",
+  "fourLibraryNodesTwoConditionalAnchors": true,
+  "sourceCorrectionApproved": false,
+  "wholeSourceTheoremAccepted": false,
+  "chapterProofDenominator": null
+}

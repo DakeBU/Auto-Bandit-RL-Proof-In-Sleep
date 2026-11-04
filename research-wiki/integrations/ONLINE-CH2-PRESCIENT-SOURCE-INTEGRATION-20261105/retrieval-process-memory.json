@@ -1,0 +1,176 @@
+{
+  "retrieval": {
+    "at": "2026-11-04T18:20:12.702919+00:00",
+    "rows": [
+      {
+        "command": [
+          "tools/bandit.py",
+          "search-memory",
+          "prescient"
+        ],
+        "exitCode": 0,
+        "stdoutSHA256": "b58cd9ad6a3b0cbd85a649b60b62f063fdfcfcf45e0e9a1d4298b2ca33eb17dc",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 11487
+      },
+      {
+        "command": [
+          "tools/bandit.py",
+          "list-lean-decls",
+          "sourceProper"
+        ],
+        "exitCode": 0,
+        "stdoutSHA256": "cf330a001185d50de24358b313665e04b36398a7fef86eb18640a2cd848f5dc7",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 3148
+      },
+      {
+        "command": [
+          "tools/bandit.py",
+          "list-lean-decls",
+          "finitePart_convex",
+          "--statement"
+        ],
+        "exitCode": 0,
+        "stdoutSHA256": "3720fb1f9be35663f7877f3e13c8fa30aa39bad3bc8457797792101454cec14b",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 381
+      },
+      {
+        "command": [
+          "tools/bandit.py",
+          "list-lean-decls",
+          "iterate_fixed_regret",
+          "--statement"
+        ],
+        "exitCode": 0,
+        "stdoutSHA256": "5f7817b53e1d596beddc230919a5a54f6c4972aceb68fb7f990a5051b83277d2",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 840
+      },
+      {
+        "command": [
+          "tools/bandit.py",
+          "list-lean-decls",
+          "iterate_variable_regret",
+          "--statement"
+        ],
+        "exitCode": 0,
+        "stdoutSHA256": "3982c51218a61781c4fcf388e02b39ff971e5c997d40ce213fec7921bc804c6b",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 1003
+      }
+    ],
+    "purpose": "Search existing accepted interfaces before porting original six declarations; no new proof search or duplicate wrapper decision inferred from counts.",
+    "productionEdits": false
+  },
+  "processMemory": {
+    "file": "runs/process_memory.json",
+    "sha256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "policy": {
+      "control_plane_math_authority": false,
+      "salvage_before_discard": true,
+      "scheduler_default_change_requires_matched_experiments": 2,
+      "parallelism": "evidence-gated",
+      "parallel_requires_distinct_direction_fingerprints": true,
+      "cross_route_audit_if_parallel": true,
+      "failure_classes": [
+        "REFUTED",
+        "SOURCE_INVALID",
+        "API_BLOCKED",
+        "ENV_BLOCKED",
+        "IMPLEMENTATION_FAILED",
+        "NONE"
+      ],
+      "reader_backpressure_tracks": [
+        "merged_not_purified",
+        "purification_age",
+        "fine_to_conceptual_ratio"
+      ]
+    },
+    "usedIDs": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "consultedEntries": [
+      {
+        "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+        "kind": "standing_instruction",
+        "status": "active",
+        "scope": [
+          "scheduler",
+          "harness-comparison"
+        ],
+        "instruction": "Do not change the default hierarchical/master-worker scheduling policy from unmatched runs. Require the configured minimum number of matched experiments on the same frozen target and route-packet hash with reviewer-owned verdicts.",
+        "process_only": true,
+        "evidence": [
+          {
+            "file": "runs/harness-comparison/latest.json",
+            "needle": "\"matched_experiments\": []",
+            "evidence_kind": "deterministic_harness_report"
+          },
+          {
+            "file": "runs/harness-comparison/latest.json",
+            "needle": "\"minimum_matched_experiments\": 2",
+            "evidence_kind": "deterministic_harness_report"
+          }
+        ],
+        "expires_when": "Replace only after the deterministic harness-comparison policy itself is intentionally versioned and independently reviewed."
+      },
+      {
+        "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+        "kind": "standing_instruction",
+        "status": "active",
+        "scope": [
+          "source-fidelity",
+          "SafeVerify",
+          "metadata"
+        ],
+        "instruction": "Record source-facing assumptions as atomic Lean-facing assumption items rather than one opaque prose blob so statement-fence checks can bind each assumption explicitly.",
+        "process_only": true,
+        "evidence": [
+          {
+            "file": "runs/trials.jsonl",
+            "needle": "SafeVerify metadata guard failed",
+            "evidence_kind": "reviewed_trial_failure"
+          }
+        ],
+        "expires_when": "Retire only when the statement-fence format mechanically derives atomic assumptions from the elaborated interface."
+      },
+      {
+        "id": "ABRL-NK-WINDOWS-PATH-LENGTH",
+        "kind": "negative_knowledge",
+        "status": "active",
+        "scope": [
+          "windows",
+          "build-system",
+          "module-paths"
+        ],
+        "classification": "ENV_BLOCKED",
+        "statement": "A long generated module/output path can prevent .olean creation even when direct Lean source compilation succeeds; this is environment evidence, not a theorem or proof-route refutation.",
+        "route_effect": "diagnostic-only",
+        "invalidation_keys": [
+          "filesystem path length policy",
+          "module filename",
+          "build worktree root"
+        ],
+        "evidence": [
+          {
+            "file": "runs/trials.jsonl",
+            "needle": "path too long",
+            "evidence_kind": "reviewed_trial_failure"
+          }
+        ]
+      }
+    ]
+  },
+  "reuseEvidence": "proof-body-review.json; definition-body-review.json",
+  "reuseDecision": "Reuse all existing source/partial-recursion/divergence and cumulative producers. Add only original properness, strictness, unique update, finite-prefix transport and two source contract adapters. No new project, definitions or toolchain.",
+  "mathlibFacts": [
+    "EReal.coe_toReal",
+    "StrictConvexOn.eq_of_isMinOn"
+  ],
+  "failureHistory": "Private reader v2 lacked rate direction and retained stale status clauses; v3 corrected them without changing any of seven formula strings. No mathematical route retired.",
+  "schedulerDefaultChanged": false
+}

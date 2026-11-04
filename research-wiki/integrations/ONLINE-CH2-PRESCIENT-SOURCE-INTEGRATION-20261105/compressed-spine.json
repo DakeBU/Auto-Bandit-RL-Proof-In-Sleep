@@ -1,0 +1,66 @@
+{
+  "status": "independently-reviewed-bounded-compression-and-precommit-rendered-exposition",
+  "moves": [
+    {
+      "id": "finite-source-loss",
+      "readerMove": "Choose a feasible point. Source codomain excludes negative infinity everywhere and domain containment excludes positive infinity at that point, producing properness. Global supports then give convexity of the finite restriction to V.",
+      "leanNodes": [
+        "BanditRL.OnlineConvex.sourceProper_of_domain",
+        "BanditRL.OnlineBregman.finitePart_convex_of_subdifferentiable"
+      ],
+      "sourceRelationship": "Derived interface for source properness/subgradient conventions; no global convexity of toReal outside V."
+    },
+    {
+      "id": "strict-penalty-unique-attained-step",
+      "readerMove": "The derivative correction is affine in the optimization variable. Strict convexity of psi, positive inverse rate and convex finite loss make the penalized objective strictly convex. Transfer both supplied and selected minima through feasible finite-part equivalence, then identify them by strict-minimizer uniqueness.",
+      "leanNodes": [
+        "BanditRL.OnlinePrescientBregman.penalized_strictConvex",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "StrictConvexOn.eq_of_isMinOn",
+        "BanditRL.OnlinePrescientBregman.advance_eq_some_of_minimizer"
+      ],
+      "sourceRelationship": "Conditional uniqueness of an attained source update. Supplied attainment enters explicitly; closedness is not coercivity."
+    },
+    {
+      "id": "relation-to-partial-recursion",
+      "readerMove": "Initialize with some x0. Induct through the played finite prefix, reducing Option.bind and applying the unique-step identity. Pair the forward identity with the existing reverse some-step specification and exact failure characterization.",
+      "leanNodes": [
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.iterate_succ_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate_eq_of_source_updates"
+      ],
+      "sourceRelationship": "Matches each supplied valid source trajectory with the shared optional library recursion. No unconditional run or automatic interiority."
+    },
+    {
+      "id": "conditional-source-endpoints",
+      "readerMove": "Under the exact finite-dimensional/source-domain/interior hypotheses, derive properness and recursion identity, then apply the accepted fixed/variable cumulative bounds. Preserve all negative movement terms and the maximum over previous states only.",
+      "leanNodes": [
+        "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+        "BanditRL.OnlinePrescientBregman.source_variable_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_regret"
+      ],
+      "sourceRelationship": "Two conditional endpoint bounds, with fixed T=0 and omitted unused printed rate comparison explicitly recorded. The accepted feasible-segment route and fixed telescope are implementation arguments, not repaired source text."
+    }
+  ],
+  "sourceGraph": "batch40-source-extraction-v2/graph.json",
+  "compiledGraph": "batch40-compiled-probes-v1/actual-dependencies.json",
+  "graphSemantics": "Conceptual reader groupings with lossless named-declaration drill-down. Compiled graph measures direct TYPE/VALUE constant presence, not occurrences or complete transitive source topology.",
+  "sourceGapsPreserved": [
+    "gap-nonsmooth-optimality",
+    "gap-constant-exercise"
+  ],
+  "sourceRootClosure": false,
+  "completeChapter": false,
+  "proseReview": "reader-prose-review.json",
+  "guardedExpansion": "exposition-node-expansion.json",
+  "scopeReadiness": "whole-original-scope-readiness.json",
+  "publicEvidenceAliases": {
+    "sourceGraph": "research-wiki/integrations/ONLINE-CH2-PRESCIENT-SOURCE-INTEGRATION-20261105/source-proof-graph.json",
+    "compiledGraph": "research-wiki/integrations/ONLINE-CH2-PRESCIENT-SOURCE-INTEGRATION-20261105/compiled-dependencies.json",
+    "bodyReview": "research-wiki/integrations/ONLINE-CH2-PRESCIENT-SOURCE-INTEGRATION-20261105/proof-body-review.json"
+  },
+  "evidenceLocationSemantics": "Existing private evidence labels are provenance identifiers. Use publicEvidenceAliases for repository navigation; rendered-link acceptance remains pending.",
+  "renderedReview": "rendered-exposition-review.json"
+}

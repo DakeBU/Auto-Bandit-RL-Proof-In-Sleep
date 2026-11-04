@@ -180,3 +180,4 @@ import Tests.OnlineStrongConvexSupportCanary
 import Tests.OnlineStrongConvexSourceSubgradientCanary
 import Tests.OnlineStrongConvexAttainmentCanary
 import Tests.OnlineStrongConvexSubgradientIffCanary
+import Tests.OnlinePrescientBregmanSourceCanary

@@ -1,0 +1,183 @@
+{
+  "schema": "abrl.batch40.phase3.definition_reuse.v1",
+  "reviewer": "/root/batch40_source_reviewer",
+  "verdict": "accepted-with-explicit-delta",
+  "blocking_production_repairs": [],
+  "bounded_obligations": [
+    {
+      "id": "selector-characterization",
+      "status": "discharged",
+      "evidence": [
+        "OnlinePrescientBregman.advance_some_spec",
+        "OnlinePrescientBregman.advance_none_iff",
+        "OnlinePrescientBregman.advance_eq_some_of_minimizer"
+      ],
+      "reason": "Forward some-value specification, exact absence characterization and converse identification under proper/support/strict/positive inputs jointly characterize the partial selector. No default point."
+    },
+    {
+      "id": "selector-uniqueness",
+      "status": "discharged-conditional-on-attainment",
+      "evidence": [
+        "OnlinePrescientBregman.penalized_strictConvex",
+        "OnlineBregman.proximal_finitePart_minimizer_iff",
+        "StrictConvexOn.eq_of_isMinOn"
+      ],
+      "reason": "Both extended minima transported to real minima and identified. Existence comes only from supplied hp/hmin."
+    },
+    {
+      "id": "iterate-correspondence",
+      "status": "discharged-on-valid-prefix",
+      "evidence": [
+        "OnlinePrescientBregman.iterate_succ_some_spec",
+        "OnlinePrescientBregman.iterate_eq_of_source_updates",
+        "OnlinePrescientBregman.iterate_prefix",
+        "OnlinePrescientBregman.iterate_no_recovery"
+      ],
+      "reason": "Reverse successful-update specification and forward finite-prefix identification share the same recursion."
+    },
+    {
+      "id": "divergence-representative",
+      "status": "discharged-on-source-domain",
+      "evidence": [
+        "OnlineBregman.divergence_extension_eq",
+        "Filter.EventuallyEq.fderiv_eq"
+      ],
+      "reason": "EqOn on X, first argument in X, reference in interior X; neighborhood equality transports actual total derivative. No boundary-reference or whole-carrier seal."
+    },
+    {
+      "id": "gradient-correspondence",
+      "status": "discharged-at-differentiable-reference",
+      "evidence": [
+        "OnlineBregman.divergence_eq_gradient",
+        "HasGradientAt.fderiv_apply"
+      ],
+      "reason": "Complete real inner-product pairing; finite-dimensional source endpoints provide completeness and interior differentiability."
+    },
+    {
+      "id": "nonsmooth-one-step",
+      "status": "implementation-discharged-by-derived-route",
+      "evidence": [
+        "OnlineBregman.proximal_one_step_extended",
+        "OnlineBregman.proximal_one_step",
+        "OnlineProximal.convex_minimizer_comparison"
+      ],
+      "reason": "Finite restriction convexity plus feasible segment, derivative only of penalty, three-point identity. Source smooth citation itself remains a source gap."
+    },
+    {
+      "id": "constant-exercise",
+      "status": "implementation-completion-discharged",
+      "evidence": [
+        "OnlinePrescientBregman.iterate_fixed_sharp",
+        "OnlinePrescientBregman.iterate_fixed_regret"
+      ],
+      "reason": "Pre-maximum telescope retains terminal term, then nonnegative quotient is removed. Source still omits proof."
+    }
+  ],
+  "reuse": [
+    {
+      "name": "sourceProper_of_domain",
+      "role": "domain-to-properness adapter",
+      "consumers": [
+        "source_fixed_regret",
+        "source_variable_regret",
+        "fixed_source_run",
+        "decreasing_source_run"
+      ],
+      "finding": "Small useful bookkeeping, not independent source theorem."
+    },
+    {
+      "name": "penalized_strictConvex",
+      "role": "finite-loss and Bregman strictness composition",
+      "consumers": [
+        "advance_eq_some_of_minimizer",
+        "fixed_source_run"
+      ],
+      "finding": "Uses accepted finite-part convexity. Generic Mathlib convex/strict addition exists, but this is a concrete interface specialization, not a duplicate framework."
+    },
+    {
+      "name": "advance_eq_some_of_minimizer",
+      "role": "unique-minimum to optional-selector transport",
+      "consumers": [
+        "iterate_eq_of_source_updates",
+        "fixed_source_run"
+      ],
+      "finding": "Uses shared finite minimum transport and Mathlib uniqueness; no fake attainment."
+    },
+    {
+      "name": "iterate_eq_of_source_updates",
+      "role": "valid relation to shared recursion",
+      "consumers": [
+        "source_fixed_regret",
+        "source_variable_regret",
+        "fixed_source_run",
+        "decreasing_source_run"
+      ],
+      "finding": "Real induction, no new recursion or library."
+    },
+    {
+      "name": "source_fixed_regret/source_variable_regret",
+      "role": "source contract adapters",
+      "consumers": [
+        "fixed_source_run/decreasing_source_run"
+      ],
+      "finding": "Retain source closedness and derive implementation hseq/hf internally. Justified small wrappers, not new independent mathematics."
+    }
+  ],
+  "canaries": {
+    "fixed_source_run": {
+      "conjunct_count": 8,
+      "conjuncts": [
+        "SourceProper f0",
+        "StrictConvexOn first penalty",
+        "advance some 0",
+        "every state through 2 agrees",
+        "movement 11/64",
+        "movement 9/64",
+        "all-u source_fixed_regret instance",
+        "-9/8 <= 5/16"
+      ],
+      "numeric_zero_based_index": 7,
+      "selected_head": "Eq.mpr",
+      "required_endpoint": "BanditRL.OnlinePrescientBregman.source_fixed_regret",
+      "compiled_value_consumption_verified": true
+    },
+    "decreasing_source_run": {
+      "conjunct_count": 6,
+      "conjuncts": [
+        "every state through 2 agrees",
+        "weighted movement 29/64",
+        "negative-comparator max 5/8",
+        "positive-comparator max 9/64",
+        "all-u source_variable_regret instance",
+        "-1/2 <= -11/64"
+      ],
+      "numeric_zero_based_index": 5,
+      "selected_head": "Eq.mpr",
+      "required_endpoint": "BanditRL.OnlinePrescientBregman.source_variable_regret",
+      "compiled_value_consumption_verified": true
+    }
+  },
+  "source_deltas_preserved": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+  ],
+  "whole_carrier_literal_seal": false,
+  "source_correction_approval": false,
+  "required_before_publication": [
+    "Record implementation convex-segment route separately from author source graph and exercise notice",
+    "Retain all explicit statement/carrier/index deltas and conditional valid-run/failure boundaries",
+    "Publish paired named definition evidence rather than whole-carrier literal claims",
+    "Preserve six declarations and every 8+6 original canary conjunct",
+    "Complete root/Tests/harness, scope/conservation, reader/exposition and final-candidate gates",
+    "Follow normal integration and live-verification gates before publication claims"
+  ],
+  "optional_purification": [
+    "Explore unnecessary CompleteSpace inherited from shared minimum-order API only in a separate contract-preserving follow-up",
+    "Compress strictness affine arithmetic with existing Mathlib combinators only if useful; no frozen-body change requested here"
+  ]
+}
