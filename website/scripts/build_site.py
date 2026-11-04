@@ -4974,19 +4974,28 @@ def build_lean_graph(
             if node_id in included_ids
         ]
         target = graph_dir / relative_path
-        write_text_lf(
-            target,
-            json.dumps(
-                {
-                    **graph_meta,
-                    "views": views,
-                    "nodes": sliced_nodes,
-                    "edges": sliced_edges,
-                },
-                ensure_ascii=False,
-                separators=(",", ":"),
-            ),
-        )
+        slice_payload = {**graph_meta, "views": views, "nodes": sliced_nodes, "edges": sliced_edges}
+        encode = lambda value: json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+        serialized = encode(slice_payload)
+        if len(serialized.encode("utf-8")) > 1_200_000:
+            statements = {node["id"]: node["statement"] for node in sliced_nodes
+                          if node.get("statement")}
+            reference = "statements/" + hashlib.sha256(relative_path.encode()).hexdigest()[:32] + ".json"
+            detail_payload = encode({"schema_version": 1, "statements": statements})
+            if not statements or len(detail_payload.encode("utf-8")) > 1_200_000:
+                raise ValueError("Exact Lean statement payload exceeds the branch budget")
+            # Never mutate canonical nodes, the full graph, or other slices.
+            deferred_nodes = [
+                {**{key: value for key, value in node.items() if key != "statement"},
+                 "statement_source": reference}
+                if node["id"] in statements else node
+                for node in sliced_nodes
+            ]
+            serialized = encode({**slice_payload, "nodes": deferred_nodes})
+            if len(serialized.encode("utf-8")) > 1_200_000:
+                raise ValueError("Lean graph branch exceeds budget after deferring statements")
+            write_text_lf(graph_dir / reference, detail_payload)
+        write_text_lf(target, serialized)
         shard_paths.append(target)
 
     scope_options = []
