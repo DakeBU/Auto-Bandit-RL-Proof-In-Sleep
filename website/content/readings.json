@@ -1496,7 +1496,8 @@
         "BanditRL.OnlineGradientDescentSource.equation_2_1",
         "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
         "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
-        "BanditRL.OnlineConvex.source_weierstrass_extended"
+        "BanditRL.OnlineConvex.source_weierstrass_extended",
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth"
       ],
       "source_theorems": [
         {
@@ -1769,6 +1770,29 @@
             "boundary": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate."
           },
           "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Derived quadratic growth at a supplied minimum",
+          "pages": "Definition 4.1, printed 34 / PDF 46; Definition 2.18, printed 16 / PDF 28",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
+          "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+          "fallback": "A supplied feasible minimum of a strongly convex extended-real objective has quadratic growth on the convex feasible set where the objective is finite.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. This is a derived conditional consequence of Definition 4.1, with properness from Definition 2.18, generalized from the source finite-dimensional setting to an arbitrary real normed space. It is not a direct restatement of Lemma 7.1. The implementation uses the following alternative segment argument; the source-support proof remains distinct. SourceProper excludes negative infinity, while V is contained in effectiveDomain f, excluding positive infinity on V. Thus f(p) and f(q) are finite, and their real values preserve order. Set c = (λ/2)‖q − p‖² and g = f(q) − f(p) ≥ 0. Suppose g < c. Then c > 0 and a = (g + c)/(2c) lies strictly between 0 and 1. Convexity places a p + (1 − a)q in V. Minimality and strong convexity give f(p) ≤ a f(p) + (1 − a)f(q) − c a(1 − a). Composing these extended-real inequalities and converting their finite endpoints yields 0 ≤ (1 − a)(g − ca). But ca = (g + c)/2 > g and 1 − a > 0, a contradiction. If λ = 0 or p = q, the nonnegative gap cannot be smaller than c = 0.",
+          "contract": {
+            "model": "One proper extended-real objective on a convex feasible set where f is finite; no algorithmic run or selected cumulative objective is asserted.",
+            "assumptions": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+            "parameters": "λ ≥ 0, a supplied attained minimum p, and any feasible comparator q. The coefficient is exactly λ/2.",
+            "regret": "No regret bound is asserted by this lemma.",
+            "guarantee": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, the source-support obligation for Theorem 6.9, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled conditional minimum growth",
+            "boundary": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, the source-support obligation for Theorem 6.9, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {
