@@ -3,9 +3,14 @@
   "command": "trusted-local-lean-replay",
   "dataset_version": "0.0.1-seed",
   "registry_sha256": "ee9a744a7f1217b46ddb3de531743a819e4075c2c6728678807a3a708fd33540",
-  "runner_commit": "d416a6f8fe4377cbdbe1240c33a31c5a755ccb28",
-  "runner_dirty": true,
-  "created_at": "2026-11-04T05:56:47.279848+00:00",
+  "runner_commit": "e31c6648fbdea45d84619693e944730461efcffb",
+  "runner_dirty": false,
+  "runner_files_sha256": {
+    "tools/banditrlbench.py": "da53d1f0822ca7893f32c410e45fb45112a7deb0683234af7506b6342bd916fd",
+    "website/scripts/banditrlbench.py": "547a145c029096ea63a72fe425720cd82dda7c6adf955edae9afc292f7725ff4",
+    "benchmarks/banditrlbench/targets.json": "047f5aacbb8193f483cfe4f55fc061fdbbf8b78edb01f068eab763e457768ee9"
+  },
+  "created_at": "2026-11-04T06:05:51.311173+00:00",
   "mode": "lean-assisted",
   "model": "reference-canary",
   "agent": "bundled-reference",
@@ -26,6 +31,7 @@
   "results": [
     {
       "core_id": "BRB-001",
+      "family_id": "regret-accounting",
       "status": "kernel-checked",
       "prediction_sha256": "08d4a51181c97a5c60cc0793450d1b3b16c92937a2f8efcf6510933fc45b3fdc",
       "contract_hash": "4172494802d81beecd073af34f00e4d7241f0795e55161b437e344629f9cb2f0",
@@ -38,36 +44,37 @@
       ],
       "dependencies": {
         "type_constants": [
-          "Real",
-          "HMul.hMul",
-          "Finset.univ",
-          "instDecidableEqFin",
-          "Nat.cast",
-          "Fin.fintype",
-          "BanditRLProof.realMeanGap",
-          "Nat",
-          "Real.instMul",
-          "BanditRLProof.pullCount",
-          "Real.instAddCommMonoid",
           "BanditRLProof.ActionTrace",
-          "Fin",
-          "Eq",
+          "BanditRLProof.pullCount",
+          "BanditRLProof.realMeanGap",
           "BanditRLProof.realMeanRegret",
+          "Eq",
+          "Fin",
+          "Fin.fintype",
           "Finset.sum",
-          "instHMul",
-          "Real.instNatCast"
+          "Finset.univ",
+          "HMul.hMul",
+          "Nat",
+          "Nat.cast",
+          "Real",
+          "Real.instAddCommMonoid",
+          "Real.instMul",
+          "Real.instNatCast",
+          "instDecidableEqFin",
+          "instHMul"
         ],
         "value_constants": [
-          "Real",
-          "Nat",
           "BanditRLProof.ActionTrace",
+          "BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount",
           "Fin",
-          "BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount"
+          "Nat",
+          "Real"
         ]
       }
     },
     {
       "core_id": "BRB-003",
+      "family_id": "confidence-schedules",
       "status": "kernel-checked",
       "prediction_sha256": "11459bd3f394e029fc3e3735f7679445eaeb9ddf957fe31b9e4777e4531de1d0",
       "contract_hash": "b7aff5365b53330baeefac5bf10d574d21d53b27d851a35f5489a40f80c1f99c",
@@ -80,30 +87,30 @@
       ],
       "dependencies": {
         "type_constants": [
-          "Real.instLE",
-          "Real",
-          "ENNReal.instAddCommMonoid",
-          "Real.instZero",
-          "ENNReal.ofReal",
-          "LE.le",
           "BanditRLProof.Concentration.geometricConfidenceShare",
-          "tsum",
-          "Nat",
           "ENNReal",
-          "Zero.toOfNat0",
+          "ENNReal.instAddCommMonoid",
           "ENNReal.instTopologicalSpace",
-          "OfNat.ofNat",
+          "ENNReal.ofReal",
           "Eq",
-          "SummationFilter.unconditional"
+          "LE.le",
+          "Nat",
+          "OfNat.ofNat",
+          "Real",
+          "Real.instLE",
+          "Real.instZero",
+          "SummationFilter.unconditional",
+          "Zero.toOfNat0",
+          "tsum"
         ],
         "value_constants": [
           "BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare",
-          "Real.instLE",
-          "Real",
-          "Real.instZero",
           "LE.le",
-          "Zero.toOfNat0",
-          "OfNat.ofNat"
+          "OfNat.ofNat",
+          "Real",
+          "Real.instLE",
+          "Real.instZero",
+          "Zero.toOfNat0"
         ]
       }
     }

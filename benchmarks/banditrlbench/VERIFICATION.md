@@ -23,8 +23,8 @@ in `targets.json` and checked against the existing `Reference.lean` signatures.
 `notation.json` changes only the presentation of literal expressions.
 
 Actual local canary command:
-`python tools/banditrlbench.py canary --trusted-local --library C:/qb261009/news --output C:/qb261104/canary2`.
-Both references kernel-checked; empty, wrong-type and placeholder controls failed
+`python tools/banditrlbench.py canary --trusted-local --library C:/qb261009/news --output C:/qb261104/canary-final`.
+Replay ran from clean runner commit e31c6648fbdea45d84619693e944730461efcffb; exact runner-file hashes are in the receipt. Both references kernel-checked; empty, wrong-type and placeholder controls failed
 as intended. `reference-replay.json` records the real prebuilt library commit,
 dirty state, toolchain, manifest, proof/target hashes, axioms and direct type/value
 constants. This is a trusted reference replay, not a fresh whole-root build or a
