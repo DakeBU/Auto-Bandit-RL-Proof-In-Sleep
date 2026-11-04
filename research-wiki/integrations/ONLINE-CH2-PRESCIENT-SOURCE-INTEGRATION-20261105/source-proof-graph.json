@@ -1,0 +1,636 @@
+{
+  "schema": "abrl.batch40.source_only_graph.v2",
+  "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "status": "EXTRACTED_NOT_INDEPENDENTLY_REVIEWED",
+  "extractor": "/root/batch40_source_extractor",
+  "source_only": true,
+  "implementation_or_historical_graph_consulted": false,
+  "anchors": [
+    "prescient-alg",
+    "prescient-variable-conclusion",
+    "prescient-constant-conclusion",
+    "ch2-forward"
+  ],
+  "nodes": [
+    {
+      "id": "ch2-forward",
+      "kind": "SOURCE_CONTEXT",
+      "printed_page": 14,
+      "pdf_page": 26,
+      "region": "first bullet after Theorem 2.13 proof",
+      "claim": "The gradient-square terms arise because x_t is output before loss l_t is known; they become non-positive if l_t is observed before producing x_t. Explicit forward reference: Section 15.5.1."
+    },
+    {
+      "id": "convex-set",
+      "kind": "DEFINITION",
+      "printed_page": 9,
+      "pdf_page": 21,
+      "region": "Definition 2.2",
+      "claim": "V is convex iff lambda*x+(1-lambda)*y is in V for x,y in V and 0<lambda<1."
+    },
+    {
+      "id": "domain-indicator",
+      "kind": "SOURCE_CONVENTION",
+      "printed_page": 9,
+      "pdf_page": 21,
+      "region": "paragraphs after Definition 2.2",
+      "claim": "dom f={x:f(x)<+infinity}; indicator i_V is 0 on V and +infinity off V. The source permits extended-real-valued functions."
+    },
+    {
+      "id": "convex-function",
+      "kind": "DEFINITION",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "region": "Definition 2.3 and following paragraph",
+      "claim": "Convexity means convex epigraph. A convex function has convex domain; i_V is convex iff V is convex; convex f+i_V is convex when V is convex."
+    },
+    {
+      "id": "convex-jensen-char",
+      "kind": "CITED_THEOREM",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "region": "Theorem 2.4",
+      "claim": "For f:R^d->(-infinity,+infinity] with convex domain, convexity is equivalent to the two-point convexity inequality on dom f.",
+      "citation": "Rockafellar (1970), Theorem 4.1"
+    },
+    {
+      "id": "convex-operations",
+      "kind": "SOURCE_FACT",
+      "printed_page": 10,
+      "pdf_page": 22,
+      "region": "first convexity-preserving operation",
+      "claim": "Nonnegative linear combinations of convex functions are convex. The proofs of the operations listed here are left as exercises at the top of printed11."
+    },
+    {
+      "id": "gradient-lower",
+      "kind": "CITED_THEOREM",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "region": "Theorem 2.7",
+      "claim": "Convex f:R^d->(-infinity,+infinity], differentiable at x in int dom f, satisfies the global affine lower bound.",
+      "citation": "Rockafellar (1970), Theorem 25.1 and Corollary 25.1.1"
+    },
+    {
+      "id": "smooth-optimality",
+      "kind": "THEOREM",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "region": "Theorem 2.8 statement",
+      "claim": "V nonempty convex, x* in V, f convex and differentiable over an open set containing V. Then x* minimizes f on V iff <grad f(x*),y-x*>>=0 for every y in V."
+    },
+    {
+      "id": "smooth-optimality-sufficient",
+      "kind": "PROOF_STEP",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "region": "Theorem 2.8 first proof paragraph",
+      "claim": "Theorem 2.7 plus the nonnegative inner product implies f(y)>=f(x*) on V."
+    },
+    {
+      "id": "smooth-optimality-necessary",
+      "kind": "PROOF_STEP",
+      "printed_page": 11,
+      "pdf_page": 23,
+      "region": "Theorem 2.8 second proof paragraph",
+      "claim": "A negative directional derivative along feasible segment z(alpha)=alpha*y+(1-alpha)*x* gives a smaller objective for sufficiently small positive alpha, contradicting minimality."
+    },
+    {
+      "id": "closed",
+      "kind": "DEFINITION",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Definition 2.16",
+      "claim": "A function f:R^d->[-infinity,+infinity] is closed iff every sublevel {x:f(x)<=alpha}, alpha real, is closed."
+    },
+    {
+      "id": "closed-lsc",
+      "kind": "CITED_FACT",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "paragraph after Definition 2.16",
+      "claim": "In Euclidean spaces, closed iff lower semicontinuous.",
+      "citation": "Bauschke and Combettes (2017), Lemma 1.24"
+    },
+    {
+      "id": "indicator-closed",
+      "kind": "SOURCE_EXAMPLE",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Example 2.17",
+      "claim": "i_V closed iff V closed."
+    },
+    {
+      "id": "proper",
+      "kind": "DEFINITION",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Definition 2.18",
+      "claim": "Proper means nowhere -infinity and finite somewhere."
+    },
+    {
+      "id": "indicator-proper",
+      "kind": "SOURCE_EXAMPLE",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Example 2.19",
+      "claim": "i_V proper iff V nonempty."
+    },
+    {
+      "id": "global-subgradient",
+      "kind": "DEFINITION",
+      "printed_page": 16,
+      "pdf_page": 28,
+      "region": "Definition 2.20",
+      "claim": "For proper f:R^d->(-infinity,+infinity], g in R^d is a subgradient at x when f(y)>=f(x)+<g,y-x> for every y in R^d."
+    },
+    {
+      "id": "subdifferentiable",
+      "kind": "SOURCE_CONVENTION",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "region": "first paragraph",
+      "claim": "partial f(x) is the set of all subgradients; subdifferentiable at x means partial f(x) is nonempty."
+    },
+    {
+      "id": "subdiff-domain",
+      "kind": "CITED_FACT",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "region": "second paragraph and footnote1",
+      "claim": "For proper convex f, dom partial f is a subset of dom f and includes int dom f. The relative-interior strengthening is explicitly not used in this book.",
+      "citation": "Rockafellar (1970), Theorem 23.4"
+    },
+    {
+      "id": "convex-from-subgrad",
+      "kind": "THEOREM",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "region": "Theorem 2.21 statement",
+      "claim": "f:R^d->R, V convex, and nonempty partial f(x) for every x in V imply restriction of f to V is convex. The codomain in the printed statement is R, not extended reals."
+    },
+    {
+      "id": "convex-from-subgrad-supports",
+      "kind": "PROOF_STEP",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "region": "Theorem 2.21 first proof paragraph and two inequalities",
+      "claim": "For x1,x2 in V and lambda in [0,1], take y=lambda*x1+(1-lambda)*x2 in V and g in partial f(y). Apply its global support inequalities to x1 and x2."
+    },
+    {
+      "id": "convex-from-subgrad-combine",
+      "kind": "PROOF_STEP",
+      "printed_page": 17,
+      "pdf_page": 29,
+      "region": "Theorem 2.21 second proof paragraph",
+      "claim": "Multiply support inequalities by lambda and 1-lambda, add and cancel inner products to get convexity on V."
+    },
+    {
+      "id": "strict-convex",
+      "kind": "DEFINITION",
+      "printed_page": 63,
+      "pdf_page": 75,
+      "region": "Definition 6.3",
+      "claim": "f:V->R, V convex; strict inequality at nontrivial convex combinations of distinct points defines strict convexity."
+    },
+    {
+      "id": "strict-support",
+      "kind": "CITED_FACT",
+      "printed_page": 63,
+      "pdf_page": 75,
+      "region": "paragraph after Definition 6.3",
+      "claim": "Strong convexity implies strict convexity. For differentiable strictly convex f, f(y)>f(x)+<grad f(x),y-x> for x!=y.",
+      "citation": "Bauschke and Combettes (2017), Proposition 17.10"
+    },
+    {
+      "id": "bregman-def",
+      "kind": "DEFINITION",
+      "printed_page": 63,
+      "pdf_page": 75,
+      "region": "Definition 6.4",
+      "claim": "psi:X->R strictly convex, differentiable on nonempty int X, X=dom psi; B_psi:X times int X->R; B(x;y)=psi(x)-psi(y)-<grad psi(y),x-y>."
+    },
+    {
+      "id": "bregman-nonnegative",
+      "kind": "SOURCE_FACT",
+      "printed_page": 64,
+      "pdf_page": 76,
+      "region": "first mathematical paragraph",
+      "claim": "For y in int X and all x in X, B(x;y)>=0, with equality only when x=y. The first argument need not be interior."
+    },
+    {
+      "id": "bregman-three-point",
+      "kind": "CITED_LEMMA",
+      "printed_page": 64,
+      "pdf_page": 76,
+      "region": "Lemma 6.7",
+      "claim": "For x,y in int X and z in X: B(z;x)+B(x;y)-B(z;y)=<grad psi(y)-grad psi(x),z-x>.",
+      "citation": "Chen and Teboulle (1993)",
+      "proof_in_book": "Called immediate; no proof displayed."
+    },
+    {
+      "id": "unique-if-attained-source",
+      "kind": "SOURCE_FACT_CONTEXT",
+      "printed_page": 77,
+      "pdf_page": 89,
+      "region": "Theorem 6.31 first proof paragraph, last sentence",
+      "claim": "Given that f is strictly convex, the minimizer must be unique too. This is an at-most-one claim after existence has been obtained under the separate hypotheses of Theorem 6.31.",
+      "source_scope": "Theorem 6.31 assumes proper closed strictly convex f, differentiability in int dom f, V nonempty closed convex intersecting dom f, and an EXISTING unconstrained minimizer in int dom f. Not cited in Theorem 15.30."
+    },
+    {
+      "id": "prescient-alg",
+      "kind": "ALGORITHM",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Algorithm 15.8 entire box",
+      "claim": "Receive l_t before choosing x_t in argmin over V of l_t(x)+B(x;x_(t-1))/eta_t, then pay l_t(x_t), t=1,...,T."
+    },
+    {
+      "id": "prescient-context",
+      "kind": "SOURCE_CONTEXT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Section15.5.1 two paragraphs",
+      "claim": "Prescience changes access from gradients to functions (Remark15.16); best response supplies nonpositive regret but the optimistic argument needs specific negative terms. Algorithm15.8 supplies such terms."
+    },
+    {
+      "id": "prescient-assumptions",
+      "kind": "STATEMENT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Theorem 15.30 hypotheses",
+      "claim": "psi differentiable in int X, closed, strictly convex; V subset X nonempty closed convex; x_t in int X, l_t subdifferentiable on V, eta_(t+1)<=eta_t for t=1,...,T, with Algorithm15.8 requirements inherited."
+    },
+    {
+      "id": "gap-nonsmooth-optimality",
+      "kind": "SOURCE_GAP",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "first proof sentence citing Theorem2.8",
+      "claim": "The cited theorem covers a convex DIFFERENTIABLE objective on an open set containing V. Here l_t is only subdifferentiable on V, and V need not lie inside int X. It does not literally establish a single g_t in partial l_t(x_t) satisfying the asserted inequality for all u in V.",
+      "disposition": "Unresolved source bridge. Do not turn the asserted conclusion into an extra public source hypothesis.",
+      "possible_repairs": "A separately proved nonsmooth constrained optimality bridge under exact assumptions, or a separately proved direct argmin/convex-segment one-step inequality. Neither proof is supplied here."
+    },
+    {
+      "id": "prescient-optimality-assertion",
+      "kind": "SOURCE_ASSERTION",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "first displayed proof inequality",
+      "claim": "There exists g_t in partial l_t(x_t) such that <eta_t*g_t+grad psi(x_t)-grad psi(x_(t-1)),u-x_t>>=0 for every u in V."
+    },
+    {
+      "id": "prescient-loss-linearization",
+      "kind": "PROOF_STEP",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "first inequality of last display",
+      "claim": "eta_t*(l_t(x_t)-l_t(u)) <= <eta_t*g_t,x_t-u> by global subgradient inequality and eta_t>0."
+    },
+    {
+      "id": "prescient-optimality-rearrange",
+      "kind": "PROOF_STEP",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "second inequality of last display",
+      "claim": "<eta_t*g_t,x_t-u> <= <grad psi(x_(t-1))-grad psi(x_t),x_t-u>."
+    },
+    {
+      "id": "prescient-one-step",
+      "kind": "PROOF_STEP",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "last equality, citation continues at printed266",
+      "claim": "eta_t*(l_t(x_t)-l_t(u)) <= B(u;x_(t-1))-B(u;x_t)-B(x_t;x_(t-1)). Lemma6.7 is used with x=x_t,y=x_(t-1),z=u, including sign rearrangement."
+    },
+    {
+      "id": "prescient-sum",
+      "kind": "PROOF_STEP",
+      "printed_page": 266,
+      "pdf_page": 278,
+      "region": "first displayed inequality",
+      "claim": "Divide each one-step inequality by positive eta_t, sum t=1,...,T; retain the negative movement sum."
+    },
+    {
+      "id": "prescient-telescope",
+      "kind": "PROOF_STEP",
+      "printed_page": 266,
+      "pdf_page": 278,
+      "region": "first displayed equality",
+      "claim": "Regret <= B(u;x0)/eta1-B(u;xT)/etaT + sum_(t=1)^(T-1)(1/eta_(t+1)-1/eta_t)*B(u;x_t) - sum_(t=1)^T B(x_t;x_(t-1))/eta_t."
+    },
+    {
+      "id": "prescient-max-bound",
+      "kind": "PROOF_STEP",
+      "printed_page": 266,
+      "pdf_page": 278,
+      "region": "next inequality and D^2 definition below display",
+      "claim": "D^2=max_(0<=t<=T-1) B(u;x_t). Drop -B(u;xT)/etaT by Bregman nonnegativity; bound each earlier B by D^2 using nonnegative reciprocal-rate differences."
+    },
+    {
+      "id": "prescient-reciprocal-telescope",
+      "kind": "PROOF_STEP",
+      "printed_page": 266,
+      "pdf_page": 278,
+      "region": "last two displayed equalities",
+      "claim": "sum_(t=1)^(T-1)(1/eta_(t+1)-1/eta_t)=1/etaT-1/eta1; initial and sum coefficients combine to D^2/etaT."
+    },
+    {
+      "id": "prescient-variable-conclusion",
+      "kind": "STATEMENT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Theorem15.30 first conclusion",
+      "claim": "For every u in V, sum_(t=1)^T l_t(x_t)-sum_(t=1)^T l_t(u) <= max_(0<=t<=T-1) B(u;x_t)/etaT - sum_(t=1)^T B(x_t;x_(t-1))/eta_t."
+    },
+    {
+      "id": "prescient-constant-conclusion",
+      "kind": "STATEMENT",
+      "printed_page": 265,
+      "pdf_page": 277,
+      "region": "Theorem15.30 moreover clause",
+      "claim": "If eta_t=eta for every t=1,...,T, regret <= B(u;x0)/eta - (1/eta)*sum_(t=1)^T B(x_t;x_(t-1))."
+    },
+    {
+      "id": "gap-constant-exercise",
+      "kind": "SOURCE_GAP_EXERCISE",
+      "printed_page": 266,
+      "pdf_page": 278,
+      "region": "sentence immediately after D^2 definition",
+      "claim": "The second statement is left as an exercise.",
+      "disposition": "Intentional omitted proof. A constant-rate specialization of the pre-max telescoping identity and deletion of the nonpositive terminal term is a DERIVED completion, not a displayed source proof."
+    }
+  ],
+  "edges": [
+    {
+      "from_id": "convex-set",
+      "to_id": "convex-from-subgrad-supports",
+      "consumer_use_site": "printed17 Theorem2.21 proof: y in V",
+      "premise_discharge": "Convex V and x1,x2 in V; endpoints lambda=0,1 are direct."
+    },
+    {
+      "from_id": "global-subgradient",
+      "to_id": "convex-from-subgrad-supports",
+      "consumer_use_site": "printed17 two support inequalities",
+      "premise_discharge": "g selected at y using nonempty subdifferential hypothesis."
+    },
+    {
+      "from_id": "convex-from-subgrad-supports",
+      "to_id": "convex-from-subgrad-combine",
+      "consumer_use_site": "printed17 multiply and add",
+      "premise_discharge": "lambda and 1-lambda nonnegative."
+    },
+    {
+      "from_id": "convex-from-subgrad-combine",
+      "to_id": "convex-from-subgrad",
+      "consumer_use_site": "printed17 final line",
+      "premise_discharge": "Real-valued f, as stated."
+    },
+    {
+      "from_id": "gradient-lower",
+      "to_id": "smooth-optimality-sufficient",
+      "consumer_use_site": "printed11 Theorem2.8 forward proof",
+      "premise_discharge": "f convex differentiable on open set containing V."
+    },
+    {
+      "from_id": "convex-set",
+      "to_id": "smooth-optimality-necessary",
+      "consumer_use_site": "printed11 segment z(alpha)",
+      "premise_discharge": "x*,y in V."
+    },
+    {
+      "from_id": "smooth-optimality-sufficient",
+      "to_id": "smooth-optimality",
+      "consumer_use_site": "printed11 iff proof, sufficient direction",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "smooth-optimality-necessary",
+      "to_id": "smooth-optimality",
+      "consumer_use_site": "printed11 iff proof, necessary direction",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "strict-convex",
+      "to_id": "bregman-def",
+      "consumer_use_site": "printed63 Definition6.4 hypotheses",
+      "premise_discharge": "psi strictly convex on its domain X."
+    },
+    {
+      "from_id": "strict-support",
+      "to_id": "bregman-nonnegative",
+      "consumer_use_site": "printed64 support/equality paragraph",
+      "premise_discharge": "y interior, x in X; includes x=y."
+    },
+    {
+      "from_id": "bregman-def",
+      "to_id": "bregman-nonnegative",
+      "consumer_use_site": "printed64 first paragraph",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "bregman-def",
+      "to_id": "bregman-three-point",
+      "consumer_use_site": "printed64 Lemma6.7",
+      "premise_discharge": "x,y interior; z in X. Identity is stated without displayed proof."
+    },
+    {
+      "from_id": "prescient-alg",
+      "to_id": "prescient-assumptions",
+      "consumer_use_site": "printed265 Theorem15.30 applies Algorithm15.8",
+      "premise_discharge": "Positive rates, x0 interior, V subset dom l_t inherited; valid updates are supplied."
+    },
+    {
+      "from_id": "smooth-optimality",
+      "to_id": "gap-nonsmooth-optimality",
+      "consumer_use_site": "printed265 first proof sentence",
+      "premise_discharge": "NOT DISCHARGED: objective differentiability/open-neighborhood condition absent."
+    },
+    {
+      "from_id": "prescient-assumptions",
+      "to_id": "gap-nonsmooth-optimality",
+      "consumer_use_site": "printed265 first proof sentence",
+      "premise_discharge": "Subdifferentiability does not literally satisfy cited theorem."
+    },
+    {
+      "from_id": "prescient-alg",
+      "to_id": "gap-nonsmooth-optimality",
+      "consumer_use_site": "printed265 first proof sentence",
+      "premise_discharge": "x_t is an attained minimizer. No independent existence theorem is provided."
+    },
+    {
+      "from_id": "gap-nonsmooth-optimality",
+      "to_id": "prescient-optimality-assertion",
+      "consumer_use_site": "printed265 first proof inequality",
+      "premise_discharge": "SOURCE_GAP remains open; edge is claimed by source, not certified."
+    },
+    {
+      "from_id": "global-subgradient",
+      "to_id": "prescient-loss-linearization",
+      "consumer_use_site": "printed265 first inequality",
+      "premise_discharge": "u and x_t in V subset dom l_t, g_t from preceding asserted selection, eta_t>0."
+    },
+    {
+      "from_id": "prescient-optimality-assertion",
+      "to_id": "prescient-loss-linearization",
+      "consumer_use_site": "printed265 first inequality",
+      "premise_discharge": "Use its g_t in global partial l_t(x_t)."
+    },
+    {
+      "from_id": "prescient-optimality-assertion",
+      "to_id": "prescient-optimality-rearrange",
+      "consumer_use_site": "printed265 second inequality",
+      "premise_discharge": "Same g_t for all u; no change of quantifier order."
+    },
+    {
+      "from_id": "prescient-loss-linearization",
+      "to_id": "prescient-one-step",
+      "consumer_use_site": "printed265 inequality chain",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "prescient-optimality-rearrange",
+      "to_id": "prescient-one-step",
+      "consumer_use_site": "printed265 inequality chain",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "bregman-three-point",
+      "to_id": "prescient-one-step",
+      "consumer_use_site": "printed265 last equality / printed266 explicit citation",
+      "premise_discharge": "x=x_t and y=x_(t-1) interior; for t=1 previous point is x0 from initialization; z=u in V subset X."
+    },
+    {
+      "from_id": "prescient-one-step",
+      "to_id": "prescient-sum",
+      "consumer_use_site": "printed266 division and summation",
+      "premise_discharge": "eta_t>0 for t=1,...,T."
+    },
+    {
+      "from_id": "prescient-sum",
+      "to_id": "prescient-telescope",
+      "consumer_use_site": "printed266 first equality",
+      "premise_discharge": "Finite positive horizon; preserve x0 and xT endpoints."
+    },
+    {
+      "from_id": "prescient-telescope",
+      "to_id": "prescient-max-bound",
+      "consumer_use_site": "printed266 next inequality",
+      "premise_discharge": "eta_(t+1)<=eta_t with both positive for t=1,...,T-1; finite max includes x0 through x_(T-1)."
+    },
+    {
+      "from_id": "bregman-nonnegative",
+      "to_id": "prescient-max-bound",
+      "consumer_use_site": "printed266 dropping terminal term",
+      "premise_discharge": "u in X, xT interior, etaT>0."
+    },
+    {
+      "from_id": "prescient-max-bound",
+      "to_id": "prescient-reciprocal-telescope",
+      "consumer_use_site": "printed266 last two equalities",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "prescient-reciprocal-telescope",
+      "to_id": "prescient-variable-conclusion",
+      "consumer_use_site": "printed265 theorem conclusion / printed266 final line",
+      "premise_discharge": "No additional conditional premise."
+    },
+    {
+      "from_id": "prescient-telescope",
+      "to_id": "gap-constant-exercise",
+      "consumer_use_site": "printed266 exercise notice",
+      "premise_discharge": "Possible DERIVED completion uses eta_t=eta>0; not claimed as a written proof."
+    },
+    {
+      "from_id": "bregman-nonnegative",
+      "to_id": "gap-constant-exercise",
+      "consumer_use_site": "printed266 exercise notice",
+      "premise_discharge": "Terminal B(u;xT)>=0 would discharge final weakening."
+    },
+    {
+      "from_id": "gap-constant-exercise",
+      "to_id": "prescient-constant-conclusion",
+      "consumer_use_site": "printed265 moreover clause",
+      "premise_discharge": "Exercise remains source-omitted; a separately proved completion is required."
+    },
+    {
+      "from_id": "prescient-context",
+      "to_id": "ch2-forward",
+      "consumer_use_site": "printed14 first bullet forward reference to Section15.5.1",
+      "premise_discharge": "Reference/context edge only, not a theorem-dependency edge."
+    }
+  ],
+  "and_or_semantics": {
+    "main_route": "The source gives one variable-step route, containing gap-nonsmooth-optimality. Its inequalities, three-point identity, summation and telescoping are conjunctive dependencies. No alternative sufficient source proof is printed.",
+    "constant_route": "Shares one-step and pre-max telescope, then an omitted exercise. The max-bound branch is NOT a prerequisite for the sharp x0 constant-rate expression.",
+    "contextual_or_only": {
+      "source": "Theorem6.8 printed65-66",
+      "form": "(condition6.5 OR condition6.6) AND existing argmin each round AND Algorithm6.1 initialization",
+      "status": "EXCLUDED FROM MAIN TARGET; cannot graft these alternatives onto Algorithm15.8 without a proof of applicability."
+    },
+    "no_false_and": "Algorithm15.9/Theorem15.31 and best-response motivation are not premises of Algorithm15.8 regret."
+  },
+  "source_gaps": [
+    "gap-nonsmooth-optimality",
+    "gap-constant-exercise"
+  ],
+  "semantic_boundaries": [
+    "Valid sequence existence and interiority are not derived from closedness.",
+    "Printed eta_(T+1) endpoint mismatch is recorded in assumptions.json.",
+    "External citations are recorded as citations in the supplied book, not independently verified external proofs."
+  ],
+  "derived_lemma_scope": [
+    {
+      "id": "derived-proper-loss",
+      "scope": "DERIVED, not an additional theorem15.30 binder",
+      "basis": [
+        "proper",
+        "domain-indicator",
+        "prescient-alg"
+      ],
+      "claim": "Since V is nonempty, V subset dom l_t, and loss codomain excludes -infinity, every l_t is proper. For a valid interior reference, the constrained objective is finite at every point of V and its +infinity extension is proper. No closedness/existence conclusion is inferred."
+    },
+    {
+      "id": "derived-finite-restriction-convex",
+      "scope": "DERIVED extension of the written proof, not literal Theorem2.21",
+      "basis": [
+        "convex-from-subgrad-supports",
+        "convex-from-subgrad-combine",
+        "prescient-alg"
+      ],
+      "claim": "Theorem2.21 is printed for real-valued f on all R^d. Its two-support proof uses only finite values on V and global supports at V; applying that reasoning to extended l_t restricted to V needs a separately identified derived lemma."
+    },
+    {
+      "id": "derived-unique-attained-update",
+      "scope": "DERIVED, not source existence theorem",
+      "basis": [
+        "strict-convex",
+        "bregman-def",
+        "convex-operations",
+        "unique-if-attained-source",
+        "derived-finite-restriction-convex",
+        "prescient-alg"
+      ],
+      "claim": "Once convexity of finite l_t on V is established, positive Bregman term is strictly convex in its first argument, so its sum with l_t is strictly convex on V and has at most one minimizer. This does not construct any minimizer or prove interiority. The derivation must be proved separately if used for a characterized definition.",
+      "basis_use_sites": {
+        "derived-finite-restriction-convex": "Supplies convexity of the finite loss restriction on V. This is a separately required derived lemma, not an author-source proof edge.",
+        "prescient-alg": "Algorithm15.8 Require line, printed265/PDF277: eta1,...,etaT>0. Positive eta_t makes 1/eta_t positive for the strictly convex Bregman term. V is convex and the reference iterate must be interior as already required by the claim."
+      },
+      "topology_status": "Proposed derived dependency metadata only; no derivation or source gap is discharged by these identifiers."
+    },
+    {
+      "id": "derived-constant-completion",
+      "scope": "DERIVED exercise completion, not written source proof",
+      "basis": [
+        "prescient-telescope",
+        "bregman-nonnegative"
+      ],
+      "claim": "Set all eta_t=eta in the pre-max telescope, cancel every reciprocal difference, and discard the nonpositive terminal term. The exact stronger retained-boundary expression is (B(u;x0)-B(u;xT)-sum B(x_t;x_(t-1)))/eta."
+    }
+  ],
+  "supersedes": {
+    "receipt_sha256": "0e2a942092522b0d65ceaf63ccde92f9a4224ca8eed529447b7c4794c1f73808",
+    "graph_sha256": "0e622527f6280400b1eedb64587d036b013d8a1cf6a6ba1bbde9f2e703caf066"
+  },
+  "review_status": "R1 and A1 metadata repairs proposed; independent successor recheck pending. No self-approval."
+}

@@ -1,0 +1,41 @@
+{
+  "algorithm_requirements": [
+    "Nonempty closed convex V subset X subset R^d (algorithm box prints subset sign for V versus X; theorem prints subseteq).",
+    "psi:X->R strictly convex and differentiable on int X.",
+    "x0 in int X; x0 in V is NOT stated.",
+    "eta1,...,etaT>0.",
+    "At round t, l_t:R^d->(-infinity,+infinity] and V subset dom l_t.",
+    "Each x_t is selected from the displayed constrained argmin and loss is paid after receipt and update."
+  ],
+  "theorem_additions": [
+    "psi is closed.",
+    "For t=1,...,T, x_t in int X and l_t subdifferentiable on V.",
+    "eta_(t+1)<=eta_t, printed for t=1,...,T."
+  ],
+  "standing_definitions": [
+    "Definition6.4 identifies X as dom psi, with nonempty interior; strict convexity presupposes convex X.",
+    "Definition2.20 is a global subgradient on R^d, not only a support on V.",
+    "Definition2.18 properness and Definition2.16 closedness have their exact extended-real meanings."
+  ],
+  "not_assumed": [
+    "V bounded/compact",
+    "u interior",
+    "x0 feasible",
+    "loss differentiable",
+    "loss globally convex",
+    "loss globally closed",
+    "strong convexity",
+    "Lipschitz loss",
+    "gradient norm bound",
+    "a probability event or filtration"
+  ],
+  "horizon_endpoints": {
+    "T": "The printed source uses T rounds, etaT and a maximum over 0,...,T-1, which require a positive finite horizon for that expression. No T=0 convention is printed.",
+    "updates": "x0 is given, x1,...,xT are updates; no x_(T+1) occurs.",
+    "maximum": "B(u;x0),...,B(u;x_(T-1)); xT is excluded.",
+    "terminal": "-B(u;xT)/etaT appears in the proof and is discarded by nonnegativity.",
+    "monotonicity": "Statement literally includes t=T and thus eta_(T+1), although Algorithm15.8 supplies only eta1,...,etaT and proof uses only t<=T-1. Record this endpoint mismatch; do not silently claim exact textual identity after normalization.",
+    "constant_case": "eta_t=eta for t=1,...,T and eta>0 inherited. Direct constant-step specialization belongs before the maximum bound."
+  },
+  "sequence_semantics": "Conditional regret guarantee for a supplied sequence of attained interior updates. Source does not provide a general existence/interiority theorem for all data satisfying just the algorithm Require line. Uniqueness can be derived after establishing strict convexity of the update objective, but does not imply existence."
+}
