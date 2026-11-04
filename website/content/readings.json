@@ -1861,6 +1861,52 @@
             "boundary": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
           },
           "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Definition 4.1: strong convexity on the finite domain",
+          "pages": "Definition 4.1, printed 34 / PDF 46",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\lambda\\ge0,\\quad V\\subseteq\\operatorname{dom}f,\\qquad f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2.",
+          "plain": "Strong convexity is defined for a proper function on a convex subset of its effective domain. It requires a quadratic improvement of the ordinary convex interpolation inequality. This definition does not require subgradients to exist.",
+          "fallback": "Quadratic interpolation on a convex subset of the effective domain.",
+          "relationship": "Definition 4.1 assumes λ ≥ 0, proper f and a convex set V contained in dom f. The quantifiers are every x,y ∈ V and every real a with 0 < a < 1. The formal representation is the existing inline hstrong interpolation predicate together with hf,hV,hdom,hlam, as recorded in the current minimum-growth header. Its later minimizer binders are not part of this definition. That existing header allows arbitrary normed E; the source finite-dimensional context is a specialization. No all-point subgradient premise is added. Public target dependency:strong-convexity4.1-4.2 is docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/121.",
+          "contract": {
+            "model": "Proper extended-real function on a finite-dimensional real normed space; the quadratic penalty uses the original E norm, and the algebraic coordinate map need not preserve norms.",
+            "assumptions": "λ ≥ 0; f is proper; V is convex and V ⊆ dom f. No subgradient-existence premise belongs to this definition. Every x,y ∈ V and 0<a<1.",
+            "parameters": "λ ≥ 0, including zero; original E norm.",
+            "regret": "Definition and pointwise characterization only, not a regret guarantee.",
+            "guarantee": "This definition requires V ⊆ dom f, not V ⊆ dom ∂f. The stronger all-point support premise belongs only to the iff lemma. The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Definition 4.1: compiled inline representation",
+            "boundary": "This definition requires V ⊆ dom f, not V ⊆ dom ∂f. The stronger all-point support premise belongs only to the iff lemma. The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Lemma 4.2: the full subgradient characterization",
+          "pages": "Lemma 4.2 and proof, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "e(V)\\subseteq\\operatorname{dom}\\partial(f\\circ e^{-1}),\\qquad \\text{strong interpolation}\\ \\Longleftrightarrow\\ f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).",
+          "plain": "On a convex set where a global source subgradient exists at every point, the interpolation inequality is equivalent to the quadratic supporting inequality for every such subgradient. The curvature modulus may be zero. Finite-dimensional coordinates supply the pairing, while the quadratic term uses the original norm; the coordinate map need not be an isometry.",
+          "fallback": "Quadratic interpolation is equivalent to every global subgradient lower bound when a support exists at every feasible point.",
+          "relationship": "The source forward proof evaluates support along a segment, divides by the positive interpolation weight and takes its limit to zero. The current body reuses the already reviewed source-vector growth result. In the converse, choose one support at the interpolated point and use it for both endpoint inequalities; their weighted linear terms cancel. On printed page 35 / PDF page 47, the second equality in the converse proof must be an inequality. The valid chain is 0 = the weighted pairing ≤ af(x)+(1−a)f(y)−f(z)−(λ/2)a(1−a)‖x−y‖². The statement of Lemma4.2 is unchanged and no equality or saturation hypothesis is added. Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct. Public target: docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/121.",
+          "contract": {
+            "model": "Proper extended-real function on a finite-dimensional real normed space; the quadratic penalty uses the original E norm, and the algebraic coordinate map need not preserve norms.",
+            "assumptions": "λ ≥ 0; proper f; convex V ⊆ dom ∂f. Every p ∈ V has an actual global source subgradient. This stronger set inclusion belongs to the iff lemma, not Definition4.1. Every p,q ∈ V and every global coordinate subgradient g at e(p) for f composed with e inverse. The coordinate map need not be an isometry.",
+            "parameters": "λ ≥ 0, including zero; original E norm.",
+            "regret": "Definition and pointwise characterization only, not a regret guarantee.",
+            "guarantee": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled full Lemma 4.2 iff",
+            "boundary": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "source-restatement"
         }
       ],
       "worked_example": {

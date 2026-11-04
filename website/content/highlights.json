@@ -7923,6 +7923,28 @@
         "BanditRL.OnlineConvex.source_weierstrass_extended",
         "BanditRL.OnlineConvex.stronglyConvex_minimum_growth"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+      "title": "Strong convexity: definition and full subgradient iff",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 349,
+      "source_match": "closest-source",
+      "plain": "Strong convexity is defined for a proper function on a convex subset of its effective domain. It requires a quadratic improvement of the ordinary convex interpolation inequality. This definition does not require subgradients to exist. On a convex set where a global source subgradient exists at every point, the interpolation inequality is equivalent to the quadratic supporting inequality for every such subgradient. The curvature modulus may be zero. Finite-dimensional coordinates supply the pairing, while the quadratic term uses the original norm; the coordinate map need not be an isometry. The iff quantifies every feasible p,q and every global source subgradient g at p.",
+      "math": "e(V)\\subseteq\\operatorname{dom}\\partial(f\\circ e^{-1}),\\qquad \\text{strong interpolation}\\ \\Longleftrightarrow\\ f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).",
+      "intuition": "At an interpolated point, one global support controls both endpoints. Their weighted linear terms cancel, leaving the exact quadratic interpolation penalty.",
+      "why": "Completes the converse direction that a forward support-growth adapter alone does not prove.",
+      "position": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete.",
+      "proof_idea": "Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct. On printed page 35 / PDF page 47, the second equality in the converse proof must be an inequality. The valid chain is 0 = the weighted pairing ≤ af(x)+(1−a)f(y)−f(z)−(λ/2)a(1−a)‖x−y‖². The statement of Lemma4.2 is unchanged and no equality or saturation hypothesis is added.",
+      "lean_notes": "The first closed experimental consumer uses E=R^2 with the sup norm, e=2 times ordinary coordinates, V=[-1,1]^2, and globally finite f(x)=(x0^2+x1^2)/2+x0. For every p it explicitly produces the global covector (p+(1,0))/2. It characterizes every global support algebraically and proves the quadratic growth premise independently, then its first conjunction genuinely applies the iff CONVERSE to obtain interpolation. At q=(1,1), original squared norm1 differs from coordinate squared norm8; pairing1 and f(q)=2 refute a substituted coordinate penalty5<=2. The same example at x=q,y=-q,a=1/2 has weighted residual1/2, so equality to0 is false. The second consumer proves f(t)=-t^2 proper with an EMPTY global subdifferential at every point. Support-indexed lambda0 growth is vacuous, but midpoint interpolation would require0<=-1. This is a counterexample to removing the all-point support premise, not to Lemma4.2. The concrete quadratic is globally finite; the canaries do not test top outside V, empty V, d0 or exhaustive edge coverage. Definition 4.1 has only the finite-domain premise; the all-point source-support assumption is specific to this iff. The standalone definition mapping uses an existing inline predicate, not a new named Lean definition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+        "BanditRL.OnlineConvex.subgradient_point_finite",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.effectiveDomain",
+        "BanditRL.OnlineConvex.SourceSubdifferential"
+      ]
     }
   ]
 }
