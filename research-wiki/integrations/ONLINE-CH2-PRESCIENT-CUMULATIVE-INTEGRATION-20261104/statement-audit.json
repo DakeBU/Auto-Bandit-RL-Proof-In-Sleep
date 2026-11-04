@@ -1,0 +1,256 @@
+{
+  "sealedInterfaces": {
+    "at": "2026-11-04T14:22:31.586181+00:00",
+    "originalHead": "547137ea02c59c24424e2fb448174875845fadb4",
+    "acceptedBase": "e8779deed29c7bcde86c2816ae909d3a6c50f2da",
+    "declarations": [
+      {
+        "id": "item_0",
+        "name": "iterate_divergence_sum",
+        "path": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "statement": "theorem iterate_divergence_sum (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      (∑ t ∈ range T, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / η t) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "signatureSHA256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+        "sourceModuleSHA256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+      },
+      {
+        "id": "item_1",
+        "name": "iterate_fixed_sharp",
+        "path": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "statement": "theorem iterate_fixed_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η - divergence ψ u (x T) / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+        "signatureSHA256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+        "sourceModuleSHA256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+      },
+      {
+        "id": "item_2",
+        "name": "iterate_variable_sharp",
+        "path": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "statement": "theorem iterate_variable_sharp (V X : Set E) (hV : Convex ℝ V) (ψ : E → ℝ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) (M : ℝ)\n    (hbound : ∀ t < T, divergence ψ u (x t) ≤ M) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      M / η (T - 1) - divergence ψ u (x T) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "signatureSHA256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+        "sourceModuleSHA256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+      },
+      {
+        "id": "item_3",
+        "name": "iterate_fixed_regret",
+        "path": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "statement": "theorem iterate_fixed_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℝ) (hη : 0 < η)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ)\n    (hseq : ∀ t ≤ T, iterate V ψ (fun _ => η) loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      divergence ψ u x0 / η -\n      (∑ t ∈ range T, divergence ψ (x (t + 1)) (x t)) / η",
+        "signatureSHA256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+        "sourceModuleSHA256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+      },
+      {
+        "id": "item_4",
+        "name": "iterate_variable_regret",
+        "path": "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+        "context": "variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+        "statement": "theorem iterate_variable_regret (V X : Set E) (hV : Convex ℝ V) (hVX : V ⊆ X)\n    (ψ : E → ℝ) (hc : StrictConvexOn ℝ X ψ)\n    (hd : DifferentiableOn ℝ ψ (interior X)) (η : ℕ → ℝ)\n    (loss : ℕ → E → EReal) (x0 : E) (x : ℕ → E) (T : ℕ) (hT : 0 < T)\n    (hseq : ∀ t ≤ T, iterate V ψ η loss x0 t = some (x t))\n    (hinterior : ∀ t ≤ T, x t ∈ interior X)\n    (hη : ∀ t < T, 0 < η t)\n    (hmono : ∀ t, t + 1 < T → η (t + 1) ≤ η t)\n    (hf : ∀ t < T, BanditRL.OnlineConvex.SourceProper (loss t))\n    (hs : ∀ t < T, ∀ z ∈ V,\n      (BanditRL.OnlineConvex.SourceSubdifferential (loss t) z).Nonempty)\n    (u : E) (hu : u ∈ V) :\n    (∑ t ∈ range T, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n      ((range T).sup' (nonempty_range_iff.mpr (Nat.ne_of_gt hT))\n        (fun t => divergence ψ u (x t))) / η (T - 1) -\n      ∑ t ∈ range T, divergence ψ (x (t + 1)) (x t) / η t",
+        "signatureSHA256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+        "sourceModuleSHA256": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d"
+      },
+      {
+        "id": "item_5",
+        "name": "fixed_signed_run",
+        "path": "Tests/OnlinePrescientBregmanRegretCanary.lean",
+        "context": "",
+        "statement": "theorem fixed_signed_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 8 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧ DifferentiableOn ℝ ψ univ ∧\n      (∀ t ≤ 2, iterate V ψ (fun _ => 1) loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (-1 / 2) (x 2) = 5 / 8 ∧\n      divergence ψ (x 1) (x 0) = 11 / 64 ∧\n      divergence ψ (x 2) (x 1) = 9 / 64 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        (∑ t ∈ range 2, (divergence ψ u (x t) - divergence ψ u (x (t + 1))) / 1) -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / 1) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 - divergence ψ u (x 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        divergence ψ u (1 / 2) / 1 -\n        (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t)) / 1) ∧\n      (-9 / 8 : ℝ) ≤ -5 / 16 ∧ (-9 / 8 : ℝ) ≤ 5 / 16",
+        "signatureSHA256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+        "sourceModuleSHA256": "e58ee6f23a1e14c30a157ffb344a97b41c93c196a43053c198a1b4ec7cf942df"
+      },
+      {
+        "id": "item_6",
+        "name": "decreasing_signed_run",
+        "path": "Tests/OnlinePrescientBregmanRegretCanary.lean",
+        "context": "",
+        "statement": "theorem decreasing_signed_run :\n    let V : Set ℝ := Icc (-1) 1\n    let ψ : ℝ → ℝ := fun z => z ^ 4 / 4 + z ^ 2 / 2\n    let f0 : ℝ → EReal := fun z => if z ∈ V then ((|z| : ℝ) : EReal) else ⊤\n    let f1 : ℝ → EReal := fun z => if z ∈ V then ((-5 * z / 4 : ℝ) : EReal) else ⊤\n    let loss : ℕ → ℝ → EReal := fun t => if t = 0 then f0 else f1\n    let η : ℕ → ℝ := fun t => if t = 0 then 1 else 1 / 2\n    let x : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2\n    SourceProper f0 ∧ SourceProper f1 ∧\n      (∀ z ∈ V, (SourceSubdifferential f0 z).Nonempty) ∧\n      (∀ z ∈ V, (SourceSubdifferential f1 z).Nonempty) ∧\n      SourceClosed (fun z => ((ψ z : ℝ) : EReal)) ∧\n      StrictConvexOn ℝ univ ψ ∧ DifferentiableOn ℝ ψ univ ∧\n      η 0 = 1 ∧ η 1 = 1 / 2 ∧\n      (∀ t < 2, 0 < η t) ∧\n      (∀ t, t + 1 < 2 → η (t + 1) ≤ η t) ∧\n      (∀ t ≤ 2, iterate V ψ η loss (1 / 2) t = some (x t)) ∧\n      divergence ψ (-1 / 2) (x 2) = 5 / 8 ∧\n      divergence ψ (-1 / 2) (x 1) = 9 / 64 ∧\n      (∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) = 29 / 64 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (-1 / 2) (x t))) = 5 / 8 ∧\n      ((range 2).sup' (by decide) (fun t => divergence ψ (1 / 2) (x t))) = 9 / 64 ∧\n      divergence ψ (1 / 2) (x 0) = 0 ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        divergence ψ u (x 2) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (∀ u ∈ V, (∑ t ∈ range 2, ((loss t (x (t + 1))).toReal - (loss t u).toReal)) ≤\n        ((range 2).sup' (by decide) (fun t => divergence ψ u (x t))) / η 1 -\n        ∑ t ∈ range 2, divergence ψ (x (t + 1)) (x t) / η t) ∧\n      (-7 / 4 : ℝ) ≤ -29 / 64 ∧ (-1 / 2 : ℝ) ≤ -11 / 64",
+        "signatureSHA256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+        "sourceModuleSHA256": "e58ee6f23a1e14c30a157ffb344a97b41c93c196a43053c198a1b4ec7cf942df"
+      }
+    ],
+    "blindPacketSHA256": "2384e92997470d016eda3b730ee47e8506e1ee4d88bee7c2c74405c6f1bd28c4",
+    "signaturesFrozenBeforePort": true,
+    "semanticReview": "pending",
+    "sourceTopologyReview": "pending",
+    "productionEdited": false
+  },
+  "originalFenceAudit": {
+    "at": "2026-11-04T14:42:01.577232+00:00",
+    "status": "original-frozen-headers-and-historical-fences-verified",
+    "originalHead": "547137ea02c59c24424e2fb448174875845fadb4",
+    "rows": [
+      {
+        "file": "targets-draft-v1.json",
+        "name": "iterate_divergence_sum",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+        "recordedSHA256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "targets-draft-v1.json",
+        "name": "iterate_fixed_sharp",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+        "recordedSHA256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "targets-draft-v1.json",
+        "name": "iterate_variable_sharp",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+        "recordedSHA256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "targets-draft-v1.json",
+        "name": "iterate_fixed_regret",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+        "recordedSHA256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "targets-draft-v1.json",
+        "name": "iterate_variable_regret",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+        "recordedSHA256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "stabilized-v1.json",
+        "name": "iterate_divergence_sum",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+        "recordedSHA256": "bdbcec04edeaac56c4491cfabaa4a606d2d81f64e10c8c519ce942722aeeea5a",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "stabilized-v1.json",
+        "name": "iterate_fixed_sharp",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+        "recordedSHA256": "188ac582493481b8f41e7efaf1ab63dbf467a499c73514fc2fbb3037fa8fffa0",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "stabilized-v1.json",
+        "name": "iterate_variable_sharp",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+        "recordedSHA256": "66f88b1ada32e29fd13715276f063429dd2b8a9abf50f64f92940dce1a932e8d",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "stabilized-v1.json",
+        "name": "iterate_fixed_regret",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+        "recordedSHA256": "57cb27b5edf71b13704a91bf65c3b37988cb00ab1d8fa06e22668b452dcd5909",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "stabilized-v1.json",
+        "name": "iterate_variable_regret",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+        "recordedSHA256": "3ef0b8101fd8e4d4328eaa09537a35cba6201dbac5719287c9d4b95adab36542",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "canary-targets-draft-v1.json",
+        "name": "fixed_signed_run",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+        "recordedSHA256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "canary-targets-draft-v1.json",
+        "name": "decreasing_signed_run",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+        "recordedSHA256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "canary-stabilized-v1.json",
+        "name": "fixed_signed_run",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+        "recordedSHA256": "2f0b6cfa5ac0b81b94f7a573df0560f9505077efa8600e84ce8542f9ed557c3b",
+        "recordedDigestMatches": true
+      },
+      {
+        "file": "canary-stabilized-v1.json",
+        "name": "decreasing_signed_run",
+        "exactHeaderMatchesOriginalHead": true,
+        "headerSHA256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+        "recordedSHA256": "5ffdb5e7429d6f812b57d933176ea3bb29bf0352cabd42fb283d55bfd018d1f4",
+        "recordedDigestMatches": true
+      }
+    ],
+    "fences": [
+      {
+        "path": "decreasing-canary-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      },
+      {
+        "path": "first-leaf-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      },
+      {
+        "path": "fixed-canary-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      },
+      {
+        "path": "fixed-printed-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      },
+      {
+        "path": "fixed-sharp-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      },
+      {
+        "path": "variable-printed-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      },
+      {
+        "path": "variable-sharp-fence-v1.json",
+        "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+        "normalizedStatementMatches": true,
+        "sourceAssumptions": [],
+        "boundary": "Historical fence equality is lexical; empty assumption metadata is not current binder/source approval."
+      }
+    ],
+    "sevenCurrentHeadersExact": true,
+    "semanticAcceptance": false,
+    "compiled": false,
+    "sourceAssumptionAudit": "Current independent binder review pending; no historical empty list treated as absence of hypotheses."
+  },
+  "binderAudit": "binder-review.json",
+  "semanticAudit": "semantic-slot-review.json",
+  "compiledEvidence": "compiled-probes.json",
+  "originalProductionAndCanaryBytesUnchanged": true,
+  "currentFullProjectGatePassed": false
+}

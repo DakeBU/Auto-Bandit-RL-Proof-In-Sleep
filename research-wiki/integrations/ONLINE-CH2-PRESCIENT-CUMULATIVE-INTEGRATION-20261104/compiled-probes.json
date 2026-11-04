@@ -1,0 +1,194 @@
+{
+  "startedAt": "2026-11-04T14:55:47.096768+00:00",
+  "sourceBindings": {
+    "BanditRLProof/OnlinePrescientBregmanRegret.lean": "415c4c9d3e8b262afd6f849b97afad2b372a7e17233e1ac22dc8f74cc56d038d",
+    "Tests/OnlinePrescientBregmanRegretCanary.lean": "e58ee6f23a1e14c30a157ffb344a97b41c93c196a43053c198a1b4ec7cf942df",
+    "BanditRLProof.lean": "e928b345a38ec630b823d90922a8ed813b6ffd3262c7463e2dcc189e4fa1658d",
+    "Tests.lean": "5d23a4b77116783680e4f471e21b351ecd051d495b1e8501ce9152eb58b1844c"
+  },
+  "probeBindings": {
+    "all-five-public-probe-v1.lean": "d3839fd0918a5fcd4221aab567079ef3fa4eaafd8ad58afca3d87516438a7397",
+    "canary-public-probe-v2.lean": "df6812f225cacc161dc963c58b09282f1aa64ef6c547700451405cc258191ee0",
+    "export-selected-dependencies-v2.lean": "e34fb45caea66b77fb56f02c7d8ad8df1b86ccb5bb658d6ad0fbfe2bdd527198",
+    "audit-four-numeric-branches-v2.lean": "c357f55903386d5981ebc0dbd97c94c4982807288b777bdffa0dc276fe474e76"
+  },
+  "cwd": "validation-worktree",
+  "commands": [
+    {
+      "label": "production-public-values",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch39-validation-probes-v1\\all-five-public-probe-v1.lean"
+      ],
+      "exitCode": 0,
+      "logSHA256": "1c3fc1c3bace868f5b25772b08a47bee7d9f4ac2edff911dae64171ce059aed1"
+    },
+    {
+      "label": "canary-public-values",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch39-validation-probes-v1\\canary-public-probe-v2.lean"
+      ],
+      "exitCode": 0,
+      "logSHA256": "9a1a80a75db8945e321dea35a7062a346bccbc00dbcabb65c966d5852e1c4dfc"
+    },
+    {
+      "label": "actual-dependencies",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "--run",
+        "private-maintenance/github-maintenance-goal-20261011\\batch39-validation-probes-v1\\export-selected-dependencies-v2.lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch39-compiled-probes-v1\\actual-dependencies.json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "numeric-branches",
+      "command": [
+        "local-user-profile/.elan/bin/lake.exe",
+        "env",
+        "lean",
+        "--run",
+        "private-maintenance/github-maintenance-goal-20261011\\batch39-validation-probes-v1\\audit-four-numeric-branches-v2.lean",
+        "private-maintenance/github-maintenance-goal-20261011\\batch39-compiled-probes-v1\\numeric-branches.json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fullProjectGatePassed": false,
+  "sourceAcceptanceInferred": false,
+  "selectedDeclarations": 7,
+  "publicValues": 7,
+  "compiledNodes": 7,
+  "directCoalescedEdges": 1885,
+  "requiredValuePairsPassed": 13,
+  "numericBranchesPassed": 4,
+  "axiomChecks": [
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch39_probe_iterate_divergence_sum",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch39_probe_iterate_fixed_sharp",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch39_probe_iterate_variable_sharp",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch39_probe_iterate_fixed_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregman.batch39_probe_iterate_variable_regret",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.batch39_probe_fixed_signed_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "declaration": "BanditRL.OnlinePrescientBregmanRegretCanary.batch39_probe_decreasing_signed_run",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "graphSHA256": "cd08aa908ff42d0fa9263916be5adb39e92a1abd63c635834138ab0c3f3b9255",
+  "numericBranchesSHA256": "5cfff9b3d8cb5bde9795573ff4614848ebd60aa3facd749eca44d219d840783b",
+  "limitation": "Direct TYPE/VALUE constant presence, not occurrence counts or full transitive topology. Four numeric conjunction branches separately inspected. No full project/source/chapter acceptance.",
+  "finishedAt": "2026-11-04T14:56:53.828466+00:00",
+  "status": "compiled-probes-passed",
+  "inputsUnchanged": true
+}

@@ -1,0 +1,1140 @@
+{
+  "schema": "abrl.source-topology.extractor.v1",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "date": "2026-06-21",
+    "path": "historical-worktrees/research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "title_page_verified": true
+  },
+  "status": {
+    "extraction": "SOURCE_ONLY_EXTRACTED",
+    "independent_topology_review": "PENDING_V2_RECHECK",
+    "extractor_self_approval": false,
+    "statement_seal": "NOT_PERFORMED_NO_LEAN_SIGNATURE_INSPECTED",
+    "proof_seal": "NOT_CLAIMED",
+    "chapter_completion": "NOT_CLAIMED",
+    "prior_v1_independent_review": "accepted-with-explicit-gaps",
+    "source_repairs_approved": []
+  },
+  "roots": [
+    "A15.8",
+    "T15.30-variable",
+    "T15.30-constant"
+  ],
+  "edge_orientation": "inputs (premises/dependencies) -> output (consumer)",
+  "logic_note": "Every listed hyperedge is AND. No printed OR alternative routes occur. Distinct theorem claims are separate targets; the fixed-step exercise is not an alternative proof of the variable-step claim. The iff proof of2.8 needs both directions. External citations are provenance leaves, not assertions that their external proofs were read. Root-obligation annotations are a separate relation and do not add proof hyperedges or source hypotheses.",
+  "nodes": [
+    {
+      "id": "A15.8",
+      "disposition": "NODE",
+      "kind": "ALGORITHM",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Algorithm 15.8 Require and lines 1-5"
+      },
+      "content": "Prescient update relation, source assumptions and receive/update/pay order exactly as source-contract.json."
+    },
+    {
+      "id": "CTX-oracle",
+      "disposition": "NODE",
+      "kind": "SEMANTIC_CONTEXT",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Section 15.5.1 first paragraph"
+      },
+      "content": "Saddle-point motivation: permitting one player to see the current loss changes the oracle from gradients-only to functions; cites Remark 15.16. This paragraph does not prove the theorem or assert that its regret is always nonpositive."
+    },
+    {
+      "id": "R15.16",
+      "disposition": "NODE",
+      "kind": "CITATION_DEPENDENCY",
+      "source": {
+        "pdf_page_1_based": 263,
+        "printed_page": 251,
+        "anchor": "Remark 15.16"
+      },
+      "content": "Exact best-response optimization requires stronger function access than only subgradients. Contextual oracle dependency, not a proof lemma for 15.30."
+    },
+    {
+      "id": "CTX-negative",
+      "disposition": "NODE",
+      "kind": "SEMANTIC_CONTEXT",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Section 15.5.1 second paragraph"
+      },
+      "content": "Best response supplies nonpositive regret, but the optimistic argument needs specific negative terms; introduces the printed prescient argmin formula and refers to Algorithm 15.8."
+    },
+    {
+      "id": "T15.30-variable",
+      "disposition": "NODE",
+      "kind": "TARGET",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem 15.30 first statement and first display"
+      },
+      "content": "forall u in V: R_T(u) <= (max_{0 <= s <= T-1} B_psi(u;x_s))/eta_T - sum_{t=1}^T B_psi(x_t;x_{t-1})/eta_t"
+    },
+    {
+      "id": "T15.30-constant",
+      "disposition": "NODE",
+      "kind": "TARGET",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem 15.30 Moreover statement and second display"
+      },
+      "content": "forall u in V: R_T(u) <= B_psi(u;x_0)/eta - (1/eta) sum_{t=1}^T B_psi(x_t;x_{t-1})"
+    },
+    {
+      "id": "P-optimality",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_ASSERTION",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Proof first paragraph and first display"
+      },
+      "content": "There exists g_t in partial ell_t(x_t) such that <eta_t g_t + grad psi(x_t)-grad psi(x_{t-1}), u-x_t> >= 0 for all u in V. The source attributes this to Theorem 2.8.",
+      "validity": "Unresolved application gap G-optimality; existence of some subgradient alone does not supply this selected subgradient."
+    },
+    {
+      "id": "P-subgradient",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Proof Hence display, first inequality"
+      },
+      "content": "eta_t(ell_t(x_t)-ell_t(u)) <= <eta_t g_t,x_t-u>; from global supporting inequality and eta_t>0."
+    },
+    {
+      "id": "P-variational",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Proof Hence display, second inequality"
+      },
+      "content": "<eta_t g_t,x_t-u> <= <grad psi(x_{t-1})-grad psi(x_t),x_t-u>; rearranges P-optimality."
+    },
+    {
+      "id": "P-three-point",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Proof Hence display, final equality; attribution continued on PDF278"
+      },
+      "content": "<grad psi(x_{t-1})-grad psi(x_t),x_t-u> = B(u;x_{t-1})-B(u;x_t)-B(x_t;x_{t-1}). Lemma 6.7 uses (x,y,z)=(x_t,x_{t-1},u), then negates both sides."
+    },
+    {
+      "id": "P-one-step",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Entire Hence display"
+      },
+      "content": "eta_t(ell_t(x_t)-ell_t(u)) <= B(u;x_{t-1})-B(u;x_t)-B(x_t;x_{t-1})."
+    },
+    {
+      "id": "P-sum",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Proof continuation first sentence and first line of display"
+      },
+      "content": "Divide by eta_t>0 and sum t=1,...,T: R_T <= sum_t [B(u;x_{t-1})/eta_t-B(u;x_t)/eta_t] - sum_t B(x_t;x_{t-1})/eta_t."
+    },
+    {
+      "id": "P-telescope",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Proof continuation display, second line equality"
+      },
+      "content": "Weighted difference sum = B(u;x_0)/eta_1 - B(u;x_T)/eta_T + sum_{t=1}^{T-1}(1/eta_{t+1}-1/eta_t)B(u;x_t); the negative movement sum remains unchanged. This is an equality of RHS expressions, not an equality with regret."
+    },
+    {
+      "id": "P-max",
+      "disposition": "NODE",
+      "kind": "PRINTED_NOTATION",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "where we denoted paragraph"
+      },
+      "content": "D^2=max_{0<=s<=T-1} B(u;x_s). The previous states, including x_0 and excluding x_T, are the bounded positive-coefficient terms."
+    },
+    {
+      "id": "P-bound",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Proof continuation display, third line inequality"
+      },
+      "content": "Use eta_{t+1}<=eta_t and positivity for nonnegative inverse-step increments; bound B(u;x_0) and B(u;x_t), t=1,...,T-1, by D^2; drop -B(u;x_T)/eta_T <=0. Retain -sum_t B(x_t;x_{t-1})/eta_t."
+    },
+    {
+      "id": "P-inverse-telescope",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Proof continuation display, fourth line equality"
+      },
+      "content": "D^2/eta_1 + D^2 sum_{t=1}^{T-1}(1/eta_{t+1}-1/eta_t) = D^2/eta_1 + D^2(1/eta_T-1/eta_1); movement sum unchanged."
+    },
+    {
+      "id": "P-final",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Proof continuation display, final line equality"
+      },
+      "content": "D^2/eta_1+D^2(1/eta_T-1/eta_1) = D^2/eta_T; movement sum unchanged."
+    },
+    {
+      "id": "EX-constant",
+      "disposition": "NODE",
+      "kind": "EXERCISE_OBLIGATION",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Sentence The second statement is left as an exercise"
+      },
+      "content": "Supply the fixed-step proof. The source prints no derivation. Candidate obligation, not source-printed proof: specialize the weighted telescope to eta_t=eta, cancel inverse-step increments, retain -B(u;x_T)/eta and the negative movement sum, then use B(u;x_T)>=0. No max is needed.",
+      "resolved": false
+    },
+    {
+      "id": "CTX-after",
+      "disposition": "NODE",
+      "kind": "SEMANTIC_CONTEXT",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "First paragraph following proof"
+      },
+      "content": "The retained negative terms are those needed by optimistic algorithms; no downstream saddle-point claim is imported as a premise."
+    },
+    {
+      "id": "D2.16",
+      "disposition": "NODE",
+      "kind": "DEFINITION",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Definition 2.16"
+      },
+      "content": "A function f:R^d -> [-infinity,+infinity] is closed iff every real sublevel set {x:f(x)<=alpha} is closed."
+    },
+    {
+      "id": "D2.18",
+      "disposition": "NODE",
+      "kind": "DEFINITION",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Definition 2.18"
+      },
+      "content": "Proper means nowhere -infinity and finite somewhere; losses satisfy this through nonempty V subset dom ell_t."
+    },
+    {
+      "id": "D2.20",
+      "disposition": "NODE",
+      "kind": "DEFINITION",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Definition 2.20; continuation PDF29 first two paragraphs"
+      },
+      "content": "For proper f, g in partial f(x) means f(y)>=f(x)+<g,y-x> for every y in R^d; partial f(x) is the set, subdifferentiability means it is nonempty. For proper convex f, dom partial f subset dom f."
+    },
+    {
+      "id": "D6.3",
+      "disposition": "NODE",
+      "kind": "DEFINITION",
+      "source": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "Definition 6.3"
+      },
+      "content": "Strict convexity on convex V: f(alpha x+(1-alpha)y)<alpha f(x)+(1-alpha)f(y) for distinct x,y and 0<alpha<1."
+    },
+    {
+      "id": "D6.4",
+      "disposition": "NODE",
+      "kind": "DEFINITION",
+      "source": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "Definition 6.4"
+      },
+      "content": "Strictly convex psi:X->R, differentiable on nonempty int X. B_psi:X x int X -> R, B(a;b)=psi(a)-psi(b)-<grad psi(b),a-b>. The opening sentence on PDF76 names psi the distance generating function associated to B_psi.",
+      "source_continuation": [
+        {
+          "pdf_page_1_based": 76,
+          "printed_page": 64,
+          "anchor": "First sentence: function psi associated to B_psi is called the distance generating function"
+        }
+      ],
+      "terminology": {
+        "distance_generating_function": "psi associated to B_psi"
+      }
+    },
+    {
+      "id": "B-nonnegative",
+      "disposition": "NODE",
+      "kind": "PRINTED_FACT",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Opening paragraph after distance generating function sentence"
+      },
+      "content": "For fixed y in int X, psi(x)>=psi(y)+<grad psi(y),x-y> for all x in X, equality only at x=y. Thus B(x;y)>=0 including boundary x; not merely for x in int X.",
+      "retained_scope": "Only supporting inequality, nonnegativity and equality case; reference-dependent similarity and lack of symmetry are explicitly excluded in X76-reference-dependence and X76-nonsymmetry."
+    },
+    {
+      "id": "C-strict-support",
+      "disposition": "NODE",
+      "kind": "CITATION_DEPENDENCY",
+      "source": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "Paragraph between Definitions 6.3 and 6.4"
+      },
+      "content": "Differentiable strictly convex functions satisfy strict tangent inequality for distinct points; attributed to Bauschke and Combettes (2017), Proposition 17.10. The neighboring strong-convexity observation is separately excluded."
+    },
+    {
+      "id": "L6.7",
+      "disposition": "NODE",
+      "kind": "CITED_LEMMA",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Lemma 6.7"
+      },
+      "content": "For x,y in int X and z in X: B(z;x)+B(x;y)-B(z;y)=<grad psi(y)-grad psi(x),z-x>. No proof paragraph printed here; attributed to Chen and Teboulle (1993)."
+    },
+    {
+      "id": "C-Chen1993",
+      "disposition": "NODE",
+      "kind": "EXTERNAL_CITATION",
+      "source": {
+        "pdf_page_1_based": 313,
+        "printed_page": 301,
+        "anchor": "References entry G. Chen and M. Teboulle"
+      },
+      "content": "Convergence analysis of a proximal-like minimization algorithm using Bregman functions. SIAM Journal on Optimization, 3(3):538-543, 1993. External work itself not inspected; book identity is inspected."
+    },
+    {
+      "id": "T2.8",
+      "disposition": "NODE",
+      "kind": "CITED_THEOREM",
+      "source": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem 2.8"
+      },
+      "content": "V nonempty convex, x* in V, f convex and differentiable on an open set containing V: x* in argmin_V f iff <grad f(x*),y-x*> >=0 for all y in V."
+    },
+    {
+      "id": "T2.8-sufficient",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem 2.8 proof first paragraph and display"
+      },
+      "content": "From Theorem2.7 and nonnegative feasible directional inner products, f(y)>=f(x*)+<grad f(x*),y-x*> >= f(x*) for every y in V."
+    },
+    {
+      "id": "T2.8-necessary",
+      "disposition": "NODE",
+      "kind": "PRINTED_PROOF_STEP",
+      "source": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem 2.8 proof second paragraph"
+      },
+      "content": "If a feasible y has negative directional inner product, z(alpha)=alpha y+(1-alpha)x* remains feasible; h(alpha)=f(z(alpha)) has h'(0)<0. By derivative definition a small positive alpha gives f(z(alpha))<f(x*), contradiction."
+    },
+    {
+      "id": "T2.7",
+      "disposition": "NODE",
+      "kind": "CITED_THEOREM",
+      "source": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem 2.7"
+      },
+      "content": "For convex f:R^d->(-infinity,+infinity], x in int dom f, differentiability at x gives f(y)>=f(x)+<grad f(x),y-x> for all y. Cites Rockafellar (1970), Theorem25.1 and Corollary25.1.1."
+    },
+    {
+      "id": "C-Rockafellar1970",
+      "disposition": "NODE",
+      "kind": "EXTERNAL_CITATION",
+      "source": {
+        "pdf_page_1_based": 321,
+        "printed_page": 309,
+        "anchor": "References entry R. T. Rockafellar, Convex Analysis"
+      },
+      "content": "Convex Analysis. Princeton University Press, 1970. External results not inspected; relevant numbered source citations retained in consumer nodes."
+    },
+    {
+      "id": "C-Bauschke2017",
+      "disposition": "NODE",
+      "kind": "EXTERNAL_CITATION",
+      "source": {
+        "pdf_page_1_based": 312,
+        "printed_page": 300,
+        "anchor": "References entry H. H. Bauschke and P. L. Combettes"
+      },
+      "content": "Convex analysis and monotone operator theory in Hilbert spaces. Springer, 2017, second edition. External result content not inspected."
+    },
+    {
+      "id": "G-optimality",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Proof first sentence invoking Theorem2.8"
+      },
+      "content": "The cited theorem requires a differentiable objective on an open neighborhood of all V. The update objective includes a merely subdifferentiable ell_t; psi is differentiable only on int X and V may meet boundary X. No printed nonsmooth sum/normal-cone bridge supplies the claimed selected g_t. Source does not assert ell_t closed. Do not import equality sum-rule hypotheses as theorem binders.",
+      "resolved": false
+    },
+    {
+      "id": "G-attainment",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Algorithm15.8 line3; theorem interiority assumption"
+      },
+      "content": "Algorithm presupposes an attained argmin at each round and theorem assumes interior iterates. This section does not prove attainment or interiority, and must not be read as total well-definedness from the Require line alone.",
+      "resolved": false,
+      "severity": "definition/execution obligation, not a claim that conditional regret algebra is false"
+    },
+    {
+      "id": "G-horizon-index",
+      "disposition": "NODE",
+      "kind": "SOURCE_GAP",
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem15.30 t=1,...,T quantifier and eta_{t+1}<=eta_t"
+      },
+      "content": "The literal quantifier refers to eta_{T+1}, absent from the algorithm supplied eta_1,...,eta_T. T=0 conventions are absent and variable-step max and eta_T require positive horizon. Record instead of silently correcting.",
+      "resolved": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-context",
+      "logic": "AND",
+      "inputs": [
+        "R15.16"
+      ],
+      "output": "CTX-oracle",
+      "role": "context",
+      "consumer_use_site": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Section15.5.1 paragraph1"
+      },
+      "premise_discharge": "Context citation only; no dependency on best-response theorem.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-defB",
+      "logic": "AND",
+      "inputs": [
+        "D6.3"
+      ],
+      "output": "D6.4",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "Definition6.4"
+      },
+      "premise_discharge": "psi strict convexity is source-stated; nonempty interior supplied by x_0.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-strict-cite",
+      "logic": "AND",
+      "inputs": [
+        "C-Bauschke2017"
+      ],
+      "output": "C-strict-support",
+      "role": "citation",
+      "consumer_use_site": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "strict tangent inequality paragraph"
+      },
+      "premise_discharge": "Proposition17.10 external input; not independently verified.",
+      "complete_as_printed": false
+    },
+    {
+      "id": "E-nonneg",
+      "logic": "AND",
+      "inputs": [
+        "D6.4",
+        "C-strict-support"
+      ],
+      "output": "B-nonnegative",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "opening paragraph"
+      },
+      "premise_discharge": "Reference y in int X; first argument can be all X. This extension is printed in the paragraph.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-Lcite",
+      "logic": "AND",
+      "inputs": [
+        "C-Chen1993"
+      ],
+      "output": "L6.7",
+      "role": "citation",
+      "consumer_use_site": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Lemma6.7 attribution"
+      },
+      "premise_discharge": "External attribution retained; no external article inspected.",
+      "complete_as_printed": false
+    },
+    {
+      "id": "E-Ldef",
+      "logic": "AND",
+      "inputs": [
+        "D6.4"
+      ],
+      "output": "L6.7",
+      "role": "definition",
+      "consumer_use_site": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Lemma6.7 formula"
+      },
+      "premise_discharge": "Definition domain matches x,y interior and z in X.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-T27cite",
+      "logic": "AND",
+      "inputs": [
+        "C-Rockafellar1970"
+      ],
+      "output": "T2.7",
+      "role": "citation",
+      "consumer_use_site": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem2.7 citation"
+      },
+      "premise_discharge": "Theorem25.1 and Corollary25.1.1 external attribution.",
+      "complete_as_printed": false
+    },
+    {
+      "id": "E-T28-suff",
+      "logic": "AND",
+      "inputs": [
+        "T2.7"
+      ],
+      "output": "T2.8-sufficient",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem2.8 proof first paragraph"
+      },
+      "premise_discharge": "Convex differentiable open-neighborhood hypothesis and assumed variational inequality.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-T28-iff",
+      "logic": "AND",
+      "inputs": [
+        "T2.8-sufficient",
+        "T2.8-necessary"
+      ],
+      "output": "T2.8",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Theorem2.8 proof"
+      },
+      "premise_discharge": "Both directions are needed for iff; not OR. Necessity uses convex feasible segments and derivative definition.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-optimality",
+      "logic": "AND",
+      "inputs": [
+        "A15.8",
+        "T2.8",
+        "G-optimality"
+      ],
+      "output": "P-optimality",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "proof first paragraph"
+      },
+      "premise_discharge": "Algorithm supplies minimizer; theorem supplies interior x_t; differentiable-neighborhood hypothesis and nonsmooth selected-subgradient bridge NOT discharged.",
+      "complete_as_printed": false
+    },
+    {
+      "id": "E-subgradient",
+      "logic": "AND",
+      "inputs": [
+        "P-optimality",
+        "D2.20"
+      ],
+      "output": "P-subgradient",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Hence display first inequality"
+      },
+      "premise_discharge": "g_t membership from P-optimality; u and x_t feasible and finite; multiply by eta_t>0.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-variational",
+      "logic": "AND",
+      "inputs": [
+        "P-optimality"
+      ],
+      "output": "P-variational",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Hence display second inequality"
+      },
+      "premise_discharge": "Use same selected g_t and universal feasible u.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-threepoint",
+      "logic": "AND",
+      "inputs": [
+        "L6.7",
+        "D6.4"
+      ],
+      "output": "P-three-point",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Hence display last equality; PDF278 opening attribution"
+      },
+      "premise_discharge": "Substitute x=x_t, y=x_{t-1}, z=u; both iterates interior (including x_0), u in V subset X; negate identity.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-onestep",
+      "logic": "AND",
+      "inputs": [
+        "P-subgradient",
+        "P-variational",
+        "P-three-point"
+      ],
+      "output": "P-one-step",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Hence display"
+      },
+      "premise_discharge": "Chain both inequalities and final identity; all share the same round and comparator.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-sum",
+      "logic": "AND",
+      "inputs": [
+        "P-one-step",
+        "A15.8"
+      ],
+      "output": "P-sum",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Dividing by eta_t and summing paragraph"
+      },
+      "premise_discharge": "Positive eta_t permits division without reversal; finite sum t=1,...,T with fixed u.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-telescope",
+      "logic": "AND",
+      "inputs": [
+        "P-sum"
+      ],
+      "output": "P-telescope",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "display second line"
+      },
+      "premise_discharge": "Reindex finite sums; endpoints x_0 and x_T; correction only t=1,...,T-1. T>=1 implicit for eta endpoints.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-bound",
+      "logic": "AND",
+      "inputs": [
+        "P-telescope",
+        "P-max",
+        "B-nonnegative"
+      ],
+      "output": "P-bound",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "display third line"
+      },
+      "premise_discharge": "eta positive and nonincreasing on required adjacent pairs makes coefficients nonnegative; max includes precisely all previous states; B(u;x_T)>=0 discharges dropped terminal term.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-inverse",
+      "logic": "AND",
+      "inputs": [
+        "P-bound"
+      ],
+      "output": "P-inverse-telescope",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "display fourth line"
+      },
+      "premise_discharge": "Finite inverse-step sum telescopes, including empty correction sum at T=1.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-final",
+      "logic": "AND",
+      "inputs": [
+        "P-inverse-telescope"
+      ],
+      "output": "P-final",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "display final line"
+      },
+      "premise_discharge": "Cancellation of D^2/eta_1; all movement terms retained.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-variable",
+      "logic": "AND",
+      "inputs": [
+        "P-final",
+        "P-max"
+      ],
+      "output": "T15.30-variable",
+      "role": "proof",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "where we denoted paragraph"
+      },
+      "premise_discharge": "Substitute D^2; proof remains conditional on unresolved optimality citation bridge.",
+      "complete_as_printed": true
+    },
+    {
+      "id": "E-exercise-input",
+      "logic": "AND",
+      "inputs": [
+        "P-telescope",
+        "B-nonnegative"
+      ],
+      "output": "EX-constant",
+      "role": "exercise_route_candidate",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "second statement left as exercise"
+      },
+      "premise_discharge": "Candidate unprinted route only: eta_t=eta>0 makes correction zero; then drop terminal comparator residual. This is not a source-printed derivation.",
+      "complete_as_printed": false
+    },
+    {
+      "id": "E-constant",
+      "logic": "AND",
+      "inputs": [
+        "EX-constant"
+      ],
+      "output": "T15.30-constant",
+      "role": "exercise_obligation",
+      "consumer_use_site": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "second statement left as exercise"
+      },
+      "premise_discharge": "No source proof supplied. Exercise obligation is unresolved in this extraction.",
+      "complete_as_printed": false
+    }
+  ],
+  "excluded": [
+    {
+      "id": "X26-display-variable",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 26,
+        "printed_page": 14,
+        "anchor": "Opening varying-step OGD regret display"
+      },
+      "reason": "Different algorithm and Euclidean x_1,...,x_{T+1} indexing; contextual analogy, not reused/cited in proof15.30. Its terminal negative squared distance is not the prescient movement sum."
+    },
+    {
+      "id": "X26-display-constant",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 26,
+        "printed_page": 14,
+        "anchor": "In the same way constant eta display"
+      },
+      "reason": "Earlier OGD theorem proof, not a printed proof of the fixed-step prescient claim; no silent substitution."
+    },
+    {
+      "id": "X26-bullets",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 26,
+        "printed_page": 14,
+        "anchor": "Five observations after displays and final tuning paragraph"
+      },
+      "reason": "Context about ordinary feedback, unbounded domains, initial conditions, terminal residuals, and tuning. They support interpretation but none is cited as a theorem15.30 dependency; Section15.5.1 cross-reference is a forward pointer, not a reverse proof edge."
+    },
+    {
+      "id": "X28-huber",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Huber-loss example continuation, gradients and Theorem2.13 reference"
+      },
+      "reason": "Unrelated example and theorem application."
+    },
+    {
+      "id": "X28-intro",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Section2.2 introduction and first technical-definition transition"
+      },
+      "reason": "Pedagogical motivation for subgradients, not substantive new proof dependency."
+    },
+    {
+      "id": "X28-lsc",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Sentence after Definition2.16, Bauschke and Combettes Lemma1.24"
+      },
+      "reason": "Closed iff lower semicontinuous equivalence is not used by the prescient proof; do not turn it into a hidden closed-loss premise. Citation identified here but excluded from active dependency graph."
+    },
+    {
+      "id": "X28-examples",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 28,
+        "printed_page": 16,
+        "anchor": "Examples2.17 and2.19; paragraph after Definition2.18"
+      },
+      "reason": "Indicator closedness/properness examples and preference for proper convex functions; no indicator sum/normal-cone proof appears in theorem15.30."
+    },
+    {
+      "id": "X29-subdiff-existence",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 29,
+        "printed_page": 17,
+        "anchor": "Paragraph proper convex f subdifferentiable on int dom f; footnote1"
+      },
+      "reason": "Rockafellar1970 Theorem23.4 and stronger relative-interior version are not used; subdifferentiability is expressly assumed on V. No replacement of V by int dom ell_t is authorized."
+    },
+    {
+      "id": "X29-T2.21",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 29,
+        "printed_page": 17,
+        "anchor": "Theorem2.21, both displayed inequalities and concluding weighted-sum proof"
+      },
+      "reason": "Supporting convexity result for real-valued functions with subgradients everywhere on V, but not cited by15.30. It does not itself resolve selected-subgradient optimality for the extended-valued constrained update; not promoted to a printed proof edge."
+    },
+    {
+      "id": "X29-T2.22",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 29,
+        "printed_page": 17,
+        "anchor": "Theorem2.22, Rockafellar1970 Theorem25.1"
+      },
+      "reason": "Differentiability iff singleton subdifferential is not cited by15.30 and does not make merely subdifferentiable losses differentiable."
+    },
+    {
+      "id": "X29-T2.23",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 29,
+        "printed_page": 17,
+        "anchor": "Theorem2.23 statement, displayed inclusion proof; PDF30 first paragraphs"
+      },
+      "reason": "Sum-rule inclusion is insufficient for reverse decomposition. Equality additionally requires proper convex closed functions and dom f_m intersect intersection of int dom f_i nonempty; proof delegates to Bauschke and Combettes2017 Corollary16.50. This was checked as a possible bridge, but15.30 does not cite or discharge it. Keep the citation and conditions explicit here, without silently adding this route."
+    },
+    {
+      "id": "X30-rest",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 30,
+        "printed_page": 18,
+        "anchor": "Examples2.24-2.25 and opening of Theorem2.26 in the candidate-bridge inspection region; not entire PDF30"
+      },
+      "reason": "Absolute value, normal-cone examples and the start of the pointwise-maximum rule are outside the printed prescient proof. The PDF30 coverage claim is restricted to the sum-rule continuation and this inspected candidate-bridge region. Example2.27, Theorem2.28 and later page material are outside this extraction scope, not implicitly covered by X30-rest."
+    },
+    {
+      "id": "X75-before-section",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "Figure6.3, continuation of projection argument, (6.2), transition to6.3"
+      },
+      "reason": "Mirror-descent motivation only; no Euclidean projection or strong-convexity assumption needed by15.30."
+    },
+    {
+      "id": "X75-strong-implies-strict",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 75,
+        "printed_page": 63,
+        "anchor": "First sentence following Definition6.3"
+      },
+      "reason": "Strict convexity is already assumed; stronger strong-convexity input is not needed."
+    },
+    {
+      "id": "X76-intuition",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Taylor/Hessian display and local-norm paragraphs"
+      },
+      "reason": "Additional twice differentiable assumption and references6.5/7.4 not used."
+    },
+    {
+      "id": "X76-strong",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Strong-convexity paragraph and equation(6.4)"
+      },
+      "reason": "Not required for B>=0 or prescient theorem; do not replace divergence by squared norm."
+    },
+    {
+      "id": "X76-examples",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Examples6.5 and6.6, all displays and KL convention"
+      },
+      "reason": "Optional Euclidean/entropy instances, not premises of generic theorem."
+    },
+    {
+      "id": "X23-context",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 23,
+        "printed_page": 11,
+        "anchor": "Top continuation about convexity exercises; post-Theorem2.8 interpretation including interior stationary-point iff; Theorem2.9; section2.1.2 and FTL display"
+      },
+      "reason": "Not used by the exact Theorem2.8 cited proof directions. No unconstrained gradient-zero rule may replace the constrained variational inequality."
+    },
+    {
+      "id": "X278-next-alg",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Algorithm15.9 Require and lines1-5"
+      },
+      "reason": "Distinct Be-the-Regularized-Leader algorithm, outside15.8/15.30."
+    },
+    {
+      "id": "X278-next-text",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Analogously paragraph, Be-The-Leader specialization, OptimisticFTRL comparison and Theorem7.47 citation"
+      },
+      "reason": "Downstream BTRL discussion, no incoming dependency of15.30."
+    },
+    {
+      "id": "X278-next-theorem",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 278,
+        "printed_page": 266,
+        "anchor": "Theorem15.31 opening"
+      },
+      "reason": "Next theorem; not a proof input of15.30."
+    },
+    {
+      "id": "X76-reference-dependence",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Opening paragraph, sentences strict convexity allows similarity measure and similarity changes with reference point y"
+      },
+      "reason": "Expository interpretation of the divergence as a reference-dependent similarity measure. No separate premise or step in the Theorem15.30 proof. The nonnegativity/equality fact remains retained in B-nonnegative."
+    },
+    {
+      "id": "X76-nonsymmetry",
+      "disposition": "EXCLUDED",
+      "source": {
+        "pdf_page_1_based": 76,
+        "printed_page": 64,
+        "anchor": "Opening paragraph final sentence: Bregman divergence is not symmetric"
+      },
+      "reason": "Warning about Bregman geometry, unused as a proof step. Excluding it never licenses symmetry: every ordered Bregman argument in the contract and graph remains fixed."
+    }
+  ],
+  "coverage_boundaries": {
+    "in_scope": "Every substantive part of Algorithm15.8 and Theorem15.30 including both displays, every line of the printed proof, exercise sentence, directly used definitions/facts, theorem2.8 and its printed proof and citations.",
+    "adjacent_material": "All substantive items on the seven originally supplied source excerpts (PDF26,28,29,75,76,277,278) are either nodes or explicitly excluded. PDF23 was inspected for the cited theorem. PDF30 inspection/coverage is limited to the Theorem2.23 proof continuation and candidate-bridge region through Examples2.24-2.25 and the opening of Theorem2.26. No complete PDF30 or all-chapter coverage is asserted.",
+    "external_citations": "No external article/book proof expansion; relevant source attributions are retained. Excluded candidate citations remain named in exclusions.",
+    "independence": "Only raw source PDF, permitted extracted source excerpts, protocol and PDF skill read. No implementation Lean, blind reconstruction, prior verdict, surrounding maintenance evidence or memory used. Successor v2 additionally reads only the designated phase1 independent review and the extractor own v1 materials. No implementation or blind evidence was introduced.",
+    "pdf30_explicit_limit": {
+      "retained_or_excluded_region": "Theorem2.23 proof continuation and inspected candidate-bridge region through Examples2.24-2.25 and opening of Theorem2.26",
+      "outside_scope": [
+        "remainder of Theorem2.26 beyond the inspected opening",
+        "Example2.27",
+        "Theorem2.28"
+      ],
+      "reason": "Ancillary raw page extraction is not a claim to whole-page source-obligation coverage."
+    }
+  },
+  "revision": {
+    "version": 2,
+    "predecessor_directory": "private-maintenance/github-maintenance-goal-20261011\\batch39-source-extraction-v1",
+    "predecessor_receipt_sha256": "1ad18f458a6b8260894dfe613a78d61b03f05289bca4b6eee19937e40a1f05b5",
+    "change_scope": [
+      "R5-root-obligations",
+      "R6-coverage-boundary"
+    ],
+    "phase1_input_review": {
+      "path": "private-maintenance/github-maintenance-goal-20261011\\batch39-source-review-v1\\phase1-topology-review.json",
+      "sha256": "fb2fb57521bbcfd91473d0dd365fc8c324731b585059e1ae5759c2b73095b3af",
+      "verdict": "accepted-with-explicit-gaps",
+      "applies_to": "v1 only"
+    },
+    "source_repairs_approved": [],
+    "reviewer_derived_witnesses_imported_as_source": false,
+    "independent_recheck": "PENDING"
+  },
+  "root_obligations": [
+    {
+      "id": "RO-A15.8-attainment",
+      "root": "A15.8",
+      "obligation": "G-attainment",
+      "role": "execution_well_definedness",
+      "relation": "ROOT_OBLIGATION_ANNOTATION",
+      "is_proof_premise": false,
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Algorithm15.8 line3 and theorem interiority assumption"
+      },
+      "note": "Root-visible execution boundary: an attained update relation is not a total algorithm. This is not a new hypothesis or missing inference in the conditional regret telescope.",
+      "resolved": false
+    },
+    {
+      "id": "RO-variable-index",
+      "root": "T15.30-variable",
+      "obligation": "G-horizon-index",
+      "role": "statement_boundary",
+      "relation": "ROOT_OBLIGATION_ANNOTATION",
+      "is_proof_premise": false,
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem15.30 joint t=1,...,T quantifier and first display"
+      },
+      "note": "Root-visible literal eta_(T+1) discrepancy and positive-horizon well-formedness. No normalized range or zero-horizon extension approved.",
+      "resolved": false
+    },
+    {
+      "id": "RO-constant-index",
+      "root": "T15.30-constant",
+      "obligation": "G-horizon-index",
+      "role": "inherited_statement_boundary",
+      "relation": "ROOT_OBLIGATION_ANNOTATION",
+      "is_proof_premise": false,
+      "source": {
+        "pdf_page_1_based": 277,
+        "printed_page": 265,
+        "anchor": "Theorem15.30 Moreover claim under inherited theorem assumptions"
+      },
+      "note": "Root-visible inherited statement boundary. The constant-step formula does not use a maximum, but its source theorem retains the joint index wording and gives no T=0 extension.",
+      "resolved": false
+    }
+  ],
+  "root_obligation_semantics": {
+    "orientation": "root -> obligation, separate from proof dependency input -> consumer edges",
+    "logic": "annotation only; neither AND hypotheses nor OR proof alternatives",
+    "traversal_requirement": "A root audit must enumerate root_obligations[root] in addition to reverse traversal of edges. Inherit relevant algorithm execution boundaries when auditing an algorithm-dependent target, without promoting them to theorem premises.",
+    "boundary_not_proof": "The conditional theorem takes an attained interior trajectory; total executable selection is a different well-definedness issue. Literal index/range interpretation is a statement boundary."
+  }
+}

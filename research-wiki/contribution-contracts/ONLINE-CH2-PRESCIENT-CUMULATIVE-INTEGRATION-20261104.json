@@ -1,0 +1,223 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-PRESCIENT-CUMULATIVE-INTEGRATION-20261104",
+  "route": "online-learning / Chapter2 prescient observation / same-run cumulative Bregman bounds",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona,21June2026; Chapter2 printed14/PDF26; properness/global subgradients printed16-17/PDF28-29; Definition6.4/Lemma6.7 printed63-64/PDF75-76; Algorithm15.8/Theorem15.30 printed265-266/PDF277-278. Five conditional derived library interfaces; fixed-step exercise proof not printed.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate original PR212 five conditional same-run cumulative inequalities and two complete canaries, with preservation and explicit continuations for all524original paths and11ignored terminal files.",
+  "affected_files": [
+    "BanditRLProof/OnlinePrescientBregmanRegret.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+    "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+    "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+    "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+    "BanditRL.OnlinePrescientBregman.iterate_variable_regret"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current main, curated process memory, pinned Mathlib and accepted actual-run/weighted-potential/divergence producers; see research-wiki/integrations/ONLINE-CH2-PRESCIENT-CUMULATIVE-INTEGRATION-20261104/retrieval-process-memory.json."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlinePrescientBregman.iterate_one_step",
+      "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+      "BanditRL.OnlineBregman.divergence_nonneg",
+      "Finset.sum_range_sub'",
+      "Finset.le_sup'"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+      "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+      "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+      "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+      "BanditRL.OnlinePrescientBregman.iterate_variable_regret"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+      "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+      "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+      "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+      "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+      "BanditRL.OnlinePrescientBregman.iterate_variable_regret"
+    ],
+    "planned_consumers": [
+      "Full source-valid-run transport and downstream Chapter2 prescient route; planned only."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Compose existing actual-run one-step and signed potential producers. The common sum has fixed/variable consumers; sharp bounds feed terminal-nonnegativity corollaries. No duplicate foundational definitions or independent project."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch39-blind-decoder",
+    "source_reviewer": "independent-batch39-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Within-setting signed cumulative telescope reuse does not certify a transport across feedback models.",
+    "focus_targets": [
+      "online-ogd"
+    ],
+    "visual_review": "Independent desktop/mobile chapter, module, catalogue and graph review accepted. Seven compiled nodes, 1885 direct TYPE/VALUE presences, thirteen required VALUE pairs and four selected Eq.mpr numeric branches remain distinct from transitive graph claims. Committed source links and live release remain pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: nine original reader operations, five new notes, one source card and thirteen reviewed parent status refreshes at stable identities.",
+    "banditrlwiki": "updated: research-wiki/integrations/ONLINE-CH2-PRESCIENT-CUMULATIVE-INTEGRATION-20261104 retains exact-original provenance and current continuation evidence.",
+    "results_ledger": "no-change-with-reason: no full-source regret theorem or chapter completion accepted.",
+    "roadmap": "no-change-with-reason: eight required forward containers and one historical navigation item remain open.",
+    "website_surfaces": [
+      "online-ogd source reader",
+      "OnlinePrescientBregmanRegret module/catalogue",
+      "compiled Lean graph"
+    ]
+  },
+  "truth_boundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. Source loss/generator transport, general attainment, interior preservation and a full source valid-run wrapper remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. All eight Chapter 2 forward containers remain open, with unknown chapter proof denominator; no full Algorithm 15.8, Theorem 15.30, chapter/book or source-correction acceptance is claimed.",
+  "verification": {
+    "focused_checks": [
+      "Exact original production and full16/22conjunct canary bytes compile on current main; seven interfaces and seven complete public values use only standard axioms; thirteen required VALUEpairs and four selected numeric branches verified.",
+      "Tests.lean and Tests/OnlinePrescientBregmanRegretCanary.lean remain owned and compiled candidate files in whole-original continuation and all seven source bindings. affected_files lists the five protected production paths classified by the current contributor checker."
+    ],
+    "bandit_check": "Complete staged package combined root, Tests and full harness passed: 483 Python tests with 7 platform skips. Actual final committed-candidate gate remains required.",
+    "site_build": "Staged site rebuilt with --lean-verified after successful combined Lean gate; 864 modules and 11021 declarations, zero placeholders.",
+    "site_check": "Complete staged build/check and independent desktop/mobile rendered exposition accepted. Committed source links and live verification remain pending.",
+    "independent_review": "Distinct source-only topology, blind reconstruction, semantic/binder/whole BODY, proof compression, guarded expansion and rendered Exposition accepted. Whole-original continuation mapping accepted with final committed/CI/main/live/lifecycle gates still pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in immutable PR212 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "pending",
+      "reason": "All524original paths and11ignored terminal files retained; final candidate continuation review pending; seven inherited artifact digests remain open.",
+      "promoted_fragments": [
+        "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_regret"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "actual-run-one-step-to-signed-sums-to-fixed-variable-telescopes"
+      ],
+      "expected_information_gain": "One preserved proof route with distinct independent semantic and acceptance reviewers.",
+      "shared_verified_context_digest": "PinnedPDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; main e8779deed29c7bcde86c2816ae909d3a6c50f2da"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Actual one-step producer, shared cumulative sum, signed fixed/variable telescope, terminal nonnegativity.",
+      "selection_reason": "No competing parallel proof-search routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "research-wiki/integrations/ONLINE-CH2-PRESCIENT-CUMULATIVE-INTEGRATION-20261104/rendered-exposition-review.json binds exact staged source, desktop/mobile rendering and independently reviewed guarded source/Lean expansion; whole-original-scope-readiness.json records independent expansion checks. No final committed or post-integration PURIFIED status is inferred.",
+      "source_expansion_nodes": [
+        "A15.8",
+        "B-nonnegative",
+        "D2.18",
+        "D2.20",
+        "D6.4",
+        "EX-constant",
+        "G-attainment",
+        "G-horizon-index",
+        "G-optimality",
+        "L6.7",
+        "P-bound",
+        "P-final",
+        "P-inverse-telescope",
+        "P-max",
+        "P-one-step",
+        "P-sum",
+        "P-telescope",
+        "T15.30-constant",
+        "T15.30-variable"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineBregman.divergence",
+        "BanditRL.OnlineBregman.divergence.eq_1",
+        "BanditRL.OnlineBregman.divergence_nonneg",
+        "BanditRL.OnlineBregman.divergence_self",
+        "BanditRL.OnlineBregman.proximal_finitePart_minimizer_iff",
+        "BanditRL.OnlineConvex.SourceClosed",
+        "BanditRL.OnlineConvex.SourceProper",
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineGradientDescent.weighted_potential_sum",
+        "BanditRL.OnlinePrescientBregman.advance",
+        "BanditRL.OnlinePrescientBregman.advance_none_iff",
+        "BanditRL.OnlinePrescientBregman.advance_some_spec",
+        "BanditRL.OnlinePrescientBregman.iterate",
+        "BanditRL.OnlinePrescientBregman.iterate_divergence_sum",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp",
+        "BanditRL.OnlinePrescientBregman.iterate_fixed_sharp._simp_1_1",
+        "BanditRL.OnlinePrescientBregman.iterate_one_step",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_regret",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_regret._proof_1_1",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_sharp",
+        "BanditRL.OnlinePrescientBregman.iterate_variable_sharp._simp_1_1",
+        "BanditRL.OnlinePrescientBregmanCanary.two_distinct_current_losses",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_3",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_4",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._proof_1_5",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.decreasing_signed_run._simp_1_2",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run._proof_1_2",
+        "BanditRL.OnlinePrescientBregmanRegretCanary.fixed_signed_run._simp_1_1",
+        "Finset.le_sup'",
+        "Finset.sum_le_sum",
+        "Finset.sum_range_sub'",
+        "Finset.sum_sub_distrib",
+        "StrictConvexOn.convexOn",
+        "le_div_iff₀"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

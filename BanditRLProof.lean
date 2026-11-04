@@ -769,3 +769,4 @@ import BanditRLProof.OnlineProximalComparison
 import BanditRLProof.OnlineBregmanProximal
 import BanditRLProof.OnlineBregmanExtended
 import BanditRLProof.OnlinePrescientBregman
+import BanditRLProof.OnlinePrescientBregmanRegret
