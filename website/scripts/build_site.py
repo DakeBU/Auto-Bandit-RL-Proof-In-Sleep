@@ -311,15 +311,20 @@ def strip_lean_comments(line: str, block_depth: int) -> tuple[str, int]:
 
 def compact_statement(lines: list[str], start: int) -> str:
     parts: list[str] = []
+    source_lines: list[str] = []
+    preserve_layout = False
     delimiter_depth = 0
     block_comment_depth = 0
     in_string = False
     for raw in lines[start : min(len(lines), start + 90)]:
         stripped = raw.strip()
         if not stripped:
+            source_lines.append(raw)
             continue
         compact = re.sub(r"\s+", " ", stripped)
-        is_result_let = stripped.startswith("let ")
+        visible, _ = strip_lean_comments(raw, block_comment_depth)
+        is_result_let = delimiter_depth == 0 and bool(re.match(r"^\s*let\s", visible))
+        preserve_layout = preserve_layout or is_result_let
         assignment_index: int | None = None
         index = 0
         while index < len(raw):
@@ -357,15 +362,19 @@ def compact_statement(lines: list[str], start: int) -> str:
                 break
             index += 1
         if assignment_index is not None:
+            source_lines.append(raw[:assignment_index].rstrip())
             before = re.sub(r"\s+", " ", raw[:assignment_index].strip()).rstrip()
             if before:
                 parts.append(before)
             break
+        source_lines.append(raw)
         parts.append(compact)
         if stripped == "where" or stripped.endswith(" where"):
             break
         if sum(len(part) for part in parts) > 8000:
             break
+    if preserve_layout:
+        return "\n".join(source_lines).rstrip()[:8000]
     return " ".join(parts)[:8000]
 
 

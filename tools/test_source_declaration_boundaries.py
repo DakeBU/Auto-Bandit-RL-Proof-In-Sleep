@@ -96,6 +96,20 @@ class SourceDeclarationBoundaryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Invalid"):
             site.scan_lean_tree()
 
+    def test_result_let_signature_preserves_copyable_source_header(self):
+        header = (
+            "theorem pair (n : Nat := 2) :\n"
+            "    /- The result has two local values. -/\n"
+            "    let x := n\n"
+            "    let y := x + 1\n"
+            "    y = n + 1"
+        )
+        source = header + " := by rfl\ntheorem next : True := by trivial\n"
+        self.assertEqual(site.compact_statement(source.splitlines(), 0), header)
+        ordinary = "theorem plain (n : Nat := 2) : n = n := by rfl"
+        self.assertEqual(site.compact_statement([ordinary], 0),
+                         "theorem plain (n : Nat := 2) : n = n")
+
     def test_missing_optional_config_keeps_default_statements(self):
         module = site.scan_lean_tree()[0]
         self.assertEqual(module, site.scan_module(self.file, []))
