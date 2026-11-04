@@ -104,6 +104,8 @@ class RunnerTests(unittest.TestCase):
             self.assertIn('reference_proof', row)
             self.assertIn('target_signature', row)
             self.assertIn('rubric', row)
+            self.assertEqual(row['answer'], row['reference_proof'])
+            self.assertTrue(row['answer'].startswith('by\n'))
 
 
 if __name__ == '__main__':

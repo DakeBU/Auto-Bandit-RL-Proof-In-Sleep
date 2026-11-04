@@ -63,7 +63,13 @@ def prompts(data, track, solutions=False):
             if solutions:
                 row['reference_proof'] = target['reference_proof']
         if solutions:
-            row.update(answer=core['answer'],rubric=core['rubric'])
+            if track == 'lean':
+                row.update(answer=target['reference_proof'], rubric=[
+                    'The proof must elaborate against the exact sealed target signature.',
+                    'Compiler acceptance and the allowed axiom closure are required; no placeholders.',
+                    'Only this formal subtarget is certified, not the entire parent NL answer.'])
+            else:
+                row.update(answer=core['answer'],rubric=core['rubric'])
         rows.append(row)
     return rows
 
