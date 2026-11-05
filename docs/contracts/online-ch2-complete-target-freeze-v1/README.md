@@ -27,3 +27,5 @@ The [source review for row 149](../online-strong-monotonicity-carrier-v1/source-
 [Row 149 at e2049d24](row-149-local-acceptance-e2049d24.json) records the counterexample to the unrestricted converse in Theorem 4.3 and the equivalence on convex sets of supported points. It includes the seven statement fingerprints, four public consumers, both browser viewports and the repaired rendering of the equivalence.
 
 [Row 143](row-143-local-acceptance-470635f9.json) and [row 163](row-163-local-acceptance-470635f9.json) record local acceptance at 470635f9. They cover the weighted entropy interpolation and relative-support bounds, the mass correction in generalized KL, and the closed-endpoint binary estimate at reference probability one half. The scaled estimate assumes t ≥ 1 and |s| ≤ t.
+
+[Row 164 at c3390d23](row-164-local-acceptance-c3390d23.json) records the initial value and the two endpoint updates for the scaled KT potential in the proof of Theorem 13.4. Both copied declarations matched their kernel imports byte for byte. The interior-coin inequality, wealth induction and second wealth lower bound remain open.

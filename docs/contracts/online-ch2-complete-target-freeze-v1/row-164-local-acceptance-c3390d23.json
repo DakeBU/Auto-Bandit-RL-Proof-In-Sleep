@@ -1,0 +1,182 @@
+{
+  "row": 164,
+  "decision": "accepted_local_exact_head",
+  "status": "ACCEPTED_LOCAL",
+  "head": "c3390d23551c2469f40d710bd3e6e3ead60a197d",
+  "target_id": "dependency:KT-endpoint-recurrence",
+  "target_pointer": "/effective_targets/164",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "locations": [
+      "Algorithm 13.1, printed p. 208 / PDF p. 220.",
+      "Proof of Theorem 13.4, printed p. 210 / PDF p. 222.",
+      "Problem 13.1, printed p. 226 / PDF p. 238."
+    ]
+  },
+  "scope": "For the displayed epsilon-scaled Gamma potential, initial F_0(0)=epsilon. For natural t >= 1, real x with |x| <= t-1 and c equal to -1 or +1, F_t(x+c)=(1+c*x/t)F_(t-1)(x). The Lean equality is homogeneous and permits every real epsilon, including the positive initial wealth scale from the source.",
+  "declarations": [
+    {
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "module": "BanditRLProof.OnlineKTPotential",
+      "name": "BanditRL.OnlineKT.ktPotential_initial"
+    },
+    {
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "module": "BanditRLProof.OnlineKTPotential",
+      "name": "BanditRL.OnlineKT.ktPotential_endpoint"
+    },
+    {
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "module": "Tests.OnlineKTPotentialCanary",
+      "name": "BanditRL.OnlineKT.Canary.first_round_two_outcomes"
+    },
+    {
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "module": "Tests.OnlineKTPotentialCanary",
+      "name": "BanditRL.OnlineKT.Canary.fractional_history_two_outcomes"
+    }
+  ],
+  "public_modules": [
+    "BanditRLProof/OnlineKTPotential.lean",
+    "Tests/OnlineKTPotentialCanary.lean"
+  ],
+  "source_contract": "../online-kt-endpoints-v1/source-contract.json",
+  "preserved_proof_attempts": "../online-kt-endpoints-v1/proof-attempts.json",
+  "source_http_at_head": [
+    {
+      "path": "BanditRLProof/OnlineKTPotential.lean",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/c3390d23551c2469f40d710bd3e6e3ead60a197d/BanditRLProof/OnlineKTPotential.lean",
+      "http": 200,
+      "sha256": "3f2b0e36bfb64dca13a00d683a81c9df9e98a5e9ed1055475ef4f5eed91a29c8",
+      "size": 1854
+    },
+    {
+      "path": "Tests/OnlineKTPotentialCanary.lean",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/c3390d23551c2469f40d710bd3e6e3ead60a197d/Tests/OnlineKTPotentialCanary.lean",
+      "http": 200,
+      "sha256": "23096adda3164d8723718a2a7770f223e369fb35d633fd1750383f06c062c36d",
+      "size": 1301
+    },
+    {
+      "path": "docs/contracts/online-kt-endpoints-v1/source-contract.json",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/c3390d23551c2469f40d710bd3e6e3ead60a197d/docs/contracts/online-kt-endpoints-v1/source-contract.json",
+      "http": 200,
+      "sha256": "b11653c8390f7544787c7c27a2754bbb5775296ddfb0a9615aef46d1d4c84bb1",
+      "size": 3525
+    },
+    {
+      "path": "docs/contracts/online-kt-endpoints-v1/proof-attempts.json",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/c3390d23551c2469f40d710bd3e6e3ead60a197d/docs/contracts/online-kt-endpoints-v1/proof-attempts.json",
+      "http": 200,
+      "sha256": "47b6dba06a1535b22ab54f7fa59ebc2e7a6f2b9f99be12f4395073b2d77ca325",
+      "size": 4378
+    }
+  ],
+  "evidence": {
+    "frozen_main": "3cff61fda65b20a1e6326da4451a655697fe1e282c12cd231756869a21b5121f",
+    "imported": "ebc97c1fee53e96f4346e075bedfb02379dfdc14a917b4a4379bb2e36213fb60",
+    "gates": "723fb4e206b5ea52df0db20572111d59e8866b32047ffca8131ab84cfc2042f5",
+    "gate_terminal": "014e4c1a4d62297587d84d872aa4ddaa8d965716c057916d5edcf663677d302f",
+    "reader": "c6d64173cafe0e9e4a5dba57b7e78a2476e4cdbd78401ca36a807a128e00b32d",
+    "visual": "53bf105702a23a647c98f7c173fc53194786d13ca0ae283bf490fc7a13d0b952",
+    "offline": "7ff6cfde3d65769e85e8074856b92f853e4898a3e876e612866671ab86c27295",
+    "clipboard": "5d00fc5404bdc989e2267fc9ae551245db0b8460fdf239d329616dd04e9cc4be",
+    "public_sources": "a702e6bb7ffc284313feffbfa875661c270ba22e1ab1596006e5373ebaa55b9d"
+  },
+  "independent_decision_sha256": "a4a46f254e28f95aed649ef556b39cc3b28a66bcbae08c776aa7b70286e09342",
+  "fingerprints": {
+    "private_frozen_main": {
+      "ktPotential_initial": "a5986fdbbaf47be3794325e6c8029363eee6f7cb6f09e405b6db99a25124ee32",
+      "ktPotential_endpoint": "7a0d3c522ff9dfe608bc144176d77a31628b9f308a2911b65caed45f4db665b3"
+    },
+    "private_frozen_consumers": {
+      "first_round_two_outcomes": "472f58a23dd744630d3822edd65069ddadeb189f2a5df7e8f9ea3e41b2de2ce5",
+      "fractional_history_two_outcomes": "d173440db83a6d77feff6a465ab51dd1579a48bf418f334a8c020f58ec39fbab"
+    },
+    "production_and_copied": [
+      "a5986fdbbaf47be3794325e6c8029363eee6f7cb6f09e405b6db99a25124ee32",
+      "7a0d3c522ff9dfe608bc144176d77a31628b9f308a2911b65caed45f4db665b3"
+    ]
+  },
+  "production_import": {
+    "count": 4,
+    "observed_native": [
+      0,
+      0,
+      0
+    ],
+    "strict_comparator_exit": 0,
+    "complete_consumer_proof_values_equal": 2,
+    "frozen_consumer_type_history": "Four and thirteen numeral proof positions previously adjudicated between typing-only and actual private proof TYPE. Imported TYPEs equal actual private TYPEs in full."
+  },
+  "gates": {
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "metrics": {
+      "module_count": 887,
+      "declaration_count": 11278,
+      "placeholder_count": 0
+    },
+    "inputs": 3209,
+    "packages": 9,
+    "harness_tests": 496,
+    "harness_skips": 7,
+    "site_manifest": "93afaea3466c1e0a90b106053020f4eeda8d545a4a4908b19d4275021c121c39"
+  },
+  "reader": {
+    "viewports": [
+      1420,
+      375
+    ],
+    "actual_copies": 4,
+    "graph_roundtrips": 4,
+    "screenshots": 9,
+    "offline_pages": 75,
+    "distinct_formulae": 1029,
+    "unique_raw_equal_types": 2,
+    "kernel_defeq": 2,
+    "owners": 4
+  },
+  "ci": {
+    "run": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/42013466394",
+    "checkout": "62b996f8708a68dfd5b0549970ef45ba52f41dd4",
+    "git_tree": "f657835ad164e72b59f52330dcc1e5892d461f7b"
+  },
+  "repair_history": "The first independent decision misidentified the Theorem 13.4 proof as Theorem 13.2. Rereading printed pp. 210 and 226 established that Problem 13.1 states the unscaled endpoint recurrence. The second decision binds this correction to the original kernel and reader evidence.",
+  "remaining": "Interior-coin inequality, wealth induction and lower estimate in Theorem 13.4, A.13, and subsequent regret results have separate obligations. Chapter 2 and the complete book remain open."
+}
