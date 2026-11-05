@@ -9286,6 +9286,42 @@
       "dependencies": [
         "BanditRL.OnlineEntropy.KLBoundary.binary_boundary"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktPotential_initial",
+      "title": "Initial wealth at zero history",
+      "chapter": "online-kt-endpoints",
+      "featured": true,
+      "teaching_order": 1,
+      "source_match": "source-proof-step",
+      "plain": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)). At time zero and history zero the potential equals its scale ε. Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+      "math": "F_0(0)=\\varepsilon",
+      "intuition": "Both numerator factors become Γ(1/2)=√π. Their product cancels π, and Γ(1)=1.",
+      "why": "The initial identity anchors the potential at the bettor’s starting wealth.",
+      "position": "Initial wealth at zero history",
+      "proof_idea": "Both numerator factors become Γ(1/2)=√π. Their product cancels π, and Γ(1)=1.",
+      "lean_notes": "The scale ε is never cancelled.",
+      "dependencies": [
+        "BanditRL.OnlineKT.ktPotential"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktPotential_endpoint",
+      "title": "One update for either coin endpoint",
+      "chapter": "online-kt-endpoints",
+      "featured": true,
+      "teaching_order": 2,
+      "source_match": "source-proof-step",
+      "plain": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)). For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t. Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+      "math": "F_t(x+c)=\\left(1+\\frac{cx}{t}\\right)F_{t-1}(x)",
+      "intuition": "A positive coin increments the Gamma argument (t+x)/2; a negative coin increments (t−x)/2. Both arguments are at least 1/2. In either case Γ(t+1)=tΓ(t) and the power of two doubles.",
+      "why": "The proof of Theorem 13.4 invokes Problem 13.1 for the two endpoint updates before treating interior coins.",
+      "position": "One update for either coin endpoint",
+      "proof_idea": "A positive coin increments the Gamma argument (t+x)/2; a negative coin increments (t−x)/2. Both arguments are at least 1/2. In either case Γ(t+1)=tΓ(t) and the power of two doubles.",
+      "lean_notes": "The subtraction t−1 is natural subtraction. The assumption t≥1 identifies it with the preceding round.",
+      "dependencies": [
+        "BanditRL.OnlineKT.ktPotential"
+      ]
     }
   ]
 }

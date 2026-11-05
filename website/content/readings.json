@@ -8843,6 +8843,149 @@
         ],
         "boundary": "The final application proves the scaled KL inequality appearing in the coin-betting argument. The remaining wealth estimates in Theorem 13.4 have their own hypotheses."
       }
+    },
+    {
+      "slug": "online-kt-endpoints",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Algorithm 13.1; proof of Theorem 13.4; Problem 13.1",
+        "pages": "printed pp. 208, 210, 226 / PDF pp. 220, 222, 238",
+        "pdf_page": 222,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "ε, t",
+          "meaning": "Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε. The time t counts completed rounds."
+        },
+        {
+          "term": "x, c",
+          "meaning": "Before round t≥1 the cumulative real history lies in [−(t−1),t−1]. The endpoint coin is −1 or 1."
+        },
+        {
+          "term": "Fₜ, Γ",
+          "meaning": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1))."
+        }
+      ],
+      "algorithm": {
+        "title": "Evaluate the KT potential",
+        "kind": "Potential in Algorithm 13.1 and the proof of Theorem 13.4",
+        "steps": [
+          {
+            "title": "Start from the Gamma product",
+            "detail": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)).",
+            "math": "F_t(x)=\\frac{\\varepsilon 2^t\\,\\Gamma((t+1+x)/2)\\,\\Gamma((t+1-x)/2)}{\\pi\\,\\Gamma(t+1)}",
+            "fallback": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1))."
+          },
+          {
+            "title": "Initial wealth at zero history",
+            "detail": "Both numerator factors become Γ(1/2)=√π. Their product cancels π, and Γ(1)=1.",
+            "math": "F_0(0)=\\varepsilon",
+            "fallback": "At time zero and history zero the potential equals its scale ε."
+          },
+          {
+            "title": "One update for either coin endpoint",
+            "detail": "A positive coin increments the Gamma argument (t+x)/2; a negative coin increments (t−x)/2. Both arguments are at least 1/2. In either case Γ(t+1)=tΓ(t) and the power of two doubles.",
+            "math": "F_t(x+c)=\\left(1+\\frac{cx}{t}\\right)F_{t-1}(x)",
+            "fallback": "For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineKT.ktPotential_initial",
+        "BanditRL.OnlineKT.ktPotential_endpoint"
+      ],
+      "source_theorems": [
+        {
+          "label": "Initial wealth at zero history",
+          "pages": "Theorem 13.4 proof, printed p. 210 / PDF p. 222",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "F_0(0)=\\varepsilon",
+          "fallback": "At time zero and history zero the potential equals its scale ε.",
+          "plain": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)). At time zero and history zero the potential equals its scale ε. Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+          "relationship": "The initial identity anchors the potential at the bettor’s starting wealth. Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)).",
+            "assumptions": "At time zero and history zero the potential equals its scale ε.",
+            "parameters": "Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+            "regret": "This step concerns the potential used in the wealth argument.",
+            "guarantee": "At time zero and history zero the potential equals its scale ε."
+          }
+        },
+        {
+          "label": "One update for either coin endpoint",
+          "pages": "Theorem 13.4 proof, printed p. 210 / PDF p. 222; Problem 13.1, printed p. 226 / PDF p. 238",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "F_t(x+c)=\\left(1+\\frac{cx}{t}\\right)F_{t-1}(x)",
+          "fallback": "For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t.",
+          "plain": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)). For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t. Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+          "relationship": "The proof of Theorem 13.4 invokes Problem 13.1 for the two endpoint updates before treating interior coins. Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)).",
+            "assumptions": "For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t.",
+            "parameters": "Algorithm 13.1 starts with ε>0. Both identities extend to every real scale ε because the potential is linear in ε.",
+            "regret": "This step concerns the potential used in the wealth argument.",
+            "guarantee": "For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Two exact updates",
+        "intro": "Track both endpoint choices at zero and nonzero history.",
+        "steps": [
+          {
+            "title": "First round with initial wealth seven",
+            "detail": "At t=1 the history condition forces x=0. Both signs have multiplier 1.",
+            "math": "F_1(-1)=F_1(1)=F_0(0)=7",
+            "fallback": "Set ε=7. Both outcomes preserve the seven units of initial wealth."
+          },
+          {
+            "title": "A fractional history separates the two signs",
+            "detail": "For ε=1, t=3 and x=1/2, the previous potential is positive because its Gamma arguments are positive.",
+            "math": "F_3(3/2)=\\tfrac76 F_2(1/2),\\qquad F_3(-1/2)=\\tfrac56 F_2(1/2)",
+            "fallback": "The negative-coin value is positive and strictly smaller than the positive-coin value."
+          },
+          {
+            "title": "Check the strict order",
+            "detail": "With positive scale one, both Gamma numerator arguments and the Gamma denominator at t=2 and x=1/2 are positive. Multiplying the positive previous potential by 5/6 or 7/6 preserves their strict order.",
+            "math": "0<F_3(-1/2)<F_3(3/2)",
+            "fallback": "At this fractional history the two outcomes are positive and different."
+          }
+        ],
+        "takeaway": "The factors coincide at the first round and separate at a nonzero history.",
+        "boundary": "Fractional histories are allowed throughout the recurrence."
+      },
+      "proof_bridge": {
+        "title": "The two Gamma shifts",
+        "summary": "Problem 13.1 uses the unscaled potential. Multiplying it by the initial wealth yields the potential in the printed proof.",
+        "steps": [
+          {
+            "title": "Start from the Gamma product",
+            "detail": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1)).",
+            "math": "F_t(x)=\\frac{\\varepsilon 2^t\\,\\Gamma((t+1+x)/2)\\,\\Gamma((t+1-x)/2)}{\\pi\\,\\Gamma(t+1)}",
+            "fallback": "For real ε and x and natural t, Fₜ(x) is ε·2ᵗ Γ((t+1+x)/2) Γ((t+1−x)/2) / (π Γ(t+1))."
+          },
+          {
+            "title": "Initial wealth at zero history",
+            "detail": "Both numerator factors become Γ(1/2)=√π. Their product cancels π, and Γ(1)=1.",
+            "math": "F_0(0)=\\varepsilon",
+            "fallback": "At time zero and history zero the potential equals its scale ε."
+          },
+          {
+            "title": "One update for either coin endpoint",
+            "detail": "A positive coin increments the Gamma argument (t+x)/2; a negative coin increments (t−x)/2. Both arguments are at least 1/2. In either case Γ(t+1)=tΓ(t) and the power of two doubles.",
+            "math": "F_t(x+c)=\\left(1+\\frac{cx}{t}\\right)F_{t-1}(x)",
+            "fallback": "For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t."
+          }
+        ],
+        "boundary": "Theorem 13.4 also needs a potential inequality for coins strictly between −1 and 1, wealth induction, and a lower estimate for the potential. The endpoint identities supply only the two equalities."
+      }
     }
   ]
 }
