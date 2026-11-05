@@ -2068,6 +2068,121 @@
             "boundary": "This declaration proves only the validity of an explicitly coupled prefix and supplied terminal minimizer. It permits arbitrary EReal losses and proves no finite-value regret equality, finiteness, automatic attainment or equality of independently selected minimizers. Complete Lemma 7.1/B7, algorithm-specific terminal bounds, Chapter 2 and the book remain open."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "When the printed FTRL right side is defined",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\nR\\text{ is defined}\\iff (\\forall n\\le T,\\ a_n<+\\infty)\\ \\land\\ \\neg(P\\land C).",
+          "plain": "No selected-finiteness premise is assumed for this characterization. The right side is defined exactly when every selected objective is finite and played and comparator infinities do not both occur.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "First prove the initial real infimum is an attained minimum. If a selected objective first becomes +∞, its minimizing inequality at the preceding feasible point forces that round’s played loss to be +∞; the printed bracket then contains undefined infinity arithmetic. If every selected objective is finite, bracket sums are finite or +∞ according to P, while the terminal comparator contributes −∞ exactly according to C. Their ordered combination is defined precisely when P and C do not both hold.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "No selected-finiteness premise is assumed for this characterization. The right side is defined exactly when every selected objective is finite and played and comparator infinities do not both occur.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "No selected-finiteness premise is assumed for this characterization. The right side is defined exactly when every selected objective is finite and played and comparator infinities do not both occur."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "This is a definedness characterization of R, not a claim that L is undefined whenever R is undefined. The selected-top model has L = +∞ and undefined R. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "FTRL equality on its lawful arithmetic domain",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land\\neg(P\\land C)\\Longrightarrow L=R\\text{ and both are defined}.",
+          "plain": "Require finite selected objectives and exclude the simultaneous occurrence of played and comparator +∞ values. The equality is then a lawful partial-arithmetic equality, never an equality of two undefined expressions. At T = 0 it gives 0 = 0.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "Split according to P and C. When neither occurs, no-bottom and the selected-finiteness premise identify every used value with the coercion of its real part. Invoke the existing strict-past finite-values theorem with all its arguments and the attained initial minimum. The remaining two cases use the one-sided infinite identities below, without cancelling infinities. A private source-domain certificate constructs Function.extend, proves restriction on X, transports objectives and the initial image/minimum, and applies this theorem before transporting the result back to source-subtype regularizers.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives and exclude the simultaneous occurrence of played and comparator +∞ values. The equality is then a lawful partial-arithmetic equality, never an equality of two undefined expressions. At T = 0 it gives 0 = 0.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives and exclude the simultaneous occurrence of played and comparator +∞ values. The equality is then a lawful partial-arithmetic equality, never an equality of two undefined expressions. At T = 0 it gives 0 = 0."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "The equality requires the displayed lawful-domain qualification; it is not the unrestricted printed equality. No new prefix-coupling theorem or trajectory existence follows. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "A played infinity gives a lawful positive-infinite identity",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land P\\land\\neg C\\Longrightarrow L=R=+\\infty.",
+          "plain": "Require finite selected objectives, at least one played +∞ loss, and no comparator +∞ loss.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "Every comparator loss is finite. Each regret summand is finite or +∞, and a witnessed played infinity makes their sum +∞. Each printed bracket has finite selected endpoints; its sum likewise contains +∞. The remaining finite terminal arithmetic preserves +∞. No infinite cancellation is used.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives, at least one played +∞ loss, and no comparator +∞ loss.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives, at least one played +∞ loss, and no comparator +∞ loss."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "This proves only the played-infinite, comparator-finite regime. It does not permit both kinds of infinity or an infinite selected objective. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "A comparator infinity gives a lawful negative-infinite identity",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land\\neg P\\land C\\Longrightarrow L=R=-\\infty.",
+          "plain": "Require finite selected objectives, no played +∞ loss, and at least one comparator +∞ loss.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "Each played loss is finite. The regret terms are finite or −∞, and a comparator infinity supplies a −∞ term. The bracket sum is finite, while F_T(u) is +∞, so the final subtraction gives −∞. The conclusion follows by one-sided ordered arithmetic rather than cancellation.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives, no played +∞ loss, and at least one comparator +∞ loss.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives, no played +∞ loss, and at least one comparator +∞ loss."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "This proves only the comparator-infinite, played-finite regime. A −∞ regret value here is a defined extended-real result, not an undefined expression. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Both types of infinity make the printed equality undefined",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land P\\land C\\Longrightarrow L\\text{ and }R\\text{ are undefined}.",
+          "plain": "Require finite selected objectives and the occurrence of both a played and a comparator +∞ loss; these occurrences need not share an index.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "At a common index, the regret difference is +∞ minus +∞ and is undefined. At different indices, either a local difference is already undefined or the ordered sum contains both a lawful +∞ and a lawful −∞ term, so it cannot have a defined result. On the right, a positive-infinite bracket sum meets the negative-infinite terminal comparator contribution. The same-index model has finite attained selected objectives, so this arithmetic obstruction does not depend on how an all-infinite argmin would be interpreted.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives and the occurrence of both a played and a comparator +∞ loss; these occurrences need not share an index.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives and the occurrence of both a played and a comparator +∞ loss; these occurrences need not share an index."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "The theorem identifies undefined arithmetic, not a lawful none = none regret identity. Distinct-index examples show why checking each individual difference is insufficient. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {

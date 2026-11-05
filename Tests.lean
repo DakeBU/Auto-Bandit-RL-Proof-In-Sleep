@@ -185,3 +185,4 @@ import Tests.OnlineCumulativeStrongConvexCanary
 import Tests.OnlineCumulativePotentialCanary
 import Tests.OnlineUnboundedOSDCanary
 import Tests.OnlineFTRLFiniteIdentityCanary
+import Tests.OnlineFTRLSourceArithmeticCanary
