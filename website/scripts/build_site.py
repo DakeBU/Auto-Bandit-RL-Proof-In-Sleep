@@ -1040,10 +1040,10 @@ def layout(
       <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
     </div>
     <nav class="sidebar-nav" aria-label="Primary">
-      <nav class="graph-shortcuts" aria-label="Explore the mathematics">
+      <div class="graph-shortcuts" role="navigation" aria-label="Explore the mathematics">
         <a href="{href_from(page_path, 'lean-graph/index.html')}"><span aria-hidden="true">◉—◉</span><strong>Lean Graph</strong></a>
         <a href="{href_from(page_path, 'functor-hypergraph/index.html')}"><span aria-hidden="true">◎⋈◎</span><strong>Functor Hypergraph</strong></a>
-      </nav>
+      </div>
       {sidebar_groups}
     </nav>
     <div class="sidebar-footer">
