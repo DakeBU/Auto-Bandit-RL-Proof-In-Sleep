@@ -780,3 +780,4 @@ import BanditRLProof.OnlineAdaptiveOSD
 import BanditRLProof.OnlineAdaptiveBenchmark
 import BanditRLProof.OnlineWeightedPotential
 import BanditRLProof.OnlineUnboundedOGD
+import BanditRLProof.ConfidenceIntervals
