@@ -1791,6 +1791,29 @@
             "boundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open."
           },
           "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Generic strict-past FTL: conditional minimizer and feasible initialization",
+          "pages": "printed11-12 / PDF23-24",
+          "pdf_page": 23,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "P_0=\\mathrm{some}(x_0),\\qquad P_t=S_V((\\ell_s)_{s<t})\\quad(t>0).",
+          "plain": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V.",
+          "fallback": "At index zero return the supplied feasible point. At a positive index select from the full feasible minimizer set of the strict-past sum, returning none exactly when it is empty.",
+          "relationship": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+          "contract": {
+            "model": "Fixed classical partial FTL selector, with an explicitly supplied feasible initial action.",
+            "assumptions": "Arbitrary type X, subset V and ambient real-valued losses; initial:V. No convexity, closedness, compactness, uniqueness or attainment is assumed by the definitions or conditional soundness statements.",
+            "parameters": "Zero-based t; only indices s<t contribute. Compare the same initial action and fixed choice convention in prefix equality.",
+            "regret": "No regret guarantee is proved by this package.",
+            "guarantee": "Success returns a feasible minimum of the full strict-past sum. Failure is exactly nonattainment. Equal earlier losses on V give equal predictions. A uniquely attained minimum identifies the chosen point. The eight complete tests check the quadratic predictions 3/4,1/4,1/2 with feasible prefix minima; current/future independence; off-domain invariance; tied feasible minima without naming the chosen endpoint; an empty domain; an empty history and two different supplied initial actions; affine nonattainment on the nonempty closed convex real line; and a separately queried longer prefix with an attained square minimum. The last example gives no playable action at the failed prefix."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Conditional FTL selector and its library properties",
+            "boundary": "One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The 65 overlapping source containers are navigation, not an independent proof denominator. Eight required forward containers and whole-chapter reconciliation remain open; six future mathematical claims remain unenumerated. Chapter 2 stays partial and its proof denominator remains unknown. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {
@@ -1821,7 +1844,7 @@
       },
       "proof_bridge": {
         "title": "Projection, one-step progress and the two telescopes",
-        "summary": "The projected-gradient update yields a squared-distance inequality. A supporting-gradient bound turns this into regret; fixed and varying rates then use separate telescoping routes. The added prescient chain instead evaluates each current affine loss at its post-update prediction, producing negative movement energy.",
+        "summary": "The projected-gradient update yields a squared-distance inequality. A supporting-gradient bound turns this into regret; fixed and varying rates then use separate telescoping routes. The added prescient chain instead evaluates each current affine loss at its post-update prediction, producing negative movement energy. The FTL steps below develop a separate strict-past partial minimizer rule and its failure boundary.",
         "steps": [
           {
             "title": "Establish projection and expand the update",
@@ -1870,9 +1893,33 @@
             "detail": "Drop only the nonnegative terminal-distance quotient. With constraints the movement is a projected displacement, so replacing it by eta times the current vector is generally invalid. The five canaries cover clipping, its gradient-energy counterexample, an unconstrained equality, current/future information and an outside initial center with an empty horizon.",
             "math": "R_T(u)\\le\\frac{\\|x_0-u\\|^2}{2\\eta}-\\frac1{2\\eta}\\sum_{t<T}\\|z_{t+1}-z_t\\|^2.",
             "fallback": "The simplified bound still subtracts actual movement energy."
+          },
+          {
+            "title": "FTL: form the whole feasible minimizer set",
+            "detail": "For a finite tuple L, sum its losses and retain both feasibility and the minimizing inequality. If this set is nonempty, Classical.choose supplies an element. If it is empty, the selector returns none. Splitting these two branches proves both conditional soundness and exact failure.",
+            "math": "C_L(x)=\\sum_{i\\in\\mathrm{Fin}(n)}L_i(x),\\qquad M_V(L)=\\{p\\in V:\\ \\forall x\\in V,\\ C_L(p)\\le C_L(x)\\}.\\quad S_V(L)=\\mathrm{some}(p)\\Rightarrow p\\in M_V(L),\\qquad S_V(L)=\\mathrm{none}\\Longleftrightarrow M_V(L)=\\varnothing.",
+            "fallback": "The selected point is feasible and minimizing. None is equivalent to the absence of an attained feasible minimum."
+          },
+          {
+            "title": "FTL: separate the supplied first action from later queries",
+            "detail": "At t=0 the definition returns initial:V and the empty objective is zero at every point. At t>0 the finite-index sum equals the natural strict-prefix sum. Apply selector soundness or failure equivalence to that same objective. Thus conditional soundness holds at every index, while failure additionally requires t>0.",
+            "math": "P_0=\\mathrm{some}(x_0),\\quad P_t=S_V((\\ell_s)_{s<t})\\ (t>0),\\quad C_{(\\ell_s)_{s<t}}(x)=\\sum_{s<t}\\ell_s(x).\\quad P_t=\\mathrm{none}\\Longleftrightarrow\\left(t>0\\ \\land\\ \\nexists p\\in V:\\ \\forall x\\in V,\\ \\sum_{s<t}\\ell_s(p)\\le\\sum_{s<t}\\ell_s(x)\\right).",
+            "fallback": "Initialization always succeeds. A later query fails exactly when its prefix has no attained feasible minimum."
+          },
+          {
+            "title": "FTL: transport equality on the feasible domain",
+            "detail": "Equality of each earlier loss on V gives equality of the two cumulative objectives on V. Transport the minimizing inequalities in both directions to get equality of the entire feasible minimizer sets. Rewriting that equality gives equal outputs of this fixed classical selector, including tied minima. Separately, a feasible attained minimizer and uniqueness identify a named output.",
+            "math": "\\left(\\forall s<t,\\ \\forall x\\in V,\\ \\ell_s(x)=\\ell_s^{\\prime}(x)\\right)\\Longrightarrow M_V(\\ell_{<t})=M_V(\\ell^{\\prime}_{<t})\\Longrightarrow P_t(\\ell)=P_t(\\ell^{\\prime}).\\qquad M_V(L)=\\{p\\}\\Longrightarrow S_V(L)=\\mathrm{some}(p).",
+            "fallback": "Equal feasible prefixes give equal full minimizer sets and fixed-selector outputs. A singleton minimum set determines the returned point."
+          },
+          {
+            "title": "FTL: distinguish an actual prediction sequence from fresh-prefix recovery",
+            "detail": "On [0,1], start at 3/4 and use q0(x)=(x-1/4)^2, then qs(x)=(x-3/4)^2 for s>0. Completing squares gives the unique minima 1/4 and 1/2 and the complete test checks feasibility and prefix minimality. On R a separate stream r0(x)=x, rs(x)=x^2-x for s>0 has no one-loss minimum but its two-loss sum is x^2. The second prefix therefore has minimum zero. It is queried afresh: the failed first prefix provides no action from which a valid full interaction could continue. Other tests cover ties, empty domain/history, changed future losses and off-domain extensions.",
+            "math": "(P_0,P_1,P_2)=\\left(\\mathrm{some}(3/4),\\mathrm{some}(1/4),\\mathrm{some}(1/2)\\right).\\quad q_0(x)+q_1(x)=2(x-1/2)^2+1/8.\\qquad r_0(x)=x,\\quad r_0(x)+r_1(x)=x^2,\\quad P_1(r)=\\mathrm{none},\\ P_2(r)=\\mathrm{some}(0).",
+            "fallback": "The quadratic test gives three concrete predictions. The real-line failure/recovery test compares separate prefixes, not a full valid run after failure."
           }
         ],
-        "boundary": "The OGD source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. Conditional nonlinear/Bregman fixed and variable bounds now have derived library proofs for supplied valid interior argmin runs. Full source-algorithm acceptance and the remaining chapter obligations stay open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here."
+        "boundary": "The OGD source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. Conditional nonlinear/Bregman fixed and variable bounds now have derived library proofs for supplied valid interior argmin runs. Full source-algorithm acceptance and the remaining chapter obligations stay open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied."
       }
     },
     {

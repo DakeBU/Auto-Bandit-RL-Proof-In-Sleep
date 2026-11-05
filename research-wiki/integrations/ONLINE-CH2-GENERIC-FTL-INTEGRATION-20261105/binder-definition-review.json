@@ -1,0 +1,301 @@
+{
+  "schema": "abrl.binder-definition-review.v1",
+  "verdict": "accepted-with-explicit-delta",
+  "definitions": [
+    {
+      "name": "cumulative",
+      "level": "library supporting source relation",
+      "kind": "literal",
+      "binders": [
+        {
+          "binder": "X : Type*",
+          "classification": "TYPING",
+          "expansion": "Ambient action carrier.",
+          "explicitDelta": "Generalized from source R^d; specialize back for literal source carrier."
+        },
+        {
+          "binder": "n : Nat",
+          "classification": "TYPING",
+          "expansion": "Finite history length. Fin n enumerates0,...,n-1.",
+          "explicitDelta": "Source round n+1 has n past losses."
+        },
+        {
+          "binder": "past : Fin n -> X -> Real",
+          "classification": "STANDING",
+          "expansion": "Historical real-valued functions.",
+          "explicitDelta": "Source losses defined on V are represented by ambient extensions; objective restricted to V."
+        },
+        {
+          "binder": "x : X",
+          "classification": "TYPING",
+          "expansion": "Evaluation point.",
+          "explicitDelta": ""
+        }
+      ],
+      "expansion": "sum i:Fin n, past i x",
+      "wholeCarrier": "Exact finite unweighted real sum for every input, including zero history; no mean/regularizer.",
+      "uniqueExistenceRequired": false
+    },
+    {
+      "name": "minimizers",
+      "level": "source-anchor relational core",
+      "kind": "literal",
+      "binders": [
+        {
+          "binder": "X : Type*",
+          "classification": "TYPING",
+          "expansion": "Ambient action carrier.",
+          "explicitDelta": "Generalized from source R^d; specialize back for literal source carrier."
+        },
+        {
+          "binder": "n : Nat",
+          "classification": "TYPING",
+          "expansion": "Finite history length. Fin n enumerates0,...,n-1.",
+          "explicitDelta": "Source round n+1 has n past losses."
+        },
+        {
+          "binder": "V : Set X",
+          "classification": "TYPING",
+          "expansion": "Fixed feasible set.",
+          "explicitDelta": "Generalized carrier; no convexity/closedness smuggled in."
+        },
+        {
+          "binder": "past : Fin n -> X -> Real",
+          "classification": "STANDING",
+          "expansion": "Historical real-valued functions.",
+          "explicitDelta": "Source losses defined on V are represented by ambient extensions; objective restricted to V."
+        }
+      ],
+      "expansion": "{x | x in V AND forall y, y in V -> sum_i past_i(x) <= sum_i past_i(y)}",
+      "wholeCarrier": "Full feasible argmin set; IsMinOn supplies comparisons, membership is separate. Ties retained; empty/nonattained objectives have empty set.",
+      "uniqueExistenceRequired": false
+    },
+    {
+      "name": "select",
+      "level": "library extension realizing a source-compatible choice",
+      "kind": "literal classical Option construction, not characterized source object",
+      "binders": [
+        {
+          "binder": "X : Type*",
+          "classification": "TYPING",
+          "expansion": "Ambient action carrier.",
+          "explicitDelta": "Generalized from source R^d; specialize back for literal source carrier."
+        },
+        {
+          "binder": "n : Nat",
+          "classification": "TYPING",
+          "expansion": "Finite history length. Fin n enumerates0,...,n-1.",
+          "explicitDelta": "Source round n+1 has n past losses."
+        },
+        {
+          "binder": "V : Set X",
+          "classification": "TYPING",
+          "expansion": "Fixed feasible set.",
+          "explicitDelta": "Generalized carrier; no convexity/closedness smuggled in."
+        },
+        {
+          "binder": "past : Fin n -> X -> Real",
+          "classification": "STANDING",
+          "expansion": "Historical real-valued functions.",
+          "explicitDelta": "Source losses defined on V are represented by ambient extensions; objective restricted to V."
+        }
+      ],
+      "expansion": "If h : exists x, x in V AND forall y in V, C(x)<=C(y), then some(Classical.choose h), else none. h is an internal branch witness, not a public premise.",
+      "wholeCarrier": "Total into Option, partial as action. No fallback action. Fixed classical choice among all minimizers, no prescribed tie priority.",
+      "sourceDelta": "Source does not specify Option or fixed consistent choice; success is source-valid but failure/tie machinery is library-only.",
+      "uniqueExistenceRequired": false,
+      "reason": "Source has no unique-minimizer semantics. Must not relabel this as a uniquely characterized source algorithm. select_some_spec/select_none_iff provide separate characterization headers; proofs pending."
+    },
+    {
+      "name": "predict",
+      "level": "one source-compatible library realization, not a second anchor",
+      "kind": "literal Option construction with explicit source delta",
+      "binders": [
+        {
+          "binder": "X : Type*",
+          "classification": "TYPING",
+          "expansion": "Ambient action carrier.",
+          "explicitDelta": "Generalized from source R^d; specialize back for literal source carrier."
+        },
+        {
+          "binder": "V : Set X",
+          "classification": "TYPING",
+          "expansion": "Fixed feasible set.",
+          "explicitDelta": "Generalized carrier; no convexity/closedness smuggled in."
+        },
+        {
+          "binder": "initial : V",
+          "classification": "SOURCE",
+          "expansion": "Subtype: initial.val : X and initial.property : initial.val in V.",
+          "explicitDelta": "Exactly caller-selected admissible first action. Empty V cannot supply it."
+        },
+        {
+          "binder": "loss : Nat -> X -> Real",
+          "classification": "STANDING",
+          "expansion": "Supplied mathematical real-loss sequence.",
+          "explicitDelta": "Zero-based full sequence instead of source finite1,...,T; not an access guarantee."
+        },
+        {
+          "binder": "t : Nat",
+          "classification": "TYPING",
+          "expansion": "Zero-based decision index, sum ranges over i<t.",
+          "explicitDelta": "Source round s=t+1 with source ell_(i+1)=loss_i; horizon-free pointwise query."
+        }
+      ],
+      "expansion": "If t=0 then some initial.val, otherwise select V of losses indexed Fin t.",
+      "wholeCarrier": "Initial feasible point returned at0. Later strict-past minimizer or none. Queries independent of previous outputs.",
+      "sourceDelta": "Zero-based pointwise Option interface, fixed tie realization and nonabsorbing failure; not a complete online execution.",
+      "uniqueExistenceRequired": false
+    }
+  ],
+  "sourceAnchorCount": 1,
+  "sourceAnchorEXCESS": [],
+  "RULED": [],
+  "sourceRepairApproved": false,
+  "libraryHeaders": [
+    {
+      "name": "cumulative_prefix",
+      "neutralId": "claim1",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "c3cf95c1c0860967a5a198f458a2484fa4514d750465afb50a3d3fe797251b76",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": []
+    },
+    {
+      "name": "select_some_spec",
+      "neutralId": "claim2",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "9dc587b24b481b1701cd47921f1ce267e50cdde11f5fc921c5666c29f76c6b97",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": [
+        {
+          "name": "h",
+          "expansion": "select V past = some p",
+          "role": "Conditional selector soundness, not source premise.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        }
+      ]
+    },
+    {
+      "name": "select_none_iff",
+      "neutralId": "claim3",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "baa5fe494c4490fa8a7354fdb7af33f4508400e8c49186affe58bf49a76547e4",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": []
+    },
+    {
+      "name": "select_congr",
+      "neutralId": "claim4",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "11582d27c589a5d15fb101afa10db5880a47d15bfa95f8fc57c570e2a5e6b796",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": [
+        {
+          "name": "h",
+          "expansion": "forall i:Fin n, forall x in V, past i x = past_prime i x",
+          "role": "Extensional library congruence.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        }
+      ]
+    },
+    {
+      "name": "select_eq_some_of_unique",
+      "neutralId": "claim5",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "d331fc91f968ffb1c5909515e6975c87fe06c9f409e34b24a6aec86df7df6658",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": [
+        {
+          "name": "hp",
+          "expansion": "p in V",
+          "role": "Named-output sufficient condition.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        },
+        {
+          "name": "hmin",
+          "expansion": "forall y in V, C(p)<=C(y)",
+          "role": "Named-output sufficient condition.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        },
+        {
+          "name": "hunique",
+          "expansion": "forall q in V, (forall y in V, C(q)<=C(y)) -> q=p",
+          "role": "Only this derived claim assumes uniqueness, not definitions.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        }
+      ]
+    },
+    {
+      "name": "predict_zero",
+      "neutralId": "claim6",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "6fdf3d4540cfe49f25e83a0ad0d1f9a3d90ab8a92918c70dc101185f3cece8b6",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": []
+    },
+    {
+      "name": "predict_some_spec",
+      "neutralId": "claim7",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "6e6db7e8554dbb1d725392da3ebc779f4816d7a5a2ca7fbe851345a59bbd71d7",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": [
+        {
+          "name": "h",
+          "expansion": "predict V initial loss t = some p",
+          "role": "Conditional soundness, no all-round existence.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        }
+      ]
+    },
+    {
+      "name": "predict_none_iff",
+      "neutralId": "claim8",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "c0ddb2bbf718e56d92ca12c7f4a03b54586b2d29a0b9c2b1673ae07d7a4aa81f",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": []
+    },
+    {
+      "name": "predict_prefix",
+      "neutralId": "claim9",
+      "level": "derived library theorem header; source credit0",
+      "headerSHA256": "a2830d1bd3b2238d3d86d2ce9edb6c5cb024016c9b963e1c9545c9660d7255e2",
+      "typingParameters": "X,n,V,past,past_prime,loss,loss_prime,t,p,x where present are carrier/history/function/index/point typing; initial:V expands as above. No hidden project-owned Prop/structure/typeclass.",
+      "logicalPremises": [
+        {
+          "name": "h",
+          "expansion": "forall s:Nat, s<t -> forall x in V, loss s x = loss_prime s x",
+          "role": "Full-function prefix equality on V, not sampled feedback.",
+          "sourceClassification": "Not a source-anchor binder. Would be EXCESS if smuggled into the cited source rule."
+        }
+      ]
+    }
+  ],
+  "expandedNotations": {
+    "IsMinOn": "forall y in V, f(p)<=f(y); does not itself assert p in V",
+    "EqOn": "forall x in V, f(x)=g(x)",
+    "Set.Nonempty": "exists x, membership",
+    "Subtype V": "underlying point plus its V membership proof",
+    "Option": "some p or none, with distinct constructors",
+    "Fin n and range t": "finite0-based indices, length n or t"
+  },
+  "definitionPolicy": "No implicit uniquely characterized source object or quotient is introduced. Relational argmin is literal. Classical Option functions are literal library constructions whose source delta is explicit; generic unique existence is neither available nor required by source tie semantics. Calling them literal source functions on every input would fail.",
+  "exampleContext": {
+    "interval": "Icc0 1",
+    "initial": "3/4 with V membership",
+    "otherInitial": "1/4 with V membership",
+    "quadraticLoss": "(x-1/4)^2 at0, (x-3/4)^2 at all positive times",
+    "changedLoss": "quadraticLoss below2, x+100 from2 onward",
+    "offDomainLoss": "quadraticLoss on interval, x+7 elsewhere",
+    "affineThenQuadratic": "x at0, x^2-x afterward",
+    "classification": "Seven canary fixtures, no independent source credit."
+  },
+  "remaining": [
+    "Actual proof bodies and axiom/dependency validation",
+    "Current compiler/full gates",
+    "Whole-original/governance",
+    "Reader/source attribution/publication"
+  ]
+}

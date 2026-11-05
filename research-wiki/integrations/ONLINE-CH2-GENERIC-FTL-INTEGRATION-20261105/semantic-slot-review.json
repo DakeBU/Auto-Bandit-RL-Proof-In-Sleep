@@ -1,0 +1,693 @@
+{
+  "schema": "abrl.semantic-slot-review.v1",
+  "verdict": "accepted-with-explicit-delta",
+  "sevenSlots": [
+    {
+      "number": 1,
+      "slot": "objects_spaces",
+      "source": "Source V subset R^d and losses V->Real.",
+      "actual": "Actual arbitrary X,V:Set X and ambient X->Real losses, Option X output.",
+      "delta": "Carrier and ambient-extension generalization, source regained by specialization/restriction; Option is library wrapper.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "number": 2,
+      "slot": "quantifiers_order",
+      "source": "Source rounds s=1,...,T, sum1,...,s-1 and arbitrary first point.",
+      "actual": "Actual pointwise t:Nat, sum0,...,t-1, arbitrary initial:V at0.",
+      "delta": "s=t+1; ell_(i+1)=loss_i. No horizon-free all-round action-existence claim.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "number": 3,
+      "slot": "assumptions_regularity",
+      "source": "Feasible initialization; surrounding OCO convex/differentiable context; no attainment/unique/oracle theorem.",
+      "actual": "No convexity/topology/boundedness/measurability/attainment premise in definitions; feasible subtype initializer.",
+      "delta": "Generic relation extends surrounding context. Derived success/EqOn/uniqueness premises not source assumptions.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "number": 4,
+      "slot": "conclusion_metric",
+      "source": "Feasible strict-past argmin, no generic regret theorem.",
+      "actual": "Literal argmin set, fixed classical some of minimizer if exists, otherwise none.",
+      "delta": "Successful source relation preserved; Option/tie consistency/failure equivalence are additional library semantics.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "number": 5,
+      "slot": "constants_normalization",
+      "source": "Unweighted sum of earlier real losses.",
+      "actual": "Finite unweighted sum, no normalization, regularization, discount or approximation.",
+      "delta": "None apart from reindexing; canary arithmetic independently checked.",
+      "verdict": "accepted"
+    },
+    {
+      "number": 6,
+      "slot": "probability_feedback_stopping",
+      "source": "Adversarial losses and some feedback, no filtration/optimizer formalism.",
+      "actual": "Supplied functions and classical choice; EqOn prefix invariance; independent pointwise queries.",
+      "delta": "No executable full-information/bandit API, measurable selector or stochastic nonanticipativity theorem. Failure is nonabsorbing, not a stopping rule.",
+      "verdict": "accepted-with-explicit-delta"
+    },
+    {
+      "number": 7,
+      "slot": "boundary_exclusions",
+      "source": "No total well-definedness or universal favorable rate.",
+      "actual": "select accepts empty V; predict requires initial:V; nonattainment yields none; ties succeed; later prefix can recover.",
+      "delta": "Explicit partial-choice library boundary, not source repair or fallback action. Source attainment/access gaps remain.",
+      "verdict": "accepted-with-explicit-delta"
+    }
+  ],
+  "neutralEquivalence": {
+    "all17ActualAndNeutralHeaderHashesRecomputed": true,
+    "all17NeutralHeadersEqualAfterBijectiveRenamingAndWhitespaceNormalization": true,
+    "bothContextsEquivalent": true,
+    "moduleTransport": "The example production-module import is removed because its same renamed definitions are explicitly supplied in Packet; all other context tokens match after renaming. This exception is explicit, not pure bytewise renaming.",
+    "identifierAndNamespaceMapsInjective": true,
+    "decoderPreservesExactMathematicalPacket": true,
+    "actualFilePrefixBinding": "Bound freeze receipt attests original head/prefix/header relationship. Actual production files not opened in Phase2; BODY gate must verify directly."
+  },
+  "decoderComparison": {
+    "fourDefinitions": "agrees",
+    "nineHeaders": "agrees",
+    "eightCompleteCanaries": "agrees",
+    "topLevelConjuncts": 36,
+    "nestedScopes": "agrees",
+    "discrepancies": []
+  },
+  "canaryReview": [
+    {
+      "name": "quadratic_trajectory",
+      "neutralId": "check1",
+      "level": "library canary only",
+      "topLevelConjunctCount": 7,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "initial=3/4",
+          "independentCheck": "Initializer definition.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "predict0=some3/4",
+          "independentCheck": "Explicit initial branch.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "predict1=some1/4",
+          "independentCheck": "Single square uniquely minimized at1/4 in[0,1].",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 4,
+          "meaning": "predict2=some1/2",
+          "independentCheck": "Two-loss objective2(x-1/2)^2+1/8.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 5,
+          "meaning": "1/4 !=1/2",
+          "independentCheck": "Distinct rationals.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 6,
+          "meaning": "q0(1/4) !=q0(3/4)",
+          "independentCheck": "Values0 and1/4.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 7,
+          "meaning": "forall t in range3, exists p: prediction=some p AND p in interval AND IsMinOn prefix at p",
+          "independentCheck": "Only0,1,2; witnesses3/4,1/4,1/2, all feasible, and all-y comparisons, including empty objective at0.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "current_future_independence",
+      "neutralId": "check2",
+      "level": "library canary only",
+      "topLevelConjunctCount": 3,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "q2(0) !=changed2(0)",
+          "independentCheck": "9/16 versus100.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "q3(0) !=changed3(0)",
+          "independentCheck": "9/16 versus100.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "predict q2=predict changed2",
+          "independentCheck": "Same indices0,1; no later-time equality claimed.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "off_domain_invariance",
+      "neutralId": "check3",
+      "level": "library canary only",
+      "topLevelConjunctCount": 5,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "2 not in interval",
+          "independentCheck": "2>1.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "q0(2) !=offDomain0(2)",
+          "independentCheck": "49/16 versus9.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "forall t, EqOn q_t offDomain_t interval",
+          "independentCheck": "Agreement for every feasible x and all t.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 4,
+          "meaning": "select Fin2 q=select Fin2 offDomain",
+          "independentCheck": "Same feasible minimizer set under fixed choice.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 5,
+          "meaning": "predict q2=predict offDomain2",
+          "independentCheck": "Same two-loss prefix on feasible set.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "tied_minimizers",
+      "neutralId": "check4",
+      "level": "library canary only",
+      "topLevelConjunctCount": 6,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "0 in interval",
+          "independentCheck": "Endpoint included.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "1 in interval",
+          "independentCheck": "Endpoint included.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "0 !=1",
+          "independentCheck": "Distinct endpoints.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 4,
+          "meaning": "IsMinOn constant-zero length1 at0",
+          "independentCheck": "Every comparison0<=0.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 5,
+          "meaning": "IsMinOn constant-zero length1 at1",
+          "independentCheck": "Every comparison0<=0.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 6,
+          "meaning": "exists p: select=some p AND p in interval AND IsMinOn zero objective at p",
+          "independentCheck": "Nonempty minimizer set equals interval; no named tied selection.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "empty_domain",
+      "neutralId": "check5",
+      "level": "library canary only",
+      "topLevelConjunctCount": 1,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "select empty length1 squared-loss=none",
+          "independentCheck": "Feasibility makes minimizer set empty, regardless of objective. No predict on empty V.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "empty_history_and_initialization",
+      "neutralId": "check6",
+      "level": "library canary only",
+      "topLevelConjunctCount": 4,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "exists p: select Fin0=some p AND p in interval",
+          "independentCheck": "Zero objective and nonempty interval; no explicit IsMinOn conjunct or named p.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "predict initial0=some3/4",
+          "independentCheck": "First initializer.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "predict otherInitial0=some1/4",
+          "independentCheck": "Second initializer.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 4,
+          "meaning": "zero-time predictions unequal",
+          "independentCheck": "Distinct some values. Does not assert positive-time difference.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "affine_nonattainment",
+      "neutralId": "check7",
+      "level": "library canary only",
+      "topLevelConjunctCount": 6,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "univ real Nonempty",
+          "independentCheck": "0 witnesses membership.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "univ real IsClosed",
+          "independentCheck": "Universal set is closed.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "univ real Convex Real",
+          "independentCheck": "Real convex combinations remain in univ.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 4,
+          "meaning": "select identity length1=none",
+          "independentCheck": "For every x, x-1 has strictly smaller loss.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 5,
+          "meaning": "predict identity0=some0",
+          "independentCheck": "Initial branch.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 6,
+          "meaning": "predict identity1=none",
+          "independentCheck": "First-prefix identity has no minimum.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    },
+    {
+      "name": "recovery_after_nonattainment",
+      "neutralId": "check8",
+      "level": "library canary only",
+      "topLevelConjunctCount": 4,
+      "conjuncts": [
+        {
+          "number": 1,
+          "meaning": "predict affineThenQuadratic1=none",
+          "independentCheck": "Prefix is x, no minimum.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 2,
+          "meaning": "predict affineThenQuadratic2=some0",
+          "independentCheck": "Prefix x+(x^2-x)=x^2 uniquely minimized at0.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 3,
+          "meaning": "IsMinOn range2 prefix on univ at0",
+          "independentCheck": "For every real y,0<=y^2.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        },
+        {
+          "number": 4,
+          "meaning": "forall x, range2 prefix=x^2",
+          "independentCheck": "Cancellation for every real x. New pointwise query, not continuation of stopped execution.",
+          "decoderComparison": "agrees",
+          "compilerStatus": "not assessed"
+        }
+      ],
+      "nestedScopesPreserved": true
+    }
+  ],
+  "perItemSevenSlotApplicability": [
+    {
+      "name": "cumulative",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library supporting source relation"
+    },
+    {
+      "name": "minimizers",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "source-anchor relational core"
+    },
+    {
+      "name": "select",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library extension realizing a source-compatible choice"
+    },
+    {
+      "name": "predict",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "one source-compatible library realization, not a second anchor"
+    },
+    {
+      "name": "cumulative_prefix",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "select_some_spec",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "select_none_iff",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "select_congr",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "select_eq_some_of_unique",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "predict_zero",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "predict_some_spec",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "predict_none_iff",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "predict_prefix",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "derived library theorem header; source credit0"
+    },
+    {
+      "name": "quadratic_trajectory",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "current_future_independence",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "off_domain_invariance",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "tied_minimizers",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "empty_domain",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "empty_history_and_initialization",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "affine_nonattainment",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    },
+    {
+      "name": "recovery_after_nonattainment",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "classification": "library canary only"
+    }
+  ],
+  "sourceAnchorCount": 1,
+  "sourceTheoremCredit": 0,
+  "blockingSignatureDefinitionRepairs": [],
+  "preportPermission": "Bounded exact port only, with explicit source delta and later gates retained.",
+  "notApproved": [
+    "BODY",
+    "Compiler/axioms/dependencies/full project",
+    "Whole-original scope",
+    "Governance",
+    "Reader/publication",
+    "Merge",
+    "Regret/attainment theorem/executable solver/full online interaction"
+  ]
+}
