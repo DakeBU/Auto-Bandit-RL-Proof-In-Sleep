@@ -1,0 +1,60 @@
+{
+  "status": "accepted locally at exact reviewed commit",
+  "commit": "c39bf303fb0f38b488b99bba0175116c770d0979",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "v10",
+    "anchor": "Algorithm 15.9 and Theorem 15.31, printed pp. 266-267 / PDF pp. 278-279",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=278"
+  },
+  "effective_target": {
+    "pointer": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json#/effective_targets/87",
+    "id": "repair:15.31-terminal",
+    "statement": "For BTRL with T>=1,proper closed lambda_t-strongly convex cumulative G_t,lambda_t>0,finite feasible played/comparator values and actual minimizers x_t, define ghost x_(T+1)=x_T. Prove R_T(u)<=psi_T(u)-psi1(x1)-sum_(t<T)lambda_t||x_t-x_(t+1)||^2/2+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1))). Optional stronger endpoint is-lambda_T||u-x_T||^2/2. Original Algorithm15.9 defines no x_(T+1); repeating last loss gives checked0<=-1/36 and is not accepted.",
+    "same_target_reference": {
+      "pointer": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json#/effective_targets/167",
+      "id": "dependency:Algorithm15.9-Theorem15.31",
+      "additional_target_count": 0
+    }
+  },
+  "proof": {
+    "module": "BanditRLProof/OnlineBTRLTerminal.lean",
+    "declarations": [
+      "BanditRL.OnlineBTRL.corrected_btrl_terminal_bound",
+      "BanditRL.OnlineBTRL.btrl_real_round_minimizer_existsUnique"
+    ],
+    "source_contract": "docs/contracts/online-btrl-terminal-repair-v1/source-contract.json",
+    "interpretation": "For an actual feasible run the two sums end before T; the sharp bound also subtracts the terminal comparator penalty. With a single round both sums are empty. The separate attainment result derives the unique feasible minimizer of each round from the carrier-relative hypotheses and positive curvature, in the specified norm. The archival statement with an undefined next iterate is retained.",
+    "canary": "Tests/OnlineBTRLTerminalCanary.lean",
+    "examples": [
+      "Repeated-last construction yields the false bound 0 <= -1/36.",
+      "Two rounds yield movement -1/2, drift -2, terminal penalty -4, sharp bound -7 and weak bound -3.",
+      "Further canaries separate constrained and ambient optima and transfer relative closedness on an open carrier."
+    ]
+  },
+  "evidence": {
+    "imported_939": "ed88d452bff17343f6af76eb2b9e778a815f737a5beafe31d6b25f4496b8c7fa",
+    "imported_scope": "27/39 exact raw fingerprints, 12 separately reconstructed via recorded module-name transport; all genuine provider and canary applications checked. The c39 successor adds only its contribution manifest.",
+    "combined": "fc2fbe65c6e238427a276de1afea0da89cc506618782ee56e1bb7d57f0483c07",
+    "combined_scope": "Six commands passed; 487 tests, seven skipped, Lean-verified site, checks, contributor and diff. Local contributor comparison base 830261ccaf84ab9be7b2a5df75199b5e0cf7488b.",
+    "reader": "98fb2b72b37f4ca502d4d2779d10c8b17e11e2c07392dd1e0c1452f1c774073f",
+    "clipboard": "e0bfeff116017d1b682b6f276fa78c1e50adb5d013f3472a0873f60e8c0a5c45",
+    "clipboard_scope": "Two actual teaching clipboard headers re-elaborated and directly assigned to imported declarations. Neither raw TYPE stream equal; independently reconstructed both directions at exactly three forallE binder-name spans per theorem. Regret header retains layout, existence header is compact.",
+    "public_source": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/c39bf303fb0f38b488b99bba0175116c770d0979/BanditRLProof/OnlineBTRLTerminal.lean",
+    "public_canary": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/c39bf303fb0f38b488b99bba0175116c770d0979/Tests/OnlineBTRLTerminalCanary.lean"
+  },
+  "publication": {
+    "baseRefOid": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+    "headRefOid": "c39bf303fb0f38b488b99bba0175116c770d0979",
+    "isDraft": true,
+    "mergeCommit": null,
+    "state": "OPEN",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/290"
+  },
+  "remaining": "Chapter 2, row 86, whole book and deployment remain outside this local adjudication.",
+  "reproduce": [
+    "lake build BanditRLProof.OnlineBTRLTerminal Tests.OnlineBTRLTerminalCanary",
+    "python tools/bandit.py check"
+  ]
+}
