@@ -126,3 +126,7 @@ state, keyboard disclosure, drawer focus and Escape, old fragments, source
 chapters, shared declaration panels, long formulas/tables, graph scope selection
 and deferred loading. The site checker validates the registry, graph memberships,
 scope consistency, old route anchors, source mappings, links, math and diagrams.
+
+## Complete Online Learning source inventory
+
+The [Chapter 2 source-target inventory](../docs/contracts/online-ch2-complete-target-freeze-v1/README.md) publishes all 73 original rows and 172 overlapping effective target records, including required dependency and repair interfaces. These are inventory records, not completed proofs. The seven curated teaching previews are not the full inventory; Chapter 2 and the whole book remain incomplete.
