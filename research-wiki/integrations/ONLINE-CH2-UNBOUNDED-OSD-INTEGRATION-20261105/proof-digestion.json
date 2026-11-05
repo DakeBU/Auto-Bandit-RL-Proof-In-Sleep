@@ -1,0 +1,77 @@
+{
+  "existingSubstrate": [
+    "BanditRL.OnlineConvex.affine_subdifferential",
+    "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+    "BanditRL.OnlineSubgradientDescent.step",
+    "BanditRL.OnlineSubgradientDescent.iterate",
+    "BanditRL.OnlineSubgradientDescent.regret",
+    "BanditRL.OnlineHuber.fullSpace",
+    "BanditRL.OnlineHuber.project_fullSpace",
+    "Mathlib sum-integral comparisons and real-power integral/derivative facts",
+    "Mathlib strict Bernoulli, concavity tangent and certified logarithm bound"
+  ],
+  "bookkeeping": [
+    "Subgradient singleton forces the actual classical selection",
+    "Full-space projection identity and affine-prefix induction",
+    "Finite EReal embedding removes infinite-value ambiguity",
+    "Signed triangular sum interchange and ceil/floor parity accounting",
+    "Guarded integral evaluation and separate upper/lower bounds on the split power",
+    "Exact horizon inequality absorbs the negative correction",
+    "Unit-direction evaluation identifies vector and scalar actual regrets"
+  ],
+  "newReusable": [
+    "BanditRL.OnlineUnboundedOSD.powerSteps",
+    "BanditRL.OnlineUnboundedOSD.phi",
+    "BanditRL.OnlineUnboundedOSD.switchSlope",
+    "BanditRL.OnlineUnboundedOSD.switchLoss",
+    "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+    "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+    "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+    "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+    "BanditRL.OnlineUnboundedOSD.phi_limit",
+    "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+    "BanditRL.OnlineUnboundedOSD.phi_range",
+    "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+    "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+    "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+    "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+  ],
+  "declarationRoles": {
+    "witnessDefinitions": [
+      "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "BanditRL.OnlineUnboundedOSD.phi",
+      "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "BanditRL.OnlineUnboundedOSD.switchLoss"
+    ],
+    "sourceAnchorComponents": [
+      "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "BanditRL.OnlineUnboundedOSD.phi_range",
+      "BanditRL.OnlineUnboundedOSD.phi_limit"
+    ],
+    "canonicalSupport": [
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+    ],
+    "testConsumers": [
+      "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound"
+    ]
+  },
+  "sourceResultCount": 1,
+  "sourceNodesAreNotLeanCounts": true,
+  "sourceCorrectionApproved": false,
+  "sourceRouteDifference": "The library reuses one affine-prefix identity and interchanges the global triangular sum instead of unrolling the two halves separately. Exact resulting parity identity and all quantitative source guards remain.",
+  "libraryAnalyticCompletions": {
+    "G-PHI-RANGE": "beta/q concavity plus strict Bernoulli",
+    "G-PHI-LIMIT": "derivative slope restricted to the left filter",
+    "G-PHI-NUMERIC": "certified log_two_lt_d9 bound"
+  },
+  "noveltyClaim": false,
+  "bodyReview": "batch41-source-review-v1/phase3-receipt.json"
+}

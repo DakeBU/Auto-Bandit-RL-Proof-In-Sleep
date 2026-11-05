@@ -175,3 +175,4 @@ import Tests.OnlineBregmanExtendedCanary
 import Tests.OnlinePrescientBregmanCanary
 import Tests.OnlinePrescientBregmanRegretCanary
 import Tests.OnlinePrescientBregmanSourceCanary
+import Tests.OnlineUnboundedOSDCanary

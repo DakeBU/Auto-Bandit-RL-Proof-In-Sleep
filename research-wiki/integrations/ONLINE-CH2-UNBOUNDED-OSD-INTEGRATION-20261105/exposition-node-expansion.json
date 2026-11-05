@@ -1,0 +1,2680 @@
+{
+  "schema": "abrl-source-lean-reader-expansion-v1",
+  "batch": 41,
+  "status": "independently-accepted-bounded-precommit-expansion",
+  "mappings": [
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "The definition only uses alpha and the current index. powerSteps_pos proves every step positive, while the source lower bound later restricts alpha to(0,1).",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "def powerSteps (α : ℝ) (t : ℕ) : ℝ := ((t + 1 : ℕ) : ℝ) ^ (-α)",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "6be344de093ccbae82ae60babc9682b82268c0f7db4a950a8fc5bdd3807dc0f8",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 15,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-OSD",
+          "sourceNodeKind": "standing_algorithm",
+          "location": {
+            "printed_page": 20,
+            "pdf_page": 32,
+            "locator": "Algorithm 2.2, require and lines 1-6"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-STATEMENT",
+          "sourceNodeKind": "source_anchor",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 complete regret assertion"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [],
+      "requiredActualValueProviders": [],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi",
+      "readerMove": "coefficient",
+      "readerProofStep": "Preserve both denominators and the exact source expression. phi_range proves the source codomain, and phi_limit proves its left limit. Total phi(1)=1 is not its left limit, so no continuity at1 is claimed.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "def phi (α : ℝ) : ℝ := 1 / (2 - α) + ((1 / 2 : ℝ) ^ (1 - α) - 1) / (1 - α)",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "a6b36ad3746f837fcf6ed6c717dce6cf04a22c61084ffac554b6e44d2d738733",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 16,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "D-PHI",
+          "sourceNodeKind": "source_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 first line"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.phi._proof_1"
+      ],
+      "requiredActualValueProviders": [],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "Split the first ceil(T/2) played losses and remaining floor(T/2) losses. The all-natural extension is only a total representation of a finite source sequence.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "def switchSlope (T t : ℕ) : ℝ := if t < (T + 1) / 2 then -1 else 1",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "3d24720a9c1b49a2aba5ec05ce9f8b3ddad672abeb4aadefbad2607185c1cea7",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 17,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "P-LOSS",
+          "sourceNodeKind": "witness_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof adversarial loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [],
+      "requiredActualValueProviders": [],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "Use one canonical witness on E. In dimension1 with v=1 this is exactly the source sequence of -x and+x; a unit vector embeds the same scalar regret into a positive-dimensional E.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "def switchLoss (T : ℕ) (v : E) (t : ℕ) (z : E) : ℝ := switchSlope T t * inner ℝ v z",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+        "signatureSHA256": "2c7d0223ec2238e1f8a070b0858478fe61249d0933e7fb9f5328d2bb97a116fa",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 19,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-AFFINE",
+          "sourceNodeKind": "standing_fact",
+          "location": {
+            "printed_page": 10,
+            "pdf_page": 22,
+            "locator": "Example 2.5"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-LOSS",
+          "sourceNodeKind": "witness_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof adversarial loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-EMBED",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First-coordinate embedding sentence"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.switchSlope"
+      ],
+      "requiredActualValueProviders": [],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "The existing affine_subdifferential theorem identifies the global source subdifferential with the singleton{a}. The actual classical selector chooses a member of that singleton. No new oracle or desired-bound premise is introduced.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem currentSubgradient_affine (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+        "signatureSHA256": "ca6e61342e0f2ef825ee80f7a5e760411b7df3ec5cf50fc4cbb1b70ae1063d8c",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 58,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-SUBGRADIENT",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 16,
+            "pdf_page": 28,
+            "locator": "Definition 2.20"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "S-SUBDIFFERENTIAL",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 17,
+            "pdf_page": 29,
+            "locator": "First paragraph"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "S-AFFINE",
+          "sourceNodeKind": "standing_fact",
+          "location": {
+            "printed_page": 10,
+            "pdf_page": 22,
+            "locator": "Example 2.5"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-FIRST-REC",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Paragraph after loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-SECOND-REC",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Paragraph before second iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineConvex.affine_subdifferential"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "Unfold the canonical step, replace its actual selector by currentSubgradient_affine, then use the existing full-space projection identity. This derives the update rather than assuming a one-step regret inequality.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem step_affine_fullSpace (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "signatureSHA256": "0306f2fe50b56901b43d75b960c8cc73a33f80f6bfd586d06fdf4c159f0404e8",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 81,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-OSD",
+          "sourceNodeKind": "standing_algorithm",
+          "location": {
+            "printed_page": 20,
+            "pdf_page": 32,
+            "locator": "Algorithm 2.2, require and lines 1-6"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-FIRST-REC",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Paragraph after loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-SECOND-REC",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Paragraph before second iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.step",
+        "BanditRL.OnlineSubgradientDescent.step._proof_1",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineHuber.project_fullSpace"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "Induct on the actual iterate definition; the successor uses step_affine_fullSpace and sum_range_succ. Only the played prefix appears. The canonical iterate_prefix theorem separately supplies information-causality semantics.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem iterate_affine_prefix (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "signatureSHA256": "37cd1b4549dcb6f19df5e59d3f780d6c51c8749616859bf7af75e70f018b6ebb",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 93,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-OSD",
+          "sourceNodeKind": "standing_algorithm",
+          "location": {
+            "printed_page": 20,
+            "pdf_page": 32,
+            "locator": "Algorithm 2.2, require and lines 1-6"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-FIRST-REC",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Paragraph after loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-FIRST-SUM",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-SECOND-REC",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Paragraph before second iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-SECOND-SUM",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Second iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.iterate.eq_2",
+        "BanditRL.OnlineSubgradientDescent.step",
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "readerMove": "affine-recursion",
+      "readerProofStep": "The natural successor has strictly positive real cast; apply Real.rpow_pos_of_pos. The source admissible alpha range is imposed by later theorems, not hidden here.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem powerSteps_pos (α : ℝ) (t : ℕ) :\n    0 < powerSteps α t",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "8bda9262833aaea54f26da8e32bcf078873ad4b208eaa3ae3073b2224bd946e4",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 109,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-OSD",
+          "sourceNodeKind": "standing_algorithm",
+          "location": {
+            "printed_page": 20,
+            "pdf_page": 32,
+            "locator": "Algorithm 2.2, require and lines 1-6"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-STATEMENT",
+          "sourceNodeKind": "source_anchor",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 complete regret assertion"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-PARITY",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Opening sentence"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps"
+      ],
+      "requiredActualValueProviders": [
+        "Real.rpow_pos_of_pos"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "readerMove": "coefficient",
+      "readerProofStep": "Differentiate (1/2)^(1-z) at1 and use HasDerivAt.tendsto_slope on the left punctured filter. The first rational term tends to1; log(1/2)=-log2 gives the limit. The verified mathlib bound log_two_lt_d9 proves the numerical inequality.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem phi_limit :\n    Tendsto phi (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "fc1f43a776fa22903c2841b99b552ba22397774cd70f7d6de14d9dfa25754b46",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 118,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "A-LIMIT",
+          "sourceNodeKind": "source_assertion",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 final sentence, limit"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "A-NUMERIC",
+          "sourceNodeKind": "source_assertion",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 final sentence, numerical comparison"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "G-PHI-LIMIT",
+          "sourceNodeKind": "SOURCE_GAP",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 assertion and absence of corresponding step in proof on pp52-53"
+          },
+          "relationship": "Source asserts the supplement without a displayed derivation; independently reviewed compiled library proof completes it. Source gap remains part of the source topology and is not a printed proof attribution."
+        },
+        {
+          "id": "G-PHI-NUMERIC",
+          "sourceNodeKind": "SOURCE_GAP",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 assertion and absence of corresponding step in proof on pp52-53"
+          },
+          "relationship": "Source asserts the supplement without a displayed derivation; independently reviewed compiled library proof completes it. Source gap remains part of the source topology and is not a printed proof attribution."
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.phi"
+      ],
+      "requiredActualValueProviders": [
+        "Real.log_two_lt_d9"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "readerMove": "unit-witness",
+      "readerProofStep": "Affine convex-combination equality proves convexity. abs(c_t)=1 and Cauchy-Schwarz with norm(v)=1 prove LipschitzWith1. Regularity is produced for the actual witness, not assumed in the lower bound.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem switching_loss_regular (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (switchLoss T v t) ∧ LipschitzWith 1 (switchLoss T v t)",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "signatureSHA256": "4be276f0357822f4daea52582706b257a3ab233fceff422d1c955af2311d048a",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 152,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-AFFINE",
+          "sourceNodeKind": "standing_fact",
+          "location": {
+            "printed_page": 10,
+            "pdf_page": 22,
+            "locator": "Example 2.5"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "S-CONVEX-FUNCTION",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 10,
+            "pdf_page": 22,
+            "locator": "Definition 2.3"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "S-LIPSCHITZ",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 19,
+            "pdf_page": 31,
+            "locator": "Definition 2.29"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-ADMISSIBLE",
+          "sourceNodeKind": "implicit_proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Witness display as the existential witness in Theorem 5.4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope"
+      ],
+      "requiredActualValueProviders": [
+        "abs_real_inner_le_norm"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "readerMove": "coefficient",
+      "readerProofStep": "Put beta=1-alpha and q(z)=(1+z)2^{-z}. Strict Bernoulli yields q(beta)>1. Two explicit derivatives show q concave on[0,1], hence its tangent at0 bounds q(beta)-1. Divide by beta(1+beta)>0 to obtain the strict source upper bound.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem phi_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < phi α ∧ phi α < 1 - Real.log 2",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "c4ef1eb5123d466924e28b92472e0d8446f29d10df12a680a37670723809b848",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 180,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "D-PHI",
+          "sourceNodeKind": "source_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 first line"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "A-PHI-RANGE",
+          "sourceNodeKind": "source_assertion",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 declared function type"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "G-PHI-RANGE",
+          "sourceNodeKind": "SOURCE_GAP",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 assertion and absence of corresponding step in proof on pp52-53"
+          },
+          "relationship": "Source asserts the supplement without a displayed derivation; independently reviewed compiled library proof completes it. Source gap remains part of the source topology and is not a printed proof attribution."
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.phi._proof_1"
+      ],
+      "requiredActualValueProviders": [
+        "rpow_one_add_lt_one_add_mul_self"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "readerMove": "exact-regret",
+      "readerProofStep": "Unroll the actual affine run, evaluate each pre-update state, and interchange the finite strict triangular sums using Finset.sum_Ico_Ico_comm'. Split at m, count the suffix signs and factor the polynomial steps. This is the source proof identity for even and odd horizons.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem switching_scalar_regret_identity (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), powerSteps α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, powerSteps α i)",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "3bae3780f549b3979b5ea9a3ba57943ff9ed3970ae766fd529180219f0edb215",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 246,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-REGRET",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 8,
+            "pdf_page": 20,
+            "locator": "Regret_T(u) display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-LOSS",
+          "sourceNodeKind": "witness_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof adversarial loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-FIRST-SUM",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-SECOND-SUM",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Second iterate display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "R-SPLIT",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Regret display row 1"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "R-SUBSTITUTE",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Regret display row 2"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "R-COUNT",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Regret display row 3"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "R-REARRANGE",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Regret display row 4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity._proof_1_1",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity._proof_1_2"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "readerMove": "integral-threshold",
+      "readerProofStep": "Start from the exact scalar identity. Monotone/antitone sum-integral comparisons and integral_rpow give R>=-T^(1-alpha)/(1-alpha)+phi(alpha)T^(2-alpha). Control ceil/floor parity without discarding odd horizons. The proved horizon threshold absorbs the negative term into half the main coefficient.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem switching_scalar_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "signatureSHA256": "19f41dd7b52f57ac0fa6fdae452d4532f625c4003b00e0ac89999bad179d6f1b",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 364,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "P-T2",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof sentence: condition on T implies T>=2"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "R-REARRANGE",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Regret display row 4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-PARITY",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Opening sentence"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-BOUNDS",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "First lower-bound display row"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-EVALUATE",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Lower-bound display row 2"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-HALF",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Lower-bound display row 3"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-COARSE",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Lower-bound display row 4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-PHI",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Lower-bound display last row, equality"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-ABSORB",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Lower-bound display last row, final inequality"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-ONE-DIMENSION",
+          "sourceNodeKind": "case_conclusion",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Proof conclusion specialized to initial d=1 reduction"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.phi._proof_1",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_1",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_2",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_3",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_4",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_5",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_6",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_7",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound._proof_1_8",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "readerMove": "unit-witness",
+      "readerProofStep": "Use iterate_affine_prefix to identify the actual vector states with the scalar coefficient times v. Unit inner-product evaluation identifies the same canonical regrets. Invoke switching_scalar_lower_bound; no arbitrary prescribed vector trajectory is substituted.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem switching_vector_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n        (fun t z => (switchLoss T v t z : EReal)) 0 0 T",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "signatureSHA256": "e9583dae5730601e696a8c745c9d3f40fcf297efde749c96cc32e9d3673bc55b",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 496,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "P-DIMENSION",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof first two sentences"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-EMBED",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First-coordinate embedding sentence"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-ONE-DIMENSION",
+          "sourceNodeKind": "case_conclusion",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Proof conclusion specialized to initial d=1 reduction"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-HIGH-DIMENSION",
+          "sourceNodeKind": "case_conclusion",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First-coordinate embedding used to discharge d>=2 case"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound._simp_1_2"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "readerMove": "unit-witness",
+      "readerProofStep": "Positive dimension supplies a unit vector using exists_norm_eq. Choose the actual switching loss witness. switching_loss_regular proves the required global regularity and switching_vector_lower_bound proves the actual run's regret. The separate phi_range and phi_limit terminals preserve the complete printed theorem content.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "signatureSHA256": "9ac005f6995ec54a3985a5dda86fd28c5a1c08db82ce01ecf95983aaab356f4d",
+        "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+        "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "fullCanaryConjuncts": null,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+            "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+            "proposedPublicAlias": "binder-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+          "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentSourceLine": 542,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "F-CH2",
+          "sourceNodeKind": "forward_reference",
+          "location": {
+            "printed_page": 14,
+            "pdf_page": 26,
+            "locator": "Fourth bullet after Theorem 2.13 proof"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-STATEMENT",
+          "sourceNodeKind": "source_anchor",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 complete regret assertion"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-DIMENSION",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof first two sentences"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-LOSS",
+          "sourceNodeKind": "witness_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof adversarial loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-ADMISSIBLE",
+          "sourceNodeKind": "implicit_proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Witness display as the existential witness in Theorem 5.4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-EMBED",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First-coordinate embedding sentence"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "T-HIGH-DIMENSION",
+          "sourceNodeKind": "case_conclusion",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First-coordinate embedding used to discharge d>=2 case"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "exists_norm_eq"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "readerMove": "diagnostics",
+      "readerProofStep": "Retain every 7/9conjunct, with scalar regret1 and vector regret>=256/15>17. The two horizons define different switching streams; five selected proof branches retain the intended producer constants.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem scalar_actual_two_rounds :\n    powerSteps (1/2) 0 = 1 ∧\n    0 < powerSteps (1/2) 1 ∧\n    powerSteps (1/2) 1 < powerSteps (1/2) 0 ∧\n    scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧\n    scalarRun 2 2 = 1 - (2 : ℝ) ^ (-(1/2 : ℝ)) ∧\n    scalarRegret 2 = 1",
+        "context": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+        "signatureSHA256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5",
+        "sourceModule": "Tests/OnlineUnboundedOSDCanary.lean",
+        "sourceModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "fullCanaryConjuncts": 7,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-original-frozen-statement-audit-v1.json",
+            "sha256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+            "proposedPublicAlias": "statement-audit.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-statement-audit.json",
+          "publicSHA256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "contextArtifact": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\original-canary-prefix.lean",
+            "sha256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+            "proposedPublicAlias": "original-canary-prefix.lean",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-canary-prefix.lean",
+          "publicSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "contextMeaning": "Exact original imports, scopes, namespace, and all five aliases before the first canary. Both declarations share these definitions; the second namespace block reopens the same namespace.",
+        "contextSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+        "prefixBindingEvidence": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\canary-prefix-binding.json",
+            "sha256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+            "proposedPublicAlias": "canary-prefix-binding.json",
+            "publicAliasMaterialized": false,
+            "usage": "Existing private path/hash is authoritative; public alias is planned only."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/canary-prefix-binding.json",
+          "publicSHA256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "currentSourceLine": 22,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "S-GAME",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 8,
+            "pdf_page": 20,
+            "locator": "Section 2.1 game bullets"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "S-REGRET",
+          "sourceNodeKind": "standing_definition",
+          "location": {
+            "printed_page": 8,
+            "pdf_page": 20,
+            "locator": "Regret_T(u) display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-LOSS",
+          "sourceNodeKind": "witness_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof adversarial loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "R-REARRANGE",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Regret display row 4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun._proof_1"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "selectedNumericBranchEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\numeric-branches.json",
+          "sha256": "8b4f3277c27aed5058d5578e03e5042d9f56d9e7c0cd6854bf1d31d8fd6e2789",
+          "proposedPublicAlias": "numeric-proof-consumption.json",
+          "publicAliasMaterialized": false,
+          "usage": "Existing private path/hash is authoritative; public alias is planned only."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/numeric-proof-consumption.json",
+        "publicSHA256": "9680b0c9076ab343ac4fdc6771f7bdc0a63484f1cd3e149590ed3ed048ecb2e9",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    },
+    {
+      "declaration": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+      "readerMove": "diagnostics",
+      "readerProofStep": "Retain every 7/9conjunct, with scalar regret1 and vector regret>=256/15>17. The two horizons define different switching streams; five selected proof branches retain the intended producer constants.",
+      "requiredGuardEnvelope": {
+        "exactStatementOrDefinition": "theorem finiteDim_source_lower_bound :\n    ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧\n    (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧\n      LipschitzWith 1 (switchLoss 64 direction t)) ∧\n    (1/15 : ℝ) ≤ phi (1/2) ∧\n    2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧\n    (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧\n    (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧\n    (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ,\n      (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n          (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+        "context": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+        "signatureSHA256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee",
+        "sourceModule": "Tests/OnlineUnboundedOSDCanary.lean",
+        "sourceModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "fullCanaryConjuncts": 9,
+        "definitionScope": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+            "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+            "proposedPublicAlias": "definition-body-review.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+          "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "binderReview": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-original-frozen-statement-audit-v1.json",
+            "sha256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+            "proposedPublicAlias": "statement-audit.json",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-statement-audit.json",
+          "publicSHA256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "contextArtifact": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\original-canary-prefix.lean",
+            "sha256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+            "proposedPublicAlias": "original-canary-prefix.lean",
+            "publicAliasMaterialized": false,
+            "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-canary-prefix.lean",
+          "publicSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "contextMeaning": "Exact original imports, scopes, namespace, and all five aliases before the first canary. Both declarations share these definitions; the second namespace block reopens the same namespace.",
+        "contextSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+        "prefixBindingEvidence": {
+          "originalPrivateEvidence": {
+            "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\canary-prefix-binding.json",
+            "sha256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+            "proposedPublicAlias": "canary-prefix-binding.json",
+            "publicAliasMaterialized": false,
+            "usage": "Existing private path/hash is authoritative; public alias is planned only."
+          },
+          "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/canary-prefix-binding.json",
+          "publicSHA256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+          "publicAliasMaterialized": true,
+          "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+        },
+        "originalReviewedModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "currentSourceLine": 68,
+        "commentSuccessorEvidence": "comment-successor-bindings.json"
+      },
+      "sourceLinks": [
+        {
+          "id": "T-STATEMENT",
+          "sourceNodeKind": "source_anchor",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Theorem 5.4 complete regret assertion"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-LOSS",
+          "sourceNodeKind": "witness_definition",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Proof adversarial loss-sequence display"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-ADMISSIBLE",
+          "sourceNodeKind": "implicit_proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "Witness display as the existential witness in Theorem 5.4"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "I-ABSORB",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 53,
+            "pdf_page": 65,
+            "locator": "Lower-bound display last row, final inequality"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        },
+        {
+          "id": "P-EMBED",
+          "sourceNodeKind": "proof_step",
+          "location": {
+            "printed_page": 52,
+            "pdf_page": 64,
+            "locator": "First-coordinate embedding sentence"
+          },
+          "relationship": "source-context-or-proof-alignment-not-a-compiled-edge"
+        }
+      ],
+      "leanValueProviders": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.phi._proof_1",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+        "BanditRL.OnlineUnboundedOSDCanary.direction",
+        "BanditRL.OnlineUnboundedOSDCanary.direction._proof_1",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun._proof_1",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRun",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRun._proof_1"
+      ],
+      "requiredActualValueProviders": [
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "allDirectDependencies": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+          "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+          "proposedPublicAlias": "compiled-dependencies.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+        "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "remainingBoundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "directPresenceIsNotIndispensability": true,
+      "proofBodyEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+          "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+          "proposedPublicAlias": "proof-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+        "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "sourceProofCorrespondence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+          "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+          "proposedPublicAlias": "source-proof-correspondence.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+        "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "selectedNumericBranchEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\numeric-branches.json",
+          "sha256": "8b4f3277c27aed5058d5578e03e5042d9f56d9e7c0cd6854bf1d31d8fd6e2789",
+          "proposedPublicAlias": "numeric-proof-consumption.json",
+          "publicAliasMaterialized": false,
+          "usage": "Existing private path/hash is authoritative; public alias is planned only."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/numeric-proof-consumption.json",
+        "publicSHA256": "9680b0c9076ab343ac4fdc6771f7bdc0a63484f1cd3e149590ed3ed048ecb2e9",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      }
+    }
+  ],
+  "sourceExpansionNodeIDs": [
+    "A-LIMIT",
+    "A-NUMERIC",
+    "A-PHI-RANGE",
+    "D-PHI",
+    "F-CH2",
+    "G-PHI-LIMIT",
+    "G-PHI-NUMERIC",
+    "G-PHI-RANGE",
+    "I-ABSORB",
+    "I-BOUNDS",
+    "I-COARSE",
+    "I-EVALUATE",
+    "I-HALF",
+    "I-PARITY",
+    "I-PHI",
+    "P-ADMISSIBLE",
+    "P-DIMENSION",
+    "P-EMBED",
+    "P-FIRST-REC",
+    "P-FIRST-SUM",
+    "P-LOSS",
+    "P-SECOND-REC",
+    "P-SECOND-SUM",
+    "P-T2",
+    "R-COUNT",
+    "R-REARRANGE",
+    "R-SPLIT",
+    "R-SUBSTITUTE",
+    "S-AFFINE",
+    "S-CONVEX-FUNCTION",
+    "S-GAME",
+    "S-LIPSCHITZ",
+    "S-OSD",
+    "S-REGRET",
+    "S-SUBDIFFERENTIAL",
+    "S-SUBGRADIENT",
+    "T-HIGH-DIMENSION",
+    "T-ONE-DIMENSION",
+    "T-STATEMENT"
+  ],
+  "additionalSourceContextNodes": [
+    {
+      "id": "S-ADVERSARY",
+      "kind": "standing_context",
+      "disposition": "Retained source context; no claim of a direct compiled dependency."
+    },
+    {
+      "id": "S-CONVEX-SET",
+      "kind": "standing_definition",
+      "disposition": "Retained source context; no claim of a direct compiled dependency."
+    },
+    {
+      "id": "S-DOMAIN",
+      "kind": "standing_definition",
+      "disposition": "Retained source context; no claim of a direct compiled dependency."
+    },
+    {
+      "id": "S-PROPER",
+      "kind": "standing_definition",
+      "disposition": "Retained source context; no claim of a direct compiled dependency."
+    },
+    {
+      "id": "MOTIVATION",
+      "kind": "context",
+      "disposition": "Retained source context; no claim of a direct compiled dependency."
+    },
+    {
+      "id": "DISCUSSION",
+      "kind": "interpretation",
+      "disposition": "Retained source context; no claim of a direct compiled dependency."
+    }
+  ],
+  "sourceGapsStillIdentified": true,
+  "libraryGapCompletionReviewPending": false,
+  "renderedExpositionAccepted": true,
+  "assumptionsPreserved": true,
+  "boundaryPreserved": true,
+  "supersedes": "batch41-exposition-expansion-draft-v2/exposition-node-expansion.json",
+  "libraryGapCompletionAccepted": true,
+  "evidenceReferences": {
+    "binder": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+        "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "proposedPublicAlias": "binder-review.json",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+      "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "definition": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+        "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+        "proposedPublicAlias": "definition-body-review.json",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+      "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "statement": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-original-frozen-statement-audit-v1.json",
+        "sha256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+        "proposedPublicAlias": "statement-audit.json",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-statement-audit.json",
+      "publicSHA256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "compiled": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\actual-dependencies.json",
+        "sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+        "proposedPublicAlias": "compiled-dependencies.json",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/compiled-dependencies.json",
+      "publicSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "body": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\proof-body-review.json",
+        "sha256": "3e6df0fe6f9a7591d14df97e679619b8ee648c6d155c78a05d8e1f6eb2f2ef04",
+        "proposedPublicAlias": "proof-body-review.json",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/proof-body-review.json",
+      "publicSHA256": "c90038df6ee44ddd67961a146e09e678b8f9af3b71df1df2c278064d49636aac",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "correspondence": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\source-proof-correspondence.json",
+        "sha256": "d5db1c025b79e370fd41de812450918a33754af183145cd5037d791af354221f",
+        "proposedPublicAlias": "source-proof-correspondence.json",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-proof-correspondence.json",
+      "publicSHA256": "eaf72b14a5b6da9ed3dfecdd0a313ef0936084d7592fd4e151e17ed30d47e55f",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "canaryPrefix": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\original-canary-prefix.lean",
+        "sha256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+        "proposedPublicAlias": "original-canary-prefix.lean",
+        "publicAliasMaterialized": false,
+        "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-canary-prefix.lean",
+      "publicSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "numericBranches": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-compiled-probes-v1\\numeric-branches.json",
+        "sha256": "8b4f3277c27aed5058d5578e03e5042d9f56d9e7c0cd6854bf1d31d8fd6e2789",
+        "proposedPublicAlias": "numeric-proof-consumption.json",
+        "publicAliasMaterialized": false,
+        "usage": "Existing private path/hash is authoritative; public alias is planned only."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/numeric-proof-consumption.json",
+      "publicSHA256": "9680b0c9076ab343ac4fdc6771f7bdc0a63484f1cd3e149590ed3ed048ecb2e9",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "canaryPrefixBinding": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\canary-prefix-binding.json",
+        "sha256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+        "proposedPublicAlias": "canary-prefix-binding.json",
+        "publicAliasMaterialized": false,
+        "usage": "Existing private path/hash is authoritative; public alias is planned only."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/canary-prefix-binding.json",
+      "publicSHA256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    },
+    "bodyReceipt": {
+      "originalPrivateEvidence": {
+        "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\phase3-receipt.json",
+        "sha256": "faa67f743d2b6847d6fb667d26d4571818b876d34d89b5f17f7fb17402a3c853",
+        "proposedPublicAlias": "source-body-receipt.json",
+        "publicAliasMaterialized": false,
+        "usage": "Existing private path/hash is authoritative; public alias is planned only."
+      },
+      "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/source-body-receipt.json",
+      "publicSHA256": "f70f104063b3eef9609709155f9bc2ca307c027a9e5f5b9945a97603b17bd053",
+      "publicAliasMaterialized": true,
+      "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+    }
+  },
+  "sourceGapCompletionScope": "Three source assertions receive reviewed compiled library proofs. No claim that those derivations were printed by the source.",
+  "edgeDirections": {
+    "source": "producer-to-consumer hyperedge",
+    "compiled": "consumer-to-referenced-constant",
+    "teaching": "conceptual grouping with named expansion; not a compiled edge"
+  },
+  "readerProposal": "batch41-reader-proposal-v2/proposal.json",
+  "readerProposalSHA256": "df69e9d45da4904ee6f0efbba55f966728f9910156e8c9938c69fdbdb136aadf",
+  "privateExpansionReview": "reader-prose-review.json",
+  "currentCommentValidation": "comment-validation.json",
+  "originalReviewedSourceGraphSHA256": "d66e76eb01db474f958b09482d18f4571bf96764edf8d549fb9d0209accb66b3",
+  "publicSourceGraphSHA256": "55bb9e325f4494389075dcf6c816898522a8a11bf61aaaefc9e349112d4243a7",
+  "originalReviewedCompiledGraphSHA256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+  "publicCompiledGraphSHA256": "18aeae08a0612c303d0fa88f76232c4923f1fc92f7fe3d4bff807dcb6e169994",
+  "originalReviewedBodyReceiptSHA256": "faa67f743d2b6847d6fb667d26d4571818b876d34d89b5f17f7fb17402a3c853",
+  "publicBodyReceiptSHA256": "f70f104063b3eef9609709155f9bc2ca307c027a9e5f5b9945a97603b17bd053",
+  "currentStatementAudit": {
+    "path": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/statement-audit.json",
+    "sha256": "9844460fc6602280233aba12606acbf5c21643630ab77ee5d9c561f3cb33556f"
+  },
+  "currentCommentSuccessor": {
+    "path": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/comment-successor-bindings.json",
+    "sha256": "523dbfdb5c3b79a2492d07f389de9361667d66f635df111e613e6c24d5492c5a"
+  },
+  "historicalRenderedExpositionAccepted": false,
+  "historicalExpansionStatus": "accepted-private-expansion-materialized-public-successor-awaiting-review",
+  "renderedReview": "rendered-exposition-review.json",
+  "renderedAcceptanceScope": "Bounded precommit desktop/mobile exposition only; final committed source links, full final Exposition Seal, whole-candidate integration and purification remain pending.",
+  "committedSourceLinksAccepted": false,
+  "finalExpositionSealAccepted": false
+}

@@ -1,0 +1,250 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105",
+  "route": "online-learning / Chapter2 forward dependency / Theorem5.4 unbounded OSD",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "A Modern Introduction to Online Learning",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona; Theorem5.4 printed52-53/PDF64-65 and Chapter2 required forward reference printed14/PDF26.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate original PR214 exact four definitions, eleven proofs and complete7/9conjunct canaries. Preserve all582original paths and12ignored terminal files; one printed result with three source-facing components.",
+  "affected_files": [
+    "BanditRLProof/OnlineUnboundedOSD.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineUnboundedOSD.powerSteps",
+    "BanditRL.OnlineUnboundedOSD.phi",
+    "BanditRL.OnlineUnboundedOSD.switchSlope",
+    "BanditRL.OnlineUnboundedOSD.switchLoss",
+    "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+    "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+    "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+    "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+    "BanditRL.OnlineUnboundedOSD.phi_limit",
+    "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+    "BanditRL.OnlineUnboundedOSD.phi_range",
+    "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+    "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+    "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+    "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current-main declaration and memory searches and pinned Mathlib, recorded in research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/retrieval-process-memory.json"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineConvex.affine_subdifferential",
+      "BanditRL.OnlineHuber.fullSpace",
+      "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+      "BanditRL.OnlineSubgradientDescent.iterate",
+      "BanditRL.OnlineSubgradientDescent.regret"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "BanditRL.OnlineUnboundedOSD.phi",
+      "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "BanditRL.OnlineUnboundedOSD.phi_range",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+      "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound"
+    ],
+    "planned_consumers": [
+      "Later original stacked PRs and Chapter2 reconciliation; not accepted by this integration."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Actual shared learner singleton subgradient, full-space projection and finite affine losses support the scalar signed sum and unit-vector lift. Original formal bodies are unchanged."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "integration-formalizer",
+    "blind_decoder": "independent-batch41-source-withheld-decoder",
+    "source_reviewer": "independent-batch41-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open. Exact source restrictions and total phi boundary in research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/semantic-slot-review.json."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The same fixed learner scalar-to-vector witness lift is not a cross-model certified functor.",
+    "focus_targets": [
+      "online-ogd"
+    ],
+    "visual_review": "Bounded rendered chapter/module exposition accepted.15production notes,17packetguards,3240direct TYPE/VALUE presences,25required VALUEpairs and5selected numeric branches remain distinct from source topology and conceptual teaching groups. Final commit source links pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated:19original operations,15notes,1source card,1reviewed parent blocker clarification.",
+    "banditrlwiki": "updated: research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105 retains original contracts and concrete current successors.",
+    "results_ledger": "no-change-with-reason: one printed result, not chapter or whole-book completion.",
+    "roadmap": "no-change-with-reason: all8forward containers require separate reconciliation;5historical byte obligations remain OPEN.",
+    "website_surfaces": [
+      "online-ogd reader",
+      "OnlineUnboundedOSD module and catalogue",
+      "compiled Lean graph"
+    ]
+  },
+  "truth_boundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+  "verification": {
+    "focused_checks": [
+      "Current comment successor production and complete tests compiled;17public probes,13explicit applications,25VALUEpairs,5selected conjunction branches and30axiom checks passed.",
+      "Tests/OnlineUnboundedOSDCanary.lean and Tests.lean are included in the seven-source bindings; affected_files covers the five protected paths."
+    ],
+    "bandit_check": "Combined BanditRLProof root and Tests9289jobs passed. Complete staged harness passed483Python tests with7skips; nine non-site gates passed before one card provenance enum and five evidence metadata binding changes. No Lean/prose/formula changes; final clean-commit gates remain required.",
+    "site_build": "Fresh --lean-verified build passed after the actual combined Lean/harness gate and independently reviewed one-enum compatibility fix.",
+    "site_check": "Generated-site link/mapping/formula checks and independent bounded desktop/mobile rendered exposition accepted. Final committed source links and live release remain pending.",
+    "independent_review": "Independent source topology, blind reconstruction, binder/definition/BODY,582path conservation,17guarded expansions, portable public packet and bounded rendered exposition accepted. Final successor scope review, committed gates/CI/main/live and purification lifecycle remain separate."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained in immutable PR214 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "pending",
+      "reason": "582original paths and12ignored files retained. Whole-original final candidate acceptance pending. Historical7byte obligations preserved,2exact versions recovered and5OPEN.",
+      "promoted_fragments": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.phi_limit",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "affine-subgradient-fullspace-recursion-signed-sum-integral-threshold-unit-vector-lift"
+      ],
+      "expected_information_gain": "One preserved proof route with independent source and reader review.",
+      "shared_verified_context_digest": "PinnedPDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; acceptedmain fd8f9cac006e27c47cba9b9b20530556c44ec23f"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Actual affine learner recursion, exact signed sum, analytic coefficient and threshold, vector embedding.",
+      "selection_reason": "No competing parallel proof construction routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "accepted",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/rendered-exposition-review.json records bounded precommit desktop/mobile acceptance. Final clean-commit source links, CI and post-integration PURIFIED acceptance remain pending.",
+      "source_expansion_nodes": [
+        "A-LIMIT",
+        "A-NUMERIC",
+        "A-PHI-RANGE",
+        "D-PHI",
+        "F-CH2",
+        "G-PHI-LIMIT",
+        "G-PHI-NUMERIC",
+        "G-PHI-RANGE",
+        "I-ABSORB",
+        "I-BOUNDS",
+        "I-COARSE",
+        "I-EVALUATE",
+        "I-HALF",
+        "I-PARITY",
+        "I-PHI",
+        "P-ADMISSIBLE",
+        "P-DIMENSION",
+        "P-EMBED",
+        "P-FIRST-REC",
+        "P-FIRST-SUM",
+        "P-LOSS",
+        "P-SECOND-REC",
+        "P-SECOND-SUM",
+        "P-T2",
+        "R-COUNT",
+        "R-REARRANGE",
+        "R-SPLIT",
+        "R-SUBSTITUTE",
+        "S-AFFINE",
+        "S-CONVEX-FUNCTION",
+        "S-GAME",
+        "S-LIPSCHITZ",
+        "S-OSD",
+        "S-REGRET",
+        "S-SUBDIFFERENTIAL",
+        "S-SUBGRADIENT",
+        "T-HIGH-DIMENSION",
+        "T-ONE-DIMENSION",
+        "T-STATEMENT"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.phi_limit",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+        "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+        "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

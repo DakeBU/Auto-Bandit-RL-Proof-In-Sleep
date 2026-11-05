@@ -1,0 +1,411 @@
+{
+  "schema": "abrl-neutral-semantic-reconstruction/v1",
+  "input": {
+    "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-input-v1\\packet.json",
+    "sha256": "d2c9388d6e4248a2d76e3353d765c0eced4b454e368d111285744fae35ed7fe4"
+  },
+  "scope": "Four definitions, eleven typed targets, and all supplied supporting API definitions.",
+  "notation": {
+    "R": "real numbers",
+    "N": "natural numbers starting at zero",
+    "C(alpha)": "coefficient alpha",
+    "m": "(T+1) div 2 = ceil(T/2)",
+    "n": "T div 2 = floor(T/2)",
+    "real(T)": "natural-to-real cast",
+    "eta*a": "real scalar multiplication"
+  },
+  "seven_slot_keys": [
+    "objects_spaces",
+    "quantifiers",
+    "assumptions",
+    "conclusion",
+    "constants_indexing",
+    "probability_feedback",
+    "boundaries"
+  ],
+  "items": [
+    {
+      "id": "definition_schedule",
+      "kind": "definition",
+      "title": "Power schedule",
+      "slots": {
+        "objects_spaces": "schedule : R -> N -> R.",
+        "quantifiers": "For every real alpha and natural t.",
+        "assumptions": "No restriction on alpha.",
+        "conclusion": "schedule(alpha,t) = (t+1)^(-alpha), with real exponentiation after casting t+1 from N to R.",
+        "constants_indexing": "t is zero-based; schedule(alpha,0)=1. The power base is always strictly positive.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "Defined for every real alpha and every natural t. Decay is not asserted for arbitrary alpha."
+      }
+    },
+    {
+      "id": "definition_coefficient",
+      "kind": "definition",
+      "title": "Coefficient",
+      "slots": {
+        "objects_spaces": "coefficient : R -> R.",
+        "quantifiers": "For every real alpha.",
+        "assumptions": "No restriction in the definition.",
+        "conclusion": "C(alpha) = 1/(2-alpha) + ((1/2)^(1-alpha)-1)/(1-alpha).",
+        "constants_indexing": "The constants 1, 2, and 1/2 and the exponent 1-alpha are real.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The Lean expression uses total real division. Positivity and the stated upper bound are asserted only for 0<alpha<1. The left limit at 1 is not a value assertion at 1; under Lean division-by-zero convention C(1)=1."
+      }
+    },
+    {
+      "id": "definition_signPattern",
+      "kind": "definition",
+      "title": "Horizon-dependent sign sequence",
+      "slots": {
+        "objects_spaces": "signPattern : N -> N -> R.",
+        "quantifiers": "For every natural horizon T and every natural t.",
+        "assumptions": "No horizon restriction.",
+        "conclusion": "With m=(T+1) div 2, signPattern(T,t)=-1 if t<m and +1 otherwise.",
+        "constants_indexing": "div is natural-number division. m=ceil(T/2), and n=T div 2=floor(T/2). Over t=0,...,T-1 there are m negative signs and n positive signs.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The sequence is defined beyond the horizon. T=0 gives m=0 and signPattern(0,t)=+1 for every natural t. The switch index t=m has sign +1."
+      }
+    },
+    {
+      "id": "definition_payoff",
+      "kind": "definition",
+      "title": "Signed linear payoff",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. payoff : N -> E -> N -> E -> R.",
+        "quantifiers": "For every T, v, t, and z of the indicated types.",
+        "assumptions": "No unit-norm or finite-dimensional assumption in the definition.",
+        "conclusion": "payoff(T,v,t,z)=signPattern(T,t) * <v,z>_R.",
+        "constants_indexing": "The scalar sign multiplies the real inner product. T determines the switch and t selects the round.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "Globally real-valued on E. The name payoff does not assert a maximization objective; the regret API subtracts comparator loss from played loss."
+      }
+    },
+    {
+      "id": "claim1",
+      "kind": "target",
+      "title": "Selected subgradient of an affine function",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. a,x in E; b in R; f(z)=<a,z>+b embedded into EReal.",
+        "quantifiers": "For every a, x, and b.",
+        "assumptions": "No finite-dimensional assumption in this target header.",
+        "conclusion": "currentSubgradient(f,x)=a.",
+        "constants_indexing": "The constant offset b and evaluation point x do not affect the selected subgradient.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "An exact identity for this finite affine function. It is not a theorem that arbitrary functions have nonempty subdifferentials."
+      },
+      "supplied_context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+      "supplied_typed_header": "theorem claim1 (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a"
+    },
+    {
+      "id": "claim2",
+      "kind": "target",
+      "title": "Full-space affine update",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. eta,b in R and a,x in E.",
+        "quantifiers": "For every eta, a, x, b.",
+        "assumptions": "Finite dimensionality; no sign restriction on eta.",
+        "conclusion": "step(fullSpace,eta,z |-> EReal(<a,z>+b),x)=x-eta*a.",
+        "constants_indexing": "eta*a denotes real scalar multiplication. fullSpace has carrier all of E.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "No bounded feasible set and no step-size positivity assumption. This specializes the supplied step API to affine finite losses."
+      },
+      "supplied_context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "supplied_typed_header": "theorem claim2 (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a"
+    },
+    {
+      "id": "claim3",
+      "kind": "target",
+      "title": "Closed-form affine iterates",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. eta:N->R, a:N->E, b:N->R, x0 in E, t in N.",
+        "quantifiers": "For every sequence eta, a, b, every initial x0, and every natural t.",
+        "assumptions": "Finite dimensionality; no regularity or sign restriction on the sequences.",
+        "conclusion": "iterate(fullSpace,eta,(s,z) |-> EReal(<a(s),z>+b(s)),x0,t)=x0-sum_{s=0}^{t-1} eta(s)*a(s).",
+        "constants_indexing": "The time-t point includes exactly t updates. range t contains 0,...,t-1. The affine offsets b(s) do not enter the expression.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "At t=0 the sum is empty and the point is x0. No dependence on a(s) for s>=t."
+      },
+      "supplied_context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "supplied_typed_header": "theorem claim3 (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s"
+    },
+    {
+      "id": "claim4",
+      "kind": "target",
+      "title": "Strict positivity of the schedule",
+      "slots": {
+        "objects_spaces": "alpha in R; t in N; real schedule.",
+        "quantifiers": "For every real alpha and every natural t.",
+        "assumptions": "No restriction on alpha or t.",
+        "conclusion": "0<schedule(alpha,t).",
+        "constants_indexing": "Uses the base t+1, never t; strict positivity includes t=0.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "This asserts positivity only, not monotonicity, summability, or an upper bound."
+      },
+      "supplied_context": "namespace NeutralPacket\n",
+      "supplied_typed_header": "theorem schedule_pos (α : ℝ) (t : ℕ) :\n    0 < schedule α t"
+    },
+    {
+      "id": "claim5",
+      "kind": "target",
+      "title": "Convexity and unit Lipschitz bound",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. T,t in N; v in E.",
+        "quantifiers": "For every T, every v satisfying ||v||=1, and every natural t.",
+        "assumptions": "Finite dimensionality and hv: ||v||=1.",
+        "conclusion": "payoff(T,v,t,.) is convex on all E and is Lipschitz with bound 1 on E.",
+        "constants_indexing": "ConvexOn R univ and LipschitzWith 1 are conjoined. Lipschitz means |f(x)-f(y)|<=||x-y|| for all x,y in E.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "There is no t<T restriction here. The Lipschitz constant is at most 1, not a separate claim that 1 is the optimal constant. No boundedness of the loss values is asserted."
+      },
+      "supplied_context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "supplied_typed_header": "theorem claim5 (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (payoff T v t) ∧ LipschitzWith 1 (payoff T v t)"
+    },
+    {
+      "id": "claim6",
+      "kind": "target",
+      "title": "Exact scalar finite-horizon regret",
+      "slots": {
+        "objects_spaces": "The space is R; alpha in R; T in N. Loss at t is EReal(payoff(T,1,t,z)).",
+        "quantifiers": "For every real alpha and natural T.",
+        "assumptions": "No alpha interval or minimum-horizon hypothesis.",
+        "conclusion": "R_T = -(m-n)*sum_{i=0}^{m-1} schedule(alpha,i) + sum_{i=0}^{T-1}(i+1)^(1-alpha) - T*sum_{i=m}^{T-1} schedule(alpha,i), where R_T=regret(fullSpace,schedule(alpha),payoff(T,1) embedded into EReal,0,0,T).",
+        "constants_indexing": "m=(T+1) div 2 and n=T div 2, both cast to R before subtraction; T and i+1 are likewise cast where needed. The last sum is over Finset.Ico m T. m-n is 0 for even T and 1 for odd T.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "Initial point 0 and fixed comparator 0 are separate regret arguments. All sums are empty at T=0. The equality includes the parity-dependent boundary term; it is not merely an asymptotic formula."
+      },
+      "supplied_context": "namespace NeutralPacket\n",
+      "supplied_typed_header": "theorem claim6 (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n      (fun t z => (payoff T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), schedule α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, schedule α i)"
+    },
+    {
+      "id": "claim7",
+      "kind": "target",
+      "title": "Coefficient range",
+      "slots": {
+        "objects_spaces": "alpha in R and C(alpha) in R.",
+        "quantifiers": "For every alpha with 0<alpha<1.",
+        "assumptions": "h_alpha0: 0<alpha; h_alpha1: alpha<1.",
+        "conclusion": "0<C(alpha) and C(alpha)<1-log(2).",
+        "constants_indexing": "log is the real natural logarithm. Both inequalities are strict.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "No endpoint alpha=0 or alpha=1 is included. No monotonicity assertion is present."
+      },
+      "supplied_context": "namespace NeutralPacket\n",
+      "supplied_typed_header": "theorem coefficient_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < coefficient α ∧ coefficient α < 1 - Real.log 2"
+    },
+    {
+      "id": "claim8",
+      "kind": "target",
+      "title": "Left endpoint limit and numerical bound",
+      "slots": {
+        "objects_spaces": "coefficient:R->R; real neighborhood filters.",
+        "quantifiers": "A parameter-free assertion about coefficient and log(2).",
+        "assumptions": "No extra hypotheses.",
+        "conclusion": "lim_{alpha->1 from below} C(alpha)=1-log(2), and 3/10<=1-log(2).",
+        "constants_indexing": "The input filter is nhdsWithin 1 {alpha | alpha<1}; the output filter is the ordinary real neighborhood of 1-log(2). The fraction 3/10 is exactly real 0.3.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The limit is one-sided from below. It does not assert a two-sided limit, continuity at 1, C(1)=1-log(2), or a strict lower inequality for the numerical constant."
+      },
+      "supplied_context": "namespace NeutralPacket\n",
+      "supplied_typed_header": "theorem coefficient_limit :\n    Tendsto coefficient (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2"
+    },
+    {
+      "id": "claim9",
+      "kind": "target",
+      "title": "Scalar regret lower bound",
+      "slots": {
+        "objects_spaces": "The space is R; alpha in R; T in N; C=coefficient(alpha).",
+        "quantifiers": "For every alpha and T satisfying the stated conditions.",
+        "assumptions": "0<alpha<1 and 2/((1-alpha)*C)<=real(T).",
+        "conclusion": "(1/2)*C*real(T)^(2-alpha) <= regret(fullSpace,schedule(alpha),(t,z) |-> EReal(payoff(T,1,t,z)),0,0,T).",
+        "constants_indexing": "The exact threshold is 2/((1-alpha)*C), with weak <=. The exact leading lower-bound constant is C/2. Exponent 2-alpha lies between 1 and 2 under the assumptions.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "Initial point and comparator both equal 0. Loss construction may depend on T. No bound is asserted here below the stated threshold, for endpoints of the alpha interval, or for other algorithms."
+      },
+      "supplied_context": "namespace NeutralPacket\n",
+      "supplied_typed_header": "theorem claim9 (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * coefficient α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * coefficient α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n      (fun t z => (payoff T (1 : ℝ) t z : EReal)) 0 0 T"
+    },
+    {
+      "id": "claim10",
+      "kind": "target",
+      "title": "Unit-direction regret lower bound",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. alpha in R; T in N; v in E.",
+        "quantifiers": "For every eligible alpha and T, and every v with ||v||=1.",
+        "assumptions": "0<alpha<1; 2/((1-alpha)*coefficient(alpha))<=real(T); ||v||=1.",
+        "conclusion": "(1/2)*coefficient(alpha)*real(T)^(2-alpha) <= regret(fullSpace,schedule(alpha),(t,z) |-> EReal(payoff(T,v,t,z)),0,0,T).",
+        "constants_indexing": "Same threshold, coefficient, exponent and horizon indexing as claim9; zeros now denote the zero vector in E.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "This is universal over supplied unit vectors. There is no explicit Nontrivial E assumption, since a unit vector is given. No dependence on the dimension appears in the lower-bound constant."
+      },
+      "supplied_context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "supplied_typed_header": "theorem claim10 (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * coefficient α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * coefficient α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n        (fun t z => (payoff T v t z : EReal)) 0 0 T"
+    },
+    {
+      "id": "claim11",
+      "kind": "target",
+      "title": "Existence of regular losses with large regret",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. Additionally Nontrivial E; alpha in R; T in N; loss:N->E->R.",
+        "quantifiers": "For every eligible E, alpha and T, there exists a loss sequence such that both the regularity and regret properties hold.",
+        "assumptions": "Nontrivial E; 0<alpha<1; 2/((1-alpha)*coefficient(alpha))<=real(T).",
+        "conclusion": "There exists loss such that (for every natural t<T, loss(t,.) is convex on E and LipschitzWith 1) and (1/2)*coefficient(alpha)*real(T)^(2-alpha) <= regret(fullSpace,schedule(alpha),(t,z) |-> EReal(loss(t,z)),0,0,T).",
+        "constants_indexing": "The same one witness loss sequence must satisfy both conjuncts. It is defined for all natural t; regularity is required only for t<T. The algorithm uses losses at t=0,...,T-1.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The existential witness may depend on alpha, T, and E. This does not assert a single loss sequence working for all horizons, a lower bound for every convex Lipschitz sequence, or a lower bound for arbitrary algorithms. The target does not specify its witness."
+      },
+      "supplied_context": "namespace NeutralPacket\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "supplied_typed_header": "theorem claim11 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * coefficient α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * coefficient α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (schedule α)\n          (fun t z => (loss t z : EReal)) 0 0 T"
+    },
+    {
+      "id": "api_SourceSubdifferential",
+      "kind": "supporting_api",
+      "title": "Global subdifferential",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. f:E->EReal, x in E; a subset of E.",
+        "quantifiers": "For every f,x, membership of every candidate g is tested against every y in E.",
+        "assumptions": "No convexity, finiteness or nonemptiness assumption in the definition.",
+        "conclusion": "g belongs iff f(x)+EReal(<g,y-x>)<=f(y) for every y in E.",
+        "constants_indexing": "The inequality has coefficient 1 on the inner product and uses y-x. Comparison and addition are in EReal.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The definition permits extended-real functions. Their arithmetic conventions are not further specified in the packet. This is a global supporting inequality, not an explicitly restricted-domain subdifferential."
+      }
+    },
+    {
+      "id": "api_Domain",
+      "kind": "supporting_api",
+      "title": "Domain structure and alias",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. Domain E is a structure.",
+        "quantifiers": "Each Domain packages one carrier set and certificates.",
+        "assumptions": "Carrier is nonempty, closed, and convex over R.",
+        "conclusion": "Domain E has carrier:Set E, nonempty:carrier.Nonempty, closed:IsClosed carrier, convex:Convex R carrier. OnlineSubgradientDescent.Domain abbreviates this same structure.",
+        "constants_indexing": "No radius, diameter, dimension, or boundedness field exists.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "Completeness is not a structure field. Defining this structure itself does not need finite dimensionality."
+      }
+    },
+    {
+      "id": "api_project",
+      "kind": "supporting_api",
+      "title": "Choice-defined projection operation",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. Additionally CompleteSpace E; V:Domain E and z in E.",
+        "quantifiers": "For each V,z.",
+        "assumptions": "V supplies nonempty, closed, convex; the surrounding space is complete.",
+        "conclusion": "project(V,z) is Classical.choose applied to exists_norm_eq_iInf_of_complete_convex(V.nonempty,V.closed.isComplete,V.convex,z).",
+        "constants_indexing": "It chooses an existence witness using classical choice; no computable search routine is supplied.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The exact type and conclusion of the named existence theorem are missing. Its name suggests a nearest-point witness, but the packet alone does not expose its membership, minimization, or uniqueness statement. Those properties are not independently certified here."
+      }
+    },
+    {
+      "id": "api_fullSpace",
+      "kind": "supporting_api",
+      "title": "Full feasible space",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. The supplied context additionally has CompleteSpace E.",
+        "quantifiers": "For each eligible E.",
+        "assumptions": "No boundedness restriction.",
+        "conclusion": "fullSpace is a Domain with carrier univ, certified nonempty, closed, and convex.",
+        "constants_indexing": "The carrier is all of E.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The explicit definition constructs the carrier and its three certificates. The header of an elaborated declaration is not supplied, so unused section variables should not automatically be treated as retained arguments."
+      }
+    },
+    {
+      "id": "api_currentSubgradient",
+      "kind": "supporting_api",
+      "title": "Selected subgradient with fallback",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. f:E->EReal and x in E. Its supplied enclosing block also declares FiniteDimensional R E.",
+        "quantifiers": "For every f,x.",
+        "assumptions": "No hypothesis ensures a nonempty subdifferential.",
+        "conclusion": "If SourceSubdifferential(f,x) is nonempty, choose one of its elements by Classical.choose; otherwise return the zero vector.",
+        "constants_indexing": "The fallback value is exactly 0. No unique selector or numerical procedure is specified.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "A fallback zero need not be a subgradient when the set is empty. The finite-dimensional section variable is unused in this body and claim1 explicitly invokes the operation without it; textual section context must not be strengthened into an extra hypothesis of claim1."
+      }
+    },
+    {
+      "id": "api_step",
+      "kind": "supporting_api",
+      "title": "One update",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. V:Domain E, eta in R, f:E->EReal, x in E.",
+        "quantifiers": "For every V,eta,f,x.",
+        "assumptions": "Domain certificates and supplied finite-dimensional context; no eta>0 assumption in the definition.",
+        "conclusion": "step(V,eta,f,x)=project(V,x-eta*currentSubgradient(f,x)).",
+        "constants_indexing": "Subtract before projection; scalar multiplication is by eta.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "The operation references the whole current function through currentSubgradient. No observational oracle, query budget or implementability claim is included."
+      }
+    },
+    {
+      "id": "api_iterate",
+      "kind": "supporting_api",
+      "title": "Zero-based recursion",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. V:Domain E, eta:N->R, loss:N->E->EReal, initial point x_init in E.",
+        "quantifiers": "For every natural t.",
+        "assumptions": "No regularity assumptions on loss or eta in the definition.",
+        "conclusion": "x(0)=x_init; x(t+1)=step(V,eta(t),loss(t),x(t)).",
+        "constants_indexing": "The code names the initial argument x1, but its time index is 0. Loss t is evaluated at x(t) in regret and is used to produce x(t+1).",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "No claim of randomization, adaptive observations or an online information restriction follows merely from this recursion."
+      }
+    },
+    {
+      "id": "api_regret",
+      "kind": "supporting_api",
+      "title": "Fixed-comparator regret",
+      "slots": {
+        "objects_spaces": "E is a real inner-product space with NormedAddCommGroup E and InnerProductSpace R E. FiniteDimensional R E is additionally assumed. V,eta,loss as above; initial point x_init and comparator u in E; horizon T in N; result in R.",
+        "quantifiers": "For every initial point, comparator and natural T.",
+        "assumptions": "No minimization or comparator-membership hypothesis appears in the definition.",
+        "conclusion": "regret = sum_{t=0}^{T-1} [toReal(loss(t,x(t)))-toReal(loss(t,u))], with x defined by iterate.",
+        "constants_indexing": "Initial point and comparator are distinct arguments. The sum contains T terms; T=0 gives 0. The subtraction is between two separately converted real values.",
+        "probability_feedback": "Deterministic statement. No probability space, expectation, high-probability event, sampling law, or feedback protocol is supplied.",
+        "boundaries": "This is regret against one supplied comparator, not an infimum over E. No expectation is taken. EReal.toReal behavior at infinities is not supplied, but all target losses are finite real values embedded into EReal, so no infinite-value convention is needed for these targets."
+      }
+    }
+  ],
+  "supplied_definition_text": "namespace NeutralPacket\ndef schedule (α : ℝ) (t : ℕ) : ℝ := ((t + 1 : ℕ) : ℝ) ^ (-α)\ndef coefficient (α : ℝ) : ℝ := 1 / (2 - α) + ((1 / 2 : ℝ) ^ (1 - α) - 1) / (1 - α)\ndef signPattern (T t : ℕ) : ℝ := if t < (T + 1) / 2 then -1 else 1\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\ndef payoff (T : ℕ) (v : E) (t : ℕ) (z : E) : ℝ := signPattern T t * inner ℝ v z\nend NeutralPacket\n",
+  "supplied_supporting_definition_text": [
+    {
+      "context": "namespace BanditRL.OnlineConvex\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+      "definition": "def SourceSubdifferential (f : E → EReal) (x : E) : Set E :=\n  {g | ∀ y, f x + (inner ℝ g (y - x) : EReal) ≤ f y}"
+    },
+    {
+      "context": "namespace BanditRL.OnlineGradientDescent",
+      "definition": "structure Domain (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E] where\n  carrier : Set E\n  nonempty : carrier.Nonempty\n  closed : IsClosed carrier\n  convex : Convex ℝ carrier"
+    },
+    {
+      "context": "namespace BanditRL.OnlineGradientDescent\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "definition": "def project (V : Domain E) (z : E) : E :=\n  Classical.choose (exists_norm_eq_iInf_of_complete_convex V.nonempty\n    V.closed.isComplete V.convex z)"
+    },
+    {
+      "context": "namespace BanditRL.OnlineHuber\nopen BanditRL.OnlineGradientDescent\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]",
+      "definition": "def fullSpace : Domain E :=\n  ⟨Set.univ, Set.univ_nonempty, isClosed_univ, convex_univ⟩"
+    },
+    {
+      "context": "namespace BanditRL.OnlineSubgradientDescent\nopen BanditRL.OnlineConvex\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]",
+      "definition": "abbrev Domain := BanditRL.OnlineGradientDescent.Domain E\n\ndef currentSubgradient (f : E → EReal) (x : E) : E :=\n  by\n    classical\n    exact if h : (SourceSubdifferential f x).Nonempty then Classical.choose h else 0\ndef step (V : Domain (E := E)) (η : ℝ) (f : E → EReal) (x : E) : E :=\n  BanditRL.OnlineGradientDescent.project V (x - η • currentSubgradient f x)\ndef iterate (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ : E) : ℕ → E\n  | 0 => x₁\n  | t + 1 => step V (η t) (loss t) (iterate V η loss x₁ t)\ndef regret (V : Domain (E := E)) (η : ℕ → ℝ) (loss : ℕ → E → EReal) (x₁ u : E) (T : ℕ) : ℝ :=\n  ∑ t ∈ range T, ((loss t (iterate V η loss x₁ t)).toReal - (loss t u).toReal)"
+    }
+  ],
+  "missing_context": [
+    "The precise statement of exists_norm_eq_iInf_of_complete_convex is absent. The projection expression can be reconstructed syntactically, but its full witness contract cannot be independently recovered from a theorem name.",
+    "The bodies and proof terms of all target theorems are absent. This review reconstructs assertions and supplies no proof-checking or mathematical-validity certificate.",
+    "Elaborated declaration signatures for supporting APIs are absent. Some declared section instances can be unused; the explicit target contexts govern reconstructed target assumptions.",
+    "General EReal arithmetic and toReal definitions are not included. The target affine and signed-linear losses have finite real values, so this gap does not prevent reading their target regret statements.",
+    "No source identity, original prose, correspondence map to external theorems, or source-specific interpretation is supplied. Source fidelity cannot be evaluated.",
+    "No probability model or feedback protocol is supplied. The deterministic definitions do not establish a bandit-feedback, stochastic, expected-regret, or high-probability claim."
+  ],
+  "actor_context": {
+    "actor": "/root/batch41_blind_decoder",
+    "role": "independent source-blind textual semantic decoder",
+    "task_received_from": "/root",
+    "context_disclosure": "The visible context contained generic Codex tool and workflow instructions, the ABRL workspace AGENTS.md instructions, a generic memory-summary block naming prior ABRL work, environment paths, and the parent task assignment. No parent mathematical discussion, original source identity, target proof, or historical verdict was supplied in this task. I did not open or search memory files, README, repository sources, imports, other maintenance files, or the internet. The only pre-existing file read was the authorized packet.json. Names already present inside that packet were retained as identifiers only.",
+    "independence_limit": "This is an independent reconstruction using the supplied packet; contextual source blindness is limited by the generic ABRL instructions and memory-summary text already visible in the agent environment. It is not a claim that the environment contained no project metadata."
+  },
+  "verdict": "Textual reconstruction only; no source-fidelity or correctness approval."
+}

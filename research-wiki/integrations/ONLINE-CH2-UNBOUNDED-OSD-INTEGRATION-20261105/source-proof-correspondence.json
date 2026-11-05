@@ -1,0 +1,701 @@
+{
+  "schema": "abrl.source-proof-correspondence.v1",
+  "source_graph_sha256": "d66e76eb01db474f958b09482d18f4571bf96764edf8d549fb9d0209accb66b3",
+  "compiled_graph_sha256": "cadcb9c4e2ad49f55a33fdf4864173517d7948a181159622cfa5c20ddbc86c9c",
+  "source_node_count": 45,
+  "mapping": [
+    {
+      "source_node": "S-GAME",
+      "implementation_file": "validation-worktree/BanditRLProof/OnlineSubgradientDescent.lean",
+      "lines": [
+        29,
+        39
+      ],
+      "declarations": [
+        "currentSubgradient",
+        "step",
+        "iterate"
+      ],
+      "guard_envelope": "Finite affine source branch;positive schedule.",
+      "correspondence": "Current-loss selector and recursion with pre-update scoring.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-REGRET",
+      "implementation_file": "validation-worktree/BanditRLProof/OnlineSubgradientDescent.lean",
+      "lines": [
+        38,
+        39
+      ],
+      "declarations": [
+        "regret"
+      ],
+      "guard_envelope": "Finite real losses embedded in EReal.",
+      "correspondence": "Each loss converted separately; comparator subtraction and t<T.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-ADVERSARY",
+      "status": "CONTEXT_PRESERVED_NOT_A_PROOF_CONSTANT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        516,
+        526
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "guard_envelope": "Only this deterministic polynomial-schedule failure;not all algorithms/schedules or stochastic SGD.",
+      "correspondence": "Finite horizon-dependent witness fulfills interpretation;context does not become a proof dependency."
+    },
+    {
+      "source_node": "S-CONVEX-SET",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        126,
+        148
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular"
+      ],
+      "guard_envelope": "Unit v;finite linear loss.",
+      "correspondence": "Direct linear Jensen identity, not unrelated source upper bound.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-DOMAIN",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        19,
+        19
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switchLoss"
+      ],
+      "guard_envelope": "Finite real output at every vector.",
+      "correspondence": "Full effective domain and nowhere minus infinity.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-CONVEX-FUNCTION",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        126,
+        148
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular"
+      ],
+      "guard_envelope": "Unit v;finite linear loss.",
+      "correspondence": "Direct linear Jensen identity, not unrelated source upper bound.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-AFFINE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        126,
+        148
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular"
+      ],
+      "guard_envelope": "Unit v;finite linear loss.",
+      "correspondence": "Direct linear Jensen identity, not unrelated source upper bound.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-PROPER",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        19,
+        19
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switchLoss"
+      ],
+      "guard_envelope": "Finite real output at every vector.",
+      "correspondence": "Full effective domain and nowhere minus infinity.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-SUBGRADIENT",
+      "implementation_file": "validation-worktree/BanditRLProof/OnlineHinge.lean",
+      "lines": [
+        23,
+        46
+      ],
+      "declarations": [
+        "BanditRL.OnlineConvex.affine_subdifferential"
+      ],
+      "guard_envelope": "Finite affine loss.",
+      "correspondence": "Global support equals singleton slope; selector bridge target32-47.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-SUBDIFFERENTIAL",
+      "implementation_file": "validation-worktree/BanditRLProof/OnlineHinge.lean",
+      "lines": [
+        23,
+        46
+      ],
+      "declarations": [
+        "BanditRL.OnlineConvex.affine_subdifferential"
+      ],
+      "guard_envelope": "Finite affine loss.",
+      "correspondence": "Global support equals singleton slope; selector bridge target32-47.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-LIPSCHITZ",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        134,
+        148
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular"
+      ],
+      "guard_envelope": "norm(v)=1.",
+      "correspondence": "Cauchy-Schwarz with abs(sign)=1.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "S-OSD",
+      "implementation_file": "validation-worktree/BanditRLProof/OnlineSubgradientDescent.lean",
+      "lines": [
+        29,
+        39
+      ],
+      "declarations": [
+        "currentSubgradient",
+        "step",
+        "iterate"
+      ],
+      "guard_envelope": "Finite affine source branch;positive schedule.",
+      "correspondence": "Current-loss selector and recursion with pre-update scoring.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "F-CH2",
+      "status": "CONTEXT_PRESERVED_NOT_A_PROOF_CONSTANT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        516,
+        526
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "guard_envelope": "Only this deterministic polynomial-schedule failure;not all algorithms/schedules or stochastic SGD.",
+      "correspondence": "Finite horizon-dependent witness fulfills interpretation;context does not become a proof dependency."
+    },
+    {
+      "source_node": "MOTIVATION",
+      "status": "CONTEXT_PRESERVED_NOT_A_PROOF_CONSTANT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        516,
+        526
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "guard_envelope": "Only this deterministic polynomial-schedule failure;not all algorithms/schedules or stochastic SGD.",
+      "correspondence": "Finite horizon-dependent witness fulfills interpretation;context does not become a proof dependency."
+    },
+    {
+      "source_node": "D-PHI",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        16,
+        16
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi"
+      ],
+      "guard_envelope": "0<alpha<1 only.",
+      "correspondence": "Literal formula;off-source values not source-certified.",
+      "status": "SOURCE_RESTRICTION_CHARACTERIZED"
+    },
+    {
+      "source_node": "A-PHI-RANGE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        154,
+        214
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi_range"
+      ],
+      "guard_envelope": "0<alpha<1.",
+      "correspondence": "Library completion; no printed source derivation.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "A-LIMIT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        95,
+        117
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi_limit"
+      ],
+      "guard_envelope": "Left limit eventually in source domain.",
+      "correspondence": "Library derivative-slope completion.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "A-NUMERIC",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        118,
+        118
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi_limit"
+      ],
+      "guard_envelope": "Exact3/10.",
+      "correspondence": "Library certified logarithm bound.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "T-STATEMENT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        516,
+        526
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "guard_envelope": "Finite-dimensional nontrivial real E;source alpha/horizon.",
+      "correspondence": "Unit direction internally chosen;one witness for both conjuncts.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-DIMENSION",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        470,
+        508
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+      ],
+      "guard_envelope": "Unit v;source alpha/horizon;finite real E.",
+      "correspondence": "Unit-direction transport specializes to source first coordinate;regrets explicitly equated.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-T2",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        344,
+        368
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "Source alpha/horizon and proved phi_range.",
+      "correspondence": "Derives beta*phi in(0,1),T>=2,m>=1,T/2<=m<=T.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-LOSS",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        17,
+        19
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switchLoss"
+      ],
+      "guard_envelope": "t<T;m=ceil(T/2).",
+      "correspondence": "Exactly m negative slopes then floor(T/2) positive slopes.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-ADMISSIBLE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        32,
+        148
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular"
+      ],
+      "guard_envelope": "Slopes +/-1 or +/-v with norm(v)=1.",
+      "correspondence": "Singleton support;fallback inactive;convexity and norm estimate.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-FIRST-REC",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        55,
+        59
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace"
+      ],
+      "guard_envelope": "Half-specific sign;eta=(s+1)^(-alpha).",
+      "correspondence": "Actual OSD update specializes to plus/minus eta.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-FIRST-SUM",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        67,
+        77
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix"
+      ],
+      "guard_envelope": "Source half guards and zero start.",
+      "correspondence": "Shared global signed prefix replaces separate source unrollings;instances253-262,477-486.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-SECOND-REC",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        55,
+        59
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace"
+      ],
+      "guard_envelope": "Half-specific sign;eta=(s+1)^(-alpha).",
+      "correspondence": "Actual OSD update specializes to plus/minus eta.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-SECOND-SUM",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        67,
+        77
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix"
+      ],
+      "guard_envelope": "Source half guards and zero start.",
+      "correspondence": "Shared global signed prefix replaces separate source unrollings;instances253-262,477-486.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "R-SPLIT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        253,
+        286
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "guard_envelope": "Zero start/comparator;finite affine loss.",
+      "correspondence": "Unfold regret and coe-toReal;global signed double sum instead of half sums.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "R-SUBSTITUTE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        253,
+        286
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "guard_envelope": "Zero start/comparator;finite affine loss.",
+      "correspondence": "Unfold regret and coe-toReal;global signed double sum instead of half sums.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "R-COUNT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        234,
+        313
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "guard_envelope": "m<=T;m+k=T;i<T;half-specific signs.",
+      "correspondence": "Prefix/suffix sign counts and triangular sum interchange.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "R-REARRANGE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        314,
+        332
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ],
+      "guard_envelope": "Positive i+1 base;natural T.",
+      "correspondence": "Weighted powers and split restore exact parity correction.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-PARITY",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        369,
+        375
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "Natural T,m,k.",
+      "correspondence": "m-k<=1 used with nonnegative sum;hdiff0 is proved but unused.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-BOUNDS",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        376,
+        425
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "0<alpha<1;m>=1;T>=m;decreasing negative power;increasing beta power from0.",
+      "correspondence": "All three sum-integral bounds,integral_rpow,first+1 and negative signs combined.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-EVALUATE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        376,
+        425
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "0<alpha<1;m>=1;T>=m;decreasing negative power;increasing beta power from0.",
+      "correspondence": "All three sum-integral bounds,integral_rpow,first+1 and negative signs combined.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-HALF",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        426,
+        443
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "T/2<=m<=T;beta>0;T>0;-1+1/beta>=0.",
+      "correspondence": "Correct opposing bounds on m^beta;retain-T^beta/beta.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-COARSE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        426,
+        443
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "T/2<=m<=T;beta>0;T>0;-1+1/beta>=0.",
+      "correspondence": "Correct opposing bounds on m^beta;retain-T^beta/beta.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-PHI",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        444,
+        455
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "T>0;beta=1-alpha.",
+      "correspondence": "Power product/addition and literal phi coefficient.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "I-ABSORB",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        456,
+        462
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "Exact threshold;beta>0;phi>0;T^beta>=0.",
+      "correspondence": "1/beta<=phi*T/2 multiplied by T^beta absorbs correction.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "T-ONE-DIMENSION",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        456,
+        462
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ],
+      "guard_envelope": "Exact threshold;beta>0;phi>0;T^beta>=0.",
+      "correspondence": "1/beta<=phi*T/2 multiplied by T^beta absorbs correction.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "P-EMBED",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        470,
+        508
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+      ],
+      "guard_envelope": "Unit v;source alpha/horizon;finite real E.",
+      "correspondence": "Unit-direction transport specializes to source first coordinate;regrets explicitly equated.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "T-HIGH-DIMENSION",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        470,
+        508
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+      ],
+      "guard_envelope": "Unit v;source alpha/horizon;finite real E.",
+      "correspondence": "Unit-direction transport specializes to source first coordinate;regrets explicitly equated.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "DISCUSSION",
+      "status": "CONTEXT_PRESERVED_NOT_A_PROOF_CONSTANT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        516,
+        526
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.theorem_5_4"
+      ],
+      "guard_envelope": "Only this deterministic polynomial-schedule failure;not all algorithms/schedules or stochastic SGD.",
+      "correspondence": "Finite horizon-dependent witness fulfills interpretation;context does not become a proof dependency."
+    },
+    {
+      "source_node": "G-PHI-RANGE",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        154,
+        214
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi_range"
+      ],
+      "guard_envelope": "0<alpha<1.",
+      "correspondence": "Library completion; no printed source derivation.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "G-PHI-LIMIT",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        95,
+        117
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi_limit"
+      ],
+      "guard_envelope": "Left limit eventually in source domain.",
+      "correspondence": "Library derivative-slope completion.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    },
+    {
+      "source_node": "G-PHI-NUMERIC",
+      "implementation_file": "validation-worktree\\BanditRLProof\\OnlineUnboundedOSD.lean",
+      "lines": [
+        118,
+        118
+      ],
+      "declarations": [
+        "BanditRL.OnlineUnboundedOSD.phi_limit"
+      ],
+      "guard_envelope": "Exact3/10.",
+      "correspondence": "Library certified logarithm bound.",
+      "status": "DISCHARGED_IMPLEMENTATION"
+    }
+  ],
+  "source_gaps": [
+    {
+      "source_gap": "G-PHI-RANGE",
+      "status": "DISCHARGED_BY_REVIEWED_COMPILED_LIBRARY_PROOF",
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "lines": [
+        154,
+        214
+      ],
+      "method": "beta/q concavity, strict Bernoulli and tangent slope",
+      "guards": "0<beta<1;0<log2<1;positive powers and beta*(1+beta)",
+      "actual_value_constants": [
+        "rpow_one_add_lt_one_add_mul_self",
+        "concaveOn_of_hasDerivWithinAt2_nonpos",
+        "ConcaveOn.slope_le_of_hasDerivAt",
+        "Real.log_two_lt_d9"
+      ]
+    },
+    {
+      "source_gap": "G-PHI-LIMIT",
+      "status": "DISCHARGED_BY_REVIEWED_COMPILED_LIBRARY_PROOF",
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "lines": [
+        95,
+        117
+      ],
+      "method": "derivative slope limit restricted left, continuous first term",
+      "guards": "positive base1/2;2-1 nonzero;nhdsLT<=nhdsNE;eventually source carrier",
+      "actual_value_constants": [
+        "HasDerivAt.tendsto_slope",
+        "HasDerivAt.const_rpow"
+      ]
+    },
+    {
+      "source_gap": "G-PHI-NUMERIC",
+      "status": "DISCHARGED_BY_REVIEWED_COMPILED_LIBRARY_PROOF",
+      "declaration": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "lines": [
+        118,
+        118
+      ],
+      "method": "linarith from certified logarithm bound",
+      "guards": "No extra premise;exact3/10",
+      "actual_value_constants": [
+        "Real.log_two_lt_d9"
+      ]
+    }
+  ],
+  "topology_deltas": [
+    "Source separate half unrollings -> shared affine-prefix signed formula.",
+    "Source half-wise sums -> global triangular interchange/suffix counts -> identical parity identity.",
+    "Source first coordinate -> arbitrary unit-direction transport and internal choice.",
+    "Missing source phi derivations -> explicit new library analytic completions."
+  ],
+  "edge_orientation": "Source inputs->output means producer-to-consumer. Compiled source->target means consumer-to-referenced-constant.",
+  "and_or": "One sufficient implementation route;three integral comparisons AND;vector proof consumes scalar result.",
+  "graph_limit": "Selected direct TYPE/VALUE constant presence only;not occurrence counts,indispensability,full transitive closure or source-result count."
+}
