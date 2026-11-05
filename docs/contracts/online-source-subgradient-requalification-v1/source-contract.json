@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-SOURCE-SUBGRADIENT-REQUALIFICATION-V1",
+  "base": "4882e4bac21d3afffd18b4fbc4e9f99eb70a17a0",
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Definition2.20; Definition4.1 and Lemma4.2 forward"
+  },
+  "exact_header": "theorem stronglyConvex_sourceSubgradient_growth {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hV : Convex ℝ V)\n    (hdom : V ⊆ effectiveDomain f) (hlam : 0 ≤ lam)\n    (hstrong : ∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n    (p : E) (hp : p ∈ V) (g : EuclideanSpace ℝ (Fin d))\n    (hg : g ∈ SourceSubdifferential (fun u => f (e.symm u)) (e p))\n    (q : E) (hq : q ∈ V) :\n    (f p).toReal + inner ℝ g (e (q - p)) +\n      (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal",
+  "core_canary": [
+    {
+      "path": "BanditRLProof/OnlineStrongConvexSourceSubgradient.lean",
+      "sha256": "72ac5b8037aefbb68e8e213cd808bc4892d45f6b11d3dfe00639c839b4c734a9",
+      "bytes": 1749
+    },
+    {
+      "path": "Tests/OnlineStrongConvexSourceSubgradientCanary.lean",
+      "sha256": "e5e882f23713ed6088d3623efd471f00fcfb1d982c6304f5dfa03e560dc2e440",
+      "bytes": 13259
+    }
+  ],
+  "historical_roles": {
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/finite_coordinate_blind_20261012",
+    "source_reviewer": "/root/support_reader_source_review_20261012"
+  },
+  "historical_evidence": [
+    {
+      "path": "docs/contracts/online-ch2-b4-source-vector-adapter-v1/neutral-frozen-header-v1.txt",
+      "sha256": "6b3937a683760c04d44a0fe595490aa3a12ead49ee490eaca534670c641d3b7f"
+    },
+    {
+      "path": "tmp/neutral-finite-coordinate-declaration-20261012/blind-reconstruction-v1.json",
+      "sha256": "b366c90dcd3b11c06b08f9a87523c8d292310a8721a97b0295aa4d31f0fef956"
+    },
+    {
+      "path": "tmp/online-b4-vector-adapter-source-review-20261012/pre-freeze-source-review-v2.json",
+      "sha256": "ee72677455ab97d65ddb73819080b85fef867f0dcadc8a002ddbc4ab9bb6b5c5"
+    },
+    {
+      "path": "tmp/online-b4-vector-adapter-source-review-20261012/body-source-review-v1.json",
+      "sha256": "f9a4798f6850d54e0090f7650559d47957977a11319cd3fcc3a96c8acffdedb5"
+    },
+    {
+      "path": "tmp/online-b4-vector-adapter-canary-source-review-20261012/pre-freeze-canary-source-review-v1.json",
+      "sha256": "ab42515358a60bbce59e93aa4f4368cf19564f64243081b3e9319437cffccb8f"
+    },
+    {
+      "path": "tmp/online-b4-vector-adapter-canary-source-review-20261012/canary-body-source-review-v1.json",
+      "sha256": "50428f35d056c9ed75144c0c12f5fd5bbe54e5ace417fdceb0793ddb9d0b8e53"
+    }
+  ],
+  "source_delta": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 2.20 and the forward implication associated with Definition 4.1 and Lemma 4.2. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This adapter uses one supplied global source subgradient and represents the source coordinates through an algebraic linear equivalence. It retains the separately chosen original norm. The source segment-and-limit proof remains distinct from this library reuse through Support growth.",
+  "native_proof": "The coordinate equivalence e gives finite dimensionality of E. Define the real linear map L(v) = ⟨g, e(v)⟩. Every linear map from this finite-dimensional normed space is continuous, so L supplies the continuous covector required by Support growth. Evaluate the supplied global subgradient inequality at e(z); cancel e⁻¹(e(z)) and use e(z) − e(p) = e(z − p). This yields f(p) + L(z − p) ≤ f(z) for each z ∈ V. Apply stronglyConvex_support_growth with this internally constructed L and support proof. The pairing uses coordinates, but the curvature term remains ‖q − p‖²_E. Neither an isometry nor a separate continuity or finite-dimensionality premise is added.",
+  "canary_distinction": "Both examples use E = R² with the sup norm, V = [−1,1]², f(x) = (x₀² + x₁²)/2 + x₀ on V and positive infinity outside, p = 0 and q = (1,1). With ordinary coordinates and g = (1,0), the original squared norm is 1 and the coordinate Euclidean squared norm is 2. The correct bound is 3/2 ≤ 2, while the incorrectly substituted norm still gives 2 ≤ 2; this example alone does not refute that substitution. Scaling coordinates to e′ = 2e and g′ = g/2 preserves the pairing and the original-norm penalty, but makes the coordinate squared norm 8. The wrong bound becomes 5 ≤ 2, which the second example refutes. Both canaries construct global support, including outside V, and genuinely invoke the adapter.",
+  "boundary": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete.",
+  "hsub_clarification_sha256": "7fc12611b133318d97d83ad048b2290bd81cdbabf4015947d4716ee08068cdcb",
+  "current_static_review_sha256": "36f941ad6584512f4332bea9206e07eed583e1b1c6c59cb4b9f909e25c2d0b0e",
+  "target_freeze": {
+    "source_rows": 73,
+    "effective_targets": 172,
+    "no_deletions": true
+  },
+  "current_focused": {
+    "validation_file": "c2-source-subgradient-focused-current-v1/validation.json",
+    "validation_sha256": "74b7a25e1396abaa0149d05ed754b6e4541330d72041cb4c99e2b4075203cb93",
+    "source_review_file": "c2-source-subgradient-focused-independent-review-v1.json",
+    "source_review_sha256": "7b09aa492a1f5de1f804fb8c25eb2752ed242ef99778b15f9b4a20bd742ece29",
+    "streams": {
+      "canonical-BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth-TYPE.txt": {
+        "sha256": "4e8f88b08622b98af4f1a423a25595613562edf9ae428d70489c8ad29757171f",
+        "bytes": 940747
+      },
+      "canonical-BanditRL.OnlineConvex.stronglyConvex_sourceSubgradient_growth-VALUE.txt": {
+        "sha256": "615518b640a8b50d835ca984ec5969f88537407aa2e21ee5a5f76f26a9e83bf5",
+        "bytes": 36617796
+      },
+      "canonical-BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates_discriminate_wrong_norm-TYPE.txt": {
+        "sha256": "5126431e341d86d48e4fc61355e428d0da0b3abe5d60ec43724c407e15719577",
+        "bytes": 1537566
+      },
+      "canonical-BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.scaledCoordinates_discriminate_wrong_norm-VALUE.txt": {
+        "sha256": "12276d5bb86eaec79f4526f1e5099295a0cca55883d27404e6e35b8a7102c364",
+        "bytes": 1105075609
+      },
+      "canonical-BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supNorm_nonzero_support-TYPE.txt": {
+        "sha256": "731fb0a0d03db7503c77cc49ee7ccd5c95ac8666d41a75a037aed94b5272e239",
+        "bytes": 606374
+      },
+      "canonical-BanditRL.Tests.OnlineStrongConvexSourceSubgradientCanary.supNorm_nonzero_support-VALUE.txt": {
+        "sha256": "6682e7aed9380e3b57d8629130333c988530bf28da8ebb6c74d8cc0bc71e7e92",
+        "bytes": 1037400788
+      }
+    },
+    "all_six_equal_to_retained_historical_record": true,
+    "historical_scope": "Current six normalized streams measured against retained V6 digest record; old huge streams not re-extracted or copied.",
+    "provider_fingerprint_timing": "Provider source fingerprints are post-only; actual pre/post tracked inputs, probes, runtime and package states unchanged. No unrecorded provider prehash claimed.",
+    "retained_failure": "Original focused sequence [0,0,0,0,1]: private operand probe encoding failure. One bounded probe repair exited0. Production inputs unchanged; no mathematical failure inferred.",
+    "repair_receipts": [
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/0.receipt.json",
+        "sha256": "34b030e800cb3019b3867c2853da9bcc5b2492abd6f10374a38e60fb9b246aa6"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/0.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/0.stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/complete.json",
+        "sha256": "af0a16bfb1d7d54e83bf17bc70eb954e240d8b12ab09abda8c56cdc6f2ae4a36"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/current-support-operands.json",
+        "sha256": "a78c7a23dc63d37553e8ad0a2e26373886a98b7bce4f8b3feb06172281efb533"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/plan.json",
+        "sha256": "2c2ff5a641a4af2dac82d660fda3957a2e3820e77dbf3df0fb173f324d625ecb"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/post-inputs.json",
+        "sha256": "f4581dfe6446021374276d4d3ef1f10ef4b5b9c1afe99a03b47411edb0f5939b"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/post-packages.json",
+        "sha256": "59956bf7b54b669a333a700a9fcb124defbb50f0958f4bcd7ed63052f5d65cf1"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/pre-inputs.json",
+        "sha256": "f4581dfe6446021374276d4d3ef1f10ef4b5b9c1afe99a03b47411edb0f5939b"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/pre-packages.json",
+        "sha256": "59956bf7b54b669a333a700a9fcb124defbb50f0958f4bcd7ed63052f5d65cf1"
+      },
+      {
+        "artifact": "c2-source-subgradient-support-operands-repair-v1/resource-launch.json",
+        "sha256": "9c3ddd1ca3ac948ecbbadd8dd2618d28cb3045dce9813a315501103702ee95a9"
+      }
+    ],
+    "large_streams": "Private only, hashes and lengths published; no huge expressions copied."
+  },
+  "combined_gates": "pending",
+  "reader": "pending",
+  "chapter2_accepted": false,
+  "book_accepted": false
+}
