@@ -197,3 +197,5 @@ import Tests.OnlineStrongMonotonicityCanary
 import Tests.OnlineEntropyL1Canary
 import Tests.OnlineEntropyKLBoundaryCanary
 import Tests.OnlineKTPotentialCanary
+import Tests.OnlineAdaptivePotentialCanary
+import Tests.OnlineAdaptiveOSDCanary
