@@ -1,0 +1,182 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-ENTROPY-GEOMETRY-20261105",
+  "route": "online-learning/chapter-2/weighted-entropy-and-kl",
+  "frontier_cell": "online-entropy-geometry",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "Orabona arXiv:1912.13213v10; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Lemma 6.33, printed p. 80; Definition 6.4, Eq. (6.4) and Example 6.6, printed pp. 63–64; the proof of Theorem 13.4, printed pp. 210–211.",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=92"
+  },
+  "target": "Prove the modulus-one chord and support bounds on the positive weighted simplex. Relate the entropy Bregman divergence to finite KL, retain the mass correction, and extend the binary estimate to both endpoints with a fair reference.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineEntropyL1.lean",
+    "BanditRLProof/OnlineEntropyKLBoundary.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [
+    "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+    "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+    "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+    "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+    "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+    "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+    "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "The weighted ambient entropy derivative and normalized pairing, convex-carrier equivalence, feasible affine support growth, PiLp with exponent 1, and the existing binary KL definition."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineEntropy.weightedEntropy_pairing",
+      "BanditRL.OnlineEntropy.weightedEntropy_differential",
+      "BanditRL.OnlineConvex.SupportCarrierExample.convex_carrier_equivalence",
+      "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+      "BanditRLProof.KLUCB.bernoulliKLCore"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+      "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+      "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+      "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+      "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+      "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+      "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use"
+    ],
+    "known_consumers": [
+      "The interior KL lower bound uses the entropy support estimate. The closed fair-coin bound and its scaled form use the same two-coordinate KL specialization.",
+      "The public canaries specialize the modulus-one chord bound and two distinct feasible supporting functionals."
+    ],
+    "planned_consumers": [
+      "The continuous-coin wealth bound also needs its gamma-potential and endpoint recurrence arguments."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "The actual ℓ¹ norm on PiLp 1 gives the squared distance in both strong-convexity inequalities. The KL identity keeps the linear mass correction until both vectors have total mass one. The Bernoulli formula extends continuously in its first argument with the second argument fixed at 1/2."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "verdict": "accepted-with-explicit-delta",
+    "formalizer": "Astra / medium formalizer of the weighted and KL statements and their concrete consumers.",
+    "blind_decoder": "Separate neutral reconstructions of the main results and all five concrete consumer statements.",
+    "source_reviewer": "Independent source and kernel review of all seven private theorems. The five consumer statements have independent neutral decoding, source review and typing evidence.",
+    "remaining_semantic_delta": "The weighted comparison set contains exactly positive weight-normalized vectors. Generalized KL admits zero numerators and requires strictly positive reference coordinates. The closed Bernoulli result fixes the reference probability at 1/2."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "The entropy and KL results use existing finite-dimensional norm and divergence interfaces. The Book maps real proof parents and their consumers.",
+    "focus_targets": [
+      "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+      "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+      "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+      "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+      "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+      "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+      "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use"
+    ],
+    "visual_review": "Seven source cards and seven Lean teaching panels on the entropy geometry route. Exact production reader gate pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: a new route follows weighted interpolation and quadratic support through the KL identities to the closed binary bound.",
+    "banditrlwiki": "no-change-with-reason: This is an Online Learning source dependency.",
+    "results_ledger": "no-change-with-reason: Final source-row adjudication is separate.",
+    "roadmap": "no-change-with-reason: further gamma and coin-betting steps remain separate.",
+    "website_surfaces": [
+      "Online Learning Book, entropy geometry route, weighted-pairing reader link, shared declaration catalog and formal graph."
+    ]
+  },
+  "truth_boundary": "The two weighted entropy statements and five KL statements have separate contract fingerprints. Full coin-betting wealth, singular reference distributions and entire chapter or book acceptance are outside this packet.",
+  "verification": {
+    "focused_checks": [
+      "The seven private statements and five concrete consumer proofs passed Lean. The independent review of seven private theorem statements compared the raw type streams and the relevant generated proof and instance values."
+    ],
+    "bandit_check": "pending",
+    "site_build": "pending",
+    "site_check": "pending",
+    "independent_review": "All seven private theorem proofs and five concrete consumer proofs were independently adjudicated. Split imports and exact-head production gates remain pending.",
+    "test_paths": [
+      "Tests.lean",
+      "Tests/OnlineEntropyL1Canary.lean",
+      "Tests/OnlineEntropyKLBoundaryCanary.lean",
+      "tools/test_book_registry.py"
+    ]
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Formalizer with distinct neutral decoder, independent source/body reviewer and independent executor."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "All obligations remain in scope. Failed elaboration attempts and raw comparator differences are retained in the proof attempts.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "weighted-L1-to-binary-KL:ae1dd07d0849cc1b6240bc1ae79b12cc814d08672edd47a8ae3375d0ecd5c2a3"
+      ],
+      "expected_information_gain": "Validate the weighted support theorem before using it for the interior KL lower bound and the binary endpoint extension.",
+      "shared_verified_context_digest": "ae1dd07d0849cc1b6240bc1ae79b12cc814d08672edd47a8ae3375d0ecd5c2a3"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "The concrete consumers separate ordinary from weighted mass and relative from ambient supports. They also test unequal masses, an interior pair and both binary endpoints.",
+      "canonical_route": "Differentiate in ambient space, restrict the strong-convexity estimate to the weighted simplex, cancel matched masses, and extend the fair-reference binary inequality by continuity.",
+      "selection_reason": "The same registered entropy and KL providers serve general vectors and their binary specializations."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 7,
+      "exposition_evidence": "Seven source cards prepared. Exact-head browser adjudication pending.",
+      "source_expansion_nodes": [
+        "WEIGHTED-SIMPLEX",
+        "BREGMAN-KL",
+        "BINARY-ENDPOINTS"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+        "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+        "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+        "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+        "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+        "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+        "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
