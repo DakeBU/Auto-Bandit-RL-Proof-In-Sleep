@@ -8355,8 +8355,8 @@
           "meaning": "For the repaired theorem V is a convex subset of S and λ is a nonnegative modulus."
         },
         {
-          "term": "e and the norm",
-          "meaning": "Use e for coordinate pairings. Measure p−q in the original norm of E."
+          "term": "e, G(p) and the norm",
+          "meaning": "The coordinate map e is linear and need not preserve length. G(p) is the global subdifferential of f composed with e⁻¹ at e(p). Use e for the pairing and the original norm on E for distances."
         }
       ],
       "algorithm": {
@@ -8512,8 +8512,8 @@
           "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
           "pdf_page": 47,
           "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
-          "math": "\\lambda\\lVert p-q\\rVert_E^2\\le\\langle g-h,e(p-q)\\rangle",
-          "fallback": "The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E.",
+          "math": "\\begin{gathered}\n f(ax+(1-a)y)\\\\\n \\le a f(x)+(1-a)f(y)\\\\\n \\qquad-\\tfrac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2\\\\\n (x,y\\in V,\\ 0<a<1)\\\\[2pt]\n \\Updownarrow\\\\[2pt]\n \\lambda\\lVert p-q\\rVert_E^2\\le\\langle g-h,e(p-q)\\rangle\\\\\n (p,q\\in V,\\ g\\in G(p),\\ h\\in G(q))\n\\end{gathered}",
+          "fallback": "For every x,y in V and 0<a<1, f(ax+(1−a)y) ≤ a f(x)+(1−a)f(y)−(λ/2)a(1−a)‖x−y‖². This holds if and only if, for every p,q in V and all g∈G(p), h∈G(q), λ‖p−q‖² ≤ ⟨g−h,e(p−q)⟩.",
           "plain": "Let E be a real normed space with a linear coordinate equivalence e to Euclidean d-space. Let f:E→EReal be proper and convex, λ≥0, and V convex. Every point of V has a global subgradient of f in these coordinates. The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E.",
           "relationship": "This is the convex-carrier repair of the converse. The segment stays inside V, where every point admits a global supporting plane.",
           "statement_provenance": "derived-support",
