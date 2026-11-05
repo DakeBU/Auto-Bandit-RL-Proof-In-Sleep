@@ -774,3 +774,4 @@ import BanditRLProof.OnlinePrescientBregmanSource
 import BanditRLProof.OnlineUnboundedOSD
 import BanditRLProof.OnlineFTLSelector
 import BanditRLProof.OnlineAdaptiveSummation
+import BanditRLProof.OnlineAdaptiveEnergy
