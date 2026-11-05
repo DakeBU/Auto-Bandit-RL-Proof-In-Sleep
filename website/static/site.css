@@ -6808,6 +6808,39 @@ tbody tr:hover {
 
 .book-breadcrumb + .hero { padding-top: 1.5rem; }
 
+/* First-level wayfinding; detailed reader contracts remain one disclosure away. */
+.graph-shortcuts { display:grid; gap:.45rem; padding:.8rem 0; border-bottom:1px solid var(--line); }
+.graph-shortcuts a { display:flex; align-items:center; gap:.6rem; padding:.55rem; border-radius:5px; background:var(--accent-soft); font-size:.85rem; }
+.graph-shortcuts span { min-width:2.3rem; color:var(--accent); font-size:1rem; }
+.bench-intro { padding:2rem 0 1.5rem; max-width:55rem; }
+.bench-intro h1 { font-size:clamp(2.7rem,5vw,4.6rem); line-height:1.08; letter-spacing:-.035em; margin:1rem 0; }
+.bench-intro h1 em { color:var(--accent); font-style:normal; }
+.bench-intro > p:not(.eyebrow) { max-width:50ch; }
+.bench-edition { color:var(--muted); font-size:.83rem; line-height:1.5; }
+.bench-graph-doors { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin-bottom:1.5rem; }
+.bench-graph-door { display:flex; gap:.8rem; align-items:center; border:1px solid var(--line); border-radius:10px; padding:.8rem; text-decoration:none; }
+.bench-graph-door .bench-picture { width:80px; height:65px; flex-shrink:0; }
+.bench-graph-door strong,.bench-graph-door small { display:block; }
+.bench-graph-door small { font-size:.85rem; margin-top:.3rem; color:var(--muted); }
+.bench-paths { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.bench-path { border:1px solid var(--line); border-radius:10px; padding:1.2rem; text-decoration:none; color:inherit; }
+.bench-path:hover,.bench-graph-door:hover { background:var(--accent-soft); }
+.bench-picture { display:block; width:100%; height:120px; color:var(--accent); margin-bottom:.5rem; }
+.bench-path h2 { font-size:1.5rem; margin:.6rem 0; }
+.bench-path p { font-size:.95rem; max-width:28ch; }
+.bench-actions { display:flex; flex-wrap:wrap; gap:.6rem; padding:1.5rem 0; }
+.reader-depth { border-top:1px solid var(--line); margin:.8rem 0; padding:1rem 0; }
+.reader-depth > summary { cursor:pointer; font-weight:600; font-size:1.1rem; }
+.reader-depth[open] > summary { margin-bottom:1rem; }
+.task-browser { border-top:1px solid var(--line); margin:.7rem 0; padding:.8rem 0; }
+.task-browser > summary { cursor:pointer; font-weight:600; font-size:1.05rem; }
+.task-browser .bench-task { scroll-margin-top:7rem; }
+.bench-pipeline { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; padding:1.3rem 0; }
+.bench-pipeline > div { border-top:3px solid var(--accent); padding-top:.8rem; }
+.bench-pipeline span { display:block; color:var(--accent); font-size:2rem; }
+.bench-pipeline strong,.bench-pipeline small { display:block; margin-top:.4rem; }
+@media(max-width:700px) { .bench-paths,.bench-graph-doors { grid-template-columns:minmax(0,1fr); } .bench-pipeline { grid-template-columns:repeat(2,minmax(0,1fr)); } .bench-intro { padding-top:1rem; } .bench-graph-door .bench-picture { width:60px; } }
+
 /* QA readers keep the exercise, proof and graph location in a readable column. */
 .bench-reader { max-width: 78rem; }
 .bench-reader nav { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-block: 1rem 2rem; }

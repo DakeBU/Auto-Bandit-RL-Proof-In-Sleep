@@ -735,7 +735,7 @@ def expected_book_chapters(books: list[dict], book_id: str, chapter_slugs: set[s
 
 
 def expected_navigation_groups(books: list[dict], chapter_slugs: set[str]) -> set[str]:
-    groups = {"start", "books", "bandit-book", "research", "library", "formalize", "community"}
+    groups = {"start", "bench", "books", "bandit-book", "research", "library", "formalize", "community"}
     owners: dict[str, str] = {}
     for book in books:
         if book.get("status") == "source-mapped":
