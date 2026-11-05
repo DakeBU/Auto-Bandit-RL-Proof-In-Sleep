@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-LITERAL-THEOREM6-9-REQUALIFICATION-V1",
+  "base": "158a16221751ca54b1f41a4520ca4372aed6d47c",
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_existsUnique_minimizer",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Theorem6.9 printed66/PDF78",
+    "literal_hsub": "Assume dom ∂f ≠ ∅.",
+    "correction_review_sha256": "8ad281bcf94d3678556780d0e7c4920f51cc5bcb26ffff03473f17505ce6229c"
+  },
+  "source_target": {
+    "id": "dependency:Theorem6.9",
+    "public_file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "json_pointer": "/effective_targets/135",
+    "statement_pointer": "/effective_targets/135/effective_statement",
+    "published_commit": "158a16221751ca54b1f41a4520ca4372aed6d47c"
+  },
+  "A3_target": {
+    "id": "dependency:A.3",
+    "public_file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "json_pointer": "/effective_targets/136"
+  },
+  "exact_header": "theorem stronglyConvex_existsUnique_minimizer {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))\n    (f : E → EReal) (lam : ℝ)\n    (hf : SourceProper f) (hclosed : SourceClosed f)\n    (hlam : 0 < lam)\n    (hstrong : ∀ x ∈ effectiveDomain f, ∀ y ∈ effectiveDomain f,\n      ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n    (hsub : {p : E |\n      (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty}.Nonempty) :\n    ∃! p : E, p ∈ effectiveDomain f ∧ ∀ q : E, f p ≤ f q",
+  "core_canary": [
+    {
+      "path": "BanditRLProof/OnlineStrongConvexAttainment.lean",
+      "sha256": "f21ba9dcdb4f7e2cf25cfc1278378009e6eeca370ce055b7a98ea16ea04a888e"
+    },
+    {
+      "path": "Tests/OnlineStrongConvexAttainmentCanary.lean",
+      "sha256": "2a8c5ad2c5bfc70017591ed5c74529aea8dfb0a446c6cc283963e0f1f246babf"
+    }
+  ],
+  "historical_roles": {
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/dual_neutral_decoder_20261012",
+    "source_reviewer": "/root/support_tool_review_20261012"
+  },
+  "historical_evidence": [
+    {
+      "path": "tmp/online-b4-next-attainment-header-freeze-20261012/Theorem6.9-local-header-freeze-v1.json",
+      "sha256": "b17cf1bba971f58cf8c88f4ea3ee86a65f982580091793b30333cfa31a99ddc3"
+    },
+    {
+      "path": "tmp/online-b4-next-attainment-header-freeze-20261012/Theorem6.9-frozen-context-and-header-v1.txt",
+      "sha256": "58decad0d7dbd318b0c21949d2f699893df9059cb70dfd3fcee020a8ee12b1a5"
+    },
+    {
+      "path": "tmp/neutral-declaration-20261012-s4/reconstruction-v1.json",
+      "sha256": "1865ce28560d07d6daccfc65f5ed72698588ead0b7af1e181df2bdabd9df3f78"
+    },
+    {
+      "path": "tmp/online-b4-next-attainment-header-source-review-20261012/theorem6.9-header-source-verdict-v1.json",
+      "sha256": "c35f8bceda0429b83e748ea6fdb34cc14f3ee52a51988401769d3ae86c12c17c"
+    },
+    {
+      "path": "tmp/online-b4-next-attainment-body-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "75110d68f69690472380d54e91ab79480cfb672da15bf7aeac65859e84dfd765"
+    },
+    {
+      "path": "tmp/online-b4-next-attainment-canary-body-20261012/independent-canary-body-source-verdict-v3.json",
+      "sha256": "3260105a23e426e2c1c5e55a966078a670e1942a69846f9e035b6aee28f10d0b"
+    }
+  ],
+  "source_proof_topology": "Choose source support y,g; quadratic-affine lower bound plus dual-norm/reverse-triangle inequality gives f(x)→+∞ as normx→∞; bounded closed sublevels compact; A.3 supplies minimum; strict convexity yields uniqueness.",
+  "implementation_topology": [
+    "Derive convex effective domain and coordinate properness internally. Supplied hsub yields y,g and actual finite y.",
+    "Form continuous L(v)=inner(g,e(v)) in original norm. For S={x|f(x)≤f(y)}, source-vector growth and operator norm give (λ/2)||x−y||²≤||L||||x−y||, hence S⊆closedBall(y,2||L||/λ).",
+    "SourceClosed gives S closed; finite dimensionality from e gives compact closed ball. Therefore S compact.",
+    "SourceClosed↔LSC and y∈S∩effectiveDomain feed actual A.3. Its returned minimum is finite because S⊆effectiveDomain and SourceProper excludes bottom.",
+    "For q outsideS, f(y)<f(q), hence p minimizes globally. Actual Minimum growth atp and λ>0 force any other minimizer to coincide."
+  ],
+  "proof_route_delta": "Direct compactness of one nonempty sublevel replaces explicit global coercivity-limit derivation. It proves exactly the compactness needed by A.3 from source premises; does not add compactness/coercivity assumptions. Uniqueness uses quantitative Minimum growth rather than a separate strict-convexity theorem. Preserve source and implementation graphs distinctly.",
+  "current_dependencies": [
+    {
+      "path": "BanditRLProof/OnlineWeierstrassExtended.lean",
+      "sha256": "290bd822307ce7607330d9d505a48d5f1757f7ac8c7095733541b4086acffb05",
+      "status": "current integrated prerequisite with separate bounded local acceptance"
+    },
+    {
+      "path": "BanditRLProof/OnlineStrongConvexMinimum.lean",
+      "sha256": "55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317",
+      "status": "current integrated prerequisite with separate bounded local acceptance"
+    },
+    {
+      "path": "BanditRLProof/OnlineStrongConvexSourceSubgradient.lean",
+      "sha256": "72ac5b8037aefbb68e8e213cd808bc4892d45f6b11d3dfe00639c839b4c734a9",
+      "status": "current integrated prerequisite with separate bounded local acceptance"
+    }
+  ],
+  "canaries": {
+    "path": "Tests/OnlineStrongConvexAttainmentCanary.lean",
+    "sha256": "2a8c5ad2c5bfc70017591ed5c74529aea8dfb0a446c6cc283963e0f1f246babf",
+    "declarations": [
+      "halfline_quadratic_unique_attainment",
+      "zero_curvature_affine_has_no_minimum"
+    ],
+    "positive": "Unbounded closed halfline quadratic (x−2)^2/2 with top outside, λ=1, actual support at nonminimum0; unique minimum2 via real theorem call.",
+    "negative": "Proper closed affine objective with global support and λ=0 has no minimizer, discriminating strictpositive modulus."
+  },
+  "boundary": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone.",
+  "target_freeze": {
+    "source_rows": 73,
+    "effective_targets": 172,
+    "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "all_targets_retained": true
+  },
+  "current_static_review_sha256": "3e73f06c63030cf7cd6d64212a25fc7f5aa2898e6a1186f69a30b3aad48d6cfb",
+  "current_focused": {
+    "validation_file": "c2-literal-theorem6-9-focused-current-v1/validation.json",
+    "validation_sha256": "f645bc4f6fe364a1d612dfa2d5b73b65c14feb449c1da9bd7e8fd48d9c367b4d",
+    "review_file": "c2-literal-theorem6-9-focused-independent-review-v1.json",
+    "review_sha256": "d89f72721bf4e59631a09515afff5801de149bf8c97a673e2e294829ce962333",
+    "all_five_actual_exit_zero": true,
+    "normalized_six_streams": [
+      {
+        "file": "core-TYPE.txt",
+        "bytes": 600146,
+        "sha256": "420034a20a799e7b81c7cca995c7538528704f96e326dc3b8bc69f3cb65b532d",
+        "historical_record_sha256": "420034a20a799e7b81c7cca995c7538528704f96e326dc3b8bc69f3cb65b532d",
+        "historical_record_bytes": 600146,
+        "equal": true
+      },
+      {
+        "file": "core-VALUE.txt",
+        "bytes": 252158335,
+        "sha256": "add87df16565492bba99bd77a4e72ce2fe13d57eedabd2aefa6f58e6751878d4",
+        "historical_record_sha256": "add87df16565492bba99bd77a4e72ce2fe13d57eedabd2aefa6f58e6751878d4",
+        "historical_record_bytes": 252158335,
+        "equal": true
+      },
+      {
+        "file": "positive-TYPE.txt",
+        "bytes": 54798,
+        "sha256": "5667d47045f3d22e090324c39a2e0fef0cb17ed253668cefaa0799b041e9f589",
+        "historical_record_sha256": "5667d47045f3d22e090324c39a2e0fef0cb17ed253668cefaa0799b041e9f589",
+        "historical_record_bytes": 54798,
+        "equal": true
+      },
+      {
+        "file": "positive-VALUE.txt",
+        "bytes": 1031053624,
+        "sha256": "ee2a2a5159c13d4033d11564705a7e3b151634d6dfc3aacf72747bd481c0d042",
+        "historical_record_sha256": "ee2a2a5159c13d4033d11564705a7e3b151634d6dfc3aacf72747bd481c0d042",
+        "historical_record_bytes": 1031053624,
+        "equal": true
+      },
+      {
+        "file": "zero-TYPE.txt",
+        "bytes": 111235,
+        "sha256": "4b705b0690e7014c2a813bc9a2782954a837486602937c1b08138742d697df66",
+        "historical_record_sha256": "4b705b0690e7014c2a813bc9a2782954a837486602937c1b08138742d697df66",
+        "historical_record_bytes": 111235,
+        "equal": true
+      },
+      {
+        "file": "zero-VALUE.txt",
+        "bytes": 20051444,
+        "sha256": "355a74edeb7c36f65401d0281b862a4d2ad4d53ddd1d314a759f4ce37d692999",
+        "historical_record_sha256": "355a74edeb7c36f65401d0281b862a4d2ad4d53ddd1d314a759f4ce37d692999",
+        "historical_record_bytes": 20051444,
+        "equal": true
+      }
+    ],
+    "historical_scope": "Actual scratch compiled report digests, not fixture or canonical replay. No oldlarge stream read/copy. Current each full expression captured once.",
+    "all_six_match_actual_historical_scratch_report": true,
+    "axioms_each": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "inputs_actual_prepost_unchanged": true,
+    "structural_probe_limits": "Binder-name operand checks require actual compiled candidate review. Coordinate finite objective/base checked for f/e and e/y occurrence only, not complete expected-lambda equality. Full normalized VALUE retains implicit instances and derived terms; separate operands are bounded binder/head/constant summaries, without expected-instance equality assertions. No source/BODY acceptance inferred.",
+    "provider_and_canary_review": "Independent actual compiled BODY review checks four genuine providers, literal hsub Exists flow, positive12-argument parent application as first conjunction, and negative zero-curvature result without parent invocation. Bounded structural probes are not complete implicit-instance equality proofs.",
+    "huge_streams_private_only": true
+  },
+  "authorship_snapshot": {
+    "compiled_claim": true,
+    "package_accepted": false,
+    "chapter_accepted": false
+  },
+  "external_evidence_policy": "Historical paths identify externally retained private evidence, not repository links. Current compact execution digests are bound in current_focused after actual focused review; huge streams stay private."
+}

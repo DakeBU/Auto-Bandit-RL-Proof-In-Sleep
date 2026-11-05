@@ -344,6 +344,39 @@
     return section;
   };
 
+  const exactStatementRequests = new Map();
+  const loadExactStatement = (source, nodeId) => {
+    if (typeof source !== "string" || !/^statements\/[0-9a-f]{32}\.json$/.test(source)) {
+      return Promise.reject(new Error("Invalid exact statement reference"));
+    }
+    let request = exactStatementRequests.get(source);
+    if (!request) {
+      request = fetch(source).then((response) => {
+        if (!response.ok) throw new Error("Exact statement could not be loaded");
+        return response.json();
+      }).then((payload) => {
+        const statements = payload?.statements;
+        if (payload?.schema_version !== 1 || !statements || Array.isArray(statements) ||
+            typeof statements !== "object" || !Object.entries(statements).length ||
+            !Object.entries(statements).every(([id, text]) =>
+              id.startsWith("declaration:") && typeof text === "string" && text.length > 0)) {
+          throw new Error("Invalid exact statement payload");
+        }
+        return statements;
+      });
+      exactStatementRequests.set(source, request);
+    }
+    return request.then((statements) => {
+      if (!Object.prototype.hasOwnProperty.call(statements, nodeId)) {
+        throw new Error("Exact declaration missing from statement payload");
+      }
+      return statements[nodeId];
+    }).catch((error) => {
+      if (exactStatementRequests.get(source) === request) exactStatementRequests.delete(source);
+      throw error;
+    });
+  };
+
   const renderDetail = () => {
     const node = nodes.get(selectedId);
     if (!node) return;
@@ -371,13 +404,43 @@
       detail.append(meta);
     }
 
-    if (node.statement) {
+    if (node.statement || node.statement_source) {
       const statement = create("details", "lean-graph-statement");
       statement.append(create("summary", "", "Exact indexed Lean statement"));
       const pre = create("pre", "lean-code");
       pre.tabIndex = 0;
-      pre.append(create("code", "", node.statement));
+      const code = create("code", "", node.statement || "");
+      pre.append(code);
       statement.append(pre);
+      if (!node.statement && node.statement_source) {
+        pre.hidden = true;
+        const status = create("p", "", "Open to load the exact statement.");
+        status.setAttribute("role", "status");
+        const retry = create("button", "button", "Retry exact statement");
+        retry.type = "button";
+        retry.hidden = true;
+        statement.append(status, retry);
+        let loading = false;
+        const load = () => {
+          if (loading || node.statement) return;
+          loading = true;
+          retry.hidden = true;
+          status.textContent = "Loading exact statement…";
+          loadExactStatement(node.statement_source, node.id).then((text) => {
+            if (!statement.isConnected || selectedId !== node.id || nodes.get(node.id) !== node) return;
+            node.statement = text;
+            code.textContent = text;
+            pre.hidden = false;
+            status.hidden = true;
+          }).catch(() => {
+            if (!statement.isConnected || selectedId !== node.id || nodes.get(node.id) !== node) return;
+            status.textContent = "Exact statement unavailable. Retry or open the reader / Lean card below.";
+            retry.hidden = false;
+          }).finally(() => { loading = false; });
+        };
+        statement.addEventListener("toggle", () => { if (statement.open) load(); });
+        retry.addEventListener("click", load);
+      }
       detail.append(statement);
     }
 

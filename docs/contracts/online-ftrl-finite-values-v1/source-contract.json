@@ -1,0 +1,430 @@
+{
+  "status": "COMPILED_FINITE_BRANCH_SOURCE_CONTRACT_GATES_AND_READER_PENDING",
+  "source": {
+    "source": "Orabona arXiv:1912.13213v10, printed100/PDF112, Lemma7.1",
+    "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "target": "dependency:Lemma7.1 /effective_targets/133",
+    "child": "dependency:FTRL7.1-wellformedness /effective_targets/168",
+    "scope": "Finite-used-values equality, regularizer representation invariance and coupled-prefix independence. Source losses remain extended-real with possible top at unused points. Not fullB7 or all source algorithm consumers.",
+    "zero_horizon": "No hT binder. A at T0 is the attained initial minimum equality; C at T0 has empty prefix and returns supplied terminal z. Never infer xPrime0=x0 in C at zero.",
+    "header_policy": "Keep all V2 binders/conclusions exact. Source closedness and full supplied argmin run may be unused in telescoping algebra but remain explicitly source premises. Any proposed signature change requires new version and review.",
+    "proof_status": "Production and four canaries independently compiled and audited at the preserved5b153 epoch. Exact source pins are carried through reviewed main merge ad2aafb8. Combined merged-root/Tests gates and actual reader acceptance remain pending."
+  },
+  "ownership": {
+    "owning_module": "BanditRLProof/OnlineFTRLFiniteIdentity.lean",
+    "public_namespace": "BanditRL.OnlineFTRL",
+    "public_declarations": [
+      "BanditRL.OnlineFTRL.lemma7_1_finite_values",
+      "BanditRL.OnlineFTRL.ftrl_regularizer_restriction_invariance",
+      "BanditRL.OnlineFTRL.ftrl_terminal_regularizer_coupled_run"
+    ],
+    "canary_module": "Tests/OnlineFTRLFiniteIdentityCanary.lean",
+    "canary_namespace": "BanditRL.OnlineFTRLCanary",
+    "canonical_reader_chapter": "online-ogd",
+    "root_import": "BanditRLProof.lean",
+    "test_root_import": "Tests.lean",
+    "public_contract_path": "docs/contracts/online-ftrl-finite-values-v1/source-contract.json",
+    "reader_classification": "Explicit finite-used-values source branch plus representation/coupling interfaces; final source card wording requires independent reader review. No direct unrestricted source-restatement badge implied.",
+    "teaching_route": "Keep existing seven curated previews. Add additional mathematical notes only after actual proof compilation and publication review.",
+    "project_boundary": "Same shared library/toolchain/graph. No per-book project or duplicated global definitions."
+  },
+  "statement_seal_file": "c2-lemma7-1-statement-seal-v1/freeze-receipt.json",
+  "statement_seal_sha256": "c633343a425c04043d692b78b1b03e9a94d4146db828b3bc7bbd80b375cbe42f",
+  "exact_headers": [
+    {
+      "id": "finite_used_values",
+      "declaration_text": "theorem lemma7_1_finite_values\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d)))\n    (hVX : V ⊆ X) (hVclosed : IsClosed V) (hV : V.Nonempty)\n    (psi : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (hbot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (u : EuclideanSpace ℝ (Fin d)) (hu : u ∈ X)\n    (hx : ∀ t ≤ T, x t ∈ V)\n    (hmin : ∀ t ≤ T, IsMinOn\n      (fun v => (psi t v : EReal) + ∑ i ∈ Finset.range t, loss i v) V (x t))\n    (hFfinite : ∀ t ≤ T,\n      (psi t (x t) : EReal) + ∑ i ∈ Finset.range t, loss i (x t) ≠ ⊤)\n    (hplayed : ∀ t < T, loss t (x t) ≠ ⊤)\n    (hcomparator : ∀ t < T, loss t u ≠ ⊤) :\n    let F := fun t v => (psi t v : EReal) + ∑ i ∈ Finset.range t, loss i v\n    (∑ t ∈ Finset.range T, ((loss t (x t)).toReal - (loss t u).toReal)) =\n      psi T u - sInf (psi 0 '' V) +\n      (∑ t ∈ Finset.range T,\n        ((F t (x t)).toReal - (F (t + 1) (x (t + 1))).toReal +\n          (loss t (x t)).toReal)) +\n      (F T (x T)).toReal - (F T u).toReal",
+      "sha256": "62e5cd8330a3c4ce4edd0a6be6567b661f67803d7bc26ca0af55cbe0733d768d"
+    },
+    {
+      "id": "regularizer_restriction_invariance",
+      "declaration_text": "theorem ftrl_regularizer_restriction_invariance\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d))) (hVX : V ⊆ X)\n    (psi psi' : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (heq : ∀ t ≤ T, ∀ v ∈ X, psi t v = psi' t v) :\n    let F := fun t v => (psi t v : EReal) + ∑ i ∈ Finset.range t, loss i v\n    let F' := fun t v => (psi' t v : EReal) + ∑ i ∈ Finset.range t, loss i v\n    (∀ t ≤ T, ∀ v ∈ X, F t v = F' t v) ∧\n    (∀ t ≤ T, ∀ p ∈ V, IsMinOn (F t) V p ↔ IsMinOn (F' t) V p) ∧\n    sInf (psi 0 '' V) = sInf (psi' 0 '' V)",
+      "sha256": "72e59ec731d289af80e7a640440753054209f2703291b061af42d3a2162b4ec5"
+    },
+    {
+      "id": "terminal_regularizer_coupled_run",
+      "declaration_text": "theorem ftrl_terminal_regularizer_coupled_run\n    (d T : ℕ)\n    (X V : Set (EuclideanSpace ℝ (Fin d))) (hVX : V ⊆ X)\n    (psi psi' : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (heq : ∀ t < T, ∀ v ∈ X, psi t v = psi' t v)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (hx : ∀ t < T, x t ∈ V)\n    (hmin : ∀ t < T, IsMinOn\n      (fun v => (psi t v : EReal) + ∑ i ∈ Finset.range t, loss i v) V (x t))\n    (z : EuclideanSpace ℝ (Fin d)) (hz : z ∈ V)\n    (hzmin : IsMinOn\n      (fun v => (psi' T v : EReal) + ∑ i ∈ Finset.range T, loss i v) V z) :\n    let x' := fun t => if t = T then z else x t\n    (∀ t < T, x' t = x t) ∧\n    (∀ t ≤ T, x' t ∈ V ∧ IsMinOn\n      (fun v => (psi' t v : EReal) + ∑ i ∈ Finset.range t, loss i v) V (x' t))",
+      "sha256": "d012e492185f11a485a72f4e5b44e3b7d3b1b14371a90162f44b097b925ec956"
+    }
+  ],
+  "atomic_binders": {
+    "atomic_binders_A": [
+      {
+        "binder": "d",
+        "classification": "SOURCE",
+        "reason": "finite-dimensional source context"
+      },
+      {
+        "binder": "T",
+        "classification": "SOURCE",
+        "reason": "natural horizon including zero; zero endpoint retained after independent source review found no printed positive-horizon premise."
+      },
+      {
+        "binder": "X",
+        "classification": "SOURCE",
+        "reason": "source regularizer/comparator domain"
+      },
+      {
+        "binder": "V",
+        "classification": "SOURCE",
+        "reason": "constraint set"
+      },
+      {
+        "binder": "hVX",
+        "classification": "SOURCE",
+        "reason": "literal V subset X"
+      },
+      {
+        "binder": "hVclosed",
+        "classification": "SOURCE",
+        "reason": "literal closed V; retained even if not used by telescope"
+      },
+      {
+        "binder": "hV",
+        "classification": "SOURCE",
+        "reason": "literal nonempty V"
+      },
+      {
+        "binder": "psi",
+        "classification": "TYPING",
+        "reason": "real regularizer representation on ambient space, restriction/backtransport required; source functions live on X, so mandatory extension existence/restriction/backtransport discharges this representation choice."
+      },
+      {
+        "binder": "loss",
+        "classification": "SOURCE",
+        "reason": "extended-real losses"
+      },
+      {
+        "binder": "hbot",
+        "classification": "SOURCE",
+        "reason": "literal exclusion of bottom on included losses at every point"
+      },
+      {
+        "binder": "x",
+        "classification": "SOURCE",
+        "reason": "given source run through terminal"
+      },
+      {
+        "binder": "u",
+        "classification": "SOURCE",
+        "reason": "source comparator"
+      },
+      {
+        "binder": "hu",
+        "classification": "SOURCE",
+        "reason": "u in X, not necessarily V"
+      },
+      {
+        "binder": "hx",
+        "classification": "SOURCE",
+        "reason": "selected point membership for every t≤T"
+      },
+      {
+        "binder": "hmin",
+        "classification": "SOURCE",
+        "reason": "source supplied minimizer inequalities for every t≤T"
+      },
+      {
+        "binder": "hFfinite",
+        "classification": "RULED",
+        "reason": "B7 branch finite cumulative values at selected points; finite branch qualification under frozen dependency:FTRL7.1-wellformedness /effective_targets/168, joined by target133 and explicitly authorized finite-used-values scope. Not asserted as a printed source premise."
+      },
+      {
+        "binder": "hplayed",
+        "classification": "RULED",
+        "reason": "B7 branch finite played losses; finite branch qualification under frozen dependency:FTRL7.1-wellformedness /effective_targets/168, joined by target133 and explicitly authorized finite-used-values scope. Not asserted as a printed source premise."
+      },
+      {
+        "binder": "hcomparator",
+        "classification": "RULED",
+        "reason": "B7 branch finite comparator losses; finite branch qualification under frozen dependency:FTRL7.1-wellformedness /effective_targets/168, joined by target133 and explicitly authorized finite-used-values scope. Not asserted as a printed source premise."
+      }
+    ],
+    "atomic_binders_B": [
+      {
+        "binder": "d",
+        "classification": "TYPING",
+        "reason": "Euclidean ambient dimension for the canonical representation interface."
+      },
+      {
+        "binder": "T",
+        "classification": "TYPING",
+        "reason": "Finite index bound, all natural horizons."
+      },
+      {
+        "binder": "X",
+        "classification": "TYPING",
+        "reason": "Domain on which two ambient representations agree."
+      },
+      {
+        "binder": "V",
+        "classification": "TYPING",
+        "reason": "Set on which minimizer predicates are compared."
+      },
+      {
+        "binder": "hVX",
+        "classification": "RULED",
+        "reason": "Explicit V⊆X premise for the representation interface, not a new source theorem."
+      },
+      {
+        "binder": "psi",
+        "classification": "TYPING",
+        "reason": "First total real representation."
+      },
+      {
+        "binder": "psi'",
+        "classification": "TYPING",
+        "reason": "Second total real representation."
+      },
+      {
+        "binder": "loss",
+        "classification": "TYPING",
+        "reason": "Shared extended-real losses; this equality interface needs no finiteness or bottom restriction."
+      },
+      {
+        "binder": "heq",
+        "classification": "RULED",
+        "reason": "Explicit equality-on-X premise through T; exact representation-invariance claim, not an assumption added to source lemma."
+      }
+    ],
+    "atomic_binders_C": [
+      {
+        "binder": "d",
+        "classification": "SOURCE",
+        "reason": "Finite-dimensional Euclidean context."
+      },
+      {
+        "binder": "T",
+        "classification": "SOURCE",
+        "reason": "Natural horizon; zero case has empty prefix and supplied z only."
+      },
+      {
+        "binder": "X",
+        "classification": "SOURCE",
+        "reason": "Source regularizer domain."
+      },
+      {
+        "binder": "V",
+        "classification": "SOURCE",
+        "reason": "Feasible set."
+      },
+      {
+        "binder": "hVX",
+        "classification": "SOURCE",
+        "reason": "Feasible set lies in source domain."
+      },
+      {
+        "binder": "psi",
+        "classification": "TYPING",
+        "reason": "Total representation of original source regularizers, subject to extension/restriction mapping."
+      },
+      {
+        "binder": "psi'",
+        "classification": "TYPING",
+        "reason": "Total representation of changed terminal regularizers."
+      },
+      {
+        "binder": "loss",
+        "classification": "SOURCE",
+        "reason": "Same loss sequence for both coupled runs; no finite-value conclusion is asserted by C."
+      },
+      {
+        "binder": "heq",
+        "classification": "RULED",
+        "reason": "Reviewed prefix agreement on X at t<T expresses changing only the terminal regularizer."
+      },
+      {
+        "binder": "x",
+        "classification": "SOURCE",
+        "reason": "Chosen original prefix."
+      },
+      {
+        "binder": "hx",
+        "classification": "SOURCE",
+        "reason": "Each selected prefix point is feasible; IsMinOn alone does not contain membership."
+      },
+      {
+        "binder": "hmin",
+        "classification": "SOURCE",
+        "reason": "Given argmin inequalities for each prefix objective; does not construct an optimizer."
+      },
+      {
+        "binder": "z",
+        "classification": "RULED",
+        "reason": "Explicit changed-terminal selection for reviewed coupled-run interpretation."
+      },
+      {
+        "binder": "hz",
+        "classification": "RULED",
+        "reason": "Feasibility of supplied changed-terminal minimizer."
+      },
+      {
+        "binder": "hzmin",
+        "classification": "RULED",
+        "reason": "Supplied terminal minimizer inequality for changed regularizer; no automatic attainment or unique-choice assertion."
+      }
+    ]
+  },
+  "source_proof_coverage": {
+    "file": "c2-literal-lemma7-1-source-proof-coverage-v2.json",
+    "sha256": "c6ae0347508436336a84ca23e55ca85ece296f1d6f6ec8e58be4ce75b00a4f7e",
+    "root_review_sha256": "79bd71da9237da173f40866fe8d1f9f451b419092924263e69f0df363766dd09"
+  },
+  "proof_nodes": [
+    {
+      "id": "EXTENSION_PROVIDER",
+      "visibility": "private proof ingredient",
+      "requirement": "Define arbitrary real extension of each source r_t:X→R with Function.extend Subtype.val (r_t) zero. Prove restriction exactly via Subtype.val_injective.extend_apply; no new public premise."
+    },
+    {
+      "id": "SOURCE_BACKTRANSPORT",
+      "visibility": "private proof ingredient and explicit source mapping certificate",
+      "requirement": "Show source subtype objective equals extended objective at every v∈X. Transport selected membership/minimality on V, cumulative and played/comparator finite conditions, initial image/minimum and final equality. Use B for any alternate total extension. The existence/restriction proof is required in addition to B."
+    },
+    {
+      "id": "FINITE_INTERPRETATION",
+      "visibility": "private proof ingredient",
+      "requirement": "Derive cumulative no-bottom from hbot and finite real regularizers. Combine hFfinite with no-bottom for F_t(x_t); combine hplayed/hcomparator with hbot for losses; derive F_T(u) finite from comparator finite prefix. Prove coe(toReal value)=value at each used point, explicitly showing the final real equality represents the lawful finite source equality. Do not rely on toReal(top)=0 defaults."
+    },
+    {
+      "id": "COMPARATOR_PREFIX",
+      "visibility": "private local lemma or induction",
+      "requirement": "Finite comparator sum equals coercion of the real-part sum, using EReal.coe_toReal/coe_add and Finset.sum_range_succ. No global finite-loss assumption or crosspoint finiteness added."
+    },
+    {
+      "id": "INITIAL_MINIMUM",
+      "visibility": "private proof ingredient",
+      "requirement": "F0=coe psi0; hmin0 and hx0 imply psi0(x0) attains minimum on V. Exhibit nonempty image and BddBelow using this attained lower bound, then csInf_le/le_csInf or IsLeast route gives sInf(image)=psi0(x0). Preserve u outside V."
+    },
+    {
+      "id": "SOURCE_TELESCOPE_A",
+      "visibility": "public sealed theorem A",
+      "requirement": "Use Finset.sum_range_sub' on a_t=(F_t(x_t)).toReal, distribute finite real sums, substitute attained initial minimum and comparator expansion. Preserve strict-past indexing, psi_T (source psi_(T+1)) and terminal difference. Existing inclusive finite_regret_identity is not a proof parent if unused."
+    },
+    {
+      "id": "RESTRICTION_B",
+      "visibility": "public sealed representation theorem B",
+      "requirement": "Pointwise F equality on X, transport IsMinOn using membership and equality on V, and Set.image_congr for initial sInf. Do not claim this alone constructs a source extension."
+    },
+    {
+      "id": "COUPLED_PREFIX_C",
+      "visibility": "public sealed theorem C",
+      "requirement": "For t<T, t≠T gives unchanged xPrime_t and heq transports its minimizer property. At t=T use hz/hzmin. Zero horizon handled by terminal case, without uniqueness or uncoupled-choice equality."
+    }
+  ],
+  "current_evidence": {
+    "production_candidate_receipt_sha256": "f9877a005fc19cf7c3c3800ecc19226ea5fdb6bc39f22368aa31997afe7f1d30",
+    "production_static_review_sha256": "f3d4982519a12f88c728ce577ed83151598f89769fd09ea658b8ceb0745e07f9",
+    "independent_compiled_audit": null,
+    "canary_freeze": null,
+    "canary_compilation": null,
+    "full_project_gates": null,
+    "actual_reader_acceptance": null
+  },
+  "failure_history": "Author attempts01/02/04 were implementation-only rewrite/coercion failures; all snapshots/logs/maps retained. Attempt05 actual0 with unchanged inputs/packages. No source target or header changed.",
+  "boundary": "This establishes the finite-used-values branch and explicitly coupled prefix semantics. Other B7 regimes remain separate, including lawful infinite-played cases, one-sided +∞ comparator cases, and undefined infinity subtraction. This list is not exhaustive; a source-faithful exhaustive classification and applicable consumer obligations remain required. No automatic existence of an argmin run, algorithm-specific terminal bound, complete Lemma 7.1/B7, Chapter 2 or book completion is asserted.",
+  "large_evidence_policy": "Only compact exact digests and portable artifact identifiers go into public contract; large expressions and machine paths remain private. Authorship-time evidence remains immutable and later gates are separate receipts.",
+  "classification_precision": "A is the explicit finite-used-values source branch. B/C permit arbitrary EReal including bottom as reviewed representation/coupling generalizations. C loss SOURCE ledger tag names inherited role only, not exact codomain equality.",
+  "boundary_scope": "The boundary field describes the package collectively. Per-declaration reader boundaries distinguish A finite equality, B representation invariance, and C coupled-run validity; no cross-attribution.",
+  "proposal_header_provenance": [
+    {
+      "id": "finite_used_values",
+      "proposal_header_sha256": "d76846870d40d0345fa1e6706c598a3f94250e74fa40a51fe72286a146097145"
+    },
+    {
+      "id": "regularizer_restriction_invariance",
+      "proposal_header_sha256": "9d62d9a3cd6dec870495d3d127bfcb44280a5d1eeba509e3f79a1d056c960506"
+    },
+    {
+      "id": "terminal_regularizer_coupled_run",
+      "proposal_header_sha256": "8e45467c0829ff153ecdf340f13375a731959dfb267997a1cc378c364b9779e4"
+    }
+  ],
+  "public_namespace": "BanditRL.OnlineFTRL",
+  "header_binding": "Canonical sealed declaration-only LF strings and hashes are separate from production physical RAW bytes. Header equality uses the explicit CRLF→LF transport recorded in source_byte_transport; earlier read_text comparisons do not prove physical RAW substring identity.",
+  "current_production_audit": {
+    "review": "c2-lemma7-1-production-compiled-independent-review-v1.json",
+    "sha256": "b10c03a492098346c791ef6462122927c0257c5a9c0709cc143cf08d9efe952e",
+    "validation_sha256": "6881f08bdf26217e379f605d05a26a0ed147de656b7b111fdbe5d139020c2c7a",
+    "scope": "Nine declarations, complete current streams, actual private mapping and A18 bridge call, standard axioms. Initial reserved-identifier audit failure and identifier-only repair retained."
+  },
+  "current_canary_status": {
+    "seal_sha256": "f7977641fff09722682ae005c94438402eec0d3cf09d15c25f405e15640305b8",
+    "candidate_receipt_sha256": "74ae003dd4047a7d33b0a3419c1949f358160deeddb4caef4001d4db1d8c288f",
+    "author_actual_exit": 0,
+    "independent_compiled_audit": "accepted",
+    "full_gate": "pending",
+    "UI": "pending",
+    "review_sha256": "e9b60a3c1ea884d0db4220aecf742ae8c232d42399eabd8cadcecca9b4668ada",
+    "validation_sha256": "bf49195733c65bc36df80ee4ecdd7c2b01466d0e46cf3c1ce434940366194c9c",
+    "scope": "Four complete types and eight current TYPE/VALUE streams, five genuine full parent calls in specified conjunctions, standard axioms. Original build/header0 and audit1 retained; reviewed bounded V5 audit exited0. No historical whole-expression replay claim.",
+    "private_probe_failure_history": [
+      {
+        "session": 66973,
+        "chunk": "2f627e",
+        "exit": 1,
+        "meaning": "Original audit strictalpha differs at numeralinstanceproof; build/header0 retained"
+      },
+      {
+        "session": 57117,
+        "chunk": "d5d2f4",
+        "exit": 1,
+        "meaning": "Bounded original mismatch diagnostic, expectedthrow after saveddata"
+      },
+      {
+        "session": 90316,
+        "chunk": "3dd995",
+        "exit": 1,
+        "meaning": "V3 reserved at variable parserfailure beforestreams"
+      },
+      {
+        "session": 45353,
+        "chunk": "f57458",
+        "exit": 1,
+        "meaning": "V4 incorrectfrontend mkNatLit rawshape guard"
+      },
+      {
+        "session": 33614,
+        "chunk": "8750da",
+        "exit": 1,
+        "meaning": "Rawdiagnosticv1 Option.toString API failure"
+      },
+      {
+        "session": 75373,
+        "chunk": "4be171",
+        "exit": 1,
+        "meaning": "Rawdiagnosticv2 savedactualshape thenpreservedthrow"
+      },
+      {
+        "session": 88880,
+        "chunk": "4e8e8c",
+        "exit": 0,
+        "meaning": "SOURCEreviewedV5 correctedrawconstructor; allchecks0 andstreams emittedonce"
+      }
+    ]
+  },
+  "source_byte_transport": {
+    "production_raw_sha256": "2b47c8ae176b496edf438e61acaf0ba7dbc776a614208938325f599a8ffdb2e2",
+    "physical_CRLF_count": 237,
+    "canonical_LF_sha256": "a136323e048ec18bc45ad9315d05b7342bbe3eda307e13e93456b16c8a129588",
+    "comparison": "The sealed declaration-only LF strings match source only after explicit CRLF to LF replacement. This is not literal physical RAW header-byte identity. No source mutation is required.",
+    "predicted_git_blob_sha1": "86886fd11228b6379f6f59deb32e9cb001460c36",
+    "actual_commit_blob_check": "pending: verify actual staged and committed Git blob; prediction is not committed evidence",
+    "source_correction": {
+      "file": "c2-lemma7-1-production-EOL-transport-correction-review-v1.json",
+      "sha256": "ff9db81b30002bf6d7844657d04725ea027f905ccfcd7902c05e08176cd6558e"
+    },
+    "root_addendum": {
+      "file": "c2-lemma7-1-statement-seal-EOL-addendum-v1.json",
+      "sha256": "657237de9a420c6d0cbc2d36cd3166454fb022298dbccfc592706379720b38ac"
+    },
+    "canary": "Canary ba7a748770743c3726b812044daf7d9dfec01d73cf00aa2179d0c7e7b6200843 is physical LF and its four sealed headers match RAW bytes."
+  },
+  "merge_transport": {
+    "head": "ad2aafb8f7409e3d0189f09069fe1685512ba3d8",
+    "main": "aae274bd02f2291e98a289eb1f01f1023e0ae03e",
+    "review_sha256": "75c622faa1780a6ac0de52e03938d67dbfdc31dd37309af1c3c79742c1eb7bc6",
+    "source_pins_unchanged": true,
+    "combined_gate": "pending; focused review remains explicitly bound to prior epoch"
+  }
+}

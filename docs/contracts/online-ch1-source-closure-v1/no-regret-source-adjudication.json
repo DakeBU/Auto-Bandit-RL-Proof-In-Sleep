@@ -1,0 +1,182 @@
+{
+  "status": "INDEPENDENT_SOURCE_ADJUDICATION_ACCEPTED_DISTINCTION_AND_SEPARATE_REPAIR_PROPOSALS",
+  "reviewer": "source_review_resumed_v2_20261104",
+  "adjudication": {
+    "definition_is_false": false,
+    "definition_reading": "The source defines a no-regret criterion using an ordinary nonpositive limit for each fixed comparator. A definition can impose convergence; it is not a theorem asserting all sequences have a limit. Literal finite-real-limit reading is implemented separately by LimitNoRegret.",
+    "literal_source_universal_claim_present": "No explicit theorem that every bounded FTL stream has every fixed-comparator ordinary limit was found on inspected pages14-18. Theorem1.3 states only a finite best-comparator upper bound. The winning-game discussion uses best-in-hindsight regret.",
+    "original_false_claim_precisely": "For every infinite y:N-> [0,1], half-initial strict-past FTL satisfies forall u in [0,1], exists a<=0, R_T(u)/T -> a; equivalently, infer LimitNoRegret solely from its upper regret bound or upper-epsilon NoRegret. This is a stronger inferred claim, not the literal finite Theorem1.3.",
+    "classification": "REFUTED_INFERENCE_AND_SEMANTIC_NON_EQUIVALENCE; NOT blanket SOURCE_INVALID for the definition or Theorem1.3",
+    "definition_prose_tension": "If at most sublinear is interpreted only as an eventual upper condition, its identification with ordinary lim<=0 lacks a convergence premise. Preserve this mismatch rather than silently rewriting the source."
+  },
+  "counterexample": {
+    "theorem": "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction",
+    "external_assumptions": [],
+    "definitions": {
+      "observations": "y(0)=0; y(n+1)=1-y(floor(n/2)). One infinite horizon-independent deterministic binary stream.",
+      "predictor": "x(0)=1/2; x(t)=average(y(0),...,y(t-1)) for t>0.",
+      "regret": "R_T(u)=sum(t<T)(x(t)-y(t))^2 - sum(t<T)(u-y(t))^2; B_T minimizes the second sum over [0,1]."
+    },
+    "domain_evidence": "dyadicObservation_unit proves every observation lies in [0,1]; meanPredict_mem gives feasibility and meanPredict_prefix strict-past causality.",
+    "proof_body_audit": [
+      "Binary range follows by strong induction from y(n+1)=1-y(n/2).",
+      "Pair recursion gives prefix counts; empirical mean at H_n=4^(n+1)-1 is exactly2/3, while at L_n=2*4^n-1 it equals1/3-(1/3)/L_n. Both horizons tend to infinity.",
+      "The actual FTL decomposition is R_T(u)/T=B_T/T-(u-mean_T)^2 for T>0, with B_T/T ->0 by a two-sided bound (nonnegative actual FTL best regret and logarithmic upper bound).",
+      "If R_T(0)/T ->a, meanPredict_fixedRegret_limit_iff implies mean_T^2 -> -a. Subsequences force -a=4/9 and -a=1/9. norm_num and linarith discharge the contradiction.",
+      "The final conjunction independently supplies upper-epsilon NoRegret, B_T/T ->0, no finite real fixed-u=0 limit, and failure of LimitNoRegret."
+    ],
+    "derived_explicit_subsequence_limits": {
+      "R_Hn_zero_over_Hn": "-4/9",
+      "R_Ln_zero_over_Ln": "-1/9",
+      "status": "Mathematical consequence of the inspected decomposition and subsequence proofs; not newly elaborated Lean declarations."
+    },
+    "does_not_refute": [
+      "Finite Theorem1.3 upper bound 4+4 ln T",
+      "The definition as a stricter convergence criterion",
+      "Upper-epsilon no-regret",
+      "Ordinary zero limit of normalized best-in-hindsight regret",
+      "Conditional ordinary-limit theorem when empirical means converge"
+    ]
+  },
+  "seven_semantic_slots": {
+    "objects_spaces": "Source generic V subset R^d with real losses. Concrete obstruction uses V=[0,1], real predictions, squared losses, one binary observation stream. It fits the source guessing game. Generic Lean predicates allow arbitrary carrier X, an explicit extension.",
+    "quantifiers": "Source fixed u is independent of horizon. Upper property is forall u forall epsilon>0 exists N forall T>=N. Literal predicate is forall u exists finite a<=0 with convergence. Counterexample fixes u=0 and one infinite stream, enough to defeat universal convergence. No uniform-in-u threshold is assumed.",
+    "assumptions_regularity": "Concrete counterexample has no stochastic, IID, measurability or limiting empirical-mean assumption. Its [0,1] range is proved, not assumed. Conditional repair explicitly adds empirical-mean convergence; it is a mathematical restriction, not a hidden source premise.",
+    "conclusion_metric": "Upper-epsilon, ordinary fixed-comparator limit, and ordinary best-in-hindsight limit are distinct. Only the first and third hold unconditionally for this FTL; literal fixed-comparator convergence fails on the dyadic stream.",
+    "constants_normalization": "Source T>=1, initial1/2, bound4+4 ln T. Lean zero-based rounds t correspond to source t+1. High/low means2/3 and1/3 produce fixed-u=0 limits-4/9 and-1/9. T=0 totalization is irrelevant to asymptotic statements.",
+    "probability_feedback": "Deterministic pathwise source route allows adaptive adversarial observations. The explicit exogenous sequence is a permitted special case. Predictor uses only strict past; no future access, distribution or probability event enters.",
+    "boundary_exclusions": "No minimax claim, source-author endorsement, all-chapter closure or current compiler certification. Finite fixed-comparator convergence is retained only with an added convergence hypothesis or exact equivalent mean-convergence criterion."
+  },
+  "separate_corrected_targets": [
+    {
+      "id": "REPAIR-A-UPPER-CONVENTION",
+      "kind": "Proposed explicit definitional convention, not a silent source edit",
+      "statement": "For each fixed u in V and each epsilon>0, there exists N such that R_T(u)/T<=epsilon for every T>=N. Equivalently limsup R_T(u)/T<=0 in the extended-real sense.",
+      "hypotheses": "General V/loss/predictor with regret defined. To guarantee this property for the source FTL: one infinite y(t) in[0,1], x(0)=1/2, strict-past empirical-mean predictions.",
+      "constants": "For T>=1, R_T(u)<=B_T<=4+4 ln T for u in[0,1].",
+      "available_Lean": "NoRegret and meanPredict_noRegret; the limsup reformulation itself was not elaborated in this review.",
+      "approval": "Proposal only. Independent mathematical adequacy accepted here; author/user source-repair approval not established."
+    },
+    {
+      "id": "REPAIR-B-KEEP-LITERAL-ADD-CONVERGENCE",
+      "kind": "Restricted derived theorem preserving the literal criterion",
+      "statement": "If y:N-> [0,1] and its empirical means converge to m, then for every real fixed u, R_T(u)/T -> -(u-m)^2; hence LimitNoRegret on[0,1]. Moreover for bounded y, LimitNoRegret of actual half-initial FTL holds iff there exists m in[0,1] to which empirical means converge.",
+      "hypotheses": "One infinite bounded stream; actual half-initial strict-past FTL; empirical-mean convergence for the forward guarantee.",
+      "constants": "Exact limit -(u-m)^2, no changed finite regret constant.",
+      "available_Lean": "meanPredict_limitNoRegret_of_mean_converges and meanPredict_limitNoRegret_iff_mean_converges",
+      "approval": "Existing derived theorem signatures/bodies inspected. This added hypothesis must not be attributed to the unconditional source game."
+    },
+    {
+      "id": "PRESERVE-BEST-REGRET-ENDPOINT",
+      "kind": "Existing distinct theorem, not a replacement definition",
+      "statement": "For every infinite y:N->[0,1], actual half-initial FTL satisfies B_T/T ->0.",
+      "available_Lean": "meanPredict_bestRegret_average_tendsto_zero",
+      "boundary": "Best comparator varies with T; does not imply each fixed-comparator normalized regret converges."
+    }
+  ],
+  "prior_approval": {
+    "source_repair_approved": "NOT_ESTABLISHED",
+    "evidence": "research-wiki/integrations/ONLINE-CH1-FTL-OBSTRUCTION-INTEGRATION-20261025/source-review-initial.json",
+    "observed": "Prior independent source review explicitly says it is not source repair approval. Current main C1 reconciliation has sourceRepairApproved=false. No author approval was found in the bounded inspected evidence; no global absence claim.",
+    "original_source_obligation_retired": false
+  },
+  "exact_Lean_signatures": {
+    "BanditRL.OnlineLearning.dyadic_meanPredict_obstruction": "theorem dyadic_meanPredict_obstruction :\n    NoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation) ∧\n    Tendsto (fun T : ℕ => squaredBestRegret dyadicObservation\n      (meanPredict dyadicObservation) T / (T : ℝ)) atTop (nhds (0 : ℝ)) ∧\n    (¬ ∃ a : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - dyadicObservation t)^2)\n        (meanPredict dyadicObservation) 0 T / (T : ℝ)) atTop (nhds a)) ∧\n    ¬ LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - dyadicObservation t)^2)\n      (meanPredict dyadicObservation)",
+    "BanditRL.OnlineLearning.dyadic_empiricalMean_subsequences": "theorem dyadic_empiricalMean_subsequences :\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (4^(n + 1) - 1))\n      atTop (nhds ((2 : ℝ) / 3)) ∧\n    Tendsto (fun n : ℕ => empiricalMean dyadicObservation (2 * 4^n - 1))\n      atTop (nhds ((1 : ℝ) / 3))",
+    "BanditRL.OnlineLearning.meanPredict_limitNoRegret_iff_mean_converges": "theorem meanPredict_limitNoRegret_iff_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y) ↔\n      ∃ m ∈ Set.Icc (0 : ℝ) 1, Tendsto (empiricalMean y) atTop (nhds m)",
+    "BanditRL.OnlineLearning.meanPredict_fixedRegret_limit_iff": "theorem meanPredict_fixedRegret_limit_iff (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (u a : ℝ) :\n    Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds a) ↔\n    Tendsto (fun T : ℕ => (u - empiricalMean y T)^2) atTop (nhds (-a))",
+    "BanditRL.OnlineLearning.meanPredict_limitNoRegret_of_mean_converges": "theorem meanPredict_limitNoRegret_of_mean_converges (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) (m : ℝ)\n    (hm : Tendsto (empiricalMean y) atTop (nhds m)) :\n    (∀ u : ℝ, Tendsto (fun T : ℕ =>\n      comparatorRegret (fun t x => (x - y t)^2) (meanPredict y) u T / (T : ℝ))\n      atTop (nhds (-(u - m)^2))) ∧\n    LimitNoRegret (Set.Icc (0 : ℝ) 1) (fun t x => (x - y t)^2) (meanPredict y)",
+    "BanditRL.OnlineLearning.meanPredict_bestRegret_average_tendsto_zero": "theorem meanPredict_bestRegret_average_tendsto_zero (y : ℕ → ℝ)\n    (hy : ∀ t, y t ∈ Set.Icc (0 : ℝ) 1) :\n    Tendsto (fun T : ℕ => squaredBestRegret y (meanPredict y) T / (T : ℝ))\n      atTop (nhds (0 : ℝ))",
+    "BanditRL.OnlineLearning.limitNoRegret_implies_noRegret": "theorem limitNoRegret_implies_noRegret {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hL : LimitNoRegret V loss prediction) :\n    NoRegret V loss prediction",
+    "BanditRL.OnlineLearning.limitNoRegret_iff_noRegret_of_converges": "theorem limitNoRegret_iff_noRegret_of_converges {X : Type*} (V : Set X)\n    (loss : ℕ → X → ℝ) (prediction : ℕ → X)\n    (hc : ∀ u ∈ V, ∃ a : ℝ,\n      Tendsto (fun T : ℕ => comparatorRegret loss prediction u T / T) atTop (nhds a)) :\n    LimitNoRegret V loss prediction ↔ NoRegret V loss prediction"
+  },
+  "raw_main_bindings": {
+    "BanditRLProof/OnlineFTLOscillation.lean": {
+      "git_blob": "eae8b45a57cec3ad96204dbe1bbb682e8182705e",
+      "raw_sha256": "87665aface86fbca5265f4da0f6dfecf7348c82064c7648528fcd6267d0de9c6"
+    },
+    "BanditRLProof/OnlineNoRegretSemantics.lean": {
+      "git_blob": "718b283fc178abfa4f68bc86f8f5c8cedcf050c9",
+      "raw_sha256": "db7482a02bf4643ba3d4b15b29dd5a59418ea111763afeed45c51879b996e5a7"
+    },
+    "BanditRLProof/OnlineFTLLimitSemantics.lean": {
+      "git_blob": "eb28547256679b94e1bcbf32adc15590a33adcbf",
+      "raw_sha256": "8413f4409dfa5f7506f33cd6cfc6fb0c03f598f877dcbd2b4f0774356d377bf9"
+    },
+    "BanditRLProof/OnlineLearningAsymptotic.lean": {
+      "git_blob": "bcc026d9d8f1f8e1f1c3024ebad146c9d150505e",
+      "raw_sha256": "0caf208525b1b3e91e378b0a74338c7c26e581fbd1514c7ac9427d4f7e6b03e0"
+    },
+    "BanditRLProof/OnlineLearningFTL.lean": {
+      "git_blob": "300a68f4da5c96fa3f42dc40c2de4e45fc631b5b",
+      "raw_sha256": "ba31844fa0835745d290ab562f287a9f229af56e4086f7c74b1afcaea5824305"
+    },
+    "BanditRLProof/OnlineLearningRegret.lean": {
+      "git_blob": "10e3439ce3f433b8507265f87bd14f7a39bbc405",
+      "raw_sha256": "63c2d4697d52e61492ea4ea157d090059b8ab0f6814f47b5d4c8a561b656f90f"
+    },
+    "research-wiki/integrations/ONLINE-CH1-FTL-OBSTRUCTION-INTEGRATION-20261025/source-review-initial.json": {
+      "git_blob": "0dcb72f7120dfb031b44f05b8c36522d1b327ba9",
+      "raw_sha256": "890127e494b23667e59c5758775fc9da810d097e5c14bf853ed89b6694f5f925"
+    }
+  },
+  "validation_boundary": {
+    "proof_search": false,
+    "elaboration": false,
+    "new_Lean_or_source_edits": false,
+    "current_root_or_harness_gate": false,
+    "chapter_completion": false,
+    "review_method": "Direct pinned-PDF extraction plus visual PDF14 review; read exact current-main signatures and counterexample/limit proof bodies; independent mathematical seven-slot adjudication."
+  },
+  "schema_version": 1,
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "url": "https://arxiv.org/abs/1912.13213v10",
+    "pdf_url": "https://arxiv.org/pdf/1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "printed_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "pdf_pages": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "availability": "Public version URL. Reviewed PDF retained as external maintenance evidence under this exact digest; no personal local path published."
+  },
+  "projection_boundary": "Original independent adjudication status retained; new durable freeze is not self-approved.",
+  "private_origin": {
+    "artifact": "c1-noregret-source-adjudication-v1.json",
+    "sha256": "67fcc363af18a3d7eb0fd72561d4fe8bd803a13fe850a7bbf19ce57b2587220b",
+    "availability": "External retained maintenance evidence; digest is not a public download URL."
+  },
+  "successor_status": {
+    "current_proof_body_review": "pending",
+    "current_runtime_compile": "pending",
+    "current_canary": "pending",
+    "current_combined_root_tests_harness": "pending",
+    "current_site": "pending",
+    "current_reader_exposition": "pending",
+    "chapter_acceptance": "pending",
+    "book_acceptance": "pending",
+    "source_freeze": "SOURCE_FREEZE_PENDING_INDEPENDENT_REVIEW",
+    "source_object_inventory": "Source-only reviewer found no missing mandatory object; durable authored freeze unaccepted",
+    "current_statement_binding": "text fingerprints only; no elaboration",
+    "packet_commit": "not committed",
+    "packet_merge": "not merged",
+    "source_repair": "not required for literal definition; no replacement approved"
+  },
+  "source_repair_needed_for_literal_definition": false
+}
