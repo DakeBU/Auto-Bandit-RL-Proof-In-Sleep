@@ -13,3 +13,5 @@ The seven exact historical JSON files are pinned in the index. Historical absolu
 This repository inventory is distinct from the seven curated teaching previews. A preview is a reading aid, not the complete target list.
 
 [Local decisions for rows 168 and 133 at 236a2d45](row-168-133-acceptance-236a2d45.json) record the arithmetic-domain repair for Lemma 7.1, the coupled-prefix interpretation, and the checks on the shared library and Book graph. The literal source formula stays in the frozen inventory. Algorithm-specific terminal bounds and the Chapter 2 gate remain open.
+
+[Local decision for row 87 at c39bf303](row-87-local-acceptance-c39bf303.json) records the corrected last-iterate bound, per-round feasible attainment, the shared Book checks, and the four public examples. Row 167 points to this same repair. The optimistic update in row 86 and the Chapter 2 gate remain open.

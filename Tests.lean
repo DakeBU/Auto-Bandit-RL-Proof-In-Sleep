@@ -188,3 +188,4 @@ import Tests.OnlineFTRLFiniteIdentityCanary
 import Tests.OnlineFTRLSourceArithmeticCanary
 import Tests.OnlineFTLSelectorCanary
 import Tests.OnlineBTRLTerminalCanary
+import Tests.OnlineOptimisticFTRLCanary
