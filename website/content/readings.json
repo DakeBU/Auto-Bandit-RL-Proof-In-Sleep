@@ -8306,6 +8306,254 @@
         ],
         "boundary": "The later weighted Jensen step and the extension of KL to endpoints require additional proofs."
       }
+    },
+    {
+      "slug": "online-strong-monotonicity",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Theorem 4.3, first bullet: strong monotonicity and strong convexity",
+        "pages": "printed pp. 35–36 / PDF pp. 47–48",
+        "pdf_page": 47,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "f and dom f",
+          "meaning": "The extended value +∞ excludes points below the horizontal axis. Finite boundary points can still lack a supporting plane."
+        },
+        {
+          "term": "∂f and S",
+          "meaning": "A global subgradient bounds f at every query. S contains exactly the points admitting such a bound."
+        },
+        {
+          "term": "V and λ",
+          "meaning": "For the repaired theorem V is a convex subset of S and λ is a nonnegative modulus."
+        },
+        {
+          "term": "e and the norm",
+          "meaning": "Use e for coordinate pairings. Measure p−q in the original norm of E."
+        }
+      ],
+      "algorithm": {
+        "title": "Test the interpolation claim on the support carrier",
+        "kind": "Counterexample and repair of Theorem 4.3",
+        "steps": [
+          {
+            "title": "A convex function with a boundary jump",
+            "detail": "Along a chord with an interior endpoint, its interior has the quadratic value. Raising a boundary endpoint only increases the chord bound. A chord entirely on the boundary uses convexity of the maximum.",
+            "math": "\\operatorname{dom}f=\\{(s,t):t\\ge0\\}",
+            "fallback": "The real epigraph is convex, the objective is proper, and its effective domain is the closed upper half-plane. The real-valued restriction is convex there."
+          },
+          {
+            "title": "Which points have a global supporting plane?",
+            "detail": "Approach the boundary from above to test every proposed affine minorant. On the outer rays a downward vertical normal preserves the bound at every feasible query.",
+            "math": "\\partial f(s,0)=\\{(2s,b):b\\le0\\}\\quad (|s|\\ge1)",
+            "fallback": "At t>0 the only subgradient is 2p. At t=0 a subgradient exists precisely when |s|≥1, and then all of them are (2s,b) with b≤0."
+          },
+          {
+            "title": "Two supported endpoints with an unsupported midpoint",
+            "detail": "Use the full subgradient classification to decide existence. The two endpoints and the missing origin then disprove convexity of S.",
+            "math": "S=\\{t>0\\}\\cup\\{t=0,\\ |s|\\ge1\\}",
+            "fallback": "S consists of the open upper half-plane and the two boundary rays |s|≥1. The endpoints (−1,0) and (1,0) belong to S; their midpoint does not."
+          },
+          {
+            "title": "Every pair of supports passes the monotonicity test",
+            "detail": "Write each support as twice its point plus a vertical correction. The correction is nonpositive and its product with its own height is zero. The two remaining cross terms have the required signs.",
+            "math": "2\\lVert p-q\\rVert_2^2\\le\\langle g-h,p-q\\rangle",
+            "fallback": "For all p,q in S and every g∈∂f(p), h∈∂f(q), the pairing dominates twice the squared Euclidean distance."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineConvex.SupportCarrierExample.carrier_and_convexity",
+        "BanditRL.OnlineConvex.SupportCarrierExample.all_supports",
+        "BanditRL.OnlineConvex.SupportCarrierExample.support_carrier",
+        "BanditRL.OnlineConvex.SupportCarrierExample.every_pair_strongly_monotone",
+        "BanditRL.OnlineConvex.SupportCarrierExample.interpolation_fails",
+        "BanditRL.OnlineConvex.SupportCarrierExample.concrete_converse_counterexample",
+        "BanditRL.OnlineConvex.SupportCarrierExample.convex_carrier_equivalence"
+      ],
+      "source_theorems": [
+        {
+          "label": "A convex function with a boundary jump",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "\\operatorname{dom}f=\\{(s,t):t\\ge0\\}",
+          "fallback": "The real epigraph is convex, the objective is proper, and its effective domain is the closed upper half-plane. The real-valued restriction is convex there.",
+          "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. The real epigraph is convex, the objective is proper, and its effective domain is the closed upper half-plane. The real-valued restriction is convex there.",
+          "relationship": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞.",
+            "assumptions": "The explicitly defined objective uses the ordinary Euclidean norm and global affine minorants.",
+            "parameters": "Modulus 2 in the Euclidean plane.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "The real epigraph is convex, the objective is proper, and its effective domain is the closed upper half-plane. The real-valued restriction is convex there."
+          }
+        },
+        {
+          "label": "Which points have a global supporting plane?",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "\\partial f(s,0)=\\{(2s,b):b\\le0\\}\\quad (|s|\\ge1)",
+          "fallback": "At t>0 the only subgradient is 2p. At t=0 a subgradient exists precisely when |s|≥1, and then all of them are (2s,b) with b≤0.",
+          "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. At t>0 the only subgradient is 2p. At t=0 a subgradient exists precisely when |s|≥1, and then all of them are (2s,b) with b≤0.",
+          "relationship": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞.",
+            "assumptions": "The explicitly defined objective uses the ordinary Euclidean norm and global affine minorants.",
+            "parameters": "Modulus 2 in the Euclidean plane.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "At t>0 the only subgradient is 2p. At t=0 a subgradient exists precisely when |s|≥1, and then all of them are (2s,b) with b≤0."
+          }
+        },
+        {
+          "label": "Two supported endpoints with an unsupported midpoint",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "S=\\{t>0\\}\\cup\\{t=0,\\ |s|\\ge1\\}",
+          "fallback": "S consists of the open upper half-plane and the two boundary rays |s|≥1. The endpoints (−1,0) and (1,0) belong to S; their midpoint does not.",
+          "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. S consists of the open upper half-plane and the two boundary rays |s|≥1. The endpoints (−1,0) and (1,0) belong to S; their midpoint does not.",
+          "relationship": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞.",
+            "assumptions": "The explicitly defined objective uses the ordinary Euclidean norm and global affine minorants.",
+            "parameters": "Modulus 2 in the Euclidean plane.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "S consists of the open upper half-plane and the two boundary rays |s|≥1. The endpoints (−1,0) and (1,0) belong to S; their midpoint does not."
+          }
+        },
+        {
+          "label": "Every pair of supports passes the monotonicity test",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "2\\lVert p-q\\rVert_2^2\\le\\langle g-h,p-q\\rangle",
+          "fallback": "For all p,q in S and every g∈∂f(p), h∈∂f(q), the pairing dominates twice the squared Euclidean distance.",
+          "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. For all p,q in S and every g∈∂f(p), h∈∂f(q), the pairing dominates twice the squared Euclidean distance.",
+          "relationship": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞.",
+            "assumptions": "The explicitly defined objective uses the ordinary Euclidean norm and global affine minorants.",
+            "parameters": "Modulus 2 in the Euclidean plane.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "For all p,q in S and every g∈∂f(p), h∈∂f(q), the pairing dominates twice the squared Euclidean distance."
+          }
+        },
+        {
+          "label": "Evaluate the midpoint inequality",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "1>\\tfrac12+\\tfrac12-\\tfrac{2}{2}\\tfrac14\\cdot4=0",
+          "fallback": "The endpoints (−1,0),(1,0) and their midpoint have value 1. At weight 1/2 and modulus 2 the proposed upper bound is 0, so the midpoint violates it.",
+          "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. The endpoints (−1,0),(1,0) and their midpoint have value 1. At weight 1/2 and modulus 2 the proposed upper bound is 0, so the midpoint violates it.",
+          "relationship": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞.",
+            "assumptions": "The explicitly defined objective uses the ordinary Euclidean norm and global affine minorants.",
+            "parameters": "Modulus 2 in the Euclidean plane.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "The endpoints (−1,0),(1,0) and their midpoint have value 1. At weight 1/2 and modulus 2 the proposed upper bound is 0, so the midpoint violates it."
+          }
+        },
+        {
+          "label": "Why endpoint monotonicity alone is insufficient",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "\\langle (2,0)-(-2,0),(1,0)-(-1,0)\\rangle=8=2\\cdot4",
+          "fallback": "This proper convex function has a globally 2-strongly monotone subdifferential on S. Two supported endpoints violate the chord bound at their midpoint.",
+          "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. This proper convex function has a globally 2-strongly monotone subdifferential on S. Two supported endpoints violate the chord bound at their midpoint.",
+          "relationship": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞.",
+            "assumptions": "The explicitly defined objective uses the ordinary Euclidean norm and global affine minorants.",
+            "parameters": "Modulus 2 in the Euclidean plane.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "This proper convex function has a globally 2-strongly monotone subdifferential on S. Two supported endpoints violate the chord bound at their midpoint."
+          }
+        },
+        {
+          "label": "Recover the equivalence on a convex supported carrier",
+          "pages": "Theorem 4.3, first bullet, printed pp. 35–36 / PDF pp. 47–48",
+          "pdf_page": 47,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=47",
+          "math": "\\lambda\\lVert p-q\\rVert_E^2\\le\\langle g-h,e(p-q)\\rangle",
+          "fallback": "The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E.",
+          "plain": "Let E be a real normed space with a linear coordinate equivalence e to Euclidean d-space. Let f:E→EReal be proper and convex, λ≥0, and V convex. Every point of V has a global subgradient of f in these coordinates. The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E.",
+          "relationship": "This is the convex-carrier repair of the converse. The segment stays inside V, where every point admits a global supporting plane.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Let E be a real normed space with a linear coordinate equivalence e to Euclidean d-space. Let f:E→EReal be proper and convex, λ≥0, and V convex. Every point of V has a global subgradient of f in these coordinates.",
+            "assumptions": "V is convex, λ≥0, f is proper and convex, and the subdifferential is nonempty everywhere on V. The coordinate equivalence e is linear and bijective.",
+            "parameters": "Dimension d, original norm on E and any λ≥0.",
+            "regret": "This is a convex-analysis statement.",
+            "guarantee": "The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Three points on the boundary",
+        "intro": "Take the points (−1,0), (0,0), and (1,0) in the closed upper half-plane.",
+        "steps": [
+          {
+            "title": "Two supported endpoints with an unsupported midpoint",
+            "detail": "Use the full subgradient classification to decide existence. The two endpoints and the missing origin then disprove convexity of S.",
+            "math": "S=\\{t>0\\}\\cup\\{t=0,\\ |s|\\ge1\\}",
+            "fallback": "S consists of the open upper half-plane and the two boundary rays |s|≥1. The endpoints (−1,0) and (1,0) belong to S; their midpoint does not."
+          },
+          {
+            "title": "Evaluate the midpoint inequality",
+            "detail": "Compute the midpoint and the squared Euclidean distance 4 before inserting the three function values.",
+            "math": "1>\\tfrac12+\\tfrac12-\\tfrac{2}{2}\\tfrac14\\cdot4=0",
+            "fallback": "The endpoints (−1,0),(1,0) and their midpoint have value 1. At weight 1/2 and modulus 2 the proposed upper bound is 0, so the midpoint violates it."
+          },
+          {
+            "title": "Why endpoint monotonicity alone is insufficient",
+            "detail": "Combine the universal support-pair result with membership of both endpoints and the failed midpoint inequality. The endpoint calculation illustrates one pair; the preceding theorem covers them all.",
+            "math": "\\langle (2,0)-(-2,0),(1,0)-(-1,0)\\rangle=8=2\\cdot4",
+            "fallback": "This proper convex function has a globally 2-strongly monotone subdifferential on S. Two supported endpoints violate the chord bound at their midpoint."
+          }
+        ],
+        "takeaway": "The midpoint has finite value 1, even though no plane supports f there. The strong chord bound would require its value to be at most 0.",
+        "boundary": "The pairing inequality quantifies over actual endpoint subgradients."
+      },
+      "proof_bridge": {
+        "title": "What convexity of the supported carrier supplies",
+        "summary": "Let E be a real normed space with a linear coordinate equivalence e to Euclidean d-space. Let f:E→EReal be proper and convex, λ≥0, and V convex. Every point of V has a global subgradient of f in these coordinates.",
+        "steps": [
+          {
+            "title": "Add endpoint bounds",
+            "detail": "Use the support-growth bound in each direction and add.",
+            "math": "\\lambda\\lVert p-q\\rVert_E^2\\le\\langle g-h,e(p-q)\\rangle",
+            "fallback": "The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E."
+          },
+          {
+            "title": "Choose intermediate supports",
+            "detail": "For a positive integer N, convexity keeps each subdivision point in V. The support hypothesis supplies an affine minorant there.",
+            "math": "p_i=p+\\tfrac{i}{N}(q-p)",
+            "fallback": "Every intermediate point is supported."
+          },
+          {
+            "title": "Recover the full quadratic term",
+            "detail": "Sum the N minorants, using monotonicity against the initial support, and take arbitrarily large N.",
+            "math": "\\tfrac{\\lambda}{2}(1-1/N)\\lVert q-p\\rVert^2\\longrightarrow\\tfrac{\\lambda}{2}\\lVert q-p\\rVert^2",
+            "fallback": "The limit yields the coefficient required by the chord bound."
+          }
+        ],
+        "boundary": "Only the first bullet is treated; other formulations of Theorem 4.3 have separate hypotheses."
+      }
     }
   ]
 }

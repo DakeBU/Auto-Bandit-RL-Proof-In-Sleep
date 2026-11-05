@@ -2122,6 +2122,9 @@ def render_highlight(
         "extension": "Compiled extension",
         "source-proof-repair": "Correction to a source proof step",
         "source-proof-step": "Source proof step",
+        "counterexample-step": "Step in the counterexample",
+        "source-counterexample": "Counterexample to the source statement",
+        "corrected-carrier": "Theorem with a corrected carrier",
         "consumer": "Downstream consumer",
     }
     match_badge = (
