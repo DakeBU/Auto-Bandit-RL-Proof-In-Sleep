@@ -46,3 +46,8 @@ code and is **not a sandbox**. The local access mode is an operator declaration;
 no closed-book policy is mechanically enforced. See the environment document before
 using any generated proof. Current dev training exports require explicit solution
 opt-in and never create a held-out test set.
+
+
+## Task admission
+
+The [task protocol](TASK_PROTOCOL.md) separates knowledge, reasoning and Agentic Lean from answer format. Use `tools/bench_task_contract.py` to scaffold and validate draft packages. Intake never grants admission; reference execution, independent semantic/leakage review and isolated agentic trials remain separate gates.

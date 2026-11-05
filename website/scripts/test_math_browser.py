@@ -145,7 +145,20 @@ def main():
                         if args.report:
                             page.screenshot(path=str(args.report.with_name(f'pbps-math-{width}.png')), full_page=False)
 
+            page.goto(base + '/banditrlbench/index.html', wait_until='domcontentloaded')
+            assert page.locator('[data-nav-group="bench"]').count() == 1
+            assert page.evaluate('''() => document.querySelector('[data-nav-group="bench"]').parentElement === document.querySelector('[data-nav-group="books"]').parentElement''')
+            assert page.locator('.graph-shortcuts a').count() == 2
+            assert page.locator('.bench-path').count() == 3
+            for door in page.locator('.bench-graph-door').all():
+                assert door.bounding_box()['y'] < 900, 'Both graph entries must be visible in the first screen'
+            page.goto(base + '/banditrlbench/run/index.html', wait_until='domcontentloaded')
+            assert page.locator('.reader-depth:not([open])').count() >= 4
             page.goto(base + '/banditrlbench/non-lean/index.html', wait_until='domcontentloaded')
+            assert not page.locator('#BRB-002').is_visible()
+            page.locator('a[href="#BRB-002"]').click()
+            page.wait_for_function('document.getElementById("BRB-002").closest(".task-browser").open')
+            page.locator('.task-browser').first.evaluate('(n) => n.open = true')
             page.locator('#BRB-001 .bench-location a').first.click()
             page.wait_for_function('document.querySelector("[data-graph-detail]")?.textContent.includes("realMeanRegret_eq_sum_gap_mul_pullCount")')
             assert page.locator('.lean-graph-node.is-selected').get_attribute('data-node-id') == 'declaration:BanditRLProof.realMeanRegret_eq_sum_gap_mul_pullCount'
