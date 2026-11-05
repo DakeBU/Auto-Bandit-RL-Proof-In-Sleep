@@ -1,0 +1,77 @@
+{
+  "schema": "abrl.source-extraction-reviewer-binding.v1",
+  "at": "2026-11-05T01:40:43.774956+00:00",
+  "actor": "/root/batch41_source_extractor",
+  "purpose": "Additive reviewer-finding provenance received after v2 extraction sealed; does not modify v1/v2 or approve topology.",
+  "inputs": [
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch42-source-topology-review-v1/receipt.json",
+      "sha256": "0066aeb8f2219481a4bd39b55b1a9dc69fee203e4a5cdb0bf4305d08c5fb8be2"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch42-source-topology-review-v1/verdict.json",
+      "sha256": "d7d71c54b0dd5267628508946ee9a33b43cd37a81253245b2d481fb0047fa454"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch42-source-extraction-v2/receipt.json",
+      "sha256": "a731d761de7ca26300d8033c4ba9e283b3f757849cecc468a8f5c157dacd9e22"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch42-source-extraction-v2/coverage.json",
+      "sha256": "677ddb6126a8920580b49cffb843cee1ac105c6901fea950446509cc678cc1c6"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch42-source-extraction-v2/report.md",
+      "sha256": "fcb0e6b54e3e2da8eaad5d0e9cdf1bcd7b8d3c6a8ac09e6834e334c87bf8a820"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011/batch42-source-extraction-v2/source-graph.json",
+      "sha256": "bfbed6fdcf933c4bcc50733e48ab5136017380d0cf7fcaec7b2248b89fc6ce97"
+    }
+  ],
+  "outputs": [],
+  "reviewerReceiptSHA256": "0066aeb8f2219481a4bd39b55b1a9dc69fee203e4a5cdb0bf4305d08c5fb8be2",
+  "correctionReceiptSHA256": "a731d761de7ca26300d8033c4ba9e283b3f757849cecc468a8f5c157dacd9e22",
+  "findingMappings": [
+    {
+      "reviewerFinding": "F1",
+      "correction": "FEEDBACK-WORDING",
+      "jsonPointers": [
+        "source-graph.json#/compressedExplanation"
+      ]
+    },
+    {
+      "reviewerFinding": "F2",
+      "correction": "PREHEADING-SECTION-LOCATORS",
+      "jsonPointers": [
+        "source-graph.json#/nodes/3/additionalLocators/0/section",
+        "coverage.json#/inventory/0/locator/section",
+        "coverage.json#/inventory/1/locator/section",
+        "coverage.json#/inventory/2/locator/section",
+        "coverage.json#/inventory/3/locator/section",
+        "coverage.json#/inventory/4/locator/section",
+        "coverage.json#/inventory/5/locator/section",
+        "coverage.json#/inventory/6/locator/section",
+        "coverage.json#/inventory/7/locator/section",
+        "coverage.json#/inventory/8/locator/section",
+        "coverage.json#/inventory/9/locator/section",
+        "coverage.json#/inventory/10/locator/section",
+        "coverage.json#/inventory/11/locator/section",
+        "coverage.json#/inventory/12/locator/section",
+        "coverage.json#/inventory/13/locator/section",
+        "coverage.json#/inventory/14/locator/section"
+      ]
+    }
+  ],
+  "exactCorrectionSetVerified": true,
+  "jsonLeafChanges": 17,
+  "parentAndSuccessorUnchanged": true,
+  "sourceGraphSelfApproved": false,
+  "independentTopologyRecheckPending": true,
+  "implementationRead": false,
+  "decoderRead": false,
+  "accessScopeAddedAfterV2Seal": [
+    "Distinct reviewer receipt and verdict read solely to bind F1/F2 to already sealed changes."
+  ],
+  "receiptSelfHash": "externally computed"
+}

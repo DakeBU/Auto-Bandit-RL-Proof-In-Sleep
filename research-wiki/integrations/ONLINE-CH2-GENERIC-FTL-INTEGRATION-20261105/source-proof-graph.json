@@ -1,0 +1,405 @@
+{
+  "schema": "abrl.source-only-definition-graph.v1",
+  "source": {
+    "version": "arXiv:1912.13213v10, 2026-06-21",
+    "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchorPDFPages": [
+      23,
+      24
+    ],
+    "anchorPrintedPages": [
+      11,
+      12
+    ],
+    "standingPDFPages": [
+      20,
+      21,
+      22
+    ]
+  },
+  "target": "Chapter2 FTL strict-past argmin and first-round initialization",
+  "sourceAnchorCount": 1,
+  "sourceAnchorKind": "algorithm definition",
+  "theoremOrRateCount": 0,
+  "root": "A-FTL-ANCHOR",
+  "nodes": [
+    {
+      "id": "S-GAME",
+      "kind": "standing_game",
+      "locator": {
+        "pdfPage": 20,
+        "printedPage": 8,
+        "section": "2.1 / 2.1.1",
+        "useSite": "Section2.1 opening game bullets"
+      },
+      "claim": "For t=1,...,T, output x_t in V subset R^d, pay loss ell_t(x_t) for ell_t:V->R, then receive some feedback on ell_t.",
+      "sourceText": "Output x_t ∈ V ⊆ R^d; Pay the loss ℓ_t(x_t), where ℓ_t : V → R; Receive some feedback on ℓ_t.",
+      "scope": "Round-index, feasible action, real losses on V, and output-before-loss/feedback convention. T is a finite horizon; no special threshold. This is a standing game definition, not a new FTL theorem."
+    },
+    {
+      "id": "S-REGRET",
+      "kind": "standing_metric",
+      "locator": {
+        "pdfPage": 20,
+        "printedPage": 8,
+        "section": "2.1 / 2.1.1",
+        "useSite": "paragraph and display immediately after game"
+      },
+      "claim": "Regret_T(u) = sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u), for any fixed competitor u in V.",
+      "scope": "Context only. No rate, expectation, confidence event or regret guarantee is part of this FTL definition anchor."
+    },
+    {
+      "id": "S-ADVERSARY",
+      "kind": "standing_information_context",
+      "locator": {
+        "pdfPage": 20,
+        "printedPage": 8,
+        "section": "2.1 / 2.1.1",
+        "useSite": "paragraph beginning We also said"
+      },
+      "claim": "Loss functions are adversarially chosen; assumptions about knowledge of the future are not regarded as reasonable.",
+      "scope": "Supports online information interpretation. The exact adversary filtration, randomization and measurability are not specified here."
+    },
+    {
+      "id": "S-OCO",
+      "kind": "standing_section_context",
+      "locator": {
+        "pdfPage": 21,
+        "printedPage": 9,
+        "section": "2.1 / 2.1.1",
+        "useSite": "paragraph beginning For a while"
+      },
+      "claim": "The chapter focuses for a while on convex losses, called Online Convex Optimization; the p11 lead-in specializes the coming algorithm discussion to convex differentiable functions.",
+      "additionalLocators": [
+        {
+          "pdfPage": 23,
+          "printedPage": 11,
+          "section": "2.1.1",
+          "useSite": "paragraph immediately before heading2.1.2"
+        }
+      ],
+      "scope": "Context for this presentation. Convexity/differentiability do not by themselves guarantee cumulative-loss attainment or unique FTL choices. No closedness/compactness imported from OGD."
+    },
+    {
+      "id": "S-CONVEX-SET",
+      "kind": "standing_definition",
+      "locator": {
+        "pdfPage": 21,
+        "printedPage": 9,
+        "section": "2.1 / 2.1.1",
+        "useSite": "Definition2.2"
+      },
+      "claim": "V subset R^d is convex when lambda*x+(1-lambda)*y belongs to V for x,y in V and lambda in (0,1).",
+      "scope": "Terminology only, not a new FTL-specific hypothesis. The empty set satisfies this condition vacuously; playable initialization still requires a feasible point."
+    },
+    {
+      "id": "S-EXTENDED-DOMAIN",
+      "kind": "standing_notation",
+      "locator": {
+        "pdfPage": 21,
+        "printedPage": 9,
+        "section": "2.1 / 2.1.1",
+        "useSite": "extended-real paragraph below Definition2.2"
+      },
+      "claim": "For an extended-real-valued function on R^d, dom f = {x in R^d : f(x)<+infinity}.",
+      "scope": "The chapter allows extended-real notation; the online game itself states real losses on V. This source definition does not exclude -infinity in dom f. No global unrestricted extended-real FTL arithmetic is asserted."
+    },
+    {
+      "id": "S-INDICATOR",
+      "kind": "standing_constraint_encoding",
+      "locator": {
+        "pdfPage": 21,
+        "printedPage": 9,
+        "section": "2.1 / 2.1.1",
+        "useSite": "paragraph and piecewise indicator display; continuation p10"
+      },
+      "claim": "The indicator iota_V(x) is 0 on V and +infinity outside; adding it to losses expresses the constraint. Finite loss requires predictions/competitor in V.",
+      "additionalLocators": [
+        {
+          "pdfPage": 22,
+          "printedPage": 10,
+          "section": "2.1 / 2.1.1",
+          "useSite": "first prose paragraph below Figure2.2"
+        }
+      ],
+      "citation": "Boyd and Vandenberghe, 2004 (constrained/extended-real notation, not an FTL existence citation).",
+      "scope": "Optional explanatory encoding, not an alternative FTL proof route. The explicit constrained argmin over V remains the anchor."
+    },
+    {
+      "id": "S-CONVEX-FUNCTION",
+      "kind": "standing_definition",
+      "locator": {
+        "pdfPage": 22,
+        "printedPage": 10,
+        "section": "2.1 / 2.1.1",
+        "useSite": "Definition2.3 and preceding one-line motivation"
+      },
+      "claim": "A function f:R^d->[−infinity,+infinity] is convex when its epigraph {(x,y) in R^{d+1}: y>=f(x)} is convex.",
+      "scope": "Terminology for S-OCO. No convex-analysis theorem is required to state the strict-past rule."
+    },
+    {
+      "id": "C-PAST-LEADER",
+      "kind": "source_explanation",
+      "locator": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "second and third sentences of last paragraph before the FTL display"
+      },
+      "claim": "The strategy uses the best prediction over the past and is named Follow-the-Leader (FTL).",
+      "sourceText": "The strategy was to use the best prediction over the past, that is, the Follow-the-Leader (FTL) strategy. In formulas,"
+    },
+    {
+      "id": "D-FTL-RULE",
+      "kind": "source_definition",
+      "locator": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "unnumbered final display on printed11"
+      },
+      "claim": "x_t = argmin_{x∈V} sum_{i=1}^{t-1} ell_i(x).",
+      "exactDisplayLatex": "x_t = \\operatorname*{argmin}_{x\\in\\mathcal V}\\sum_{i=1}^{t-1}\\ell_i(x)",
+      "quantifiers": "At each round t in the standing game t=1,...,T. The minimization variable is x in the same fixed feasible set V. Only losses with index i<t occur.",
+      "notationAudit": "The source prints equality to argmin, not a set-membership symbol. It uses a selected minimizer notation without specifying a tie-break. Feasibility and minimizing the strict-past objective characterize a valid selected action when such a minimizer exists.",
+      "sourceDoesNotSpecify": [
+        "a unique minimizer",
+        "a total selection operator on all inputs",
+        "a default point when no minimum exists",
+        "a randomized selection law",
+        "an executable optimizer",
+        "a measurable selector"
+      ]
+    },
+    {
+      "id": "D-FIRST-ACTION",
+      "kind": "source_initialization",
+      "locator": {
+        "pdfPage": 24,
+        "printedPage": 12,
+        "section": "2.1.2",
+        "useSite": "first prose sentence below Algorithm2.1, continuing the p11 FTL display"
+      },
+      "claim": "In the first round, any admissible point may be played.",
+      "sourceText": "and, in the first round, we can play any admissible point.",
+      "scope": "x_1 must belong to V. Arbitrary does not mean outside V or a canonical fixed point. No point exists if V is empty. The empty sum explanation is natural mathematical interpretation; it is not separately proved on these pages."
+    },
+    {
+      "id": "A-FTL-ANCHOR",
+      "kind": "aggregate_source_definition_anchor",
+      "locator": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "FTL display and immediately continued initialization on printed12"
+      },
+      "claim": "One algorithm-definition anchor: select a feasible minimizer of the strictly earlier cumulative loss, with an arbitrary feasible initial action.",
+      "additionalLocators": [
+        {
+          "pdfPage": 24,
+          "printedPage": 12,
+          "section": "2.1.2",
+          "useSite": "first prose sentence below Algorithm2.1"
+        }
+      ],
+      "sourceResultCount": 1,
+      "notAdditionalTheorem": true,
+      "definitionKindAssessment": "Source notation is a minimizer rule with unspecified choice, not a uniquely characterized total function. A literal relation/set of valid minimizers and any chosen valid action should be distinguished. Extra selector mechanics require separate library specification and proofs."
+    },
+    {
+      "id": "G-ATTAINMENT",
+      "kind": "SOURCE_GAP",
+      "locator": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "operational well-definedness of D-FTL-RULE at a general round"
+      },
+      "claim": "No general nonemptiness/attainment theorem for the cumulative-loss argmin is supplied in the anchor or read standing context.",
+      "gapType": "source-definition underspecification, not an omitted regret-proof step",
+      "consumer": "A-FTL-ANCHOR",
+      "handling": "Expose conditional applicability of the minimizer rule. Do not invent compactness, continuity, coercivity, global attainment, or an off-source fallback. Convex/differentiable losses and a nonempty feasible set alone do not establish attainment."
+    },
+    {
+      "id": "G-CHOICE",
+      "kind": "SOURCE_GAP",
+      "locator": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "point-valued equality to argmin in D-FTL-RULE"
+      },
+      "claim": "No tie-breaking, uniqueness or choice-consistency convention is specified.",
+      "gapType": "source-definition underspecification",
+      "consumer": "A-FTL-ANCHOR",
+      "handling": "Any feasible minimizing point satisfies the printed rule. A deterministic same-prefix equality theorem requires a fixed consistent choice mechanism in the library and is not printed here."
+    },
+    {
+      "id": "G-FEEDBACK",
+      "kind": "SOURCE_GAP",
+      "locator": {
+        "pdfPage": 20,
+        "printedPage": 8,
+        "section": "2.1 / 2.1.1",
+        "useSite": "standing Receive some feedback bullet as consumed by D-FTL-RULE"
+      },
+      "claim": "The standing game says some feedback; the FTL display requires enough information or an oracle to minimize the past cumulative objective, without specifying an oracle/access model here.",
+      "gapType": "access-model not specified at this bounded anchor",
+      "consumer": "D-FTL-RULE",
+      "handling": "Do not claim bandit-only realizability, executability, or a specific full-information API from the generic feedback bullet. This is an abstract decision rule."
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-CONTEXT-TERM",
+      "kind": "contextual_AND",
+      "producers": [
+        "S-CONVEX-SET",
+        "S-CONVEX-FUNCTION"
+      ],
+      "consumer": "S-OCO",
+      "consumerUseSite": {
+        "pdfPage": 21,
+        "printedPage": 9,
+        "section": "2.1 / 2.1.1",
+        "useSite": "convex losses/OCO paragraph"
+      },
+      "meaning": "Explain the section terminology only; not an FTL existence premise."
+    },
+    {
+      "id": "E-DOMAIN-ENCODING",
+      "kind": "notation_AND",
+      "producers": [
+        "S-EXTENDED-DOMAIN",
+        "S-GAME"
+      ],
+      "consumer": "S-INDICATOR",
+      "consumerUseSite": {
+        "pdfPage": 21,
+        "printedPage": 9,
+        "section": "2.1 / 2.1.1",
+        "useSite": "indicator discussion"
+      },
+      "meaning": "Relates explicit constraints to optional extended-real notation; not a competing sufficient route to FTL."
+    },
+    {
+      "id": "E-RULE-INDEX",
+      "kind": "typing_AND",
+      "producers": [
+        "S-GAME"
+      ],
+      "consumer": "D-FTL-RULE",
+      "consumerUseSite": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "FTL display x in V and i=1,...,t-1"
+      },
+      "meaning": "Same feasible set, loss indexing and online game; excludes ell_t and all later losses from objective."
+    },
+    {
+      "id": "E-PAST-EXPLANATION",
+      "kind": "expository",
+      "producers": [
+        "C-PAST-LEADER"
+      ],
+      "consumer": "D-FTL-RULE",
+      "consumerUseSite": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "In formulas immediately before display"
+      },
+      "meaning": "Natural-language best-over-past explanation is rendered by strict-past cumulative minimization."
+    },
+    {
+      "id": "E-INITIAL-FEASIBILITY",
+      "kind": "typing_AND",
+      "producers": [
+        "S-GAME"
+      ],
+      "consumer": "D-FIRST-ACTION",
+      "consumerUseSite": {
+        "pdfPage": 24,
+        "printedPage": 12,
+        "section": "2.1.2",
+        "useSite": "any admissible point"
+      },
+      "meaning": "Admissible means membership in V. No unique point or special initializer is prescribed."
+    },
+    {
+      "id": "E-ANCHOR-ASSEMBLY",
+      "kind": "contract_AND",
+      "producers": [
+        "D-FTL-RULE",
+        "D-FIRST-ACTION"
+      ],
+      "consumer": "A-FTL-ANCHOR",
+      "consumerUseSite": {
+        "pdfPages": [
+          23,
+          24
+        ],
+        "printedPages": [
+          11,
+          12
+        ],
+        "useSite": "one rule spanning a page break"
+      },
+      "meaning": "Both strict-past rule and first-round freedom are retained; initialization is a temporal case of the same algorithm, not an alternative proof route."
+    }
+  ],
+  "gapAnnotations": [
+    {
+      "gap": "G-ATTAINMENT",
+      "consumer": "A-FTL-ANCHOR",
+      "relation": "UNRESOLVED_SPECIFICATION_ANNOTATION",
+      "notLogicalPremise": true,
+      "consumerUseSite": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "operational well-definedness of D-FTL-RULE at a general round"
+      }
+    },
+    {
+      "gap": "G-CHOICE",
+      "consumer": "A-FTL-ANCHOR",
+      "relation": "UNRESOLVED_SPECIFICATION_ANNOTATION",
+      "notLogicalPremise": true,
+      "consumerUseSite": {
+        "pdfPage": 23,
+        "printedPage": 11,
+        "section": "2.1.2",
+        "useSite": "point-valued equality to argmin in D-FTL-RULE"
+      }
+    },
+    {
+      "gap": "G-FEEDBACK",
+      "consumer": "D-FTL-RULE",
+      "relation": "UNRESOLVED_SPECIFICATION_ANNOTATION",
+      "notLogicalPremise": true,
+      "consumerUseSite": {
+        "pdfPage": 20,
+        "printedPage": 8,
+        "section": "2.1 / 2.1.1",
+        "useSite": "standing Receive some feedback bullet as consumed by D-FTL-RULE"
+      }
+    }
+  ],
+  "alternativeProofRoutes": [],
+  "AND_OR_audit": "No proof or competing sufficient routes is printed for this algorithm definition. AND combines the rule and its initialization clause; first/later temporal cases are not OR proof routes. Standing terminology and optional constraint encoding are labelled contextual, not logical well-definedness premises. Gap annotations are not secretly added hypotheses.",
+  "consumerUseSitePolicy": "Each edge and gap records its source consumer. No source result is inferred from incoming context-only edges.",
+  "compressedExplanation": "FTL chooses a feasible action minimizing cumulative loss from strictly earlier rounds 1 through t-1. The first round has no past losses, so the source permits any feasible action. The source leaves existence of later minimizers and tie-selection/access mechanics unspecified. This is an algorithmic prescription with conditional applicability, not a rate theorem.",
+  "libraryOnlyResultsNotAssertedByAnchor": [
+    "correctness theorem for an implementation selector",
+    "exact Option/none characterization of empty or unattained objectives",
+    "causal prefix invariance/equality for a fixed selector",
+    "specific empty-set, tie, nonattainment or recovery examples",
+    "global unique existence, computability or measurability",
+    "any unconditional FTL regret bound"
+  ],
+  "roleAccessDisclosure": "Source-only extraction in this task. Pre-existing thread context includes PR215 title/body metadata seen during an earlier Batch41 dependency-conservation review; no PR215 Lean, contracts, old source judgments, neutral-decoder packet/results, or other Batch42 artifacts were read in this task. No implementation contents were used to determine nodes/edges. This is disclosed residual metadata exposure, not a claim of globally pristine blindness.",
+  "topologyApproved": false,
+  "independentTopologyReviewRequired": true
+}

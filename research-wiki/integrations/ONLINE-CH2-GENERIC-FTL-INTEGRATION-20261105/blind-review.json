@@ -1,0 +1,78 @@
+{
+  "schema": "source-blind-semantic-receipt/v1",
+  "created_utc": "2026-11-05T01:34:50.111751+00:00",
+  "actor_identity": "/root/batch42_blind_decoder",
+  "parent_identity": "/root",
+  "distinct_decoder_actor": true,
+  "input": {
+    "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-neutral-inputs-v1\\packet.json",
+    "expected_sha256": "9dec9ba4039e0abbed0be2ea4f6b1d57190fc77d72cf4624b6f782229bd1e6a9",
+    "actual_sha256": "9dec9ba4039e0abbed0be2ea4f6b1d57190fc77d72cf4624b6f782229bd1e6a9",
+    "match": true
+  },
+  "outputs": [
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\report.md",
+      "sha256": "908c5e948a464f014108039e0439bbb79abaf70cd4660e8d86f75892bf4bda8f"
+    },
+    {
+      "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\reconstruction.json",
+      "sha256": "9180446306fc28f65bcdb0fee7098096d278237990ee9b0005e8cfa2a7d9bcdd"
+    }
+  ],
+  "read_scope": {
+    "allowed_packet_reads": "private-maintenance/github-maintenance-goal-20261011\\batch42-neutral-inputs-v1\\packet.json",
+    "generic_mathlib_reads": [],
+    "source_reads": [],
+    "surrounding_file_reads": [],
+    "memory_reads": [],
+    "git_reads": [],
+    "internet_reads": [],
+    "other_agent_reads": [],
+    "output_verification_reads": [
+      "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\report.md",
+      "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\reconstruction.json"
+    ],
+    "source_exposure": false
+  },
+  "write_scope": [
+    "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\report.md",
+    "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\reconstruction.json",
+    "private-maintenance/github-maintenance-goal-20261011\\batch42-blind-review-v1\\receipt.json"
+  ],
+  "operations": [
+    {
+      "tool": "functions.exec -> tools.exec_command",
+      "action": "PowerShell Get-FileHash and Get-Content of assigned packet only"
+    },
+    {
+      "tool": "functions.exec -> tools.exec_command",
+      "action": "Python standard library read of assigned packet, reconstruction generation, writing the three permitted deliverables, and hashing input/output bytes"
+    }
+  ],
+  "compilation": {
+    "run": false,
+    "reason": "Semantic reconstruction only; no builds requested and no Lean proof bodies inspected"
+  },
+  "verification": {
+    "definition_count": 4,
+    "claim_count": 9,
+    "example_check_count": 8,
+    "top_level_conjunct_counts": {
+      "check1": 7,
+      "check2": 3,
+      "check3": 5,
+      "check4": 6,
+      "check5": 1,
+      "check6": 4,
+      "check7": 6,
+      "check8": 4
+    },
+    "seven_slots_for_every_item": true,
+    "compilation": "not_run",
+    "proof_validation": "not_performed",
+    "source_equivalence_verdict": "not_given"
+  },
+  "source_equivalence_verdict": "not_given",
+  "receipt_self_hash": "Not embedded; delivered externally after creation to avoid circularity."
+}

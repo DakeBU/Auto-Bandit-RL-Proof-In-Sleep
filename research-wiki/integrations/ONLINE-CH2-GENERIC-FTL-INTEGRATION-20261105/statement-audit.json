@@ -1,0 +1,195 @@
+{
+  "head": "8f31042350bd8eeb1c9108257c58e2b3aafaebfb",
+  "productionContextSHA256": "112847a69636cd98ea1413861fa77dd5d315493f8c591893b4166080674c6db2",
+  "exampleContextSHA256": "e9eb14df49f2ccf9fcf1cf3a629309329a38f5831ced1a581b439e27571b7bcc",
+  "neutralMappings": {
+    "cumulative": "C",
+    "minimizers": "M",
+    "select": "S",
+    "predict": "P",
+    "interval": "D",
+    "initial": "a",
+    "otherInitial": "b",
+    "quadraticLoss": "q",
+    "changedLoss": "qChanged",
+    "offDomainLoss": "qExtended",
+    "affineThenQuadratic": "r"
+  },
+  "namespaceMappings": {
+    "BanditRL.OnlineFTLSelector": "Packet",
+    "Tests.OnlineFTLSelector": "Examples"
+  },
+  "rows": [
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.cumulative_prefix",
+      "neutralId": "claim1",
+      "actualHeader": "theorem cumulative_prefix (loss : ℕ → X → ℝ) (t : ℕ) (x : X) :\n    cumulative (fun i : Fin t => loss i.val) x = ∑ i ∈ range t, loss i x",
+      "actualHeaderSHA256": "c3cf95c1c0860967a5a198f458a2484fa4514d750465afb50a3d3fe797251b76",
+      "frozenHeaderSHA256": "c3cf95c1c0860967a5a198f458a2484fa4514d750465afb50a3d3fe797251b76",
+      "neutralHeaderSHA256": "c694af8fd11d9d37948e598d1ddeb1742787d5b275a5e051f8a20ed4991bbb94",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.select_some_spec",
+      "neutralId": "claim2",
+      "actualHeader": "theorem select_some_spec (V : Set X) (past : Fin n → X → ℝ) (p : X) (h : select V past = some p) :\n    p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "actualHeaderSHA256": "9dc587b24b481b1701cd47921f1ce267e50cdde11f5fc921c5666c29f76c6b97",
+      "frozenHeaderSHA256": "9dc587b24b481b1701cd47921f1ce267e50cdde11f5fc921c5666c29f76c6b97",
+      "neutralHeaderSHA256": "3b28742b4cd79db54f411fbe15a37d2af0e6288482145391e399589d48b2f519",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.select_none_iff",
+      "neutralId": "claim3",
+      "actualHeader": "theorem select_none_iff (V : Set X) (past : Fin n → X → ℝ) :\n    select V past = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "actualHeaderSHA256": "baa5fe494c4490fa8a7354fdb7af33f4508400e8c49186affe58bf49a76547e4",
+      "frozenHeaderSHA256": "baa5fe494c4490fa8a7354fdb7af33f4508400e8c49186affe58bf49a76547e4",
+      "neutralHeaderSHA256": "bd4d19db10efbb262e5e77bd47290d4c667ea669baa30b48a76295b987e17513",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.select_congr",
+      "neutralId": "claim4",
+      "actualHeader": "theorem select_congr (V : Set X) (past past' : Fin n → X → ℝ) (h : ∀ i, EqOn (past i) (past' i) V) :\n    select V past = select V past'",
+      "actualHeaderSHA256": "11582d27c589a5d15fb101afa10db5880a47d15bfa95f8fc57c570e2a5e6b796",
+      "frozenHeaderSHA256": "11582d27c589a5d15fb101afa10db5880a47d15bfa95f8fc57c570e2a5e6b796",
+      "neutralHeaderSHA256": "392581f85f38f30afc16a39be3ee3a156c8175117b5cffea963df15776516ffb",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+      "neutralId": "claim5",
+      "actualHeader": "theorem select_eq_some_of_unique (V : Set X) (past : Fin n → X → ℝ) (p : X) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) (hunique : ∀ q ∈ V, IsMinOn (cumulative past) V q → q = p) :\n    select V past = some p",
+      "actualHeaderSHA256": "d331fc91f968ffb1c5909515e6975c87fe06c9f409e34b24a6aec86df7df6658",
+      "frozenHeaderSHA256": "d331fc91f968ffb1c5909515e6975c87fe06c9f409e34b24a6aec86df7df6658",
+      "neutralHeaderSHA256": "e0d6d5b9d7ade474cf32a8a8c01ed27fccda65f8b6e57732dec0637cb7ec83b5",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.predict_zero",
+      "neutralId": "claim6",
+      "actualHeader": "theorem predict_zero (V : Set X) (initial : V) (loss : ℕ → X → ℝ) :\n    predict V initial loss 0 = some (initial : X)",
+      "actualHeaderSHA256": "6fdf3d4540cfe49f25e83a0ad0d1f9a3d90ab8a92918c70dc101185f3cece8b6",
+      "frozenHeaderSHA256": "6fdf3d4540cfe49f25e83a0ad0d1f9a3d90ab8a92918c70dc101185f3cece8b6",
+      "neutralHeaderSHA256": "485832cb91b58f8971e96e4835343c582334dbfeb5639f837aa5efdb34e35370",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.predict_some_spec",
+      "neutralId": "claim7",
+      "actualHeader": "theorem predict_some_spec (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) (p : X) (h : predict V initial loss t = some p) :\n    p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "actualHeaderSHA256": "6e6db7e8554dbb1d725392da3ebc779f4816d7a5a2ca7fbe851345a59bbd71d7",
+      "frozenHeaderSHA256": "6e6db7e8554dbb1d725392da3ebc779f4816d7a5a2ca7fbe851345a59bbd71d7",
+      "neutralHeaderSHA256": "4e07513ad0150df0f555502cee42d8a7cb94eda8692c5bf804d1f70cc5029c5c",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.predict_none_iff",
+      "neutralId": "claim8",
+      "actualHeader": "theorem predict_none_iff (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) :\n    predict V initial loss t = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "actualHeaderSHA256": "c0ddb2bbf718e56d92ca12c7f4a03b54586b2d29a0b9c2b1673ae07d7a4aa81f",
+      "frozenHeaderSHA256": "c0ddb2bbf718e56d92ca12c7f4a03b54586b2d29a0b9c2b1673ae07d7a4aa81f",
+      "neutralHeaderSHA256": "ae56d1eedb88bcf4b8837b689b7728e28fe029b00f851f5d7fd4e8f0de679cfd",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "production",
+      "declaration": "BanditRL.OnlineFTLSelector.predict_prefix",
+      "neutralId": "claim9",
+      "actualHeader": "theorem predict_prefix (V : Set X) (initial : V) (loss loss' : ℕ → X → ℝ) (t : ℕ) (h : ∀ s < t, EqOn (loss s) (loss' s) V) :\n    predict V initial loss t = predict V initial loss' t",
+      "actualHeaderSHA256": "a2830d1bd3b2238d3d86d2ce9edb6c5cb024016c9b963e1c9545c9660d7255e2",
+      "frozenHeaderSHA256": "a2830d1bd3b2238d3d86d2ce9edb6c5cb024016c9b963e1c9545c9660d7255e2",
+      "neutralHeaderSHA256": "fcb1deea93869358f18ce2f30682aa3cbc0b8524d032e32bebe53c2be777b1fe",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.quadratic_trajectory",
+      "neutralId": "check1",
+      "actualHeader": "theorem quadratic_trajectory :\n    (initial : ℝ) = 3 / 4 ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval initial quadraticLoss 1 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 2 = some (1 / 2) ∧\n    (1 / 4 : ℝ) ≠ 1 / 2 ∧\n    quadraticLoss 0 (1 / 4) ≠ quadraticLoss 0 (3 / 4) ∧\n    (∀ t ∈ range 3, ∃ p, predict interval initial quadraticLoss t = some p ∧\n      p ∈ interval ∧ IsMinOn (fun x => ∑ i ∈ range t, quadraticLoss i x) interval p)",
+      "actualHeaderSHA256": "26c225b9c5bb7f04d587618ebd2cdce712f71b99b7d6e1401abe71796b84a219",
+      "frozenHeaderSHA256": "26c225b9c5bb7f04d587618ebd2cdce712f71b99b7d6e1401abe71796b84a219",
+      "neutralHeaderSHA256": "ad0969ee8c57d60caac500d66ed4e1c587953ffaaea8bebea2bcf5ccfb57e3b6",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.current_future_independence",
+      "neutralId": "check2",
+      "actualHeader": "theorem current_future_independence :\n    quadraticLoss 2 0 ≠ changedLoss 2 0 ∧\n    quadraticLoss 3 0 ≠ changedLoss 3 0 ∧\n    predict interval initial quadraticLoss 2 = predict interval initial changedLoss 2",
+      "actualHeaderSHA256": "d79fdd7b4a666d0d25bc58ac9e7b433b3276ef04c46bba2ab0b710bf3892f15e",
+      "frozenHeaderSHA256": "d79fdd7b4a666d0d25bc58ac9e7b433b3276ef04c46bba2ab0b710bf3892f15e",
+      "neutralHeaderSHA256": "7fe43b2445f99f8ad711df2938bd7a5882ec0c9f28ab8aa1b909cf3454a3f2d8",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.off_domain_invariance",
+      "neutralId": "check3",
+      "actualHeader": "theorem off_domain_invariance :\n    (2 : ℝ) ∉ interval ∧\n    quadraticLoss 0 2 ≠ offDomainLoss 0 2 ∧\n    (∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval) ∧\n    select interval (fun i : Fin 2 => quadraticLoss i.val) =\n      select interval (fun i : Fin 2 => offDomainLoss i.val) ∧\n    predict interval initial quadraticLoss 2 = predict interval initial offDomainLoss 2",
+      "actualHeaderSHA256": "d3cca36c69c1a1b7597868815a075cb8e83d6f41d660b7744e45fbb25cf757cf",
+      "frozenHeaderSHA256": "d3cca36c69c1a1b7597868815a075cb8e83d6f41d660b7744e45fbb25cf757cf",
+      "neutralHeaderSHA256": "1e48df87c3c0d10daad6dae7091a46ef093c75456bcd454c5360b35cf619be94",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.tied_minimizers",
+      "neutralId": "check4",
+      "actualHeader": "theorem tied_minimizers :\n    (0 : ℝ) ∈ interval ∧ (1 : ℝ) ∈ interval ∧ (0 : ℝ) ≠ 1 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 0 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 1 ∧\n    (∃ p, select interval (fun _ : Fin 1 => fun _ : ℝ => 0) = some p ∧\n      p ∈ interval ∧ IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval p)",
+      "actualHeaderSHA256": "621e5ac88729baf77706fe7e987357b61279fc4ac0cf212ac638d8decab0cc55",
+      "frozenHeaderSHA256": "621e5ac88729baf77706fe7e987357b61279fc4ac0cf212ac638d8decab0cc55",
+      "neutralHeaderSHA256": "e07dff265e6127d958961e1d75ca4bba87227b1784836abe9a242f839f7367e1",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.empty_domain",
+      "neutralId": "check5",
+      "actualHeader": "theorem empty_domain :\n    select (∅ : Set ℝ) (fun _ : Fin 1 => fun x : ℝ => x ^ 2) = none",
+      "actualHeaderSHA256": "9c69336c82c2c38c10a1048f4c3b1dcbb2a155a7c9b08ab958f0a0f59bea0be7",
+      "frozenHeaderSHA256": "9c69336c82c2c38c10a1048f4c3b1dcbb2a155a7c9b08ab958f0a0f59bea0be7",
+      "neutralHeaderSHA256": "5d68e15c731e7f4e0960fecd2b3ce1cbafe089192f37964abd6b93484fdf5234",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.empty_history_and_initialization",
+      "neutralId": "check6",
+      "actualHeader": "theorem empty_history_and_initialization :\n    (∃ p, select interval (fun i : Fin 0 => Fin.elim0 i) = some p ∧ p ∈ interval) ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval otherInitial quadraticLoss 0 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 0 ≠ predict interval otherInitial quadraticLoss 0",
+      "actualHeaderSHA256": "62961c8314ec5401f8ed2f4f724c326ceb28a1f9e556482ce5a06b08d981f4d4",
+      "frozenHeaderSHA256": "62961c8314ec5401f8ed2f4f724c326ceb28a1f9e556482ce5a06b08d981f4d4",
+      "neutralHeaderSHA256": "09210be19e1cd475afa0bf754b10db08afbafdc428983c8eb270af8f4b2f865e",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.affine_nonattainment",
+      "neutralId": "check7",
+      "actualHeader": "theorem affine_nonattainment :\n    (univ : Set ℝ).Nonempty ∧ IsClosed (univ : Set ℝ) ∧ Convex ℝ (univ : Set ℝ) ∧\n    select univ (fun _ : Fin 1 => fun x : ℝ => x) = none ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 0 = some 0 ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1 = none",
+      "actualHeaderSHA256": "595d49b41619d757e83387e0096abefaa5d7c212d4eb68ae69118778de2a9636",
+      "frozenHeaderSHA256": "595d49b41619d757e83387e0096abefaa5d7c212d4eb68ae69118778de2a9636",
+      "neutralHeaderSHA256": "fdf44900e2503a82314486596718ab43424ec73c051772899d21c4fe3c57f0d5",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    },
+    {
+      "group": "canaries",
+      "declaration": "Tests.OnlineFTLSelector.recovery_after_nonattainment",
+      "neutralId": "check8",
+      "actualHeader": "theorem recovery_after_nonattainment :\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1 = none ∧\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 2 = some 0 ∧\n    IsMinOn (fun x => ∑ i ∈ range 2, affineThenQuadratic i x) univ 0 ∧\n    (∀ x, (∑ i ∈ range 2, affineThenQuadratic i x) = x ^ 2)",
+      "actualHeaderSHA256": "72979e6113977449f8b37da2d167ffdd0fd369ffe1dfc5eeb4f2195fa9a6e1b0",
+      "frozenHeaderSHA256": "72979e6113977449f8b37da2d167ffdd0fd369ffe1dfc5eeb4f2195fa9a6e1b0",
+      "neutralHeaderSHA256": "6108c22e8874809f45674e21720571cee9efda26acb5a128c424c5ead342e8ad",
+      "comparison": "Exact token/whitespace-normalized header; actual bytes separately sealed."
+    }
+  ],
+  "actualPrefixBindings": true
+}

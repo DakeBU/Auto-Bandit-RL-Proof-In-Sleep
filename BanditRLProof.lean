@@ -782,3 +782,4 @@ import BanditRLProof.OnlineCumulativePotential
 import BanditRLProof.OnlineUnboundedOSD
 import BanditRLProof.OnlineFTRLFiniteIdentity
 import BanditRLProof.OnlineFTRLSourceArithmetic
+import BanditRLProof.OnlineFTLSelector
