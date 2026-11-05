@@ -1,0 +1,123 @@
+{
+  "completeTests": [
+    {
+      "name": "Tests.OnlineAdaptiveSummationCanary.nonconstant_zero_increment_canary",
+      "fullHeader": "theorem nonconstant_zero_increment_canary :\n    (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) ≤ (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) ∧\n    (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) = 1 / 4 ∧\n    (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) = 1 / 2 ∧\n    (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) < (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) ∧\n    (fun x : ℝ => max (1 - x) 0) 0 ≠ (fun x : ℝ => max (1 - x) 0) 1 ∧\n    (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 0 = 1 / 2 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 1 = 0 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 2 = 1 / 2",
+      "conjuncts": 8,
+      "owner": "Tests/OnlineAdaptiveSummationCanary.lean",
+      "ownerSHA256": "625fd14407664c25941161200e0ca4f068ef95794705fa869369f8a7bca24b16"
+    },
+    {
+      "name": "Tests.OnlineAdaptiveSummationCanary.zero_boundaries_canary",
+      "fullHeader": "theorem zero_boundaries_canary :\n    (∑ t ∈ range 0, (1 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (1 : ℝ))) ≤\n      (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 0, (1 : ℝ)), (fun x : ℝ => max (3 - x) 0) x) ∧\n    (∑ t ∈ range 3, (0 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (0 : ℝ))) ≤\n      (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 3, (0 : ℝ)), (fun x : ℝ => max (3 - x) 0) x) ∧\n    (fun x : ℝ => max (3 - x) 0) 2 = 1",
+      "conjuncts": 3,
+      "owner": "Tests/OnlineAdaptiveSummationCanary.lean",
+      "ownerSHA256": "625fd14407664c25941161200e0ca4f068ef95794705fa869369f8a7bca24b16"
+    }
+  ],
+  "reconstruction": [
+    {
+      "item": "item_2",
+      "slots": {
+        "objects": "Closed example with a₀=0, T=3, a(t)=0 for t=1 and 1/2 for every other natural t, and f(x)=max(1−x,0) on the reals.",
+        "quantifiers_and_domains": "No free parameters or external hypotheses. Each outer sum uses t=0,1,2. The sum inside the function uses all i from 0 through t.",
+        "premises": "The constants, step sequence and function are specified directly.",
+        "construction": "The three widths are (1/2,0,1/2), and the successive right endpoints are (1/2,1/2,1). The weighted terms are (1/4,0,0). The integral runs from 0 to 1, where f(x)=1−x.",
+        "conclusion": "Write L for this weighted sum and I for this interval integral. The statement conjoins all eight claims in the order below.",
+        "boundaries_and_special_cases": "The repeated middle endpoint comes from a zero step. The function has distinct endpoint values f(0)=1 and f(1)=0. L=1/4 and I=1/2 witness strictness.",
+        "scope_and_limits": "One explicit instance of strict inequality for a nonconstant function and a sequence containing a zero step. No general sufficient condition for strictness is quantified."
+      },
+      "conjuncts": [
+        {
+          "index": 1,
+          "lean": "(∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) ≤ (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x)",
+          "reading": "L ≤ I."
+        },
+        {
+          "index": 2,
+          "lean": "(∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) = 1 / 4",
+          "reading": "L = 1/4."
+        },
+        {
+          "index": 3,
+          "lean": "(∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) = 1 / 2",
+          "reading": "I = 1/2."
+        },
+        {
+          "index": 4,
+          "lean": "(∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) < (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x)",
+          "reading": "L < I."
+        },
+        {
+          "index": 5,
+          "lean": "(fun x : ℝ => max (1 - x) 0) 0 ≠ (fun x : ℝ => max (1 - x) 0) 1",
+          "reading": "f(0) ≠ f(1)."
+        },
+        {
+          "index": 6,
+          "lean": "(fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 0 = 1 / 2",
+          "reading": "a(0) = 1/2."
+        },
+        {
+          "index": 7,
+          "lean": "(fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 1 = 0",
+          "reading": "a(1) = 0."
+        },
+        {
+          "index": 8,
+          "lean": "(fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 2 = 1 / 2",
+          "reading": "a(2) = 1/2."
+        }
+      ]
+    },
+    {
+      "item": "item_3",
+      "slots": {
+        "objects": "Two closed examples with offset 2 and g(x)=max(3−x,0) on the reals. The first has horizon 0 and unit steps. The second has horizon 3 and zero steps.",
+        "quantifiers_and_domains": "No free parameters or external hypotheses. First sum has no indices. Second outer sum uses t=0,1,2, with inner sum over i=0 through t.",
+        "premises": "All offsets, horizons, steps and the function are fixed by the formulas.",
+        "construction": "First compare the empty right-endpoint sum for unit steps with the integral from 2 to 2+Σ_{i<0}1. Then compare the three-step sum with weights 0 and right endpoints 2+Σ_{i≤t}0 with the integral from 2 to 2+Σ_{i<3}0.",
+        "conclusion": "Two weak inequalities followed by the point evaluation g(2)=1. Each of the two inequalities simplifies to 0 ≤ 0.",
+        "boundaries_and_special_cases": "The first interval collapses with no steps. The second collapses despite three steps because all widths vanish. In both cases the function is positive at the offset.",
+        "scope_and_limits": "These are specific boundary instances. Equal numerical sides follow by simplification, but the first two exact conjuncts use ≤. The third conjunct is only a value at x=2."
+      },
+      "conjuncts": [
+        {
+          "index": 1,
+          "lean": "(∑ t ∈ range 0, (1 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (1 : ℝ))) ≤\n      (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 0, (1 : ℝ)), (fun x : ℝ => max (3 - x) 0) x)",
+          "reading": "At T=0 and offset 2, the empty weighted sum for unit steps is ≤ the integral of g from 2 to 2+Σ_{i<0}1."
+        },
+        {
+          "index": 2,
+          "lean": "(∑ t ∈ range 3, (0 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (0 : ℝ))) ≤\n      (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 3, (0 : ℝ)), (fun x : ℝ => max (3 - x) 0) x)",
+          "reading": "At T=3 and offset 2, the weighted sum for three zero steps is ≤ the integral of g from 2 to 2+Σ_{i<3}0."
+        },
+        {
+          "index": 3,
+          "lean": "(fun x : ℝ => max (3 - x) 0) 2 = 1",
+          "reading": "g(2) = 1."
+        }
+      ]
+    }
+  ],
+  "formalChecks": [
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "axiomListRecords": 2,
+      "scope": "Exact public statement application plus #check/#print axioms; full current compiler proof bodies are separately inspected."
+    },
+    {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "axiomListRecords": 1,
+      "scope": "Exact public statement application plus #check/#print axioms; full current compiler proof bodies are separately inspected."
+    }
+  ]
+}

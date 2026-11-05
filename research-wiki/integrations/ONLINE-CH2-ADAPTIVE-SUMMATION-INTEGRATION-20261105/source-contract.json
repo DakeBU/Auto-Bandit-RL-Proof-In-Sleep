@@ -1,0 +1,43 @@
+{
+  "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+  "author": "Francesco Orabona",
+  "version": "arXiv:1912.13213v10",
+  "sourceURL": "https://arxiv.org/pdf/1912.13213v10#page=52",
+  "printedPage": 40,
+  "pdfPage": 52,
+  "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "production": "BanditRL.OnlineAdaptiveSummation.lemma_4_13",
+  "sourceOnlySlots": [
+    {
+      "id": "finite_data",
+      "content": "Finite horizon T with entries a_0,...,a_T >= 0. The offset a_0 is among these entries. The text states no strict positivity or lower bound on T."
+    },
+    {
+      "id": "function",
+      "content": "f : [0,+infinity) -> [0,+infinity)."
+    },
+    {
+      "id": "order",
+      "content": "f is non-increasing on its domain. Equality is permitted."
+    },
+    {
+      "id": "regularity",
+      "content": "f is continuous on the stated domain, including its finite endpoint."
+    },
+    {
+      "id": "sample_and_weight",
+      "content": "For round t=1,...,T the weight is a_t and the sample point is the current right endpoint a_0 + sum_{i=1}^t a_i. The proof writes this endpoint as s_t = sum_{i=0}^t a_i."
+    },
+    {
+      "id": "integral_and_boundaries",
+      "content": "Integrate f(x) dx from a_0 to sum_{t=0}^T a_t. Both integration limits depend on the supplied data; s_0 = a_0 and s_T = sum_{t=0}^T a_t."
+    },
+    {
+      "id": "comparison",
+      "content": "sum_{t=1}^T a_t f(a_0 + sum_{i=1}^t a_i) <= integral_{a_0}^{sum_{t=0}^T a_t} f(x) dx. This is an exact finite, one-sided inequality with coefficient 1."
+    }
+  ],
+  "correspondence": "Offset separate. Source increments 1 through T correspond to Lean indices 0 through T-1. The total real extension is constrained on Ici 0. The value of f on negative inputs is irrelevant. Source nonnegativity of f remains in the signature although the local proof does not use it.",
+  "independentSource": "b3f17b4787e19ce0b9d595e1277d1bad4fb04df46e723e0bd75c586f4150ac00",
+  "independentSemantic": "316390468cb3f650e317dc15d37d054f56364f638038c26ae86516115d1f59d2"
+}

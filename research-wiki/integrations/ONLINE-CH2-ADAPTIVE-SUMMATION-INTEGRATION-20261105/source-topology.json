@@ -1,0 +1,51 @@
+{
+  "source": "Orabona v10, section 4.2.1, Lemma 4.13, physical PDF page 52, printed page 40, first display and proof",
+  "slots": [
+    {
+      "id": "finite_data",
+      "content": "Finite horizon T with entries a_0,...,a_T >= 0. The offset a_0 is among these entries. The text states no strict positivity or lower bound on T."
+    },
+    {
+      "id": "function",
+      "content": "f : [0,+infinity) -> [0,+infinity)."
+    },
+    {
+      "id": "order",
+      "content": "f is non-increasing on its domain. Equality is permitted."
+    },
+    {
+      "id": "regularity",
+      "content": "f is continuous on the stated domain, including its finite endpoint."
+    },
+    {
+      "id": "sample_and_weight",
+      "content": "For round t=1,...,T the weight is a_t and the sample point is the current right endpoint a_0 + sum_{i=1}^t a_i. The proof writes this endpoint as s_t = sum_{i=0}^t a_i."
+    },
+    {
+      "id": "integral_and_boundaries",
+      "content": "Integrate f(x) dx from a_0 to sum_{t=0}^T a_t. Both integration limits depend on the supplied data; s_0 = a_0 and s_T = sum_{t=0}^T a_t."
+    },
+    {
+      "id": "comparison",
+      "content": "sum_{t=1}^T a_t f(a_0 + sum_{i=1}^t a_i) <= integral_{a_0}^{sum_{t=0}^T a_t} f(x) dx. This is an exact finite, one-sided inequality with coefficient 1."
+    }
+  ],
+  "proof_topology": [
+    "Introduce s_t = sum_{i=0}^t a_i; s_t-s_{t-1}=a_t for t=1,...,T.",
+    "Identify the summand with a_t f(s_t), the integral of the constant f(s_t) on [s_{t-1},s_t].",
+    "Since s_{t-1} <= x <= s_t, non-increase gives f(s_t) <= f(x). Integrate this comparison on that interval.",
+    "Sum the per-interval inequalities. Additivity across adjacent intervals yields the integral on [s_0,s_T]."
+  ],
+  "boundary_observations": [
+    "a_0 can be zero and remains the lower integral endpoint. The sum of weighted samples starts at t=1.",
+    "Any later a_t=0 produces equal consecutive endpoints, zero rectangle and zero interval integral. For all later increments zero the two sides vanish.",
+    "T=0, if admitted by a formal horizon type, gives an empty sum and equal limits. The source does not single out this case.",
+    "The displayed lemma assumes continuity and nonnegative codomain even if one might prove variants with weaker conditions."
+  ],
+  "downstream": [
+    "Printed pp.39-40 motivate the lemma by adaptive online subgradient descent (OSD). Equation (4.3) uses eta_t = D/sqrt(sum_{i=1}^t ||g_i||_2^2), skipping zero-gradient rounds.",
+    "Immediately after the proof, set a_t=||g_t||_2^2 for t>=1 as indicated by the displayed sum. The text uses f(x)=1/sqrt(x) and a_0 -> 0. The singularity at zero requires separate treatment; the function as written is outside the lemma's continuous domain at zero.",
+    "With the factor D/2 preceding the sum, the resulting upper bound is D sqrt(sum_{t=1}^T ||g_t||_2^2). This supplies the second term in the derivation leading to the (3/2)D sqrt(sum ||g_t||_2^2) regret bound (4.4).",
+    "Theorem 4.14, later on p.40, rescales the learning rates by sqrt(2)/2, skips zero-gradient updates, and states the improved D sqrt(2 sum ||g_t||_2^2) regret bound and a fixed-rate minimization expression. The lemma alone establishes the scalar sum-integral inequality."
+  ]
+}
