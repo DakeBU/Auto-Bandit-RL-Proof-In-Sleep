@@ -1,0 +1,298 @@
+{
+  "decision": "ACCEPTED_LOCAL_ESTIMATES",
+  "scope": "Six named Gamma estimate definitions, six estimate theorems and four concrete consumers at exact commit. Two generated auxiliary declarations audited separately.",
+  "head": "f446a8f14a62dbeb74a9de9a22f79e20e24167be",
+  "parent": "8971b81c40605c2add05d233e29d827d6e0ee103",
+  "sources": "Orabona v10 Appendix A.2; these estimates support the proof of Lemma A.13 on printed pp.295–296/PDF307–308.",
+  "import_verdict": "12efa46c15380202405d9bfdca4425c87813e3f2691166a0e2c8a37f47649e8d",
+  "fullgate_verdict": "6cf42224428d883451eb7e60ccf63c8712388ca589d3ed1930936dfae2333250",
+  "public_sources": "c8ee5c98541845e8dec20061c2d3d7575f39492db64a0385ef4befacb0b4449c",
+  "browser": "452381090ca27ec3788ae17063606c9c6a793c8db4ebf3c1548219843c914d37",
+  "visual": "277a42b0f0b257497807890621b23137fd15dfcb3c8057cdeb45dfeab303ee9f",
+  "offline": "b4fe30dc6956bb3d51627f1a132f2e2d95441f78207b0783cd9b177d1800610e",
+  "clipboard": "fe69b0829bb3d3fe357e4ae9d1e622a4037415c21ca079fae57c0b9177e63c2e",
+  "remote_ci": "779dec75f7a8ce53a1fb72acde5d715b45b0316dffc7b16da551b78d7c3519c6",
+  "ci_run": "42029371497",
+  "synthetic_commit": "e645cfd21236f5495bb785c54842bf71536c3684",
+  "ci_parents": [
+    "2e97d6f64aa23f2322021f974d7aa99ea0150c18",
+    "f446a8f14a62dbeb74a9de9a22f79e20e24167be"
+  ],
+  "candidate_tree": "32fc4bef40955f6d04647ff88a185195d8854759",
+  "metrics": {
+    "stages": 16,
+    "harness_tests": 496,
+    "skips": 7,
+    "modules": 891,
+    "declarations": 11330,
+    "placeholders": 0,
+    "imports_raw_files": 58,
+    "reader_cards": 3,
+    "widths": [
+      1420,
+      375
+    ],
+    "copies": 6,
+    "graph_cycles": 6,
+    "screenshots": 14,
+    "offline_pages": 76,
+    "offline_formulas": 1038,
+    "kernel_copied_types": 3,
+    "public_origins": 16
+  },
+  "row_dispositions": {
+    "165": "open",
+    "146": "open",
+    "138": "open"
+  },
+  "limits": "Private subsequent derivative, integral, curvature and simplex work is outside this commit. Local acceptance and a green PR synthetic checkout carry no merge or live deployment determination.",
+  "independent_decision_sha256": "19455d9f3f5d81452d7e3a9246b0a366a375e0370cc9a54f992a71c1c4bd819a",
+  "source_contract": "source-contract.json",
+  "proof_attempts": "proof-attempts.json",
+  "source_http_at_head": [
+    {
+      "path": "BanditRLProof/OnlineGammaEstimates.lean",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/f446a8f14a62dbeb74a9de9a22f79e20e24167be/BanditRLProof/OnlineGammaEstimates.lean",
+      "http": 200,
+      "bytes": 6120,
+      "sha256": "c4166b59191f0aac347aa59fe9eda6b06dda75129037dfd7256f6e4caf7807ef"
+    },
+    {
+      "path": "Tests/OnlineGammaEstimatesCanary.lean",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/f446a8f14a62dbeb74a9de9a22f79e20e24167be/Tests/OnlineGammaEstimatesCanary.lean",
+      "http": 200,
+      "bytes": 2436,
+      "sha256": "86ed2a765480dd75453922d4c2d06268dcb2c26441bc54b5c7c9c7bea7792133"
+    },
+    {
+      "path": "docs/contracts/online-gamma-curvature-estimates-v1/source-contract.json",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/f446a8f14a62dbeb74a9de9a22f79e20e24167be/docs/contracts/online-gamma-curvature-estimates-v1/source-contract.json",
+      "http": 200,
+      "bytes": 9672,
+      "sha256": "4a4ce590f728e1a9cf10a08c345913b60233a907fe74b1bf11729fc5e8a371f7"
+    },
+    {
+      "path": "docs/contracts/online-gamma-curvature-estimates-v1/proof-attempts.json",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/f446a8f14a62dbeb74a9de9a22f79e20e24167be/docs/contracts/online-gamma-curvature-estimates-v1/proof-attempts.json",
+      "http": 200,
+      "bytes": 11598,
+      "sha256": "1a965278a21bdaf66779893f9d502b2a7030fb3a076881f78334b26a16486f60"
+    },
+    {
+      "path": "research-wiki/contribution-contracts/ONLINE-GAMMA-CURVATURE-ESTIMATES-20261105.json",
+      "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/f446a8f14a62dbeb74a9de9a22f79e20e24167be/research-wiki/contribution-contracts/ONLINE-GAMMA-CURVATURE-ESTIMATES-20261105.json",
+      "http": 200,
+      "bytes": 10580,
+      "sha256": "57ac6e289a60963bec75108bac658901690f20d0a9a1f3a310e0ea1d51b43280"
+    }
+  ],
+  "declarations": [
+    {
+      "owner": "Tests.OnlineGammaEstimatesCanary",
+      "name": "BanditRL.OnlineGamma.Canary.sum_reciprocalDifference_neg_one_two",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "451a067bf27bd6b5a23fdf10cccc4b5a69fcd54e56f23e37b542e95b7b4f0cea",
+      "value_sha256": "61fb1ae9c7dfeed45107d0cc674ef464c1dad977a892a18869062adaaa4edb39"
+    },
+    {
+      "owner": "Tests.OnlineGammaEstimatesCanary",
+      "name": "BanditRL.OnlineGamma.Canary.logGammaSeq_derivatives_zero_at_two",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "2f2687fc89da3a0420bc5cf70f6bcf408edec489d6fb4d4b56996f6b17472d2c",
+      "value_sha256": "9076cac6c917ac34535dc25440fa51836ba7f8c253dc85c6d668669f0ed808ee"
+    },
+    {
+      "owner": "Tests.OnlineGammaEstimatesCanary",
+      "name": "BanditRL.OnlineGamma.Canary.logGammaSeq_derivatives_one_at_one",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "2a008bba15fcb790d472f0641f2fada08c002de921e59e6eb06f200c0b5c5e4d",
+      "value_sha256": "ce4ac6fde83c4087013a5d87a1014f9cfb92d836bf5a96940b37496b4ec2ea67"
+    },
+    {
+      "owner": "Tests.OnlineGammaEstimatesCanary",
+      "name": "BanditRL.OnlineGamma.Canary.uniform_tails_endpoint_limits_and_prefixes",
+      "axioms": [
+        "Quot.sound",
+        "propext",
+        "Classical.choice"
+      ],
+      "type_sha256": "70cfc06db036828ed5f5ae4f2cfff95c7d562a8ced929f591ed38becbdfdf2a2",
+      "value_sha256": "2bdbcb92ef9a15065b771b84c68a1c61c428d8e07167017e7a798445b1ad3d32"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.compensatedReciprocal",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "ffadfe7b1977e1d6ada4be2c20fc06c5c783666f1a4cfe23232ff9d363974fb6",
+      "value_sha256": "3abb31d49fb5954e590455c4e207061a57a27e15813997b9039a93564ff07d1b"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.hasDerivAt_logGammaSeq_and_slopeApprox",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "6d668b1a63bdf254e8b14564b3bd1fba9ae097fb99f940743fa24c49d6c0f88e",
+      "value_sha256": "1b277b2227745d8777745dfc6bdd3faae95570c8437f60abe16b4cdb0003edef"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.logGammaCurvatureApprox",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "c46674c8d4a0e148a495cc63e9aa5c73106b84c1f08f7b54313393cd97ccbd2c",
+      "value_sha256": "0897d02dceaa8f99b2eb5a59bfab6862aa4db544d05d91915857f4c153932feb"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.logGammaSlopeApprox",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "c46674c8d4a0e148a495cc63e9aa5c73106b84c1f08f7b54313393cd97ccbd2c",
+      "value_sha256": "8991eb9cbae62b27d0e3c624e1686529705c3412338456812d0f0b437aaa0076"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.midpointInvSq",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "5580ba67c024c119bc6e6238f1e896310547686cac1fa72d4be1b93628de0280",
+      "value_sha256": "c6072f705f59307063a1dbc3178cb21883a8c4b5d61e6aeca52e7369c3723380"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.midpointInvSq_le_reciprocalDifference",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "b7dc2fb08bf029234f05b0a21552ed5e1c9a354508f0d36163ff6eb6c943790f",
+      "value_sha256": "6be94f07500d7c54f46e9ac4457a9b9896d666f39d493e44ca9865050a88fc45"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.reciprocalDifference",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "5580ba67c024c119bc6e6238f1e896310547686cac1fa72d4be1b93628de0280",
+      "value_sha256": "5647422c2466b55ae4ee3486b25f0f1d5bc66af63c71ca680b64bab2773f217e"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.shiftedInvSq",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "ffadfe7b1977e1d6ada4be2c20fc06c5c783666f1a4cfe23232ff9d363974fb6",
+      "value_sha256": "ff26e638c1b2e7825caa4cb78002502c2e71ce5db0835c40bbe410a5b4dd7a9a"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.sum_midpointInvSq_le",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "aea59ce397cacba1cd3598821f918e6747051551fe3fff008cf16f7f7f7b2857",
+      "value_sha256": "8d155758fa6e3815bd34750ae0d196518c8e080ef97cd0289367f25c2e42e3ff"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.sum_reciprocalDifference",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "dddc72ce29c9266466bd82437db79269610db0b80d0e7ebad102d4d733a7eb7d",
+      "value_sha256": "0f01d7cd6f4cfa67ba3bc24183b062b6eea39dd6dd52974310c7f8e78562c86a"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.summable_midpointInvSq_and_tsum_le",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "9c844d00f8f25694799b82c48d2aef741c6d651048c207cf82ef71b9e4b8f07b",
+      "value_sha256": "fe55b9cdcae0a4e8d6ddbf886fa799d07aa49b4de38da42bfd171e50ba57dab6"
+    },
+    {
+      "owner": "BanditRLProof.OnlineGammaEstimates",
+      "name": "BanditRL.OnlineGamma.tendstoUniformlyOn_compensatedReciprocal_and_shiftedInvSq",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "type_sha256": "0ab908fc503fbcd52784b4a12d207f8461193535b4ed5a4c5290e0df50272d88",
+      "value_sha256": "36e171311f72b25e3fdbb91dc3ad8a2aeafeb7643092c7509e436bd256d70654"
+    }
+  ],
+  "production_probe": {
+    "first_native_exit_codes": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "failed_step": "The consumer import used the schematic preparation file. Its failed output was retained.",
+    "repair": "Re-ran the consumer import with the actual four-consumer probe, exit 0. All 58 output files matched their accepted private counterparts.",
+    "manifest_sha256": "492d5c696107d2a2b521589c3d7200bda39ce99fee4e117f07c6d830f3858444"
+  },
+  "gates": {
+    "accepted": true,
+    "head": "f446a8f14a62dbeb74a9de9a22f79e20e24167be",
+    "summary": "ce5303f789ad65f89e93f40633ec5b84ce9fe3451fa1ce79ac51a20f15d6c6e0",
+    "terminal": "0c29b429d7e523d3eef8305959f65fa56a536a88a4d01de641e0382b6788b910",
+    "site_manifest": "0fa74fba2fd43fb2081468d49adbfefa189da9a103d5d0fbaba0ffa928f00e8b",
+    "stages": 16,
+    "tests": 496,
+    "skips": 7,
+    "inputs": 3243,
+    "packages": 9,
+    "modules_retained": 20,
+    "metrics": {
+      "module_count": 891,
+      "declaration_count": 11330,
+      "placeholder_count": 0
+    },
+    "scope": "Exact-head local project gates. Browser, visual and clipboard results are separately adjudicated."
+  },
+  "ci_url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/actions/runs/42029371497"
+}
