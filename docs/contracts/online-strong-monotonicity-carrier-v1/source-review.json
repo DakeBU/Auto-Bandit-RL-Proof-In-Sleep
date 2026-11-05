@@ -1,0 +1,24 @@
+{
+  "disposition": "REPAIR_REQUIRED: expert mathematical source review and typed countermodel/repair contracts. Lean proofs have not been accepted.",
+  "source": "Orabona, arXiv:1912.13213v10, Definition 4.1 and Lemma 4.2 on printed 34, Theorem 4.3 first item on printed 35–36 (PDF 46–48).",
+  "pdf": "https://arxiv.org/pdf/1912.13213v10#page=46",
+  "original": "For proper convex f, λ-strong convexity on dom ∂f is printed as equivalent to strong monotonicity of all its subgradients there. The inventory and printed theorem remain unchanged.",
+  "example": {
+    "geometry": "The Euclidean plane with coordinates (s,t).",
+    "objective": "For t>0, f=s²+t²; for t=0, f=max(s²,1); for t<0, f=+∞.",
+    "supported": "All points of positive height have support 2(s,t). At height zero there is a subgradient exactly at |s|≥1, and all of them are (2s,b) with b≤0.",
+    "consequence": "All support pairs satisfy the printed inequality with λ=2. At (-1,0) and (1,0) both values are 1, the squared distance is 4, and the midpoint value 1 exceeds the required upper bound 0. The midpoint belongs to dom f but not dom ∂f."
+  },
+  "repair": "Use an explicit convex carrier V contained in dom ∂f. Both the quadratic penalty and the strong monotonicity constant refer to the chosen original norm. The coordinate pairing may be transported by a linear equivalence; no isometry is assumed.",
+  "consumer": "The weighted entropy result uses the repair on the positive weighted simplex and the true ℓ¹ norm. The already proved pairing does not establish strong convexity on its own.",
+  "evidence": {
+    "c2-row149-source-first-convex-carrier-audit-v1.json": "bd1d2d2973108b535aef36ba9479ed02eab364965a196fa906b577d4073ebe91",
+    "c2-row149-independent-math-review-v1/review.json": "0fdb1b34b00467c47fda6dfb9467ba6404f1fae6cb6fee2133695e7cc06c1410",
+    "c2-row149-typed-counterexample-and-repair-freeze-v1.json": "a75832ef47671737d0a7f89ac43bdc6d4d00db95806b677ede79fb0245a95745",
+    "c2-row149-102e-independent-typing-adjudication-v1.json": "2c2c73040a4133902215b41c64bb51095d1edf34aa294f0e8ba50a065ddcbdbf"
+  },
+  "remaining": [
+    "Formalize properness and actual real epigraph convexity, full support classification, λ=2 globally on supported points and failure at the midpoint.",
+    "Complete the convex-carrier equivalence and all public canaries, project, reader and semantic checks before accepting row 149."
+  ]
+}

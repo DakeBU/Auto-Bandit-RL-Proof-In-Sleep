@@ -1,0 +1,54 @@
+{
+  "typed_on": "102e0ce79908306bfde3b2c8ba87144bfcf70a59",
+  "status": "Frozen statements. The counterexample, the corrected convex-carrier theorem and public acceptance have separate proof obligations.",
+  "context": "import BanditRLProof.OnlineStrongConvexSubgradientIff\n\nnoncomputable section\nopen Set\nnamespace BanditRL.OnlineConvex.SupportCarrierExample\n\nabbrev Plane := EuclideanSpace ℝ (Fin 2)\n\ndef halfPlane : Set Plane := {p | 0 ≤ p 1}\ndef boundaryValue (p : Plane) : ℝ := max (p 0 ^ 2) 1\ndef finiteValue (p : Plane) : ℝ :=\n  if p 1 = 0 then boundaryValue p else (p 0 ^ 2 + p 1 ^ 2)\nopen scoped Classical in\ndef objective (p : Plane) : EReal :=\n  if p ∈ halfPlane then (finiteValue p : EReal) else ⊤\ndef supported : Set Plane := {p | (SourceSubdifferential objective p).Nonempty}\ndef rightPoint : Plane := (WithLp.linearEquiv 2 ℝ (Fin 2 → ℝ)).symm (fun i => if i = 0 then 1 else 0)\ndef leftPoint : Plane := -rightPoint\n\n",
+  "context_sha256": "082fbaff35bc46a37ea2a6b746a80aed6fbe07dc3edfc54edbfe8cae1c94d097",
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.carrier_and_convexity",
+      "header": "theorem carrier_and_convexity :\n    SourceProper objective ∧ IsConvexExtended objective ∧\n    effectiveDomain objective = halfPlane ∧ ConvexOn ℝ halfPlane finiteValue\n",
+      "header_sha256": "5c51f6a9f7b7aaee57c395f2acead8a9bdc2330dee695a661671e6a18c682de4",
+      "lean_type_sha256": "c0b78bfe26d27632e74550bbec72f30c03a788571f8cbbeb2d6d7e4b1bfea895"
+    },
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.all_supports",
+      "header": "theorem all_supports (p g : Plane) :\n    g ∈ SourceSubdifferential objective p ↔\n      (0 < p 1 ∧ g = (2 : ℝ) • p) ∨\n      (p 1 = 0 ∧ 1 ≤ |p 0| ∧ g 0 = 2 * p 0 ∧ g 1 ≤ 0)\n",
+      "header_sha256": "c2ccb354c4a90578e7e644ae845bccfb0a92fc31634fcace5a8779b65849da1b",
+      "lean_type_sha256": "e0107b9ba46beb3ad33637cf85f1f73ef307db99a33e7ed70dc5bcc5ceb746a6"
+    },
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.support_carrier",
+      "header": "theorem support_carrier :\n    supported = {p : Plane | 0 < p 1 ∨ (p 1 = 0 ∧ 1 ≤ |p 0|)} ∧\n    leftPoint ∈ supported ∧ rightPoint ∈ supported ∧\n    (0 : Plane) ∉ supported ∧ ¬ Convex ℝ supported\n",
+      "header_sha256": "4887978c058a7cb206dde326d662cc63a681e014ba7bfe89aa3708a5e26517eb",
+      "lean_type_sha256": "b831d8d96e6d0c1255f75857f02dff9969302fc2be1f1bc369814494931ffc35"
+    },
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.every_pair_strongly_monotone",
+      "header": "theorem every_pair_strongly_monotone :\n    ∀ p ∈ supported, ∀ q ∈ supported, ∀ g ∈ SourceSubdifferential objective p,\n      ∀ h ∈ SourceSubdifferential objective q,\n        2 * ‖p - q‖ ^ 2 ≤ inner ℝ (g - h) (p - q)\n",
+      "header_sha256": "3eb019108aa46e2c432d3af4e2f2418e57dece95ba0aa22bdcbcf21490705beb",
+      "lean_type_sha256": "d6a31f9972190185f4c66dd3462700e6427777067f0146874fa73e70f580e4c1"
+    },
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.interpolation_fails",
+      "header": "theorem interpolation_fails :\n    let m := (1 / 2 : ℝ) • leftPoint + (1 / 2 : ℝ) • rightPoint;\n    let r := ((1 / 2 : ℝ) : EReal) * objective leftPoint +\n      ((1 / 2 : ℝ) : EReal) * objective rightPoint -\n      ((((2 : ℝ) / 2) * (1 / 2) * (1 / 2) * ‖leftPoint - rightPoint‖ ^ 2 : ℝ) : EReal);\n    m = 0 ∧ objective leftPoint = 1 ∧ objective rightPoint = 1 ∧\n    ‖leftPoint - rightPoint‖ ^ 2 = 4 ∧ objective m = 1 ∧ r = 0 ∧ ¬ (objective m ≤ r)\n",
+      "header_sha256": "355aca1eb2bd9297b5a4977eef575447ce8534126ff251185c898c5efdd92291",
+      "lean_type_sha256": "7284fcb4e691d3b8c958c07aa639e8d9c896529203b95d6164971b1379830eb8"
+    },
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.concrete_converse_counterexample",
+      "header": "theorem concrete_converse_counterexample :\n    SourceProper objective ∧ IsConvexExtended objective ∧\n    (∀ p ∈ supported, ∀ q ∈ supported, ∀ g ∈ SourceSubdifferential objective p,\n      ∀ h ∈ SourceSubdifferential objective q,\n        2 * ‖p - q‖ ^ 2 ≤ inner ℝ (g - h) (p - q)) ∧\n    ¬ (∀ x ∈ supported, ∀ y ∈ supported, ∀ a : ℝ, 0 < a → a < 1 →\n      objective (a • x + (1 - a) • y) ≤\n        (a : EReal) * objective x + ((1 - a : ℝ) : EReal) * objective y -\n          ((((2 : ℝ) / 2) * a * (1-a) * ‖x-y‖ ^ 2 : ℝ) : EReal))\n",
+      "header_sha256": "8fe879a34484ff3f35af76ef43544cda40a7334b69491d867ebd626bf670078a",
+      "lean_type_sha256": "1bbfd13066a017793ab87780c97e8c51f35dbcb610d9e5b203bd0fae57cec436"
+    },
+    {
+      "name": "BanditRL.OnlineConvex.SupportCarrierExample.convex_carrier_equivalence",
+      "header": "theorem convex_carrier_equivalence {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hconv : IsConvexExtended f) (hV : Convex ℝ V) (hlam : 0 ≤ lam)\n    (hsub : ∀ p ∈ V, (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty) :\n    (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1-a) * ‖x-y‖ ^ 2 : ℝ) : EReal)) ↔\n    (∀ p ∈ V, ∀ q ∈ V, ∀ g ∈ SourceSubdifferential (fun u => f (e.symm u)) (e p),\n      ∀ h ∈ SourceSubdifferential (fun u => f (e.symm u)) (e q),\n        lam * ‖p-q‖ ^ 2 ≤ inner ℝ (g-h) (e (p-q)))\n",
+      "header_sha256": "d96dd9016ff4529a36f46086bef4fb06f36db64890fa7d90cf609fd7deb1ce55",
+      "lean_type_sha256": "9aeb3ca3ba5ecebd66042e0418fdb1662be7ef6f323437c5dfa51113fe68695f"
+    }
+  ],
+  "typed_expression_manifest": "9ee41bd3a9b1fe10bf7c0e799e3cbe4204a847bd8cfff50ed6f9e6aa4fa441c9",
+  "typed_summary": "19d0cec02675a779093e122cd9480bcdafa04e4d7823d283644738cfd2788bdc",
+  "independent_typing_review": "2c2c73040a4133902215b41c64bb51095d1edf34aa294f0e8ba50a065ddcbdbf",
+  "failed_type_attempt": "The initial if p ∈ halfPlane did not synthesize a Decidable instance. The exact same objective now uses open scoped Classical in, scoped to that definition."
+}
