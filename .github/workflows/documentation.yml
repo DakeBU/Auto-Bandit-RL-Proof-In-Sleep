@@ -50,6 +50,8 @@ jobs:
           python3 website/scripts/banditrlbench.py validate
           python3 -m unittest website.scripts.test_banditrlbench
           python3 -m unittest tools.test_banditrlbench
+          python3 -m unittest tools.test_bench_task_contract
+          python3 tools/bench_task_contract.py validate-all
           lake env lean benchmarks/banditrlbench/lean/Reference.lean
           python3 tools/banditrlbench.py canary --library . --output _out/brb-canary --trusted-local
 

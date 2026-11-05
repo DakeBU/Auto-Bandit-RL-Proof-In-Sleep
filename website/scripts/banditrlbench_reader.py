@@ -76,21 +76,20 @@ def build_pages(data, output, verified, generated_at, layout, write_page):
     replay = json.loads((BENCH / 'reference-replay.json').read_text(encoding='utf-8'))
     replay_results = {r['core_id']: r for r in replay['results']}
     locations = {r['core_id']: r for r in graph_locations(data, output)}
+    try:
+        from .bench_visuals import landing, fold_sections, protocol_page
+    except ImportError:
+        from bench_visuals import landing, fold_sections, protocol_page
     def emit(path, title, body):
-        write_page(output, path, layout(path, title, '<div class="bench-reader">' + body + '</div>', [], 'banditrlbench', verified, generated_at))
+        if path.endswith('/run/index.html') or path.endswith('/review/index.html'):
+            body = fold_sections(body)
+        write_page(output, path, layout(path, title, '<div class="bench-reader">' + body + '</div>', [], 'banditrlbench', verified, generated_at, extra_scripts=('static/bench-reader.js',)))
     def hero(title, lede):
         return f'<section class="hero"><p class="eyebrow">BanditRLBench · public development edition</p><h1 class="page-title">{title}</h1><p class="lede">{lede}</p></section>'
-    warning = '<p class="callout warning">Four public development cores; two bounded Lean subtargets. Gold admission and held-out test data are pending. No model performance is reported.</p>'
-    nav = '<nav aria-label="Benchmark"><a href="../index.html">Overview</a> · <a href="../non-lean/index.html">Natural-language QA</a> · <a href="../lean/index.html">Lean QA</a> · <a href="../run/index.html">Run and train</a> · <a href="../review/index.html">Expert review</a></nav>'
-    cards = ''.join(f'<article class="info-card"><h3>{title}</h3><p>{desc}</p><a href="{route}/index.html">{action} →</a></article>' for title, desc, route, action in [
-        ('Natural-language QA', 'Explain a proof, audit its assumptions and refute invalid inferences. No Lean installation required.', 'non-lean', 'Browse four questions'),
-        ('Lean QA', 'Submit a proof of an exact fixed signature. Library application is permitted; only the formal subtarget is checked.', 'lean', 'Browse two subtargets'),
-        ('Run, evaluate and train', 'Prepare prompt-only JSONL, record access conditions, replay trusted formal answers or assemble expert review packets.', 'run', 'Open the quick start'),
-        ('Review and contribute', 'Inspect each core in the Lean Graph, compare source and formal scope, review answers and propose task families.', 'review', 'Open the expert guide')])
-    overview = hero('Reason about sequential learning', 'QA tasks connected to the mathematics of BanditRLlib, with separate natural-language and Lean evaluation workflows.') + warning
-    overview += '<section><h2>Choose your workflow</h2><div class="card-grid">' + cards + '</div></section>'
-    overview += '<section><h2>What this release measures</h2><p>Regret accounting, finite-sum integration, confidence budgets and estimator semantics. Views share mathematical identities and splits: four NL views plus two formal companions are four cores, not six independent problems. RL coverage and more demanding proof tasks remain open.</p><p><a href="non-lean-prompts.jsonl">NL prompts only</a> · <a href="lean-prompts.jsonl">Lean prompts and exact signatures</a> · <a href="graph-locations.json">Graph-location map</a></p><details><summary>Public development solutions and provenance</summary><p><a href="cores.json">Registry, solutions and rubrics</a> · <a href="Reference.lean">Reference proofs</a> · <a href="reference-check.json">Original compiler receipt</a></p><p>Public answers make this suitable for development and supervised practice; this is not an unseen exam.</p></details></section>'
-    emit('banditrlbench/index.html', 'BanditRLBench', overview)
+    warning = '<p class="bench-edition">Public dev · 4 cores · 2 Lean warmups · Gold admission and held-out tests pending</p>'
+    nav = '<nav aria-label="Benchmark"><a href="../index.html">Overview</a> · <a href="../non-lean/index.html">Natural-language QA</a> · <a href="../lean/index.html">Lean QA</a> · <a href="../run/index.html">Run and train</a> · <a href="../review/index.html">Expert review</a> · <a href="../protocol/index.html">Task protocol</a></nav>'
+    emit('banditrlbench/index.html', 'BanditRLBench', landing())
+    emit('banditrlbench/protocol/index.html', 'BanditRLBench · Task protocol', protocol_page())
     for track, title in [('non-lean', 'Natural-language QA'), ('lean', 'Lean QA')]:
         listing = '<p class="bench-toc">Jump to: ' + ' · '.join(f'<a href="#{c["core_id"]}">{c["core_id"]}</a>' for c in data['cores'] if track == 'non-lean' or c['core_id'] in targets) + '</p>'
         for core in data['cores']:
@@ -100,7 +99,7 @@ def build_pages(data, output, verified, generated_at, layout, write_page):
             loc = locations[cid]
             p = lambda text: prose(text, notation[cid])
             question = core['question'] if track == 'non-lean' else core['lean']['question']
-            listing += f'<article class="bench-task" id="{cid}"><p class="eyebrow">{cid} · {esc(core["family_id"])} · dev</p><h2>{esc(core["title"])}</h2><h3>Assumptions</h3><ul>' + ''.join('<li>' + p(a) + '</li>' for a in core['assumptions']) + '</ul><h3>Your task</h3><p>' + p(question) + '</p>'
+            listing += f'<details class="task-browser"'+(' open' if cid == 'BRB-001' else '')+f'><summary>{cid} · {esc(core["title"])}</summary><article class="bench-task" id="{cid}"><p class="eyebrow">{cid} · {esc(core["family_id"])} · dev</p><h2>{esc(core["title"])}</h2><h3>Assumptions</h3><ul>' + ''.join('<li>' + p(a) + '</li>' for a in core['assumptions']) + '</ul><h3>Your task</h3><p>' + p(question) + '</p>'
             if track == 'lean':
                 listing += '<p class="callout">Only the fixed signature below is graded. The NL assumptions describe the parent problem; the signature is the exact formal contract.</p><pre class="lean-code"><code>' + esc('theorem Submission ' + targets[cid]['signature'] + ' := by\n  -- your proof') + '</code></pre>'
             listing += '<details><summary>Solution and assessment rubric</summary><div class="bench-proof">' + p(core['answer']) + '</div><ol>' + ''.join('<li>' + p(r) + '</li>' for r in core['rubric']) + '</ol>'
@@ -112,7 +111,7 @@ def build_pages(data, output, verified, generated_at, layout, write_page):
                 actual = [name for name in measured['dependencies']['value_constants'] if name.startswith('BanditRLProof.')]
                 listing += '<details><summary>Actual constants in the checked reference proof</summary><p>Project constants read from the compiled proof value: ' + ', '.join('<code>' + esc(name) + '</code>' for name in actual) + '.</p><p>Axioms: ' + ', '.join(esc(name) for name in measured['axioms']) + '.</p><p>Recorded library environment: <code>' + replay['environment']['library_commit'] + '</code>. This is direct fixed-target proof evidence, not the transitive dependency closure of the library theorem. <a href="../reference-replay.json">Full type/proof constants and environment receipt</a>.</p></details>'
             source = f'{REPO}/blob/{core["source_commit"]}/{core["source_file"]}'
-            listing += f'<details><summary>Frozen source and verification boundary</summary><p><a href="{source}" data-benchmark-core="{cid}" data-benchmark-contract="{core["contract_hash"]}" data-benchmark-snapshot="{core["source_commit"]}">Frozen benchmark source ({core["source_commit"][:7]})</a></p><p>Source SHA-256: <code>{core["source_sha256"]}</code><br>Question contract: <code>{core["contract_hash"]}</code></p><p>Current graph source matches frozen bytes: {str(loc["current_source_matches_frozen"]).lower()}. Current graph location is navigation, not evidence of a new compiled dependency edge.</p><p>NL gold admission: pending. <a href="../reference-check.json">Reference compilation receipt</a>. <a href="../run/index.html">Replay formal submissions</a>.</p></details></article>'
+            listing += f'<details><summary>Frozen source and verification boundary</summary><p><a href="{source}" data-benchmark-core="{cid}" data-benchmark-contract="{core["contract_hash"]}" data-benchmark-snapshot="{core["source_commit"]}">Frozen benchmark source ({core["source_commit"][:7]})</a></p><p>Source SHA-256: <code>{core["source_sha256"]}</code><br>Question contract: <code>{core["contract_hash"]}</code></p><p>Current graph source matches frozen bytes: {str(loc["current_source_matches_frozen"]).lower()}. Current graph location is navigation, not evidence of a new compiled dependency edge.</p><p>NL gold admission: pending. <a href="../reference-check.json">Reference compilation receipt</a>. <a href="../run/index.html">Replay formal submissions</a>.</p></details></article></details>'
         emit(f'banditrlbench/{track}/index.html', 'BanditRLBench · ' + title, hero(title, 'Read the assumptions, attempt the task, then unfold the solution. Exact graph locations stay visible.') + nav + warning + listing)
 
     run = hero('Run, evaluate and train', 'Start with prompt-only data. Keep the access condition, model identity and evidence attached to each result.') + nav + warning
