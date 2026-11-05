@@ -775,3 +775,6 @@ import BanditRLProof.OnlineUnboundedOSD
 import BanditRLProof.OnlineFTLSelector
 import BanditRLProof.OnlineAdaptiveSummation
 import BanditRLProof.OnlineAdaptiveEnergy
+import BanditRLProof.OnlineAdaptivePotential
+import BanditRLProof.OnlineAdaptiveOSD
+import BanditRLProof.OnlineAdaptiveBenchmark
