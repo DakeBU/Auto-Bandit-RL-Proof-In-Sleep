@@ -187,3 +187,4 @@ import Tests.OnlineUnboundedOSDCanary
 import Tests.OnlineFTRLFiniteIdentityCanary
 import Tests.OnlineFTRLSourceArithmeticCanary
 import Tests.OnlineFTLSelectorCanary
+import Tests.OnlineBTRLTerminalCanary
