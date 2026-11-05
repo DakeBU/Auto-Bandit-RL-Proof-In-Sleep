@@ -8974,6 +8974,41 @@
       "dependencies": [
         "BanditRL.OnlineEntropy.scalarGap_nonneg"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.weightedEntropy_differential",
+      "title": "The ambient derivative of weighted entropy",
+      "chapter": "online-entropy-gap",
+      "featured": false,
+      "teaching_order": 403,
+      "source_match": "source-proof-step",
+      "plain": "For finitely many coordinates, set ψ(x)=∑ᵢ cᵢxᵢ log xᵢ on the positive orthant. Every xᵢ is positive. The coefficients cᵢ are arbitrary real numbers and v is any real direction. The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ.",
+      "math": "\\begin{aligned}\\psi(x)&=\\sum_i c_i x_i\\log x_i,\\\\D\\psi(x)[v]&=\\sum_i c_i(\\log x_i+1)v_i.\\end{aligned}",
+      "intuition": "With c=(1,2) and x=(1/4,3/2), the direction v=(0,1) changes the weighted mass at rate 1/2. Its derivative is 2(log(3/2)+1).",
+      "why": "Lemma 6.33, proof, printed p. 80 / PDF p. 92.",
+      "position": "The ambient derivative identifies the linear functional used in the pairing.",
+      "proof_idea": "Differentiate each coordinate map on the positive orthant. The product rule contributes log xᵢ+1. The derivative of the finite sum adds the resulting linear functionals.",
+      "lean_notes": "The finite-sum derivative acts on the whole real coordinate space.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.weightedEntropy_pairing",
+      "title": "From coordinate ratios to the squared ℓ¹ distance",
+      "chapter": "online-entropy-gap",
+      "featured": false,
+      "teaching_order": 404,
+      "source_match": "source-proof-step",
+      "plain": "For finitely many coordinates, set ψ(x)=∑ᵢ cᵢxᵢ log xᵢ and K={x : xᵢ>0, ∑ᵢ xᵢ/cᵢ=1}. Each weight cᵢ is positive, and both x and y belong to K. The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y].",
+      "math": "\\begin{aligned}L&=\\sum_i |x_i-y_i|,\\quad M=\\sum_i\\frac{2c_i(x_i-y_i)^2}{x_i+y_i},\\\\L^2&\\le M\\le (D\\psi(x)-D\\psi(y))[x-y].\\end{aligned}",
+      "intuition": "With c=(1,2), x=(1/4,3/2) and y=(3/4,1/2), both points have weighted mass 1. Their ordinary coordinate sums are 7/4 and 5/4. The two comparisons become 9/4 ≤ 5/2 ≤ (5/2)log 3. Setting y=x makes all three terms zero.",
+      "why": "Lemma 6.33, proof, printed p. 80 / PDF p. 92.",
+      "position": "The pairing is the input to a subsequent strong-convexity argument on the feasible set.",
+      "proof_idea": "Use weights wᵢ=(xᵢ+yᵢ)/(2cᵢ), whose sum is 1 because x and y both satisfy the weighted normalization. Apply Jensen to the square at |xᵢ−yᵢ|/wᵢ to obtain the first inequality. For the second, multiply the scalar ratio inequality by cᵢ and sum. Subtracting the two ambient derivatives cancels the constant terms.",
+      "lean_notes": "The theorem spells out the ℓ¹ sum of absolute differences and pairs the continuous linear derivative with the displacement.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.positive_pair_log_ratio",
+        "BanditRL.OnlineEntropy.weightedEntropy_differential"
+      ]
     }
   ]
 }

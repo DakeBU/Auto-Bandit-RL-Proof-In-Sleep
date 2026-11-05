@@ -1168,22 +1168,25 @@
     },
     {
       "slug": "online-entropy-gap",
-      "title": "The scalar step in the weighted entropy bound",
+      "title": "From a scalar entropy gap to a weighted gradient bound",
       "short_title": "Entropy gap",
       "status": "compiled",
-      "summary": "A convex logarithmic gap turns a comparison of two positive coordinates into a quadratic lower bound. Its curvature is zero at exactly one point.",
+      "summary": "A scalar logarithmic inequality controls the contribution from one coordinate. Weighted Jensen combines the coordinates to bound the squared ℓ¹ distance by a difference of entropy derivatives.",
       "audience": "Readers following the proof of Orabona, Lemma 6.33, or the entropy dependencies of the Chapter 2 regret estimates.",
-      "completion_definition": "The positive-domain derivative formula, scalar nonnegativity and its two-coordinate consequence, with explicit source correction at u=1.",
+      "completion_definition": "Derivatives and nonnegativity of the positive scalar gap, the coordinate ratio inequality, the ambient entropy differential, and the two-step pairing estimate on the positive weighted simplex.",
       "completion_blockers": [
-        "The weighted summation and the remaining strong-convexity argument require additional declarations."
+        "The full strong-convexity conclusion requires a support argument on the feasible set. The KL identity and boundary extension require separate proofs."
       ],
       "learning_goals": [
         "Check why the printed strict curvature claim fails at u=1.",
         "Use a horizontal tangent to bound the gap on both sides of 1.",
-        "Convert the scalar result into a comparison of two positive coordinates."
+        "Convert the scalar result into a comparison of two positive coordinates.",
+        "Differentiate weighted entropy in every ambient direction at a positive point.",
+        "Track the normalized Jensen weights through both comparisons."
       ],
       "module_globs": [
-        "BanditRLProof/OnlineEntropyScalarGap.lean"
+        "BanditRLProof/OnlineEntropyScalarGap.lean",
+        "BanditRLProof/OnlineEntropyWeightedPairing.lean"
       ],
       "open_gaps": [
         "The full weighted L1 strong-convexity theorem, KL corollary and Bernoulli endpoints are outside this scalar step."

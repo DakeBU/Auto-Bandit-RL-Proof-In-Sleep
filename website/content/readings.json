@@ -8097,7 +8097,7 @@
         "title": "Online Learning: A Modern Introduction Using Convex Optimization",
         "authors": "Francesco Orabona",
         "edition": "arXiv:1912.13213v10",
-        "sections": "Scalar inequality in the proof of Lemma 6.33",
+        "sections": "Scalar and weighted-pairing steps in the proof of Lemma 6.33",
         "pages": "printed p. 80 / PDF p. 92",
         "pdf_page": 92,
         "url": "https://arxiv.org/pdf/1912.13213v10"
@@ -8114,10 +8114,18 @@
         {
           "term": "x, y",
           "meaning": "Two strictly positive coordinates. They need not sum to 1."
+        },
+        {
+          "term": "cᵢ, K",
+          "meaning": "Positive weights cᵢ define K by xᵢ>0 and ∑ᵢ xᵢ/cᵢ=1."
+        },
+        {
+          "term": "Dψ(x)[v]",
+          "meaning": "The ambient derivative acts on any real vector v. The weighted-simplex constraint applies only when comparing feasible points."
         }
       ],
       "algorithm": {
-        "title": "From curvature to a coordinate bound",
+        "title": "From one positive coordinate to the weighted pairing",
         "kind": "Proof calculation for Lemma 6.33",
         "steps": [
           {
@@ -8137,13 +8145,27 @@
             "detail": "Put u=x/y, then multiply the gap by y and expand the logarithm of the ratio.",
             "math": "y\\phi(x/y)=(x-y)(\\log x-\\log y)-\\frac{2(x-y)^2}{x+y}",
             "fallback": "The nonnegative scaled gap is precisely the difference of the two-coordinate terms."
+          },
+          {
+            "title": "The ambient derivative of weighted entropy",
+            "detail": "Differentiate each coordinate map on the positive orthant. The product rule contributes log xᵢ+1. The derivative of the finite sum adds the resulting linear functionals.",
+            "math": "\\begin{aligned}\\psi(x)&=\\sum_i c_i x_i\\log x_i,\\\\D\\psi(x)[v]&=\\sum_i c_i(\\log x_i+1)v_i.\\end{aligned}",
+            "fallback": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ."
+          },
+          {
+            "title": "From coordinate ratios to the squared ℓ¹ distance",
+            "detail": "Use weights wᵢ=(xᵢ+yᵢ)/(2cᵢ), whose sum is 1 because x and y both satisfy the weighted normalization. Apply Jensen to the square at |xᵢ−yᵢ|/wᵢ to obtain the first inequality. For the second, multiply the scalar ratio inequality by cᵢ and sum. Subtracting the two ambient derivatives cancels the constant terms.",
+            "math": "\\begin{aligned}L&=\\sum_i |x_i-y_i|,\\quad M=\\sum_i\\frac{2c_i(x_i-y_i)^2}{x_i+y_i},\\\\L^2&\\le M\\le (D\\psi(x)-D\\psi(y))[x-y].\\end{aligned}",
+            "fallback": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y]."
           }
         ]
       },
       "teaching_route": [
         "BanditRL.OnlineEntropy.scalarGap_curvature",
         "BanditRL.OnlineEntropy.scalarGap_nonneg",
-        "BanditRL.OnlineEntropy.positive_pair_log_ratio"
+        "BanditRL.OnlineEntropy.positive_pair_log_ratio",
+        "BanditRL.OnlineEntropy.weightedEntropy_differential",
+        "BanditRL.OnlineEntropy.weightedEntropy_pairing"
       ],
       "source_theorems": [
         {
@@ -8198,6 +8220,42 @@
             "parameters": "The logarithm is natural.",
             "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
             "guarantee": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree."
+          }
+        },
+        {
+          "label": "The ambient derivative of weighted entropy",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}\\psi(x)&=\\sum_i c_i x_i\\log x_i,\\\\D\\psi(x)[v]&=\\sum_i c_i(\\log x_i+1)v_i.\\end{aligned}",
+          "plain": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ.",
+          "fallback": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ. With c=(1,2) and x=(1/4,3/2), the direction v=(0,1) changes the weighted mass at rate 1/2. Its derivative is 2(log(3/2)+1).",
+          "relationship": "Differentiate each coordinate map on the positive orthant. The product rule contributes log xᵢ+1. The derivative of the finite sum adds the resulting linear functionals.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "For finitely many coordinates, set ψ(x)=∑ᵢ cᵢxᵢ log xᵢ on the positive orthant.",
+            "assumptions": "Every xᵢ is positive. The coefficients cᵢ are arbitrary real numbers and v is any real direction.",
+            "parameters": "Natural logarithms and finitely many real coordinates.",
+            "regret": "Analytic ingredients for the strong-convexity argument in Lemma 6.33.",
+            "guarantee": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ."
+          }
+        },
+        {
+          "label": "From coordinate ratios to the squared ℓ¹ distance",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}L&=\\sum_i |x_i-y_i|,\\quad M=\\sum_i\\frac{2c_i(x_i-y_i)^2}{x_i+y_i},\\\\L^2&\\le M\\le (D\\psi(x)-D\\psi(y))[x-y].\\end{aligned}",
+          "plain": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y].",
+          "fallback": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y]. With c=(1,2), x=(1/4,3/2) and y=(3/4,1/2), both points have weighted mass 1. Their ordinary coordinate sums are 7/4 and 5/4. The two comparisons become 9/4 ≤ 5/2 ≤ (5/2)log 3. Setting y=x makes all three terms zero.",
+          "relationship": "Use weights wᵢ=(xᵢ+yᵢ)/(2cᵢ), whose sum is 1 because x and y both satisfy the weighted normalization. Apply Jensen to the square at |xᵢ−yᵢ|/wᵢ to obtain the first inequality. For the second, multiply the scalar ratio inequality by cᵢ and sum. Subtracting the two ambient derivatives cancels the constant terms.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "For finitely many coordinates, set ψ(x)=∑ᵢ cᵢxᵢ log xᵢ and K={x : xᵢ>0, ∑ᵢ xᵢ/cᵢ=1}.",
+            "assumptions": "Each weight cᵢ is positive, and both x and y belong to K.",
+            "parameters": "Natural logarithms and finitely many real coordinates.",
+            "regret": "Analytic ingredients for the strong-convexity argument in Lemma 6.33.",
+            "guarantee": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y]."
           }
         }
       ],

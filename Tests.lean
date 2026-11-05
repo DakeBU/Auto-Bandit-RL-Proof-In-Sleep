@@ -191,3 +191,4 @@ import Tests.OnlineBTRLTerminalCanary
 import Tests.OnlineOptimisticFTRLCanary
 import Tests.OnlineAdaptiveSummationCanary
 import Tests.OnlineEntropyScalarGapCanary
+import Tests.OnlineEntropyWeightedPairingCanary

@@ -1,0 +1,41 @@
+{
+  "source": "Francesco Orabona, arXiv:1912.13213v10, Lemma 6.33 proof, printed 80 / PDF 92.",
+  "declarations": [
+    "BanditRL.OnlineEntropy.weightedEntropy_differential",
+    "BanditRL.OnlineEntropy.weightedEntropy_pairing"
+  ],
+  "assumptions": [
+    "Every xᵢ is positive. The coefficients cᵢ are arbitrary real numbers and v is any real direction.",
+    "Each weight cᵢ is positive, and both x and y belong to K."
+  ],
+  "formulas": [
+    "\\begin{aligned}\\psi(x)&=\\sum_i c_i x_i\\log x_i,\\\\D\\psi(x)[v]&=\\sum_i c_i(\\log x_i+1)v_i.\\end{aligned}",
+    "\\begin{aligned}L&=\\sum_i |x_i-y_i|,\\quad M=\\sum_i\\frac{2c_i(x_i-y_i)^2}{x_i+y_i},\\\\L^2&\\le M\\le (D\\psi(x)-D\\psi(y))[x-y].\\end{aligned}"
+  ],
+  "proofs": [
+    "Differentiate each coordinate map on the positive orthant. The product rule contributes log xᵢ+1. The derivative of the finite sum adds the resulting linear functionals.",
+    "Use weights wᵢ=(xᵢ+yᵢ)/(2cᵢ), whose sum is 1 because x and y both satisfy the weighted normalization. Apply Jensen to the square at |xᵢ−yᵢ|/wᵢ to obtain the first inequality. For the second, multiply the scalar ratio inequality by cᵢ and sum. Subtracting the two ambient derivatives cancels the constant terms."
+  ],
+  "concrete_checks": [
+    "With c=(1,2) and x=(1/4,3/2), the direction v=(0,1) changes the weighted mass at rate 1/2. Its derivative is 2(log(3/2)+1).",
+    "With c=(1,2), x=(1/4,3/2) and y=(3/4,1/2), both points have weighted mass 1. Their ordinary coordinate sums are 7/4 and 5/4. The two comparisons become 9/4 ≤ 5/2 ≤ (5/2)log 3. Setting y=x makes all three terms zero."
+  ],
+  "inventory": {
+    "/effective_targets/88": "Scalar curvature correction and general coordinate bound, via public OnlineEntropyScalarGap.",
+    "/effective_targets/162": "Ambient differential and weighted Jensen/coordinate pairing, pending final adjudication.",
+    "/effective_targets/143": "Strong convexity on the positive weighted simplex and its KL corollary require further proofs.",
+    "/effective_targets/163": "KL/Bregman identity and endpoint extension remain separate."
+  },
+  "required_actual_dependencies": [
+    "weightedEntropy_differential on both points",
+    "ConvexOn.map_sum_le with normalized positive weights",
+    "positive_pair_log_ratio on each component"
+  ],
+  "evidence": {
+    "typed_source_freeze": "66ffb11465e4f1f9228b98c8a92663569c924491677a23a6976acf792fdb6101",
+    "combined_source": "00f8e1116e4d8be3eee93e0fed8e1c2e73a7ce533c0d73d9685cb810ff279e2e",
+    "combined_native_receipt": "59d4b1a5d90f5d4393d28b02d46c730b8c97cfe1bab4d200c3fa6a0a9da1df8b",
+    "source_static_review": "0c96c165d5d00a97f4d3660922f6ff0376a77fd18447a19cf5ec265a3e6c1fff"
+  },
+  "status": "Typed contracts and five privately verified proofs. Production split, shared gates, reader and row-level acceptance require independent checks."
+}
