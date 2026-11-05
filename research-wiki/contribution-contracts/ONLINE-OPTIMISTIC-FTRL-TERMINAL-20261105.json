@@ -1,0 +1,170 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-OPTIMISTIC-FTRL-TERMINAL-20261105",
+  "route": "online-learning/chapter-2/optimistic-ftrl-terminal",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "Orabona arXiv:1912.13213v10; SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 / PDF pp. 141–142; Definition 4.1, printed p. 34 / PDF p. 46.",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=141"
+  },
+  "target": "True-round hinted prediction, zero-hint terminal attainment, sharp and Young regret, and the repeated-hint residual.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineOptimisticFTRL.lean",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineOptimistic.optimistic_round_unique",
+    "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+    "BanditRL.OnlineOptimistic.zero_hint_sharp_regret",
+    "BanditRL.OnlineOptimistic.positive_modulus_young_regret",
+    "BanditRL.OnlineOptimistic.repeated_hint_residual_regret"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Shared inclusive finite regret identity with arbitrary terminal point and full drift",
+      "Source Theorem 6.9 with a coordinate subgradient and original-norm curvature",
+      "Constrained support growth; extended Weierstrass; finite-dimensional norm equivalence"
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineBTRL.sourceInclusive",
+      "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+      "BanditRL.OnlineConvex.stronglyConvex_existsUnique_minimizer",
+      "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+      "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+      "BanditRL.OnlineConvex.source_weierstrass_extended"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineOptimistic.optimistic_round_unique",
+      "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+      "BanditRL.OnlineOptimistic.zero_hint_sharp_regret",
+      "BanditRL.OnlineOptimistic.positive_modulus_young_regret",
+      "BanditRL.OnlineOptimistic.repeated_hint_residual_regret"
+    ],
+    "known_consumers": [
+      "Five concrete examples in Tests.OnlineOptimisticFTRLCanary make twelve uses of the general results: asymmetric hints, regularizer drift, the true dual on a box, announced zero curvature, and a continuum of terminal minimizers."
+    ],
+    "planned_consumers": [
+      "Chapter 2 forward obligation 86 and reference 166 for Algorithm 7.8 and Theorem 7.47."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Keep A_t strict-past and hinted, G_t inclusive and unhinted. Reuse the arbitrary-terminal algebra and original-norm convex analysis; do not apply the BTRL regret theorem to a different algorithm."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "source-reviewed",
+    "verdict": "source-reviewed",
+    "formalizer": "/root/c1_global_source_closure_20261104",
+    "blind_decoder": "Main and concrete source-blind formula reconstructions were checked independently before the final typing seal eb0f79107768bbf42facd2af30da5d3c798fe4e9d465e82661fe44d9e5b2c447.",
+    "source_reviewer": "/root/source_review_resumed_v2_20261104",
+    "remaining_semantic_delta": "The sharp theorem permits specified nonnegative inclusive curvature; its terminal minimizer exists but need not be unique at zero. The dual Young expression requires positive chosen moduli. Repeating the hint instead requires its terminal residual. A relative support on V is not automatically an ambient support on X. This contract alone accepts no proof or chapter."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Finite-dimensional norm comparison and support restriction are concrete analytic maps. No categorical claim is made.",
+    "focus_targets": [
+      "BanditRL.OnlineOptimistic.optimistic_round_unique",
+      "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+      "BanditRL.OnlineOptimistic.zero_hint_sharp_regret",
+      "BanditRL.OnlineOptimistic.positive_modulus_young_regret",
+      "BanditRL.OnlineOptimistic.repeated_hint_residual_regret"
+    ],
+    "visual_review": "The five named declarations are linked to source cards and theorem explanations in the shared online-ogd route. Actual production browser traversal and clipboard re-elaboration are separate checks.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "Five new teaching explanations and five source cards cover actual rounds, zero-hint attainment, the sharp and Young bounds, and the repeated-hint residual. The existing preview route is retained.",
+    "banditrlwiki": "no-change-with-reason: the same Online Learning Book owns this chapter.",
+    "results_ledger": "no-change-with-reason: candidate verification does not close the source row; final adjudication is recorded separately.",
+    "roadmap": "no-change-with-reason: existing frozen statements and parent obligation row 166 refer to the same repair.",
+    "website_surfaces": [
+      "Existing Online Learning Book chapter, shared declaration catalog and Lean graph."
+    ]
+  },
+  "truth_boundary": "The sharp theorem permits specified nonnegative inclusive curvature; its terminal minimizer exists but need not be unique at zero. The dual Young expression requires positive chosen moduli. Repeating the hint instead requires its terminal residual. A relative support on V is not automatically an ambient support on X. This contract alone accepts no proof or chapter.",
+  "verification": {
+    "focused_checks": [
+      "Main and five-model type-only checks passed with 61 ordinals and 130 full captured expressions. Initial layout and subtype failures remain archived.",
+      "Private compiled audit of the five proof values: Lean exited 0. Of 29 prior streams, 28 were byte-identical; the Young type differed only in the proof operand of the numeral 2 and was exactly reconstructed both ways.",
+      "All five models compiled together. A second probe verified the twelve full parent applications. Of 110 comparable historical streams, 104 matched directly. Six complete types were reconstructed both ways using 38 identified numeral proof operands. The original strict comparison failure is retained."
+    ],
+    "bandit_check": "pending",
+    "site_build": "pending",
+    "site_check": "pending",
+    "independent_review": "Distinct blind and source reviews of the formal headers, worked model headers, five main proofs and the five worked examples. The production import and public reader checks are separate."
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Formalizer with distinct neutral decoder, independent source/body reviewer and independent executor."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "IMPLEMENTATION_FAILED",
+    "salvage": {
+      "required": true,
+      "status": "completed",
+      "reason": "The type-only probe originally rejected an ambiguous local let layout and the concrete model had ill-elaborated subtype data. Exact fixes, original diagnostics and partial fingerprints were retained. The mathematical endpoint and model data were not weakened.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "optimistic-ftrl-corrected-terminal:eb0f79107768bbf42facd2af30da5d3c798fe4e9d465e82661fe44d9e5b2c447"
+      ],
+      "expected_information_gain": "Five general statements and five concrete models are frozen. Distinct actors supply the blind interpretation, actual proofs, compiled audit and source adjudication.",
+      "shared_verified_context_digest": "c39bf303fb0f38b488b99bba0175116c770d0979"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "Distinct negative examples test the repeated-hint terminal, totalized division at zero and substitution of an incorrect dual norm.",
+      "canonical_route": "Finite inclusive algebra, correct hinted first-order information, derived terminal compactness and positive-modulus Young estimate.",
+      "selection_reason": "Retain source real rounds and distinguish the two non-equivalent terminal conventions."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 5,
+      "exposition_evidence": "Reader wording and formulas for all five declarations have received source review. The local production reader and actual clipboard checks require the generated site.",
+      "source_expansion_nodes": [
+        "HINTED-REAL-ROUNDS",
+        "UNHINTED-TERMINAL",
+        "SHARP-AND-DUAL-BOUND",
+        "REPEATED-HINT-RESIDUAL"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineOptimistic.optimistic_round_unique",
+        "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+        "BanditRL.OnlineOptimistic.zero_hint_sharp_regret",
+        "BanditRL.OnlineOptimistic.positive_modulus_young_regret",
+        "BanditRL.OnlineOptimistic.repeated_hint_residual_regret"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

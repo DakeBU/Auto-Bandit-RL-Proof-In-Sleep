@@ -8812,6 +8812,100 @@
         "BanditRL.OnlineConvex.subgradient_exists_of_relative_domain_interior",
         "BanditRL.OnlineConvex.theorem_2_4"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimistic.optimistic_round_unique",
+      "title": "Why every actual hinted round has a unique choice",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 392,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1. The Aₜ assumptions concern each actual round, including existence of a positive modulus in some norm, closed finite values on V and a support at every feasible point. The first conclusion of Theorem 7.47 states that each actual round has a unique minimizer. The Lean interface makes finiteness and supporting functionals on all of V explicit. Algorithm 7.8 separately requires the loss revealed after the choice to be finite at the played point. Each real round has one and only one feasible minimizer of its hinted, strictly-past objective.",
+      "math": "\\forall t\\in\\{1,\\dots,T\\},\\quad\\exists!\\,p\\in V:\\quad\\forall q\\in V,\\ A_t(p)\\le A_t(q).",
+      "intuition": "This is a unique feasible point on each actual round. The current loss has not yet been revealed. A minimum of an unhinted objective is not asserted here.",
+      "why": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 (PDF pp. 141–142). The first conclusion of Theorem 7.47 states that each actual round has a unique minimizer. The Lean interface makes finiteness and supporting functionals on all of V explicit. Algorithm 7.8 separately requires the loss revealed after the choice to be finite at the played point. With the regularizer and hint fixed for the present round, the objective uses only losses strictly before that round. A support or a finite value of the yet-unrevealed loss is not assumed to construct the minimizer.",
+      "position": "The zero-based Lean index n is source t−1. At n=0 there are no past losses. ",
+      "proof_idea": "Transfer hinted curvature from its own separating norm to the displayed norm. Extend the hinted objective by +∞ outside closed V. Map the available supporting functional to finite-dimensional Euclidean coordinates and apply the shared attainment Theorem 6.9 in the original norm. Its unique feasible minimizer is the unique round prediction.",
+      "lean_notes": "The first conclusion of Theorem 7.47 states that each actual round has a unique minimizer. The Lean interface makes finiteness and supporting functionals on all of V explicit. Algorithm 7.8 separately requires the loss revealed after the choice to be finite at the played point. With the regularizer and hint fixed for the present round, the objective uses only losses strictly before that round. A support or a finite value of the yet-unrevealed loss is not assumed to construct the minimizer. ",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_existsUnique_minimizer"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+      "title": "Why the terminal point exists even at zero inclusive curvature",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 393,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1. Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. Supply a real minimizing run xₜ and a support of ℓₜ−hₜ on V at each played point. These additional premises belong to the second part of the source theorem. There is a feasible z whose final inclusive value is no larger than that of any feasible comparator; there can be more than one such z.",
+      "math": "\\exists z\\in V,\\quad\\forall q\\in V,\\quad G_T(z)\\le G_T(q).",
+      "intuition": "With terminal hint zero, the ghost minimizes the unhinted G_T. Existence is enough. For A₁(q)=q²/2 on [0,∞) and G₁(q)=max(q−1,0)²/2, the actual play is uniquely 0 while the terminal argmin is all of [0,1].",
+      "why": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 (PDF pp. 141–142). This is the terminal existence needed by the labelled zero-hint correction. The terminal point is auxiliary and never incurs a played loss.",
+      "position": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. In both continuations set ψ_(T+1)=ψ_T. For the labelled correction set h_(T+1)=0 on V.",
+      "proof_idea": "The last hinted objective grows at least quadratically away from x_T. The support of the forecast error adds an affine lower bound to it. Their sum bounds the G_T-sublevel containing x_T inside a ball. It is nonempty, closed and compact; take its minimum and compare with points outside. This proof does not need λ_T>0.",
+      "lean_notes": "This is the terminal existence needed by the labelled zero-hint correction. The terminal point is auxiliary and never incurs a played loss. ",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+        "BanditRL.OnlineConvex.source_weierstrass_extended"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimistic.zero_hint_sharp_regret",
+      "title": "The sharp regret bound with a zero terminal hint",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 394,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1. Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. Take any supporting gₜ of ℓₜ−hₜ at xₜ on V, any feasible terminal minimizer z of G_T, and any comparator u∈V. For a covector g, g(v) is its value on the primal vector v. Regret is bounded by the final-minus-initial regularizer and its drift, plus the sum of the support pairing minus quadratic movement over the real transitions and the zero-hint terminal displacement.",
+      "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T[\\ell_t(x_t)-\\ell_t(u)],\\\\\nK_T(u)&=\\psi_T(u)-\\psi_1(x_1)+\\sum_{t=1}^{T-1}[\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})],\\\\\ny_{t+1}(z)&=\\begin{cases}x_{t+1}&t<T,\\\\z&t=T,\\end{cases}\\\\\nS_T(z)&=\\sum_{t=1}^{T}\\left[g_t(x_t-y_{t+1}(z))-\\tfrac{\\lambda_t}{2}\\lVert x_t-y_{t+1}(z)\\rVert^2\\right],\\\\\nR_T(u)&\\le K_T(u)+S_T(z).\n\\end{aligned}",
+      "intuition": "The signed sum sees every actual transition and the terminal displacement. For two actual rounds one can have R=11, regularizer baseline 5/2, drift 4, and sharp contributions 0 and 9/2. Removing the drift gives a false bound of 7.",
+      "why": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 (PDF pp. 141–142). The printed proof repeats the terminal hint. The inequality here uses a zero terminal hint and the final regularizer. A repeated-hint minimizer needs the separate residual bound.",
+      "position": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. In both continuations set ψ_(T+1)=ψ_T. For the labelled correction set h_(T+1)=0 on V.",
+      "proof_idea": "The optimality inequality for Aₜ and the support for ℓₜ−hₜ give an affine support for Gₜ at xₜ. Strong growth in the original norm bounds each inclusive difference. Apply the finite regret identity first with arbitrary z; for this z the terminal G_T-gap is nonpositive.",
+      "lean_notes": "The printed proof repeats the terminal hint. The inequality here uses a zero terminal hint and the final regularizer. A repeated-hint minimizer needs the separate residual bound. K is the final regularizer at u minus the first regularizer at the first play, plus the regularizer drift through t=T−1. R is cumulative played loss minus cumulative loss at the same fixed feasible u.",
+      "dependencies": [
+        "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+        "BanditRL.OnlineConvex.stronglyConvex_support_growth"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimistic.positive_modulus_young_regret",
+      "title": "A comparator bound in the actual dual norm",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 395,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1. Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. For this bound every specified λₜ is strictly positive. Take any comparator u∈V and any gₜ supporting ℓₜ−hₜ at xₜ against every q∈V. The user does not need to supply a terminal minimizer. Regret is at most the same baseline and drift plus the sum of squared dual norms divided by twice the corresponding positive modulus.",
+      "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T[\\ell_t(x_t)-\\ell_t(u)],\\\\\nK_T(u)&=\\psi_T(u)-\\psi_1(x_1)+\\sum_{t=1}^{T-1}[\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})],\\\\\nR_T(u)&\\le K_T(u)+\\sum_{t=1}^{T}\\frac{\\lVert g_t\\rVert_*^2}{2\\lambda_t}.\n\\end{aligned}",
+      "intuition": "With primal sup norm on a two-dimensional box, g(a,b)=a+b has dual norm 2. In the frozen positive-curvature model the regret is 8/3 and the valid Young bound is 10/3. Substituting the Euclidean gradient length gives 7/3 and fails. An announced zero modulus makes the divided source expression undefined.",
+      "why": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 (PDF pp. 141–142). The printed expression divides by the chosen λₜ. Definition 4.1 permits a specified zero modulus. This finite, real-valued endpoint is stated only for strictly positive chosen moduli.",
+      "position": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. In both continuations set ψ_(T+1)=ψ_T. For the labelled correction set h_(T+1)=0 on V.",
+      "proof_idea": "Choose a terminal point by existence, then use the sharp bound, g(v)≤‖g‖_*‖v‖, and a real square completion for each positive λₜ.",
+      "lean_notes": "The printed expression divides by the chosen λₜ. Definition 4.1 permits a specified zero modulus. This finite, real-valued endpoint is stated only for strictly positive chosen moduli. K is the final regularizer at u minus the first regularizer at the first play, plus the regularizer drift through t=T−1. R is cumulative played loss minus cumulative loss at the same fixed feasible u.",
+      "dependencies": [
+        "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+        "BanditRL.OnlineOptimistic.zero_hint_sharp_regret"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineOptimistic.repeated_hint_residual_regret",
+      "title": "What remains if the final hint is repeated",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 396,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1. Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. Take any comparator u∈V and any gₜ supporting ℓₜ−hₜ at xₜ against every q∈V. The specified inclusive curvatures may be zero. Now supply a minimizer z of G_T+h_T over V; it need not minimize G_T. Use the sharp sum for the repeated-hint point and add the last hint at the comparator minus the last hint at the terminal point.",
+      "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T[\\ell_t(x_t)-\\ell_t(u)],\\\\\nK_T(u)&=\\psi_T(u)-\\psi_1(x_1)+\\sum_{t=1}^{T-1}[\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})],\\\\\ny_{t+1}(z)&=\\begin{cases}x_{t+1}&t<T,\\\\z&t=T,\\end{cases}\\\\\nS_T(z)&=\\sum_{t=1}^{T}\\left[g_t(x_t-y_{t+1}(z))-\\tfrac{\\lambda_t}{2}\\lVert x_t-y_{t+1}(z)\\rVert^2\\right],\\\\\nR_T(u)&\\le K_T(u)+S_T(z)+h_T(u)-h_T(z).\n\\end{aligned}",
+      "intuition": "In the one-round quadratic model the real point and comparator are 1/2, but the repeated-hint point is 2/3. The sharp term without the residual would give 0≤−1/36. The residual is 5/72 and the actual right-hand side is 1/24.",
+      "why": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 (PDF pp. 141–142). This quantifies over supplied minimizers of the repeated-hint objective. The zero-hint terminal existence theorem alone does not supply such a minimizer.",
+      "position": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. The printed proof repeats h_(T+1)=h_T on V and keeps ψ_(T+1)=ψ_T. This choice leaves a residual; it cannot justify the zero-hint inequality with the repeated-hint point.",
+      "proof_idea": "Reuse the arbitrary-terminal decomposition. From (G_T+h_T)(z)≤(G_T+h_T)(u), bound G_T(z)−G_T(u) by h_T(u)−h_T(z). No other term changes.",
+      "lean_notes": "This quantifies over supplied minimizers of the repeated-hint objective. The zero-hint terminal existence theorem alone does not supply such a minimizer. K is the final regularizer at u minus the first regularizer at the first play, plus the regularizer drift through t=T−1. R is cumulative played loss minus cumulative loss at the same fixed feasible u.",
+      "dependencies": [
+        "BanditRL.OnlineCumulativePotential.finite_regret_identity",
+        "BanditRL.OnlineConvex.stronglyConvex_support_growth"
+      ]
     }
   ]
 }
