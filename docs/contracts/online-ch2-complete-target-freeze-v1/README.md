@@ -11,3 +11,5 @@ The [historical freeze receipt](freeze-receipt-v1.json) and [independent review]
 The seven exact historical JSON files are pinned in the index. Historical absolute paths are opaque provenance, not public links. The source PDF, source-page images, exploratory trial logs and other omitted historical artifacts remain external evidence identified by their original hashes. No huge proof streams or runtime caches are included. Current leaf requalification contracts have separate bounded evidence and do not close the full inventory.
 
 This repository inventory is distinct from the seven curated teaching previews. A preview is a reading aid, not the complete target list.
+
+[Local decisions for rows 168 and 133 at 236a2d45](row-168-133-acceptance-236a2d45.json) record the arithmetic-domain repair for Lemma 7.1, the coupled-prefix interpretation, and the checks on the shared library and Book graph. The literal source formula stays in the frozen inventory. Algorithm-specific terminal bounds and the Chapter 2 gate remain open.
