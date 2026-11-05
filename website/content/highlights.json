@@ -8485,6 +8485,22 @@
         "BanditRL.OnlineFTLSelector.select",
         "BanditRL.OnlineFTLSelector.select_congr"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineAdaptiveSummation.lemma_4_13",
+      "title": "A right-endpoint sum is bounded by its integral",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 300,
+      "source_match": "closest-source",
+      "plain": "Start at a nonnegative offset c. For T rounds, add a nonnegative increment at each round and evaluate f at the new cumulative total. If f is continuous, nonincreasing and nonnegative on the nonnegative half-line, the sum of those values weighted by the increments is at most the integral of f from c to the final total.",
+      "math": "\\begin{gathered}s_0=c,\\quad s_{t+1}=s_t+b_t,\\quad 0\\le t<T,\\\\ \\sum_{t=0}^{T-1}b_t f(s_{t+1})\\le\\int_c^{s_T}f(x)\\,dx,\\\\ b_t f(s_{t+1})=\\int_{s_t}^{s_{t+1}}f(s_{t+1})\\,dx\\le\\int_{s_t}^{s_{t+1}}f(x)\\,dx,\\\\ \\sum_{t=0}^{T-1}\\int_{s_t}^{s_{t+1}}f(x)\\,dx=\\int_c^{s_T}f(x)\\,dx.\\end{gathered}",
+      "intuition": "Each interval contributes a rectangle at its right endpoint. As f decreases across the interval, the rectangle fits under the curve.",
+      "why": "Bound a weighted finite sum even when some increments vanish.",
+      "position": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10, Lemma 4.13, printed p. 40 (PDF p. 52). This estimate supplies the integration step in the analysis of adaptive rates.",
+      "proof_idea": "Nonnegative increments order all cumulative endpoints inside the nonnegative half-line. Restrict the given continuity to each compact increment interval to obtain integrability. Antitonicity bounds the constant right-endpoint value by f(x) on that interval. Its integral is the actual increment times the right-endpoint value. Sum these comparisons and telescope the adjacent integrals; repeated endpoints and the empty horizon require no division or special positivity assumption.",
+      "lean_notes": "Lean uses b at index t for the book’s increment at t+1 and keeps c separate. Its real-valued extension of f is constrained only on the nonnegative half-line, with relative continuity at zero. The signature retains the book’s nonnegativity assumption on f. The comparison itself uses its monotonicity and continuity. The proof uses ContinuousOn.intervalIntegrable_of_Icc, intervalIntegral.integral_mono_on, intervalIntegral.integral_const, and intervalIntegral.sum_integral_adjacent_intervals. The compiled proof has no direct dependency on an earlier ABRL theorem. Each of the three inequality proofs in the two canaries directly references Lemma 4.13. These are direct references in the compiled proof terms. Two library canaries illustrate the boundaries. For c=0, increments (1/2,0,1/2) and f(x)=max(1−x,0), the right-endpoint sum is 1/4 and the integral is 1/2. Starting at 2, f(x)=max(3−x,0) has value 1 there. With horizon zero and unit increments, the sum is empty and the integral is from 2 to 2. With horizon three and zero increments, each rectangle has width zero and the integral is again from 2 to 2. Both comparisons read 0 ≤ 0.",
+      "dependencies": []
     }
   ]
 }

@@ -1,0 +1,123 @@
+{
+  "sourceTopology": [
+    "Introduce s_t = sum_{i=0}^t a_i; s_t-s_{t-1}=a_t for t=1,...,T.",
+    "Identify the summand with a_t f(s_t), the integral of the constant f(s_t) on [s_{t-1},s_t].",
+    "Since s_{t-1} <= x <= s_t, non-increase gives f(s_t) <= f(x). Integrate this comparison on that interval.",
+    "Sum the per-interval inequalities. Additivity across adjacent intervals yields the integral on [s_0,s_T]."
+  ],
+  "bodyReview": {
+    "reviewer": "/root/batch43_raw_extractor",
+    "status": "PASS, independent compiled BODY audit of one selected production lemma and its two concrete canaries",
+    "sourceAndOleanBeforeAfterVerified": true,
+    "fourIndependentReplayExitCodes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "exactClauseCounts": [
+      1,
+      8,
+      3
+    ],
+    "directProductionBranchCount": 3,
+    "reviewedObjects": [
+      {
+        "path": "validation-checkout\\BanditRLProof\\OnlineAdaptiveSummation.lean",
+        "sha256": "802b9dfef436477f7abf32907ddd0da357862f5d9f7607c8febfcfc3890ae1a3"
+      },
+      {
+        "path": "validation-checkout\\Tests\\OnlineAdaptiveSummationCanary.lean",
+        "sha256": "625fd14407664c25941161200e0ca4f068ef95794705fa869369f8a7bca24b16"
+      },
+      {
+        "path": "validation-checkout\\BanditRLProof.lean",
+        "sha256": "0b2275241582a34375cfdbe4f8b6d50223c00f6d588d51bc71bf31297575a5e5"
+      },
+      {
+        "path": "validation-checkout\\Tests.lean",
+        "sha256": "2240fab3ab98f170aab7c98c5b5228c51f7f4ff7ec129fe19d49662b5844b304"
+      },
+      {
+        "path": "validation-checkout\\.lake\\build\\lib\\lean\\BanditRLProof\\OnlineAdaptiveSummation.olean",
+        "sha256": "d497c404316b4c28657a0eeb3fd6484e1cdbf2237554ae87668e950e17435d4c"
+      },
+      {
+        "path": "validation-checkout\\.lake\\build\\lib\\lean\\Tests\\OnlineAdaptiveSummationCanary.olean",
+        "sha256": "0d2888993035817128253c236105513a8e0a652b44faf0d678ae72df6d11c580"
+      }
+    ],
+    "wholeProjectGate": false,
+    "liveVerified": false,
+    "newTheoremCredit": 0,
+    "artifacts": {
+      "branches.json": "70270ccf3fffbfd22394512e7d99c5d5e9c2f2d885ce03d3a32318ab78f92488",
+      "branches.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "canary.log": "cd72a7205957187f837c6cef7c46a12107907fe571e53b5b55cca70b2a6123ac",
+      "export.json": "b8ec441a04aae7c731ec5ef5f09fddfc06738a14cb852f4d8f382a156168ce5b",
+      "export.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "production.log": "77f00b6327ba2feabfc4c631645995e5be6f2787d2d8242065fc151c2eb5f2b1",
+      "recovery-evidence.json": "0d9bca2429bfea5383ecced2efb0a85d929cb9aa36374c472dee6e5eeead7a06",
+      "report.md": "893929329dc0ed6aa9157142b6a1dbcb24d9d64934ff910ff236aedaebf39f5a"
+    }
+  },
+  "focusedBuild": {
+    "at": "2026-11-05T04:14:36.319943+00:00",
+    "status": "focused-original-production-and-canary-build-passed",
+    "command": [
+      "local-user/.elan/bin/lake.exe",
+      "build",
+      "BanditRLProof.OnlineAdaptiveSummation",
+      "Tests.OnlineAdaptiveSummationCanary"
+    ],
+    "exitCode": 0,
+    "seconds": 21.68689219999942,
+    "sourceBindings": {
+      "BanditRLProof/OnlineAdaptiveSummation.lean": "802b9dfef436477f7abf32907ddd0da357862f5d9f7607c8febfcfc3890ae1a3",
+      "Tests/OnlineAdaptiveSummationCanary.lean": "625fd14407664c25941161200e0ca4f068ef95794705fa869369f8a7bca24b16",
+      "BanditRLProof.lean": "0b2275241582a34375cfdbe4f8b6d50223c00f6d588d51bc71bf31297575a5e5",
+      "Tests.lean": "2240fab3ab98f170aab7c98c5b5228c51f7f4ff7ec129fe19d49662b5844b304"
+    },
+    "compilerLogSHA256": "fc2ad4bf60a8521b4e17ccd29be4dc817a01e606741e374edd273ec149be0cbe",
+    "workspaceReceiptSHA256": "f2f6e6184948f8d5dee37965e08032b0e47ae6875136079d23fba16d8bab896a",
+    "combinedRootTestsGate": false,
+    "fullHarnessGate": false,
+    "BODYReviewAccepted": false,
+    "sourceBytesUnchanged": true
+  },
+  "combinedBuild": {
+    "at": "2026-11-05T04:23:21.802001+00:00",
+    "status": "combined-library-and-Tests-passed",
+    "command": [
+      "local-user/.elan/bin/lake.exe",
+      "build",
+      "BanditRLProof",
+      "Tests"
+    ],
+    "exitCode": 0,
+    "seconds": 293.52078540000366,
+    "sourceBindings": {
+      "BanditRLProof/OnlineAdaptiveSummation.lean": "802b9dfef436477f7abf32907ddd0da357862f5d9f7607c8febfcfc3890ae1a3",
+      "Tests/OnlineAdaptiveSummationCanary.lean": "625fd14407664c25941161200e0ca4f068ef95794705fa869369f8a7bca24b16",
+      "BanditRLProof.lean": "0b2275241582a34375cfdbe4f8b6d50223c00f6d588d51bc71bf31297575a5e5",
+      "Tests.lean": "2240fab3ab98f170aab7c98c5b5228c51f7f4ff7ec129fe19d49662b5844b304"
+    },
+    "compilerLogSHA256": "bc64a71e1b83e8bcadfafbc4328f4a2fe3473fe54bb089f9510a08cb5fd053c1",
+    "workspaceReceiptSHA256": "f2f6e6184948f8d5dee37965e08032b0e47ae6875136079d23fba16d8bab896a",
+    "combinedRootTestsGate": true,
+    "fullHarnessGate": false,
+    "staticBodyReviewPassed": true,
+    "sourceBytesUnchanged": true,
+    "publicationMaterialized": false
+  },
+  "boundedCurrentCredit": {
+    "printedLemma": 1,
+    "newDefinitions": 0,
+    "canaryTheorems": 2,
+    "testConjuncts": [
+      8,
+      3
+    ]
+  },
+  "purification": "pending after integration"
+}

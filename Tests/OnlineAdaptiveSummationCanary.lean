@@ -1,0 +1,65 @@
+import BanditRLProof.OnlineAdaptiveSummation
+import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+
+noncomputable section
+open Set Finset MeasureTheory
+
+namespace Tests.OnlineAdaptiveSummationCanary
+
+theorem nonconstant_zero_increment_canary :
+    (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) ≤ (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) ∧
+    (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) = 1 / 4 ∧
+    (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) = 1 / 2 ∧
+    (∑ t ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) t * (fun x : ℝ => max (1 - x) 0) (0 + ∑ i ∈ range (t + 1), (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i)) < (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) i), (fun x : ℝ => max (1 - x) 0) x) ∧
+    (fun x : ℝ => max (1 - x) 0) 0 ≠ (fun x : ℝ => max (1 - x) 0) 1 ∧
+    (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 0 = 1 / 2 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 1 = 0 ∧ (fun t : ℕ => if t = 1 then (0 : ℝ) else 1 / 2) 2 = 1 / 2 := by
+  let a : ℕ → ℝ := fun t => if t = 1 then 0 else 1 / 2
+  let f : ℝ → ℝ := fun x => max (1 - x) 0
+  have hcont : Continuous f := (continuous_const.sub continuous_id).max continuous_const
+  have hmono : AntitoneOn f (Set.Ici 0) := by
+    intro x hx y hy hxy
+    exact max_le_max (sub_le_sub_left hxy 1) le_rfl
+  have hnonneg : ∀ x ∈ Set.Ici 0, 0 ≤ f x := fun x _ => le_max_right _ _
+  have bound := BanditRL.OnlineAdaptiveSummation.lemma_4_13 0 a f 3 (by norm_num)
+    (by intro t ht; dsimp [a]; split <;> norm_num) hcont.continuousOn hmono hnonneg
+  have hsum : (∑ t ∈ range 3, a t * f (0 + ∑ i ∈ range (t + 1), a i)) = 1 / 4 := by
+    norm_num [a, f, sum_range_succ]
+  have htotal : (0 : ℝ) + ∑ i ∈ range 3, a i = 1 := by
+    norm_num [a, sum_range_succ]
+  have hint : (∫ x in (0 : ℝ)..(0 + ∑ i ∈ range 3, a i), f x) = 1 / 2 := by
+    rw [htotal]
+    change (∫ x in (0 : ℝ)..1, max (1 - x) 0) = 1 / 2
+    calc
+      (∫ x in (0 : ℝ)..1, max (1 - x) 0) = ∫ x in (0 : ℝ)..1, 1 - x := by
+        apply intervalIntegral.integral_congr
+        intro x hx
+        rw [Set.uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hx
+        exact max_eq_left (sub_nonneg.mpr hx.2)
+      _ = 1 / 2 := by
+        rw [intervalIntegral.integral_sub (f := fun _ : ℝ => 1) (g := fun x : ℝ => x)
+          intervalIntegrable_const
+          (continuous_id.intervalIntegrable _ _), intervalIntegral.integral_const,
+          integral_id]
+        norm_num
+  exact ⟨bound, hsum, hint, by rw [hsum, hint]; norm_num,
+    by norm_num [f], by norm_num [a], by norm_num [a], by norm_num [a]⟩
+
+theorem zero_boundaries_canary :
+    (∑ t ∈ range 0, (1 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (1 : ℝ))) ≤
+      (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 0, (1 : ℝ)), (fun x : ℝ => max (3 - x) 0) x) ∧
+    (∑ t ∈ range 3, (0 : ℝ) * (fun x : ℝ => max (3 - x) 0) (2 + ∑ _i ∈ range (t + 1), (0 : ℝ))) ≤
+      (∫ x in (2 : ℝ)..(2 + ∑ _i ∈ range 3, (0 : ℝ)), (fun x : ℝ => max (3 - x) 0) x) ∧
+    (fun x : ℝ => max (3 - x) 0) 2 = 1 := by
+  let f : ℝ → ℝ := fun x => max (3 - x) 0
+  have hcont : Continuous f := (continuous_const.sub continuous_id).max continuous_const
+  have hmono : AntitoneOn f (Set.Ici 0) := by
+    intro x hx y hy hxy
+    exact max_le_max (sub_le_sub_left hxy 3) le_rfl
+  have hnonneg : ∀ x ∈ Set.Ici 0, 0 ≤ f x := fun x _ => le_max_right _ _
+  refine ⟨?_, ?_, by norm_num [f]⟩
+  · exact BanditRL.OnlineAdaptiveSummation.lemma_4_13 2 (fun _ => 1) f 0
+      (by norm_num) (by intro t ht; omega) hcont.continuousOn hmono hnonneg
+  · exact BanditRL.OnlineAdaptiveSummation.lemma_4_13 2 (fun _ => 0) f 3
+      (by norm_num) (by intro t ht; norm_num) hcont.continuousOn hmono hnonneg
+
+end Tests.OnlineAdaptiveSummationCanary
