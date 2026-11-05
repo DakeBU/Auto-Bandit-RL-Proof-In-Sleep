@@ -149,16 +149,14 @@
     },
     {
       "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
-      "title": "The canonical posterior is the conditional environment law",
-      "chapter": "thompson",
-      "featured": true,
-      "plain": "If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.",
-      "math": "\\(\\Pi(\\cdot\\mid H)=\\mathcal L(E\\mid H)\\quad\\text{a.e.}\\)",
-      "intuition": "A posterior is a measurable kernel from histories to environments; the theorem identifies that constructed kernel with the measure-theoretic conditional distribution.",
-      "why": "Probability matching is valid only after the algorithmic posterior is tied to the actual environment-history law.",
-      "position": "It is the posterior-law root of the Chapter 6 proof DAG.",
-      "proof_idea": "Use uniqueness of regular conditional distributions under the equality of the observed pair pushforward and the canonical prior-likelihood joint measure.",
-      "lean_notes": "The theorem requires Standard Borel and nonempty environment, measurable environment/history maps, a probability prior, a Markov likelihood kernel, and exact pair-law equality. It does not accept an arbitrary posterior kernel.",
+      "chapter": "probability",
+      "plain": "If the joint law of environment and history is the canonical prior-likelihood law, the canonical posterior kernel agrees almost everywhere with the conditional distribution of the environment given history.",
+      "math": "\\(\\mathcal L(E,H)=\\pi\\otimes L\\Longrightarrow \\Pi(\\cdot\\mid H)=\\operatorname{condDistrib}(E\\mid H)\\quad\\text{a.e.}\\)",
+      "intuition": "Bayes' posterior and measure-theoretic conditional distribution are two descriptions of the same object once their joint law is identified.",
+      "why": "Thompson sampling needs to replace a reference posterior sampler by the actual conditional environment law along a generated history.",
+      "position": "This theorem is the principal posterior-law transport in the Thompson proof DAG.",
+      "proof_idea": "Rewrite the supplied pair pushforward as the canonical joint measure and use Mathlib's posterior/conditional-distribution identity, transporting the almost-everywhere statement along the history marginal.",
+      "lean_notes": "The conclusion is kernel equality almost everywhere, not pointwise equality. Standard Borel and finiteness hypotheses make conditional distributions available.",
       "dependencies": []
     },
     {
@@ -360,6 +358,20 @@
       "dependencies": [
         "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
       ]
+    },
+    {
+      "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
+      "title": "The canonical posterior is the conditional environment law",
+      "chapter": "thompson",
+      "featured": true,
+      "plain": "If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.",
+      "math": "\\(\\Pi(\\cdot\\mid H)=\\mathcal L(E\\mid H)\\quad\\text{a.e.}\\)",
+      "intuition": "A posterior is a measurable kernel from histories to environments; the theorem identifies that constructed kernel with the measure-theoretic conditional distribution.",
+      "why": "Probability matching is valid only after the algorithmic posterior is tied to the actual environment-history law.",
+      "position": "It is the posterior-law root of the Chapter 6 proof DAG.",
+      "proof_idea": "Use uniqueness of regular conditional distributions under the equality of the observed pair pushforward and the canonical prior-likelihood joint measure.",
+      "lean_notes": "The theorem requires Standard Borel and nonempty environment, measurable environment/history maps, a probability prior, a Markov likelihood kernel, and exact pair-law equality. It does not accept an arbitrary posterior kernel.",
+      "dependencies": []
     },
     {
       "full_name": "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction",
