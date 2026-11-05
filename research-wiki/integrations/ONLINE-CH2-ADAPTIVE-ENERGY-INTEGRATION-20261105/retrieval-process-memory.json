@@ -1,0 +1,78 @@
+{
+  "entries": [
+    {
+      "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "kind": "standing_instruction",
+      "status": "active",
+      "scope": [
+        "scheduler",
+        "harness-comparison"
+      ],
+      "instruction": "Do not change the default hierarchical/master-worker scheduling policy from unmatched runs. Require the configured minimum number of matched experiments on the same frozen target and route-packet hash with reviewer-owned verdicts.",
+      "process_only": true,
+      "evidence": [
+        {
+          "file": "runs/harness-comparison/latest.json",
+          "needle": "\"matched_experiments\": []",
+          "evidence_kind": "deterministic_harness_report"
+        },
+        {
+          "file": "runs/harness-comparison/latest.json",
+          "needle": "\"minimum_matched_experiments\": 2",
+          "evidence_kind": "deterministic_harness_report"
+        }
+      ],
+      "expires_when": "Replace only after the deterministic harness-comparison policy itself is intentionally versioned and independently reviewed."
+    },
+    {
+      "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "kind": "standing_instruction",
+      "status": "active",
+      "scope": [
+        "source-fidelity",
+        "SafeVerify",
+        "metadata"
+      ],
+      "instruction": "Record source-facing assumptions as atomic Lean-facing assumption items rather than one opaque prose blob so statement-fence checks can bind each assumption explicitly.",
+      "process_only": true,
+      "evidence": [
+        {
+          "file": "runs/trials.jsonl",
+          "needle": "SafeVerify metadata guard failed",
+          "evidence_kind": "reviewed_trial_failure"
+        }
+      ],
+      "expires_when": "Retire only when the statement-fence format mechanically derives atomic assumptions from the elaborated interface."
+    }
+  ],
+  "source": "runs/process_memory.json",
+  "sourceSHA256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+  "reuse": [
+    "BanditRLProof.Tsallis.two_mul_sqrt_sub_sqrt_le_sub_div_sqrt"
+  ],
+  "historicalPath": "research-wiki/retrieval-index/ONLINE-CH2-ADAPTIVE-ENERGY-20261010.md",
+  "historicalURL": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/0283616c8439b09fc49d5e35373ff74aa11371cc/research-wiki/retrieval-index/ONLINE-CH2-ADAPTIVE-ENERGY-20261010.md",
+  "historicalContents": "# Adaptive-energy retrieval\n\nActual rg production retrieval and pinned type/API probe are recorded in OWN run. Reuse existing Tsallis supporting-line proof; existing unit-increment sqrt schedule theorem is not general feedback energy; existing variable weighted-potential lemma requires positive exogenous steps and cannot cover initial zero energy. No dependency/toolchain upgrade. Source family1, proof terminals3proposed, no algorithm closure.\n\n## Bounded energy prerequisite accepted locally\n\nThree exact frozen production proposition obligations are closed (3 -> 0); this is ONE source energy-display family, not three source results or a chapter denominator. Two separately validated FULL canaries retain all 8 and 3 conjuncts. Distinct FINAL review: `e463ffe312bf56c7f4b682a6f5d5420da2afb5d338983c649c59a16667ced5bd`. Actual combined root/Tests/full harness, public axioms, compiled VALUE branches, frozen fences, shared registry and six original reader images are recorded in `runs/online-ch2-adaptive-energy-20261010/`. Clean local site source: `3e5669e4b4e73a01d5c301e37aaa2eef07bd289b`. Native candidate/acceptance events transport prior actual evidence retrospectively; they do not imply one runtime enforces the whole scientific workflow. Distinct post-native and actual delivery reviews remain pending.\n\nOne source energy-display family is now a reusable prerequisite for the required Chapter2 adaptive-rate forward claim, represented by three production proofs and two full canaries, not three independent source results. Actual causal adaptive OSD, zero-feedback skipping, zero-radius/zero-energy regret, zero-weight potential, Eq.(4.4), Theorem4.14 and its minimum-versus-infimum edge remain required/open. All eight Chapter2 forward containers and six future mathematical claims remain required/open. Chapter2 partial/null; Chapters3-16 unenumerated/null; Chapter4 is not a competing main task. Whole Chapters1-16 Goal ACTIVE. Stacked on OPEN draft unmerged PR216 exact 873039ee2d3247eacaa9b3c95d765954e6453611. No merge, deployment, main/live or retirement claim.\n",
+  "currentRoute": {
+    "production": [
+      "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound"
+    ],
+    "existingParent": [
+      "BanditRLProof.Tsallis.two_mul_sqrt_sub_sqrt_le_sub_div_sqrt"
+    ],
+    "compiled": {
+      "path": "research-wiki/integrations/ONLINE-CH2-ADAPTIVE-ENERGY-INTEGRATION-20261105/compiled-edges.json",
+      "sha256": "643694008c6872431a6b3d0bdfae18d81600d8dcda17b9ff74bd4f9217268323"
+    },
+    "open": {
+      "path": "research-wiki/integrations/ONLINE-CH2-ADAPTIVE-ENERGY-INTEGRATION-20261105/open-obligations.json",
+      "sha256": "f09c1fca48acf35cafe63369491f4ba79be98fbf5c08c5f0952debaef6cd9ad6"
+    },
+    "readerFile": {
+      "path": "website/content/readings.json",
+      "sha256": "dc8a89e8347e3b5d5ec420b01a8da9bef7b714f34f1b44963dd5faa64e8c5b64"
+    }
+  }
+}
