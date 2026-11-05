@@ -19,6 +19,9 @@ warmups; no agentic suite or model performance has been admitted.
 ## Package and intake
 
 Use `python tools/bench_task_contract.py scaffold --id BRB-DRAFT-001 --ability agentic-lean --output _out/task-draft`.
+Submit new families under `benchmarks/banditrlbench/tasks/<task-id>/`.
+CI runs `validate-all` over every submitted package; new families must not bypass
+this intake through the legacy four-core warmup registry.
 The package separates `instruction.md`, `environment/`, `solution/` and `tests/`.
 `task.json` freezes ability, format, source, family, graph anchors, access and
 budgets, with hashes of the actual instruction/environment/reference/verifier

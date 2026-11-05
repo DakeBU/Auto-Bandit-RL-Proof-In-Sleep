@@ -97,7 +97,15 @@ def main():
     sub = p.add_subparsers(dest='command', required=True)
     s = sub.add_parser('scaffold'); s.add_argument('--id', required=True); s.add_argument('--ability', choices=ABILITIES, required=True); s.add_argument('--output', type=Path, required=True)
     v = sub.add_parser('validate'); v.add_argument('package', type=Path)
+    all_tasks = sub.add_parser('validate-all')
+    all_tasks.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1]/'benchmarks/banditrlbench/tasks')
     args = p.parse_args()
+    if args.command == 'validate-all':
+        packages = sorted(args.root.glob('*/task.json'))
+        for package in packages:
+            validate(package.parent)
+        print(json.dumps(dict(packages_checked=len(packages), admission='not-granted')))
+        return
     if args.command == 'scaffold':
         scaffold(args.output, args.id, args.ability)
         root = args.output
