@@ -1,0 +1,91 @@
+{
+  "semantic": {
+    "path": "research-wiki/integrations/ONLINE-CH2-ADAPTIVE-OSD-INTEGRATION-20261105/statement-seal.json",
+    "sha256": "b9206692054696aa67d5d6dce8377ccd86f94ad73cd65d129a44b1ca48f0bc95"
+  },
+  "edges": {
+    "path": "research-wiki/integrations/ONLINE-CH2-ADAPTIVE-OSD-INTEGRATION-20261105/compiled-edges.json",
+    "sha256": "de3fc043ce0c175da7900a8f3156e609b3e070d88bca35b746e904cd4731b6c5"
+  },
+  "branches": {
+    "path": "research-wiki/integrations/ONLINE-CH2-ADAPTIVE-OSD-INTEGRATION-20261105/compiled-branches.json",
+    "sha256": "b2ea4b13e036cf63ff72c5f07f8c8ecb9e0183eb5fd59f9974b2ad916732181c"
+  },
+  "publicDeclarations": [
+    "BanditRL.OnlineAdaptivePotential.weighted_potential_sum",
+    "BanditRL.OnlineAdaptiveOSD.Domain",
+    "BanditRL.OnlineAdaptiveOSD.SupportPolicy",
+    "BanditRL.OnlineAdaptiveOSD.state",
+    "BanditRL.OnlineAdaptiveOSD.history",
+    "BanditRL.OnlineAdaptiveOSD.energy",
+    "BanditRL.OnlineAdaptiveOSD.output",
+    "BanditRL.OnlineAdaptiveOSD.selected",
+    "BanditRL.OnlineAdaptiveOSD.eta",
+    "BanditRL.OnlineAdaptiveOSD.LegalFeedback",
+    "BanditRL.OnlineAdaptiveOSD.regret",
+    "BanditRL.OnlineAdaptiveOSD.state_succ",
+    "BanditRL.OnlineAdaptiveOSD.state_prefix",
+    "BanditRL.OnlineAdaptiveOSD.energy_succ",
+    "BanditRL.OnlineAdaptiveOSD.output_succ",
+    "BanditRL.OnlineAdaptiveOSD.energy_eq_sum",
+    "BanditRL.OnlineAdaptiveOSD.history_mem",
+    "BanditRL.OnlineAdaptiveOSD.eta_eq_energy",
+    "BanditRL.OnlineAdaptiveOSD.output_mem",
+    "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
+    "BanditRL.OnlineAdaptiveOSD.trajectory_finite_loss",
+    "BanditRL.OnlineAdaptiveOSD.oracle_feedback",
+    "BanditRL.OnlineAdaptiveOSD.canonical_feedback",
+    "BanditRL.OnlineAdaptiveOSD.energy_step_mono",
+    "BanditRL.OnlineAdaptiveOSD.energy_pos_of_selected_ne_zero",
+    "BanditRL.OnlineAdaptiveOSD.eta_pos_of_selected_ne_zero",
+    "BanditRL.OnlineAdaptiveOSD.zero_feedback_step",
+    "BanditRL.OnlineAdaptiveOSD.regret_zero_diameter",
+    "BanditRL.OnlineAdaptiveOSD.one_step_chain",
+    "BanditRL.OnlineAdaptiveOSD.one_step",
+    "BanditRL.OnlineAdaptiveOSD.regret_bound",
+    "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+    "BanditRL.OnlineAdaptiveOSD.source_theorem4_14",
+    "BanditRL.OnlineAdaptiveOSD.canonical_eq4_4",
+    "BanditRL.OnlineAdaptiveOSD.canonical_theorem4_14",
+    "BanditRL.OnlineAdaptiveBenchmark.benchmark_isGLB",
+    "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value",
+    "BanditRL.OnlineAdaptiveBenchmark.benchmark_attained_iff",
+    "BanditRL.OnlineAdaptiveBenchmark.benchmark_positive_minimum",
+    "BanditRL.OnlineAdaptiveBenchmark.source_theorem4_14_infimum"
+  ],
+  "productionTheorems": 30,
+  "definitions": 8,
+  "aliases": 2,
+  "completeTestTheorems": 9,
+  "compiledPublicApplications": 39,
+  "additionalBoundaryApplications": 4,
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "scientificBodyNotes": [
+    "The parameterized regret proof combines actual nonzero and skip one-step inequalities, the signed terminal weighted telescope, and the imported norm-square energy estimate. Its D=0 and empty-T branches precede division. The two source-facing constants 3/2 and sqrt(2) follow by specializing α on the same trajectory and dropping a nonnegative residual.",
+    "The policy sees only past losses and past/current outputs plus the current loss when selecting the subgradient. The recursion branches explicitly on a zero selected support. Feasibility and finite values are derived; the source-facing convexity assumption is kept even where an internal lemma needs only actual supports.",
+    "The repaired hindsight comparison instantiates the GLB on actual tuned-run energy. GLB uses lower bound and positive optimizer in interior, direct positive witnesses on the axes. Attainment contradiction separately uses positive-rate halving/doubling; uniqueness uses optimal_unique. Positive, origin and both mixed-axis examples elaborate against the public declarations.",
+    "The readout separates the type and proof-value sets. All 46 top-level branches of all 9 full tests were inspected in compiled values, including numerical/refl branches, not all of which call an imported theorem. 18 selected lexical occurrences across 17 branches have specifically named parents. The four performance subproofs dispatch to the three actual formal guarantees, not loose existential witnesses."
+  ],
+  "scopeLimits": [
+    "Lean constant presence in a VALUE expression includes constants in typ annotations or casts. Selected named parents were checked against their written application routes; this is not generic proof necessity, occurrence count, computational execution or a global transitive graph.",
+    "Registry follows named roots and references in the five target modules; imported symbols are recorded as outgoing dependencies without expanding all external modules. Conjunct selection uses local beta/let/id/projection-of-constructor and And eliminator continuations, plus Eq transports on spines. Selected lexical subterms under lambdas are not separately closed kernel proof terms.",
+    "interfaces v1 lacked the source-local DecidableEq E instance and failed on two conditionals. v2 restored the exact local instance and passed; no production source was edited. Export v1 resolved 43/46 branches; v2 handled Eq.mpr but suppressed terminal transport details. v3 preserves terminal transport proof references and includes the bounded module closure. All previous logs and outputs are retained."
+  ],
+  "sourceBindings": {
+    "BanditRLProof/OnlineAdaptiveBenchmark.lean": "a734ad7f4d91291ad20b60266dcd5e311b22048a15063b0ea59a32f95f7f92eb",
+    "BanditRLProof/OnlineAdaptiveOSD.lean": "197f1f6460168daafe23f4a8017f2c11b54566e0f7749da77bd031d4ab7babef",
+    "BanditRLProof/OnlineAdaptivePotential.lean": "7b8a515dbc2f681ff2c230faa81c132665dd89b2e78d6973c1e6821151f55709",
+    "Tests/OnlineAdaptiveOSDCanary.lean": "4b62e01f4f57bce6a3ca45bf8bc021a9c7fceab61fdabefee535306c1e27c905",
+    "Tests/OnlineAdaptivePotentialCanary.lean": "bfed81abdc98704bbb201daf0aabced847ad423aeab6775b0f2110a8ca050864",
+    "BanditRLProof.lean": "3c2f7ceeaefc65cdbd2892837247fec36bf6d79af03953f767e654ce8a79bcba",
+    "Tests.lean": "d1a6ac166f66055b1a2f5c810efd03c2c047eaacf5d9c6461c1259572d31f862"
+  },
+  "PURIFIED": false,
+  "wholeChapterAccepted": false,
+  "acceptedParentOfLocalPort": "28bbf970a6afb96085e860a6c5ee53c06df8a5d4",
+  "compilationScope": "Local working tree on this parent, with the seven bound Lean files applied."
+}

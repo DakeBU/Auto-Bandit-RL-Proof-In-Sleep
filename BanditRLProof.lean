@@ -789,3 +789,6 @@ import BanditRLProof.OnlineAdaptiveSummation
 import BanditRLProof.OnlineEntropyScalarGap
 import BanditRLProof.OnlineEntropyWeightedPairing
 import BanditRLProof.OnlineAdaptiveEnergy
+import BanditRLProof.OnlineAdaptivePotential
+import BanditRLProof.OnlineAdaptiveOSD
+import BanditRLProof.OnlineAdaptiveBenchmark

@@ -2362,7 +2362,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Lemma 4.13",
-            "boundary": "The inverse-square-root energy estimate is available. The causal rate in Eq. (4.3), the zero-gradient update rule, zero-radius and zero-energy regret cases, Eq. (4.4), and the full regret bound of Theorem 4.14 remain open. The displayed minimum in Theorem 4.14 also requires distinguishing attainment from an infimum."
+            "boundary": "The inverse-square-root energy estimate is available. The adaptive projected update now covers zero feedback, zero diameter and zero realized energy. Equation (4.4) and the regret bound in Theorem 4.14 use the energy of their respective runs. The benchmark has an infimum for all nonnegative diameters and energies. Chapter-wide obligations remain open."
           },
           "statement_provenance": "source-restatement"
         },
@@ -2379,15 +2379,84 @@
             "model": "A deterministic finite feedback sequence in the energy estimate for adaptive OSD.",
             "assumptions": "The book takes Euclidean norms, a diameter bound D and skips zero-gradient rounds. The analytic Lean statement permits a normed additive commutative group and any nonnegative D.",
             "parameters": "The denominator at round t includes all squared norms through t. A zero prefix contributes zero. Empty horizons and D=0 are valid boundary cases of the formal estimate.",
-            "regret": "This estimate controls the energy term in the regret calculation. The trajectory and full regret bound remain open.",
+            "regret": "Summing the normalized squared feedback norms bounds the energy term in the regret of the adaptive trajectory.",
             "guarantee": "For every allowed feedback stream, finite horizon and nonnegative D, the scaled normalized sum is at most D times the square root of cumulative squared feedback norms."
           },
           "local_status": {
             "status": "compiled",
             "label": "Energy estimate",
-            "boundary": "The energy estimate supplies the sum of normalized squared feedback norms in adaptive OSD. The causal update, skip rule, zero-radius and zero-energy regret cases, zero-weight potential, equation (4.4), and the full regret bound of Theorem 4.14, including its minimum versus infimum, remain open."
+            "boundary": "The energy estimate supplies the sum of normalized squared feedback norms in adaptive OSD. The adaptive projected update now covers zero feedback, zero diameter and zero realized energy. Equation (4.4) and the regret bound in Theorem 4.14 use the energy of their respective runs. The benchmark has an infimum for all nonnegative diameters and energies. Chapter-wide obligations remain open."
           },
           "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Weighted distances in Theorem 2.13 and the calculation before equation (4.4)",
+          "pages": "printed pp. 13–14 and 39–40 / PDF pp. 25–26 and 51–52",
+          "pdf_page": 52,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{gathered}S_t=\\sum_{i<t}\\|g_i\\|^2,\\quad a_t=\\|x_t-u\\|^2,\\quad C=D^2,\\\\ \\eta_t=\\alpha D/\\sqrt{S_{t+1}}\\quad(S_{t+1}>0),\\\\q_t=\\begin{cases}\\|g_t\\|^2/\\sqrt{S_{t+1}},& S_{t+1}>0,\\\\0,&S_{t+1}=0,\\end{cases}\\\\ \\delta_t=\\ell_t(x_t)-\\ell_t(u),\\quad R_T(u)=\\sum_{t<T}\\delta_t,\\\\ w_t=\\sqrt{S_{t+1}}/(2\\alpha D)\\quad(D>0),\\\\ \\delta_t\\le(a_t-a_{t+1})w_t+\\tfrac{\\alpha D}{2}q_t\\quad(D>0),\\\\\\sum_{t<T}q_t\\le2\\sqrt{S_T},\\quad \\tfrac{\\alpha D}{2}\\sum_{t<T}q_t\\le\\alpha D\\sqrt{S_T},\\\\\\sum_{t<T}(a_t-a_{t+1})w_t\\le(C-a_T)w_{T-1}\\quad(D>0,\\ T>0),\\\\R_T(u)\\le\\left(\\tfrac1{2\\alpha}+\\alpha\\right)D\\sqrt{S_T}-\\tfrac{a_T\\sqrt{S_T}}{2\\alpha D}\\quad(D>0).\\end{gathered}",
+          "plain": "Predict from past losses and plays. After observing the current loss, select a supporting subgradient at the played point, add its squared norm to the cumulative energy, and project the scaled step back onto the feasible set. Zero feedback leaves the prediction in place. The regret bound keeps a deduction for the final squared distance to the comparator. Regret sums the finite differences between the loss of each prediction and the loss of the comparator on that same round.",
+          "fallback": "Predict from past losses and plays. After observing the current loss, select a supporting subgradient at the played point, add its squared norm to the cumulative energy, and project the scaled step back onto the feasible set. Zero feedback leaves the prediction in place. The regret bound keeps a deduction for the final squared distance to the comparator. Regret sums the finite differences between the loss of each prediction and the loss of the comparator on that same round.",
+          "relationship": "Printed pages 13–14 give the weighted-distance calculation, including the negative terminal term. Printed pages 39–40 apply the adaptive energy schedule. The library combines these steps for general positive scale.",
+          "contract": {
+            "model": "Deterministic actual causal full-information projected adaptive subgradient run.",
+            "assumptions": "Feasible initial point; finite-dimensional real inner-product space; nonempty closed convex domain of diameter at most D>=0; finite horizon; proper losses subdifferentiable on the domain; chosen supports legal at actual played points. Source specializations additionally retain convexity. General alpha endpoint requires alpha>0 and is support-sufficient without an extra convexity premise. For each t before T the extended-real loss is proper and has a global supporting subgradient at every feasible point. The predictions and comparator are feasible, so all evaluated losses are finite. The comparator is fixed. The two source specializations also assume convex losses. Fix the policy before the run. At time t the prediction uses only the complete earlier loss functions. The selector then receives t, those earlier functions, the play history through the new prediction, and the current loss. It must return a global supporting subgradient at the actual prediction. A uniform oracle satisfies this requirement on every admissible history. The canonical selector uses mathematical choice.",
+            "parameters": "Rounds 1 through T in the book correspond to indices 0 through T − 1 in Lean. The rate uses energy through the current feedback. The terminal play has Lean index T. The expression for the stepsize uses positive cumulative energy, and zero feedback leaves the play fixed for every prefix.",
+            "regret": "For positive scale and D > 0, the displayed general bound retains the final squared-distance deduction. The abstract weighted sum uses a nonempty horizon, signed potentials bounded above at played indices, and nonnegative nondecreasing weights. A zero diameter forces regret zero on every horizon. An empty horizon has regret zero for every diameter. If final energy is zero then regret is at most zero.",
+            "guarantee": "Predict from past losses and plays. After observing the current loss, select a supporting subgradient at the played point, add its squared norm to the cumulative energy, and project the scaled step back onto the feasible set. Zero feedback leaves the prediction in place. The regret bound keeps a deduction for the final squared distance to the comparator. Regret sums the finite differences between the loss of each prediction and the loss of the comparator on that same round."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "General-scale terminal-distance bound",
+            "boundary": "With no rounds, regret is zero. For D = 0 the feasible set is a singleton and regret is zero, even with positive energy. With zero realized energy and D positive, each selected support is zero and regret is at most zero. Zero feedback always keeps the play fixed. The step formula below uses a positive energy denominator; the Lean rate is totalized to zero when the prefix energy is zero."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Equation (4.4). Regret for the scale-one run",
+          "pages": "printed p. 40 / PDF p. 52",
+          "pdf_page": 52,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{gathered}\\eta_t=D/\\sqrt{S_{t+1}}\\quad(S_{t+1}>0),\\\\ g_t=0\\ \\Longrightarrow\\ x_{t+1}=x_t,\\\\R_T(u)\\le\\tfrac32 D\\sqrt{S_T}.\\end{gathered}",
+          "plain": "With scale one, each nonzero subgradient uses the diameter bound divided by the square root of energy through that round. For every feasible comparator, regret is at most three halves of the diameter bound times the square root of final energy.",
+          "fallback": "With scale one, each nonzero subgradient uses the diameter bound divided by the square root of energy through that round. For every feasible comparator, regret is at most three halves of the diameter bound times the square root of final energy.",
+          "relationship": "Equation (4.4) appears on printed page 40, following the adaptive energy calculation. Its comparator is evaluated along the scale-one trajectory.",
+          "contract": {
+            "model": "Deterministic actual causal full-information projected adaptive subgradient run.",
+            "assumptions": "Feasible initial point; finite-dimensional real inner-product space; nonempty closed convex domain of diameter at most D>=0; finite horizon; proper losses subdifferentiable on the domain; chosen supports legal at actual played points. Source specializations additionally retain convexity. General alpha endpoint requires alpha>0 and is support-sufficient without an extra convexity premise.",
+            "parameters": "Rounds 1 through T in the book correspond to indices 0 through T − 1 in Lean. The rate uses energy through the current feedback. The terminal play has Lean index T.",
+            "regret": "For every comparator in the feasible domain, the actual alpha=1 projected adaptive run has regret at most (3/2)*D*sqrt(S_T), including zero energy, zero diameter and the empty horizon.",
+            "guarantee": "With scale one, each nonzero subgradient uses the diameter bound divided by the square root of energy through that round. For every feasible comparator, regret is at most three halves of the diameter bound times the square root of final energy."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Scale-one regret bound",
+            "boundary": "Fix the policy before the run. At time t the prediction uses only the complete earlier loss functions. The selector then receives t, those earlier functions, the play history through the new prediction, and the current loss. It must return a global supporting subgradient at the actual prediction. A uniform oracle satisfies this requirement on every admissible history. The canonical selector uses mathematical choice."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Theorem 4.14. Tuned regret and the fixed-step benchmark",
+          "pages": "printed p. 40 / PDF p. 52",
+          "pdf_page": 52,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{gathered}\\eta_t=D/\\sqrt{2S_{t+1}}\\quad(S_{t+1}>0),\\\\R_T(u)\\le D\\sqrt{2S_T},\\quad B(\\eta)=D^2/(2\\eta)+\\eta S_T/2,\\\\\\text{Printed:}\\quad D\\sqrt{2S_T}=\\sqrt2\\min_{\\eta>0}B(\\eta),\\\\\\text{All }D,S_T\\ge0:\\quad D\\sqrt{2S_T}=\\sqrt2\\inf_{\\eta>0}B(\\eta).\\end{gathered}",
+          "plain": "With scale one over the square root of two, regret is at most the diameter bound times the square root of twice the realized energy. The printed fixed-step benchmark uses a minimum over positive steps. Its value extends to both zero axes as an infimum.",
+          "fallback": "With scale one over the square root of two, regret is at most the diameter bound times the square root of twice the realized energy. The printed fixed-step benchmark uses a minimum over positive steps. Its value extends to both zero axes as an infimum.",
+          "relationship": "On printed page 40, Theorem 4.14 changes the schedule and gives the tuned regret bound. Its final equality concerns a scalar benchmark evaluated with the energy of this tuned run.",
+          "contract": {
+            "model": "Deterministic actual causal full-information projected adaptive subgradient run.",
+            "assumptions": "Feasible initial point; finite-dimensional real inner-product space; nonempty closed convex domain of diameter at most D>=0; finite horizon; proper losses subdifferentiable on the domain; chosen supports legal at actual played points. Source specializations additionally retain convexity. General alpha endpoint requires alpha>0 and is support-sufficient without an extra convexity premise.",
+            "parameters": "Rounds 1 through T in the book correspond to indices 0 through T − 1 in Lean. The rate uses energy through the current feedback. The terminal play has Lean index T.",
+            "regret": "The actual alpha=sqrt(2)/2 adaptive run satisfies R_T(u)<=D*sqrt(2*S_T). Its numerical bound equals sqrt(2) times the infimum of the fixed-energy positive-step upper-bound family. The regret inequality preserves the source regimes; the infimum display explicitly repairs unattained one-zero minima.",
+            "guarantee": "With scale one over the square root of two, regret is at most the diameter bound times the square root of twice the realized energy. The printed fixed-step benchmark uses a minimum over positive steps. Its value extends to both zero axes as an infimum. For positive D and S the unique minimizing step is D/√S. If D = S = 0, every positive step attains zero. If exactly one of D and S is positive, the infimum is zero and no positive step attains it."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Tuned regret and fixed-step infimum",
+            "boundary": "The regret inequality retains the printed statement. The infimum correction applies to the scalar positive-step comparison. Its energy is fixed after observing the tuned trajectory. Changing the scale can change the predictions, selected feedback and total energy. A singleton with nonzero linear feedback realizes D = 0 and S = 9. A unit interval with zero losses realizes D = 1 and S = 0. For positive D and S the unique minimizing step is D/√S. If D = S = 0, every positive step attains zero. If exactly one of D and S is positive, the infimum is zero and no positive step attains it."
+          },
+          "statement_provenance": "derived-support"
         }
       ],
       "worked_example": {
@@ -2499,7 +2568,7 @@
             "fallback": "The right-endpoint rectangle has area at most the integral over that interval. Adding the comparisons gives a single integral from c to the final total."
           }
         ],
-        "boundary": "The OGD source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. Conditional nonlinear/Bregman fixed and variable bounds now have derived library proofs for supplied valid interior argmin runs. Full source-algorithm acceptance and the remaining chapter obligations stay open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied. Lemma 4.13 assumes continuity on the closed nonnegative half-line. Orabona passes to a positive-offset limit for the singular inverse square root. The compiled energy estimate instead uses a square-root supporting line and handles a zero prefix separately. The inverse-square-root energy estimate is available. The causal rate in Eq. (4.3), the zero-gradient update rule, zero-radius and zero-energy regret cases, Eq. (4.4), and the full regret bound of Theorem 4.14 remain open. The displayed minimum in Theorem 4.14 also requires distinguishing attainment from an infimum."
+        "boundary": "The OGD source-facing endpoints use convexity on the feasible set and differentiability of a supplied ambient extension on an open neighborhood; the legacy RegularLoss helper has stronger convex-open assumptions and is labelled separately. Complete real Hilbert spaces generalize the source Euclidean setting. The fixed-rate formalization also permits zero rounds; variable-rate and tuned endpoints retain their positive-horizon requirements. No executable projection solver, stochastic guarantee, optimality lower bound or whole-chapter completion is claimed. These are derived affine-loss, quadratic-potential, constant-step results, extended from the finite-dimensional source to complete real Hilbert spaces. Conditional nonlinear/Bregman fixed and variable bounds now have derived library proofs for supplied valid interior argmin runs. Full source-algorithm acceptance and the remaining chapter obligations stay open. No chapter completion or source correction is asserted. The source leaves the constant-step proof as an exercise. In the general proof, the cited Theorem 2.8 assumes differentiability on an open neighborhood, whereas Theorem 15.30 states subdifferentiability on V; that applicability bridge remains open. The printed monotonicity range also mentions eta_(T+1), beyond the listed algorithm inputs. Neither issue is silently repaired here. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied. Lemma 4.13 assumes continuity on the closed nonnegative half-line. Orabona passes to a positive-offset limit for the singular inverse square root. The compiled energy estimate instead uses a square-root supporting line and handles a zero prefix separately. The inverse-square-root energy estimate is available. The adaptive projected update now covers zero feedback, zero diameter and zero realized energy. Equation (4.4) and the regret bound in Theorem 4.14 use the energy of their respective runs. The benchmark has an infimum for all nonnegative diameters and energies. Chapter-wide obligations remain open."
       }
     },
     {

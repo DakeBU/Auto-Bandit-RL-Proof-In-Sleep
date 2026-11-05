@@ -1,0 +1,61 @@
+{
+  "source": {
+    "D>0,E>0": "f(eta)-D sqrt(E)=(D-eta sqrt(E))^2/(2 eta), so the unique minimizer is D/sqrt(E).",
+    "D=E=0": "every positive eta gives 0.",
+    "D=0<E": "eta E/2 tends to zero only as eta decreases to 0; every positive eta gives strict inequality.",
+    "E=0<D": "D^2/(2 eta) tends to zero only as eta increases unboundedly; every finite positive eta gives strict inequality.",
+    "scope": "sqrt(2) times infimum is exact in all four regimes. The unqualified minimum needs repair only for exactly one zero. For D=0 the feasible set is a singleton even if an ambient selected gradient is nonzero; regret is zero. E=0 implies zero observed gradients and no updates, with regret upper bounded by zero."
+  },
+  "review": {
+    "proposalPath": "docs/contracts/online-ch2-adaptive-osd-v1/minimum-infimum-repair-proposed-v1.md",
+    "proposalHash": "f2fec765776feca8c2ab8d1e04ea3478cee9005a292a712d037a6d11f2d0ca99",
+    "separateReviewPath": "runs/online-ch2-adaptive-osd-20261010/fresh-production-source-review-20261011-v1.json",
+    "separateReviewHash": "728ce3ad8b326f53ee584a61e0125135a81fee4e6b45f2f837b8e12a3d4385be",
+    "actor": "historical actor adaptive reviewer",
+    "verdict": {
+      "proposed_repair_verdict": "accepted",
+      "literal_all_regime_minimum_verdict": "rejected",
+      "finding": "Separate repair accepted: for all D,S>=0 use inf_(eta>0)[D^2/(2eta)+eta*S/2]=D*sqrt(S), retain exact attainment classification. D>0,S0 gives positive D^2/(2eta), strictly reduced by doubling eta; D0,S>0 gives positive eta*S/2, reduced by halving eta. Both source-compatible: constant losses on nontrivial bounded domain; nonzero affine ambient support on singleton domain. Bothzero every positive eta attains0. Positive pair has unique eta=D/sqrt(S). Literal printed attained min over all regimes is rejected. Keep original source unchanged and repair separate; do not remove zero cases or add D/S positivity to full regret. No author endorsement/published erratum claimed."
+    },
+    "threeProductionHashesMatchOriginal": true
+  },
+  "separateCheck": "Previously proposed minimum-to-infimum repair has a distinct historical reviewer on byte-identical production files and the same PDF. I independently reproduced its full four-way classification. The exact existing repair is accepted; no new repair proposed or separate outstanding re-review for it.",
+  "retainedRecords": [
+    {
+      "path": "docs/contracts/online-ch2-adaptive-osd-v1/minimum-infimum-repair-proposed-v1.md",
+      "gitObject": "ae09655250b7e669d14d4d622cf6bd43f7df036e",
+      "mode": "100644",
+      "sha256": "f2fec765776feca8c2ab8d1e04ea3478cee9005a292a712d037a6d11f2d0ca99",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/7291d3395d462d1e921b25d035d120c0f3755feb/docs/contracts/online-ch2-adaptive-osd-v1/minimum-infimum-repair-proposed-v1.md"
+    },
+    {
+      "path": "docs/contracts/online-ch2-adaptive-osd-v1/source-proof-display-correction-proposed-v1.md",
+      "gitObject": "c65f72b2211d9e3f5d095bc1b97641cd20ed9dae",
+      "mode": "100644",
+      "sha256": "b509393889f17a3200439ed4e625236c76a6b561435f94619ee069386ea683a9",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/7291d3395d462d1e921b25d035d120c0f3755feb/docs/contracts/online-ch2-adaptive-osd-v1/source-proof-display-correction-proposed-v1.md"
+    },
+    {
+      "path": "docs/contracts/online-ch2-adaptive-osd-v1/source-proof-display-retraction-v1.md",
+      "gitObject": "61df8c4e74c1cdfb86ec034c3b7397e7753fd15e",
+      "mode": "100644",
+      "sha256": "f0f0993b53024e42af412aed53f9ed186381fe9ec96d9979852c44def7fa8cee",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/7291d3395d462d1e921b25d035d120c0f3755feb/docs/contracts/online-ch2-adaptive-osd-v1/source-proof-display-retraction-v1.md"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/fresh-production-source-review-20261011-v1.json",
+      "gitObject": "bea018c7f14d5b60785da368c35e847c21778b6d",
+      "mode": "100644",
+      "sha256": "728ce3ad8b326f53ee584a61e0125135a81fee4e6b45f2f837b8e12a3d4385be",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/7291d3395d462d1e921b25d035d120c0f3755feb/runs/online-ch2-adaptive-osd-20261010/fresh-production-source-review-20261011-v1.json"
+    },
+    {
+      "path": "runs/online-ch2-adaptive-osd-20261010/potential-CONTRACT-review-v1.json",
+      "gitObject": "724f9d2f8426df172509094e6d1a64fdd54c07f9",
+      "mode": "100644",
+      "sha256": "d28d039513dd8daf1a8d43dcf0a311fd80fe3fcbfc994ae7b6d6289c552fb88c",
+      "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/7291d3395d462d1e921b25d035d120c0f3755feb/runs/online-ch2-adaptive-osd-20261010/potential-CONTRACT-review-v1.json"
+    }
+  ],
+  "reviewedNumbers": "1/2,1/2,0,0,4/5 actual trajectory; regret 3/2, 16/25 squared terminal distance, S=25, sharper bound 59/10 and coarse 15/2; tuned sqrt50 on its own run. Both independent mixed-axis countermodels can be realized by feasible problems."
+}

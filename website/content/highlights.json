@@ -9021,11 +9021,73 @@
       "math": "\\begin{gathered}S_{-1}=0,\\quad S_t=\\sum_{i=0}^{t}a_i,\\quad a_i\\ge0,\\\\ \\frac{a_t}{\\sqrt{S_t}}\\le2(\\sqrt{S_t}-\\sqrt{S_{t-1}}),\\\\ \\sum_{t=0}^{T-1}\\frac{a_t}{\\sqrt{S_t}}\\le2\\sqrt{S_{T-1}},\\\\ a_t=\\|g_t\\|^2,\\quad \\frac D2\\sum_{t=0}^{T-1}\\frac{\\|g_t\\|^2}{\\sqrt{S_t}}\\le D\\sqrt{S_{T-1}}.\\end{gathered}",
       "intuition": "A positive increment increases both cumulative energy and its square root. Its normalized size is bounded by twice that increase in the square root. Adding across rounds cancels the intermediate square roots.",
       "why": "Multiplying the scalar estimate by half the diameter bound gives the energy term in the adaptive OSD analysis.",
-      "position": "Orabona derives this display after Lemma 4.13 on printed page 40. The book applies the integral inequality with a positive offset and lets the offset approach zero. The energy estimate supplies the sum of normalized squared feedback norms in adaptive OSD. The causal update, skip rule, zero-radius and zero-energy regret cases, zero-weight potential, equation (4.4), and the full regret bound of Theorem 4.14, including its minimum versus infimum, remain open.",
+      "position": "Orabona derives this display after Lemma 4.13 on printed page 40. The book applies the integral inequality with a positive offset and lets the offset approach zero. The energy estimate supplies the sum of normalized squared feedback norms in adaptive OSD. The adaptive projected update now covers zero feedback, zero diameter and zero realized energy. Equation (4.4) and the regret bound in Theorem 4.14 use the energy of their respective runs. The benchmark has an infimum for all nonnegative diameters and energies. Chapter-wide obligations remain open.",
       "proof_idea": "Write S for the sum before the round and add the current nonnegative increment a. When S+a is positive, the square-root supporting line bounds a/√(S+a) by twice the difference √(S+a)−√S. When S+a is zero, both S and a vanish. Summation telescopes. Substitute squared norms and multiply by D/2.",
       "lean_notes": "The book numbers rounds from 1. Lean starts at 0 and includes the current round in every denominator. The norm can be any norm on an additive commutative group. Lean assigns zero to the quotient at a zero prefix, matching the contribution of the rounds skipped in the book. For feedback [0,3,0,4], the squared norms total 25 and the normalized sum is 31/5. With D=2 the three-round prefix bound is 6. Adding the final term 16/5 gives an upper bound of 46/5, strictly below 10. A second test covers the empty horizon, an all-zero stream and D=0 with nonzero feedback.",
       "dependencies": [
         "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineAdaptiveOSD.regret_bound",
+      "title": "Causal adaptive OSD retains the terminal-distance residual",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 302,
+      "source_match": "closest-source",
+      "plain": "Predict from past losses and plays. After observing the current loss, select a supporting subgradient at the played point, add its squared norm to the cumulative energy, and project the scaled step back onto the feasible set. Zero feedback leaves the prediction in place. The regret bound keeps a deduction for the final squared distance to the comparator. Regret sums the finite differences between the loss of each prediction and the loss of the comparator on that same round.",
+      "math": "\\begin{gathered}S_t=\\sum_{i<t}\\|g_i\\|^2,\\quad a_t=\\|x_t-u\\|^2,\\quad C=D^2,\\\\ \\eta_t=\\alpha D/\\sqrt{S_{t+1}}\\quad(S_{t+1}>0),\\\\q_t=\\begin{cases}\\|g_t\\|^2/\\sqrt{S_{t+1}},& S_{t+1}>0,\\\\0,&S_{t+1}=0,\\end{cases}\\\\ \\delta_t=\\ell_t(x_t)-\\ell_t(u),\\quad R_T(u)=\\sum_{t<T}\\delta_t,\\\\ w_t=\\sqrt{S_{t+1}}/(2\\alpha D)\\quad(D>0),\\\\ \\delta_t\\le(a_t-a_{t+1})w_t+\\tfrac{\\alpha D}{2}q_t\\quad(D>0),\\\\\\sum_{t<T}q_t\\le2\\sqrt{S_T},\\quad \\tfrac{\\alpha D}{2}\\sum_{t<T}q_t\\le\\alpha D\\sqrt{S_T},\\\\\\sum_{t<T}(a_t-a_{t+1})w_t\\le(C-a_T)w_{T-1}\\quad(D>0,\\ T>0),\\\\R_T(u)\\le\\left(\\tfrac1{2\\alpha}+\\alpha\\right)D\\sqrt{S_T}-\\tfrac{a_T\\sqrt{S_T}}{2\\alpha D}\\quad(D>0).\\end{gathered}",
+      "intuition": "Projection can discard part of a trial step. The squared distance to a feasible comparator records how much progress survives projection.",
+      "why": "The last prediction still carries geometric information. Keeping its distance to the comparator can sharpen the regret estimate on an actual trajectory.",
+      "position": "Printed pages 13–14 give the weighted-distance calculation, including the negative terminal term. Printed pages 39–40 apply the adaptive energy schedule. The library combines these steps for general positive scale.",
+      "proof_idea": "Bound each loss difference by the supporting plane at the played point. The projection inequality gives a difference of squared distances plus a normalized feedback term. Sum by parts with nondecreasing energy weights, keep the final distance, and apply the cumulative energy bound. If the diameter bound is zero, all feasible plays and the comparator coincide. The potential is squared comparator distance, its upper bound at played points is the squared diameter bound, and its weights are nonnegative and nondecreasing. Summation by parts uses the last weight only for a nonempty run. Printed page 14 already includes the factors of one half and the negative terminal-distance term.",
+      "lean_notes": "Fix the policy before the run. At time t the prediction uses only the complete earlier loss functions. The selector then receives t, those earlier functions, the play history through the new prediction, and the current loss. It must return a global supporting subgradient at the actual prediction. A uniform oracle satisfies this requirement on every admissible history. The canonical selector uses mathematical choice. For each t before T the extended-real loss is proper and has a global supporting subgradient at every feasible point. The predictions and comparator are feasible, so all evaluated losses are finite. The comparator is fixed. The two source specializations also assume convex losses. The final prediction indexed T in Lean corresponds to the source point indexed T + 1. With no rounds, regret is zero. For D = 0 the feasible set is a singleton and regret is zero, even with positive energy. With zero realized energy and D positive, each selected support is zero and regret is at most zero. Zero feedback always keeps the play fixed. The step formula below uses a positive energy denominator; the Lean rate is totalized to zero when the prefix energy is zero.",
+      "dependencies": [
+        "BanditRL.OnlineAdaptiveOSD.one_step",
+        "BanditRL.OnlineAdaptiveOSD.regret_zero_diameter",
+        "BanditRL.OnlineAdaptiveOSD.energy_eq_sum",
+        "BanditRL.OnlineAdaptiveOSD.energy_step_mono",
+        "BanditRL.OnlineAdaptiveOSD.output_mem",
+        "BanditRL.OnlineAdaptivePotential.weighted_potential_sum",
+        "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineAdaptiveOSD.source_eq4_4",
+      "title": "The alpha-one adaptive run has the three-halves bound",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 303,
+      "source_match": "closest-source",
+      "plain": "With scale one, each nonzero subgradient uses the diameter bound divided by the square root of energy through that round. For every feasible comparator, regret is at most three halves of the diameter bound times the square root of final energy.",
+      "math": "\\begin{gathered}\\eta_t=D/\\sqrt{S_{t+1}}\\quad(S_{t+1}>0),\\\\ g_t=0\\ \\Longrightarrow\\ x_{t+1}=x_t,\\\\R_T(u)\\le\\tfrac32 D\\sqrt{S_T}.\\end{gathered}",
+      "intuition": "Small past energy allows a larger step. Including the current gradient in the denominator controls the size of its own update.",
+      "why": "This specialization gives the explicit constant in equation (4.4) for the predictions produced by that update.",
+      "position": "Equation (4.4) appears on printed page 40, following the adaptive energy calculation. Its comparator is evaluated along the scale-one trajectory.",
+      "proof_idea": "Apply the general bound with scale one. Its two positive terms have coefficients one half and one. Dropping the nonnegative deduction gives three halves. For the unit interval with initial play one half, comparator zero and linear losses with slopes 0, 3, 0, −4, the final play is 4/5 and final energy is 25. The regret is 3/2, the bound retaining the final distance is 59/10, and equation (4.4) gives 15/2. The full play sequence is 1/2, 1/2, 0, 0, 4/5. The final squared distance to zero is 16/25.",
+      "lean_notes": "Losses are proper and admit global supports throughout the feasible set. A legal policy can use earlier losses, the play history and the current loss when selecting feedback. A canonical support selector uses mathematical choice. A later zero gradient keeps the play fixed even if the computed rate is positive. With no rounds, regret is zero. For D = 0 the feasible set is a singleton and regret is zero, even with positive energy. With zero realized energy and D positive, each selected support is zero and regret is at most zero. Zero feedback always keeps the play fixed. The step formula below uses a positive energy denominator; the Lean rate is totalized to zero when the prefix energy is zero.",
+      "dependencies": [
+        "BanditRL.OnlineAdaptiveOSD.regret_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineAdaptiveBenchmark.source_theorem4_14_infimum",
+      "title": "The optimized adaptive coefficient and the infimum boundary",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 304,
+      "source_match": "closest-source",
+      "plain": "With scale one over the square root of two, regret is at most the diameter bound times the square root of twice the realized energy. The printed fixed-step benchmark uses a minimum over positive steps. Its value extends to both zero axes as an infimum.",
+      "math": "\\begin{gathered}\\eta_t=D/\\sqrt{2S_{t+1}}\\quad(S_{t+1}>0),\\\\R_T(u)\\le D\\sqrt{2S_T},\\quad B(\\eta)=D^2/(2\\eta)+\\eta S_T/2,\\\\\\text{Printed:}\\quad D\\sqrt{2S_T}=\\sqrt2\\min_{\\eta>0}B(\\eta),\\\\\\text{All }D,S_T\\ge0:\\quad D\\sqrt{2S_T}=\\sqrt2\\inf_{\\eta>0}B(\\eta).\\end{gathered}",
+      "intuition": "When both terms are positive, increasing the fixed step reduces one term and increases the other. On either zero axis only one of the terms remains.",
+      "why": "The comparison explains the factor of square root two and identifies exactly when a positive fixed step realizes the benchmark.",
+      "position": "On printed page 40, Theorem 4.14 changes the schedule and gives the tuned regret bound. Its final equality concerns a scalar benchmark evaluated with the energy of this tuned run.",
+      "proof_idea": "The tuned scale makes the two positive terms equal. For positive diameter D and energy S, the unique minimizing fixed step is D divided by the square root of S. With D positive and S zero, the benchmark approaches zero as the step grows. With D zero and S positive, it approaches zero as the step shrinks. Neither axis admits a positive minimizing step. At D and S both zero, every positive step attains zero. The lower bound follows by expanding the square of D minus the step times the square root of S. On each mixed-zero axis, doubling or halving a positive step strictly lowers its objective. With the same four affine slopes the tuned run has bound √50. Its energy is also 25 because the slopes are fixed independently of the play. Generally each scale has its own feedback history.",
+      "lean_notes": "The regret inequality retains the printed statement. The infimum correction applies to the scalar positive-step comparison. Its energy is fixed after observing the tuned trajectory. Changing the scale can change the predictions, selected feedback and total energy. A singleton with nonzero linear feedback realizes D = 0 and S = 9. A unit interval with zero losses realizes D = 1 and S = 0.",
+      "dependencies": [
+        "BanditRL.OnlineAdaptiveOSD.source_theorem4_14",
+        "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
+        "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value"
       ]
     }
   ]
