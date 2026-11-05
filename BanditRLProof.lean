@@ -776,6 +776,7 @@ import BanditRLProof.OnlineStrongConvexSupport
 import BanditRLProof.OnlineStrongConvexSourceSubgradient
 import BanditRLProof.OnlineStrongConvexAttainment
 import BanditRLProof.OnlineStrongConvexSubgradientIff
+import BanditRLProof.OnlineStrongMonotonicity
 import BanditRLProof.OnlinePrescientBregmanSource
 import BanditRLProof.OnlineCumulativeStrongConvex
 import BanditRLProof.OnlineCumulativePotential
