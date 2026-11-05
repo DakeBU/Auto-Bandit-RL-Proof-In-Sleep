@@ -788,3 +788,4 @@ import BanditRLProof.OnlineOptimisticFTRL
 import BanditRLProof.OnlineAdaptiveSummation
 import BanditRLProof.OnlineEntropyScalarGap
 import BanditRLProof.OnlineEntropyWeightedPairing
+import BanditRLProof.OnlineAdaptiveEnergy
