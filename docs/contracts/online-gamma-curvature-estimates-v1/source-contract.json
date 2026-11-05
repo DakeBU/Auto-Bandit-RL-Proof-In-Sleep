@@ -1,0 +1,174 @@
+{
+  "target_id": "dependency:A13-simplex-endpoint",
+  "target_pointer": "/effective_targets/165",
+  "inventory": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+  "parent_statement": "For h(x)=xlnx-lnGamma(x+1/2), h double-prime>=0 on x>0 via trigamma integral comparison; extend sum h continuously to nonnegative simplex. Convex function maximum on finite simplex attained at a vertex.",
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=307",
+    "printed": [
+      295,
+      296
+    ],
+    "pdf": [
+      307,
+      308
+    ],
+    "source_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "module": "BanditRLProof.OnlineGammaEstimates",
+  "source_file": "BanditRLProof/OnlineGammaEstimates.lean",
+  "source_sha256": "c4166b59191f0aac347aa59fe9eda6b06dda75129037dfd7256f6e4caf7807ef",
+  "namespace": "BanditRL.OnlineGamma",
+  "statements": [
+    {
+      "name": "BanditRL.OnlineGamma.midpointInvSq_le_reciprocalDifference",
+      "header": "theorem midpointInvSq_le_reciprocalDifference (x : ℝ) (hx : 0 < x) (k : ℕ) :\n    midpointInvSq x k ≤ reciprocalDifference x k"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.sum_reciprocalDifference",
+      "header": "theorem sum_reciprocalDifference (x : ℝ) (N : ℕ) :\n    ∑ k ∈ range N, reciprocalDifference x k = 1/x - 1/(x + (N : ℝ))"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.sum_midpointInvSq_le",
+      "header": "theorem sum_midpointInvSq_le (x : ℝ) (hx : 0 < x) (N : ℕ) :\n    ∑ k ∈ range N, midpointInvSq x k ≤ 1/x - 1/(x + (N : ℝ))"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.summable_midpointInvSq_and_tsum_le",
+      "header": "theorem summable_midpointInvSq_and_tsum_le (x : ℝ) (hx : 0 < x) :\n    Summable (fun k : ℕ => 1 / (x + (k : ℝ) + 1 / 2)^2) ∧\n    (∑' k : ℕ, 1 / (x + (k : ℝ) + 1 / 2)^2) ≤ 1 / x"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.hasDerivAt_logGammaSeq_and_slopeApprox",
+      "header": "theorem hasDerivAt_logGammaSeq_and_slopeApprox (N : ℕ) (y : ℝ) (hy : 0 < y) :\n    HasDerivAt (fun z : ℝ => Real.BohrMollerup.logGammaSeq z N) (logGammaSlopeApprox N y) y ∧\n    HasDerivAt (logGammaSlopeApprox N) (logGammaCurvatureApprox N y) y"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.tendstoUniformlyOn_compensatedReciprocal_and_shiftedInvSq",
+      "header": "theorem tendstoUniformlyOn_compensatedReciprocal_and_shiftedInvSq :\n  ∀ (a b : ℝ), 0 < a → a < b →\n    TendstoUniformlyOn\n      (fun (N : ℕ) (y : ℝ) => ∑ k ∈ range N, compensatedReciprocal k y)\n      (fun y : ℝ => ∑' k : ℕ, compensatedReciprocal k y) atTop (Icc a b) ∧\n    TendstoUniformlyOn\n      (fun (N : ℕ) (y : ℝ) => ∑ k ∈ range N, shiftedInvSq k y)\n      (fun y : ℝ => ∑' k : ℕ, shiftedInvSq k y) atTop (Icc a b)"
+    }
+  ],
+  "functions": [
+    "BanditRL.OnlineGamma.midpointInvSq",
+    "BanditRL.OnlineGamma.reciprocalDifference",
+    "BanditRL.OnlineGamma.logGammaSlopeApprox",
+    "BanditRL.OnlineGamma.logGammaCurvatureApprox",
+    "BanditRL.OnlineGamma.compensatedReciprocal",
+    "BanditRL.OnlineGamma.shiftedInvSq"
+  ],
+  "source_relationship": "The source compares a shifted reciprocal-square series with its integral on the positive half-line. The finite difference estimate, telescoping sum and summability bound recover the numerical inequality. Finite Euler derivatives and the two uniform limits supply intermediate results toward Proposition A.10(f).",
+  "boundaries": [
+    "x>0 for analytic midpoint bounds. The exact finite difference telescope holds for every real x, since Lean defines the reciprocal of zero as zero.",
+    "y>0 for both derivatives at a finite natural truncation N, inclusive of k=N and of N=0.",
+    "0<a<b for uniform convergence on the closed interval [a,b]. The partial sums run over k<N and both summands use k+1."
+  ],
+  "reference_fingerprints": [
+    {
+      "name": "BanditRL.OnlineGamma.midpointInvSq",
+      "prior_type_sha256": "5580ba67c024c119bc6e6238f1e896310547686cac1fa72d4be1b93628de0280",
+      "prior_type_bytes": 183,
+      "prior_value_sha256": "6ac57f9ce268866b9444d70bbe7b156d1a6638395f5c38ca571a1f8b19931f87",
+      "prior_value_bytes": 5922
+    },
+    {
+      "name": "BanditRL.OnlineGamma.reciprocalDifference",
+      "prior_type_sha256": "5580ba67c024c119bc6e6238f1e896310547686cac1fa72d4be1b93628de0280",
+      "prior_type_bytes": 183,
+      "prior_value_sha256": "5647422c2466b55ae4ee3486b25f0f1d5bc66af63c71ca680b64bab2773f217e",
+      "prior_value_bytes": 5840
+    },
+    {
+      "name": "BanditRL.OnlineGamma.midpointInvSq_le_reciprocalDifference",
+      "prior_type_sha256": "4c2d8ee218f803dbc4b2145e44a50475582e2a651e47bef10ae7bb57ae498031",
+      "prior_type_bytes": 1279,
+      "prior_value_sha256": "f017db5cce1251e32bc5ea01b4c3061727ff86b288bdbcb10cdbf6c9aeea7eab",
+      "prior_value_bytes": 41894814
+    },
+    {
+      "name": "BanditRL.OnlineGamma.sum_reciprocalDifference",
+      "prior_type_sha256": "ac253ca3969a1e14c00b4739e40394e0c165817bd59db31a6992ff5e2553635f",
+      "prior_type_bytes": 4882,
+      "prior_value_sha256": "47a58d828650592f8a4f8d20fd73af5f67d28ce56c2732501f068ea814ace07b",
+      "prior_value_bytes": 10981008
+    },
+    {
+      "name": "BanditRL.OnlineGamma.sum_midpointInvSq_le",
+      "prior_type_sha256": "80ff0d70cb2e2176db5522325426eb7cb915cb9454c7799d0481cd446da750e0",
+      "prior_type_bytes": 5816,
+      "prior_value_sha256": "df0635bf1de3ee78789fe11cb148bef0f7322c102e0ad790e20139c9107dfc96",
+      "prior_value_bytes": 12281
+    },
+    {
+      "name": "BanditRL.OnlineGamma.summable_midpointInvSq_and_tsum_le",
+      "prior_type_sha256": "9c844d00f8f25694799b82c48d2aef741c6d651048c207cf82ef71b9e4b8f07b",
+      "prior_type_bytes": 21997,
+      "prior_value_sha256": "09bc54985dfb776d50f9ab16208eaf2cdd876f99efc4b74ac16f98a65c7bdff4",
+      "prior_value_bytes": 164910
+    },
+    {
+      "name": "BanditRL.OnlineGamma.hasDerivAt_logGammaSeq_and_slopeApprox",
+      "prior_type_sha256": "79cf42307e596703002d42316ca71ac293ce77102e33e4973c48ff1e85a2dd91",
+      "prior_type_bytes": 62884,
+      "prior_value_sha256": "c4d98e1b660aa9542c68508e8b676ea282291fba08be1012507a4ac7f9ac9678",
+      "prior_value_bytes": 3303872
+    },
+    {
+      "name": "BanditRL.OnlineGamma.logGammaSlopeApprox",
+      "prior_type_sha256": "c46674c8d4a0e148a495cc63e9aa5c73106b84c1f08f7b54313393cd97ccbd2c",
+      "prior_type_bytes": 183,
+      "prior_value_sha256": "8991eb9cbae62b27d0e3c624e1686529705c3412338456812d0f0b437aaa0076",
+      "prior_value_bytes": 4680
+    },
+    {
+      "name": "BanditRL.OnlineGamma.logGammaCurvatureApprox",
+      "prior_type_sha256": "c46674c8d4a0e148a495cc63e9aa5c73106b84c1f08f7b54313393cd97ccbd2c",
+      "prior_type_bytes": 183,
+      "prior_value_sha256": "0897d02dceaa8f99b2eb5a59bfab6862aa4db544d05d91915857f4c153932feb",
+      "prior_value_bytes": 5002
+    },
+    {
+      "name": "BanditRL.OnlineGamma.compensatedReciprocal",
+      "prior_type_sha256": "ffadfe7b1977e1d6ada4be2c20fc06c5c783666f1a4cfe23232ff9d363974fb6",
+      "prior_type_bytes": 183,
+      "prior_value_sha256": "3abb31d49fb5954e590455c4e207061a57a27e15813997b9039a93564ff07d1b",
+      "prior_value_bytes": 6213
+    },
+    {
+      "name": "BanditRL.OnlineGamma.shiftedInvSq",
+      "prior_type_sha256": "ffadfe7b1977e1d6ada4be2c20fc06c5c783666f1a4cfe23232ff9d363974fb6",
+      "prior_type_bytes": 183,
+      "prior_value_sha256": "ff26e638c1b2e7825caa4cb78002502c2e71ce5db0835c40bbe410a5b4dd7a9a",
+      "prior_value_bytes": 4386
+    },
+    {
+      "name": "BanditRL.OnlineGamma.tendstoUniformlyOn_compensatedReciprocal_and_shiftedInvSq",
+      "prior_type_sha256": "c33341684044a71707815c6e3374f32be96d3187f7b3a7a4c91bf1d15c3d0021",
+      "prior_type_bytes": 10094,
+      "prior_value_sha256": "214d32a861843106ea7b960479249f8b9ed44ef1fa0bad16b3ff3945e9d07f6e",
+      "prior_value_bytes": 81255430
+    }
+  ],
+  "independent_private_reviews": [
+    "a9dd9c7009cec8b6fd8d362deacb23fa5d28699cdfcae3b8e415c0069d2fdbc4",
+    "27ddf6cb7c4b67e0112d5e2ef58bcfdeb05538a86f313b3738bd5e8d7b6a330f",
+    "69487e5c0221af6d5fb7a3c405ffc1f85f58fe61e3fbe8bbaf2bcda1a9a546c0",
+    "cf932c7d10829bdf5bf06002cd939cad8674796a630887e3e4e3c3aee569aa4f"
+  ],
+  "open_source_obligations": [
+    "Cell and half-line integral identities",
+    "Identification of the derivatives of the limiting log Gamma function",
+    "Convexity and continuity through zero",
+    "Product on the finite nonnegative simplex and its attained vertex maximum"
+  ],
+  "stage": "The six definitions and six proofs compiled under their public names in a private module build. The four proof-bearing consumers also compiled and were imported from an independent test module in that build. The combined project and reader gates remain open.",
+  "named_import_review_sha256": "f46ba88b0dcd4f9d075c7ee3d8067cc93191b4e93c9204bffeb1101322d63b6e",
+  "consumer_module": "Tests.OnlineGammaEstimatesCanary",
+  "consumer_source_sha256": "86ed2a765480dd75453922d4c2d06268dcb2c26441bc54b5c7c9c7bea7792133",
+  "consumer_names": [
+    "BanditRL.OnlineGamma.Canary.sum_reciprocalDifference_neg_one_two",
+    "BanditRL.OnlineGamma.Canary.logGammaSeq_derivatives_zero_at_two",
+    "BanditRL.OnlineGamma.Canary.logGammaSeq_derivatives_one_at_one",
+    "BanditRL.OnlineGamma.Canary.uniform_tails_endpoint_limits_and_prefixes"
+  ],
+  "consumer_freeze_sha256": "a6a39683ace2608ee5c9658633a092052b5fb0d3269f6827bde368b218ab8384"
+}
