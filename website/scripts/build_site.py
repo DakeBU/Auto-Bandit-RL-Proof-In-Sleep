@@ -1065,7 +1065,7 @@ def layout(
     <footer class="site-footer">
       <div class="footer-inner">
         <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Auto-Bandit-RL-Proof-In-Sleep (ABRL)</strong>. Generated from current sources at {html.escape(generated_at)}; exact Lean statements and verification status take precedence.</p>
-        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="{href_from(page_path, 'attribution/index.html')}">Attribution details</a>.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="{href_from(page_path, 'attribution/index.html')}">License, reuse and attribution</a>.</p>
       </div>
     </footer>
   </div>
@@ -5620,6 +5620,13 @@ python3 website/scripts/ide_server.py</code></pre>
 
 def build_attribution(output: Path, verified: bool, generated_at: str) -> None:
     page_path = "attribution/index.html"
+    license_sections = []
+    for paragraph in (ROOT / "LICENSE_SCOPE.md").read_text(encoding="utf-8").strip().split("\n\n"):
+        if paragraph.startswith("# "):
+            continue
+        tag = "h3" if paragraph.startswith("## ") else "p"
+        license_sections.append(f"<{tag}>{html.escape(paragraph.removeprefix('## '))}</{tag}>")
+    license_body = '<section id="license"><h2>License and reuse</h2><p><a href="../LICENSE">Apache 2.0 full text</a> · <a href="../LICENSE_SCOPE.md">Reuse scope</a> · <a href="../NOTICE">NOTICE</a> · <a href="../LICENSE-MIT">Earlier MIT text</a></p>' + "".join(license_sections) + '</section>'
     body = f"""
 <section class="hero" id="attribution">
   <p class="eyebrow">Design provenance and license boundary</p>
@@ -5627,6 +5634,7 @@ def build_attribution(output: Path, verified: bool, generated_at: str) -> None:
   <p class="lede">This site's organization is inspired by Sho Sonoda's Lean-Ridgelet Blueprint, especially its readable implementation map from mathematics to Lean.</p>
 </section>
 
+{license_body}
 <section id="lean-ridgelet">
   <h2>Lean-Ridgelet inspiration</h2>
   <p><a href="https://github.com/shosonoda/lean-ridgelet">Lean-Ridgelet</a> is a Lean formalization project by <strong>Sho Sonoda</strong>. Its <a href="https://shosonoda.github.io/lean-ridgelet/">Blueprint website</a> demonstrates how publication-order mathematical exposition can link to verified declarations.</p>
@@ -5654,7 +5662,7 @@ def build_attribution(output: Path, verified: bool, generated_at: str) -> None:
   <p>Theorem cards summarize external results for retrieval. They do not transfer authorship and do not become local proof certificates until an import or local proof compiles.</p>
 </section>
 """
-    toc = [("attribution", "Attribution"), ("lean-ridgelet", "Lean-Ridgelet"), ("statsmllib", "StatsMLlib"), ("samplinglib", "Samplinglib inspiration"), ("other-sources", "Other sources")]
+    toc = [("attribution", "Attribution"), ("license", "License and reuse"), ("lean-ridgelet", "Lean-Ridgelet"), ("statsmllib", "StatsMLlib"), ("samplinglib", "Samplinglib inspiration"), ("other-sources", "Other sources")]
     write_page(
         output,
         page_path,
@@ -5922,7 +5930,7 @@ copied.
 ## ⚖️ License
 
 The public website and intentional community contributions are distributed
-under the [MIT License](LICENSE).
+under [Apache License 2.0](LICENSE), subject to [scope and exceptions](LICENSE_SCOPE.md).
 """
     write_text_lf(output / "README.md", readme)
 
@@ -6008,7 +6016,8 @@ def main() -> int:
     shutil.copytree(DIAGRAM_DIR, output / "diagrams")
     shutil.copytree(COMMUNITY_DIR, output / "community")
     shutil.copytree(PUBLIC_REPO_DIR, output, dirs_exist_ok=True)
-    shutil.copy2(ROOT / "LICENSE", output / "LICENSE")
+    for license_file in ("LICENSE", "LICENSE-MIT", "LICENSE_SCOPE.md", "NOTICE"):
+        shutil.copy2(ROOT / license_file, output / license_file)
     shutil.copy2(ROOT / "NOTICE.md", output / "NOTICE.md")
     write_text_lf(
         output / "community" / "registry.json",
