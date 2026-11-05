@@ -792,3 +792,6 @@ import BanditRLProof.OnlineEntropyWeightedPairing
 import BanditRLProof.OnlineEntropyL1
 import BanditRLProof.OnlineEntropyKLBoundary
 import BanditRLProof.OnlineAdaptiveEnergy
+import BanditRLProof.OnlineAdaptivePotential
+import BanditRLProof.OnlineAdaptiveOSD
+import BanditRLProof.OnlineAdaptiveBenchmark
