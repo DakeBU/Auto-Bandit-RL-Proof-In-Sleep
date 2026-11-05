@@ -181,3 +181,4 @@ import Tests.OnlineAdaptiveSummationCanary
 import Tests.OnlineAdaptiveEnergyCanary
 import Tests.OnlineAdaptivePotentialCanary
 import Tests.OnlineAdaptiveOSDCanary
+import Tests.OnlineWeightedPotentialCanary

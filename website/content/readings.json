@@ -1929,6 +1929,29 @@
             "boundary": "The regret inequality retains the printed statement. The infimum correction applies to the scalar positive-step comparison. Its energy is fixed after observing the tuned trajectory. Changing the scale can change the predictions, selected feedback and total energy. A singleton with nonzero linear feedback realizes D = 0 and S = 9. A unit interval with zero losses realizes D = 1 and S = 0. For positive D and S the unique minimizing step is D/√S. If D = S = 0, every positive step attains zero. If exactly one of D and S is positive, the infimum is zero and no positive step attains it."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Theorem 2.13 proof. Exact weighted-distance identity",
+          "pages": "printed p. 14 / PDF p. 26",
+          "pdf_page": 26,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=26",
+          "math": "\\begin{aligned}\\sum_{t=1}^{T}\\frac{\\|x_t-u\\|_2^2-\\|x_{t+1}-u\\|_2^2}{2\\eta_t}&=\\frac{\\|x_1-u\\|_2^2}{2\\eta_1}-\\frac{\\|x_{T+1}-u\\|_2^2}{2\\eta_T}\\\\&\\quad+\\frac12\\sum_{t=1}^{T-1}\\left(\\frac1{\\eta_{t+1}}-\\frac1{\\eta_t}\\right)\\|x_{t+1}-u\\|_2^2.\\end{aligned}",
+          "plain": "Weight each drop in squared distance by the reciprocal of twice the step size. Adding over the rounds leaves both endpoints and an interior correction whenever the step size changes.",
+          "fallback": "Initial weighted distance minus final weighted distance, plus one half of the sum of interior squared distances times the change in reciprocal step size.",
+          "relationship": "In the first equality of the variable-step calculation at the top of printed page 14, the sum of half the step size times the squared gradient norm appears unchanged on both sides. Cancel it to obtain the displayed identity for squared Euclidean distances. Monotonicity of the steps enters the later inequality. The identity itself also applies when consecutive step sizes increase.",
+          "contract": {
+            "model": "A finite sequence of points and a fixed comparator. Orabona uses Euclidean space. The Lean result applies to a normed additive commutative group.",
+            "assumptions": "At least one round and a positive step on each played round. The points and comparator may be chosen arbitrarily.",
+            "parameters": "Round 1 in the book is index 0 in Lean. The final iterate is x(T), and the final played step is η(T−1).",
+            "regret": "The weighted distance difference is one term in the proof of the OGD regret bound.",
+            "guarantee": "An exact identity with a negative terminal term and an interior correction. At one round the interior sum is empty. With a constant step it vanishes."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Exact weighted-distance identity",
+            "boundary": "The proof needs only the weighted scalar identity. Deterministic projected OGD and subgradient examples exercise the formula on actual iterates. Chapter 2 retains its separate source and forward obligations."
+          },
+          "statement_provenance": "source-restatement"
         }
       ],
       "worked_example": {

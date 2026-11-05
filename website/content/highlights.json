@@ -8581,6 +8581,24 @@
         "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
         "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "title": "Why changing step sizes leaves an interior correction",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 20.5,
+      "source_match": "closest-source",
+      "plain": "Weight each drop in squared distance by the reciprocal of twice the step size. Adding over the rounds leaves both endpoints and an interior correction whenever the step size changes.",
+      "math": "\\begin{aligned}\\sum_{t=1}^{T}\\frac{\\|x_t-u\\|_2^2-\\|x_{t+1}-u\\|_2^2}{2\\eta_t}&=\\frac{\\|x_1-u\\|_2^2}{2\\eta_1}-\\frac{\\|x_{T+1}-u\\|_2^2}{2\\eta_T}\\\\&\\quad+\\frac12\\sum_{t=1}^{T-1}\\left(\\frac1{\\eta_{t+1}}-\\frac1{\\eta_t}\\right)\\|x_{t+1}-u\\|_2^2.\\end{aligned}",
+      "intuition": "With constant weights, adjacent potentials cancel completely; changing weights leaves their successive differences.",
+      "why": "The equality shows exactly where the distance at the final iterate enters the proof, before any diameter bound is applied.",
+      "position": "The first equality in the variable-step calculation at the top of printed page 14 carries the same gradient-energy sum on both sides. Cancel that sum to obtain the displayed distance identity. The same algebra applies to any trajectory in a normed additive commutative group. In the OGD proof, one then bounds the interior terms to obtain the regret inequality.",
+      "proof_idea": "Write a_t for squared distance and w_t for the reciprocal of twice the step size. Expand the weighted differences. An interior distance occurs twice, once with each adjacent weight, so its coefficient is their difference. The initial distance occurs once positively and the terminal distance once negatively. In a three-round example with affine loss slopes 1, −2, 2 and steps 1, 2, 1, projected OGD and projected subgradient descent both follow 0, −1, 3, 1 on the real line. At comparator 2 the initial term is 2, the terminal term is −1/2, and the interior correction is −2. Their sum is −1/2.",
+      "lean_notes": "The scalar identity applies to arbitrary real sequences of potentials and weights, including negative and zero values, with no terminal bound. Its proof uses Finset.sum_range_by_parts and Finset.sum_range_sub'. The distance theorem calls weighted_difference_sum_eq and specializes it to squared norms and reciprocal weights, retaining the positive horizon and positive played steps of the source. The displayed formula uses the Euclidean norm of the book. The two trajectory tests apply this identity to generated iterates. Lean numbers plays from zero, so x(T) is the last iterate and η(T−1) is the last played step.",
+      "dependencies": [
+        "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq"
+      ]
     }
   ]
 }
