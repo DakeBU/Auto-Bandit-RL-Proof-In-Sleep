@@ -2110,6 +2110,8 @@ def render_highlight(
     match_labels = {
         "closest-source": "Closest local match to the source theorem",
         "extension": "Compiled extension",
+        "source-proof-repair": "Correction to a source proof step",
+        "source-proof-step": "Source proof step",
         "consumer": "Downstream consumer",
     }
     match_badge = (

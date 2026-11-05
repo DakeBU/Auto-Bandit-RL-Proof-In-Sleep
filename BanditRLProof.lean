@@ -786,3 +786,4 @@ import BanditRLProof.OnlineFTLSelector
 import BanditRLProof.OnlineBTRLTerminal
 import BanditRLProof.OnlineOptimisticFTRL
 import BanditRLProof.OnlineAdaptiveSummation
+import BanditRLProof.OnlineEntropyScalarGap

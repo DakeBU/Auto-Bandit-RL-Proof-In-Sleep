@@ -14,4 +14,6 @@ This repository inventory is distinct from the seven curated teaching previews. 
 
 [Local decisions for rows 168 and 133 at 236a2d45](row-168-133-acceptance-236a2d45.json) record the arithmetic-domain repair for Lemma 7.1, the coupled-prefix interpretation, and the checks on the shared library and Book graph. The literal source formula stays in the frozen inventory. Algorithm-specific terminal bounds and the Chapter 2 gate remain open.
 
-[Local decision for row 87 at c39bf303](row-87-local-acceptance-c39bf303.json) records the corrected last-iterate bound, per-round feasible attainment, the shared Book checks, and the four public examples. Row 167 points to this same repair. The optimistic update in row 86 and the Chapter 2 gate remain open.
+[Local decision for row 87 at c39bf303](row-87-local-acceptance-c39bf303.json) records the corrected last-iterate bound, per-round feasible attainment, the shared Book checks, and the four public examples. Row 167 points to this same repair. The separate optimistic update in row 86 was still open at that commit.
+
+[Local decision for row 86 at a0fa915e](row-86-local-acceptance-a0fa915e.json) records the two terminal-hint choices, their different bounds, twelve actual applications in five public examples and their Book mappings. Row 166 points to the same repair. The [scalar entropy proof-step contract](../online-entropy-scalar-gap-v1/source-contract.json) freezes the next positive-domain calculus statements. The weighted gradient pairing, full weighted entropy result and Chapter 2 gate remain open.

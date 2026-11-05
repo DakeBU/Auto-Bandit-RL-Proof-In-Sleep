@@ -8922,6 +8922,58 @@
       "proof_idea": "Nonnegative increments order all cumulative endpoints inside the nonnegative half-line. Restrict the given continuity to each compact increment interval to obtain integrability. Antitonicity bounds the constant right-endpoint value by f(x) on that interval. Its integral is the actual increment times the right-endpoint value. Sum these comparisons and telescope the adjacent integrals; repeated endpoints and the empty horizon require no division or special positivity assumption.",
       "lean_notes": "Lean uses b at index t for the book’s increment at t+1 and keeps c separate. Its real-valued extension of f is constrained only on the nonnegative half-line, with relative continuity at zero. The signature retains the book’s nonnegativity assumption on f. The comparison itself uses its monotonicity and continuity. The proof uses ContinuousOn.intervalIntegrable_of_Icc, intervalIntegral.integral_mono_on, intervalIntegral.integral_const, and intervalIntegral.sum_integral_adjacent_intervals. The compiled proof has no direct dependency on an earlier ABRL theorem. Each of the three inequality proofs in the two canaries directly references Lemma 4.13. These are direct references in the compiled proof terms. Two library canaries illustrate the boundaries. For c=0, increments (1/2,0,1/2) and f(x)=max(1−x,0), the right-endpoint sum is 1/4 and the integral is 1/2. Starting at 2, f(x)=max(3−x,0) has value 1 there. With horizon zero and unit increments, the sum is empty and the integral is from 2 to 2. With horizon three and zero increments, each rectangle has width zero and the integral is again from 2 to 2. Both comparisons read 0 ≤ 0.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.scalarGap_curvature",
+      "title": "Where the entropy gap has zero curvature",
+      "chapter": "online-entropy-gap",
+      "featured": false,
+      "teaching_order": 400,
+      "source_match": "source-proof-repair",
+      "plain": "One real coordinate u and the logarithmic gap φ(u)=(u−1)log u−2(u−1)²/(u+1). u>0. All derivatives use the ordinary real function on a neighborhood within the positive half-line. On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero.",
+      "math": "\\begin{aligned}\\phi(u)&=(u-1)\\log u-\\frac{2(u-1)^2}{u+1},\\\\ \\phi^\\prime(u)&=\\log u-1-\\frac1u+\\frac{8}{(u+1)^2},\\\\ \\phi^{\\prime\\prime}(u)&=\\frac{(u-1)^2(u^2+6u+1)}{u^2(u+1)^3}.\\end{aligned}",
+      "intuition": "The factor (u−1)² forces curvature to vanish at 1. At 2 the same formula gives 17/108.",
+      "why": "Lemma 6.33, proof, printed p. 80 / PDF p. 92. The proof of Lemma 6.33 states that the second derivative is strictly positive for every u>0. Its proof needs only a nonnegative second derivative. The exception at 1 does not invalidate the lemma.",
+      "position": "The weighted gradient pairing, Jensen step, full strong convexity and KL boundaries require further arguments.",
+      "proof_idea": "Differentiate the logarithm and the rational term on the open positive half-line. The first-derivative formula holds on a neighborhood of every positive point, so differentiating it gives the second derivative of the actual gap. Factor the numerator and use positivity of the denominator.",
+      "lean_notes": "Lean proves HasDerivAt for the gap and for its actual derivative at each positive u. It does not infer differentiability from a totalized deriv value.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.scalarGap_nonneg",
+      "title": "Why the scalar entropy gap stays nonnegative",
+      "chapter": "online-entropy-gap",
+      "featured": false,
+      "teaching_order": 401,
+      "source_match": "source-proof-step",
+      "plain": "One real coordinate u and the logarithmic gap φ(u)=(u−1)log u−2(u−1)²/(u+1). The domain of convexity and of the lower bound is u>0. The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input.",
+      "math": "\\begin{aligned}\\phi(u)&=(u-1)\\log u-\\frac{2(u-1)^2}{u+1},\\\\\\phi(1)&=\\phi^\\prime(1)=0,\\\\ \\phi(u)&\\ge\\phi(1)+\\phi^\\prime(1)(u-1)=0\\quad(u>0).\\end{aligned}",
+      "intuition": "A horizontal tangent to a convex function lies below the graph on both sides of the contact point.",
+      "why": "Lemma 6.33, proof, printed p. 80 / PDF p. 92. This is the scalar inequality used before summing over the weighted simplex. It holds on both sides of 1 even though the curvature vanishes at the contact point.",
+      "position": "The weighted gradient pairing, Jensen step, full strong convexity and KL boundaries require further arguments.",
+      "proof_idea": "Use the nonnegative second derivative to obtain convexity. Compare the chord from u to 1 for u<1 and the chord from 1 to u for u>1 with the zero derivative at 1. Equality at 1 handles the remaining case.",
+      "lean_notes": "ConvexOn uses Set.Ioi 0. Both differentiability hypotheses are obtained from the derivative theorem on this open interval.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.scalarGap_curvature"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.positive_pair_log_ratio",
+      "title": "From a positive ratio to a pair of coordinates",
+      "chapter": "online-entropy-gap",
+      "featured": false,
+      "teaching_order": 402,
+      "source_match": "source-proof-step",
+      "plain": "Two positive real coordinates x and y; substitute u=x/y in the same scalar logarithmic gap. x>0 and y>0. No weights and no normalization are assumed. For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree.",
+      "math": "\\begin{aligned}x,y&>0,\\\\ (x-y)(\\log x-\\log y)&\\ge\\frac{2(x-y)^2}{x+y},\\\\ x=y&\\implies (x-y)(\\log x-\\log y)=\\frac{2(x-y)^2}{x+y}=0.\\end{aligned}",
+      "intuition": "Both sides are unchanged by interchanging x and y. Their difference equals y times the scalar gap at x/y.",
+      "why": "Lemma 6.33, proof, printed p. 80 / PDF p. 92. This reusable two-coordinate statement is the input to the weighted sum in the proof of Lemma 6.33. No simplex normalization or boundary convention is required at this step.",
+      "position": "The weighted gradient pairing, Jensen step, full strong convexity and KL boundaries require further arguments.",
+      "proof_idea": "Apply nonnegativity at x/y and multiply by y. Expand the gap, use log(x/y)=log x−log y, and simplify. Substitution x=y gives the stated equality.",
+      "lean_notes": "The declaration takes x>0 and y>0 as explicit premises. The equality clause only asserts the forward implication from x=y.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.scalarGap_nonneg"
+      ]
     }
   ]
 }
