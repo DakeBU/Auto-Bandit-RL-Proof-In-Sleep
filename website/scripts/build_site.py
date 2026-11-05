@@ -71,7 +71,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20261104-bench-workflows"
+ASSET_VERSION = "20261105-bench-hierarchy"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -809,7 +809,6 @@ def layout(
 ) -> str:
     root = page_root(page_path)
     start_items = [
-        ("banditrlbench", "BanditRLBench", "banditrlbench/index.html"),
         ("overview", "Overview", "index.html"),
         ("math-2-0", "Math 2.0 mission", "math-2-0/index.html"),
         ("installation", "Installation", "installation/index.html"),
@@ -916,6 +915,13 @@ def layout(
     sidebar_groups = "".join(
         [
             nav_group("start", "Start", start_nav, current in {"overview", "math-2-0", "installation"}),
+            nav_group("bench", "BanditRLBench", nav_links([
+                ("bench-home", "Overview", "banditrlbench/index.html"),
+                ("bench-nl", "Knowledge & reasoning", "banditrlbench/non-lean/index.html"),
+                ("bench-lean", "Lean QA", "banditrlbench/lean/index.html"),
+                ("bench-protocol", "Agentic task protocol", "banditrlbench/protocol/index.html"),
+                ("bench-run", "Run & train", "banditrlbench/run/index.html"),
+                ("bench-review", "Review & contribute", "banditrlbench/review/index.html")]), current == "banditrlbench"),
             nav_group("books", "Books", books_nav, bandit_active or other_book_active or current in {"books", "reinforcement-learning", "online-learning", "conformal-prediction"}),
             nav_group(
                 "research",
@@ -1034,6 +1040,10 @@ def layout(
       <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
     </div>
     <nav class="sidebar-nav" aria-label="Primary">
+      <nav class="graph-shortcuts" aria-label="Explore the mathematics">
+        <a href="{href_from(page_path, 'lean-graph/index.html')}"><span aria-hidden="true">◉—◉</span><strong>Lean Graph</strong></a>
+        <a href="{href_from(page_path, 'functor-hypergraph/index.html')}"><span aria-hidden="true">◎⋈◎</span><strong>Functor Hypergraph</strong></a>
+      </nav>
       {sidebar_groups}
     </nav>
     <div class="sidebar-footer">
@@ -2332,12 +2342,12 @@ def build_index(
   <p class="eyebrow">Sequential learning · human understanding · Lean</p>
   <h1>BanditRLlib · BanditRLBench</h1>
   <p class="hero-purpose">Understand why a learning guarantee holds—and where it breaks.</p>
-  <p class="lede">Read the proof ideas, follow their Lean evidence, and explore how they connect across bandits, reinforcement learning and online learning.</p>
+  <p class="lede">Read sequential-learning mathematics. Explore its Lean structure. Evaluate mathematical AI.</p>
   <div class="hero-actions">
     <a class="button primary" href="{href_from(page_path, 'books/index.html')}">Explore the Books</a>
     <a class="button primary" href="{href_from(page_path, 'banditrlbench/index.html')}">Explore BanditRLBench</a>
-    <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
-    <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
+    <a class="button" href="{href_from(page_path, 'lean-graph/index.html')}">Lean Graph</a>
+    <a class="button" href="{href_from(page_path, 'functor-hypergraph/index.html')}">Functor Hypergraph</a>
   </div>
   <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'math-2-0/index.html')}">Our Math 2.0 mission</a></p>
 </section>
