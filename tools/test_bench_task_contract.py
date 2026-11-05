@@ -54,5 +54,31 @@ class IntakeTests(unittest.TestCase):
         task['budgets']['tokens'] = 100; task['answer_format'] = 'natural-language'; self.save(task)
         with self.assertRaisesRegex(ValueError, 'artifacts'): intake.validate(self.root)
 
+    def candidate(self):
+        # Synthetic parser fixture, not executed proof/isolation or expert evidence.
+        task = self.task()
+        task.update(stage='candidate', source_snapshot='a'*40, family='fixture-family', license_scope='Synthetic fixture',
+                    graph_anchors=[dict(id='declaration:Fixture.target', relation='formal-target')],
+                    review_roles=dict(author='fixture-author', blind_decoder='fixture-decoder', source_reviewer='fixture-reviewer'))
+        record = self.root/'fixture-evidence.txt'; record.write_text('Parser fixture only; no admission or execution claim.')
+        task['evidence'] = {key: dict(file=record.name, sha256=intake.sha(record.read_bytes())) for key in
+                            ('reference','negative-controls','semantic-review','leakage-review')}
+        path = self.root/'environment/manifest.json'; env = json.loads(path.read_text())
+        env.update(toolchain='fixture-toolchain', dependency_lock_sha256='b'*64, isolation_receipt='fixture-only')
+        path.write_text(json.dumps(env))
+        path = self.root/'tests/contract.json'; tests = json.loads(path.read_text()); tests['grader']='lean-kernel'; path.write_text(json.dumps(tests))
+        self.save(task)
+        return task
+
+    def test_structurally_valid_candidate_remains_candidate(self):
+        self.candidate()
+        self.assertEqual(intake.validate(self.root)['stage'], 'candidate')
+        (self.root/'fixture-evidence.txt').write_text('Changed report after sealing')
+        with self.assertRaisesRegex(ValueError, 'Evidence'): intake.validate(self.root)
+
+    def test_same_actor_cannot_fill_independent_review_roles(self):
+        task = self.candidate(); task['review_roles']['blind_decoder']='fixture-author'; self.save(task)
+        with self.assertRaisesRegex(ValueError, 'Distinct'): intake.validate(self.root)
+
 
 if __name__ == '__main__': unittest.main()
