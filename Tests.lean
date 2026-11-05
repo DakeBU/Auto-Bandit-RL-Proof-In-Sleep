@@ -194,3 +194,5 @@ import Tests.OnlineEntropyScalarGapCanary
 import Tests.OnlineEntropyWeightedPairingCanary
 import Tests.OnlineAdaptiveEnergyCanary
 import Tests.OnlineStrongMonotonicityCanary
+import Tests.OnlineAdaptivePotentialCanary
+import Tests.OnlineAdaptiveOSDCanary
