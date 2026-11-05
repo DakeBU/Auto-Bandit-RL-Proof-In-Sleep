@@ -192,4 +192,5 @@ import Tests.OnlineOptimisticFTRLCanary
 import Tests.OnlineAdaptiveSummationCanary
 import Tests.OnlineEntropyScalarGapCanary
 import Tests.OnlineEntropyWeightedPairingCanary
+import Tests.OnlineAdaptiveEnergyCanary
 import Tests.OnlineStrongMonotonicityCanary

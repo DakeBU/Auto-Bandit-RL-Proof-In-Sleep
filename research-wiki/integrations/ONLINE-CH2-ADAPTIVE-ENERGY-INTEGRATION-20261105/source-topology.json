@@ -1,0 +1,37 @@
+{
+  "sharedRegistryIDs": [
+    "declaration:BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+    "declaration:BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+    "declaration:BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound"
+  ],
+  "directCompiledEdgesParentToChild": [
+    [
+      "BanditRLProof.Tsallis.two_mul_sqrt_sub_sqrt_le_sub_div_sqrt",
+      "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix"
+    ],
+    [
+      "BanditRL.OnlineAdaptiveEnergy.sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix"
+    ],
+    [
+      "BanditRL.OnlineAdaptiveEnergy.norm_sq_sum_div_sqrt_prefix",
+      "BanditRL.OnlineAdaptiveEnergy.source_energy_term_bound"
+    ]
+  ],
+  "registryModule": "BanditRLProof.OnlineAdaptiveEnergy",
+  "futureConsumer": "Required Chapter2 causal adaptive OSD; no compiled consumer edge yet",
+  "sourceOnlyCorrespondence": "Lemma4.13; not an actual direct proof edge",
+  "sourceRoute": [
+    "Lemma 4.13 applied with a positive starting offset",
+    "Integrate the reciprocal square root",
+    "Pass to the zero-offset limit and scale by half the diameter bound"
+  ],
+  "formalRoute": [
+    "Square-root supporting line on a positive inclusive prefix",
+    "Nonnegative summands imply a zero increment at a zero prefix",
+    "Telescope, substitute squared norms, scale by D/2"
+  ],
+  "sourceSite": "https://arxiv.org/pdf/1912.13213v10#page=52",
+  "independentExtractionSHA256": "47bbe878a78a93f0febfe6d69b49e0559c936be298bf0718ae00b7f3f1314bff",
+  "representation": "The scaled display is proved for nonnegative D and an arbitrary normed additive commutative group. Specializing to Euclidean feedback and the diameter bound gives the printed estimate. Zero prefixes contribute zero. The causal OSD update, regret statement, equation (4.4) and Theorem 4.14 remain open."
+}
