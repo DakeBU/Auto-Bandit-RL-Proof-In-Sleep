@@ -8403,6 +8403,54 @@
         "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
         "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTRL.lemma7_1_finite_values",
+      "title": "FTRL accounting when the used extended-real values are finite",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 370,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty. Source regularizers ψ₁,…,ψ_(T+1) are real-valued on X. Losses may take +∞ but never −∞. Let u ∈ X; u need not belong to V. Supply a feasible minimizer x_t of each strict-past objective F_t over V through the terminal index T+1. Require the cumulative values at those selected points, each played loss, and each comparator loss to be finite. These finiteness conditions qualify the finite branch; they are not silently attributed to the unrestricted printed statement. Source F_t(v) = ψ_t(v) + ∑_{i=1}^{t−1}ℓ_i(v). Lean index n corresponds to source n+1: Lean ψ T is source ψ_(T+1), and Lean x T is the terminal point. This is distinct from the earlier inclusive G_t accounting identity. The displayed equality is interpreted through the real values of the finite extended-real terms. The terminal difference is retained with its sign unchanged. At T = 0, the empty-round identity follows from the attained initial minimum.",
+      "math": "\\begin{aligned}\\sum_{t=1}^{T}(\\ell_t(x_t)-\\ell_t(u))={}&\\psi_{T+1}(u)-\\min_{v\\in V}\\psi_1(v)\\\\&+\\sum_{t=1}^{T}\\bigl[F_t(x_t)-F_{t+1}(x_{t+1})+\\ell_t(x_t)\\bigr]\\\\&+F_{T+1}(x_{T+1})-F_{T+1}(u).\\end{aligned}",
+      "intuition": "The displayed equality is interpreted through the real values of the finite extended-real terms. The terminal difference is retained with its sign unchanged. At T = 0, the empty-round identity follows from the attained initial minimum.",
+      "why": "Orabona v10, Lemma 7.1, printed p. 100/PDF p. 112; explicit finite-value branch of the printed extended-real claim.",
+      "position": "This declaration proves only the finite-used-values regret equality, with the terminal difference retained. It does not prove prefix coupling or construct an argmin run. Other B7 regimes remain separate, including lawful infinite-played cases, one-sided +∞ comparator cases, and undefined infinity subtraction. This list is not an exhaustive classification of extended-real cases. Complete Lemma 7.1/B7, algorithm-specific terminal bounds, Chapter 2 and the book remain open.",
+      "proof_idea": "The source-domain regularizers are extended outside X by an arbitrary real value using Function.extend. A proved restriction identity and a private subtype back-transport show that objectives, minimizer assumptions, finite-use assumptions, initial minimum and the final equality agree on all source-used points. The source codomain excludes bottom. Together with the finite-use conditions this proves every relevant value equals the coercion of its real part. A finite-prefix induction expands the comparator cumulative value without invoking any default value of toReal at infinity. At the initial point, the empty-prefix objective is ψ₁. Feasibility and its supplied minimizer inequality give a nonempty image and an attained lower bound, so the real sInf used in Lean equals the actual minimum ψ₁(x₁). Telescope the real values F_t(x_t), retain the played-loss sum, and expand F_(T+1)(u). Substitute the attained initial minimum. No convexity, unique minimizer or global finite-loss premise is added.",
+      "lean_notes": "The proof uses Mathlib finite-sum telescoping and order/coercion facts directly. The older inclusive finite_regret_identity is not a proof parent. Source closedness and the complete supplied argmin-run premises remain in the exact header even though the telescoping algebra uses only the initial minimizer to identify the minimum. The one-round test uses the closed nonconvex set V = {v₀,v₁} and comparator v₂ ∈ X outside V. A loss is +∞ at the unused point v₃. The actual supplied minimizers give −2 = 1 − 5 + 2, retaining the terminal gap. The zero-round test invokes the same theorem with an attained initial minimum.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineFTRL.ftrl_regularizer_restriction_invariance",
+      "title": "Regularizer extensions agree on the source domain",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 371,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X ⊆ ℝᵈ and T be any natural number. Take two total real-valued regularizer sequences and one shared extended-real loss sequence. The regularizers agree at every point of X through the terminal index. This representation theorem permits arbitrary EReal losses, including bottom, because it compares identical expressions and makes no finite-arithmetic claim.  The objectives agree on X, the minimizer predicates agree for every feasible point, and the initial real infima agree. Equality of infima here follows from equality of the image sets; it does not assert attainment. Define the zero-based strict-past objectives Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v) and F̃ₙ(v) = ψ̃ₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), using the same loss sequence; the sums are empty at n = 0.",
+      "math": "\\psi_n|_X=\\widetilde\\psi_n|_X\\ (0\\le n\\le T)\\Longrightarrow F_n|_X=\\widetilde F_n|_X,\\quad \\operatorname{argmin}_V F_n=\\operatorname{argmin}_V\\widetilde F_n.",
+      "intuition": "The objectives agree on X, the minimizer predicates agree for every feasible point, and the initial real infima agree. Equality of infima here follows from equality of the image sets; it does not assert attainment.",
+      "why": "Representation interface for Orabona v10 Lemma 7.1, printed p. 100/PDF p. 112; not a separately printed source theorem.",
+      "position": "This is a representation generalization, not an unrestricted source regret equality. It does not prove finiteness, attainment, trajectory existence or equality of independently selected minimizers.",
+      "proof_idea": "Add the same strict-past loss prefix to equal regularizer values on X. Use V ⊆ X and feasibility of the candidate minimizer to rewrite both sides of each minimizer inequality. The initial regularizers have the same image on V, so their sInf values are identical.",
+      "lean_notes": "This interface proves independence of the chosen ambient representation. Constructing an extension of a source function on X is a separate required private proof, supplied in this package using Function.extend and its restriction theorem. Two total regularizer representations agree on X = {v₀,v₁,v₂}, but their values at v₃ are 9 and 16. The test applies this restriction theorem to obtain all three conclusions.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineFTRL.ftrl_terminal_regularizer_coupled_run",
+      "title": "Changing the terminal regularizer preserves a coupled prefix",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 372,
+      "source_match": "extension",
+      "plain": "Let V ⊆ X ⊆ ℝᵈ and T be any natural number. Keep the loss sequence fixed and let two regularizer sequences agree on X at all indices before T. Supply the same feasible minimizing prefix x_n for n < T and a feasible minimizer z for the changed terminal objective. Losses may be arbitrary EReal here: this statement transports minimizer predicates without cancelling infinities. No uniqueness is assumed.  The changed run has exactly the supplied first T points and is valid through its supplied terminal minimizer. At T = 0 the prefix is empty and the result uses z alone; it does not claim x′₀ = x₀. Define the zero-based strict-past objectives Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v) and F̃ₙ(v) = ψ̃ₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), using the same loss sequence; the sums are empty at n = 0.",
+      "math": "x_n^\\prime=\\begin{cases}x_n&n<T,\\\\z&n=T,\\end{cases}\\qquad x_n^\\prime\\in\\operatorname{argmin}_{v\\in V}\\widetilde F_n(v)\\quad(0\\le n\\le T).",
+      "intuition": "The changed run has exactly the supplied first T points and is valid through its supplied terminal minimizer. At T = 0 the prefix is empty and the result uses z alone; it does not claim x′₀ = x₀.",
+      "why": "Explicit coupled interpretation of the final independence clause in Orabona v10 Lemma 7.1, printed p. 100/PDF p. 112.",
+      "position": "This declaration proves only the validity of an explicitly coupled prefix and supplied terminal minimizer. It permits arbitrary EReal losses and proves no finite-value regret equality, finiteness, automatic attainment or equality of independently selected minimizers. Complete Lemma 7.1/B7, algorithm-specific terminal bounds, Chapter 2 and the book remain open.",
+      "proof_idea": "Before the terminal index, the new point equals the supplied old point. The two objectives agree on X, so the original minimizer inequality remains valid on V. At the terminal index, feasibility and minimality are exactly the supplied properties of z.",
+      "lean_notes": "This is an explicit coupling of admissible choices. Equality of argmin sets does not imply equality of arbitrary independent tie choices. The theorem neither selects a canonical minimizer nor produces terminal attainment. The one-round test keeps the played point v₀ and changes the terminal minimizer from v₁ to v₀. The zero-round test changes the initial regularizer and uses v₁ instead of v₀. Two distinct minimizers of the zero objective also show why arbitrary independent tie choices need not coincide.",
+      "dependencies": []
     }
   ]
 }

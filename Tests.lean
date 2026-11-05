@@ -184,3 +184,4 @@ import Tests.OnlinePrescientBregmanSourceCanary
 import Tests.OnlineCumulativeStrongConvexCanary
 import Tests.OnlineCumulativePotentialCanary
 import Tests.OnlineUnboundedOSDCanary
+import Tests.OnlineFTRLFiniteIdentityCanary

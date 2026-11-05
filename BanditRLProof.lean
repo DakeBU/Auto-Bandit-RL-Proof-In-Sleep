@@ -780,3 +780,4 @@ import BanditRLProof.OnlinePrescientBregmanSource
 import BanditRLProof.OnlineCumulativeStrongConvex
 import BanditRLProof.OnlineCumulativePotential
 import BanditRLProof.OnlineUnboundedOSD
+import BanditRLProof.OnlineFTRLFiniteIdentity
