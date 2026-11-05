@@ -1,0 +1,251 @@
+{
+  "schema": "abrl.source-binder-definition-review.v1",
+  "phase": 2,
+  "verdict": "ACCEPTED_RESTRICTED_SOURCE_ANCHORS_NO_EXCESS",
+  "source_anchor_names": [
+    "theorem_5_4",
+    "phi_range",
+    "phi_limit"
+  ],
+  "source_anchor_inputs": {
+    "theorem_5_4": [
+      {
+        "input": "alpha : R",
+        "class": "TYPING",
+        "expansion": "Real parameter."
+      },
+      {
+        "input": "h_alpha0 : 0 < alpha",
+        "class": "SOURCE",
+        "expansion": "Exact open lower endpoint in source."
+      },
+      {
+        "input": "h_alpha1 : alpha < 1",
+        "class": "SOURCE",
+        "expansion": "Exact open upper endpoint in source."
+      },
+      {
+        "input": "T : Nat",
+        "class": "TYPING",
+        "expansion": "Integer number of rounds, including zero as a type value; source horizon hypothesis rules out inadmissible values rather than a new binder."
+      },
+      {
+        "input": "hT : 2 / ((1-alpha)*phi(alpha)) <= real(T)",
+        "class": "SOURCE",
+        "expansion": "Literal source threshold after substituting the explicit phi expression. No separately assumed phi positivity or bound is hidden inside hT."
+      },
+      {
+        "input": "E : Type; NormedAddCommGroup E; InnerProductSpace R E",
+        "class": "TYPING",
+        "expansion": "Additive real vector space with compatible real inner product/norm, representing source Euclidean geometry. These are structural carrier laws, not a lower-bound certificate."
+      },
+      {
+        "input": "FiniteDimensional R E",
+        "class": "TYPING",
+        "expansion": "A finite spanning family over R, encoding finite d in R^d. It also supplies ambient completeness needed by projection; no external CompleteSpace hypothesis is added."
+      },
+      {
+        "input": "Nontrivial E",
+        "class": "TYPING",
+        "expansion": "Existence of two unequal points; together with the vector-space structure excludes dimension zero and corresponds to source positive dimension."
+      }
+    ],
+    "phi_range": [
+      {
+        "input": "alpha : R",
+        "class": "TYPING",
+        "expansion": "Real parameter."
+      },
+      {
+        "input": "h_alpha0 : 0 < alpha",
+        "class": "SOURCE",
+        "expansion": "Exact open lower endpoint in source."
+      },
+      {
+        "input": "h_alpha1 : alpha < 1",
+        "class": "SOURCE",
+        "expansion": "Exact open upper endpoint in source."
+      }
+    ],
+    "phi_limit": []
+  },
+  "encoded_source_and_standing_conditions": [
+    {
+      "condition": "x1=0, comparator=0, unprojected fullSpace, eta_s=(s+1)^(-alpha)",
+      "class": "SOURCE",
+      "realization": "Literal arguments/definitions in source Anchor conclusions; not extra hypotheses."
+    },
+    {
+      "condition": "Convex and 1-Lipschitz losses",
+      "class": "SOURCE_OUTPUT",
+      "realization": "Conjoined properties of one existential loss witness, not public assumptions."
+    },
+    {
+      "condition": "Round and regret conventions",
+      "class": "STANDING",
+      "realization": "Expanded through iterate/regret with exact index translation."
+    }
+  ],
+  "helper_binders": [
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "level": "B",
+      "note": "Canonical affine-selector identity; mathematical support for P-ADMISSIBLE. Generic affine coefficients and infinite-dimensional carrier are broader than the source witness."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "level": "B",
+      "note": "Canonical affine full-space step identity; eta is any real, unlike the positive source schedule. This wider helper is not a strengthened Source Anchor premise."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "level": "B",
+      "note": "Canonical affine prefix identity for arbitrary schedules, offsets and initial points. Source proof uses a specific schedule and zero start."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "level": "B",
+      "note": "Canonical positivity helper for every real alpha and natural time; no source monotonicity result is asserted."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "level": "B",
+      "note": "Canonical witness regularity, generalized to arbitrary unit direction and all natural times. FiniteDimensional is present in supplied context and is not sold as a minimal assumption."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "level": "B",
+      "note": "Canonical source-proof-step identity corresponding to R-REARRANGE, with valid wider all-real-alpha/all-natural-horizon statement."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "level": "B",
+      "note": "Canonical explicit scalar witness specialization of the source proof, not another book theorem."
+    },
+    {
+      "name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "level": "B",
+      "note": "Canonical unit-direction generalization of source first-coordinate embedding. hv is a legitimate helper precondition, absent from the existential Source Anchor."
+    }
+  ],
+  "definitions": [
+    {
+      "name": "powerSteps",
+      "kind": "literal",
+      "declaration_role": "B_TOTAL_EXTENSION_WITH_SOURCE_RESTRICTION",
+      "source_carrier": "0<alpha<1, source round t>=1",
+      "lean_carrier": "alpha:R, s:Nat",
+      "matching": "powerSteps(alpha,s)=(s+1)^(-alpha) equals source eta_(s+1).",
+      "outside_source": "All real alpha and all natural s are defined. Only positivity, not decay, is claimed for arbitrary alpha.",
+      "choice_or_fallback": false
+    },
+    {
+      "name": "phi",
+      "kind": "literal_on_source_carrier_only",
+      "declaration_role": "B_TOTAL_EXTENSION; RESTRICTION_IS_SOURCE_DEFINITION",
+      "source_carrier": "alpha in (0,1)",
+      "lean_carrier": "R",
+      "matching": "Literal rational/real-power expression agrees on all of source (0,1), with no zero denominator there. The range is a theorem obligation, not part of the input carrier.",
+      "outside_source": "Lean total division defines off-source values, including phi(1)=1. REJECT any claim of global literal equality to the source partial function or phi(1)=1-log(2). Restriction suffices for the accepted Anchor statements and left-limit germ.",
+      "choice_or_fallback": false,
+      "global_literal_source_identity_accepted": false
+    },
+    {
+      "name": "switchSlope",
+      "kind": "literal_after_index_translation_on_finite_prefix",
+      "declaration_role": "B_WITNESS_EXTENSION",
+      "source_carrier": "Integer admissible T and source rounds 1..T",
+      "lean_carrier": "T,s:Nat",
+      "matching": "s<(T+1) div 2 means source round s+1<=ceil(T/2).",
+      "outside_source": "Extends the stream to all natural times; T=0 gives all positive signs. No zero-horizon source theorem or common all-horizon witness inferred.",
+      "choice_or_fallback": false
+    },
+    {
+      "name": "switchLoss",
+      "kind": "literal_on_scalar_and_coordinate_source_specializations",
+      "declaration_role": "B_GENERALIZED_WITNESS_DEFINITION",
+      "source_carrier": "R or R^d with coordinate direction e_1, finite source prefix",
+      "lean_carrier": "Any real inner-product E, any direction v, all T,s",
+      "matching": "v=1 in R yields -x/+x; v=e_1 yields source first-coordinate loss. Unit vectors give an isometric direction generalization.",
+      "outside_source": "Arbitrary v need not produce 1-Lipschitz losses; unit norm is required in the regularity/helper theorem, then chosen within main existential proof.",
+      "choice_or_fallback": false
+    }
+  ],
+  "recursively_expanded_supporting_definitions": [
+    {
+      "name": "SourceSubdifferential",
+      "kind": "literal_on_finite_real_losses",
+      "expansion": "Membership g iff for every y, f(x)+<g,y-x><=f(y). Source properness is automatic for the actual finite-real losses.",
+      "audit": "Generic extended-real off-source arithmetic is not certified. No properness or nonemptiness proof is a public Anchor input."
+    },
+    {
+      "name": "Domain and fullSpace",
+      "kind": "literal_structure_and_specialization",
+      "expansion": "Domain has carrier, nonempty, closed and convex fields. fullSpace sets carrier=univ and supplies all three elementary certificates.",
+      "classification": "STANDING for source algorithm conventions; certificates internally discharged. No boundedness, diameter, confidence or regret field."
+    },
+    {
+      "name": "project",
+      "kind": "characterized_choice_existing_api",
+      "expansion": "Classical.choose of exists v in V.carrier, norm(z-v)=inf norm(z-w). Nonemptiness/closedness/convexity come from Domain; completeness from finite Euclidean typing.",
+      "audit": "The exact supplied witness type resolves the earlier missing-context issue. For univ, z is feasible and the nonnegative infimum is zero, so chosen point is z and unique. This is semantic reasoning, not a separately compiled proof. General-domain uniqueness certification is outside this target and is not inferred from the existential header alone."
+    },
+    {
+      "name": "currentSubgradient",
+      "kind": "characterized_selection_on_nonempty_source_branch_only",
+      "expansion": "If the global subdifferential is nonempty choose a member, else return zero.",
+      "audit": "Reject blanket source characterization on all EReal functions: fallback is off-source. Actual affine witnesses have unique slope, hence nonempty subdifferential and no fallback. Finite convex real losses in the main existential conclusion also have subgradients everywhere in finite dimension; proof of required witness facts must be in later dependencies, never an added public binder. No unique choice is required by source OSD for general nondifferentiable losses."
+    },
+    {
+      "name": "step",
+      "kind": "literal_composition_on_source_branch",
+      "expansion": "project V (x-eta*currentSubgradient f x). On fullSpace this is the source unprojected step. Positive source eta is generated by powerSteps, not assumed via a bound certificate.",
+      "audit": "Generic eta<=0 outside source algorithm is allowed in B helper identities only."
+    },
+    {
+      "name": "iterate",
+      "kind": "literal_reindexing",
+      "expansion": "X(0)=x1, X(s+1)=step(...eta(s),loss(s),X(s)); source x_(s+1)=X(s).",
+      "audit": "Current loss is used after the point scored in that round; no future-loss dependency in recursion."
+    },
+    {
+      "name": "regret",
+      "kind": "literal_on_finite_real_losses",
+      "expansion": "sum over s<T of toReal(loss(s,X(s)))-toReal(loss(s,u)).",
+      "audit": "Every target loss is a real value embedded in EReal, so toReal recovers that real value. Both x1 and u equal zero in source lower bounds. No best-comparator, expectation, or infinite-loss semantics are certified."
+    }
+  ],
+  "no_unexpanded_project_prop_bundle": true,
+  "rules": {
+    "RULED": [],
+    "EXCESS": [],
+    "human_corrections_assumed": false,
+    "api_convenience_promoted_to_source_hypothesis": false
+  },
+  "proof_ingredient_obligations_not_binders": [
+    "phi positivity/range",
+    "phi left limit",
+    "1-log(2)>=3/10",
+    "affine witness regularity and unique subgradient",
+    "full-space projection identity",
+    "iterate/regret identities",
+    "sum-integral comparisons",
+    "rounding and boundary absorption",
+    "existence of unit direction and embedding preservation"
+  ],
+  "source_gaps": {
+    "G-PHI-RANGE": "signature candidate phi_range only; proof discharge not audited",
+    "G-PHI-LIMIT": "signature candidate phi_limit first conjunct only; proof discharge not audited",
+    "G-PHI-NUMERIC": "signature candidate phi_limit second conjunct only; proof discharge not audited"
+  },
+  "counting": {
+    "new_definitions": 4,
+    "production_theorem_headers": 11,
+    "source_anchor_components": 3,
+    "canonical_derived_theorem_headers": 8,
+    "complete_test_consumers": 2,
+    "source_results": 1,
+    "internal_implementation_providers": "Not inspected; no completeness or purification finding."
+  },
+  "definition_completion_limit": "No blanket whole-carrier source identity or general support-API characterization is accepted. All source literal claims are explicitly restricted to the original source carriers. No code repair or signature change authorized."
+}

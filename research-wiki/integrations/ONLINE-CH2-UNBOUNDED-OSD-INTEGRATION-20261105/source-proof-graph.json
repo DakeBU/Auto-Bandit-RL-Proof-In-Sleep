@@ -1,0 +1,905 @@
+{
+  "schema": "abrl.source-proof-graph.v1",
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "A Modern Introduction to Online Learning",
+    "revision": "arXiv:1912.13213v10",
+    "path": "private-abrl/worktrees\\research-online-ogd\\tmp\\pdfs\\orabona-v10.pdf",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "target": "Theorem 5.4, Section 5.2",
+    "printed_pages": [
+      52,
+      53
+    ],
+    "pdf_pages": [
+      64,
+      65
+    ],
+    "page_numbers_are_one_based": true
+  },
+  "status": "PROPOSED_SOURCE_TOPOLOGY_NOT_SELF_APPROVED",
+  "nodes": [
+    {
+      "id": "S-GAME",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 8,
+        "pdf_page": 20,
+        "locator": "Section 2.1 game bullets"
+      },
+      "content": "For t=1,...,T: output x_t in V subset R^d; pay loss ell_t(x_t), ell_t:V->R; then receive feedback on ell_t.",
+      "relevance": "Loss is not known before output. The chosen witness is deterministic and fixed in advance."
+    },
+    {
+      "id": "S-REGRET",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 8,
+        "pdf_page": 20,
+        "locator": "Regret_T(u) display"
+      },
+      "content": "Regret_T(u) := sum_{t=1}^T ell_t(x_t) - sum_{t=1}^T ell_t(u), for u in V."
+    },
+    {
+      "id": "S-ADVERSARY",
+      "kind": "standing_context",
+      "source_location": {
+        "printed_page": 8,
+        "pdf_page": 20,
+        "locator": "Paragraph after regret display"
+      },
+      "content": "Losses are adversarial; future knowledge is not assumed. Restrictions may be placed on the loss class."
+    },
+    {
+      "id": "S-CONVEX-SET",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 9,
+        "pdf_page": 21,
+        "locator": "Definition 2.2"
+      },
+      "content": "V subset R^d is convex iff for every x,y in V and lambda in (0,1), lambda*x+(1-lambda)*y belongs to V."
+    },
+    {
+      "id": "S-DOMAIN",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 9,
+        "pdf_page": 21,
+        "locator": "Extended-real-valued functions paragraph"
+      },
+      "content": "For an extended-real-valued function f on R^d, dom f = {x in R^d : f(x)<+infinity}."
+    },
+    {
+      "id": "S-CONVEX-FUNCTION",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 10,
+        "pdf_page": 22,
+        "locator": "Definition 2.3"
+      },
+      "content": "f:R^d->[ -infinity,+infinity ] is convex iff its epigraph {(x,y) in R^(d+1): y>=f(x)} is convex."
+    },
+    {
+      "id": "S-AFFINE",
+      "kind": "standing_fact",
+      "source_location": {
+        "printed_page": 10,
+        "pdf_page": 22,
+        "locator": "Example 2.5"
+      },
+      "content": "Affine functions f(x)=<z,x>+b are convex.",
+      "provenance": "Available standing semantic support, not explicitly cited in Theorem 5.4 proof.",
+      "source_result_credit": false
+    },
+    {
+      "id": "S-PROPER",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 16,
+        "pdf_page": 28,
+        "locator": "Definition 2.18"
+      },
+      "content": "A function is proper if it is nowhere -infinity and finite somewhere."
+    },
+    {
+      "id": "S-SUBGRADIENT",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 16,
+        "pdf_page": 28,
+        "locator": "Definition 2.20"
+      },
+      "content": "For proper f:R^d->(-infinity,+infinity], g in R^d is a subgradient of f at x iff f(y)>=f(x)+<g,y-x> for all y in R^d."
+    },
+    {
+      "id": "S-SUBDIFFERENTIAL",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 17,
+        "pdf_page": 29,
+        "locator": "First paragraph"
+      },
+      "content": "The set of subgradients at x is denoted partial f(x); f is subdifferentiable at x iff this set is nonempty."
+    },
+    {
+      "id": "S-LIPSCHITZ",
+      "kind": "standing_definition",
+      "source_location": {
+        "printed_page": 19,
+        "pdf_page": 31,
+        "locator": "Definition 2.29"
+      },
+      "content": "f is L-Lipschitz on V subset dom f with respect to norm ||.|| iff |f(x)-f(y)| <= L||x-y|| for all x,y in V."
+    },
+    {
+      "id": "S-OSD",
+      "kind": "standing_algorithm",
+      "source_location": {
+        "printed_page": 20,
+        "pdf_page": 32,
+        "locator": "Algorithm 2.2, require and lines 1-6"
+      },
+      "content": "Require nonempty closed convex V subset R^d, x_1 in V, eta_1,...,eta_T>0. For t=1,...,T output x_t, pay subdifferentiable loss ell_t(x_t), select g_t in partial ell_t(x_t), update x_{t+1}=Pi_V(x_t-eta_t*g_t)=argmin_{y in V}||x_t-eta_t*g_t-y||_2.",
+      "specialization": "Unprojected means V=R^d and update x_{t+1}=x_t-eta_t*g_t. Source uses Euclidean geometry."
+    },
+    {
+      "id": "F-CH2",
+      "kind": "forward_reference",
+      "source_location": {
+        "printed_page": 14,
+        "pdf_page": 26,
+        "locator": "Fourth bullet after Theorem 2.13 proof"
+      },
+      "content": "If we want to use time-varying learning rates, we need to control the terms ||x_t-u||_2^2. To do it, we assume a bounded domain V. However, this assumption is false in most of the machine learning applications. We will also see in Section 5.2 that this is not an artifact of the proof, that is, OGD can fail in unbounded domains with time-varying learning rates. That said, in the stochastic setting, you can still use a time-varying learning rate in SGD with an unbounded domain, as we will see in Chapter 3.",
+      "exactness": "Words transcribed verbatim; mathematical typography normalized. The source says OGD here, OSD in Theorem 5.4.",
+      "scope": "Existential failure, not failure of every time-varying schedule or of stochastic SGD."
+    },
+    {
+      "id": "MOTIVATION",
+      "kind": "context",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Section 5.2 introductory paragraph"
+      },
+      "content": "Focus on OSD and show that the Chapter 2 bounded-domain limitation for time-varying stepsizes is real. Theorem 5.4 supplies a lower bound."
+    },
+    {
+      "id": "D-PHI",
+      "kind": "source_definition",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 first line"
+      },
+      "content": "phi(alpha) := 1/(2-alpha) + ((1/2)^(1-alpha)-1)/(1-alpha), for alpha in (0,1).",
+      "definition_kind": "literal",
+      "declared_codomain": "(0,1-ln 2)",
+      "endpoint": "No phi(1) is defined."
+    },
+    {
+      "id": "A-PHI-RANGE",
+      "kind": "source_assertion",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 declared function type"
+      },
+      "content": "For every alpha in (0,1), 0 < phi(alpha) < 1-ln 2.",
+      "proof_status": "Not established in displayed source proof."
+    },
+    {
+      "id": "A-LIMIT",
+      "kind": "source_assertion",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 final sentence, limit"
+      },
+      "content": "lim_{alpha->1} phi(alpha) = 1-ln 2.",
+      "interpretation": "Limit relative to source domain (0,1), hence the left limit alpha->1-. It is not evaluation at alpha=1.",
+      "proof_status": "Not established in displayed source proof."
+    },
+    {
+      "id": "A-NUMERIC",
+      "kind": "source_assertion",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 final sentence, numerical comparison"
+      },
+      "content": "1-ln 2 >= 0.3.",
+      "proof_status": "Not established in displayed source proof."
+    },
+    {
+      "id": "T-STATEMENT",
+      "kind": "source_anchor",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 complete regret assertion"
+      },
+      "content": "For alpha in (0,1), and integer horizon T >= 2/((1-alpha)*phi(alpha)), unprojected OSD with eta_t=t^(-alpha), x_1=0 admits a sequence of T convex and 1-Lipschitz losses for which Regret_T(0) >= (1/2)*phi(alpha)*T^(2-alpha).",
+      "source_result_credit": true
+    },
+    {
+      "id": "P-DIMENSION",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Proof first two sentences"
+      },
+      "content": "Assume d=1. For d>=2 embed the one-dimensional loss vectors in the first coordinate of R^d.",
+      "note": "Positive dimension is implicit in this case split. This does not establish a d=0 version."
+    },
+    {
+      "id": "P-T2",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Proof sentence: condition on T implies T>=2"
+      },
+      "content": "The stated horizon condition implies T>=2.",
+      "detail": "Source states this consequence without expanding its scalar inequality proof."
+    },
+    {
+      "id": "P-LOSS",
+      "kind": "witness_definition",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Proof adversarial loss-sequence display"
+      },
+      "content": "Let m=ceil(T/2), n=floor(T/2). Set ell_t(x)=-x for 1<=t<=m and ell_t(x)=x for m+1<=t<=T. There are m negative-slope losses followed by n positive-slope losses."
+    },
+    {
+      "id": "P-ADMISSIBLE",
+      "kind": "implicit_proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Witness display as the existential witness in Theorem 5.4"
+      },
+      "content": "The displayed affine losses are convex, 1-Lipschitz, and subdifferentiable. Their subgradients are -1 and +1, respectively. In R^d these are -e_1 and +e_1 and Lipschitz is with respect to the Euclidean norm.",
+      "proof_detail": "Implicit in the source, not separately displayed or externally cited. Semantic obligation, not an extra source theorem."
+    },
+    {
+      "id": "P-FIRST-REC",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Paragraph after loss-sequence display"
+      },
+      "content": "For 1<=t<=m, x_{t+1}=x_t+t^(-alpha)."
+    },
+    {
+      "id": "P-FIRST-SUM",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "First iterate display"
+      },
+      "content": "x_t=sum_{i=1}^{t-1} i^(-alpha), for 1<=t<=m+1, from x_1=0."
+    },
+    {
+      "id": "P-SECOND-REC",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Paragraph before second iterate display"
+      },
+      "content": "For m+1<=t<=T, x_{t+1}=x_t-t^(-alpha)."
+    },
+    {
+      "id": "P-SECOND-SUM",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Second iterate display"
+      },
+      "content": "x_t=x_{m+1}-sum_{i=m+1}^{t-1}i^(-alpha)=sum_{i=1}^m i^(-alpha)-sum_{i=m+1}^{t-1}i^(-alpha), for m+1<=t<=T+1."
+    },
+    {
+      "id": "R-SPLIT",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Regret display row 1"
+      },
+      "content": "Regret_T(0)=-sum_{t=1}^m x_t+sum_{t=m+1}^T x_t. All ell_t(0)=0."
+    },
+    {
+      "id": "R-SUBSTITUTE",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Regret display row 2"
+      },
+      "content": "Regret_T(0)=-sum_{t=1}^m sum_{i=1}^{t-1}i^(-alpha)+sum_{t=m+1}^T (sum_{i=1}^m i^(-alpha)-sum_{i=m+1}^{t-1}i^(-alpha))."
+    },
+    {
+      "id": "R-COUNT",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Regret display row 3"
+      },
+      "content": "Regret_T(0)=-sum_{i=1}^m (m-i)/i^alpha+n*sum_{i=1}^m i^(-alpha)-sum_{i=m+1}^T (T-i)/i^alpha."
+    },
+    {
+      "id": "R-REARRANGE",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Regret display row 4"
+      },
+      "content": "Regret_T(0)=-sum_{i=1}^m (m-n)/i^alpha+sum_{i=1}^T i^(1-alpha)-T*sum_{i=m+1}^T i^(-alpha)."
+    },
+    {
+      "id": "I-PARITY",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Opening sentence"
+      },
+      "content": "ceil(T/2)-floor(T/2)<=1.",
+      "note": "Both even and odd T are included. The source does not assume T even."
+    },
+    {
+      "id": "I-BOUNDS",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "First lower-bound display row"
+      },
+      "content": "Regret_T(0)>=-1-integral_1^m x^(-alpha) dx + integral_0^T x^(1-alpha) dx - T*integral_m^T x^(-alpha) dx.",
+      "source_typography": "The first integral lower annotation is printed i=1 although integration variable is x. Semantic lower endpoint 1 is recorded without silently altering the facsimile.",
+      "component_obligations": [
+        "sum_{i=1}^m i^(-alpha)<=1+integral_1^m x^(-alpha) dx",
+        "sum_{i=1}^T i^(1-alpha)>=integral_0^T x^(1-alpha) dx",
+        "sum_{i=m+1}^T i^(-alpha)<=integral_m^T x^(-alpha) dx"
+      ],
+      "logic": "AND: all three integral comparisons and the parity bound are jointly used."
+    },
+    {
+      "id": "I-EVALUATE",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Lower-bound display row 2"
+      },
+      "content": "Regret_T(0)>=-1-(m^(1-alpha)-1)/(1-alpha)+T^(2-alpha)/(2-alpha)-T*(T^(1-alpha)-m^(1-alpha))/(1-alpha)."
+    },
+    {
+      "id": "I-HALF",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Lower-bound display row 3"
+      },
+      "content": "Regret_T(0)>=-1+1/(1-alpha)-m^(1-alpha)/(1-alpha)+T^(2-alpha)/(2-alpha)-(T^(2-alpha)-T*(T/2)^(1-alpha))/(1-alpha).",
+      "discharge": "m>=T/2, 1-alpha>0, and T>=2. Replacement affects the positive T*m^(1-alpha)/(1-alpha) term only."
+    },
+    {
+      "id": "I-COARSE",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Lower-bound display row 4"
+      },
+      "content": "Regret_T(0)>=-T^(1-alpha)/(1-alpha)+(1/(2-alpha)+(1/2)^(1-alpha)/(1-alpha)-1/(1-alpha))*T^(2-alpha).",
+      "discharge": "Use m<=T and -1+1/(1-alpha)>=0; collect powers. Do not remove the negative boundary term before horizon absorption."
+    },
+    {
+      "id": "I-PHI",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Lower-bound display last row, equality"
+      },
+      "content": "-T^(1-alpha)/(1-alpha)+(1/(2-alpha)+(1/2)^(1-alpha)/(1-alpha)-1/(1-alpha))*T^(2-alpha) = -T^(1-alpha)/(1-alpha)+phi(alpha)*T^(2-alpha)."
+    },
+    {
+      "id": "I-ABSORB",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Lower-bound display last row, final inequality"
+      },
+      "content": "-T^(1-alpha)/(1-alpha)+phi(alpha)*T^(2-alpha)>=(1/2)*phi(alpha)*T^(2-alpha).",
+      "discharge": "Use T>=2/((1-alpha)*phi(alpha)), phi(alpha)>0, 1-alpha>0 and T>0. This is the sole use of the quantitative horizon threshold in the final absorption."
+    },
+    {
+      "id": "T-ONE-DIMENSION",
+      "kind": "case_conclusion",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Proof conclusion specialized to initial d=1 reduction"
+      },
+      "content": "The stated existential regret lower bound holds in dimension d=1.",
+      "source_result_credit": false
+    },
+    {
+      "id": "P-EMBED",
+      "kind": "proof_step",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "First-coordinate embedding sentence"
+      },
+      "content": "For d>=2 take ell_t(x)=s_t*x_1, where s_t=-1 for t<=m and +1 otherwise. Starting from the zero vector, updates remain in the first coordinate, with identical scalar regret and unit Euclidean Lipschitz constant.",
+      "proof_detail": "Source states embedding in one sentence; invariance and norm preservation are implicit details, not new theorem claims."
+    },
+    {
+      "id": "T-HIGH-DIMENSION",
+      "kind": "case_conclusion",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "First-coordinate embedding used to discharge d>=2 case"
+      },
+      "content": "The same existential regret lower bound holds for every dimension d>=2.",
+      "source_result_credit": false
+    },
+    {
+      "id": "DISCUSSION",
+      "kind": "interpretation",
+      "source_location": {
+        "printed_page": 53,
+        "pdf_page": 65,
+        "locator": "Paragraph immediately after proof, first two sentences"
+      },
+      "content": "OSD can fail in unbounded domains with polynomially decreasing stepsizes. This does not rule out another algorithm working in the same setting."
+    },
+    {
+      "id": "G-PHI-RANGE",
+      "kind": "SOURCE_GAP",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 assertion and absence of corresponding step in proof on pp52-53"
+      },
+      "content": "Prove 0<phi(alpha)<1-ln 2 for every alpha in (0,1). The printed proof supplies no derivation.",
+      "affects": "A-PHI-RANGE",
+      "status": "OPEN_SOURCE_BRIDGE",
+      "is_source_error_claim": false,
+      "policy": "A downstream proof may discharge this obligation; it must not become an extra public source hypothesis."
+    },
+    {
+      "id": "G-PHI-LIMIT",
+      "kind": "SOURCE_GAP",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 assertion and absence of corresponding step in proof on pp52-53"
+      },
+      "content": "Prove the domain-relative left limit as alpha tends to 1 equals 1-ln 2. No limit computation is in the printed proof.",
+      "affects": "A-LIMIT",
+      "status": "OPEN_SOURCE_BRIDGE",
+      "is_source_error_claim": false,
+      "policy": "A downstream proof may discharge this obligation; it must not become an extra public source hypothesis."
+    },
+    {
+      "id": "G-PHI-NUMERIC",
+      "kind": "SOURCE_GAP",
+      "source_location": {
+        "printed_page": 52,
+        "pdf_page": 64,
+        "locator": "Theorem 5.4 assertion and absence of corresponding step in proof on pp52-53"
+      },
+      "content": "Prove 1-ln 2>=0.3 with a justified numerical inequality. No numerical argument is supplied.",
+      "affects": "A-NUMERIC",
+      "status": "OPEN_SOURCE_BRIDGE",
+      "is_source_error_claim": false,
+      "policy": "A downstream proof may discharge this obligation; it must not become an extra public source hypothesis."
+    }
+  ],
+  "edges": [
+    {
+      "id": "E001",
+      "inputs": [
+        "S-CONVEX-SET"
+      ],
+      "output": "S-CONVEX-FUNCTION",
+      "logic": "AND",
+      "relation": "definition",
+      "consumer_use_site": "Definition 2.3 epigraph",
+      "premise_discharge": "Convexity of the epigraph uses the definition of a convex subset."
+    },
+    {
+      "id": "E002",
+      "inputs": [
+        "S-PROPER"
+      ],
+      "output": "S-SUBGRADIENT",
+      "logic": "AND",
+      "relation": "definition",
+      "consumer_use_site": "Definition 2.20 opening",
+      "premise_discharge": "Proper is defined in Definition 2.18."
+    },
+    {
+      "id": "E003",
+      "inputs": [
+        "S-SUBGRADIENT"
+      ],
+      "output": "S-SUBDIFFERENTIAL",
+      "logic": "AND",
+      "relation": "definition",
+      "consumer_use_site": "p17 first paragraph",
+      "premise_discharge": "Set of all subgradients; nonemptiness defines subdifferentiability."
+    },
+    {
+      "id": "E004",
+      "inputs": [
+        "S-SUBDIFFERENTIAL",
+        "S-GAME"
+      ],
+      "output": "S-OSD",
+      "logic": "AND",
+      "relation": "definition",
+      "consumer_use_site": "Algorithm 2.2 lines 2-5",
+      "premise_discharge": "Subgradient feedback occurs after prediction and loss."
+    },
+    {
+      "id": "E005",
+      "inputs": [
+        "F-CH2"
+      ],
+      "output": "MOTIVATION",
+      "logic": "AND",
+      "relation": "context",
+      "consumer_use_site": "p52 Section 5.2 introductory paragraph",
+      "premise_discharge": "Section 5.2 identifies the Chapter 2 limitation it will witness."
+    },
+    {
+      "id": "E006",
+      "inputs": [
+        "D-PHI",
+        "G-PHI-RANGE"
+      ],
+      "output": "A-PHI-RANGE",
+      "logic": "AND",
+      "relation": "open_bridge",
+      "consumer_use_site": "Theorem 5.4 function codomain",
+      "premise_discharge": "The range proof is missing from source; open obligation, not discharged."
+    },
+    {
+      "id": "E007",
+      "inputs": [
+        "D-PHI",
+        "G-PHI-LIMIT"
+      ],
+      "output": "A-LIMIT",
+      "logic": "AND",
+      "relation": "open_bridge",
+      "consumer_use_site": "Theorem 5.4 final sentence",
+      "premise_discharge": "The limit proof is missing from source; open obligation, not discharged."
+    },
+    {
+      "id": "E008",
+      "inputs": [
+        "G-PHI-NUMERIC"
+      ],
+      "output": "A-NUMERIC",
+      "logic": "AND",
+      "relation": "open_bridge",
+      "consumer_use_site": "Theorem 5.4 numerical inequality",
+      "premise_discharge": "Numerical proof is missing from source; open obligation, not discharged."
+    },
+    {
+      "id": "E009",
+      "inputs": [
+        "A-PHI-RANGE"
+      ],
+      "output": "P-T2",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 proof third sentence",
+      "premise_discharge": "Combine alpha in (0,1), the range bound and horizon hypothesis; source only states the consequence."
+    },
+    {
+      "id": "E010",
+      "inputs": [
+        "P-T2"
+      ],
+      "output": "P-LOSS",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 adversarial loss display",
+      "premise_discharge": "T is an integer >=2, m=ceil(T/2), n=floor(T/2), m+n=T."
+    },
+    {
+      "id": "E011",
+      "inputs": [
+        "P-LOSS",
+        "S-AFFINE",
+        "S-LIPSCHITZ",
+        "S-SUBGRADIENT"
+      ],
+      "output": "P-ADMISSIBLE",
+      "logic": "AND",
+      "relation": "semantic_support",
+      "consumer_use_site": "p52 affine witness and recurrences",
+      "premise_discharge": "Definition-level verification for slopes +/-1; details implicit in source."
+    },
+    {
+      "id": "E012",
+      "inputs": [
+        "P-LOSS",
+        "P-ADMISSIBLE",
+        "S-OSD"
+      ],
+      "output": "P-FIRST-REC",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 first-half recurrence paragraph",
+      "premise_discharge": "V=R, eta_t=t^(-alpha), slope=-1, 1<=t<=m."
+    },
+    {
+      "id": "E013",
+      "inputs": [
+        "P-FIRST-REC"
+      ],
+      "output": "P-FIRST-SUM",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 first iterate display",
+      "premise_discharge": "Initial x_1=0; sum recurrence from 1 to t-1 including empty sum at t=1."
+    },
+    {
+      "id": "E014",
+      "inputs": [
+        "P-LOSS",
+        "P-ADMISSIBLE",
+        "S-OSD"
+      ],
+      "output": "P-SECOND-REC",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 second-half recurrence paragraph",
+      "premise_discharge": "V=R, eta_t=t^(-alpha), slope=+1, m+1<=t<=T."
+    },
+    {
+      "id": "E015",
+      "inputs": [
+        "P-FIRST-SUM",
+        "P-SECOND-REC"
+      ],
+      "output": "P-SECOND-SUM",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 second iterate display",
+      "premise_discharge": "Unroll from x_{m+1}; both pieces agree at t=m+1 where the second sum is empty."
+    },
+    {
+      "id": "E016",
+      "inputs": [
+        "P-LOSS",
+        "S-REGRET"
+      ],
+      "output": "R-SPLIT",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 regret display row1",
+      "premise_discharge": "Comparator is 0 and ell_t(0)=0; split rounds into 1..m and m+1..T."
+    },
+    {
+      "id": "E017",
+      "inputs": [
+        "R-SPLIT",
+        "P-FIRST-SUM",
+        "P-SECOND-SUM"
+      ],
+      "output": "R-SUBSTITUTE",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 regret display row2",
+      "premise_discharge": "Use the correct iterate formula on each half."
+    },
+    {
+      "id": "E018",
+      "inputs": [
+        "R-SUBSTITUTE"
+      ],
+      "output": "R-COUNT",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 regret display row3",
+      "premise_discharge": "Count occurrences: first-half coefficient m-i, n second-half copies of first sum, second-half coefficient T-i."
+    },
+    {
+      "id": "E019",
+      "inputs": [
+        "R-COUNT"
+      ],
+      "output": "R-REARRANGE",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 regret display row4",
+      "premise_discharge": "Use m+n=T and collect weighted powers and parity coefficient."
+    },
+    {
+      "id": "E020",
+      "inputs": [
+        "R-REARRANGE",
+        "I-PARITY"
+      ],
+      "output": "I-BOUNDS",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 first integral display row",
+      "premise_discharge": "0<alpha<1 gives decreasing x^(-alpha) and increasing x^(1-alpha); compare all three sums with integrals, preserving signs. All comparisons are jointly needed."
+    },
+    {
+      "id": "E021",
+      "inputs": [
+        "I-BOUNDS"
+      ],
+      "output": "I-EVALUATE",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 display row2",
+      "premise_discharge": "Evaluate all three definite integrals. Exponents have positive antiderivative denominators 1-alpha and 2-alpha."
+    },
+    {
+      "id": "E022",
+      "inputs": [
+        "I-EVALUATE"
+      ],
+      "output": "I-HALF",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 display row3",
+      "premise_discharge": "m>=T/2, 1-alpha>0, T>=2 supply monotonicity and signs."
+    },
+    {
+      "id": "E023",
+      "inputs": [
+        "I-HALF"
+      ],
+      "output": "I-COARSE",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 display row4",
+      "premise_discharge": "m<=T, 1-alpha>0; drop nonnegative -1+1/(1-alpha); factor T^(2-alpha)."
+    },
+    {
+      "id": "E024",
+      "inputs": [
+        "I-COARSE",
+        "D-PHI"
+      ],
+      "output": "I-PHI",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 final row equality",
+      "premise_discharge": "Substitute exact literal phi definition; keep negative boundary term."
+    },
+    {
+      "id": "E025",
+      "inputs": [
+        "I-PHI",
+        "A-PHI-RANGE"
+      ],
+      "output": "I-ABSORB",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 final row inequality",
+      "premise_discharge": "Use positive phi and source horizon hypothesis T>=2/((1-alpha)*phi(alpha)) to absorb boundary term."
+    },
+    {
+      "id": "E026",
+      "inputs": [
+        "P-LOSS",
+        "P-ADMISSIBLE",
+        "I-ABSORB"
+      ],
+      "output": "T-ONE-DIMENSION",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p53 proof square",
+      "premise_discharge": "Witness is a length-T admissible loss sequence and the OSD regret calculation supplies the bound."
+    },
+    {
+      "id": "E027",
+      "inputs": [
+        "P-DIMENSION",
+        "P-LOSS",
+        "S-OSD",
+        "S-LIPSCHITZ"
+      ],
+      "output": "P-EMBED",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 proof second sentence",
+      "premise_discharge": "Guard d>=2. Embed slopes in e_1, start x_1=0, preserve first-coordinate recurrence and unit norm."
+    },
+    {
+      "id": "E028",
+      "inputs": [
+        "T-ONE-DIMENSION",
+        "P-EMBED"
+      ],
+      "output": "T-HIGH-DIMENSION",
+      "logic": "AND",
+      "relation": "proof",
+      "consumer_use_site": "p52 proof second sentence applied to the scalar conclusion",
+      "premise_discharge": "Guard d>=2; transfer identical regret and convex/Lipschitz admissibility."
+    },
+    {
+      "id": "E029",
+      "inputs": [
+        "T-ONE-DIMENSION",
+        "T-HIGH-DIMENSION"
+      ],
+      "output": "T-STATEMENT",
+      "logic": "AND_CASE_COVERAGE",
+      "relation": "proof",
+      "consumer_use_site": "Theorem 5.4 completed proof",
+      "premise_discharge": "For all positive integer d, cases d=1 and d>=2 exhaust the dimensions. AND at the universally quantified theorem, not alternative proof routes."
+    },
+    {
+      "id": "E030",
+      "inputs": [
+        "T-STATEMENT"
+      ],
+      "output": "DISCUSSION",
+      "logic": "AND",
+      "relation": "interpretation",
+      "consumer_use_site": "p53 paragraph after proof",
+      "premise_discharge": "Fix alpha in (0,1); positive coefficient and exponent 2-alpha>1 yield a superlinear worst-case loss sequence."
+    },
+    {
+      "id": "E031",
+      "inputs": [
+        "T-STATEMENT"
+      ],
+      "output": "F-CH2",
+      "logic": "AND",
+      "relation": "fulfills_forward_reference",
+      "consumer_use_site": "p14 Section 5.2 forward reference",
+      "premise_discharge": "The existential polynomial-schedule construction supplies the promised failure example. No claim about all schedules."
+    }
+  ],
+  "root": "T-STATEMENT",
+  "supplement_roots": [
+    "A-PHI-RANGE",
+    "A-LIMIT",
+    "A-NUMERIC"
+  ],
+  "alternative_routes": [],
+  "logic_notes": [
+    "There is one source proof route for the regret bound.",
+    "The three integral comparisons are AND inputs, not alternative routes.",
+    "Dimension cases d=1 and d>=2 are exhaustive cases. A fixed dimension chooses one branch, but proving the universally quantified statement requires both cases; the high-dimensional branch depends on the scalar proof.",
+    "The range assertion is needed for threshold positivity; its omitted proof is exposed as G-PHI-RANGE.",
+    "Limit and numerical supplement are sibling conclusions, not premises of the regret bound. The 0.3 comparison is not a uniform lower bound on phi(alpha).",
+    "Context and fulfills_forward_reference edges are not mathematical implication edges and must not be used to manufacture proof cycles."
+  ],
+  "source_gaps": [
+    "G-PHI-RANGE",
+    "G-PHI-LIMIT",
+    "G-PHI-NUMERIC"
+  ],
+  "consumer_use_sites_present": true,
+  "independent_review_required": true
+}

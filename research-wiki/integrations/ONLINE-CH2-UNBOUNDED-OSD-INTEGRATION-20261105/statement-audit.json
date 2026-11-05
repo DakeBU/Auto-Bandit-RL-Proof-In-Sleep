@@ -1,0 +1,1026 @@
+{
+  "originalFrozenAudit": {
+    "at": "2026-11-04T21:58:04.347565+00:00",
+    "head": "2e06e21d2acb0bf41142b19266d66d89364e17a0",
+    "status": "original-frozen-signatures-exact-semantic-review-pending",
+    "productionSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+    "testSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+    "definitions": 4,
+    "productionTheorems": 11,
+    "completeCanaries": 2,
+    "canaryConjuncts": [
+      7,
+      9
+    ],
+    "frozenDefinitionsPrefixSHA256": "6eb0e733aabd5345e4eb88f7b3e923447483a0bf2bf8595db9b53227a02e05cc",
+    "canaryPrefixSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+    "rows": [
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "kind": "production",
+        "line": 32,
+        "header": "theorem currentSubgradient_affine (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+        "headerContentSHA256": "ca6e61342e0f2ef825ee80f7a5e760411b7df3ec5cf50fc4cbb1b70ae1063d8c",
+        "rawHeaderSHA256": "161ceb1896154c01613c578a32eab73b4579d13348089cb7499b7e8f6ef2546f",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "034352bba8e83c963fec7c32ac6c2e00d048fcf083b7ae78518474b1da53d55f",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-currentSubgradient_affine-v1.json",
+        "fenceSHA256": "88faa7a0be0c49fb62b50f2de362b00c2e73867ae28e30d14937b7bc82442ec7"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+        "kind": "production",
+        "line": 55,
+        "header": "theorem step_affine_fullSpace (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "headerContentSHA256": "0306f2fe50b56901b43d75b960c8cc73a33f80f6bfd586d06fdf4c159f0404e8",
+        "rawHeaderSHA256": "29661bb573c96c7e485c7f836e362b96994d456166288d3ecdf56d1afb458d4d",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "53d96ce6c5da6af84c775b6130aa20a81a203d4848f4d9e8dd8e09974f58ab11",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-step_affine_fullSpace-v1.json",
+        "fenceSHA256": "7b10705ad67e9a384507cdb3969d4effb9710528a74d573646533fbc08214de7"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "kind": "production",
+        "line": 67,
+        "header": "theorem iterate_affine_prefix (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "headerContentSHA256": "37cd1b4549dcb6f19df5e59d3f780d6c51c8749616859bf7af75e70f018b6ebb",
+        "rawHeaderSHA256": "103c808a442f55c5fbf378b07d5dca3f101da0a1c4a83d21c93d453db49238d7",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "f483733d75dae3e389ec525f099372fe7fd53fa020041cbcef87fc06b1f6f55a",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-iterate_affine_prefix-v1.json",
+        "fenceSHA256": "5cde9250501b2531fd613059777be7a635b74af3635cf3223cf8c96e2e1ef4e8"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "kind": "production",
+        "line": 83,
+        "header": "theorem powerSteps_pos (α : ℝ) (t : ℕ) :\n    0 < powerSteps α t",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "headerContentSHA256": "8bda9262833aaea54f26da8e32bcf078873ad4b208eaa3ae3073b2224bd946e4",
+        "rawHeaderSHA256": "6f323c342e2314f04145e02f57681d6c2ba8f77a635d7161587859e228a18375",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "05a3be64ecb09f12139c2c22e979dd7cd75ff302e120a839f76045d3c5f34e23",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-powerSteps_pos-v1.json",
+        "fenceSHA256": "42b0723f2fa09f69921b0051339feb9d9565b6a841f28a7b3982cdf218be90d6"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "kind": "production",
+        "line": 126,
+        "header": "theorem switching_loss_regular (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (switchLoss T v t) ∧ LipschitzWith 1 (switchLoss T v t)",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "headerContentSHA256": "4be276f0357822f4daea52582706b257a3ab233fceff422d1c955af2311d048a",
+        "rawHeaderSHA256": "208a2886eef10e2a450e04b903a72e22d8051c82f8d37635d720c299a2ed1c88",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "bee9239fe3859cd07b3c1d8196e5107ffef8a83d7283fdb35fba4991bc4d23fe",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-switching_loss_regular-v1.json",
+        "fenceSHA256": "52f1e9467f9083f053a2db428d458006cab333028d89e147de0a38be0812d200"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+        "kind": "production",
+        "line": 220,
+        "header": "theorem switching_scalar_regret_identity (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), powerSteps α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, powerSteps α i)",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "headerContentSHA256": "3bae3780f549b3979b5ea9a3ba57943ff9ed3970ae766fd529180219f0edb215",
+        "rawHeaderSHA256": "cf767deaafe5bd9f551c7d73e6c8255e32209b782b27bf7137fdb4d4a6b3ba09",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "e98aef35ebf6c58d6df307a608b7d63296d2460226c32d7b48ba37d9e69fc5ba",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-switching_scalar_regret_identity-v1.json",
+        "fenceSHA256": "4b3cde82ea0c448afc308b010796f44d7b0f272c2b6f9e45a313a42eb90c78bf"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.phi_range",
+        "kind": "production",
+        "line": 154,
+        "header": "theorem phi_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < phi α ∧ phi α < 1 - Real.log 2",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "headerContentSHA256": "c4ef1eb5123d466924e28b92472e0d8446f29d10df12a680a37670723809b848",
+        "rawHeaderSHA256": "503c89579621bfca15a8a8c901d815792d8978735d4f286b3479c15fb80738c9",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "57077c24de04349bcb3550f6cd0d4467ca46dee5fc09d3d533cbda470f2f1d7e",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-phi_range-v1.json",
+        "fenceSHA256": "d244cf09cbb58c389ee20b04745f8f3f6a8af93648d9733d0316c0faff8c4240"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+        "kind": "production",
+        "line": 92,
+        "header": "theorem phi_limit :\n    Tendsto phi (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "headerContentSHA256": "fc1f43a776fa22903c2841b99b552ba22397774cd70f7d6de14d9dfa25754b46",
+        "rawHeaderSHA256": "313b03512a14de95ade1c22828e7e248cbffd81e3d83f7c939f5197f17a5e6f8",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "db0ebb90a5194eba9e76f3273be422ff5f22c539b01cc0e1ccca394f2c62afb4",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-phi_limit-v1.json",
+        "fenceSHA256": "2d8c21b7d3b47d4234f7f3aebcdb3767264b81b81801edb73d5461d39183eba3"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+        "kind": "production",
+        "line": 338,
+        "header": "theorem switching_scalar_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+        "headerContentSHA256": "19f41dd7b52f57ac0fa6fdae452d4532f625c4003b00e0ac89999bad179d6f1b",
+        "rawHeaderSHA256": "b6167356c15da8e8068d8cee24544f4a4545086d784516da7492ac1bcba919c7",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "06f24503766fe154dd318e57fdf86dd9df8b591a7c3bd04be8aa1b502a8b4c5e",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-switching_scalar_lower_bound-v1.json",
+        "fenceSHA256": "7e584bf4226ea340794dedc6ce1cfb0b0d5f6f1a2214c4f77409c4d7d34901a9"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "kind": "production",
+        "line": 470,
+        "header": "theorem switching_vector_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n        (fun t z => (switchLoss T v t z : EReal)) 0 0 T",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "headerContentSHA256": "e9583dae5730601e696a8c745c9d3f40fcf297efde749c96cc32e9d3673bc55b",
+        "rawHeaderSHA256": "66d9b01d6cff11551ab94b3a4f77bc6a2c9a5e63952e6ff97cf44d9f8c094c2b",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "c8a70a16179b67ee1fc35af2fa01180de5ec9fa041246042b481946ec0935c21",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-switching_vector_lower_bound-v1.json",
+        "fenceSHA256": "da5ef56ffe44962825a621a93e58d28aeedf1ca19beadbf33b03640602a7703a"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+        "kind": "production",
+        "line": 516,
+        "header": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T",
+        "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+        "headerContentSHA256": "9ac005f6995ec54a3985a5dda86fd28c5a1c08db82ce01ecf95983aaab356f4d",
+        "rawHeaderSHA256": "46a6e6181276fa21e57c101f2c83a4d62d7cc6b066e87423e465e38066e5a7eb",
+        "rawHeaderHashConvention": "UTF8 header plus one LF",
+        "normalizedStatementSHA256": "e85a91f6254c7e28f877cca2da2bf525777326672a4e92c6c7e46757c170b138",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-theorem_5_4-v1.json",
+        "fenceSHA256": "c24c28874150936339bb898dc0ec629bfd53309f36f69b0f41d19230dadc9ec4"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+        "kind": "canary",
+        "line": 22,
+        "header": "theorem scalar_actual_two_rounds :\n    powerSteps (1/2) 0 = 1 ∧\n    0 < powerSteps (1/2) 1 ∧\n    powerSteps (1/2) 1 < powerSteps (1/2) 0 ∧\n    scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧\n    scalarRun 2 2 = 1 - (2 : ℝ) ^ (-(1/2 : ℝ)) ∧\n    scalarRegret 2 = 1",
+        "context": null,
+        "headerContentSHA256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5",
+        "rawHeaderSHA256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5",
+        "rawHeaderHashConvention": "UTF8 header without trailing LF",
+        "normalizedStatementSHA256": "dafadce52f05c2e4ad06efc2744c3e8d5a8f37ade6e57dfe96bc7d9de194a2e2",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-scalar_actual_two_rounds-v1.json",
+        "fenceSHA256": "c08720b109d18292a6bcf3008dabd110dfae4e20c112a87a402de4da4fc2bf01"
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+        "kind": "canary",
+        "line": 68,
+        "header": "theorem finiteDim_source_lower_bound :\n    ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧\n    (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧\n      LipschitzWith 1 (switchLoss 64 direction t)) ∧\n    (1/15 : ℝ) ≤ phi (1/2) ∧\n    2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧\n    (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧\n    (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧\n    (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ,\n      (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n          (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+        "context": null,
+        "headerContentSHA256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee",
+        "rawHeaderSHA256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee",
+        "rawHeaderHashConvention": "UTF8 header without trailing LF",
+        "normalizedStatementSHA256": "1e2f304534f2092b37097795421ebde184254d76c571fda4c922e047adf5e673",
+        "frozenFence": "docs/contracts/online-ch2-unbounded-osd-v1/frozen-finiteDim_source_lower_bound-v1.json",
+        "fenceSHA256": "2056fecc03478a3e7a2727e630460aca74c8ce2522760815552a0e11f3506189"
+      }
+    ],
+    "neutralCanarySHA256": "dc22754c3faccbca9f45d0e96b72eb173f50af4738dd0e71f9740d0a6724bea6",
+    "proofsChanged": false,
+    "compiled": false,
+    "semanticAccepted": false,
+    "scriptSHA256": "571ca7ac71075fb906e27d42f249c91127308b4567c7286567a0fd2f1ff81783"
+  },
+  "currentCommentSuccessor": {
+    "production": "BanditRLProof/OnlineUnboundedOSD.lean",
+    "originalSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+    "currentSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+    "allBytesOutsideSingleCommentIdentical": true,
+    "originalBodyReview": "batch41-source-review-v1/phase3-receipt.json",
+    "bodyReviewSHA256": "faa67f743d2b6847d6fb667d26d4571818b876d34d89b5f17f7fb17402a3c853",
+    "commentReviewSHA256": "2167790db49bc6fb85134941d23ebdf275ab7b4a8c30f1d0baadcfb6147bcffa",
+    "lineMap": [
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "ca6e61342e0f2ef825ee80f7a5e760411b7df3ec5cf50fc4cbb1b70ae1063d8c",
+        "originalLine": 32,
+        "currentLine": 58,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "0306f2fe50b56901b43d75b960c8cc73a33f80f6bfd586d06fdf4c159f0404e8",
+        "originalLine": 55,
+        "currentLine": 81,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "37cd1b4549dcb6f19df5e59d3f780d6c51c8749616859bf7af75e70f018b6ebb",
+        "originalLine": 67,
+        "currentLine": 93,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "8bda9262833aaea54f26da8e32bcf078873ad4b208eaa3ae3073b2224bd946e4",
+        "originalLine": 83,
+        "currentLine": 109,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "4be276f0357822f4daea52582706b257a3ab233fceff422d1c955af2311d048a",
+        "originalLine": 126,
+        "currentLine": 152,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "3bae3780f549b3979b5ea9a3ba57943ff9ed3970ae766fd529180219f0edb215",
+        "originalLine": 220,
+        "currentLine": 246,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.phi_range",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "c4ef1eb5123d466924e28b92472e0d8446f29d10df12a680a37670723809b848",
+        "originalLine": 154,
+        "currentLine": 180,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "fc1f43a776fa22903c2841b99b552ba22397774cd70f7d6de14d9dfa25754b46",
+        "originalLine": 92,
+        "currentLine": 118,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "19f41dd7b52f57ac0fa6fdae452d4532f625c4003b00e0ac89999bad179d6f1b",
+        "originalLine": 338,
+        "currentLine": 364,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "e9583dae5730601e696a8c745c9d3f40fcf297efde749c96cc32e9d3673bc55b",
+        "originalLine": 470,
+        "currentLine": 496,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+        "originalModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+        "currentModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+        "headerSHA256": "9ac005f6995ec54a3985a5dda86fd28c5a1c08db82ce01ecf95983aaab356f4d",
+        "originalLine": 516,
+        "currentLine": 542,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+        "originalModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "currentModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "headerSHA256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5",
+        "originalLine": 22,
+        "currentLine": 22,
+        "headerAndProofUnchanged": true
+      },
+      {
+        "name": "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+        "originalModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "currentModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+        "headerSHA256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee",
+        "originalLine": 68,
+        "currentLine": 68,
+        "headerAndProofUnchanged": true
+      }
+    ],
+    "compileAfterCommentPending": false,
+    "historicalRecordedCompileAfterCommentPending": true,
+    "currentCompilationEvidence": {
+      "path": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/comment-validation.json",
+      "sha256": "fe260d94c19e35bafa3c4fe76a84aabcbd9598e4fb6e941263adf0ed1adf32fd"
+    },
+    "successorStateMeaning": "Original materialization snapshot recorded compilation pending; subsequent focused and public-probe validation passed for the same seven source hashes. Full candidate gate remains pending."
+  },
+  "currentGuardEnvelopes": [
+    {
+      "exactStatementOrDefinition": "def powerSteps (α : ℝ) (t : ℕ) : ℝ := ((t + 1 : ℕ) : ℝ) ^ (-α)",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "6be344de093ccbae82ae60babc9682b82268c0f7db4a950a8fc5bdd3807dc0f8",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 15,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "def phi (α : ℝ) : ℝ := 1 / (2 - α) + ((1 / 2 : ℝ) ^ (1 - α) - 1) / (1 - α)",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "a6b36ad3746f837fcf6ed6c717dce6cf04a22c61084ffac554b6e44d2d738733",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 16,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "def switchSlope (T t : ℕ) : ℝ := if t < (T + 1) / 2 then -1 else 1",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "3d24720a9c1b49a2aba5ec05ce9f8b3ddad672abeb4aadefbad2607185c1cea7",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 17,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "def switchLoss (T : ℕ) (v : E) (t : ℕ) (z : E) : ℝ := switchSlope T t * inner ℝ v z",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]",
+      "signatureSHA256": "2c7d0223ec2238e1f8a070b0858478fe61249d0933e7fb9f5328d2bb97a116fa",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 19,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem currentSubgradient_affine (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.currentSubgradient\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = a",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\n",
+      "signatureSHA256": "ca6e61342e0f2ef825ee80f7a5e760411b7df3ec5cf50fc4cbb1b70ae1063d8c",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 58,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem step_affine_fullSpace (η : ℝ) (a x : E) (b : ℝ) :\n    BanditRL.OnlineSubgradientDescent.step BanditRL.OnlineHuber.fullSpace η\n      (fun z => ((inner ℝ a z + b : ℝ) : EReal)) x = x - η • a",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "signatureSHA256": "0306f2fe50b56901b43d75b960c8cc73a33f80f6bfd586d06fdf4c159f0404e8",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 81,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem iterate_affine_prefix (η : ℕ → ℝ) (a : ℕ → E) (b : ℕ → ℝ)\n    (x0 : E) (t : ℕ) :\n    BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace η\n      (fun s z => ((inner ℝ (a s) z + b s : ℝ) : EReal)) x0 t =\n      x0 - ∑ s ∈ range t, η s • a s",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "signatureSHA256": "37cd1b4549dcb6f19df5e59d3f780d6c51c8749616859bf7af75e70f018b6ebb",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 93,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem powerSteps_pos (α : ℝ) (t : ℕ) :\n    0 < powerSteps α t",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "8bda9262833aaea54f26da8e32bcf078873ad4b208eaa3ae3073b2224bd946e4",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 109,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem phi_limit :\n    Tendsto phi (𝓝[<] (1 : ℝ)) (𝓝 (1 - Real.log 2)) ∧\n      (3 / 10 : ℝ) ≤ 1 - Real.log 2",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "fc1f43a776fa22903c2841b99b552ba22397774cd70f7d6de14d9dfa25754b46",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 118,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem switching_loss_regular (T : ℕ) (v : E) (hv : ‖v‖ = 1) (t : ℕ) :\n    ConvexOn ℝ univ (switchLoss T v t) ∧ LipschitzWith 1 (switchLoss T v t)",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "signatureSHA256": "4be276f0357822f4daea52582706b257a3ab233fceff422d1c955af2311d048a",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 152,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem phi_range (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1) :\n    0 < phi α ∧ phi α < 1 - Real.log 2",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "c4ef1eb5123d466924e28b92472e0d8446f29d10df12a680a37670723809b848",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 180,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem switching_scalar_regret_identity (α : ℝ) (T : ℕ) :\n    BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T =\n      -((((T + 1) / 2 : ℕ) : ℝ) - ((T / 2 : ℕ) : ℝ)) *\n        (∑ i ∈ range ((T + 1) / 2), powerSteps α i) +\n      (∑ i ∈ range T, ((i + 1 : ℕ) : ℝ) ^ (1 - α)) -\n      (T : ℝ) * (∑ i ∈ Ico ((T + 1) / 2) T, powerSteps α i)",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "3bae3780f549b3979b5ea9a3ba57943ff9ed3970ae766fd529180219f0edb215",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 246,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem switching_scalar_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n      (fun t z => (switchLoss T (1 : ℝ) t z : EReal)) 0 0 T",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\n",
+      "signatureSHA256": "19f41dd7b52f57ac0fa6fdae452d4532f625c4003b00e0ac89999bad179d6f1b",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 364,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem switching_vector_lower_bound (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) (v : E) (hv : ‖v‖ = 1) :\n    (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n      BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n        (fun t z => (switchLoss T v t z : EReal)) 0 0 T",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "signatureSHA256": "e9583dae5730601e696a8c745c9d3f40fcf297efde749c96cc32e9d3673bc55b",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 496,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem theorem_5_4 [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)\n    (T : ℕ) (hT : 2 / ((1 - α) * phi α) ≤ (T : ℝ)) :\n    ∃ loss : ℕ → E → ℝ,\n      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1 / 2 : ℝ) * phi α * (T : ℝ) ^ (2 - α) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps α)\n          (fun t z => (loss t z : EReal)) 0 0 T",
+      "context": "namespace BanditRL.OnlineUnboundedOSD\nvariable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]\nvariable [FiniteDimensional ℝ E]\n",
+      "signatureSHA256": "9ac005f6995ec54a3985a5dda86fd28c5a1c08db82ce01ecf95983aaab356f4d",
+      "sourceModule": "BanditRLProof/OnlineUnboundedOSD.lean",
+      "sourceModuleSHA256": "83ea6609b387281ab290c34069cb325c23ab100e4ec3734e3af246669af21fdd",
+      "fullCanaryConjuncts": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\binder-definition-review.json",
+          "sha256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+          "proposedPublicAlias": "binder-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/binder-review.json",
+        "publicSHA256": "0148ba81cdcd156357dd6e1b47484bf5f45ab1a6d6b7ad2709dbef0ab5500232",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "a026fb7d45e5844d163664e75c562273dc835f1daa485ba9289f3a76d946ece8",
+      "currentSourceLine": 542,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem scalar_actual_two_rounds :\n    powerSteps (1/2) 0 = 1 ∧\n    0 < powerSteps (1/2) 1 ∧\n    powerSteps (1/2) 1 < powerSteps (1/2) 0 ∧\n    scalarRun 2 0 = 0 ∧ scalarRun 2 1 = 1 ∧\n    scalarRun 2 2 = 1 - (2 : ℝ) ^ (-(1/2 : ℝ)) ∧\n    scalarRegret 2 = 1",
+      "context": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+      "signatureSHA256": "f6da76b7dacf6f11753bd436c96be9485b1901f99f29ac8027b7c0ff990ff2d5",
+      "sourceModule": "Tests/OnlineUnboundedOSDCanary.lean",
+      "sourceModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+      "fullCanaryConjuncts": 7,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-original-frozen-statement-audit-v1.json",
+          "sha256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+          "proposedPublicAlias": "statement-audit.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-statement-audit.json",
+        "publicSHA256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "contextArtifact": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\original-canary-prefix.lean",
+          "sha256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+          "proposedPublicAlias": "original-canary-prefix.lean",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-canary-prefix.lean",
+        "publicSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "contextMeaning": "Exact original imports, scopes, namespace, and all five aliases before the first canary. Both declarations share these definitions; the second namespace block reopens the same namespace.",
+      "contextSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+      "prefixBindingEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\canary-prefix-binding.json",
+          "sha256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+          "proposedPublicAlias": "canary-prefix-binding.json",
+          "publicAliasMaterialized": false,
+          "usage": "Existing private path/hash is authoritative; public alias is planned only."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/canary-prefix-binding.json",
+        "publicSHA256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+      "currentSourceLine": 22,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    },
+    {
+      "exactStatementOrDefinition": "theorem finiteDim_source_lower_bound :\n    ‖direction‖ = 1 ∧ vectorRun 64 1 = direction ∧\n    (∀ t < 64, ConvexOn ℝ univ (switchLoss 64 direction t) ∧\n      LipschitzWith 1 (switchLoss 64 direction t)) ∧\n    (1/15 : ℝ) ≤ phi (1/2) ∧\n    2 / ((1 - (1/2 : ℝ)) * phi (1/2)) ≤ (64 : ℝ) ∧\n    (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤ vectorRegret 64 ∧\n    (256/15 : ℝ) ≤ vectorRegret 64 ∧ (17 : ℝ) < vectorRegret 64 ∧\n    (∃ loss : ℕ → EuclideanSpace ℝ (Fin 2) → ℝ,\n      (∀ t < 64, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t)) ∧\n      (1/2 : ℝ) * phi (1/2) * (64 : ℝ) ^ (2 - (1/2 : ℝ)) ≤\n        BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace\n          (powerSteps (1/2)) (fun t z => (loss t z : EReal)) 0 0 64)",
+      "context": "import BanditRLProof.OnlineUnboundedOSD\nnoncomputable section\nopen Set Finset Filter Topology\nopen scoped InnerProductSpace\nset_option autoImplicit false\nnamespace BanditRL.OnlineUnboundedOSDCanary\nopen BanditRL.OnlineUnboundedOSD\nabbrev scalarRun (T t : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 t\nabbrev scalarRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T (1 : ℝ) s z : EReal)) 0 0 T\nabbrev direction : EuclideanSpace ℝ (Fin 2) := PiLp.single 2 0 1\nabbrev vectorRun (T t : ℕ) : EuclideanSpace ℝ (Fin 2) :=\n  BanditRL.OnlineSubgradientDescent.iterate BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 t\nabbrev vectorRegret (T : ℕ) : ℝ :=\n  BanditRL.OnlineSubgradientDescent.regret BanditRL.OnlineHuber.fullSpace (powerSteps (1/2))\n    (fun s z => (switchLoss T direction s z : EReal)) 0 0 T\n",
+      "signatureSHA256": "bd996f75f3d2f9a6a034ad000ef085aee77da55a178d91bfdf09347848a074ee",
+      "sourceModule": "Tests/OnlineUnboundedOSDCanary.lean",
+      "sourceModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+      "fullCanaryConjuncts": 9,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-source-review-v1\\definition-body-review.json",
+          "sha256": "2c044d6bf9c08927a8c3447c88b4166bdb17d57fb07fa167e5f7291184c18e3a",
+          "proposedPublicAlias": "definition-body-review.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/definition-body-review.json",
+        "publicSHA256": "b206604fbe1f71b8708b71a4d7c8b1d9145ae1565295d89b36ba16646964c804",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-original-frozen-statement-audit-v1.json",
+          "sha256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+          "proposedPublicAlias": "statement-audit.json",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-statement-audit.json",
+        "publicSHA256": "785f81115fb1a3e6a833d19f4bcc1e36ddfb7be33edd9aef46ce6eaa51c9285b",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "contextArtifact": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\original-canary-prefix.lean",
+          "sha256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+          "proposedPublicAlias": "original-canary-prefix.lean",
+          "publicAliasMaterialized": false,
+          "usage": "Use the existing path/hash for this private review; alias is a planned publication filename, not a live artifact."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/original-canary-prefix.lean",
+        "publicSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "contextMeaning": "Exact original imports, scopes, namespace, and all five aliases before the first canary. Both declarations share these definitions; the second namespace block reopens the same namespace.",
+      "contextSHA256": "666965ac60f65af8f6a3873288c821185c2a5013f51e191d3118701743c08c08",
+      "prefixBindingEvidence": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch41-neutral-binding-v1\\canary-prefix-binding.json",
+          "sha256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+          "proposedPublicAlias": "canary-prefix-binding.json",
+          "publicAliasMaterialized": false,
+          "usage": "Existing private path/hash is authoritative; public alias is planned only."
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-UNBOUNDED-OSD-INTEGRATION-20261105/canary-prefix-binding.json",
+        "publicSHA256": "55b721d230c85701410d834792d2db936d53bf81e69559b2a7a13d9cbaf8a752",
+        "publicAliasMaterialized": true,
+        "usage": "Public artifact hash is current. Original private path/hash identifies reviewed historical bytes. The frozen statement audit is separate from current guarded expansions to avoid self-referential hashes."
+      },
+      "originalReviewedModuleSHA256": "bd04685f5e8c59b982c2de751f374881d31069085491e80f4053f06ecbb93238",
+      "currentSourceLine": 68,
+      "commentSuccessorEvidence": "comment-successor-bindings.json"
+    }
+  ],
+  "originalAllFormalBytesUnchanged": true,
+  "originalFullTestBytesUnchanged": true,
+  "bodyReview": "proof-body-review.json",
+  "binderReview": "binder-review.json",
+  "definitionReview": "definition-review.json",
+  "compiledEvidenceStage": "Current comment successor focused compilation and public probes passed; graph and five selected numeric branches byte-identical to pre-comment evidence. Full combined candidate gate pending.",
+  "currentFullProjectGatePassed": false,
+  "historicalSnapshotFieldsRemainHistorical": true,
+  "guardEvidenceResolution": "Current guard references resolve publicly. Original frozen audit remains historical; complete canary prefix and comment successor bind current contexts and positions.",
+  "currentCommentSuccessorMeaning": "Current state after comment compilation; historical materialization pending flag is explicitly retained inside historicalRecordedCompileAfterCommentPending."
+}

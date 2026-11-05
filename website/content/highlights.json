@@ -8116,6 +8116,293 @@
       "proof_idea": "Expand the inclusive cumulative potential to obtain Gₙ₊₁(v) = Gₙ(v) + ψₙ₊₁(v) − ψₙ(v) + ℓₙ₊₁(v). All operations are ordinary real arithmetic. For a prefix of n + 1 rounds, retain the last term Gₙ(yₙ₊₁) − Gₙ(u). The one-round case follows by expanding G₀ and cancelling terms. Extend the identity by one round. Expand each finite sum at its last index and substitute the recurrence for G. The intermediate potential terms cancel; the change from ψₙ to ψₙ₊₁ remains as the explicit regularizer-change summand. Use T > 0 to set n = T − 1, then substitute y_T = z. This gives the displayed terminal gap without assigning it a sign.",
       "lean_notes": "Each canary proves its first conjunct by an actual application of finite_regret_identity, then checks the displayed rational values. The production proof uses finite-sum induction and real arithmetic. It imports Mathlib only; the preceding cumulative producer is not a proof parent. Take T = 1, ψₜ(v) = v²/2, ℓₜ(v) = (v − 1)²/2, xₜ = u = 1/2 and z = 2/3. The theorem gives 0 = 0 − 1/36 + 0 + 1/36. Deleting the positive terminal gap would assert the false inequality 0 ≤ −1/36. This refutes unconditional algebraic deletion, not a source algorithm with an established argmin trajectory. Take T = 2, ψₜ(v) = (t + 1)v²/2, ℓ₀(v) = v and ℓ₁(v) = −2v + 1. Let x₀ = 0, x₁ = 1, x₂ = 100, u = 3 and z = 2. The four blocks give 1 = 9 − 7/2 − 1/2 − 4. The terminal splice has y₂ = 2 although x₂ = 100; no update rule is asserted.",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.powerSteps",
+      "title": "Polynomially decreasing played steps",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 219,
+      "plain": "Definition, not a separately numbered theorem. All real alpha and natural t; no alpha restriction or dimension. The positive base t+1 avoids zero to a negative exponent.",
+      "math": "\\eta_t=(t+1)^{-\\alpha}\\quad(t\\in\\mathbb N_0).",
+      "intuition": "The definition only uses alpha and the current index. powerSteps_pos proves every step positive, while the source lower bound later restricts alpha to(0,1).",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Source witness definition; not a separately numbered result.",
+      "proof_idea": "The definition only uses alpha and the current index. powerSteps_pos proves every step positive, while the source lower bound later restricts alpha to(0,1).",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.phi",
+      "title": "The exact source coefficient phi",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 220,
+      "plain": "Definition on all real alpha using Lean total real division/power; source semantics and positivity are restricted to0<alpha<1.",
+      "math": "\\phi(\\alpha)=\\frac1{2-\\alpha}+\\frac{(1/2)^{1-\\alpha}-1}{1-\\alpha}.",
+      "intuition": "Preserve both denominators and the exact source expression. phi_range proves the source codomain, and phi_limit proves its left limit. Total phi(1)=1 is not its left limit, so no continuity at1 is claimed.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Source witness definition; not a separately numbered result.",
+      "proof_idea": "Preserve both denominators and the exact source expression. phi_range proves the source codomain, and phi_limit proves its left limit. Total phi(1)=1 is not its left limit, so no continuity at1 is claimed.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.switchSlope",
+      "title": "The horizon-dependent adversarial signs",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 221,
+      "plain": "Definition for natural horizon T and natural t, including T0. This is the loss witness, not a horizon-dependent choice of learner.",
+      "math": "c_t=\\begin{cases}-1&t<\\lceil T/2\\rceil,\\\\+1&t\\ge\\lceil T/2\\rceil.\\end{cases}",
+      "intuition": "Split the first ceil(T/2) played losses and remaining floor(T/2) losses. The all-natural extension is only a total representation of a finite source sequence.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Source witness definition; not a separately numbered result.",
+      "proof_idea": "Split the first ceil(T/2) played losses and remaining floor(T/2) losses. The all-natural extension is only a total representation of a finite source sequence.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.switchLoss",
+      "title": "Embed the switching losses along one direction",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 222,
+      "plain": "Definition in a real inner-product space E, no dimension or unit-norm premise; T,t natural, v,z arbitrary. Unit norm enters the regularity theorem.",
+      "math": "\\ell_t(z)=c_t\\langle v,z\\rangle.",
+      "intuition": "Use one canonical witness on E. In dimension1 with v=1 this is exactly the source sequence of -x and+x; a unit vector embeds the same scalar regret into a positive-dimensional E.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Source witness definition; not a separately numbered result.",
+      "proof_idea": "Use one canonical witness on E. In dimension1 with v=1 this is exactly the source sequence of -x and+x; a unit vector embeds the same scalar regret into a positive-dimensional E.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineUnboundedOSD.switchSlope"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "title": "The actual affine subgradient selector",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 223,
+      "plain": "Any real inner-product E; arbitrary a,x in E and real intercept b. No completeness, finite dimension, step or convexity premise is needed.",
+      "math": "\\operatorname{currentSubgradient}(z\\mapsto\\langle a,z\\rangle+b,x)=a.",
+      "intuition": "The existing affine_subdifferential theorem identifies the global source subdifferential with the singleton{a}. The actual classical selector chooses a member of that singleton. No new oracle or desired-bound premise is introduced.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "The existing affine_subdifferential theorem identifies the global source subdifferential with the singleton{a}. The actual classical selector chooses a member of that singleton. No new oracle or desired-bound premise is introduced.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SourceSubdifferential",
+        "BanditRL.OnlineConvex.affine_subdifferential",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace",
+      "title": "One actual full-space affine update",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 224,
+      "plain": "Finite-dimensional real inner-product E; arbitrary real eta (including zero/negative), arbitrary a,x,b. Positive steps are only required at the source lower-bound endpoint.",
+      "math": "\\operatorname{step}_{E,\\eta}(\\langle a,\\cdot\\rangle+b,x)=x-\\eta a.",
+      "intuition": "Unfold the canonical step, replace its actual selector by currentSubgradient_affine, then use the existing full-space projection identity. This derives the update rather than assuming a one-step regret inequality.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "Unfold the canonical step, replace its actual selector by currentSubgradient_affine, then use the existing full-space projection identity. This derives the update rather than assuming a one-step regret inequality.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineSubgradientDescent.currentSubgradient",
+        "BanditRL.OnlineSubgradientDescent.step",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+      "title": "Unroll the same affine recursion",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 225,
+      "plain": "Finite-dimensional real inner-product E; arbitrary eta:N->R,a:N->E,b:N->R,initial x0 and natural t including0. No positive-step or bounded-domain assumption.",
+      "math": "I_t=x_0-\\sum_{s=0}^{t-1}\\eta_s a_s.",
+      "intuition": "Induct on the actual iterate definition; the successor uses step_affine_fullSpace and sum_range_succ. Only the played prefix appears. The canonical iterate_prefix theorem separately supplies information-causality semantics.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "Induct on the actual iterate definition; the successor uses step_affine_fullSpace and sum_range_succ. Only the played prefix appears. The canonical iterate_prefix theorem separately supplies information-causality semantics.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.step",
+        "BanditRL.OnlineUnboundedOSD.step_affine_fullSpace"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+      "title": "Every polynomial step is positive",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 226,
+      "plain": "All real alpha and natural t including0; no restriction alpha in(0,1).",
+      "math": "0<(t+1)^{-\\alpha}.",
+      "intuition": "The natural successor has strictly positive real cast; apply Real.rpow_pos_of_pos. The source admissible alpha range is imposed by later theorems, not hidden here.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "The natural successor has strictly positive real cast; apply Real.rpow_pos_of_pos. The source admissible alpha range is imposed by later theorems, not hidden here.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "title": "Every constructed loss is globally convex and1-Lipschitz",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 227,
+      "plain": "Finite-dimensional real inner-product E as in the actual API; unit v with norm1, arbitrary T and t. No alpha or horizon threshold.",
+      "math": "\\ell_t\\text{ convex on }E,\\qquad |\\ell_t(x)-\\ell_t(y)|\\le\\|x-y\\|.",
+      "intuition": "Affine convex-combination equality proves convexity. abs(c_t)=1 and Cauchy-Schwarz with norm(v)=1 prove LipschitzWith1. Regularity is produced for the actual witness, not assumed in the lower bound.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "Affine convex-combination equality proves convexity. abs(c_t)=1 and Cauchy-Schwarz with norm(v)=1 prove LipschitzWith1. Regularity is produced for the actual witness, not assumed in the lower bound.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity",
+      "title": "Exact scalar regret of the actual run",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 228,
+      "plain": "Real scalar space with initial/comparator0; all real alpha and natural T including0,1. This is an identity with no desired-regret/trajectory premise.",
+      "math": "R_T(0)=-(m-k)\\sum_{i=1}^{m}i^{-\\alpha}+\\sum_{i=1}^{T}i^{1-\\alpha}-T\\sum_{i=m+1}^{T}i^{-\\alpha}.",
+      "intuition": "Unroll the actual affine run, evaluate each pre-update state, and interchange the finite strict triangular sums using Finset.sum_Ico_Ico_comm'. Split at m, count the suffix signs and factor the polynomial steps. This is the source proof identity for even and odd horizons.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "Unroll the actual affine run, evaluate each pre-update state, and interchange the finite strict triangular sums using Finset.sum_Ico_Ico_comm'. Split at m, count the suffix signs and factor the polynomial steps. This is the source proof identity for even and odd horizons.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.phi_range",
+      "title": "The source coefficient has its stated range",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 229,
+      "plain": "Real alpha with0<alpha<1; no horizon or learner premises.",
+      "math": "0<\\phi(\\alpha)<1-\\ln2.",
+      "intuition": "Put beta=1-alpha and q(z)=(1+z)2^{-z}. Strict Bernoulli yields q(beta)>1. Two explicit derivatives show q concave on[0,1], hence its tangent at0 bounds q(beta)-1. Divide by beta(1+beta)>0 to obtain the strict source upper bound.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Component of the one printed Theorem 5.4.",
+      "proof_idea": "Put beta=1-alpha and q(z)=(1+z)2^{-z}. Strict Bernoulli yields q(beta)>1. Two explicit derivatives show q concave on[0,1], hence its tangent at0 bounds q(beta)-1. Divide by beta(1+beta)>0 to obtain the strict source upper bound.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open. The source asserts this supplement without a displayed derivation. The library supplies an analytic proof; it is not a newly attributed source proof.",
+      "dependencies": [
+        "BanditRL.OnlineUnboundedOSD.phi"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.phi_limit",
+      "title": "The mandatory endpoint limit and numerical constant",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 230,
+      "plain": "No free parameters; left filter at1. The source interval is(0,1), and the total Lean definition at1 is deliberately not identified with the limit.",
+      "math": "\\lim_{\\alpha\\uparrow1}\\phi(\\alpha)=1-\\ln2\\ge\\frac3{10}.",
+      "intuition": "Differentiate (1/2)^(1-z) at1 and use HasDerivAt.tendsto_slope on the left punctured filter. The first rational term tends to1; log(1/2)=-log2 gives the limit. The verified mathlib bound log_two_lt_d9 proves the numerical inequality.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Component of the one printed Theorem 5.4.",
+      "proof_idea": "Differentiate (1/2)^(1-z) at1 and use HasDerivAt.tendsto_slope on the left punctured filter. The first rational term tends to1; log(1/2)=-log2 gives the limit. The verified mathlib bound log_two_lt_d9 proves the numerical inequality.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open. The source asserts this supplement without a displayed derivation. The library supplies an analytic proof; it is not a newly attributed source proof.",
+      "dependencies": [
+        "BanditRL.OnlineUnboundedOSD.phi"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound",
+      "title": "The printed scalar lower bound",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 231,
+      "plain": "Real alpha with0<alpha<1 and natural T>=2/((1-alpha)phi(alpha)); actual full-space scalar OSD, initial/comparator0, exact switching losses.",
+      "math": "R_T(0)\\ge\\tfrac12\\phi(\\alpha)T^{2-\\alpha}.",
+      "intuition": "Start from the exact scalar identity. Monotone/antitone sum-integral comparisons and integral_rpow give R>=-T^(1-alpha)/(1-alpha)+phi(alpha)T^(2-alpha). Control ceil/floor parity without discarding odd horizons. The proved horizon threshold absorbs the negative term into half the main coefficient.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "Start from the exact scalar identity. Monotone/antitone sum-integral comparisons and integral_rpow give R>=-T^(1-alpha)/(1-alpha)+phi(alpha)T^(2-alpha). Control ceil/floor parity without discarding odd horizons. The proved horizon threshold absorbs the negative term into half the main coefficient.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.powerSteps_pos",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_regret_identity"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+      "title": "The same lower bound in a chosen unit direction",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 232,
+      "plain": "Finite-dimensional real inner-product E, any supplied unit v;0<alpha<1 and the exact natural horizon threshold. Unit v already excludes the zero-space instance.",
+      "math": "R_T^{E}(0;\\ell_t=c_t\\langle v,\\cdot\\rangle)=R_T^{\\mathbb R}(0)\\ge\\tfrac12\\phi(\\alpha)T^{2-\\alpha}.",
+      "intuition": "Use iterate_affine_prefix to identify the actual vector states with the scalar coefficient times v. Unit inner-product evaluation identifies the same canonical regrets. Invoke switching_scalar_lower_bound; no arbitrary prescribed vector trajectory is substituted.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Derived supporting theorem in the explicit witness proof.",
+      "proof_idea": "Use iterate_affine_prefix to identify the actual vector states with the scalar coefficient times v. Unit inner-product evaluation identifies the same canonical regrets. Invoke switching_scalar_lower_bound; no arbitrary prescribed vector trajectory is substituted.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open. The displayed equality of scalar and vector regrets is established inside the proof; the public header concludes the lower bound.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.iterate",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.iterate_affine_prefix",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switching_scalar_lower_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOSD.theorem_5_4",
+      "title": "Theorem5.4: unbounded decreasing-step OSD can fail",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 233,
+      "plain": "For 0<alpha<1, take a natural T with T>=2/((1-alpha)*phi(alpha)), in a nontrivial finite-dimensional real inner-product space. Start the fixed unprojected OSD recursion at zero with source step eta_t=t^(-alpha). There exists a real-valued convex 1-Lipschitz loss sequence whose pre-update regret against zero is at least phi(alpha)*T^(2-alpha)/2.",
+      "math": "\\exists\\ell_1,\\ldots,\\ell_T\\text{ convex and1-Lipschitz}:\\quad R_T(0)\\ge\\tfrac12\\phi(\\alpha)T^{2-\\alpha}.",
+      "intuition": "Positive dimension supplies a unit vector using exists_norm_eq. Choose the actual switching loss witness. switching_loss_regular proves the required global regularity and switching_vector_lower_bound proves the actual run's regret. The separate phi_range and phi_limit terminals preserve the complete printed theorem content.",
+      "why": "Explain how polynomially decreasing steps can incur superlinear regret on an unbounded domain.",
+      "position": "Orabona, A Modern Introduction to Online Learning, arXiv:1912.13213v10. Theorem 5.4, printed pp.52-53 / PDF pp.64-65, is a required dependency of the Chapter 2 forward observation on printed p.14 / PDF p.26. Component of the one printed Theorem 5.4.",
+      "proof_idea": "Positive dimension supplies a unit vector using exists_norm_eq. Choose the actual switching loss witness. switching_loss_regular proves the required global regularity and switching_vector_lower_bound proves the actual run's regret. The separate phi_range and phi_limit terminals preserve the complete printed theorem content.",
+      "lean_notes": "Lean index t corresponds to source round t+1. Start at X0=0 and score loss_t(X_t) before updating to X_(t+1). The comparator is zero. Set m=ceil(T/2) and k=floor(T/2); the first m signs are -1 and the last k are +1. The horizon-specific witness uses these signs along one unit direction. The canonical learner selects a subgradient from the current loss and point; its step size uses only alpha and the current index. Source interpretation restricts alpha to (0,1) and the losses to the finite played prefix. The library functions also have values outside that carrier. In particular total phi(1)=1 differs from the source left limit 1-log(2). The finite affine witness has a singleton global subdifferential, so the selector fallback is inactive; its loss values are finite before EReal.toReal. Finite-dimensional nontrivial real inner-product spaces express the positive-dimensional Euclidean setting without selecting coordinates. The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. All eight Chapter 2 forward containers still require dedicated reconciliation and chapter gates; the chapter proof denominator remains unknown and whole-book acceptance remains open. At alpha=1/2, the seven-part scalar T=2 diagnostic checks steps 1 and 2^(-1/2), their positivity and decrease, states 0,1,1-2^(-1/2), and pre-update regret 1. This small horizon tests the identity rather than the lower-bound threshold. The nine-part T=64 diagnostic in R^2 checks the unit direction, first update, regularity of all played losses, phi(1/2)>=1/15, the exact threshold, the source-form bound, regret>=256/15 and regret>17, and the fully applied existential theorem. The T=2 and T=64 loss streams have different switch times. The final existential does not itself identify its witness with the earlier explicit test stream.",
+      "dependencies": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+      ]
     }
   ]
 }
