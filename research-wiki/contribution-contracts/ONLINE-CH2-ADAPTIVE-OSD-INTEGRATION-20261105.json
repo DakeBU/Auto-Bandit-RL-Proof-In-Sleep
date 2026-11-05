@@ -17,9 +17,6 @@
     "BanditRLProof/OnlineAdaptiveBenchmark.lean",
     "BanditRLProof/OnlineAdaptiveOSD.lean",
     "BanditRLProof/OnlineAdaptivePotential.lean",
-    "Tests.lean",
-    "Tests/OnlineAdaptiveOSDCanary.lean",
-    "Tests/OnlineAdaptivePotentialCanary.lean",
     "website/content/chapters.json",
     "website/content/highlights.json",
     "website/content/readings.json"
@@ -195,6 +192,7 @@
   "truth_boundary": "The tuned regret bound holds on its own realized trajectory. When exactly one of the diameter bound and realized energy is zero, the fixed-step objective has infimum zero and no positive step attains it. With both positive, the unique minimizer is their ratio D/sqrt(S). With both zero, all positive steps attain zero. All eight chapter forward containers and six future enumerations retain their recorded status.",
   "verification": {
     "focused_checks": [
+      "Tests.lean imports Tests.OnlineAdaptiveOSDCanary and Tests.OnlineAdaptivePotentialCanary. All three changed test paths are bound in evidence-map.json and proof-seal.json.",
       "Five focused modules and the public library root and Tests passed together.",
       "All 39 theorem signatures applied; 46 top-level canary conjuncts inspected."
     ],
