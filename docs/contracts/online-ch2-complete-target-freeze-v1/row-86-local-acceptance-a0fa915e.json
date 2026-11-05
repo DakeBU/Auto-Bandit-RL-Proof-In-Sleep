@@ -1,0 +1,111 @@
+{
+  "status": "Accepted locally at the named stacked head for the labelled optimistic-FTRL repair.",
+  "head": "a0fa915ee8846fe7ba1edb9c7b9705123140c407",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "arXiv": "1912.13213v10",
+    "pages": "printed 129–130 / PDF 141–142",
+    "label": "Algorithm 7.8, Theorem 7.47; Definition 4.1 on specified curvature",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=141"
+  },
+  "target": {
+    "path": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "pointer": "/effective_targets/86",
+    "id": "repair:7.47-terminal",
+    "statement": "For G_t=psi_t+sum_(i<=t)ell_i,arbitrary feasible z=x_(T+1) and finite displayed values, R_T(u)=psi_T(u)-psi1(x1)+sum_(t<=T)(G_t(x_t)-G_t(x_(t+1)))+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1)))+G_T(z)-G_T(u). Mandatory labelled correction: retain real-round Algorithm7.8/hypotheses; define ghost psi_(T+1)=psi_T,h_(T+1)=0 and z in argmin G_T, proving attainment and all support/finiteness conditions. Then terminal gap<=0 yields printed sharp bound and Young bound. Repeating final hint instead requires adding h_(T+1)(u)-h_(T+1)(z), not cancelling it. The repeated-hint quadratic completion is refuted; no statement of equivalence to literal original is accepted.",
+    "reference": {
+      "pointer": "/effective_targets/166",
+      "id": "dependency:Algorithm7.8-Theorem7.47",
+      "additional_result_count": 0
+    }
+  },
+  "mathematics": [
+    "Each actual point minimizes the regularizer, current hint and strict past loss over V. The positive hinted curvature is in some genuine norm that can depend on the round.",
+    "For the additional terminal point, hold the final regularizer fixed. Setting the hint to zero gives a minimizer of the inclusive objective even at assigned curvature zero. Any such minimizer admits the sharp regret bound.",
+    "The Young bound uses the actual induced dual norm and requires all chosen curvatures strictly positive. Repeating the hint instead contributes its value at the comparator minus its value at the repeated-hint endpoint.",
+    "This is a labelled source repair. A feasible support need not support an arbitrary ambient extension. Neither uniqueness of the zero-curvature endpoint nor a zero-curvature Young bound is inferred."
+  ],
+  "public": {
+    "module": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/a0fa915ee8846fe7ba1edb9c7b9705123140c407/BanditRLProof/OnlineOptimisticFTRL.lean",
+    "tests": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/a0fa915ee8846fe7ba1edb9c7b9705123140c407/Tests/OnlineOptimisticFTRLCanary.lean",
+    "contract": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/a0fa915ee8846fe7ba1edb9c7b9705123140c407/docs/contracts/online-optimistic-ftrl-terminal-v1/source-contract.json",
+    "main_private_evidence": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/a0fa915ee8846fe7ba1edb9c7b9705123140c407/docs/contracts/online-optimistic-ftrl-terminal-v1/private-main-evidence.json",
+    "example_private_evidence": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/a0fa915ee8846fe7ba1edb9c7b9705123140c407/docs/contracts/online-optimistic-ftrl-terminal-v1/private-example-evidence.json",
+    "main_declarations": [
+      "optimistic_round_unique",
+      "zero_hint_terminal_attained",
+      "zero_hint_sharp_regret",
+      "positive_modulus_young_regret",
+      "repeated_hint_residual_regret"
+    ]
+  },
+  "type_freeze": "eb0f79107768bbf42facd2af30da5d3c798fe4e9d465e82661fe44d9e5b2c447",
+  "compiled": {
+    "standalone_and_two_import_lean_exits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "production_proof_audit_sha256": "9ab6845ff2b5e89425f9fcb04bb273459a0727ae7a3700b4218b2cdadcb74145",
+    "raw_comparator_exit": 3,
+    "raw_equal": 78,
+    "reconstructed": 88,
+    "positions": {
+      "Lean.Expr.forallE": 514,
+      "Lean.Expr.lam": 12619,
+      "Lean.Expr.const": 968,
+      "generated_proof_const": 33398,
+      "Lean.Expr.letE": 1,
+      "NeZero.two-instance": 1
+    },
+    "true_private_origins": 45,
+    "actual_model_parent_calls": 12,
+    "comparison_supplement": "33,398 generated Nat.AtLeastTwo proof-name occurrences and one fully applied NeZero (2 : ℝ) instance were isolated; matched provider declarations and a kernel probe established the relevant proof types and definitional equality. Original wrapper failures remain archived."
+  },
+  "project": {
+    "head": "a0fa915ee8846fe7ba1edb9c7b9705123140c407",
+    "gate_sha256": "c266dde2e7b867d2c7bc4ac014428e78a7a75507e65fbabd1726eb8116f9912f",
+    "root_jobs": 9127,
+    "tests_jobs": 9314,
+    "harness_run": 487,
+    "configured_skips": 7,
+    "website": {
+      "pages": 991,
+      "modules": 879,
+      "declarations": 11192,
+      "placeholders": 0
+    },
+    "six_gate_exits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "stacked_base": "c39bf303fb0f38b488b99bba0175116c770d0979",
+    "latest_main_for_contributor_check": "d3c4520c5736ff90856e01dbf1a6736d208a3eb3",
+    "common_base_with_main": "830261ccaf84ab9be7b2a5df75199b5e0cf7488b"
+  },
+  "reader": {
+    "desktop_and_mobile_visits": 10,
+    "desktop_graph_round_trips": 5,
+    "mobile_arrow_right_edges_px": [
+      133,
+      0,
+      141,
+      138,
+      141
+    ],
+    "mobile_second_formula": "Fits without scrolling.",
+    "browser_sha256": "e07371672f5fdedcf9bcf15bda2d2f5842a8ab325d4b641dfb497e963089ece7",
+    "screenshot_observations_sha256": "5a856fcd12bcf59bd4cce5f75a928c91b0056e96e676529892fff0318fe9b272",
+    "five_clipboard_kernel_exit": 0,
+    "original_binder_only_comparator_exit": 1,
+    "clipboard_reconstruction_sha256": "1ba97cbda5b590360d6d4ec9308c7132db18c2ff3932f262cb27478a3bce280f",
+    "public_unauthenticated_git_bytes_sha256": "a0089d84828168b68109210829e90ee29e52be5e1c69057af312711b6067d317",
+    "independent_review_sha256": "66bb859bf7cc960ac9495651aa7b9dde384b0679d897c9271c969551f777a9df"
+  },
+  "scope": "This adjudication closes row 86 (with row 166 as its reference) only at the named stacked head. The checked-out feature stack does not include collaborator PR #291. Chapter 2, the overall book, main merge and live deployment are not adjudicated by these checks."
+}

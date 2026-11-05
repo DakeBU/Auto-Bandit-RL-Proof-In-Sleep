@@ -1,0 +1,204 @@
+{
+  "status": "Type-checked contracts, prior to proof adjudication. A definition with value Prop is not a proof.",
+  "source": {
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+    "locator": "Lemma 6.33, scalar step of its proof, printed p. 80 (PDF p. 92)."
+  },
+  "targets": {
+    "88": "Repair the strictly-positive second-derivative claim on u>0. The displayed gap vanishes to first order at 1, is convex, and is nonnegative throughout the positive half-line.",
+    "162": "Uses the scalar inequality. The weighted gradient pairing and Jensen step are separate outstanding obligations.",
+    "143": "The full weighted L1 strong convexity result, KL corollary and Bernoulli endpoints remain separate. No endpoint convention follows from the positive pair calculation."
+  },
+  "semantic_boundaries": [
+    "Both derivatives are of the actual gap, not of an unconnected expression. Identify the first derivative on a positive neighborhood of each point before differentiating again.",
+    "The corrected second derivative is zero at 1 and positive elsewhere on the stated domain. The printed strict statement is false; its nonnegative consequence suffices.",
+    "The two-coordinate claim quantifies only over x,y>0. It asserts equality at x=y, without asserting a converse."
+  ],
+  "typing": {
+    "base": "c39bf303fb0f38b488b99bba0175116c770d0979",
+    "native_exit": 0,
+    "validator_exit": 0,
+    "inputs": 3122,
+    "packages": 9,
+    "actual_streams": 17,
+    "index_files": 2,
+    "source_review_sha256": "6e07252743f8a89e7543ea2b6f2fcaa955a5d78ce62a507cc0be47b71cc60a85",
+    "source_first_review_sha256": "c665212d8c95471456ac33bd5d432f8b5661a1966e651e2f2ffbe88489c8b084",
+    "main_decoder_sha256": "04ef9a99f6c60579a6fe81ba974a994f466ea72f5a748043b49a53a179932aaf",
+    "consumer_decoder_sha256": "dbc38487ca8bb56acd9c64cccf4a68be7a1a003a56a9b3a6442c3be5c48190c7"
+  },
+  "context": {
+    "utf8_text": "import Mathlib.Analysis.Convex.Deriv\nimport Mathlib.Analysis.SpecialFunctions.Log.Deriv\n\nnoncomputable section\nnamespace BanditRL.OnlineEntropy\n\ndef scalarGap (u : ℝ) : ℝ :=\n  (u - 1) * Real.log u - 2 * (u - 1)^2 / (u + 1)\n",
+    "bytes": 227,
+    "sha256": "e73cdf9c5c756c99202929558df79241341efc70b9cc0438f924cac90052b100"
+  },
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap",
+      "ordinal": 0,
+      "kind": "actual_definition",
+      "type_only_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "streams": {
+        "TYPE": {
+          "bytes": 100,
+          "sha256": "7a8982d7d339e132a3775c715646cb857e1656a42040fa2096433c3e58e33c63"
+        },
+        "VALUE": {
+          "bytes": 7607,
+          "sha256": "cab3d4fe11c30943fe7cb089f6414dec76e14fac09b7253459f1b3500ab2a1f2"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_curvature",
+      "ordinal": 1,
+      "kind": "unproved_Prop_definition",
+      "type_only_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "streams": {
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 52812,
+          "sha256": "d709a5bff5c6714ba06b0bdfab7fe47b07ebe2681c9cb2d86595110f5c096501"
+        },
+        "TYPE": {
+          "bytes": 795,
+          "sha256": "0ddb96b6267053143470984be4f894aaafbf08f71343968087347c232b9330ba"
+        },
+        "VALUE": {
+          "bytes": 52804,
+          "sha256": "caf6b9158c814ecd384f4ee6aaf8ebd735ae3cb00bddbe3b97177af6c9099a0a"
+        }
+      },
+      "declaration": {
+        "utf8_text": "theorem scalarGap_curvature (u : ℝ) (hu : 0 < u) :\n    HasDerivAt scalarGap (Real.log u - 1 - 1 / u + 8 / (u + 1)^2) u ∧\n    HasDerivAt (deriv scalarGap)\n      ((u - 1)^2 * (u^2 + 6*u + 1) / (u^2 * (u + 1)^3)) u ∧\n    0 ≤ deriv (deriv scalarGap) u ∧ (deriv (deriv scalarGap) u = 0 ↔ u = 1)\n",
+        "bytes": 302,
+        "sha256": "3cb4fabb2b3c9d2948acc4e859769f640919c10d448f3fa93b1e489f4d9025d1"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_nonneg",
+      "ordinal": 2,
+      "kind": "unproved_Prop_definition",
+      "type_only_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "streams": {
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 10613,
+          "sha256": "b33f4969487e48f57b9e9240fdbda18b6980fd1046bdde77f246f2ef67897bc8"
+        },
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 10613,
+          "sha256": "b33f4969487e48f57b9e9240fdbda18b6980fd1046bdde77f246f2ef67897bc8"
+        }
+      },
+      "declaration": {
+        "utf8_text": "theorem scalarGap_nonneg :\n    scalarGap 1 = 0 ∧ deriv scalarGap 1 = 0 ∧\n    ConvexOn ℝ (Set.Ioi 0) scalarGap ∧ ∀ u : ℝ, 0 < u → 0 ≤ scalarGap u\n",
+        "bytes": 161,
+        "sha256": "04829dba05c4c135849a349f1468952019a00420982b07c975ea24b0cfc7dcf8"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_unit_contact",
+      "ordinal": 3,
+      "kind": "unproved_Prop_definition",
+      "type_only_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "streams": {
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 21333,
+          "sha256": "d5fa79c22072b2a398f06cd69b833edb1f67a573cdad0139404d67a26c3f360a"
+        },
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 21333,
+          "sha256": "d5fa79c22072b2a398f06cd69b833edb1f67a573cdad0139404d67a26c3f360a"
+        }
+      },
+      "declaration": {
+        "utf8_text": "theorem scalarGap_unit_contact :\n    HasDerivAt scalarGap 0 1 ∧ HasDerivAt (deriv scalarGap) 0 1 ∧\n    scalarGap 1 = 0 ∧ ¬ (∀ u : ℝ, 0 < u → 0 < deriv (deriv scalarGap) u)\n",
+        "bytes": 185,
+        "sha256": "5cf05ff3bbb32f16059cc3299fcc4d828836cc436db58696beba504503c5c270"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_two_curvature",
+      "ordinal": 4,
+      "kind": "unproved_Prop_definition",
+      "type_only_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "streams": {
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 25361,
+          "sha256": "87feaba5eed4faa857ba48a7b0c2cacf8a2f33da879a34aa8ed3244132c6f734"
+        },
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 25361,
+          "sha256": "87feaba5eed4faa857ba48a7b0c2cacf8a2f33da879a34aa8ed3244132c6f734"
+        }
+      },
+      "declaration": {
+        "utf8_text": "theorem scalarGap_two_curvature :\n    HasDerivAt (deriv scalarGap) (17/108) 2 ∧\n    deriv (deriv scalarGap) 2 = 17/108 ∧ 0 < deriv (deriv scalarGap) 2\n",
+        "bytes": 155,
+        "sha256": "05dc06aa98b4a6332709a9b175061ae6d056bdd74c8031e0426131107dff4c4f"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.positive_pair_log_ratio",
+      "ordinal": 5,
+      "kind": "unproved_Prop_definition",
+      "type_only_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "streams": {
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 19034,
+          "sha256": "558c73b73328223cd23c5ab66344810050dff6ba1e8fcc615e51c8255dd2d1df"
+        },
+        "TYPE": {
+          "bytes": 1662,
+          "sha256": "06f9994fc5ee0307711b5d1fd30360026d1ffd17c3c70db81514caadc78c238a"
+        },
+        "VALUE": {
+          "bytes": 19018,
+          "sha256": "039470cbbb346a4f0cb31436548f3a39eca4e75673327320d9245ab9fe9fa44a"
+        }
+      },
+      "declaration": {
+        "utf8_text": "theorem positive_pair_log_ratio (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :\n    2 * (x-y)^2 / (x+y) ≤ (x-y) * (Real.log x - Real.log y) ∧\n    (x = y → 2 * (x-y)^2 / (x+y) = (x-y) * (Real.log x - Real.log y))\n",
+        "bytes": 210,
+        "sha256": "bdc49968a02036e16db85331ca82ece9cf7bd1594f1eb0dff68ba3647180cff7"
+      }
+    }
+  ]
+}
