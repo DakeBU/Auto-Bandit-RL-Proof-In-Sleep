@@ -92,6 +92,18 @@ def scaffold(output, identity, ability):
     (output/'task.json').write_text(json.dumps(task, indent=2)+'\n')
 
 
+def validate_packages(root):
+    packages = []
+    for folder in sorted(root.iterdir()) if root.exists() else []:
+        if not folder.is_dir():
+            continue
+        if folder.is_symlink() or not (folder/'task.json').is_file():
+            raise ValueError('Every submitted task directory requires its own task.json: '+str(folder))
+        validate(folder)
+        packages.append(folder)
+    return packages
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='command', required=True)
@@ -101,9 +113,7 @@ def main():
     all_tasks.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1]/'benchmarks/banditrlbench/tasks')
     args = p.parse_args()
     if args.command == 'validate-all':
-        packages = sorted(args.root.glob('*/task.json'))
-        for package in packages:
-            validate(package.parent)
+        packages = validate_packages(args.root)
         print(json.dumps(dict(packages_checked=len(packages), admission='not-granted')))
         return
     if args.command == 'scaffold':

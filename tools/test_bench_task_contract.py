@@ -80,5 +80,11 @@ class IntakeTests(unittest.TestCase):
         task = self.candidate(); task['review_roles']['blind_decoder']='fixture-author'; self.save(task)
         with self.assertRaisesRegex(ValueError, 'Distinct'): intake.validate(self.root)
 
+    def test_package_collection_rejects_directories_without_manifest(self):
+        self.assertEqual(intake.validate_packages(self.root.parent), [self.root])
+        incomplete = self.root.parent/'incomplete'; incomplete.mkdir()
+        (incomplete/'instruction.md').write_text('Missing task contract')
+        with self.assertRaisesRegex(ValueError, 'task.json'): intake.validate_packages(self.root.parent)
+
 
 if __name__ == '__main__': unittest.main()
