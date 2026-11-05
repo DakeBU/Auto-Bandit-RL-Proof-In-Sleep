@@ -1,0 +1,286 @@
+{
+  "status": "COMPILED_AUDITED_PRIVATE_PACKAGE_INTEGRATION_GATES_UI_PENDING",
+  "namespace": "BanditRL.OnlineFTRLSourceArithmetic",
+  "planned_module": "BanditRLProof/OnlineFTRLSourceArithmetic.lean",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Lemma 7.1 printed100/PDF112; Algorithm7.1 printed99/PDF111"
+  },
+  "target_pointers": [
+    {
+      "file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+      "pointer": "/effective_targets/133",
+      "role": "parent remains open",
+      "target_object": "Lemma7.1"
+    },
+    {
+      "file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+      "pointer": "/effective_targets/168",
+      "role": "B7 arithmetic qualification under review; no completion mutation",
+      "target_object": "FTRL7.1-wellformedness"
+    }
+  ],
+  "exact_headers": {
+    "source_arithmetic_domain": {
+      "canonical_text": "theorem source_arithmetic_domain\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d)))\n    (hVX : V ⊆ X) (hVclosed : IsClosed V) (hV : V.Nonempty)\n    (psi : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (hbot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (u : EuclideanSpace ℝ (Fin d)) (hu : u ∈ X)\n    (hx : ∀ t ≤ T, x t ∈ V)\n    (hmin : ∀ t ≤ T, IsMinOn (objective psi loss t) V (x t)) :\n    (sourceRHS T V psi loss x u).isSome ↔\n      (∀ t ≤ T, objective psi loss t (x t) ≠ ⊤) ∧\n      ¬ (playedTop T loss x ∧ comparatorTop T loss u)\n",
+      "sha256": "0f511181248aec520a54eb3cb92575731489229bf3190816fdcdcc7657f665d8"
+    },
+    "lawful_source_identity": {
+      "canonical_text": "theorem lawful_source_identity\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d)))\n    (hVX : V ⊆ X) (hVclosed : IsClosed V) (hV : V.Nonempty)\n    (psi : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (hbot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (u : EuclideanSpace ℝ (Fin d)) (hu : u ∈ X)\n    (hx : ∀ t ≤ T, x t ∈ V)\n    (hmin : ∀ t ≤ T, IsMinOn (objective psi loss t) V (x t))\n    (hselected : ∀ t ≤ T, objective psi loss t (x t) ≠ ⊤)\n    (hexclusive : ¬ (playedTop T loss x ∧ comparatorTop T loss u)) :\n    sourceLHS T loss x u = sourceRHS T V psi loss x u ∧\n      (sourceLHS T loss x u).isSome\n",
+      "sha256": "78d4a677f38d5d0b45198afcb409a6d393f4775f792297210240bbe1047d187f"
+    },
+    "played_top_source_identity": {
+      "canonical_text": "theorem played_top_source_identity\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d)))\n    (hVX : V ⊆ X) (hVclosed : IsClosed V) (hV : V.Nonempty)\n    (psi : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (hbot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (u : EuclideanSpace ℝ (Fin d)) (hu : u ∈ X)\n    (hx : ∀ t ≤ T, x t ∈ V)\n    (hmin : ∀ t ≤ T, IsMinOn (objective psi loss t) V (x t))\n    (hselected : ∀ t ≤ T, objective psi loss t (x t) ≠ ⊤)\n    (hplayed : playedTop T loss x)\n    (hcomparator : ¬ comparatorTop T loss u) :\n    sourceLHS T loss x u = some ⊤ ∧ sourceRHS T V psi loss x u = some ⊤\n",
+      "sha256": "aaa8c2581784b8da22abb613d478ae685170d665720e88cd3a0206c617c1b792"
+    },
+    "comparator_top_source_identity": {
+      "canonical_text": "theorem comparator_top_source_identity\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d)))\n    (hVX : V ⊆ X) (hVclosed : IsClosed V) (hV : V.Nonempty)\n    (psi : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (hbot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (u : EuclideanSpace ℝ (Fin d)) (hu : u ∈ X)\n    (hx : ∀ t ≤ T, x t ∈ V)\n    (hmin : ∀ t ≤ T, IsMinOn (objective psi loss t) V (x t))\n    (hselected : ∀ t ≤ T, objective psi loss t (x t) ≠ ⊤)\n    (hplayed : ¬ playedTop T loss x)\n    (hcomparator : comparatorTop T loss u) :\n    sourceLHS T loss x u = some ⊥ ∧ sourceRHS T V psi loss x u = some ⊥\n",
+      "sha256": "b6d4e49e388cc5e05134ac8e1edccc6bff99edb2a85b3039e443fa80714a33aa"
+    },
+    "both_top_source_undefined": {
+      "canonical_text": "theorem both_top_source_undefined\n    (d T : ℕ) (X V : Set (EuclideanSpace ℝ (Fin d)))\n    (hVX : V ⊆ X) (hVclosed : IsClosed V) (hV : V.Nonempty)\n    (psi : ℕ → EuclideanSpace ℝ (Fin d) → ℝ)\n    (loss : ℕ → EuclideanSpace ℝ (Fin d) → EReal)\n    (hbot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (x : ℕ → EuclideanSpace ℝ (Fin d))\n    (u : EuclideanSpace ℝ (Fin d)) (hu : u ∈ X)\n    (hx : ∀ t ≤ T, x t ∈ V)\n    (hmin : ∀ t ≤ T, IsMinOn (objective psi loss t) V (x t))\n    (hselected : ∀ t ≤ T, objective psi loss t (x t) ≠ ⊤)\n    (hplayed : playedTop T loss x)\n    (hcomparator : comparatorTop T loss u) :\n    sourceLHS T loss x u = none ∧ sourceRHS T V psi loss x u = none\n",
+      "sha256": "786b7e478c8789e459b936dd9dbd006dbfbf977fc4bd76bd2ea81ba164053159"
+    }
+  },
+  "exact_definitions": {
+    "sourceAdd": {
+      "canonical_text": "def sourceAdd (a b : EReal) : Option EReal :=\n  if (a = ⊤ ∧ b = ⊥) ∨ (a = ⊥ ∧ b = ⊤) then none else some (a + b)\n",
+      "sha256": "ec0c2fb5b81d678cd3b747e8049773ed1d3ed5f270c77e09f3f77e939e74caba"
+    },
+    "sourceSub": {
+      "canonical_text": "def sourceSub (a b : EReal) : Option EReal := sourceAdd a (-b)\n",
+      "sha256": "c260c24351bf1ce9e387b57ee9445ac6613748d07572dbff21943795685798c8"
+    },
+    "sourceSum": {
+      "canonical_text": "def sourceSum : ℕ → (ℕ → Option EReal) → Option EReal\n  | 0, _ => some 0\n  | n + 1, f => (sourceSum n f).bind (fun a => (f n).bind (sourceAdd a))\n",
+      "sha256": "75af98543e9673c226cf37a8afa83ac453a907bc7e383aadcebc2e2d27a61565"
+    },
+    "objective": {
+      "canonical_text": "def objective {E : Type*} (psi : ℕ → E → ℝ) (loss : ℕ → E → EReal)\n    (t : ℕ) (v : E) : EReal :=\n  (psi t v : EReal) + ∑ i ∈ range t, loss i v\n",
+      "sha256": "e5b989fd8aaf411cfc45cbae9d18cdb3d8da1622870b9b6d88826f9f75dbd1ec"
+    },
+    "sourceLHS": {
+      "canonical_text": "def sourceLHS {E : Type*} (T : ℕ) (loss : ℕ → E → EReal)\n    (x : ℕ → E) (u : E) : Option EReal :=\n  sourceSum T (fun t => sourceSub (loss t (x t)) (loss t u))\n",
+      "sha256": "8de65c617a6eace17ba7bc4c98b32ca946b81cc7803381363153e1d20753425b"
+    },
+    "sourceRHS": {
+      "canonical_text": "def sourceRHS {E : Type*} (T : ℕ) (V : Set E) (psi : ℕ → E → ℝ)\n    (loss : ℕ → E → EReal) (x : ℕ → E) (u : E) : Option EReal :=\n  let F := objective psi loss\n  let brackets := sourceSum T (fun t =>\n    (sourceSub (F t (x t)) (F (t + 1) (x (t + 1)))).bind\n      (fun delta => sourceAdd delta (loss t (x t))))\n  -- Preserve the displayed outer left association: initial + sum + a_T - F_T(u).\n  brackets.bind (fun s =>\n    (sourceAdd ((psi T u - sInf (psi 0 '' V) : ℝ) : EReal) s).bind\n      (fun q => (sourceAdd q (F T (x T))).bind\n        (fun r => sourceSub r (F T u))))\n",
+      "sha256": "c125542e148611736fbc258e0b729fad1bf1fd07d84c8146ff768857a9298118"
+    },
+    "playedTop": {
+      "canonical_text": "def playedTop {E : Type*} (T : ℕ) (loss : ℕ → E → EReal) (x : ℕ → E) : Prop :=\n  ∃ t < T, loss t (x t) = ⊤\n",
+      "sha256": "2a0459ae095f67c95efaf425b5c74dd041237dea6ee5f2caafd70bf667342418"
+    },
+    "comparatorTop": {
+      "canonical_text": "def comparatorTop {E : Type*} (T : ℕ) (loss : ℕ → E → EReal) (u : E) : Prop :=\n  ∃ t < T, loss t u = ⊤\n",
+      "sha256": "8c7fd8d3d40dd51e415d67e4c0b50ee28c33045cb575ed457993034bbde3dbe4"
+    }
+  },
+  "context_sha256": "79a91ee8611f70670a90644f80fafc4c34f3d17e97f1ebbb0c77dab038571e71",
+  "source_model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+  "indexing": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞.",
+  "partial_semantics": "Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+  "mathematical_boundary": "This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention.",
+  "required_certificates": {
+    "status": "ALL_EIGHT_GROUPS_INDEPENDENTLY_AUDITED_INTEGRATION_PUBLICATION_PENDING",
+    "certificates": [
+      {
+        "id": "OPERATION",
+        "obligation": "Soundness/completeness of guarded add/sub/sum against ordinary partial extended-real operations, including propagation and ordering.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "PREFIX",
+        "obligation": "No-bottom finite-prefix objective interpretation; total EReal objective agrees with source-defined prefix.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "MINIMUM",
+        "obligation": "Feasible minimizing x0 witnesses attained real sInf; no empty-image/default-value shortcut.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "FIRST_TOP",
+        "obligation": "First selected-top j and actual hmin force top played loss at previous feasible point, making original bracket undefined.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "FINITE_BRIDGE",
+        "obligation": "Legal finite branch follows by genuine current lemma7_1_finite_values application with all used-value hypotheses discharged from case classification.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "DOMAIN_TRANSPORT",
+        "obligation": "Actual source function extension, restriction and partial evaluator subtype backtransport; representation interface alone insufficient.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "INFINITE_CASES",
+        "obligation": "Lawful positive and negative infinity cases and both-top same/distinct-index undefined cases without invalid cancellation; T0 handled.",
+        "current_state": "INDEPENDENT_MAIN_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+          "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98"
+        }
+      },
+      {
+        "id": "CANARIES",
+        "obligation": "Separately sealed concrete source-model tests for playedtop,comparatortop,same/different-index both-top,selectedtop,T0, with genuine parent applications.",
+        "current_state": "INDEPENDENT_CANARY_AUDIT_ACCEPTED",
+        "evidence": {
+          "file": "c2-lemma7-1-B7-canary-audit-independent-review-v3.json",
+          "sha256": "440a7afc7bb565adb31701f3dcadb2e427217838d5ee4bc3e78714a07c02bde8"
+        }
+      }
+    ],
+    "publication_state": "pending exact integration, full gates and actual UI"
+  },
+  "current_evidence": {
+    "main_author_exit": 0,
+    "main_sha256": "1fe8998fafebdf48e1a4722f71162e2b283bde5393c97ced9976ff62ed614e69",
+    "canary_combined_author_exit": 0,
+    "canary_combined_sha256": "a107b81eb78cc292f006676ed9a293821bfaa699f2d3cc3a948a7179709d2f3d",
+    "main_static_review": "72080fea6550f6384ce892a18773412263432f0edd3b69c8f6b86b97c2b492ee",
+    "independent_compiled_main": {
+      "status": "accepted-with-explicit-scope",
+      "file": "c2-lemma7-1-B7-main-audit-independent-review-v3.json",
+      "sha256": "f726eaba57bb734e65022ec724846712a72bcf4584492631cf3cdea075751e98",
+      "candidate_sha256": "1fe8998fafebdf48e1a4722f71162e2b283bde5393c97ced9976ff62ed614e69"
+    },
+    "independent_compiled_canary": {
+      "status": "accepted-with-explicit-scope",
+      "file": "c2-lemma7-1-B7-canary-audit-independent-review-v3.json",
+      "sha256": "440a7afc7bb565adb31701f3dcadb2e427217838d5ee4bc3e78714a07c02bde8",
+      "actual_calls": 15,
+      "whole_headers": 7,
+      "baseline_comparison": "143b7ac9e7ec4112b0b1f443342f9a4e86029644b8670840e2b274c37ce81dd7",
+      "summary": "cceb4029b03bcecb525f6e7e7398cc84a9b393db3dd783f5b9452a90f66b0d90"
+    },
+    "full_gates": "pending",
+    "actual_UI": "pending",
+    "reader_draft_review": {
+      "file": "c2-lemma7-1-B7-prospective-publication-source-review-v2.json",
+      "sha256": "8b4319cf0be9e2a9b89a3143d514ff5324a3ea9393368cdec4595d76b0f15ac3"
+    },
+    "blind_decoders": [
+      {
+        "file": "decoder-v1.json",
+        "sha256": "6b2ae2dcf8c356c9868daad387ac749b0f4ca7faf7d4b4819fb0f16931382a61",
+        "kind": "external private evidence basename and digest, not a public file link"
+      },
+      {
+        "file": "decoder-canary-v1.json",
+        "sha256": "ec605e17264633a31351e0cab9df7d8726087bb4b3a3225c3aaebad5cdf5784c",
+        "kind": "external private evidence basename and digest, not a public file link"
+      }
+    ],
+    "candidate_proof_seal": {
+      "file": "c2-lemma7-1-B7-candidate-proof-seal-v2.json",
+      "sha256": "b4c9d152e6f3a9a71987786039007e7540eaffefc67cf10222cdb33413a36b60",
+      "scope": "Accepted private candidate ProofSeal; standalone production integration, combined gates and reader acceptance pending."
+    }
+  },
+  "actual_dependency_plan": {
+    "finite_bridge": "private finite_source_bridge calls BanditRL.OnlineFTRL.lemma7_1_finite_values with18 operands",
+    "lawful_public_direct": [
+      "BanditRL.OnlineFTRLSourceArithmetic.played_top_source_identity",
+      "BanditRL.OnlineFTRLSourceArithmetic.comparator_top_source_identity"
+    ],
+    "source_subtype_backtransport": "private mapping consumer of lawful_source_identity, not a reverse proof parent",
+    "old_inclusive_identity": "not a proof parent",
+    "cumulative_producer": "not a proof parent",
+    "kernel_edges": "Actual private VALUE/provider audits accepted: main f726eaba and canary440a7afc bind directed dependencies and fifteen full applications. Standalone imported production origins, combined gates and rendered graph remain pending."
+  },
+  "transport_plan": {
+    "main": "The private candidate replaces only the leading stale proposal comment; exact inverse byte transport is recorded below. Every definition, theorem header and proof byte is unchanged.",
+    "canary": "The private candidate replaces only two leading stale proposal comments relative to the audited planned-import standalone source. All definitions, aliases, headers and proof bytes remain unchanged. Standalone import validation is pending actual authorized integration.",
+    "historical_evidence": "Preserve original proposals, failed attempts, freezes, combined harnesses and receipts; comment cleanup does not rewrite their status."
+  },
+  "historical_frozen_requirement_ledger": {
+    "status": "ALL_UNPROVED_REQUIRED_BEFORE_ACCEPTANCE",
+    "certificates": [
+      {
+        "id": "OPERATION",
+        "obligation": "Soundness/completeness of guarded add/sub/sum against ordinary partial extended-real operations, including propagation and ordering."
+      },
+      {
+        "id": "PREFIX",
+        "obligation": "No-bottom finite-prefix objective interpretation; total EReal objective agrees with source-defined prefix."
+      },
+      {
+        "id": "MINIMUM",
+        "obligation": "Feasible minimizing x0 witnesses attained real sInf; no empty-image/default-value shortcut."
+      },
+      {
+        "id": "FIRST_TOP",
+        "obligation": "First selected-top j and actual hmin force top played loss at previous feasible point, making original bracket undefined."
+      },
+      {
+        "id": "FINITE_BRIDGE",
+        "obligation": "Legal finite branch follows by genuine current lemma7_1_finite_values application with all used-value hypotheses discharged from case classification."
+      },
+      {
+        "id": "DOMAIN_TRANSPORT",
+        "obligation": "Actual source function extension, restriction and partial evaluator subtype backtransport; representation interface alone insufficient."
+      },
+      {
+        "id": "INFINITE_CASES",
+        "obligation": "Lawful positive and negative infinity cases and both-top same/distinct-index undefined cases without invalid cancellation; T0 handled."
+      },
+      {
+        "id": "CANARIES",
+        "obligation": "Separately sealed concrete source-model tests for playedtop,comparatortop,same/different-index both-top,selectedtop,T0, with genuine parent applications."
+      }
+    ]
+  },
+  "production_transport": [
+    {
+      "target": "BanditRLProof/OnlineFTRLSourceArithmetic.lean",
+      "audited_source_file": "OnlineFTRLSourceArithmetic.lean",
+      "audited_raw_sha256": "1fe8998fafebdf48e1a4722f71162e2b283bde5393c97ced9976ff62ed614e69",
+      "candidate_raw_sha256": "04c3492ad32804901da9d56331b1da1752e309f0175608fb03c358fd39e6bb84",
+      "removed_exact_comment_UTF8": "-- PRIVATE UNFROZEN PROPOSAL: not elaborated, compiled or accepted.\n",
+      "replacement_exact_comment_UTF8": "-- Partial extended-real arithmetic for the supplied FTRL minimizing-run interface.\n",
+      "inverse_equality_verified": true,
+      "all_remaining_bytes_unchanged": true,
+      "physical_EOL": "LF"
+    },
+    {
+      "target": "Tests/OnlineFTRLSourceArithmeticCanary.lean",
+      "audited_source_file": "OnlineFTRLSourceArithmeticCanary.lean",
+      "audited_raw_sha256": "731a83893633ea50d5589203d08967ff5c391673f655cd9b3d15f74f2ca517da",
+      "candidate_raw_sha256": "f4fdac326c7fa91605a9be05fb36043611865da36047d403531ea2c3c4435ffa",
+      "removed_exact_comment_UTF8": "-- PRIVATE UNFROZEN UNTYPED MODEL PROPOSAL. No proof or acceptance implied.\n-- Planned production namespace import remains subject to DefinitionSeal.\n",
+      "replacement_exact_comment_UTF8": "-- Concrete models for lawful and undefined source-arithmetic regimes.\n",
+      "inverse_equality_verified": true,
+      "all_remaining_bytes_unchanged": true,
+      "physical_EOL": "LF"
+    }
+  ]
+}

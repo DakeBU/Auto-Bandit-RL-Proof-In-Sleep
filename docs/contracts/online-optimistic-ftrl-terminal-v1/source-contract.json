@@ -1,0 +1,1162 @@
+{
+  "status": "Frozen statement and model contract. Five general propositions and five concrete propositions were type-checked. No proof of those propositions is represented by these type-level VALUE streams.",
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "location": "Algorithm 7.8 and Theorem 7.47, printed pp. 129–130 / PDF pp. 141–142; Definition 4.1, printed p. 34 / PDF p. 46.",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=141"
+  },
+  "inventory": {
+    "86": [
+      "repair:7.47-terminal",
+      "For G_t=psi_t+sum_(i<=t)ell_i,arbitrary feasible z=x_(T+1) and finite displayed values, R_T(u)=psi_T(u)-psi1(x1)+sum_(t<=T)(G_t(x_t)-G_t(x_(t+1)))+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1)))+G_T(z)-G_T(u). Mandatory labelled correction: retain real-round Algorithm7.8/hypotheses; define ghost psi_(T+1)=psi_T,h_(T+1)=0 and z in argmin G_T, proving attainment and all support/finiteness conditions. Then terminal gap<=0 yields printed sharp bound and Young bound. Repeating final hint instead requires adding h_(T+1)(u)-h_(T+1)(z), not cancelling it. The repeated-hint quadratic completion is refuted; no statement of equivalence to literal original is accepted."
+    ],
+    "166": [
+      "dependency:Algorithm7.8-Theorem7.47",
+      "Effective target is repair:7.47-terminal; immutable original algorithm/statement/hypotheses are retained in archival_sources."
+    ]
+  },
+  "repair": [
+    "Keep the strictly-past hinted objective and every real-round play unchanged. At the extra index use the final regularizer and the zero hint; the corrected terminal point minimizes the unhinted inclusive objective.",
+    "A repeated hint instead leaves h_T(u)−h_T(z). The varied regularizers also give a drift term over t<T. The unhinted terminal need not be unique when its announced curvature is zero.",
+    "The sharp bound is for every admissible supporting covector and comparator at specified nonnegative inclusive moduli. The divided Young bound needs positive specified moduli and uses their original induced dual norm."
+  ],
+  "qualification": "Positive hinted curvature in a separately represented genuine norm does not make the unhinted curvature positive. The zero-hint terminal existence and sharp bound allow lambda=0. Young requires positive lambda. Preserve declared-zero curvature vs an actually flat unhinted terminal set, and distinguish ambient primal/dual norms from the hinted metric. Repeating the last hint has a residual term and cannot be canceled unconditionally.",
+  "carrier": "The feasible set V ⊆ X in the finite-dimensional real normed ambient space E is nonempty and convex, and V is closed in E. X need not be closed. Regularizers are real on X, hints are real on V, and the ambient losses never take −∞. The supporting inequality is tested against all q in V; an ambient affine support restricts to V, with no converse on X asserted. The proof must derive finiteness at every feasible point used in the sums from inclusive-domain finiteness and ambient no-bottom losses.",
+  "contexts": {
+    "main_context": {
+      "sha256": "66b3a01b68394a5e631d37c6f3a0ce5bf8a64917ceedd691beed2874b0d3c3b0",
+      "bytes": 2929,
+      "utf8_text": "import BanditRLProof.OnlineBTRLTerminal\nimport BanditRLProof.OnlineStrongConvexSupport\nimport Mathlib.Analysis.Seminorm\n\nnoncomputable section\nopen Set Finset\nopen BanditRL.OnlineConvex\nnamespace BanditRL.OnlineOptimistic\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\n\ndef hinted {X V : Set E} (incl : V ⊆ X) (psi : ℕ → X → ℝ)\n    (loss : ℕ → E → EReal) (hint : ℕ → V → ℝ) (n : ℕ) (v : V) : EReal :=\n  (psi n ⟨v.val,incl v.property⟩ : EReal) + ∑ i ∈ range n, loss i v.val + (hint n v : EReal)\n\nabbrev inclusive {X V : Set E} (incl : V ⊆ X) (psi : ℕ → X → ℝ)\n    (loss : ℕ → E → EReal) (n : ℕ) (v : V) : EReal :=\n  BanditRL.OnlineBTRL.sourceInclusive X psi loss n ⟨v.val,incl v.property⟩\n\ndef supports {V : Set E} (f : V → EReal) (p : V) (g : E →L[ℝ] ℝ) : Prop :=\n  ∀ q : V, f p + (g (q.val-p.val) : EReal) ≤ f q\n\ndef restrictedStrong {V : Set E} (f : V → EReal) (N : Seminorm ℝ E) (l : ℝ) : Prop :=\n  ∀ p q : V, ∀ a : ℝ, 0 < a → a < 1 → ∀ hz : a • p.val + (1-a) • q.val ∈ V,\n    f ⟨_,hz⟩ ≤ (a:EReal)*f p + ((1-a:ℝ):EReal)*f q -\n      ((l/2*a*(1-a)*(N (p.val-q.val))^2 : ℝ) : EReal)\n\ndef hintedRegular {V : Set E} (A : ℕ → V → EReal) (T : ℕ) : Prop :=\n  ∀ n < T, SourceClosed (A n) ∧ (∀ v : V, A n v < ⊤) ∧\n    (∀ v : V, ∃ g : E →L[ℝ] ℝ, supports (A n) v g) ∧\n    ∃ N : Seminorm ℝ E, (∀ v, N v = 0 → v = 0) ∧\n      ∃ μ : ℝ, 0 < μ ∧ restrictedStrong (A n) N μ\n\ndef inclusiveRegular {V : Set E} (G : ℕ → V → EReal) (lam : ℕ → ℝ) (T : ℕ) : Prop :=\n  ∀ n < T, SourceClosed (G n) ∧ (∀ v : V, G n v < ⊤) ∧\n    (∀ v : V, ∃ g : E →L[ℝ] ℝ, supports (G n) v g) ∧\n    0 ≤ lam n ∧ restrictedStrong (G n) (normSeminorm ℝ E) (lam n)\n\ndef predicts {V : Set E} (A : ℕ → V → EReal) (T : ℕ) (x : ℕ → V) : Prop :=\n  ∀ n < T, ∀ q : V, A n (x n) ≤ A n q\n\ndef forecastError {V : Set E} (loss : ℕ → E → EReal) (hint : ℕ → V → ℝ)\n    (n : ℕ) (q : V) : EReal := loss n q.val - (hint n q : EReal)\n\ndef nextPlay {V : Set E} (T : ℕ) (x : ℕ → V) (z : V) (n : ℕ) : V :=\n  if n+1=T then z else x (n+1)\n\ndef playedRegret {V : Set E} (T : ℕ) (loss : ℕ → E → EReal) (x : ℕ → V) (u : V) : ℝ :=\n  (∑ n ∈ range T, (loss n (x n).val).toReal) - ∑ n ∈ range T, (loss n u.val).toReal\n\ndef regularizerTerms {X V : Set E} (incl : V ⊆ X) (T : ℕ) (psi : ℕ → X → ℝ)\n    (x : ℕ → V) (u : V) : ℝ :=\n  let r (n : ℕ) (v : V) := psi n ⟨v.val,incl v.property⟩\n  r (T-1) u - r 0 (x 0) + ∑ n ∈ range (T-1), (r n (x (n+1))-r (n+1) (x (n+1)))\n\ndef sharpTerms {V : Set E} (T : ℕ) (x : ℕ → V) (z : V)\n    (g : ℕ → E →L[ℝ] ℝ) (lam : ℕ → ℝ) : ℝ :=\n  ∑ n ∈ range T, let v := (x n).val - (nextPlay T x z n).val;\n                  g n v - lam n / 2 * ‖v‖^2\r\n"
+    },
+    "model_context": {
+      "sha256": "081ff1fc96b8b951cf164ea219297c12ce17aa14920a14deb0e2d538dd05f2a0",
+      "bytes": 3853,
+      "utf8_text": "noncomputable section\nattribute [local instance] Classical.propDecidable\nopen Set Finset BanditRL.OnlineOptimistic\nnamespace BanditRL.OnlineOptimisticCanary\n\nstructure Inputs (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] where\n  T : ℕ\n  V : Set E\n  psi : ℕ → ↥(Set.univ : Set E) → ℝ\n  hint : ℕ → V → ℝ\n  loss : ℕ → E → EReal\n  lam : ℕ → ℝ\n  x : ℕ → V\n  g : ℕ → E →L[ℝ] ℝ\n  u : V\n\nvariable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]\nabbrev inc (m : Inputs E) : m.V ⊆ Set.univ := Set.subset_univ _\nabbrev r (m : Inputs E) := playedRegret m.T m.loss m.x m.u\nabbrev base (m : Inputs E) := regularizerTerms (inc m) m.T m.psi m.x m.u\nabbrev s (m : Inputs E) (z : m.V) := base m + sharpTerms m.T m.x z m.g m.lam\nabbrev y (m : Inputs E) := base m + ∑ n ∈ range m.T, ‖m.g n‖^2 / (2*m.lam n)\nabbrev repeated (m : Inputs E) (z : m.V) := s m z + (m.hint (m.T-1) m.u - m.hint (m.T-1) z)\nabbrev A (m : Inputs E) := hinted (inc m) m.psi m.loss m.hint\nabbrev G (m : Inputs E) := inclusive (inc m) m.psi m.loss\nabbrev allReal (v : ℝ) : (Set.univ : Set ℝ) := ⟨v, Set.mem_univ _⟩\nabbrev slope (a : ℝ) : ℝ →L[ℝ] ℝ := a • ContinuousLinearMap.id ℝ ℝ\n\ndef repeatLast : Inputs ℝ where\n  T := 1\n  V := Set.univ\n  psi := fun _ v => v.val^2/2\n  hint := fun _ v => (v.val-1)^2/2\n  loss := fun _ v => (((v-1)^2/2 : ℝ) : EReal)\n  lam := fun _ => 2\n  x := fun _ => allReal (1/2)\n  g := fun _ => 0\n  u := allReal (1/2)\nabbrev repeatZ : repeatLast.V := allReal (1/2)\nabbrev repeatZ' : repeatLast.V := allReal (2/3)\n\ndef driftingTwo : Inputs ℝ where\n  T := 2\n  V := Set.univ\n  psi := fun n v => v.val^2/2 + (if n=0 then 0 else 2*v.val)\n  hint := fun n v => if n=0 then 0 else -v.val\n  loss := fun n v => ((if n=0 then v else 2*v : ℝ) : EReal)\n  lam := fun _ => 1\n  x := fun n => allReal (if n=0 then 0 else -2)\n  g := fun n => slope (if n=0 then 1 else 3)\n  u := allReal (-5)\nabbrev driftZ : driftingTwo.V := allReal (-5)\nabbrev term (m : Inputs E) (z : m.V) (n : ℕ) : ℝ :=\n  let v := (m.x n).val - (nextPlay m.T m.x z n).val\n  m.g n v - m.lam n/2 * ‖v‖^2\n\nabbrev Pair := ℝ × ℝ\ndef box : Set Pair := (Set.Icc (-2 : ℝ) 2) ×ˢ (Set.Icc (-2 : ℝ) 2)\ndef quad (w : Pair) : ℝ := (9*w.1^2-6*w.1*w.2+9*w.2^2)/8\ndef euc : Seminorm ℝ Pair :=\n  (normSeminorm ℝ (WithLp 2 Pair)).comp (WithLp.linearEquiv 2 ℝ Pair).symm.toLinearMap\ndef boxFunctional : Pair →L[ℝ] ℝ :=\n  ContinuousLinearMap.fst ℝ ℝ ℝ + ContinuousLinearMap.snd ℝ ℝ ℝ\ndef dualBox : Inputs Pair where\n  T := 1\n  V := box\n  psi := fun _ v => quad v.val/2\n  hint := fun _ _ => 0\n  loss := fun _ w => if w ∈ box then ((w.1+w.2 : ℝ) : EReal) else ⊤\n  lam := fun _ => 1\n  x := fun _ => ⟨(0,0), by norm_num [box, Set.mem_prod]⟩\n  g := fun _ => boxFunctional\n  u := ⟨(-4/3,-4/3), by norm_num [box, Set.mem_prod]⟩\n\ndef declaredZero : Inputs ℝ where\n  T := 1\n  V := Set.univ\n  psi := fun _ v => v.val^2/2\n  hint := fun _ _ => 0\n  loss := fun _ v => (v : EReal)\n  lam := fun _ => 0\n  x := fun _ => allReal 0\n  g := fun _ => slope 1\n  u := allReal (-1)\ndef declaredOne : Inputs ℝ := { declaredZero with lam := fun _ => 1 }\n\ndef flatHalfLine : Inputs ℝ where\n  T := 1\n  V := Set.Ici 0\n  psi := fun _ v => v.val^2/2\n  hint := fun _ _ => 0\n  loss := fun _ q => if 0 ≤ q then (((max (q-1) 0)^2/2-q^2/2 : ℝ) : EReal) else ⊤\n  lam := fun _ => 0\n  x := fun _ => ⟨(0 : ℝ), by change (0 : ℝ) ≤ (0 : ℝ); exact le_rfl⟩\n  g := fun _ => slope (-1)\n  u := ⟨1, by change (0 : ℝ) ≤ 1; norm_num⟩\nabbrev flatZero : flatHalfLine.V := ⟨0, by change (0 : ℝ) ≤ 0; exact le_rfl⟩\nabbrev flatOne : flatHalfLine.V := ⟨1, by change (0 : ℝ) ≤ 1; norm_num⟩\nabbrev flatMin (z : flatHalfLine.V) := ∀ q : flatHalfLine.V, G flatHalfLine 0 z ≤ G flatHalfLine 0 q\n"
+    },
+    "extra_import": {
+      "sha256": "fc7cecc521808fe9dade56939e402a85e91e75a7391b793f042e4345f7010de7",
+      "bytes": 41,
+      "utf8_text": "import Mathlib.Analysis.Normed.Lp.ProdLp\n"
+    }
+  },
+  "main": {
+    "optimistic_round_unique": {
+      "sha256": "3b7eb9af56dea41f726589ed02c294994d7753393861c4dbc3041799984ee16a",
+      "bytes": 540,
+      "utf8_text": "theorem optimistic_round_unique\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (incl : V ⊆ X)\n    (hV : V.Nonempty) (hclosedV : IsClosed V) (hconvV : Convex ℝ V)\n    (psi : ℕ → X → ℝ) (hint : ℕ → V → ℝ) (loss : ℕ → E → EReal)\n    (hnobot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hA : hintedRegular (hinted incl psi loss hint) T) :\n    ∀ n < T, ∃! p : V, ∀ q : V, hinted incl psi loss hint n p ≤ hinted incl psi loss hint n q\n"
+    },
+    "zero_hint_terminal_attained": {
+      "sha256": "63362cfd538dad85b700794f79b6719b324ec86e1bcd46ccc6368b71a4fedd86",
+      "bytes": 779,
+      "utf8_text": "theorem zero_hint_terminal_attained\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (incl : V ⊆ X)\n    (hV : V.Nonempty) (hclosedV : IsClosed V) (hconvV : Convex ℝ V)\n    (psi : ℕ → X → ℝ) (hint : ℕ → V → ℝ) (loss : ℕ → E → EReal)\n    (hnobot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hA : hintedRegular (hinted incl psi loss hint) T)\n    (lam : ℕ → ℝ) (hG : inclusiveRegular (inclusive incl psi loss) lam T)\n    (x : ℕ → V) (hx : predicts (hinted incl psi loss hint) T x)\n    (hsupp : ∀ n < T, ∃ g : E →L[ℝ] ℝ, supports (forecastError loss hint n) (x n) g) :\n    ∃ z : V, ∀ q : V, inclusive incl psi loss (T-1) z ≤ inclusive incl psi loss (T-1) q\n"
+    },
+    "zero_hint_sharp_regret": {
+      "sha256": "633f355473833edc400773b2ab122fd42b77299f97144c66dfd210903943beb1",
+      "bytes": 881,
+      "utf8_text": "theorem zero_hint_sharp_regret\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (incl : V ⊆ X)\n    (hV : V.Nonempty) (hclosedV : IsClosed V) (hconvV : Convex ℝ V)\n    (psi : ℕ → X → ℝ) (hint : ℕ → V → ℝ) (loss : ℕ → E → EReal)\n    (hnobot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hA : hintedRegular (hinted incl psi loss hint) T)\n    (lam : ℕ → ℝ) (hG : inclusiveRegular (inclusive incl psi loss) lam T)\n    (x : ℕ → V) (hx : predicts (hinted incl psi loss hint) T x)\n    (g : ℕ → E →L[ℝ] ℝ) (hg : ∀ n < T, supports (forecastError loss hint n) (x n) (g n))\n    (z : V) (hz : ∀ q : V, inclusive incl psi loss (T-1) z ≤ inclusive incl psi loss (T-1) q) (u : V) :\n    playedRegret T loss x u ≤ regularizerTerms incl T psi x u + sharpTerms T x z g lam\n"
+    },
+    "positive_modulus_young_regret": {
+      "sha256": "68d2f61e0a6eda5f0a5791aa6366aeb33964120efaeaec30eee95c5d45795795",
+      "bytes": 850,
+      "utf8_text": "theorem positive_modulus_young_regret\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (incl : V ⊆ X)\n    (hV : V.Nonempty) (hclosedV : IsClosed V) (hconvV : Convex ℝ V)\n    (psi : ℕ → X → ℝ) (hint : ℕ → V → ℝ) (loss : ℕ → E → EReal)\n    (hnobot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hA : hintedRegular (hinted incl psi loss hint) T)\n    (lam : ℕ → ℝ) (hG : inclusiveRegular (inclusive incl psi loss) lam T)\n    (x : ℕ → V) (hx : predicts (hinted incl psi loss hint) T x)\n    (g : ℕ → E →L[ℝ] ℝ) (hg : ∀ n < T, supports (forecastError loss hint n) (x n) (g n))\n    (hpos : ∀ n < T, 0 < lam n) (u : V) :\n    playedRegret T loss x u ≤ regularizerTerms incl T psi x u +\n      ∑ n ∈ range T, ‖g n‖^2 / (2*lam n)\n"
+    },
+    "repeated_hint_residual_regret": {
+      "sha256": "25685d38f950f685800e8cea53ba6bb05434a7bc064ceb1b98b052adb93cf612",
+      "bytes": 982,
+      "utf8_text": "theorem repeated_hint_residual_regret\n    {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (incl : V ⊆ X)\n    (hV : V.Nonempty) (hclosedV : IsClosed V) (hconvV : Convex ℝ V)\n    (psi : ℕ → X → ℝ) (hint : ℕ → V → ℝ) (loss : ℕ → E → EReal)\n    (hnobot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hA : hintedRegular (hinted incl psi loss hint) T)\n    (lam : ℕ → ℝ) (hG : inclusiveRegular (inclusive incl psi loss) lam T)\n    (x : ℕ → V) (hx : predicts (hinted incl psi loss hint) T x)\n    (g : ℕ → E →L[ℝ] ℝ) (hg : ∀ n < T, supports (forecastError loss hint n) (x n) (g n))\n    (z : V) (hz : ∀ q : V,\n      inclusive incl psi loss (T-1) z + (hint (T-1) z : EReal) ≤\n      inclusive incl psi loss (T-1) q + (hint (T-1) q : EReal)) (u : V) :\n    playedRegret T loss x u ≤ regularizerTerms incl T psi x u + sharpTerms T x z g lam + (hint (T-1) u - hint (T-1) z)\n"
+    }
+  },
+  "concrete": {
+    "Repeat": {
+      "sha256": "5db510e57e14032b0b67737f509f3063c64095dde3e08fea3239d974ec4997f8",
+      "bytes": 576,
+      "utf8_text": "theorem repeat_last_residual :\n    r repeatLast ≤ s repeatLast repeatZ ∧\n    r repeatLast ≤ y repeatLast ∧\n    r repeatLast ≤ repeated repeatLast repeatZ' ∧\n    repeatZ ≠ repeatZ' ∧ r repeatLast = 0 ∧ s repeatLast repeatZ = 0 ∧ y repeatLast = 0 ∧\n    s repeatLast repeatZ' = -1/36 ∧ repeatLast.hint 0 repeatLast.u - repeatLast.hint 0 repeatZ' = 5/72 ∧\n    repeated repeatLast repeatZ' = 1/24 ∧ ¬r repeatLast ≤ s repeatLast repeatZ' ∧\n    ¬r repeatLast ≤ s repeatLast repeatZ' - (repeatLast.hint 0 repeatLast.u - repeatLast.hint 0 repeatZ')\n"
+    },
+    "Drift": {
+      "sha256": "31a98adc388a2c8ff6d1a802a1ab707a054f704fe99abeeb245dcb45826bd0fe",
+      "bytes": 518,
+      "utf8_text": "theorem two_round_drift :\n    r driftingTwo ≤ s driftingTwo driftZ ∧ r driftingTwo ≤ y driftingTwo ∧\n    predicts (A driftingTwo) 2 driftingTwo.x ∧\n    r driftingTwo = 11 ∧ driftingTwo.psi 1 (allReal (-5)) - driftingTwo.psi 0 (allReal 0) = 5/2 ∧\n    driftingTwo.psi 0 (allReal (-2)) - driftingTwo.psi 1 (allReal (-2)) = 4 ∧\n    term driftingTwo driftZ 0 = 0 ∧ term driftingTwo driftZ 1 = 9/2 ∧\n    s driftingTwo driftZ = 11 ∧ y driftingTwo = 23/2 ∧ ¬r driftingTwo ≤ s driftingTwo driftZ - 4\n"
+    },
+    "Box": {
+      "sha256": "627a3aba02ed7405c678366a0bd44cd79f3a4ef772ca5fbd9bc6e25222fcc42c",
+      "bytes": 677,
+      "utf8_text": "theorem dual_box_norms :\n    r dualBox ≤ s dualBox dualBox.u ∧ r dualBox ≤ y dualBox ∧\n    (∀ w, euc w = 0 → w = 0) ∧ restrictedStrong (A dualBox 0) euc (3/4) ∧\n    restrictedStrong (G dualBox 0) (normSeminorm ℝ Pair) 1 ∧\n    (∀ w : Pair, (euc w)^2 = w.1^2+w.2^2) ∧ euc (1,1) ≠ ‖((1,1) : Pair)‖ ∧\n    ‖boxFunctional‖ = 2 ∧ boxFunctional (1,1) = 2 ∧\n    dualBox.loss 0 (3,0) = ⊤ ∧ supports (forecastError dualBox.loss dualBox.hint 0) (dualBox.x 0) boxFunctional ∧\n    r dualBox = 8/3 ∧ s dualBox dualBox.u = 28/9 ∧ y dualBox = 10/3 ∧\n    base dualBox + (euc (1,1))^2/2 = 7/3 ∧ ¬r dualBox ≤ base dualBox + (euc (1,1))^2/2\n"
+    },
+    "Zero": {
+      "sha256": "a4238d758f05dead8787f7dee8f21123aa454f2ad95273c00fc064ab61c385d2",
+      "bytes": 348,
+      "utf8_text": "theorem announced_zero_and_positive_young :\n    r declaredZero ≤ s declaredZero declaredZero.u ∧ r declaredOne ≤ y declaredOne ∧\n    declaredZero.lam 0 = 0 ∧ declaredOne.lam 0 = 1 ∧\n    r declaredZero = 1 ∧ s declaredZero declaredZero.u = 3/2 ∧\n    y declaredZero = 1/2 ∧ ¬r declaredZero ≤ y declaredZero ∧ y declaredOne = 1\n"
+    },
+    "Flat": {
+      "sha256": "1f50017e41c8677b37f7a558f8a7671c3ec2cbaa66bac14a6eb472211ff803b1",
+      "bytes": 706,
+      "utf8_text": "theorem flat_terminal_minimizers :\n    (∀ n < flatHalfLine.T, ∃! p : flatHalfLine.V, ∀ q : flatHalfLine.V, A flatHalfLine n p ≤ A flatHalfLine n q) ∧\n    (∃ z : flatHalfLine.V, flatMin z) ∧\n    (∀ z : flatHalfLine.V, z.val ∈ Set.Icc (0:ℝ) 1 → r flatHalfLine ≤ s flatHalfLine z) ∧\n    (∀ z : flatHalfLine.V, flatMin z ↔ z.val ∈ Set.Icc (0:ℝ) 1) ∧\n    flatMin flatZero ∧ flatMin flatOne ∧ flatZero ≠ flatOne ∧\n    (∀ μ : ℝ, 0 < μ → ¬restrictedStrong (G flatHalfLine 0) (normSeminorm ℝ ℝ) μ) ∧\n    flatHalfLine.loss 0 (-1) = ⊤ ∧ r flatHalfLine = 1/2 ∧\n    (∀ z : flatHalfLine.V, z.val ∈ Set.Icc (0:ℝ) 1 → s flatHalfLine z = 1/2+z.val)\n"
+    }
+  },
+  "required_parent_slots": {
+    "Repeat": [
+      {
+        "position": 0,
+        "public_parent": "C",
+        "model": "repeatLast",
+        "z": "repeatZ"
+      },
+      {
+        "position": 1,
+        "public_parent": "D",
+        "model": "repeatLast",
+        "z": null
+      },
+      {
+        "position": 2,
+        "public_parent": "E",
+        "model": "repeatLast",
+        "z": "repeatZ'"
+      }
+    ],
+    "Drift": [
+      {
+        "position": 0,
+        "public_parent": "C",
+        "model": "driftingTwo",
+        "z": "driftZ"
+      },
+      {
+        "position": 1,
+        "public_parent": "D",
+        "model": "driftingTwo",
+        "z": null
+      }
+    ],
+    "Box": [
+      {
+        "position": 0,
+        "public_parent": "C",
+        "model": "dualBox",
+        "z": "dualBox.u"
+      },
+      {
+        "position": 1,
+        "public_parent": "D",
+        "model": "dualBox",
+        "z": null
+      }
+    ],
+    "Zero": [
+      {
+        "position": 0,
+        "public_parent": "C",
+        "model": "declaredZero",
+        "z": "declaredZero.u"
+      },
+      {
+        "position": 1,
+        "public_parent": "D",
+        "model": "declaredOne",
+        "z": null
+      }
+    ],
+    "Flat": [
+      {
+        "position": 0,
+        "public_parent": "A",
+        "model": "flatHalfLine",
+        "z": null
+      },
+      {
+        "position": 1,
+        "public_parent": "B",
+        "model": "flatHalfLine",
+        "z": null
+      },
+      {
+        "position": 2,
+        "public_parent": "C",
+        "model": "flatHalfLine",
+        "z": "arbitrary z with z.val in [0,1]"
+      }
+    ]
+  },
+  "required_obligations": [
+    "Each displayed public bound occupies the indicated conjunction slot, including the universal z in Flat. Fully instantiate its original model-specific premises without adding assumptions to these closed headers. Reconstruct all 12 actual applications and data/proof slots from proof terms after separate seal.",
+    "Box: derive hinted regularity with exactly euc and 3/4, not just another legal modulus/norm; derive inclusive display sup curvature with exactly 1. With actual subgradient g=(1,1), operator norm upper bound from |a+b|<=2 max(|a|,|b|) and lower at (1,1).",
+    "Flat: prove convexity and tangent support of G on the ray from concrete formula; prove support of forecast error at 0 with slope -1. Obtain universal third slot from C using independently proved argmin characterization. Exclude positive curvature using endpoints 0,1 and midpoint, show A selects 0 via concrete quadratic.",
+    "Repeat: show unhinted minimizer 1/2 and repeated minimizer 2/3 from quadratic on all R, and two distinct required parent operands. Drift: derive actual strict-past predictions and terminal minimizer from quadratics.",
+    "Source-scope: five tests are models of proposed corrected interfaces. The zero-denominator expression tests dropping D positivity only; no D call at λ=0. No original row adjudication from these canaries."
+  ],
+  "type_freeze_sha256": "eb0f79107768bbf42facd2af30da5d3c798fe4e9d465e82661fe44d9e5b2c447",
+  "typed_on": "c39bf303fb0f38b488b99bba0175116c770d0979",
+  "typing": {
+    "summary_sha256": "861c36dbca21b40355cf9c1aef1b3ca527c86519b487ce4de973bbaca367864a",
+    "manifest_sha256": "7402c6b7372317ffb4da9b1c0efbe24474242e6f1ee24d93d6df54b6d72bd933",
+    "ordinals": 61,
+    "stream_count": 130,
+    "bytes": 4205333,
+    "matches_prior_main_raw": 39,
+    "failures": [
+      "main V2 result-let layout",
+      "canary V2 type errors",
+      "canary V3 ray-member elaboration"
+    ],
+    "axioms_and_error_recovery": "The successful typing checks excluded sorryAx. Failed earlier attempts are retained, including partial streams."
+  },
+  "declarations": [
+    {
+      "name": "BanditRL.OnlineOptimistic.hinted",
+      "ordinal": 0,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 3072,
+          "sha256": "55f1f2f654b6e87be44479cb726e5a16fdec2efe3eac373ff7e4edfed6913d63"
+        },
+        "VALUE": {
+          "bytes": 13421,
+          "sha256": "e1c6cecf5e48b6a4dc2b804dbee6a4e3fbb45d7702597b24466c89554a1ea5a1"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.inclusive",
+      "ordinal": 1,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2419,
+          "sha256": "055b9ea8fc5c7230b6ffc8b939664e17e45b1e7543dd5897e56d4a9580663a10"
+        },
+        "VALUE": {
+          "bytes": 6017,
+          "sha256": "e2130efabff1796392b43530716d535821b0e0ae4bdcdea50b24175245dfe68a"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.supports",
+      "ordinal": 2,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 13454,
+          "sha256": "7d032ac3b66c69b32d03c0743ca24d831d740d5524b54b7e9e2a36b24fbd3878"
+        },
+        "VALUE": {
+          "bytes": 57116,
+          "sha256": "146f88319bfe9291a765ad10a07787a16102da549258414e43650ba298081cfc"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.restrictedStrong",
+      "ordinal": 3,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 25324,
+          "sha256": "8a92eb3c3b268c36dc96555389f23a2bd50404fdf3b57c0302ebb2385810bc94"
+        },
+        "VALUE": {
+          "bytes": 332888,
+          "sha256": "0604dd53697770c8747faf4c4650c9a467d4617ad56ec6559b179ae99ddcd0b3"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.hintedRegular",
+      "ordinal": 4,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1956,
+          "sha256": "5c0c5e44cefbfe828dba8d798a0f3517c2f3c37c55abd275eb672c654f665a6c"
+        },
+        "VALUE": {
+          "bytes": 203214,
+          "sha256": "73c7d921c95db924994af3fec1525f90ecb4caf2b979cd52f625ac0d169abcb5"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.inclusiveRegular",
+      "ordinal": 5,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2305,
+          "sha256": "87df169a12ba8a97ce2014e110d98b6b790213671e0b7f53d059454839aba263"
+        },
+        "VALUE": {
+          "bytes": 46795,
+          "sha256": "1ccafa710267ed0c93937f0849da267a81208cb955740285e73ad3f550cdcb88"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.predicts",
+      "ordinal": 6,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1323,
+          "sha256": "7ff2d24e6ee6062ef79d450563792c4b4de043c4c801d8bce2d0bc69f68a9ba5"
+        },
+        "VALUE": {
+          "bytes": 3060,
+          "sha256": "dbb32ddf5f47a3aadf03f2390311e9727869d4d640e0447276b67b1f7b9f5630"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.forecastError",
+      "ordinal": 7,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1596,
+          "sha256": "abd289af9bd3e2dc6e5f9a4ea90dd510fbe5f6b95c4aced181de4f16d9c7b679"
+        },
+        "VALUE": {
+          "bytes": 4155,
+          "sha256": "4022d557ef7141e92b8048cf7b1acc9f536c7f0be0586bd98b8a7cb53af2c43c"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.nextPlay",
+      "ordinal": 8,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1249,
+          "sha256": "55b9180d759c84cf41da338c7a8ac69f86f163c03e3711712331fc38c4c01b29"
+        },
+        "VALUE": {
+          "bytes": 5658,
+          "sha256": "55d6539da7e3c7d2839bfbb9e7164b69a7be597537d775f9eb1c9b499d8e1013"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.playedRegret",
+      "ordinal": 9,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1454,
+          "sha256": "15c55e2ecf77c012c607e84ff12521d62ad5fa55339b7fee0cf9ae2dc3dc1576"
+        },
+        "VALUE": {
+          "bytes": 6506,
+          "sha256": "4ef66c5f06bdafc0d0c8b1042bc269e6681673e6ed0dfab72ff350fecfef839c"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.regularizerTerms",
+      "ordinal": 10,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2403,
+          "sha256": "60350c21b971359eabd2d93a4295f202c5350dfbe11de33bc5d04f0c3f1066ce"
+        },
+        "VALUE": {
+          "bytes": 20509,
+          "sha256": "0244836877a5f6877664275c7170de5d3c0ac9c803e6103505e25fb161eab0e4"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.sharpTerms",
+      "ordinal": 11,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 15184,
+          "sha256": "0580376a12563adc8ac5bc8716acd4caa5c0e506e4996dcbd772a588e0016ca7"
+        },
+        "VALUE": {
+          "bytes": 66683,
+          "sha256": "724bab0c9a45f125d2c26843d26042d99185ac83aa95829222156ebd7b4b0c94"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.optimistic_round_unique",
+      "ordinal": 12,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 48308,
+          "sha256": "68a92eaf19205df6e8ee37604aa1ba24357971c07b699a8dbbf2adb1a3fd44fe"
+        },
+        "VALUE": {
+          "bytes": 55184,
+          "sha256": "900dbae771ecee12c7c29b147efeeec0689ee3119251edc3b0d559cf6e8b1bfb"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 55252,
+          "sha256": "15f84cad6b77f42cf2129c0959f9b7c3463bd21e4422a5441b53316943435410"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.zero_hint_terminal_attained",
+      "ordinal": 13,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 103426,
+          "sha256": "9e820bab6339e45828b70c5ca5f5890a372fb0acaa783b8baaf765d72e448537"
+        },
+        "VALUE": {
+          "bytes": 114462,
+          "sha256": "d34cbe0a13a87526b62316c93d80c97d8976ffa315482815ede097b1e8ea531c"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 114550,
+          "sha256": "1a98ccfbbd9b1df26e11ba55bd630105890440ecf7fa7c2e93403595c19b9074"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.zero_hint_sharp_regret",
+      "ordinal": 14,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 90953,
+          "sha256": "ae603a311e4b1084a92a17ad9a705f58603de8df00d4df89841f3a3ce444ad8b"
+        },
+        "VALUE": {
+          "bytes": 97484,
+          "sha256": "02361b0b30c2ea93cda9c89e3b735a0aecc62a27f61280860a94998841035bdb"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 97588,
+          "sha256": "04c46439be90e3801c061ac5184137000c3b8348073085b140b717b80839f5be"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.positive_modulus_young_regret",
+      "ordinal": 15,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 82971,
+          "sha256": "59d043b379d7a4b43128adce76d661303917681d962b791f095861ffc19a8e14"
+        },
+        "VALUE": {
+          "bytes": 144192,
+          "sha256": "e428bf881bff1e7086e9dbcdd2c684c0bd39780a42173aa450fe6195dc7ded8c"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 144292,
+          "sha256": "06b12b9510d00483a21e66d0d3243b83ffe164795ccba0bd9b53b0f55bde63e8"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimistic.repeated_hint_residual_regret",
+      "ordinal": 16,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 104088,
+          "sha256": "6bc0eddf55b80bb997f3fe2f535cb8dc6bba131c5ce482792192e740400902d3"
+        },
+        "VALUE": {
+          "bytes": 120153,
+          "sha256": "d10b1df276a4a439367e1da7e2f1354401d71bef710c1854d53489a79cccb1e2"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 120257,
+          "sha256": "fff5a614152cd70711bfbc32b37eb982c2819405624d9f3f351df3c1a0a3d6dc"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs",
+      "ordinal": 17,
+      "kind": "inductive_or_constructor",
+      "streams": {
+        "TYPE": {
+          "bytes": 1165,
+          "sha256": "12c0d5ea250f0e34edbc52d1ab376e4d2d173c860d1f903ed5dd191a52db5da6"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.mk",
+      "ordinal": 18,
+      "kind": "inductive_or_constructor",
+      "streams": {
+        "TYPE": {
+          "bytes": 19490,
+          "sha256": "cdcfbf7d5d0099c5a22283ef27b87dbb7c13242ecf8bc1b5f433ddc9a636e570"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.T",
+      "ordinal": 19,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1476,
+          "sha256": "6bc42979a4d1093aad60879f99c6f860f75cb92426f13a60510151b65b81d239"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "eb00196ed0b9cfea15421efeaf25fc5456ebfab59d11dd49e6c1a8ab44fce104"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.V",
+      "ordinal": 20,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1532,
+          "sha256": "045f3b7cc3c62a2ddcfa41030140004d59ca8618c16a8d499c369d1d25af264e"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "e1675d297463e8c8e213c59a1041174f372dca0466b369a456986d03e2c73e74"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.psi",
+      "ordinal": 21,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1983,
+          "sha256": "aed5f1904a2ed3ba1108b884c287ee6a7684c206d3f03a13f94e7677023dc9f2"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "d8735fa93a5c194cd9cc02cf2c6860affc757da46bc0fd9f131a43bffedec74c"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.hint",
+      "ordinal": 22,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2272,
+          "sha256": "539c99120b6f7bd86803f062123e70a9d43463a586d20a06de5b0c3bef1e9775"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "83d031a7eed36eeb281ad5f736c60bd69e55ed146c12f675ed4769491ff0a3e8"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.loss",
+      "ordinal": 23,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1785,
+          "sha256": "c34996aef95e91128087afdff8bd4c59d698f7415d7d77d0b65667e47827714b"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "5dd3fba72e5dae785ed95f89d5e8575212098071fd91b6bb7be96954debc4778"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.lam",
+      "ordinal": 24,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1630,
+          "sha256": "90417364424ea19828a41ee743cd6075408614b74c5592cf1f794ff5beea6c67"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "b86cd9e7967932ffaf9ca3bbef5227e2de580e518a526cb72e275842f3839286"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.x",
+      "ordinal": 25,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2090,
+          "sha256": "71a91e3a943168724d964c665390e8a1d8a9a8f35a9a5011882b259adb137a6e"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "fe0adf1af0d79152ec74e8bf87815ac60886d5038ce5df456eecc910af7d1a03"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.g",
+      "ordinal": 26,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 11889,
+          "sha256": "5236bfe16ac76d241a5d0f128dd6e881ce900aecf085b32a54c75f7727e13965"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "04916771df224acfef86c1adab740c690cad7614a07d198d09c6cfe0d8ed20fc"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Inputs.u",
+      "ordinal": 27,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1917,
+          "sha256": "c208b48ac2688ae0a43eedde89871addb79dbcc94783ed8d96d52d14b8269f70"
+        },
+        "VALUE": {
+          "bytes": 1511,
+          "sha256": "60b3bba29722598cf65c79682c60d44ba91751e78afc8f5e419d52dba4ce9ea3"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.inc",
+      "ordinal": 28,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2300,
+          "sha256": "22314a61155310c88549aa04da4d3951eb4d0360849c50fe4e9111c3dd8f0409"
+        },
+        "VALUE": {
+          "bytes": 1905,
+          "sha256": "19b3d8a9d5b068f0253573afcea7bf055502abf15212143ada4d7a5d5cb1c0b3"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.r",
+      "ordinal": 29,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1474,
+          "sha256": "594c661d3c7a91b70f2535562e16251f7d8c4320e2e64a777be55bec76b6b29f"
+        },
+        "VALUE": {
+          "bytes": 3691,
+          "sha256": "061effe9dcd6c9c2bacd85dacfbd74b8336fddc20e4f4f9e77e75ddca3485704"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.base",
+      "ordinal": 30,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1474,
+          "sha256": "b28a9dd61a9fa8bf0564d7ea76cf68dcf1e320679d440ccee2cf2110f06cc322"
+        },
+        "VALUE": {
+          "bytes": 4324,
+          "sha256": "de13e750182403e89f256a217f8ab5cd91c2794853cfb24854869e503c3ba9d9"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.s",
+      "ordinal": 31,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2050,
+          "sha256": "0a2816e94a336319733c8981fea81d7ee541dd4f812999e363a579dfb2bbb029"
+        },
+        "VALUE": {
+          "bytes": 5799,
+          "sha256": "5346e91efc899d1eb39966c8fd427a50bcd61220f592849445e03bbc389f5ce4"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.y",
+      "ordinal": 32,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1474,
+          "sha256": "4cfd5668d7b6dd68ec25a4147a2ff15d401568c0d7a9b885b25c7c338f60f226"
+        },
+        "VALUE": {
+          "bytes": 31568,
+          "sha256": "10d4f79350028090d47eca4e997c37d43f5246ffb741dca0b4aa5f588db18d1b"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.repeated",
+      "ordinal": 33,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2050,
+          "sha256": "b29a17288966b7106f06640bfa33a5356619c557a10b23fb74a531bb5b02022e"
+        },
+        "VALUE": {
+          "bytes": 8344,
+          "sha256": "f021344c632fa4f9e72bc38e4cd46c25edf8779083ee54724b72e6a38bf9e7bb"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.A",
+      "ordinal": 34,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2194,
+          "sha256": "35ee831c9a87e10618b957aa8225fc0fa9a628a8e6e944d86c98886a75b2184d"
+        },
+        "VALUE": {
+          "bytes": 3832,
+          "sha256": "8f79ec76be70a9519d4280551ab5c36c3b76e943d0f3d1b662738a00f857b595"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.G",
+      "ordinal": 35,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2194,
+          "sha256": "d6a8847d2a5c7a0cbcc6e15a3cd879bba70acafe9529778cbe62e6c337b2aaa8"
+        },
+        "VALUE": {
+          "bytes": 3364,
+          "sha256": "b39a3b992b017670e42f2098f431d960bcdadb3e4a29d885f2be127f51a994ed"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.allReal",
+      "ordinal": 36,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 283,
+          "sha256": "b11499ac16f1b50f35871ed8edcba261f9283246d1342ee75b199f22467271df"
+        },
+        "VALUE": {
+          "bytes": 1168,
+          "sha256": "0c582e05ca683c08058024928c783158ba5dc8734b02a6bf32ed1ae66820bf95"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.slope",
+      "ordinal": 37,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 7804,
+          "sha256": "7dfe4e099235e164a8241390940eb5ec1ec63d75b1bbc927304b2dd8ceff7213"
+        },
+        "VALUE": {
+          "bytes": 44846,
+          "sha256": "f4c83fe466f1d6b9511cca57455c683b8b9ed9d79a57d64607b9f4854b39077f"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.repeatLast",
+      "ordinal": 38,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 955,
+          "sha256": "1bb52552f82a485cbfc479cd88c30978cb90041ac6293c133e824407bbb5a507"
+        },
+        "VALUE": {
+          "bytes": 59707,
+          "sha256": "10daaee0241970f2fdd4dc01f4cd5822d0293dd45945c083bc90e20abfe8f236"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.repeatZ",
+      "ordinal": 39,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1243,
+          "sha256": "908728b643d6bedc3e0d136d35cb5dbb740f8cf0bfafe3576e92d46e3d5b3250"
+        },
+        "VALUE": {
+          "bytes": 1670,
+          "sha256": "eb07295104ecad8c6a3aa6d11a619313c68e837463cec2f7441066b653f59eeb"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.repeatZ'",
+      "ordinal": 40,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1243,
+          "sha256": "908728b643d6bedc3e0d136d35cb5dbb740f8cf0bfafe3576e92d46e3d5b3250"
+        },
+        "VALUE": {
+          "bytes": 1877,
+          "sha256": "09522a324fe819478f3e4bd612eec1582a9ead33d23d0b6d696f6ad6aef62c95"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.driftingTwo",
+      "ordinal": 41,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 955,
+          "sha256": "1bb52552f82a485cbfc479cd88c30978cb90041ac6293c133e824407bbb5a507"
+        },
+        "VALUE": {
+          "bytes": 29163,
+          "sha256": "d7411b44ae9cb916ffd602e5c30328b8a6f524eab0486f948edc61e8ed0702a2"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.driftZ",
+      "ordinal": 42,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1244,
+          "sha256": "ac15f944bc3a6769b09a3faa84a30372f16cdb924709ab78985c8ec768fe9ce5"
+        },
+        "VALUE": {
+          "bytes": 808,
+          "sha256": "f545c040772400732cb9723b42e2b97e54db12224af8e0c53aec07be6e0a75f0"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.term",
+      "ordinal": 43,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2125,
+          "sha256": "0322f74ec2a67afc620de680d4ea8372f34536bcad7dbe9340e79d4b98e5e4f4"
+        },
+        "VALUE": {
+          "bytes": 47598,
+          "sha256": "86f304196047d62a8c395b95e24a9c9f49c6a1cff759b74f46c55fb401ac1bb2"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.Pair",
+      "ordinal": 44,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 50,
+          "sha256": "b4611575b2b62eb57ff8b514cf96bf01666158b035ac2fcc89065136260d1e05"
+        },
+        "VALUE": {
+          "bytes": 146,
+          "sha256": "4938ff59a850c73d2fe69f6d89e2fde618cd3ee31a9b1da47f89345b83e21990"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.box",
+      "ordinal": 45,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 113,
+          "sha256": "de33081e8acb1aee63eae23cb94fc674d9206cc9660f5e2dee4ece6d992368d4"
+        },
+        "VALUE": {
+          "bytes": 4002,
+          "sha256": "f017b99f6aa9422c4a679464f86b2288428d7f3260ffb9a2ea51cf05c390a5a0"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.quad",
+      "ordinal": 46,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 140,
+          "sha256": "dd24c6ef5b9514c0b95f9522b8e8d1c15d375ad00ce194f7faef1fc233f6e191"
+        },
+        "VALUE": {
+          "bytes": 11243,
+          "sha256": "085e8ec0f6cbefce1224ab40b390fb02681a4eb00b5e69126e17cd151bbbb73a"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.euc",
+      "ordinal": 47,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 2744,
+          "sha256": "5bfda96541246c6e47066cb9346ab238d1c252f99c3299564d8c2b4f43217766"
+        },
+        "VALUE": {
+          "bytes": 99224,
+          "sha256": "a42cfc5955ac29f5d29595031eab365f22b944ed739d0ffc17217839a1dfc442"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.boxFunctional",
+      "ordinal": 48,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 12260,
+          "sha256": "bd4dac5ecb5c93e7458ef6cbc74615bdd7dde49de105b3abb88c38dfea1117e6"
+        },
+        "VALUE": {
+          "bytes": 90854,
+          "sha256": "9c282dd834d2d2590329edfa5b4e378c9027d51edac41c06c146c2b6e2674f15"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.dualBox",
+      "ordinal": 49,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 3114,
+          "sha256": "60329ede57535d32caea2abffd2d3ef1f20ef282c957ea0646bbbf755f464def"
+        },
+        "VALUE": {
+          "bytes": 25125,
+          "sha256": "9d8e1e0fff408f30f6d0e2cc59f536b262a37cc7e2ba7ad8a68c04aea9c7e6cb"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.declaredZero",
+      "ordinal": 50,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 955,
+          "sha256": "1bb52552f82a485cbfc479cd88c30978cb90041ac6293c133e824407bbb5a507"
+        },
+        "VALUE": {
+          "bytes": 11952,
+          "sha256": "17141ed6366952ca6a9b72f57db09c609cc006fb1e062ca530ec19ff69439eb2"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.declaredOne",
+      "ordinal": 51,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 955,
+          "sha256": "1bb52552f82a485cbfc479cd88c30978cb90041ac6293c133e824407bbb5a507"
+        },
+        "VALUE": {
+          "bytes": 14735,
+          "sha256": "d97e69aeefce2fb40eeddaf16e63a33c8433c1b9e65a8f3e3a10de290b83d55c"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.flatHalfLine",
+      "ordinal": 52,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 955,
+          "sha256": "1bb52552f82a485cbfc479cd88c30978cb90041ac6293c133e824407bbb5a507"
+        },
+        "VALUE": {
+          "bytes": 30171,
+          "sha256": "4f6650995062a529dc6d6bad8c501b23840ad58a759e8c6f9f0d7c230a0d8084"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.flatZero",
+      "ordinal": 53,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1245,
+          "sha256": "67c5fe1b30121b173340def2956d3b1c8f4f1ebd33f5a953044f196c938717eb"
+        },
+        "VALUE": {
+          "bytes": 2649,
+          "sha256": "6197cc8344d96d4cc73855ff709f5cf7c4c8c88c3e961f04ebf020ae8bac7da0"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.flatOne",
+      "ordinal": 54,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1245,
+          "sha256": "67c5fe1b30121b173340def2956d3b1c8f4f1ebd33f5a953044f196c938717eb"
+        },
+        "VALUE": {
+          "bytes": 2646,
+          "sha256": "5db52d4ed5e8842f7f3e23d0cdfa9e821ee41c7241ba270863fcdad37f77077a"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.flatMin",
+      "ordinal": 55,
+      "kind": "actual_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 1417,
+          "sha256": "e0572ed488d7a067a215c5297c6a91868f19558f9a7cdbecc8a612385da951c2"
+        },
+        "VALUE": {
+          "bytes": 6920,
+          "sha256": "422ed9586b230d499f88e539f6c0bf30a3f918911f08d2c03f8ccfba87255ef2"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.repeat_last_residual",
+      "ordinal": 56,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 60099,
+          "sha256": "1e7a5cb11b8d60736d6c69d527f858fb5a8be513d4c1e119a886c72204636394"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 60099,
+          "sha256": "1e7a5cb11b8d60736d6c69d527f858fb5a8be513d4c1e119a886c72204636394"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.two_round_drift",
+      "ordinal": 57,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 55595,
+          "sha256": "92988027524e5cba70292747dcf5d72bf895d530c602c1cc44eb192ca01853de"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 55595,
+          "sha256": "92988027524e5cba70292747dcf5d72bf895d530c602c1cc44eb192ca01853de"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.dual_box_norms",
+      "ordinal": 58,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 381250,
+          "sha256": "dfdf17613bbc5c6d23655ba956e550b99e41994a800a6d87d3bd83d6bad6685a"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 381250,
+          "sha256": "dfdf17613bbc5c6d23655ba956e550b99e41994a800a6d87d3bd83d6bad6685a"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.announced_zero_and_positive_young",
+      "ordinal": 59,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 31164,
+          "sha256": "04007793b03949b1095da09f1d59207b01d23c8c2668fce1bede88237297fc49"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 31164,
+          "sha256": "04007793b03949b1095da09f1d59207b01d23c8c2668fce1bede88237297fc49"
+        }
+      }
+    },
+    {
+      "name": "BanditRL.OnlineOptimisticCanary.flat_terminal_minimizers",
+      "ordinal": 60,
+      "kind": "unproved_Prop_definition",
+      "streams": {
+        "TYPE": {
+          "bytes": 32,
+          "sha256": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde"
+        },
+        "VALUE": {
+          "bytes": 75811,
+          "sha256": "026e4ab37e89df2e4c6e92eddd1652ce2f453382fca7f441f7a90a18745a9300"
+        },
+        "PROPOSED-THEOREM-TYPE": {
+          "bytes": 75811,
+          "sha256": "026e4ab37e89df2e4c6e92eddd1652ce2f453382fca7f441f7a90a18745a9300"
+        }
+      }
+    }
+  ],
+  "parent_key": {
+    "A": "optimistic_round_unique",
+    "B": "zero_hint_terminal_attained",
+    "C": "zero_hint_sharp_regret",
+    "D": "positive_modulus_young_regret",
+    "E": "repeated_hint_residual_regret"
+  }
+}

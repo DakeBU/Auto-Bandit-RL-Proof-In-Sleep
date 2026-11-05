@@ -1,0 +1,215 @@
+{
+  "status": "Local source, proof and reader adjudication at the reviewed commit",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "locator": "Lemma 7.1, printed p. 100 / PDF p. 112",
+    "pdf": "https://arxiv.org/pdf/1912.13213v10#page=112",
+    "author": "Francesco Orabona",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "frozen_inventory": {
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "mutation": false
+  },
+  "adjudication_order": [
+    {
+      "order": 1,
+      "target": "dependency:FTRL7.1-wellformedness",
+      "frozen_pointer": "/effective_targets/168",
+      "frozen_statement": "Prove literal7.1 telescoping equality when all played/cumulative/comparator terms are finite. Separately retain finite-algorithm/plus-infinite-comparator one-sided extended branch. When both algorithm/comparator incur+infinity the literal subtraction is undefined: required source-domain correction obligation, not an asserted equality. Identically+infinity objectives do not ensure a finite minimizer value.",
+      "source_locator_excerpt_sha256": "968c80bd7a1ea93ec297585cb1dfc2016b552593561118ff00c0ecda45ae7a70",
+      "dependency_rows": [],
+      "decision": "accepted locally with explicit ordinary-arithmetic domain repair",
+      "decision_commit": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+      "reader_evidence": "evidence.actual_reader_result",
+      "decision_reason": "Five compiled declarations establish the domain and all lawful regimes, together with a both-infinite undefined disposition. Seven concrete models test the boundary cases. Selected-top obstruction uses the order-minimizer interpretation; the finite-selected same-index counterexample is independent of that convention.",
+      "modules": [
+        "OnlineFTRLSourceArithmetic",
+        "OnlineFTRLSourceArithmeticCanary"
+      ],
+      "parent_provider": "BanditRL.OnlineFTRL.lemma7_1_finite_values",
+      "domain": "Under the source run premises, the displayed right-hand side is defined exactly when every selected cumulative value through T is finite and played and comparator losses do not both hit +∞. If all used values are finite the real telescoping result applies. With finite selected objectives, played-only +∞ yields +∞ on both sides, comparator-only +∞ yields −∞ on both, and both hitting +∞ makes both sides undefined.",
+      "examples": {
+        "finite_source_model": "Both sides equal −2 on a closed nonconvex feasible set with comparator outside V and an unused infinite loss.",
+        "lawful_played_top": "Played loss +∞ with finite comparator; both sides are +∞.",
+        "lawful_comparator_top": "Comparator loss +∞ with finite played values; both sides are −∞.",
+        "same_index_undefined": "Same-round +∞−(+∞), with finite selected minimizer values. This witnesses the source arithmetic defect even when a selected minimizer must have finite value.",
+        "different_index_undefined": "Two rounds contribute +∞ and −∞ separately. Their sum is undefined.",
+        "selected_top_only_rhs_undefined": "With an order minimizer of an all-+∞ feasible objective, LHS is +∞ and RHS is undefined. This is an interface obstruction subject to the convention for argmin membership.",
+        "zero_horizon_lawful": "Both totals equal zero with an unused +∞ loss."
+      },
+      "implementation": "The Option EReal definitions encode partial source arithmetic in the printed order. none denotes an undefined operation; some ⊤ and some ⊥ are defined values.",
+      "certificate_groups": [
+        "ordinary operations and finite sums",
+        "strict-past prefixes",
+        "attained initial minimum",
+        "first selected-top obstruction",
+        "finite identity provider",
+        "restriction and subtype transport",
+        "infinite and undefined regimes",
+        "seven canaries"
+      ]
+    },
+    {
+      "order": 2,
+      "target": "dependency:Lemma7.1",
+      "frozen_pointer": "/effective_targets/133",
+      "frozen_statement": "The literal Lemma7.1 statement, formula, assumptions and iterate-independence clause remain verbatim in archival_sources and the unchanged source_locator. The operative equality is qualified by the mandatory named child dependency:FTRL7.1-wellformedness (B7): finite played/cumulative/comparator values give the finite telescoping equality; finite algorithm values with a plus-infinite comparator form a separate one-sided extended branch. Undefined infinity-minus-infinity arithmetic requires an explicit source-domain repair and is not an asserted equality. Do not silently impose finiteness on the complete source claim; preserve all branches and the psi_(T+1) iterate-independence obligation.",
+      "source_locator_excerpt_sha256": "cc45ee4a232be44135ed806987eb85feec6fed494f77dd318bacf5a7f83734fc",
+      "dependency_rows": [
+        {
+          "pointer": "/effective_targets/168",
+          "decision": "accepted locally with explicit ordinary-arithmetic domain repair",
+          "commit": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775"
+        }
+      ],
+      "decision": "accepted locally in its frozen source-qualified scope",
+      "decision_commit": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+      "reader_evidence": "evidence.actual_reader_result",
+      "decision_reason": "Row 168 was adjudicated first. The previously accepted finite and restriction/coupling theorems supply the real telescoping calculation and the common admissible prefix. Combined with the domain and infinity results they cover the frozen parent, preserving its archival wording and stated repair.",
+      "modules": [
+        "OnlineFTRLFiniteIdentity",
+        "OnlineFTRLFiniteIdentityCanary"
+      ],
+      "prior_accepted_finite_leaf": "d26d465310c6d0bc243e7c4a08027abd2440db02",
+      "assumptions": "Finite-dimensional real Euclidean space, nonempty closed feasible V ⊆ X, real regularizers on X, ambient losses taking values in (−∞,+∞], a comparator u ∈ X and supplied feasible minimizing choices through the terminal time.",
+      "source_formula": "F_t(v)=ψ_t(v)+Σ_{i<t}ℓ_i(v). Σ_{t=1}^T[ℓ_t(x_t)−ℓ_t(u)] = ψ_{T+1}(u)−min_{v∈V}ψ_1(v) + Σ_{t=1}^T[(F_t(x_t)−F_{t+1}(x_{t+1}))+ℓ_t(x_t)] + F_{T+1}(x_{T+1})−F_{T+1}(u), on the lawful source domain.",
+      "representation": "Code round 0 is source round 1. Code index T is the terminal objective and regularizer. The initial minimum is attained and represented by sInf. A source regularizer on X extends to the ambient space and the equality transfers back by restriction.",
+      "independence": "Keeping the regularizers equal on X for t<T preserves the admissible prefix. Given a terminal minimizer for the changed objective, one can reuse the actual prefix and change that final choice. Different selections from a tied argmin can differ.",
+      "example_references": [
+        "BanditRL.OnlineFTRLCanary.finite_nonconvex_unused_top",
+        "BanditRL.OnlineFTRLCanary.off_domain_extension_invariance",
+        "BanditRL.OnlineFTRLCanary.changed_terminal_same_prefix",
+        "BanditRL.OnlineFTRLCanary.zero_horizon_and_nonunique_selector_boundary"
+      ],
+      "excluded": "The archival statement remains available verbatim. The qualified identity retains the domain repair and does not assign an arithmetic value to an undefined expression. Generation of minimizers for a particular algorithm and terminal consumers 86 and 87 are separate obligations."
+    }
+  ],
+  "public_modules": {
+    "OnlineFTRLSourceArithmetic": {
+      "module": "BanditRLProof/OnlineFTRLSourceArithmetic.lean",
+      "git_blob": "e13a53b104500f224bec9222d91a62bf73887381",
+      "source": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLSourceArithmetic.lean",
+      "declarations": {
+        "BanditRL.OnlineFTRLSourceArithmetic.source_arithmetic_domain": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLSourceArithmetic.lean#L426",
+        "BanditRL.OnlineFTRLSourceArithmetic.played_top_source_identity": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLSourceArithmetic.lean#L574",
+        "BanditRL.OnlineFTRLSourceArithmetic.comparator_top_source_identity": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLSourceArithmetic.lean#L591",
+        "BanditRL.OnlineFTRLSourceArithmetic.both_top_source_undefined": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLSourceArithmetic.lean#L687",
+        "BanditRL.OnlineFTRLSourceArithmetic.lawful_source_identity": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLSourceArithmetic.lean#L704"
+      }
+    },
+    "OnlineFTRLSourceArithmeticCanary": {
+      "module": "Tests/OnlineFTRLSourceArithmeticCanary.lean",
+      "git_blob": "d45c7e2c3366948e0423a831d14e669a7ada5091",
+      "source": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean",
+      "declarations": {
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.finite_source_model": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L302",
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.lawful_played_top": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L323",
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.lawful_comparator_top": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L331",
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.same_index_undefined": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L339",
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.different_index_undefined": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L348",
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.selected_top_only_rhs_undefined": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L359",
+        "BanditRL.OnlineFTRLSourceArithmeticCanary.zero_horizon_lawful": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLSourceArithmeticCanary.lean#L377"
+      }
+    },
+    "OnlineFTRLFiniteIdentity": {
+      "module": "BanditRLProof/OnlineFTRLFiniteIdentity.lean",
+      "git_blob": "86886fd11228b6379f6f59deb32e9cb001460c36",
+      "source": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLFiniteIdentity.lean",
+      "declarations": {
+        "BanditRL.OnlineFTRL.lemma7_1_finite_values": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLFiniteIdentity.lean#L63",
+        "BanditRL.OnlineFTRL.ftrl_regularizer_restriction_invariance": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLFiniteIdentity.lean#L114",
+        "BanditRL.OnlineFTRL.ftrl_terminal_regularizer_coupled_run": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/BanditRLProof/OnlineFTRLFiniteIdentity.lean#L145"
+      }
+    },
+    "OnlineFTRLFiniteIdentityCanary": {
+      "module": "Tests/OnlineFTRLFiniteIdentityCanary.lean",
+      "git_blob": "3698d0d7b4f0e9aff3ab4e8e2ced4ac2be0cea7d",
+      "source": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLFiniteIdentityCanary.lean",
+      "declarations": {
+        "BanditRL.OnlineFTRLCanary.finite_nonconvex_unused_top": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLFiniteIdentityCanary.lean#L48",
+        "BanditRL.OnlineFTRLCanary.off_domain_extension_invariance": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLFiniteIdentityCanary.lean#L77",
+        "BanditRL.OnlineFTRLCanary.changed_terminal_same_prefix": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLFiniteIdentityCanary.lean#L92",
+        "BanditRL.OnlineFTRLCanary.zero_horizon_and_nonunique_selector_boundary": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/Tests/OnlineFTRLFiniteIdentityCanary.lean#L112"
+      }
+    }
+  },
+  "source_contracts": [
+    "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/docs/contracts/online-ftrl-finite-values-v1/source-contract.json",
+    "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/236a2d45cb37d3fa8e12567a9536a5c7aaf8a775/docs/contracts/online-ftrl-source-arithmetic-v1/source-contract.json"
+  ],
+  "evidence": {
+    "detailed_imported_commit": "f75ae83467ad784a8c15ac55aabaa6344ccc67f3",
+    "detailed_result": "Four completed Lean stages. All twelve public statements and proof values were collected, with the three standard axioms. Three main provider calls and fifteen canary applications were checked. Of 64 baseline streams, 56 match raw and 8 VALUE streams differ only in 37 verified generated binder Name positions. The initial aggregate returned 1; the corrective verifier returned 0.",
+    "successor_commit": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+    "successor_project_result": {
+      "project_root_jobs": 9125,
+      "tests_target_jobs": 9310,
+      "harness_tests": 487,
+      "harness_skips": 7,
+      "five_gate_exits": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "contributor_base": "830261ccaf84ab9be7b2a5df75199b5e0cf7488b",
+      "independent_gate_review_sha256": "38fc4265d4527d2f10fa25113f517c2b3e91b48229fc36b3a2ec56e543d88d6c"
+    },
+    "successor_smoke_result": "12 imported declarations, complete displayed signatures and axiom sets, exit 0. Detailed proof queries were run at f75; source chain and compiled artifacts were retained.",
+    "site_manifest_sha256": "a29e11e0ee64b9d3b2f809a8103e4fc41be7757f3f115e1c113484679ef164be",
+    "actual_reader_result": {
+      "source_revision": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+      "desktop_width": 1420,
+      "mobile_width": 375,
+      "cards_per_viewport": 5,
+      "checked": "On both viewports the five actual post-Copied clipboard strings match the exact source-derived single-line display. All five re-elaborated closed TYPE serializations matched their imported declarations byte for byte. The catalog and graph round trips were checked on desktop. Mobile has a horizontal formula-reading affordance.",
+      "root_observation_sha256": "eaf19dd09e0b7ea22709f7b64b4e32e5aa33b86cb3f1b30132443a86d26b11a6",
+      "browser_sha256": "b80ab8effb95ba2287ca707717dfbbe4c8ed5811915bcd67cf253ffbea47f99b",
+      "clipboard_kernel_sha256": "c5a1ba53a98fa7c57dc4ac2a68b10ee28e1f66fb7a32d8a901887ffb4a644c48",
+      "public_source_sha256": "273c23feb76f27083596f1df0b03f22e71422b6c6aa7d8c915fd503ca30dcebd",
+      "initial_comparison": "The original raw-multiline display comparison failed. The renderer emits compact headers for these five declarations. The successful checks used those actual bytes."
+    },
+    "local_row_decisions": [
+      168,
+      133
+    ],
+    "branch_pull_request": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/289",
+    "pr_scope": "Draft PR 289 at the reviewed revision. Local acceptance recorded before merge.",
+    "merged_to_main": false,
+    "live_deployment": "unverified",
+    "pr_reviewed_head": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+    "imported_independent_review_sha256": "b678f7d008c47252bc6d05e937770bc6b43977991070d72d5251a014238d274a"
+  },
+  "reproduce": {
+    "working_directory": "Repository root with the pinned Lean toolchain and dependencies. Use the indicated revision in a separate checkout.",
+    "detailed_source_revision": "f75ae83467ad784a8c15ac55aabaa6344ccc67f3",
+    "source_build": [
+      "lake build BanditRLProof.OnlineFTRLSourceArithmetic Tests.OnlineFTRLSourceArithmeticCanary BanditRLProof.OnlineFTRLFiniteIdentity Tests.OnlineFTRLFiniteIdentityCanary"
+    ],
+    "successor_revision": "236a2d45cb37d3fa8e12567a9536a5c7aaf8a775",
+    "successor_commands": [
+      "python tools/bandit.py check",
+      "python website/scripts/build_site.py --lean-verified",
+      "python website/scripts/check_site.py",
+      "python tools/check_contributor_contract.py --base 830261ccaf84ab9be7b2a5df75199b5e0cf7488b",
+      "git diff --check 830261ccaf84ab9be7b2a5df75199b5e0cf7488b...HEAD"
+    ],
+    "use_verified_build": "Run the Lean-verified site build only after the combined check succeeds at the same clean revision.",
+    "public_inspection": "In a temporary Lean file, import the four modules listed below and use #check and #print axioms on each fully qualified declaration. Then run lake env lean <file>. The source build and these inspection commands reproduce the public interface checks. The historical binder-comparison verifier is separate.",
+    "imports": [
+      "BanditRLProof.OnlineFTRLSourceArithmetic",
+      "Tests.OnlineFTRLSourceArithmeticCanary",
+      "BanditRLProof.OnlineFTRLFiniteIdentity",
+      "Tests.OnlineFTRLFiniteIdentityCanary"
+    ]
+  },
+  "other_dispositions": {
+    "rows_86_and_87": "open terminal consumers",
+    "chapter_2": "open",
+    "whole_book": "open"
+  }
+}

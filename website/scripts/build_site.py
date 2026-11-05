@@ -17,6 +17,8 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
+from ipaddress import ip_address
 
 try:
     from .book_registry import build_registry, membership_index
@@ -71,7 +73,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20261104-bench-workflows"
+ASSET_VERSION = "20261105-source-heading-wrap"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -309,15 +311,20 @@ def strip_lean_comments(line: str, block_depth: int) -> tuple[str, int]:
 
 def compact_statement(lines: list[str], start: int) -> str:
     parts: list[str] = []
+    source_lines: list[str] = []
+    preserve_layout = False
     delimiter_depth = 0
     block_comment_depth = 0
     in_string = False
     for raw in lines[start : min(len(lines), start + 90)]:
         stripped = raw.strip()
         if not stripped:
+            source_lines.append(raw)
             continue
         compact = re.sub(r"\s+", " ", stripped)
-        is_result_let = stripped.startswith("let ")
+        visible, _ = strip_lean_comments(raw, block_comment_depth)
+        is_result_let = delimiter_depth == 0 and bool(re.match(r"^\s*let\s", visible))
+        preserve_layout = preserve_layout or is_result_let
         assignment_index: int | None = None
         index = 0
         while index < len(raw):
@@ -355,15 +362,19 @@ def compact_statement(lines: list[str], start: int) -> str:
                 break
             index += 1
         if assignment_index is not None:
+            source_lines.append(raw[:assignment_index].rstrip())
             before = re.sub(r"\s+", " ", raw[:assignment_index].strip()).rstrip()
             if before:
                 parts.append(before)
             break
+        source_lines.append(raw)
         parts.append(compact)
         if stripped == "where" or stripped.endswith(" where"):
             break
         if sum(len(part) for part in parts) > 8000:
             break
+    if preserve_layout:
+        return "\n".join(source_lines).rstrip()[:8000]
     return " ".join(parts)[:8000]
 
 
@@ -795,6 +806,12 @@ def teaching_chapters_for_book(book_id: str, *, owned_only: bool = False) -> lis
             and (not owned_only or primary_teaching_book(chapters[ref]["slug"])["id"] == book_id)]
 
 
+def extra_script_version(script: str) -> str:
+    if script == "static/lean-graph.js":
+        return hashlib.sha256((ROOT / "website" / script).read_bytes()).hexdigest()[:16]
+    return ASSET_VERSION
+
+
 def layout(
     page_path: str,
     title: str,
@@ -982,7 +999,7 @@ def layout(
   <script src="{root}/static/math-reader.js?v=20261021-2"></script>
   <script defer src="{root}/static/vendor/mathjax@3.2.2/tex-mml-chtml.js"></script>"""
     extra_script_tags = "".join(
-        f'\n  <script src="{root}/{html.escape(script)}?v={ASSET_VERSION}"></script>'
+        f'\n  <script src="{root}/{html.escape(script)}?v={extra_script_version(script)}"></script>'
         for script in extra_scripts
     )
     page_shell_class = "page-shell wide-page" if wide else "page-shell"
@@ -1199,7 +1216,7 @@ def build_books(output: Path, verified: bool, generated_at: str) -> None:
         else:
             refs = ''.join(f'<li><a href="{href_from(page_path, chapters[ref]["url"])}">{html.escape(chapters[ref]["title"])}</a></li>' for ref in book["chapter_refs"])
             mapping_title = "Remaining source mapping" if book["status"] == "source-mapped" else "Planned source mapping"
-            mapping_text = ("The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits; neither this chapter nor the whole book is complete."
+            mapping_text = ("The mapped routes have bounded source contracts and exact Lean references. Remaining chapters and results require separate source and proof audits. A mapped route alone does not establish completion of its source chapter or the whole book."
                             if book["status"] == "source-mapped" else
                             "Next: freeze source versions, chapter contracts, assumptions and theorem locators; retrieve existing declarations and prove only the missing interfaces. Chapter numbers, page coverage and completion totals will appear after that audit.")
             body += f'''<section id="existing-reading"><h2>Existing shared reading</h2><p>These links reuse established pages with their original sources and exact Lean boundaries. They do not certify a chapter of the new book.</p>{'<ol class="shared-route">' + refs + '</ol>' if refs else '<p>No chapter references registered yet.</p>'}</section>
@@ -1684,6 +1701,61 @@ def build_textbook_spine(
         )
 
 
+def validate_proof_step_references(step: dict[str, Any]) -> list[dict[str, str]]:
+    """Validate optional external proof references before rendering any link."""
+    if "references" not in step:
+        return []
+    references = step["references"]
+    if not isinstance(references, list):
+        raise ValueError("Proof-step references must be a list")
+    allowed_urls = {
+        "https://arxiv.org/pdf/1912.13213v10#page=17",
+        "https://github.com/leanprover-community/mathlib4/blob/5e932f97dd25535344f80f9dd8da3aab83df0fe6/Mathlib/NumberTheory/Harmonic/Bounds.lean#L33-L57",
+    }
+    for reference in references:
+        if not isinstance(reference, dict):
+            raise ValueError("Proof-step reference must be an object")
+        label, url = reference.get("label"), reference.get("url")
+        if not isinstance(label, str) or not label.strip():
+            raise ValueError("Proof-step reference needs a nonempty label")
+        if not isinstance(url, str) or not url.strip():
+            raise ValueError("Proof-step reference needs a nonempty URL")
+        if any(char.isspace() or ord(char) < 32 or ord(char) == 127 for char in url) or "\\" in url:
+            raise ValueError("Proof-step reference URL contains whitespace or backslash")
+        try:
+            parsed = urlsplit(url)
+            host = parsed.hostname
+            port = parsed.port
+            if (parsed.scheme != "https" or not parsed.netloc or not host
+                    or parsed.username is not None or parsed.password is not None):
+                raise ValueError("Expected an HTTPS URL with a host and no credentials")
+            if ":" in host:
+                ip_address(host)
+            else:
+                labels = host.removesuffix(".").split(".")
+                if not all(re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?", part) for part in labels):
+                    raise ValueError("Invalid HTTPS hostname")
+            if parsed.netloc.endswith(":") or (port is not None and not 1 <= port <= 65535):
+                raise ValueError("Invalid HTTPS port")
+        except ValueError as error:
+            raise ValueError("Invalid proof-step HTTPS URL") from error
+        if url not in allowed_urls:
+            raise ValueError("Unreviewed proof-step reference URL")
+    return references
+
+
+def render_proof_step_references(step: dict[str, Any]) -> str:
+    references = validate_proof_step_references(step)
+    if not references:
+        return ""
+    links = " · ".join(
+        f'<a href="{html.escape(reference["url"], quote=True)}">'
+        f'{html.escape(reference["label"])}</a>'
+        for reference in references
+    )
+    return '<p class="proof-bridge-references">' + links + '</p>'
+
+
 def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[str, Any]) -> str:
     primary = reading["primary"]
     companion = reading.get("companion")
@@ -1766,7 +1838,8 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
             f'<p>{html.escape(step["detail"])}</p>'
             '</div>'
             f'{render_math_statement(f"Step {index} equation", step["math"], step["fallback"])}'
-            '</li>'
+            + render_proof_step_references(step)
+            + '</li>'
             for index, step in enumerate(proof_bridge["steps"], start=1)
         )
         proof_bridge_html = f"""
@@ -4498,7 +4571,7 @@ def build_lean_graph(
             "parent": parent,
             "order": order,
             "meta": meta or [],
-            "statement": compact(statement, 900),
+            "statement": statement,
             "missing": missing or [],
             "search": compact(f"{label} {subtitle} {description} {kind} {status}", 1400).lower(),
         }
@@ -4907,19 +4980,28 @@ def build_lean_graph(
             if node_id in included_ids
         ]
         target = graph_dir / relative_path
-        write_text_lf(
-            target,
-            json.dumps(
-                {
-                    **graph_meta,
-                    "views": views,
-                    "nodes": sliced_nodes,
-                    "edges": sliced_edges,
-                },
-                ensure_ascii=False,
-                separators=(",", ":"),
-            ),
-        )
+        slice_payload = {**graph_meta, "views": views, "nodes": sliced_nodes, "edges": sliced_edges}
+        encode = lambda value: json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+        serialized = encode(slice_payload)
+        if len(serialized.encode("utf-8")) > 1_200_000:
+            statements = {node["id"]: node["statement"] for node in sliced_nodes
+                          if node.get("statement")}
+            reference = "statements/" + hashlib.sha256(relative_path.encode()).hexdigest()[:32] + ".json"
+            detail_payload = encode({"schema_version": 1, "statements": statements})
+            if not statements or len(detail_payload.encode("utf-8")) > 1_200_000:
+                raise ValueError("Exact Lean statement payload exceeds the branch budget")
+            # Never mutate canonical nodes, the full graph, or other slices.
+            deferred_nodes = [
+                {**{key: value for key, value in node.items() if key != "statement"},
+                 "statement_source": reference}
+                if node["id"] in statements else node
+                for node in sliced_nodes
+            ]
+            serialized = encode({**slice_payload, "nodes": deferred_nodes})
+            if len(serialized.encode("utf-8")) > 1_200_000:
+                raise ValueError("Lean graph branch exceeds budget after deferring statements")
+            write_text_lf(graph_dir / reference, detail_payload)
+        write_text_lf(target, serialized)
         shard_paths.append(target)
 
     scope_options = []
@@ -5763,6 +5845,7 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 required = ("title", "detail", "math", "fallback")
                 if any(not str(step.get(key, "")).strip() for key in required):
                     raise SystemExit(f"reading {reading['slug']} has an incomplete proof-bridge step")
+                validate_proof_step_references(step)
                 normalized = normalize_math_source(step["math"])
                 if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
                     raise SystemExit(f"reading {reading['slug']} proof bridge has unbalanced mathematical delimiters")
