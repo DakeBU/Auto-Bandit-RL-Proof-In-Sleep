@@ -783,3 +783,4 @@ import BanditRLProof.OnlineUnboundedOSD
 import BanditRLProof.OnlineFTRLFiniteIdentity
 import BanditRLProof.OnlineFTRLSourceArithmetic
 import BanditRLProof.OnlineFTLSelector
+import BanditRLProof.OnlineBTRLTerminal

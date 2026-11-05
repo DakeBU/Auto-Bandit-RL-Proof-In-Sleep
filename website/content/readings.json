@@ -2019,7 +2019,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Compiled finite-value branch",
-            "boundary": "This declaration proves only the finite-used-values regret equality, with the terminal difference retained. It does not prove prefix coupling or construct an argmin run. Other B7 regimes remain separate, including lawful infinite-played cases, one-sided +∞ comparator cases, and undefined infinity subtraction. This list is not an exhaustive classification of extended-real cases. Complete Lemma 7.1/B7, algorithm-specific terminal bounds, Chapter 2 and the book remain open."
+            "boundary": "This declaration proves only the finite-used-values regret equality, with the terminal difference retained. It does not prove prefix coupling or construct an argmin run. Other B7 regimes remain separate, including lawful infinite-played cases, one-sided +∞ comparator cases, and undefined infinity subtraction. This list is not an exhaustive classification of extended-real cases. For the exact domain of the printed equality, see “When the printed FTRL right side is defined”. Its companion statements distinguish a one-sided infinite value from undefined arithmetic."
           },
           "statement_provenance": "derived-support"
         },
@@ -2065,7 +2065,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Compiled coupled-run interface",
-            "boundary": "This declaration proves only the validity of an explicitly coupled prefix and supplied terminal minimizer. It permits arbitrary EReal losses and proves no finite-value regret equality, finiteness, automatic attainment or equality of independently selected minimizers. Complete Lemma 7.1/B7, algorithm-specific terminal bounds, Chapter 2 and the book remain open."
+            "boundary": "This declaration proves only the validity of an explicitly coupled prefix and supplied terminal minimizer. It permits arbitrary EReal losses and proves no finite-value regret equality, finiteness, automatic attainment or equality of independently selected minimizers. For the exact domain of the printed equality, see “When the printed FTRL right side is defined”. Its companion statements distinguish a one-sided infinite value from undefined arithmetic."
           },
           "statement_provenance": "derived-support"
         },
@@ -2204,6 +2204,52 @@
             "status": "compiled",
             "label": "Conditional FTL selector and its library properties",
             "boundary": "One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The generic FTL package used an earlier inventory of 65 overlapping source containers. The published Chapter 2 inventory lists 73 original source rows, 172 overlapping effective records and 121 dependency edges. Chapter 2 remains partial. Whole-chapter acceptance requires reconciliation of the individual obligations. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "BTRL regret with the last actual iterate",
+          "pages": "Algorithm 15.9 / Theorem 15.31, printed pp. 266–267, PDF pp. 278–279",
+          "pdf_page": 278,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=278",
+          "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T\\bigl(\\ell_t(x_t)-\\ell_t(u)\\bigr),\\\\\nM&=\\sum_{t=1}^{T-1}\\tfrac{\\lambda_t}{2}\\lVert x_t-x_{t+1}\\rVert^2,\\\\\nD&=\\sum_{t=1}^{T-1}\\bigl(\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})\\bigr),\\\\\nB&=\\psi_T(u)-\\psi_1(x_1)-M+D,\\\\\nR_T(u)&\\le B-\\tfrac{\\lambda_T}{2}\\lVert u-x_T\\rVert^2\\le B.\n\\end{aligned}",
+          "plain": "The regret is at most B minus the final comparator penalty, hence also at most B. Each genuine transition earns a negative quadratic term. There is no transition to a new algorithm iterate after the last round.",
+          "fallback": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1). The comparator u belongs to V. An empty movement or drift sum at T=1 is zero. Why specify the endpoint? With T=1, X=V=ℝ, λ₁=2, ψ(v)=v²/2, ℓ(v)=(v−1)²/2 and u=x₁=1/2, the regret and corrected bound are zero. Minimizing ψ+2ℓ invents a second point 2/3 and would give 0≤−1/36.",
+          "relationship": "In the inclusive regret identity choose the auxiliary endpoint z=x_T. The last difference G_T(x_T)−G_T(z) is then zero. For t<T, constrained minimum growth bounds Gₜ(xₜ)−Gₜ(xₜ₊₁) by −(λₜ/2)‖xₜ−xₜ₊₁‖². Apply the same growth inequality at t=T to u to retain the last comparator penalty. The changes of regularizer have sign ψₜ(xₜ₊₁)−ψₜ₊₁(xₜ₊₁). The book reaches its formula through Theorem 7.47 by using the current loss as a hint. This proof uses the inclusive identity and minimum growth directly.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space, with V nonempty, closed and convex. On round t=1,…,T, the learner sees ℓₜ before choosing xₜ. The regularizer ψₜ is real on X; the ambient loss takes values in ℝ ∪ {+∞} and is finite on V. The inclusive objective is Gₜ(v)=ψₜ(v)+∑ᵢ₌₁ᵗ ℓᵢ(v) on X. It is proper, closed and λₜ-strongly convex in the original norm. The repaired result uses T≥1 and λₜ>0.",
+            "assumptions": "Supply a feasible minimizer xₜ of Gₜ on V for each real round and u∈V. All values used in the regret and in the inclusive telescoping identity are finite. Positive curvatures and the source assumptions on the cumulative objectives are retained. Lean uses real sublevels relative to X. A closed ambient representative agreeing on X gives relative closedness. Agreement only on V gives closed feasible sublevels. For finite endpoints p,q in X, the interpolation inequality is required at each point a·p+(1−a)·q that belongs to X. The entire chord need not lie in X. Convexity of V ensures membership for every feasible chord. No closedness of X or convexity of each individual loss is needed.",
+            "parameters": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1). The comparator u belongs to V. An empty movement or drift sum at T=1 is zero.",
+            "regret": "Cumulative played loss minus cumulative loss of the one feasible comparator u.",
+            "guarantee": "The regret is at most B minus the final comparator penalty, hence also at most B. Each genuine transition earns a negative quadratic term. There is no transition to a new algorithm iterate after the last round."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Corrected BTRL terminal bound",
+            "boundary": "Theorem 15.31 prints a movement sum up to T; Algorithm 15.9 defines no x_(T+1). This is the labelled last-iterate repair, with an additional endpoint refinement. It does not assert the unqualified printed formula for an arbitrary next point."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Why the BTRL round has a unique feasible choice",
+          "pages": "Algorithm 15.9 / Theorem 15.31, printed pp. 266–267, PDF pp. 278–279",
+          "pdf_page": 278,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=278",
+          "math": "\\begin{aligned}\nH_t(v)&=\\begin{cases}G_t(v)&v\\in V,\\\\+\\infty&v\\notin V,\\end{cases}\\\\\n\\operatorname{dom}H_t&=V,\\\\\n\\forall t\\in\\{1,\\ldots,T\\},\\quad&\n\\exists!\\,p\\in V:\\ \\forall q\\in V,\\ G_t(p)\\le G_t(q).\n\\end{aligned}",
+          "plain": "Every real round has exactly one feasible minimizer. The minimum is taken over V even when the unconstrained optimum lies elsewhere. This is an existence theorem, not a computable selection algorithm.",
+          "fallback": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1). If X=(−1,1), V=[−1/2,1/2] and G(v)=v², the level-1 sublevel of the extension by +∞ off X is the nonclosed interval X. Restricting instead to closed V gives the closed sublevel needed in the proof.",
+          "relationship": "Extend Gₜ by +∞ off V, leaving its values on V unchanged. For each real threshold, restrict the sublevel from X to V and use closedness of V in the ambient space: the extended function Hₜ is closed. It is proper with effective domain V. Strong convexity on V makes the restricted epigraph convex. In finite-dimensional coordinates, a relative-interior point of the domain supplies a supporting subgradient. Apply the strong-convexity attainment theorem to Hₜ with its original norm, then translate its unique global minimum back to V.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space, with V nonempty, closed and convex. On round t=1,…,T, the learner sees ℓₜ before choosing xₜ. The regularizer ψₜ is real on X; the ambient loss takes values in ℝ ∪ {+∞} and is finite on V. The inclusive objective is Gₜ(v)=ψₜ(v)+∑ᵢ₌₁ᵗ ℓᵢ(v) on X. It is proper, closed and λₜ-strongly convex in the original norm. The repaired result uses T≥1 and λₜ>0.",
+            "assumptions": "No minimizing trajectory is supplied. For every t, the finite loss domains cover V. On X the inclusive objective has closed real sublevels, satisfies the properness conditions, and has the stated positive curvature. Lean uses real sublevels relative to X. A closed ambient representative agreeing on X gives relative closedness. Agreement only on V gives closed feasible sublevels. For finite endpoints p,q in X, the interpolation inequality is required at each point a·p+(1−a)·q that belongs to X. The entire chord need not lie in X. Convexity of V ensures membership for every feasible chord. No closedness of X or convexity of each individual loss is needed.",
+            "parameters": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1).",
+            "regret": "No regret bound is needed to prove per-round feasibility and uniqueness.",
+            "guarantee": "Every real round has exactly one feasible minimizer. The minimum is taken over V even when the unconstrained optimum lies elsewhere. This is an existence theorem, not a computable selection algorithm."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Derived BTRL attainment",
+            "boundary": "This is a library proof of the well-definedness needed by Algorithm 15.9 under the repaired hypotheses, not a separately numbered source theorem. It does not require the extension by +∞ off X to be globally closed or identify the minimizer with an unconstrained ambient one."
           },
           "statement_provenance": "derived-support"
         }
