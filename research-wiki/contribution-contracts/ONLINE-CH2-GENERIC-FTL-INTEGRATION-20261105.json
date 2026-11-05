@@ -1,0 +1,222 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105",
+  "route": "online-learning / Chapter2 / generic strict-past FTL definition realization",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Francesco Orabona, Chapter2 printed11-12/PDF23-24: argmin rule and feasible first action.",
+    "url": "https://arxiv.org/abs/1912.13213v10"
+  },
+  "target": "Integrate original PR215 four definitions, nine derived proofs and eight complete canaries with36conjuncts. Preserve all574original paths and11ignored terminal files, all31governance records and65overlapping source containers. One algorithm-definition anchor, no new regret bound or chapter acceptance.",
+  "affected_files": [
+    "BanditRLProof/OnlineFTLSelector.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineFTLSelector.cumulative",
+    "BanditRL.OnlineFTLSelector.minimizers",
+    "BanditRL.OnlineFTLSelector.select",
+    "BanditRL.OnlineFTLSelector.predict",
+    "BanditRL.OnlineFTLSelector.cumulative_prefix",
+    "BanditRL.OnlineFTLSelector.select_some_spec",
+    "BanditRL.OnlineFTLSelector.select_none_iff",
+    "BanditRL.OnlineFTLSelector.select_congr",
+    "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+    "BanditRL.OnlineFTLSelector.predict_zero",
+    "BanditRL.OnlineFTLSelector.predict_some_spec",
+    "BanditRL.OnlineFTLSelector.predict_none_iff",
+    "BanditRL.OnlineFTLSelector.predict_prefix"
+  ],
+  "reuse_plan": {
+    "classification": "missing",
+    "decision": "new_shared",
+    "searched_existing": [
+      "Accepted-main FTL declaration and process-memory searches; pinned Mathlib APIs, recorded in research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/retrieval-process-memory.json"
+    ],
+    "reused_declarations": [
+      "Fin.sum_univ_eq_sum_range",
+      "Finset.sum_congr",
+      "Set.ext",
+      "isMinOn_iff",
+      "Classical.choose_spec",
+      "Option.some.inj"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineFTLSelector.cumulative",
+      "BanditRL.OnlineFTLSelector.minimizers",
+      "BanditRL.OnlineFTLSelector.select",
+      "BanditRL.OnlineFTLSelector.predict",
+      "BanditRL.OnlineFTLSelector.cumulative_prefix",
+      "BanditRL.OnlineFTLSelector.select_some_spec",
+      "BanditRL.OnlineFTLSelector.select_none_iff",
+      "BanditRL.OnlineFTLSelector.select_congr",
+      "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+      "BanditRL.OnlineFTLSelector.predict_zero",
+      "BanditRL.OnlineFTLSelector.predict_some_spec",
+      "BanditRL.OnlineFTLSelector.predict_none_iff",
+      "BanditRL.OnlineFTLSelector.predict_prefix"
+    ],
+    "known_consumers": [
+      "Tests.OnlineFTLSelector.quadratic_trajectory",
+      "Tests.OnlineFTLSelector.current_future_independence",
+      "Tests.OnlineFTLSelector.off_domain_invariance",
+      "Tests.OnlineFTLSelector.tied_minimizers",
+      "Tests.OnlineFTLSelector.empty_domain",
+      "Tests.OnlineFTLSelector.empty_history_and_initialization",
+      "Tests.OnlineFTLSelector.affine_nonattainment",
+      "Tests.OnlineFTLSelector.recovery_after_nonattainment"
+    ],
+    "planned_consumers": [
+      "Subsequent original stacked PRs and Chapter2 reconciliation, not accepted by this integration."
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Scalar linear/squared and regularized/current-loss FTL APIs do not supply an arbitrary-carrier strict-prefix Option selector. Preserve exact original formal bodies and use actual complete concrete tests."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "root-integration-formalizer",
+    "blind_decoder": "independent-batch42-source-withheld-decoder",
+    "source_reviewer": "independent-batch42-source-reviewer",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied. One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The 65 overlapping source containers are navigation, not an independent proof denominator. Eight required forward containers and whole-chapter reconciliation remain open; six future mathematical claims remain unenumerated. Chapter 2 stays partial and its proof denominator remains unknown."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "EqOn invariance transports the ambient representation of the same feasible losses, not a guarantee between feedback models or a certified functor.",
+    "focus_targets": [
+      "online-ogd"
+    ],
+    "visual_review": "24selected compiled nodes,1715coalesced direct TYPE/VALUE pairs,15required production VALUE pairs and11selected canary branches. All36conjuncts compiled. Source topology, compiled references and four teaching steps remain distinct. Rendered review pending.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated:17original operations,13notes,1source card and4new displayed proof steps; prior rows and8steps retained.",
+    "banditrlwiki": "updated: research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105 retains exact original provenance, qualified65container reconciliation and concrete current successors.",
+    "results_ledger": "no-change-with-reason: a partial algorithm-definition realization adds no regret-bound or chapter milestone.",
+    "roadmap": "no-change-with-reason: eight forward containers and six unenumerated future claims remain open;5inherited artifact obligations remain OPEN.",
+    "website_surfaces": [
+      "online-ogd reader",
+      "OnlineFTLSelector module and catalogue",
+      "compiled Lean graph"
+    ]
+  },
+  "truth_boundary": "This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied. One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The 65 overlapping source containers are navigation, not an independent proof denominator. Eight required forward containers and whole-chapter reconciliation remain open; six future mathematical claims remain unenumerated. Chapter 2 stays partial and its proof denominator remains unknown.",
+  "verification": {
+    "focused_checks": [
+      "Original production and complete tests compiled;17exact public interface applications,38axiom records,15production VALUEpairs and11selected canary branches passed.",
+      "Combined BanditRLProof and Tests passed9291cached-inclusive jobs on these exact source bytes; full harness still pending.",
+      "Tests/OnlineFTLSelectorCanary.lean and Tests.lean are in the seven-source bindings; affected_files lists the five protected paths."
+    ],
+    "bandit_check": "Actual complete-package full harness gate pending.",
+    "site_build": "Fresh build after actual Lean and harness gates is required.",
+    "site_check": "Generated-site checks, desktop/mobile exposition and committed source links pending.",
+    "independent_review": "Distinct source-only topology, neutral source-withheld reconstruction, source/binder/definition/BODY, reader and574path preservation reviews accepted within their recorded scopes. Portable public successor and final candidate acceptance pending."
+  },
+  "contributor": {
+    "name": "OpenAI Codex",
+    "role": "Integration maintenance; original authorship retained by immutable PR215 and Git history."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "pending",
+      "reason": "All574original paths and11ignored files retained. Final candidate whole-original acceptance pending;5parent artifact obligations remain OPEN.",
+      "promoted_fragments": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.cumulative_prefix",
+        "BanditRL.OnlineFTLSelector.select_some_spec",
+        "BanditRL.OnlineFTLSelector.select_none_iff",
+        "BanditRL.OnlineFTLSelector.select_congr",
+        "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.predict_some_spec",
+        "BanditRL.OnlineFTLSelector.predict_none_iff",
+        "BanditRL.OnlineFTLSelector.predict_prefix"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "finite-past-sum-feasible-minimum-classical-option-prefix-invariance"
+      ],
+      "expected_information_gain": "Preserved proof route with distinct source/reader and conservation reviewers.",
+      "shared_verified_context_digest": "PinnedPDF cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17; acceptedmain aae274bd02f2291e98a289eb1f01f1023e0ae03e"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Feasible minimizer set; Option cases; exact prefix sum; EqOn transport; complete boundary canaries.",
+      "selection_reason": "No competing parallel proof construction routes."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Accepted private four-step mathematical explanation and21guarded expansions. Portable successor and rendered desktop/mobile gates pending.",
+      "source_expansion_nodes": [
+        "D-FIRST-ACTION",
+        "D-FTL-RULE",
+        "G-ATTAINMENT",
+        "G-CHOICE",
+        "G-FEEDBACK"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.cumulative_prefix",
+        "BanditRL.OnlineFTLSelector.select_some_spec",
+        "BanditRL.OnlineFTLSelector.select_none_iff",
+        "BanditRL.OnlineFTLSelector.select_congr",
+        "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.predict_some_spec",
+        "BanditRL.OnlineFTLSelector.predict_none_iff",
+        "BanditRL.OnlineFTLSelector.predict_prefix",
+        "Tests.OnlineFTLSelector.quadratic_trajectory",
+        "Tests.OnlineFTLSelector.current_future_independence",
+        "Tests.OnlineFTLSelector.off_domain_invariance",
+        "Tests.OnlineFTLSelector.tied_minimizers",
+        "Tests.OnlineFTLSelector.empty_domain",
+        "Tests.OnlineFTLSelector.empty_history_and_initialization",
+        "Tests.OnlineFTLSelector.affine_nonattainment",
+        "Tests.OnlineFTLSelector.recovery_after_nonattainment"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "status": "current-main-reuse-search-complete",
+  "receipt": {
+    "at": "2026-11-05T01:35:49.811649+00:00",
+    "status": "current-library-reuse-review-proposal",
+    "acceptedMain": "aae274bd02f2291e98a289eb1f01f1023e0ae03e",
+    "decision": "new_shared",
+    "reason": "Existing scalar empirical-mean and signed-linear FTL strategies specialize losses and choose ties explicitly. Existing prescient Bregman advance requires normed-space/extended-real regularized current-loss context and propagates failure through Option.bind. They do not provide the arbitrary-carrier real-valued strict-prefix feasible minimizer selector, and substituting either would alter the preserved original contract.",
+    "existing": [
+      {
+        "declaration": "BanditRL.OnlineLearning.ftlPredict",
+        "disposition": "preserve-source-qualified-squared-loss-instance; no asserted equality to new classical selector"
+      },
+      {
+        "declaration": "BanditRL.OnlineLearning.linearFTLPredict",
+        "disposition": "preserve-concrete-linear-tie-strategy; no asserted equality to arbitrary tied choice"
+      },
+      {
+        "declaration": "BanditRL.OnlinePrescientBregman.advance",
+        "disposition": "related-partial-choice-pattern; different objective/domain/information/recursive-failure semantics"
+      }
+    ],
+    "reusedAPIs": [
+      "IsMinOn",
+      "isMinOn_iff",
+      "Fin.sum_univ_eq_sum_range",
+      "Set.ext",
+      "Finset.sum_congr",
+      "Classical.choose_spec"
+    ],
+    "APIScope": "Names read in original proof and pinned imported Mathlib source. Actual compiler resolution/axiom/dependency probe remains pending.",
+    "realInternalConsumers": [
+      "predict_some_spec consumes select_some_spec and cumulative_prefix",
+      "predict_none_iff consumes select_none_iff and cumulative_prefix",
+      "predict_prefix consumes select_congr",
+      "eight complete concrete Test canaries consume these actual selectors and characterizations"
+    ],
+    "futureConsumers": "Other FTL proofs may use the generic API; no consumer equivalence or completion is claimed without a new adapter proof.",
+    "processMemoryIds": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "parallelism": {
+      "decision": "distinct-independent-audit-roles",
+      "fingerprints": [
+        "source-only-extraction",
+        "source-withheld-semantic-reconstruction",
+        "anti-anchored-topology-and-source-review"
+      ],
+      "proofSearchRoutes": 0,
+      "schedulerDefaultsChanged": false,
+      "commonBlindSpotReview": "Independent source reviewer compares source topology and blind semantics; no parallel proof routes claimed."
+    },
+    "newProofSearch": false,
+    "scientificAcceptancePending": true,
+    "inputs": {
+      "canonical-repository\\BanditRLProof\\OnlineLearningFTLState.lean": "fa33c10252eb5cd51b3ea4cdffb10fa95c37416f3098ceb76d9d58f465ff1765",
+      "canonical-repository\\BanditRLProof\\OnlineFTLFailure.lean": "bd7691120cefb664a645d64d9dd09b77b579e857fe333e363f6f2313db7c9b47",
+      "canonical-repository\\BanditRLProof\\OnlinePrescientBregman.lean": "ca33201a527e3bf0b07bbaa82f979c5d3b06b344a8f692f5edd9a525fc740265",
+      "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Order\\Filter\\Extr.lean": "02b73ed141a3bc3e38da7a237f369cbdf8aad80dfa155572cc13e588334a4679",
+      "canonical-repository\\.lake\\packages\\mathlib\\Mathlib\\Algebra\\BigOperators\\Fin.lean": "4130e166fde65ec3815b73c94021a2a30aa99374de6ddbf5aa97f0e192d492ea",
+      "canonical-repository\\research-wiki\\mathlib\\theorem-cards.md": "4656c1a8ccd4b2d8523cf5cf48bd1f966e7ba2c2237e2e578d6b8c2ecc6fbd97",
+      "canonical-repository\\runs\\process_memory.json": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578"
+    },
+    "commandReceiptSHA256": "e9fe6194138783c7a15e81e030269a78daa1244c8c75a71319e1b0bcdd23c119"
+  },
+  "exactReceiptSHA256": "88a58d501105dc559687e1f56f8410ef4cca55c2ad8864e672dd0add267d9f9a",
+  "decision": "new_shared: existing scalar or regularized/current-loss interfaces do not supply this arbitrary-carrier strict-prefix partial choice. Reuse the pinned project and Mathlib APIs, with actual Test consumers.",
+  "processEvidenceIsNotMathematicalAuthority": true,
+  "schedulerDefaultChanged": false,
+  "currentProcessMemory": {
+    "path": "runs/process_memory.json",
+    "sha256": "d85256d30393b733554a040c0f5fb729e70639e6734fc775ef0e920089a0c578",
+    "usedIDs": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "entries": [
+      {
+        "id": "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+        "kind": "standing_instruction",
+        "status": "active",
+        "scope": [
+          "scheduler",
+          "harness-comparison"
+        ],
+        "instruction": "Do not change the default hierarchical/master-worker scheduling policy from unmatched runs. Require the configured minimum number of matched experiments on the same frozen target and route-packet hash with reviewer-owned verdicts.",
+        "process_only": true,
+        "evidence": [
+          {
+            "file": "runs/harness-comparison/latest.json",
+            "needle": "\"matched_experiments\": []",
+            "evidence_kind": "deterministic_harness_report"
+          },
+          {
+            "file": "runs/harness-comparison/latest.json",
+            "needle": "\"minimum_matched_experiments\": 2",
+            "evidence_kind": "deterministic_harness_report"
+          }
+        ],
+        "expires_when": "Replace only after the deterministic harness-comparison policy itself is intentionally versioned and independently reviewed."
+      },
+      {
+        "id": "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+        "kind": "standing_instruction",
+        "status": "active",
+        "scope": [
+          "source-fidelity",
+          "SafeVerify",
+          "metadata"
+        ],
+        "instruction": "Record source-facing assumptions as atomic Lean-facing assumption items rather than one opaque prose blob so statement-fence checks can bind each assumption explicitly.",
+        "process_only": true,
+        "evidence": [
+          {
+            "file": "runs/trials.jsonl",
+            "needle": "SafeVerify metadata guard failed",
+            "evidence_kind": "reviewed_trial_failure"
+          }
+        ],
+        "expires_when": "Retire only when the statement-fence format mechanically derives atomic assumptions from the elaborated interface."
+      },
+      {
+        "id": "ABRL-NK-WINDOWS-PATH-LENGTH",
+        "kind": "negative_knowledge",
+        "status": "active",
+        "scope": [
+          "windows",
+          "build-system",
+          "module-paths"
+        ],
+        "classification": "ENV_BLOCKED",
+        "statement": "A long generated module/output path can prevent .olean creation even when direct Lean source compilation succeeds; this is environment evidence, not a theorem or proof-route refutation.",
+        "route_effect": "diagnostic-only",
+        "invalidation_keys": [
+          "filesystem path length policy",
+          "module filename",
+          "build worktree root"
+        ],
+        "evidence": [
+          {
+            "file": "runs/trials.jsonl",
+            "needle": "path too long",
+            "evidence_kind": "reviewed_trial_failure"
+          }
+        ]
+      }
+    ]
+  }
+}

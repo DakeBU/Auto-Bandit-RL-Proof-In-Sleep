@@ -8246,6 +8246,245 @@
         "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
         "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.cumulative",
+      "title": "Finite cumulative loss",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 234,
+      "plain": "All finite history lengths including0, arbitrary X and real losses; no feasible-set or regularity premise.",
+      "math": "C_L(x)=\\sum_{i\\in\\mathrm{Fin}(n)}L_i(x).",
+      "intuition": "Sum the supplied finite tuple. The empty sum is zero. cumulative_prefix later identifies the exact natural-index strict prefix.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Definition in the library realization of the one source rule.",
+      "proof_idea": "Sum the supplied finite tuple. The empty sum is zero. cumulative_prefix later identifies the exact natural-index strict prefix.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.minimizers",
+      "title": "The complete feasible minimizer set",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 235,
+      "plain": "All V, histories and points; V may be empty and the minimum need not be attained.",
+      "math": "M_V(L)=\\{p\\in V:C_L(p)\\le C_L(u)\\ \\forall u\\in V\\}.",
+      "intuition": "Include both membership and global minimum comparison on V. IsMinOn alone is not used as a replacement for feasibility.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Definition in the library realization of the one source rule.",
+      "proof_idea": "Include both membership and global minimum comparison on V. IsMinOn alone is not used as a replacement for feasibility.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.select",
+      "title": "Conditional classical minimizer selection",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 236,
+      "plain": "All V and finite histories, with no nonemptiness or attainment premise.",
+      "math": "S_V(L)=\\begin{cases}\\mathrm{some}(p),&M_V(L)\\ne\\varnothing,\\ p\\in M_V(L),\\\\\\mathrm{none},&M_V(L)=\\varnothing.\\end{cases}",
+      "intuition": "Branch on nonemptiness of exactly the minimizer set and use Classical.choose only in the successful branch. No default minimizer is fabricated.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Definition in the library realization of the one source rule.",
+      "proof_idea": "Branch on nonemptiness of exactly the minimizer set and use Classical.choose only in the successful branch. No default minimizer is fabricated.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.minimizers"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.predict",
+      "title": "FTL with the supplied feasible initial action",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 237,
+      "plain": "A supplied subtype initial:V, arbitrary loss stream and natural time. Feasibility of the initial excludes empty V.",
+      "math": "P_0=\\mathrm{some}(x_0),\\qquad P_t=S_V((\\ell_s)_{s<t})\\quad(t>0).",
+      "intuition": "Use the given initial at zero; at positive time form Fin t from strict-past losses. Each query is recomputed from its prefix, not an absorbing Option recursion.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Definition in the library realization of the one source rule.",
+      "proof_idea": "Use the given initial at zero; at positive time form Fin t from strict-past losses. Each query is recomputed from its prefix, not an absorbing Option recursion.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied. The eight complete tests check the quadratic predictions 3/4,1/4,1/2 with feasible prefix minima; current/future independence; off-domain invariance; tied feasible minima without naming the chosen endpoint; an empty domain; an empty history and two different supplied initial actions; affine nonattainment on the nonempty closed convex real line; and a separately queried longer prefix with an attained square minimum. The last example gives no playable action at the failed prefix. One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The 65 overlapping source containers are navigation, not an independent proof denominator. Eight required forward containers and whole-chapter reconciliation remain open; six future mathematical claims remain unenumerated. Chapter 2 stays partial and its proof denominator remains unknown.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.select"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.cumulative_prefix",
+      "title": "The exact strict-past sum convention",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 238,
+      "plain": "All natural t including0, every stream and ambient point; no V premise.",
+      "math": "C_{(\\ell_s)_{s<t}}(x)=\\sum_{s=0}^{t-1}\\ell_s(x).",
+      "intuition": "Use the finite-index/range sum identity to identify the same t summands. No loss argument, reordering approximation or normalization is changed.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "Use the finite-index/range sum identity to identify the same t summands. No loss argument, reordering approximation or normalization is changed.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.select_some_spec",
+      "title": "A successful selection is feasible and minimizes",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 239,
+      "plain": "All V, finite histories and p; assumes the actual equality S_V(L)=some p.",
+      "math": "S_V(L)=\\mathrm{some}(p)\\Longrightarrow p\\in V\\ \\wedge\\ C_L(p)\\le C_L(u)\\ (u\\in V).",
+      "intuition": "Unfold the Option selector and split on existence of a feasible minimizer. The none branch cannot equal some p. In the success branch, some-injectivity identifies p with Classical.choose, whose witness gives both feasibility and global minimality.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "Unfold the Option selector and split on existence of a feasible minimizer. The none branch cannot equal some p. In the success branch, some-injectivity identifies p with Classical.choose, whose witness gives both feasibility and global minimality.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.select_none_iff",
+      "title": "Failure means no feasible attained minimum",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 240,
+      "plain": "All V and finite histories, including empty domains/history; no compactness premise.",
+      "math": "S_V(L)=\\mathrm{none}\\Longleftrightarrow\\neg\\exists p\\in V,\\ \\forall u\\in V,\\ C_L(p)\\le C_L(u).",
+      "intuition": "Split on nonemptiness of the minimizer set. In the nonempty branch both equality to none and negated existence are impossible. In the empty branch the function is definitionally none and the negated existential is exactly the branch hypothesis.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "Split on nonemptiness of the minimizer set. In the nonempty branch both equality to none and negated existence are impossible. In the empty branch the function is definitionally none and the negated existential is exactly the branch hypothesis.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.select_congr",
+      "title": "Changing loss values outside V preserves selection",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 241,
+      "plain": "Histories of the same length with EqOn(L_i,L_i',V) for every coordinate; tied minima permitted.",
+      "math": "L_i|_V=L_i^{\\prime}|_V\\ (\\forall i)\\Longrightarrow S_V(L)=S_V(L^{\\prime}).",
+      "intuition": "Sum per-index equality on feasible points to get equality of cumulative objectives on V. Prove equality of entire feasible minimizer sets by extensionality, transporting each minimizing inequality in both directions. Rewrite that set equality inside the literal classical selector. Equal sets induce equal fixed choices without assuming uniqueness.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "Sum per-index equality on feasible points to get equality of cumulative objectives on V. Prove equality of entire feasible minimizer sets by extensionality, transporting each minimizing inequality in both directions. Rewrite that set equality inside the literal classical selector. Equal sets induce equal fixed choices without assuming uniqueness.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.minimizers",
+        "BanditRL.OnlineFTLSelector.select"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+      "title": "A unique feasible minimum determines the actual output",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 242,
+      "plain": "A supplied feasible p, its actual IsMinOn proof and uniqueness among feasible minimizers. These are explicit adapter premises.",
+      "math": "p\\in M_V(L),\\quad M_V(L)\\subseteq\\{p\\}\\Longrightarrow S_V(L)=\\mathrm{some}(p).",
+      "intuition": "Case split the actual Option output. none contradicts the supplied feasible minimizing witness using failure equivalence. For some q, soundness supplies feasibility/minimality and uniqueness identifies q=p, then map equality through some.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "Case split the actual Option output. none contradicts the supplied feasible minimizing witness using failure equivalence. For some q, soundness supplies feasibility/minimality and uniqueness identifies q=p, then map equality through some.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_none_iff",
+        "BanditRL.OnlineFTLSelector.select_some_spec"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.predict_zero",
+      "title": "Initialization preserves the chosen feasible first action",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 243,
+      "plain": "Arbitrary X,V, supplied initial:V and stream; no loss values inspected.",
+      "math": "P_0=\\mathrm{some}(x_0).",
+      "intuition": "Reduce the t=0 definition branch by reflexivity.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "Reduce the t=0 definition branch by reflexivity.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.predict"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.predict_some_spec",
+      "title": "Every successful prediction minimizes exactly its past",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 244,
+      "plain": "All natural t including0, feasible initial and actual equality P_t=some p.",
+      "math": "P_t=\\mathrm{some}(p)\\Longrightarrow p\\in V\\ \\wedge\\ \\sum_{s<t}\\ell_s(p)\\le\\sum_{s<t}\\ell_s(u)\\ (u\\in V).",
+      "intuition": "At zero, identify p with initializer and prove the empty objective inequality for every feasible point. At positive t, use function extensionality plus cumulative_prefix, reduce the positive branch, and apply select_some_spec.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "At zero, identify p with initializer and prove the empty objective inequality for every feasible point. At positive t, use function extensionality plus cumulative_prefix, reduce the positive branch, and apply select_some_spec.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.cumulative_prefix",
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_some_spec"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.predict_none_iff",
+      "title": "Prediction failure has an exact prefix meaning",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 245,
+      "plain": "All natural t including0 and a feasible supplied initial; no regularity or attainment hypothesis.",
+      "math": "P_t=\\mathrm{none}\\Longleftrightarrow\\neg\\exists p\\in V,\\ \\forall u\\in V,\\ \\sum_{s<t}\\ell_s(p)\\le\\sum_{s<t}\\ell_s(u).",
+      "intuition": "At zero, equality some initializer=none is impossible; the initializer itself witnesses a minimum of the zero objective, contradicting the other side. At positive t, rewrite the finite-index objective as the prefix sum and apply select_none_iff.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "At zero, equality some initializer=none is impossible; the initializer itself witnesses a minimum of the zero objective, contradicting the other side. At positive t, rewrite the finite-index objective as the prefix sum and apply select_none_iff.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.cumulative",
+        "BanditRL.OnlineFTLSelector.cumulative_prefix",
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_none_iff"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineFTLSelector.predict_prefix",
+      "title": "Strict-past feasible-domain causality",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 246,
+      "plain": "The SAME feasible initial and V; all s<t losses agree only on V. No equality of current/future or outside-V values.",
+      "math": "\\ell_s|_V=\\ell_s^{\\prime}|_V\\ (s<t)\\Longrightarrow P_t(\\ell)=P_t(\\ell^{\\prime}).",
+      "intuition": "At zero both outputs equal the same initializer. Otherwise apply select_congr to the two Fin t prefixes, with each bounded index supplying i.val<t. This is extensional strict-prefix dependence; it does not implement acquisition of earlier loss functions from permitted feedback.",
+      "why": "Separate strict-past minimization, feasible initialization and the cases in which no action is returned.",
+      "position": "Orabona, arXiv:1912.13213v10 (2026-06-21), Chapter 2, printed pp.11-12 / PDF pp.23-24. The source gives an argmin rule and a feasible first action. Derived library property of the partial selector; not a separately printed source theorem.",
+      "proof_idea": "At zero both outputs equal the same initializer. Otherwise apply select_congr to the two Fin t prefixes, with each bounded index supplying i.val<t. This is extensional strict-prefix dependence; it does not implement acquisition of earlier loss functions from permitted feedback.",
+      "lean_notes": "Let X be any type, V a feasible subset and ell_s:X->R ambient real losses. Only their restrictions to V enter the rule. Lean index t corresponds to source round t+1, and the queried objective sums exactly s<t. For predict, the supplied initial point belongs to V. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied.",
+      "dependencies": [
+        "BanditRL.OnlineFTLSelector.predict",
+        "BanditRL.OnlineFTLSelector.predict_zero",
+        "BanditRL.OnlineFTLSelector.select",
+        "BanditRL.OnlineFTLSelector.select_congr"
+      ]
     }
   ]
 }

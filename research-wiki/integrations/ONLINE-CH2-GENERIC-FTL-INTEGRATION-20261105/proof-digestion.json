@@ -1,0 +1,119 @@
+{
+  "existingSubstrate": [
+    "Mathlib Fin.sum_univ_eq_sum_range",
+    "Mathlib Finset.sum_congr",
+    "Mathlib isMinOn_iff and Set.ext",
+    "Lean Classical.choose and Classical.choose_spec",
+    "Lean Option.some.inj and case analysis"
+  ],
+  "bookkeeping": [
+    "Identify Fin t and range t sums",
+    "Split Option success/failure on nonempty feasible minimizer set",
+    "Transport full minimizing inequalities across EqOn",
+    "Separate zero initialization from positive prefix queries"
+  ],
+  "newReusable": [
+    "BanditRL.OnlineFTLSelector.cumulative",
+    "BanditRL.OnlineFTLSelector.minimizers",
+    "BanditRL.OnlineFTLSelector.select",
+    "BanditRL.OnlineFTLSelector.predict",
+    "BanditRL.OnlineFTLSelector.cumulative_prefix",
+    "BanditRL.OnlineFTLSelector.select_some_spec",
+    "BanditRL.OnlineFTLSelector.select_none_iff",
+    "BanditRL.OnlineFTLSelector.select_congr",
+    "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+    "BanditRL.OnlineFTLSelector.predict_zero",
+    "BanditRL.OnlineFTLSelector.predict_some_spec",
+    "BanditRL.OnlineFTLSelector.predict_none_iff",
+    "BanditRL.OnlineFTLSelector.predict_prefix"
+  ],
+  "declarationRoles": {
+    "definitions": [
+      "BanditRL.OnlineFTLSelector.cumulative",
+      "BanditRL.OnlineFTLSelector.minimizers",
+      "BanditRL.OnlineFTLSelector.select",
+      "BanditRL.OnlineFTLSelector.predict"
+    ],
+    "derivedLibraryProperties": [
+      "BanditRL.OnlineFTLSelector.cumulative_prefix",
+      "BanditRL.OnlineFTLSelector.select_some_spec",
+      "BanditRL.OnlineFTLSelector.select_none_iff",
+      "BanditRL.OnlineFTLSelector.select_congr",
+      "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+      "BanditRL.OnlineFTLSelector.predict_zero",
+      "BanditRL.OnlineFTLSelector.predict_some_spec",
+      "BanditRL.OnlineFTLSelector.predict_none_iff",
+      "BanditRL.OnlineFTLSelector.predict_prefix"
+    ],
+    "completeTestConsumers": [
+      "Tests.OnlineFTLSelector.quadratic_trajectory",
+      "Tests.OnlineFTLSelector.current_future_independence",
+      "Tests.OnlineFTLSelector.off_domain_invariance",
+      "Tests.OnlineFTLSelector.tied_minimizers",
+      "Tests.OnlineFTLSelector.empty_domain",
+      "Tests.OnlineFTLSelector.empty_history_and_initialization",
+      "Tests.OnlineFTLSelector.affine_nonattainment",
+      "Tests.OnlineFTLSelector.recovery_after_nonattainment"
+    ]
+  },
+  "sourceAlgorithmAnchorCount": 1,
+  "sourceResultCount": 0,
+  "sourceNodesAreNotLeanCounts": true,
+  "sourceCorrectionApproved": false,
+  "sourceRouteDifference": "The source supplies an argmin rule without a complete optimizer, choice or feedback-access specification. The library supplies one fixed classical Option-valued realization on arbitrary carriers and independently queried strict prefixes. Its nine theorems establish derived partial-selection properties.",
+  "sourceSpecificationGapsRetained": [
+    "G-ATTAINMENT",
+    "G-CHOICE",
+    "G-FEEDBACK"
+  ],
+  "sourceGapsDischarged": false,
+  "noveltyClaim": false,
+  "bodyReview": "batch42-source-review-v1/phase3-receipt.json",
+  "reviewedTeachingMoves": [
+    {
+      "source": "D-FTL-RULE",
+      "move": "Build strict-past sum and full feasible minimizer set; prove partial selection correctness and exact no-attainment failure.",
+      "declarations": [
+        "cumulative",
+        "minimizers",
+        "select",
+        "cumulative_prefix",
+        "select_some_spec",
+        "select_none_iff"
+      ]
+    },
+    {
+      "source": "D-FIRST-ACTION + D-FTL-RULE",
+      "move": "Separate zero-history initialization from positive prefixes; transport selector characterization to queries.",
+      "declarations": [
+        "predict",
+        "predict_zero",
+        "predict_some_spec",
+        "predict_none_iff"
+      ]
+    },
+    {
+      "source": "Library realization only",
+      "move": "Equal feasible histories yield equal minimizer sets and fixed selector outputs; unique attained minima identify named outputs.",
+      "declarations": [
+        "select_congr",
+        "predict_prefix",
+        "select_eq_some_of_unique"
+      ]
+    },
+    {
+      "source": "Library validation only",
+      "move": "Concrete squares, empty set/history, ties, affine nonattainment, future/off-domain changes and fresh-prefix recovery test exact boundaries.",
+      "declarations": [
+        "quadratic_trajectory",
+        "current_future_independence",
+        "off_domain_invariance",
+        "tied_minimizers",
+        "empty_domain",
+        "empty_history_and_initialization",
+        "affine_nonattainment",
+        "recovery_after_nonattainment"
+      ]
+    }
+  ]
+}

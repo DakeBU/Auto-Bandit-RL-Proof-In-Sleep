@@ -1,0 +1,1169 @@
+{
+  "originalFrozenAudit": "statement-audit.json",
+  "currentExactGuards": [
+    {
+      "exactStatementOrDefinition": "def cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "5f7a8689af2a2298f73b219535d953bef51bf87d9276d50dbeab423daf5969c7",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 10
+    },
+    {
+      "exactStatementOrDefinition": "def minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "6a65f173e706684cccb93f837cdbd0cec98c2709207c3e9f5b7898515a3512fa",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 13
+    },
+    {
+      "exactStatementOrDefinition": "def select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "c3ac8e7fa85d204a57e2c7af56b6ccd80cabf5aa2c23540672273703a68c7516",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 16
+    },
+    {
+      "exactStatementOrDefinition": "def predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "d74d0402325ce99cf1f4bbbfc96759594c06f662bc98982acfd811db0b753a80",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 20
+    },
+    {
+      "exactStatementOrDefinition": "theorem cumulative_prefix (loss : ℕ → X → ℝ) (t : ℕ) (x : X) :\n    cumulative (fun i : Fin t => loss i.val) x = ∑ i ∈ range t, loss i x",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "c3cf95c1c0860967a5a198f458a2484fa4514d750465afb50a3d3fe797251b76",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 43
+    },
+    {
+      "exactStatementOrDefinition": "theorem select_some_spec (V : Set X) (past : Fin n → X → ℝ) (p : X) (h : select V past = some p) :\n    p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "9dc587b24b481b1701cd47921f1ce267e50cdde11f5fc921c5666c29f76c6b97",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 23
+    },
+    {
+      "exactStatementOrDefinition": "theorem select_none_iff (V : Set X) (past : Fin n → X → ℝ) :\n    select V past = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (cumulative past) V p",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "baa5fe494c4490fa8a7354fdb7af33f4508400e8c49186affe58bf49a76547e4",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 31
+    },
+    {
+      "exactStatementOrDefinition": "theorem select_congr (V : Set X) (past past' : Fin n → X → ℝ) (h : ∀ i, EqOn (past i) (past' i) V) :\n    select V past = select V past'",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "11582d27c589a5d15fb101afa10db5880a47d15bfa95f8fc57c570e2a5e6b796",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 47
+    },
+    {
+      "exactStatementOrDefinition": "theorem select_eq_some_of_unique (V : Set X) (past : Fin n → X → ℝ) (p : X) (hp : p ∈ V) (hmin : IsMinOn (cumulative past) V p) (hunique : ∀ q ∈ V, IsMinOn (cumulative past) V q → q = p) :\n    select V past = some p",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "d331fc91f968ffb1c5909515e6975c87fe06c9f409e34b24a6aec86df7df6658",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 74
+    },
+    {
+      "exactStatementOrDefinition": "theorem predict_zero (V : Set X) (initial : V) (loss : ℕ → X → ℝ) :\n    predict V initial loss 0 = some (initial : X)",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "6fdf3d4540cfe49f25e83a0ad0d1f9a3d90ab8a92918c70dc101185f3cece8b6",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 70
+    },
+    {
+      "exactStatementOrDefinition": "theorem predict_some_spec (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) (p : X) (h : predict V initial loss t = some p) :\n    p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "6e6db7e8554dbb1d725392da3ebc779f4816d7a5a2ca7fbe851345a59bbd71d7",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 82
+    },
+    {
+      "exactStatementOrDefinition": "theorem predict_none_iff (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) :\n    predict V initial loss t = none ↔ ¬ ∃ p, p ∈ V ∧ IsMinOn (fun x => ∑ i ∈ range t, loss i x) V p",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "c0ddb2bbf718e56d92ca12c7f4a03b54586b2d29a0b9c2b1673ae07d7a4aa81f",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 99
+    },
+    {
+      "exactStatementOrDefinition": "theorem predict_prefix (V : Set X) (initial : V) (loss loss' : ℕ → X → ℝ) (t : ℕ) (h : ∀ s < t, EqOn (loss s) (loss' s) V) :\n    predict V initial loss t = predict V initial loss' t",
+      "context": "import Mathlib.Algebra.BigOperators.Fin\nimport Mathlib.Data.Real.Basic\nimport Mathlib.Order.Filter.Extr\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineFTLSelector\nvariable {X : Type*} {n : ℕ}\n\ndef cumulative (past : Fin n → X → ℝ) (x : X) : ℝ :=\n  ∑ i, past i x\n\ndef minimizers (V : Set X) (past : Fin n → X → ℝ) : Set X :=\n  {x | x ∈ V ∧ IsMinOn (cumulative past) V x}\n\ndef select (V : Set X) (past : Fin n → X → ℝ) : Option X := by\n  classical\n  exact if h : (minimizers V past).Nonempty then some (Classical.choose h) else none\n\ndef predict (V : Set X) (initial : V) (loss : ℕ → X → ℝ) (t : ℕ) : Option X :=\n  if t = 0 then some (initial : X) else select V (fun i : Fin t => loss i.val)\n\n",
+      "contextSHA256": "2e7958ab5fa057bbeeeb87464d570a06999afd150d83a2d19e6f1e4bb137c7b9",
+      "signatureSHA256": "a2830d1bd3b2238d3d86d2ce9edb6c5cb024016c9b963e1c9545c9660d7255e2",
+      "sourceModule": "BanditRLProof/OnlineFTLSelector.lean",
+      "sourceModuleSHA256": "cd1cae5683edaa40fde18466f1efbca8ad34b295d8dfc3b173a35e0d459405df",
+      "fullCanaryConjuncts": null,
+      "completeCanaryReview": null,
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 120
+    },
+    {
+      "exactStatementOrDefinition": "theorem quadratic_trajectory :\n    (initial : ℝ) = 3 / 4 ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval initial quadraticLoss 1 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 2 = some (1 / 2) ∧\n    (1 / 4 : ℝ) ≠ 1 / 2 ∧\n    quadraticLoss 0 (1 / 4) ≠ quadraticLoss 0 (3 / 4) ∧\n    (∀ t ∈ range 3, ∃ p, predict interval initial quadraticLoss t = some p ∧\n      p ∈ interval ∧ IsMinOn (fun x => ∑ i ∈ range t, quadraticLoss i x) interval p)",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "26c225b9c5bb7f04d587618ebd2cdce712f71b99b7d6e1401abe71796b84a219",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 7,
+      "completeCanaryReview": {
+        "name": "quadratic_trajectory",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 7,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "initial=3/4",
+            "independentCheck": "Initializer definition.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "Initializer unfolds.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "predict0=some3/4",
+            "independentCheck": "Explicit initial branch.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_zero.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "predict1=some1/4",
+            "independentCheck": "Single square uniquely minimized at1/4 in[0,1].",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "quadratic_selection with c=1/4,k=1,d=0; cumulative_prefix and finite sum computation.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 4,
+            "meaning": "predict2=some1/2",
+            "independentCheck": "Two-loss objective2(x-1/2)^2+1/8.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "quadratic_selection with c=1/2,k=2,d=1/8; cumulative_prefix, finite sum computation and ring identity.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 5,
+            "meaning": "1/4 !=1/2",
+            "independentCheck": "Distinct rationals.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num checks distinct rational points.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 6,
+            "meaning": "q0(1/4) !=q0(3/4)",
+            "independentCheck": "Values0 and1/4.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num evaluates initial squared loss0 versus1/4.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 7,
+            "meaning": "forall t in range3, exists p: prediction=some p AND p in interval AND IsMinOn prefix at p",
+            "independentCheck": "Only0,1,2; witnesses3/4,1/4,1/2, all feasible, and all-y comparisons, including empty objective at0.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "mem_range and omega restrict t to0,1,2; each branch supplies exact output witness and predict_some_spec for feasibility AND minimizing inequalities.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 164
+    },
+    {
+      "exactStatementOrDefinition": "theorem current_future_independence :\n    quadraticLoss 2 0 ≠ changedLoss 2 0 ∧\n    quadraticLoss 3 0 ≠ changedLoss 3 0 ∧\n    predict interval initial quadraticLoss 2 = predict interval initial changedLoss 2",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "d79fdd7b4a666d0d25bc58ac9e7b433b3276ef04c46bba2ab0b710bf3892f15e",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 3,
+      "completeCanaryReview": {
+        "name": "current_future_independence",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 3,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "q2(0) !=changed2(0)",
+            "independentCheck": "9/16 versus100.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num evaluates9/16 versus100.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "q3(0) !=changed3(0)",
+            "independentCheck": "9/16 versus100.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num evaluates9/16 versus100.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "predict q2=predict changed2",
+            "independentCheck": "Same indices0,1; no later-time equality claimed.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_prefix uses changedLoss=same loss for each s<2, independently of feasible x.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 42
+    },
+    {
+      "exactStatementOrDefinition": "theorem off_domain_invariance :\n    (2 : ℝ) ∉ interval ∧\n    quadraticLoss 0 2 ≠ offDomainLoss 0 2 ∧\n    (∀ t, EqOn (quadraticLoss t) (offDomainLoss t) interval) ∧\n    select interval (fun i : Fin 2 => quadraticLoss i.val) =\n      select interval (fun i : Fin 2 => offDomainLoss i.val) ∧\n    predict interval initial quadraticLoss 2 = predict interval initial offDomainLoss 2",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "d3cca36c69c1a1b7597868815a075cb8e83d6f41d660b7744e45fbb25cf757cf",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 5,
+      "completeCanaryReview": {
+        "name": "off_domain_invariance",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 5,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "2 not in interval",
+            "independentCheck": "2>1.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num checks point2 outside[0,1].",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "q0(2) !=offDomain0(2)",
+            "independentCheck": "49/16 versus9.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num evaluates49/16 versus9.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "forall t, EqOn q_t offDomain_t interval",
+            "independentCheck": "Agreement for every feasible x and all t.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "heq unfolds offDomainLoss at an arbitrary feasible x, for arbitrary t.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 4,
+            "meaning": "select Fin2 q=select Fin2 offDomain",
+            "independentCheck": "Same feasible minimizer set under fixed choice.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "select_congr uses heq at each Fin2 index.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 5,
+            "meaning": "predict q2=predict offDomain2",
+            "independentCheck": "Same two-loss prefix on feasible set.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_prefix uses heq at all s<2.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 52
+    },
+    {
+      "exactStatementOrDefinition": "theorem tied_minimizers :\n    (0 : ℝ) ∈ interval ∧ (1 : ℝ) ∈ interval ∧ (0 : ℝ) ≠ 1 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 0 ∧\n    IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval 1 ∧\n    (∃ p, select interval (fun _ : Fin 1 => fun _ : ℝ => 0) = some p ∧\n      p ∈ interval ∧ IsMinOn (cumulative (fun _ : Fin 1 => fun _ : ℝ => 0)) interval p)",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "621e5ac88729baf77706fe7e987357b61279fc4ac0cf212ac638d8decab0cc55",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 6,
+      "completeCanaryReview": {
+        "name": "tied_minimizers",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 6,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "0 in interval",
+            "independentCheck": "Endpoint included.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num endpoint0 feasibility.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "1 in interval",
+            "independentCheck": "Endpoint included.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num endpoint1 feasibility.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "0 !=1",
+            "independentCheck": "Distinct endpoints.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "norm_num distinctness.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 4,
+            "meaning": "IsMinOn constant-zero length1 at0",
+            "independentCheck": "Every comparison0<=0.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "hm0: unfold cumulative constant-zero loss and isMinOn_iff, prove0<=0.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 5,
+            "meaning": "IsMinOn constant-zero length1 at1",
+            "independentCheck": "Every comparison0<=0.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "hm1: same all-point zero comparison.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 6,
+            "meaning": "exists p: select=some p AND p in interval AND IsMinOn zero objective at p",
+            "independentCheck": "Nonempty minimizer set equals interval; no named tied selection.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "selection_witness uses feasible0 and hm0 to produce same selected p with feasibility AND minimality, without naming that p.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 67
+    },
+    {
+      "exactStatementOrDefinition": "theorem empty_domain :\n    select (∅ : Set ℝ) (fun _ : Fin 1 => fun x : ℝ => x ^ 2) = none",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "9c69336c82c2c38c10a1048f4c3b1dcbb2a155a7c9b08ab958f0a0f59bea0be7",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 1,
+      "completeCanaryReview": {
+        "name": "empty_domain",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 1,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "select empty length1 squared-loss=none",
+            "independentCheck": "Feasibility makes minimizer set empty, regardless of objective. No predict on empty V.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "select_none_iff; any existential minimizer has impossible empty-set membership.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 29
+    },
+    {
+      "exactStatementOrDefinition": "theorem empty_history_and_initialization :\n    (∃ p, select interval (fun i : Fin 0 => Fin.elim0 i) = some p ∧ p ∈ interval) ∧\n    predict interval initial quadraticLoss 0 = some (3 / 4) ∧\n    predict interval otherInitial quadraticLoss 0 = some (1 / 4) ∧\n    predict interval initial quadraticLoss 0 ≠ predict interval otherInitial quadraticLoss 0",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "62961c8314ec5401f8ed2f4f724c326ceb28a1f9e556482ce5a06b08d981f4d4",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 4,
+      "completeCanaryReview": {
+        "name": "empty_history_and_initialization",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 4,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "exists p: select Fin0=some p AND p in interval",
+            "independentCheck": "Zero objective and nonempty interval; no explicit IsMinOn conjunct or named p.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "Empty sum gives hm at feasible0. selection_witness supplies p and all properties; retain exactly output and feasibility in this conjunct.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "predict initial0=some3/4",
+            "independentCheck": "First initializer.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_zero at initial.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "predict otherInitial0=some1/4",
+            "independentCheck": "Second initializer.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_zero at otherInitial.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 4,
+            "meaning": "zero-time predictions unequal",
+            "independentCheck": "Distinct some values. Does not assert positive-time difference.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "Rewrite both zero branches; norm_num distinguishes3/4 and1/4.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 83
+    },
+    {
+      "exactStatementOrDefinition": "theorem affine_nonattainment :\n    (univ : Set ℝ).Nonempty ∧ IsClosed (univ : Set ℝ) ∧ Convex ℝ (univ : Set ℝ) ∧\n    select univ (fun _ : Fin 1 => fun x : ℝ => x) = none ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 0 = some 0 ∧\n    predict univ ⟨0, mem_univ 0⟩ (fun _ : ℕ => fun x : ℝ => x) 1 = none",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "595d49b41619d757e83387e0096abefaa5d7c212d4eb68ae69118778de2a9636",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 6,
+      "completeCanaryReview": {
+        "name": "affine_nonattainment",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 6,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "univ real Nonempty",
+            "independentCheck": "0 witnesses membership.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "Witness0 in univ.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "univ real IsClosed",
+            "independentCheck": "Universal set is closed.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "isClosed_univ.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "univ real Convex Real",
+            "independentCheck": "Real convex combinations remain in univ.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "convex_univ.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 4,
+            "meaning": "select identity length1=none",
+            "independentCheck": "For every x, x-1 has strictly smaller loss.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "select_none_iff; cumulative singleton reduces to identity; apply affine_no_minimum.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 5,
+            "meaning": "predict identity0=some0",
+            "independentCheck": "Initial branch.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_zero.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 6,
+            "meaning": "predict identity1=none",
+            "independentCheck": "First-prefix identity has no minimum.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_none_iff; first prefix reduces to identity; apply affine_no_minimum.",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 122
+    },
+    {
+      "exactStatementOrDefinition": "theorem recovery_after_nonattainment :\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 1 = none ∧\n    predict univ ⟨0, mem_univ 0⟩ affineThenQuadratic 2 = some 0 ∧\n    IsMinOn (fun x => ∑ i ∈ range 2, affineThenQuadratic i x) univ 0 ∧\n    (∀ x, (∑ i ∈ range 2, affineThenQuadratic i x) = x ^ 2)",
+      "context": "import BanditRLProof.OnlineFTLSelector\nimport Mathlib.Analysis.Convex.Basic\nimport Mathlib.Topology.Instances.Real.Lemmas\nimport Mathlib.Tactic\n\nnoncomputable section\nopen Set Finset BanditRL.OnlineFTLSelector\nnamespace Tests.OnlineFTLSelector\n\ndef interval : Set ℝ := Icc 0 1\n\ndef initial : interval := ⟨3 / 4, by norm_num [interval]⟩\n\ndef otherInitial : interval := ⟨1 / 4, by norm_num [interval]⟩\n\ndef quadraticLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then (x - 1 / 4) ^ 2 else (x - 3 / 4) ^ 2\n\ndef changedLoss (t : ℕ) (x : ℝ) : ℝ :=\n  if t < 2 then quadraticLoss t x else x + 100\n\ndef offDomainLoss (t : ℕ) (x : ℝ) : ℝ := by\n  classical\n  exact if x ∈ interval then quadraticLoss t x else x + 7\n\ndef affineThenQuadratic (t : ℕ) (x : ℝ) : ℝ :=\n  if t = 0 then x else x ^ 2 - x\n\n",
+      "contextSHA256": "46485cbb587a8dfa8722e9fcef634fa239b075776d3ec251e7e5f726094ccbab",
+      "signatureSHA256": "72979e6113977449f8b37da2d167ffdd0fd369ffe1dfc5eeb4f2195fa9a6e1b0",
+      "sourceModule": "Tests/OnlineFTLSelectorCanary.lean",
+      "sourceModuleSHA256": "a6e3b16b29c6a5eddcb343cb555457eb52bed35c9c5089a1948e90f30cb1df85",
+      "fullCanaryConjuncts": 4,
+      "completeCanaryReview": {
+        "name": "recovery_after_nonattainment",
+        "verdict": "accepted",
+        "completeTheoremCompiled": true,
+        "topLevelConjunctCount": 4,
+        "conjuncts": [
+          {
+            "number": 1,
+            "meaning": "predict affineThenQuadratic1=none",
+            "independentCheck": "Prefix is x, no minimum.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "predict_none_iff; first affineThenQuadratic prefix reduces to identity, then affine_no_minimum.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 2,
+            "meaning": "predict affineThenQuadratic2=some0",
+            "independentCheck": "Prefix x+(x^2-x)=x^2 uniquely minimized at0.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "Reduce positive prediction to selector; quadratic_selection with c=0,k=1,d=0. cumulative_prefix plus hc establishes x^2.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 3,
+            "meaning": "IsMinOn range2 prefix on univ at0",
+            "independentCheck": "For every real y,0<=y^2.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "isMinOn_iff; rewrite hc at0 and x, reduce0^2 and use sq_nonneg x.",
+            "bodyVerdict": "accepted"
+          },
+          {
+            "number": 4,
+            "meaning": "forall x, range2 prefix=x^2",
+            "independentCheck": "Cancellation for every real x. New pointwise query, not continuation of stopped execution.",
+            "decoderComparison": "agrees",
+            "compilerStatus": "passed in supplied focused build and exact public application",
+            "bodyProofMove": "Compute range2 sum via sum_range_succ and affineThenQuadratic, cancel x+(x^2-x).",
+            "bodyVerdict": "accepted"
+          }
+        ],
+        "allNestedScopesChecked": true
+      },
+      "definitionScope": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\binder-definition-review.json",
+          "sha256": "118a86739355c611484f8ceaaeee0eb209f5f4d7f7f04b174863f228fbcd1ec0",
+          "proposedPublicAlias": "binder-definition-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/binder-definition-review.json",
+        "publicSHA256": "f4e57db6c4bdc070bef4ba01480782c90f53bb307411469e8b72b3ac7d8d7ec5",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "binderReview": {
+        "originalPrivateEvidence": {
+          "path": "private-maintenance/github-maintenance-goal-20261011\\batch42-source-review-v1\\semantic-slot-review.json",
+          "sha256": "1d2ce0fb5d1dde917fd791a95167864f170be12653b9d0923fdf90a06b8db92a",
+          "proposedPublicAlias": "semantic-slot-review.json",
+          "publicAliasMaterialized": false
+        },
+        "publicPath": "research-wiki/integrations/ONLINE-CH2-GENERIC-FTL-INTEGRATION-20261105/semantic-slot-review.json",
+        "publicSHA256": "4a3dd4b26f5080a34d14849d13ccef1b057872ba46f13a053ce1ffcf0de2c172",
+        "publicAliasMaterialized": true,
+        "usage": "The public alias resolves in this draft. Original path/hash identifies the independently reviewed bytes. Rendered and final candidate acceptance are separate."
+      },
+      "currentSourceLine": 140
+    }
+  ],
+  "productionDefinitions": [
+    "BanditRL.OnlineFTLSelector.cumulative",
+    "BanditRL.OnlineFTLSelector.minimizers",
+    "BanditRL.OnlineFTLSelector.select",
+    "BanditRL.OnlineFTLSelector.predict"
+  ],
+  "derivedLibraryProperties": [
+    "BanditRL.OnlineFTLSelector.cumulative_prefix",
+    "BanditRL.OnlineFTLSelector.select_some_spec",
+    "BanditRL.OnlineFTLSelector.select_none_iff",
+    "BanditRL.OnlineFTLSelector.select_congr",
+    "BanditRL.OnlineFTLSelector.select_eq_some_of_unique",
+    "BanditRL.OnlineFTLSelector.predict_zero",
+    "BanditRL.OnlineFTLSelector.predict_some_spec",
+    "BanditRL.OnlineFTLSelector.predict_none_iff",
+    "BanditRL.OnlineFTLSelector.predict_prefix"
+  ],
+  "completeCanaries": [
+    "Tests.OnlineFTLSelector.quadratic_trajectory",
+    "Tests.OnlineFTLSelector.current_future_independence",
+    "Tests.OnlineFTLSelector.off_domain_invariance",
+    "Tests.OnlineFTLSelector.tied_minimizers",
+    "Tests.OnlineFTLSelector.empty_domain",
+    "Tests.OnlineFTLSelector.empty_history_and_initialization",
+    "Tests.OnlineFTLSelector.affine_nonattainment",
+    "Tests.OnlineFTLSelector.recovery_after_nonattainment"
+  ],
+  "fullCanaryConjunctCounts": [
+    7,
+    3,
+    5,
+    6,
+    1,
+    4,
+    6,
+    4
+  ],
+  "compiledEvidence": "compiled-probes.json",
+  "formalAndTestBytesUnchanged": true,
+  "sourceAlgorithmAnchorCount": 1,
+  "sourceTheoremCredit": 0
+}

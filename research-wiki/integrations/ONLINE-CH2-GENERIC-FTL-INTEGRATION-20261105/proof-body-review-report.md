@@ -1,0 +1,43 @@
+# Phase3 bounded BODY and proof-value review
+
+Verdict: **accepted** for the exact released production and complete Test proof bodies. Phase2 source fidelity remains **accepted-with-explicit-delta**. There are no mathematical/signature/proof blockers in this bounded packet. Full combined gates,574-path/31-governance conservation and17reader operations/browser/publication are not approved here.
+
+All28plan inputs match their pins. Actual production/Test files match the frozen original whole-file hashes, all17actual theorem headers exactly match their sealed strings and hashes, and both definition prefixes match the Phase2 contexts after whitespace normalization. I read every production proof, all3private Test helpers, all8complete canaries and all4probe programs. I also checked the supplied current compiler/axiom logs and metadata outputs. I did not rerun the compiler or edit a worktree.
+
+## Definition characterization and production proof routes
+
+The minimizer set is literally feasibility conjoined with all-feasible-point comparison. Selection chooses from that set only when nonempty; otherwise it returns none. `select_some_spec` splits that actual definition, eliminates the impossible none=some case, identifies the chosen point by some-injectivity, and applies `Classical.choose_spec`. `select_none_iff` handles both branches and gives exact absence-of-attainment equivalence. This is not a hidden generic existence assumption.
+
+`cumulative_prefix` uses `Fin.sum_univ_eq_sum_range`, preserving every summand. `select_congr` first sums pointwise equality on V with `Finset.sum_congr`. It then uses `Set.ext` and `isMinOn_iff` to show equality of the entire feasible minimizer sets, rewriting that equality in the fixed classical selector. This correctly proves exact Option equality even for ties. It does not prove that two arbitrarily chosen source minimizers must coincide.
+
+`select_eq_some_of_unique` rejects none using the supplied feasible minimizing witness and `select_none_iff`; in the some branch `select_some_spec` provides the properties needed to invoke the explicit uniqueness premise. The premise remains local to this derived library claim.
+
+`predict_zero` reduces by reflexivity. `predict_some_spec` handles zero using initializer feasibility and the empty sum, and handles positive t by rewriting through `cumulative_prefix` and applying selector soundness. `predict_none_iff` similarly rejects both sides at zero, since initialization supplies a zero-objective minimizer, and transports exact selector failure at positive t. `predict_prefix` separates zero from positive time and applies `select_congr` to bounded indices i.val<t. These routes are mathematically sound and use the intended local dependencies.
+
+## Private helpers and all complete canaries
+
+The3private helpers are explicitly authored Test theorems with compiler-mangled names, not3additional printed source results. `selection_witness` converts an actual feasible minimum into a successful selected point by Option cases and the soundness/failure pair. `quadratic_selection` proves both minimum and uniqueness of k(x-c)^2+d for k>0 and feasible c. Nonnegative squares give minimality; a competing minimizer yields k(x-c)^2<=0, positivity of k gives a zero square and hence x=c. `affine_no_minimum` contradicts a claimed identity-loss minimum at p by comparison with p-1.
+
+Every canary conjunct is reviewed individually in body-proof-review.json. There are36top-level conjuncts with counts7,3,5,6,1,4,6,4, including all nested witness conjunctions and quantified cases.
+
+The quadratic trajectory uses the completed-square helper at centers1/4 and1/2, with second objective2(x-1/2)^2+1/8. It preserves initializer3/4, both numeric nontriviality inequalities, and the full t in range3 existential output/feasibility/minimality assertion, proved by explicit0/1/2 cases and `predict_some_spec`. The future-change test proves both9/16-versus100 differences and uses `predict_prefix` for the unchanged first two losses. The off-domain test proves2 outside[0,1], values49/16 and9 differing there, every-time EqOn, selector equality and predictor equality.
+
+The tie test proves both distinct endpoints feasible and minimizing, then obtains an unspecified successful witness through `selection_witness`. The empty-domain proof uses `select_none_iff` and impossible membership. Empty history uses the zero objective, keeps exactly the witness/output/feasibility statement, and separately proves the two chosen initial outputs differ. The affine canary preserves nonempty/closed/convex claims, selector failure, successful initialization and later failure. The recovery canary preserves both failure/success outputs, minimizing inequality and every-x identity x+(x^2-x)=x^2. No branch treats none as an absorbing state or silently supplies an action.
+
+## Compiler, interface and metadata evidence
+
+The focused supplied log reports the two exact modules built successfully in3286cached-inclusive jobs. This is not3286new proof obligations. The public probes apply all9production and8complete Test declarations at their exact original headers. All38original/probe axiom-list records contain only `propext`, `Classical.choice` and `Quot.sound`. Selected production/Test source files contain no sorry/admit/axiom/unsafe replacement declarations. These compiler checks complement the mathematical BODY review.
+
+The exporter reads the compiled environment, extracts sorted unique constants separately from TYPE and VALUE, and coalesces matching pairs with `also_in_value`. I independently checked all1715pairs against the stored arrays, including uniqueness and exact union coverage. Its24selected nodes are21public declarations plus3referenced private Test helpers. All15required production VALUE pairs are actually present. Referenced nonprivate generated `_proof_*` constants are not recursively included as selected helper nodes.
+
+The canary probe substitutes top-level lets, removes metadata/id, selects the explicit And.intro branch and follows only private Test VALUEs. All11selected branches have the required production constants, and each recorded helper VALUE list matches the compiled export. The program does not unfold production declarations or use import connectivity as proof evidence. Substitution may retain other let-bound proof constants; presence is therefore not proof necessity or an occurrence count. This is not a full transitive graph, and only11of36conjuncts have separate branch-level VALUE probes. All36are nevertheless covered by complete compiled canaries and this independent BODY reading.
+
+One metadata wording should be read narrowly in future exposition: the export's phrase compiler-generated Test auxiliaries refers here to mangled private names of explicitly written helper theorems. It does not establish newly generated mathematical results. Likewise `root_module=BanditRLProof` is descriptive metadata, not evidence that the combined root was built by this probe. No proof blocker follows from those labels, but reader publication should use the precise scope.
+
+## Source-to-reader spine and remaining boundary
+
+A compact exposition can follow four moves: define the cumulative past objective and feasible argmin set; prove exact optional selector success/failure; add arbitrary feasible zero-time initialization and transport the rule to positive prefixes; derive feasible-prefix extensionality and named outputs when uniqueness is separately proved. The concrete canaries then expose ties, missing minima, initialization, extension invariance and fresh-prefix recovery. The JSON gives exact local and upstream VALUE mappings for each production move, full direct constant lists, private helper routes and each canary conjunct.
+
+This remains one source algorithm-definition anchor,9derived library proofs and8library canaries. The five Phase2 deltas remain: arbitrary carrier/ambient real-loss extension, zero-based horizon-free queries, fixed classical Option choice, none for absent attained feasible minima, and nonabsorbing pointwise failure without feedback interaction. G-ATTAINMENT, G-CHOICE and G-FEEDBACK remain source-specification gaps. No general attainment, unique tied choice, regret, executable solver, measurable selection or complete online interaction has been proved.
+
+No source, worktree, canonical repository or remote mutation occurred in this review. The bounded BODY gate passes. Combined root/Tests/harness,whole-original/governance conservation,reader operations/browser/exposition,publication,integration,CI and live verification remain later gates.
