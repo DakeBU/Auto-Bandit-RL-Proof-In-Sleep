@@ -1,0 +1,739 @@
+{
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=26",
+    "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "First equality in chain continuing Theorem 2.13 proof. Same gradient-square sum carried on both sides."
+  },
+  "slots": {
+    "1_objects_spaces": "Scalar sequences a,w:Nat to Real. Distance specialization x:Nat to E, comparator u:E, real steps eta and natural horizon in a normed additive commutative group E. Euclidean space is an instance. Only real numbers obtained from squared norms participate in the rearrangement; no inner product on E, completeness or finite dimension required.",
+    "2_quantifiers_order": "Generic forall a,w,T, if 0<T then equality. Distance forall E and instance, x,u,eta,T, if 0<T and forall t<T, 0<eta(t), then equality. Fixed comparator for all rounds, trajectory arbitrary, no hidden optimizer.",
+    "3_assumptions": "Positive horizon, plus positivity of played rates in distance statement. No sign/order imposed on generic weights. Distance algebra uses total real division and does not invoke hη. The full theorem assumes feasibility, convex differentiable losses, bounded diameter and positive nonincreasing steps; those are not required for this isolated equality.",
+    "4_conclusion": "Exact identity: with q_t=norm(x(t)-u)^2, w_t=1/(2 eta(t)), sum_{t<T}(q_t-q_{t+1})w_t=q_0w_0-q_Tw_{T-1}+sum_{t<T-1}(w_{t+1}-w_t)q_{t+1}. Generic theorem has arbitrary q=a and w.",
+    "5_constants_indices": "Lean x(0)=source x_1, x(T)=source x_(T+1), eta(T-1)=source eta_T. Initial plus, terminal minus, next-minus-current reciprocal increment applied to next squared distance. Factor 1/2 multiplies entire interior sum. Source gradient-square addend cancels from both sides.",
+    "6_probability_feedback": "Deterministic pathwise identities. Arbitrary x in production. OGD and also policy OSD are tested on actual algorithm-generated trajectories. This particular policy ignores history and selects fixed feedback(t).",
+    "7_boundaries_exclusions": "T=1 free terminal at same rate as initial, empty interior. T=0 outside exact statements. Positive eta only on played rounds, generic signed and zero weights permitted, unconstrained terminal. Equalities alone do not supply a regret inequality or diameter bound."
+  },
+  "reconstruction": [
+    {
+      "id": "weighted_difference_sum_eq",
+      "objects": "a and w are arbitrary real sequences indexed by natural numbers, T is a natural horizon.",
+      "quantifiers_order": "For every a, w, T, if T>0 then the identity holds.",
+      "premises": [
+        "T>0"
+      ],
+      "conclusion": [
+        "Σ_{t<T}(a_t−a_{t+1})w_t = a_0 w_0 − a_T w_{T−1} + Σ_{t<T−1}(w_{t+1}−w_t)a_{t+1}."
+      ],
+      "constants_indices": "Last weight is w_{T−1}; last sequence value is a_T. Interior coefficients multiply a_{t+1}.",
+      "stochastic_feedback_structure": "Deterministic algebra on arbitrary sequences.",
+      "exceptions": "Signs, zeros and order of the weights are unrestricted. No terminal value is prescribed. T=1 is included, T=0 lies outside the hypothesis."
+    },
+    {
+      "id": "distance_potential_sum_eq",
+      "objects": "E is a normed additive commutative group. x:ℕ→E is arbitrary, u∈E is fixed across t, η:ℕ→ℝ, and T∈ℕ.",
+      "quantifiers_order": "For every such E, x, u, η and T, assume the two premises, then the equality holds.",
+      "premises": [
+        "T>0",
+        "For every natural t<T, 0<η(t)."
+      ],
+      "conclusion": [
+        "Writing D_t=‖x_t−u‖², Σ_{t<T}(D_t−D_{t+1})/(2η_t) = D_0/(2η_0) − D_T/(2η_{T−1}) + (1/2)Σ_{t<T−1}(1/η_{t+1}−1/η_t)D_{t+1}."
+      ],
+      "constants_indices": "The factor 1/2 applies to the entire interior sum; the last denominator is 2η_{T−1}.",
+      "stochastic_feedback_structure": "No feedback, update rule, projection, or probability model is imposed on x.",
+      "exceptions": "η is positive only on rounds t<T; no ordering of the rates is assumed. The terminal x_T is free. No Hilbert or finite-dimensional structure is required."
+    },
+    {
+      "id": "signed_weights_complete",
+      "objects": "The fixed sequences A=signedA and W=signedW with A_t=4 for t≥3 and W_t=1 for t≥2.",
+      "quantifiers_order": "Closed statement with the indicated finite sums.",
+      "premises": [],
+      "conclusion": [
+        "A_0=−2",
+        "A_1=3",
+        "A_2=−1",
+        "A_3=4",
+        "W_0=0",
+        "W_1=−2",
+        "W_2=1",
+        "L=Σ_{t<3}(A_t−A_{t+1})W_t = A_0 W_0 − A_3 W_2 + Σ_{t<2}(W_{t+1}−W_t)A_{t+1}.",
+        "L=−13",
+        "−A_3 W_2=−4"
+      ],
+      "constants_indices": "T=3; left summands are 0,−8,−5. Right side is 0−4+(−6−3).",
+      "stochastic_feedback_structure": "Fixed scalar sequences.",
+      "exceptions": "Includes a zero and a negative weight, and keeps the signed terminal contribution."
+    },
+    {
+      "id": "one_step_free_terminal_complete",
+      "objects": "Two arbitrary natural-indexed real sequences a and w.",
+      "quantifiers_order": "For all a, w; horizon fixed at 1.",
+      "premises": [],
+      "conclusion": [
+        "Σ_{t<1}(a_t−a_{t+1})w_t = a_0 w_0−a_1 w_0+Σ_{t<0}(w_{t+1}−w_t)a_{t+1}.",
+        "Σ_{t<0}(w_{t+1}−w_t)a_{t+1}=0."
+      ],
+      "constants_indices": "Only t=0 contributes on the left. Both endpoints use w_0.",
+      "stochastic_feedback_structure": "Deterministic algebra.",
+      "exceptions": "a_1 is free. The terminal term can be nonzero even when the interior sum is empty."
+    },
+    {
+      "id": "constant_zero_weights_complete",
+      "objects": "a is a natural-indexed real sequence, c∈ℝ and T∈ℕ.",
+      "quantifiers_order": "For all a,c,T with T>0, the four claims hold jointly.",
+      "premises": [
+        "T>0"
+      ],
+      "conclusion": [
+        "Σ_{t<T}(a_t−a_{t+1})c = a_0 c−a_T c+Σ_{t<T−1}(c−c)a_{t+1}.",
+        "Σ_{t<T}(a_t−a_{t+1})c=(a_0−a_T)c.",
+        "Σ_{t<T}(a_t−a_{t+1})0 = a_0·0−a_T·0+Σ_{t<T−1}(0−0)a_{t+1}.",
+        "Σ_{t<T}(a_t−a_{t+1})0=0."
+      ],
+      "constants_indices": "Endpoint indices are 0 and T. The T−1 interior differences vanish.",
+      "stochastic_feedback_structure": "Deterministic algebra.",
+      "exceptions": "c is arbitrary including zero or a negative real; a_T is unrestricted."
+    },
+    {
+      "id": "ogd_three_step_complete",
+      "objects": "V is the full real line. g(t) is fixed to 1 at 0, −2 at 1 and 2 thereafter. η(t) is 2 at 1 and 1 otherwise. f_t(z)=g(t)z is real valued. x_t=ogd(t) is the iterate of projected gradient descent from x_0=0.",
+      "quantifiers_order": "Closed theorem for these particular functions. The regularity and feedback properties quantify over natural t<3. The monotonicity test scopes the comparison to t+1<3.",
+      "premises": [],
+      "conclusion": [
+        "η(0)=1",
+        "η(1)=2",
+        "η(2)=1",
+        "For every t<3, η(t)>0.",
+        "It is false that for all natural t with t+1<3, η(t+1)≤η(t). The increase at t=0 witnesses this.",
+        "g(0)=1",
+        "g(1)=−2",
+        "g(2)=2",
+        "For every t<3, f_t is convex on V and differentiable (ambient differentiability at the point) at every x in V.",
+        "For every t<3, the gradient of f_t at ogd(t) equals g(t).",
+        "ogd(0)=0",
+        "ogd(1)=−1",
+        "ogd(2)=3",
+        "ogd(3)=1",
+        "For D_t=|x_t−2|², the sum L=Σ_{t=0}² (D_t−D_{t+1})/(2η(t)) equals I+J+C, where I=D_0/(2η(0)), J=−D_3/(2η(2)), C=(1/2)Σ_{t=0}¹ (1/η(t+1)−1/η(t))D_{t+1}.",
+        "L=−1/2",
+        "I=2",
+        "J=−1/2",
+        "C=−2"
+      ],
+      "constants_indices": "Comparator u=2, horizon T=3. D=(4,9,1,1), L=(4−9)/2+(9−1)/4+(1−1)/2. C=(1/2)[(1/2−1)9+(1−1/2)1]. Terminal x_3 is an output after the final update using η(2).",
+      "stochastic_feedback_structure": "Deterministic full-loss iteration. The update projects x_t−η(t)∇f_t(x_t) to V, which is the full line.",
+      "exceptions": "This is an equality of distance-potential terms on the stated OGD trajectory. There is no quantified regret, loss-gap, expectation, or all-trajectories inequality. Regularity/feedback checks bind t=0,1,2; x_3 occurs only as a terminal iterate in the trajectory and distance identity."
+    },
+    {
+      "id": "osd_three_step_complete",
+      "objects": "V is the full real line. g(t) is fixed to 1 at 0, −2 at 1 and 2 thereafter. η(t) is 2 at 1 and 1 otherwise. F_t(z) is the extended-real embedding of g(t)z+0. The policy returns g(t). x_t=osd(t) is the last point of its projected history starting at x_0=0.",
+      "quantifiers_order": "Closed theorem for these particular functions. The regularity and feedback properties quantify over natural t<3. The monotonicity test scopes the comparison to t+1<3.",
+      "premises": [],
+      "conclusion": [
+        "η(0)=1",
+        "η(1)=2",
+        "η(2)=1",
+        "For every t<3, η(t)>0.",
+        "It is false that for all natural t with t+1<3, η(t+1)≤η(t). The increase at t=0 witnesses this.",
+        "g(0)=1",
+        "g(1)=−2",
+        "g(2)=2",
+        "For every t<3, F_t never takes −∞, is equal to a finite real at some point, and at each x in V there exists s such that F_t(x)+⟨s,y−x⟩≤F_t(y) for every ambient y.",
+        "The feedback is legal through horizon 3: at every round t<3 the actually selected s_t at x_t satisfies F_t(x_t)+⟨s_t,y−x_t⟩≤F_t(y) for every real y.",
+        "For every t<3, the policy's actual selection s_t equals g(t).",
+        "osd(0)=0",
+        "osd(1)=−1",
+        "osd(2)=3",
+        "osd(3)=1",
+        "For D_t=|x_t−2|², the sum L=Σ_{t=0}² (D_t−D_{t+1})/(2η(t)) equals I+J+C, where I=D_0/(2η(0)), J=−D_3/(2η(2)), C=(1/2)Σ_{t=0}¹ (1/η(t+1)−1/η(t))D_{t+1}.",
+        "L=−1/2",
+        "I=2",
+        "J=−1/2",
+        "C=−2"
+      ],
+      "constants_indices": "Comparator u=2, horizon T=3. D=(4,9,1,1), L=(4−9)/2+(9−1)/4+(1−1)/2. C=(1/2)[(1/2−1)9+(1−1/2)1]. Terminal x_3 is an output after the final update using η(2).",
+      "stochastic_feedback_structure": "Deterministic selection. A general policy receives t, the losses with indices <t, the history of t+1 outputs up to x_t, and the current full loss. This particular policy ignores all but t. The next output is the projection of x_t−η(t)s_t.",
+      "exceptions": "This is an equality of distance-potential terms on the stated OSD trajectory. There is no quantified regret, loss-gap, expectation, or all-trajectories inequality. Regularity/feedback checks bind t=0,1,2; x_3 occurs only as a terminal iterate in the trajectory and distance identity."
+    }
+  ],
+  "originalProofRoutes": {
+    "generic": "Commute factors; Finset.sum_range_by_parts on w and consecutive differences; telescope prefixes with Finset.sum_range_sub'; distribute, telescope increments via Finset.sum_range_sub and collect endpoints by ring.",
+    "distance": "Instantiate generic declaration with norm distance squared and reciprocal doubled step, normalize division and move 1/2 outside sum. Source hη is retained without being used by the algebraic proof."
+  },
+  "witnesses": {
+    "signed": "A=(-2,3,-1,4), W=(0,-2,1): LHS 0-8-5=-13, RHS 0-4-6-3=-13. Terminal -4.",
+    "oneRound": "All a,w. Both endpoints use w(0), range 0 sum vanishes, a(1) remains free.",
+    "constantZero": "All a,c,T>0. Full identity for arbitrary c, reduced (a(0)-a(T))*c; full identity separately with zero, reduced zero.",
+    "common": "eta=(1,2,1) positive, nonincrease fails at 0. feedback=(1,-2,2). Full-line projection is identity; starting 0 gives -1,3,1. Comparator 2 gives q=(4,9,1,1). Left sum -5/2+2+0=-1/2. Initial 2, terminal -1/2, correction (-9+1)/4=-2, total -1/2.",
+    "OGD": "Real linear inner-product loss. linear_regular and regular_to_feasible establish feasible convexity and pointwise ambient differentiability; gradient_linear gives gradient at each played iterate. iterateVariable and step with project_fullSpace generate actual four outputs. distance_potential_sum_eq applied to that iterate.",
+    "OSD": "Extended-real affine loss with zero intercept; affine_proper and affine_subdifferential establish global properness and nonempty subgradients on the full line. Actual selection equals feedback by definition, hence LegalFeedback at actual rounds through horizon 3. output_zero and output_succ with project_fullSpace generate trace. distance_potential_sum_eq applied separately to policy output."
+  },
+  "currentDeclaredTypesAndValues": [
+    {
+      "name": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "87af64ac8f02af8321f6e2276353429855d5b8f2c03a6eca2813deda47ff1bc0",
+      "valueExprSHA256": "6c72131ed3f0e414ea8f010b1116deab6cb8a7e27bbcf95a98ffff84ea3e852e",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "2a1e8af814489928387b44c96395864fcc56b75a2af64193b65ea79f9c49d565",
+      "valueExprSHA256": "1f0eec2f69a235148ac16eda4e9e4515ba64a20b797986f0c084c7afe668b7c7",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "b0dbedeb023a106854e8617caaee97ef8b0f615d8b8688468ce5aa960da6d83b",
+      "valueExprSHA256": "2ffb923a7c1a2b23fed0d550c05a6d86fb6ad7d0243c2999cc0ad0a3108f1943",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "WeightedIdentityProbe.one_step_free_terminal_complete",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "4153e0a0e0c7eb8b97f2750cc65125a8c274562b9da3953310420c59a56fb890",
+      "valueExprSHA256": "98719ba34a5b406f752e5a67a53c79597027f5ed3e01290a2d42efad93f5eb3c",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "WeightedIdentityProbe.constant_zero_weights_complete",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "f3a849c6fc51f451121c3aec1afd448075ac0c24419be4f7cfa27baf4e542702",
+      "valueExprSHA256": "eb1ce13f068633567fd77688397e478abaf66c251edd74635eb2718d13aba4f3",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "b1486e829c84f27c0395f155cee9b7e7fbfeb035465aa8c21c3c5eb9f3ec5a9d",
+      "valueExprSHA256": "6eff7610229a3f1d95d7b3716bfafdbd5ccd50b277d4603160b1017e847429b4",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "frozenHeaderComparedBy": "Lean structural Expr equality after elaborating frozen statement as fresh private theorem",
+      "identical": true,
+      "typeExprSHA256": "8e7b84d7805ad2ffb9bba3c4a780c13ec030d0d3be65b7c44d84de73c08f23e3",
+      "valueExprSHA256": "65b67743d8533b9e118e5337cfe2fe064a07640c4a01b73b9c2bfd438ebf7234",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  ],
+  "currentSelectedParents": {
+    "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq": [
+      "Finset.sum_range_by_parts",
+      "Finset.sum_range_sub",
+      "Finset.sum_range_sub'"
+    ],
+    "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq": [
+      "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq"
+    ],
+    "WeightedIdentityProbe.ogd_three_step_complete": [
+      "BanditRL.OnlineGradientDescent.iterateVariable",
+      "BanditRL.OnlineHuber.project_fullSpace",
+      "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "BanditRL.OnlineGradientDescentSource.regular_to_feasible",
+      "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+    ],
+    "WeightedIdentityProbe.osd_three_step_complete": [
+      "BanditRL.OnlineSubgradientPolicy.output_zero",
+      "BanditRL.OnlineSubgradientPolicy.output_succ",
+      "BanditRL.OnlineConvex.affine_proper",
+      "BanditRL.OnlineConvex.affine_subdifferential",
+      "BanditRL.OnlineHuber.project_fullSpace",
+      "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq"
+    ],
+    "WeightedIdentityProbe.ogd": [
+      "BanditRL.OnlineGradientDescent.iterateVariable"
+    ],
+    "WeightedIdentityProbe.osd": [
+      "BanditRL.OnlineSubgradientPolicy.output"
+    ]
+  },
+  "currentBranches": [
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 0,
+      "meaning": "A_0=−2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 1,
+      "meaning": "A_1=3",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 2,
+      "meaning": "A_2=−1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 3,
+      "meaning": "A_3=4",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 4,
+      "meaning": "W_0=0",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 5,
+      "meaning": "W_1=−2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 6,
+      "meaning": "W_2=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 7,
+      "meaning": "L=Σ_{t<3}(A_t−A_{t+1})W_t = A_0 W_0 − A_3 W_2 + Σ_{t<2}(W_{t+1}−W_t)A_{t+1}.",
+      "requiredOccurrence": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "valueConstantCount": 17,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 8,
+      "meaning": "L=−13",
+      "requiredOccurrence": null,
+      "valueConstantCount": 140,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.signed_weights_complete",
+      "index0": 9,
+      "meaning": "−A_3 W_2=−4",
+      "requiredOccurrence": null,
+      "valueConstantCount": 51,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.one_step_free_terminal_complete",
+      "index0": 0,
+      "meaning": "Σ_{t<1}(a_t−a_{t+1})w_t = a_0 w_0−a_1 w_0+Σ_{t<0}(w_{t+1}−w_t)a_{t+1}.",
+      "requiredOccurrence": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "valueConstantCount": 15,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.one_step_free_terminal_complete",
+      "index0": 1,
+      "meaning": "Σ_{t<0}(w_{t+1}−w_t)a_{t+1}=0.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 11,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.constant_zero_weights_complete",
+      "index0": 0,
+      "meaning": "Σ_{t<T}(a_t−a_{t+1})c = a_0 c−a_T c+Σ_{t<T−1}(c−c)a_{t+1}.",
+      "requiredOccurrence": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "valueConstantCount": 2,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.constant_zero_weights_complete",
+      "index0": 1,
+      "meaning": "Σ_{t<T}(a_t−a_{t+1})c=(a_0−a_T)c.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 60,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.constant_zero_weights_complete",
+      "index0": 2,
+      "meaning": "Σ_{t<T}(a_t−a_{t+1})0 = a_0·0−a_T·0+Σ_{t<T−1}(0−0)a_{t+1}.",
+      "requiredOccurrence": "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq",
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.constant_zero_weights_complete",
+      "index0": 3,
+      "meaning": "Σ_{t<T}(a_t−a_{t+1})0=0.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 45,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 0,
+      "meaning": "η(0)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 1,
+      "meaning": "η(1)=2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 2,
+      "meaning": "η(2)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 3,
+      "meaning": "For every t<3, η(t)>0.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 40,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 4,
+      "meaning": "It is false that for all natural t with t+1<3, η(t+1)≤η(t). The increase at t=0 witnesses this.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 60,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 5,
+      "meaning": "g(0)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 6,
+      "meaning": "g(1)=−2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 7,
+      "meaning": "g(2)=2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 8,
+      "meaning": "For every t<3, f_t is convex on V and differentiable (ambient differentiability at the point) at every x in V.",
+      "requiredOccurrence": "BanditRL.OnlineGradientDescentSource.linear_regular",
+      "valueConstantCount": 10,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 9,
+      "meaning": "For every t<3, the gradient of f_t at ogd(t) equals g(t).",
+      "requiredOccurrence": "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "valueConstantCount": 8,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 10,
+      "meaning": "ogd(0)=0",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 11,
+      "meaning": "ogd(1)=−1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 12,
+      "meaning": "ogd(2)=3",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 13,
+      "meaning": "ogd(3)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 14,
+      "meaning": "For D_t=|x_t−2|², the sum L=Σ_{t=0}² (D_t−D_{t+1})/(2η(t)) equals I+J+C, where I=D_0/(2η(0)), J=−D_3/(2η(2)), C=(1/2)Σ_{t=0}¹ (1/η(t+1)−1/η(t))D_{t+1}.",
+      "requiredOccurrence": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "valueConstantCount": 53,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 15,
+      "meaning": "L=−1/2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 195,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 16,
+      "meaning": "I=2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 104,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 17,
+      "meaning": "J=−1/2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 147,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.ogd_three_step_complete",
+      "index0": 18,
+      "meaning": "C=−2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 192,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 0,
+      "meaning": "η(0)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 1,
+      "meaning": "η(1)=2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 2,
+      "meaning": "η(2)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 3,
+      "meaning": "For every t<3, η(t)>0.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 40,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 4,
+      "meaning": "It is false that for all natural t with t+1<3, η(t+1)≤η(t). The increase at t=0 witnesses this.",
+      "requiredOccurrence": null,
+      "valueConstantCount": 60,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 5,
+      "meaning": "g(0)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 6,
+      "meaning": "g(1)=−2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 7,
+      "meaning": "g(2)=2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 6,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 8,
+      "meaning": "For every t<3, F_t never takes −∞, is equal to a finite real at some point, and at each x in V there exists s such that F_t(x)+⟨s,y−x⟩≤F_t(y) for every ambient y.",
+      "requiredOccurrence": "BanditRL.OnlineConvex.affine_proper",
+      "valueConstantCount": 47,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 9,
+      "meaning": "The feedback is legal through horizon 3: at every round t<3 the actually selected s_t at x_t satisfies F_t(x_t)+⟨s_t,y−x_t⟩≤F_t(y) for every real y.",
+      "requiredOccurrence": "BanditRL.OnlineConvex.affine_subdifferential",
+      "valueConstantCount": 47,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 10,
+      "meaning": "For every t<3, the policy's actual selection s_t equals g(t).",
+      "requiredOccurrence": null,
+      "valueConstantCount": 14,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 11,
+      "meaning": "osd(0)=0",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 12,
+      "meaning": "osd(1)=−1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 13,
+      "meaning": "osd(2)=3",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 14,
+      "meaning": "osd(3)=1",
+      "requiredOccurrence": null,
+      "valueConstantCount": 0,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 15,
+      "meaning": "For D_t=|x_t−2|², the sum L=Σ_{t=0}² (D_t−D_{t+1})/(2η(t)) equals I+J+C, where I=D_0/(2η(0)), J=−D_3/(2η(2)), C=(1/2)Σ_{t=0}¹ (1/η(t+1)−1/η(t))D_{t+1}.",
+      "requiredOccurrence": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "valueConstantCount": 53,
+      "branchOccurrenceValidated": true
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 16,
+      "meaning": "L=−1/2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 195,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 17,
+      "meaning": "I=2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 104,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 18,
+      "meaning": "J=−1/2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 147,
+      "branchOccurrenceValidated": false
+    },
+    {
+      "name": "WeightedIdentityProbe.osd_three_step_complete",
+      "index0": 19,
+      "meaning": "C=−2",
+      "requiredOccurrence": null,
+      "valueConstantCount": 192,
+      "branchOccurrenceValidated": false
+    }
+  ],
+  "currentSourceBindings": {
+    "BanditRLProof/OnlineWeightedPotential.lean": "63d94480e5e5a337acf5019c62e092fd36b1d2bf1a6edfc6f5b6bc5b95aa885a",
+    "Tests/OnlineWeightedPotentialCanary.lean": "4a82683376bd02572706bedf5d58a55b619c68d9e30c373a0c6f192eea77f867",
+    "BanditRLProof.lean": "39ed2eabb0af9306c3fe5f952dbc77daf3b4fee018a7d280108db36b02ccd6c4",
+    "Tests.lean": "2d7e30be68f4ce2f9e3739fd012b6894106b412c0fc4117db26bfe879d722bdd"
+  },
+  "chapterProofDenominator": null
+}
