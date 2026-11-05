@@ -190,3 +190,4 @@ import Tests.OnlineFTLSelectorCanary
 import Tests.OnlineBTRLTerminalCanary
 import Tests.OnlineOptimisticFTRLCanary
 import Tests.OnlineAdaptiveSummationCanary
+import Tests.OnlineEntropyScalarGapCanary

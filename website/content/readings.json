@@ -8090,6 +8090,168 @@
         "takeaway": "The actual path witness demonstrates the role of inverse-square rate compensation, not a universal strict path change or worse regret. Structural equalities and finite-loss bounds have different hypotheses.",
         "boundary": "Whole real line, one explicit chosen policy, fixed rate1 and specified loss. No arbitrary-domain, independent-policy, stochastic or source-gap completion claim."
       }
+    },
+    {
+      "slug": "online-entropy-gap",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Scalar inequality in the proof of Lemma 6.33",
+        "pages": "printed p. 80 / PDF p. 92",
+        "pdf_page": 92,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "u",
+          "meaning": "A positive real input. In the coordinate application, u=x/y."
+        },
+        {
+          "term": "φ",
+          "meaning": "The logarithmic gap between (u−1)log u and 2(u−1)²/(u+1)."
+        },
+        {
+          "term": "x, y",
+          "meaning": "Two strictly positive coordinates. They need not sum to 1."
+        }
+      ],
+      "algorithm": {
+        "title": "From curvature to a coordinate bound",
+        "kind": "Proof calculation for Lemma 6.33",
+        "steps": [
+          {
+            "title": "Inspect curvature",
+            "detail": "Factor the second derivative; the positive denominator and quadratic factor leave only the squared distance to 1 as a possible zero.",
+            "math": "\\phi''(u)=\\frac{(u-1)^2(u^2+6u+1)}{u^2(u+1)^3}",
+            "fallback": "The curvature vanishes exactly at 1 on the positive half-line."
+          },
+          {
+            "title": "Use the tangent at 1",
+            "detail": "The function is convex and the tangent at 1 is horizontal at height zero.",
+            "math": "\\phi(u)\\ge\\phi(1)+\\phi'(1)(u-1)=0",
+            "fallback": "The tangent bound holds both for u below 1 and for u above 1."
+          },
+          {
+            "title": "Scale a positive ratio",
+            "detail": "Put u=x/y, then multiply the gap by y and expand the logarithm of the ratio.",
+            "math": "y\\phi(x/y)=(x-y)(\\log x-\\log y)-\\frac{2(x-y)^2}{x+y}",
+            "fallback": "The nonnegative scaled gap is precisely the difference of the two-coordinate terms."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineEntropy.scalarGap_curvature",
+        "BanditRL.OnlineEntropy.scalarGap_nonneg",
+        "BanditRL.OnlineEntropy.positive_pair_log_ratio"
+      ],
+      "source_theorems": [
+        {
+          "label": "Where the entropy gap has zero curvature",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}\\phi(u)&=(u-1)\\log u-\\frac{2(u-1)^2}{u+1},\\\\ \\phi^\\prime(u)&=\\log u-1-\\frac1u+\\frac{8}{(u+1)^2},\\\\ \\phi^{\\prime\\prime}(u)&=\\frac{(u-1)^2(u^2+6u+1)}{u^2(u+1)^3}.\\end{aligned}",
+          "plain": "On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero.",
+          "fallback": "On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero. The factor (u−1)² forces curvature to vanish at 1. At 2 the same formula gives 17/108.",
+          "relationship": "The proof of Lemma 6.33 states that the second derivative is strictly positive for every u>0. Its proof needs only a nonnegative second derivative. The exception at 1 does not invalidate the lemma. Differentiate the logarithm and the rational term on the open positive half-line. The first-derivative formula holds on a neighborhood of every positive point, so differentiating it gives the second derivative of the actual gap. Factor the numerator and use positivity of the denominator.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "One real coordinate u and the logarithmic gap φ(u)=(u−1)log u−2(u−1)²/(u+1).",
+            "assumptions": "u>0. All derivatives use the ordinary real function on a neighborhood within the positive half-line.",
+            "parameters": "The logarithm is natural.",
+            "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
+            "guarantee": "On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero."
+          }
+        },
+        {
+          "label": "Why the scalar entropy gap stays nonnegative",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}\\phi(u)&=(u-1)\\log u-\\frac{2(u-1)^2}{u+1},\\\\\\phi(1)&=\\phi^\\prime(1)=0,\\\\ \\phi(u)&\\ge\\phi(1)+\\phi^\\prime(1)(u-1)=0\\quad(u>0).\\end{aligned}",
+          "plain": "The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input.",
+          "fallback": "The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input. A horizontal tangent to a convex function lies below the graph on both sides of the contact point.",
+          "relationship": "This is the scalar inequality used before summing over the weighted simplex. It holds on both sides of 1 even though the curvature vanishes at the contact point. Use the nonnegative second derivative to obtain convexity. Compare the chord from u to 1 for u<1 and the chord from 1 to u for u>1 with the zero derivative at 1. Equality at 1 handles the remaining case.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "One real coordinate u and the logarithmic gap φ(u)=(u−1)log u−2(u−1)²/(u+1).",
+            "assumptions": "The domain of convexity and of the lower bound is u>0.",
+            "parameters": "The logarithm is natural.",
+            "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
+            "guarantee": "The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input."
+          }
+        },
+        {
+          "label": "From a positive ratio to a pair of coordinates",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}x,y&>0,\\\\ (x-y)(\\log x-\\log y)&\\ge\\frac{2(x-y)^2}{x+y},\\\\ x=y&\\implies (x-y)(\\log x-\\log y)=\\frac{2(x-y)^2}{x+y}=0.\\end{aligned}",
+          "plain": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree.",
+          "fallback": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree. Both sides are unchanged by interchanging x and y. Their difference equals y times the scalar gap at x/y.",
+          "relationship": "This reusable two-coordinate statement is the input to the weighted sum in the proof of Lemma 6.33. No simplex normalization or boundary convention is required at this step. Apply nonnegativity at x/y and multiply by y. Expand the gap, use log(x/y)=log x−log y, and simplify. Substitution x=y gives the stated equality.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Two positive real coordinates x and y; substitute u=x/y in the same scalar logarithmic gap.",
+            "assumptions": "x>0 and y>0. No weights and no normalization are assumed.",
+            "parameters": "The logarithm is natural.",
+            "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
+            "guarantee": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Two curvature checks and a log bound",
+        "intro": "Three substitutions distinguish a false strict inequality from its useful non-strict consequence.",
+        "steps": [
+          {
+            "title": "At the contact point",
+            "detail": "The derivative and curvature both vanish. The gap itself is also zero.",
+            "math": "\\phi(1)=\\phi'(1)=\\phi''(1)=0",
+            "fallback": "At 1 all three quantities are zero."
+          },
+          {
+            "title": "At a second point",
+            "detail": "The denominator is 4 times 27, and the nonzero numerator is 17.",
+            "math": "\\phi''(2)=\\frac{17}{108}>0",
+            "fallback": "At 2 the curvature is positive, with value 17/108."
+          },
+          {
+            "title": "Choose x=3 and y=1",
+            "detail": "The rational term is 2, and the logarithmic term is 2 log 3.",
+            "math": "2\\le 2\\log 3,\\qquad 1\\le\\log 3",
+            "fallback": "The positive-pair comparison gives a lower bound on log 3."
+          }
+        ],
+        "takeaway": "The curvature can vanish at the minimum and still give a concrete inequality away from it.",
+        "boundary": "All coordinates are positive. No value of the logarithm at zero is used."
+      },
+      "proof_bridge": {
+        "title": "Why the second derivative is the derivative of the gap",
+        "summary": "Matching a formula for the slope at a single point would not justify differentiating it. The proof works on a neighborhood and keeps the positive-domain condition throughout.",
+        "steps": [
+          {
+            "title": "Stay in the domain",
+            "detail": "For u>0 there is a neighborhood of u in which every t is positive. Both t and t+1 are then nonzero.",
+            "math": "0<u\\Longrightarrow\\exists\\delta>0,\\ (u-\\delta,u+\\delta)\\subset(0,\\infty)",
+            "fallback": "Choose an open interval about u inside the positive half-line."
+          },
+          {
+            "title": "Identify the derivative locally",
+            "detail": "On that whole interval the derivative agrees with the explicit first-derivative formula. Transferring the derivative of that formula along local equality gives the stated second derivative.",
+            "math": "\\phi'(t)=\\log t-1-\\frac{1}{t}+\\frac{8}{(t+1)^2}",
+            "fallback": "The first-derivative identity holds near u, not just at u."
+          },
+          {
+            "title": "Check both sides of the contact",
+            "detail": "For u<1 bound the chord slope above by the slope at 1. For u>1 bound the chord slope below by that same slope. In each case the chord inequality puts the graph above the tangent.",
+            "math": "\\frac{\\phi(1)-\\phi(u)}{1-u}\\le0\\ (u<1),\\qquad 0\\le\\frac{\\phi(u)-\\phi(1)}{u-1}\\ (u>1)",
+            "fallback": "At u=1 equality holds, and each open side yields the same lower bound."
+          }
+        ],
+        "boundary": "The later weighted Jensen step and the extension of KL to endpoints require additional proofs."
+      }
     }
   ]
 }
