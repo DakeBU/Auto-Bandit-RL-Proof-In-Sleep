@@ -803,3 +803,7 @@ import BanditRLProof.OnlineGammaSimplexBasic
 import BanditRLProof.OnlineGammaSimplexCurvature
 import BanditRLProof.OnlineGammaSimplexGeometry
 import BanditRLProof.OnlineGammaSimplexMaximum
+import BanditRLProof.OnlineWeightedPotential
+import BanditRLProof.OnlineUnboundedOGD
+import BanditRLProof.ConfidenceIntervals
+import BanditRLProof.OnlineGammaSimplex
