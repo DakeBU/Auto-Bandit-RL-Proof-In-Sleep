@@ -2457,6 +2457,52 @@
             "boundary": "The regret inequality retains the printed statement. The infimum correction applies to the scalar positive-step comparison. Its energy is fixed after observing the tuned trajectory. Changing the scale can change the predictions, selected feedback and total energy. A singleton with nonzero linear feedback realizes D = 0 and S = 9. A unit interval with zero losses realizes D = 1 and S = 0. For positive D and S the unique minimizing step is D/√S. If D = S = 0, every positive step attains zero. If exactly one of D and S is positive, the infimum is zero and no positive step attains it."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Theorem 2.13 proof. Exact weighted-distance identity",
+          "pages": "printed p. 14 / PDF p. 26",
+          "pdf_page": 26,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=26",
+          "math": "\\begin{aligned}\\sum_{t=1}^{T}\\frac{\\|x_t-u\\|_2^2-\\|x_{t+1}-u\\|_2^2}{2\\eta_t}&=\\frac{\\|x_1-u\\|_2^2}{2\\eta_1}-\\frac{\\|x_{T+1}-u\\|_2^2}{2\\eta_T}\\\\&\\quad+\\frac12\\sum_{t=1}^{T-1}\\left(\\frac1{\\eta_{t+1}}-\\frac1{\\eta_t}\\right)\\|x_{t+1}-u\\|_2^2.\\end{aligned}",
+          "plain": "Weight each drop in squared distance by the reciprocal of twice the step size. Adding over the rounds leaves both endpoints and an interior correction whenever the step size changes.",
+          "fallback": "Initial weighted distance minus final weighted distance, plus one half of the sum of interior squared distances times the change in reciprocal step size.",
+          "relationship": "In the first equality of the variable-step calculation at the top of printed page 14, the sum of half the step size times the squared gradient norm appears unchanged on both sides. Cancel it to obtain the displayed identity for squared Euclidean distances. Monotonicity of the steps enters the later inequality. The identity itself also applies when consecutive step sizes increase.",
+          "contract": {
+            "model": "A finite sequence of points and a fixed comparator. Orabona uses Euclidean space. The Lean result applies to a normed additive commutative group.",
+            "assumptions": "At least one round and a positive step on each played round. The points and comparator may be chosen arbitrarily.",
+            "parameters": "Round 1 in the book is index 0 in Lean. The final iterate is x(T), and the final played step is η(T−1).",
+            "regret": "The weighted distance difference is one term in the proof of the OGD regret bound.",
+            "guarantee": "An exact identity with a negative terminal term and an interior correction. At one round the interior sum is empty. With a constant step it vanishes."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Exact weighted-distance identity",
+            "boundary": "The proof needs only the weighted scalar identity. Deterministic projected OGD and subgradient examples exercise the formula on actual iterates. Chapter 2 retains its separate source and forward obligations."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Unbounded-domain OGD on the switching losses of Theorem 5.4",
+          "pages": "printed pp. 14, 52–53 / PDF pp. 26, 64–65",
+          "pdf_page": 64,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=64",
+          "math": "\\begin{gathered}\\phi(\\alpha)=\\frac1{2-\\alpha}+\\frac{2^{\\alpha-1}-1}{1-\\alpha},\\quad 0<\\alpha<1,\\quad T\\ge\\frac2{(1-\\alpha)\\phi(\\alpha)},\\\\ \\exists(\\ell_t)_{t=1}^{T}\\text{ convex, 1-Lipschitz and differentiable}:\\quad R_T^{\\mathrm{OGD}}(0)\\ge\\frac12\\phi(\\alpha)T^{2-\\alpha}.\\end{gathered}",
+          "plain": "Fix a polynomially decreasing step schedule. At each sufficiently large horizon, affine losses that reverse direction partway through the run give gradient descent superlinear regret against zero. The switch time depends on the horizon.",
+          "fallback": "For each exponent 0 < α < 1 and each natural T with T ≥ 2 / ((1−α) φ(α)), there is a sequence of convex, differentiable, 1-Lipschitz losses on which OGD with steps t^(−α), starting at zero, has regret against zero of at least φ(α) T^(2−α) / 2.",
+          "relationship": "The Chapter 2 remark (printed p. 14, PDF p. 26) points to Section 5.2. Theorem 5.4 (printed pp. 52–53, PDF pp. 64–65) gives the bound for unprojected subgradient descent. On its affine switching losses the unique subgradient equals the gradient at every point, so gradient descent follows the same iterates.",
+          "contract": {
+            "model": "Gradient descent on the full space, initialized at zero, compared with zero. Losses are evaluated before each update.",
+            "assumptions": "A nontrivial finite-dimensional real inner-product space, an exponent strictly between zero and one, and a natural horizon satisfying the displayed threshold.",
+            "parameters": "At source round t, starting at one, take step size t raised to the power −α. The loss sequence may be chosen separately for each horizon.",
+            "regret": "Add up the played loss minus the loss at zero over the first T rounds.",
+            "guarantee": "There is a sequence of globally convex, differentiable, 1-Lipschitz losses on the played rounds for which OGD regret is at least half of φ(α) times T raised to the power 2−α."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "OGD lower bound for the affine switching losses",
+            "boundary": "The source gives the OSD bound. The library transfers it to actual OGD on the same run. Seven required Chapter 2 forward containers remain open."
+          },
+          "statement_provenance": "derived-instantiation"
         }
       ],
       "worked_example": {

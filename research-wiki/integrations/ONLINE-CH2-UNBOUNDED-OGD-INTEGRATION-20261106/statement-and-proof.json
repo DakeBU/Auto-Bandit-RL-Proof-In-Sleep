@@ -1,0 +1,422 @@
+{
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "forwardRemark": "https://arxiv.org/pdf/1912.13213v10#page=26",
+    "theoremAndProof": "https://arxiv.org/pdf/1912.13213v10#page=64"
+  },
+  "sourceFirst": {
+    "UTC": "2026-11-05T16:19:47.9689071Z",
+    "antiAnchoring": "Only pinned PDF was read for #220 up to this point; neither Lean code nor the neutral decoding has been inspected.",
+    "work": "Francesco Orabona. Online Learning: A Modern Introduction Using Convex Optimization. arXiv:1912.13213v10 [cs.LG], 21 Jun 2026",
+    "pdfSHA256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "locator": "Theorem 5.4, section 5.2, physical PDF 64-65, printed 52-53",
+    "formula": "0<alpha<1; phi(alpha)=1/(2-alpha)+((1/2)^(1-alpha)-1)/(1-alpha). The paper gives range (0,1-ln 2), left limit at 1 equal to 1-ln 2 >= 0.3. For each natural T >= 2/((1-alpha)*phi(alpha)), unprojected OSD with x_1=0, eta_t=t^(-alpha) on rounds t=1..T admits T convex 1-Lipschitz losses forcing comparator-zero regret >= phi(alpha)*T^(2-alpha)/2.",
+    "constructiveWitness": "Take d=1, c=ceil(T/2), first c rounds loss -x and remaining floor(T/2) rounds loss +x. Negative slope moves iterate up by t^-alpha before switch, positive slope down after switch. Regret sum_t sign(t)*x_t at competitor zero, not terminal point. In Rd d>=2 use first coordinate. Since these exact losses are differentiable, gradient = unique subgradient ±1. OGD and OSD reproduce the same path for these losses, but source theorem names OSD, no universal claim over OGD losses, all algorithms, schedules or domains.",
+    "argument": "Change order of double sums, ceil(T/2)-floor(T/2)<=1, monotone integral comparisons bound regret >= phi(alpha)*T^(2-alpha)-T^(1-alpha)/(1-alpha), then use horizon condition to absorb error. Witness depends on T via switch. Polynomial exponent 2-alpha strictly exceeds 1 for alpha in (0,1).",
+    "boundaries": "No OGD transfer is printed as its own theorem, and no global lower bound for every unconstrained optimizer follows. Positive-dimensional lifting is in proof. Phi range/limit and horizon must remain separately accounted for if a contribution transfers only the regret bound."
+  },
+  "interpretation": {
+    "literalSource": "Unconstrained OSD; every alpha in (0,1) and every sufficiently large natural T admit a horizon-dependent sequence of convex 1-Lipschitz losses. Witness switches after ceil(T/2), one real coordinate then higher-dimensional embedding. Source phi range and alpha->1 left limit are distinct from growth in T.",
+    "formalObjectsQuantifiers": "Nontrivial finite-dimensional real inner-product space E. For every alpha satisfying both strict inequalities and every natural T with 2/((1-alpha)*phi(alpha)) <= real T, exists loss : Nat -> E -> Real, globally convex on univ, 1-Lipschitz and differentiable on each played round, whose actual variable-step OGD from zero against zero has R_T >= phi(alpha)*T^(2-alpha)/2. All three regularity properties and the inequality belong to one witness. Proof extends witness to all natural t; header imposes regularity only t<T.",
+    "indexingAndFeedback": "Lean t=0 is source round 1. powerSteps(t)=(t+1)^(-alpha). Natural (T+1)/2 equals ceil(T/2); first ceil(T/2) gradients negative, remaining floor(T/2) positive along chosen unit v. Actual preupdate iterates enter regret; terminal x(T) excluded. Deterministic full-loss gradient updates, no probability, sampled feedback, comparator choice, arbitrary schedule, or minmax over learners.",
+    "proofRoute": "Choose ||v||=1, set loss=switchLoss T v, eta=powerSteps alpha. Rewrite linear witness using inner product. gradient_linear and singleton affine source subgradient identify the actual gradient and canonical OSD support. Induct on t in actual recurrences from zero with the same projection, equate actual regrets via real/EReal coercions, prove global differentiability of continuous linear form and reuse switching_loss_regular for convexity/Lipschitz. Apply switching_vector_lower_bound on this exact witness (not the bare existential theorem_5_4).",
+    "scope": "An admissible finite-horizon family implies no uniform sublinear bound across allowed losses (R_T/T >= phi(alpha) T^(1-alpha)/2). No single infinite-stream divergence, failure of all schedules, or Lean Tendsto for normalized regret. The existing phi_limit is Tendsto in alpha, separately inherited."
+  },
+  "statementOnlyReconstruction": {
+    "definitions": {
+      "BanditRL.OnlineUnboundedOSD.powerSteps": "For real alpha and natural t, eta_t = (t+1)^(-alpha) using a positive real base and real exponent. With 0<alpha<1 this starts at 1, stays positive, and strictly decreases.",
+      "BanditRL.OnlineUnboundedOSD.phi": "phi(alpha) = 1/(2-alpha) + ((1/2)^(1-alpha)-1)/(1-alpha). The main claim uses the open interval (0,1).",
+      "BanditRL.OnlineGradientDescent.Domain": "A subset of a real inner-product normed additive commutative group with witnesses that it is nonempty, closed, and convex. The general carrier need not be bounded.",
+      "BanditRL.OnlineGradientDescent.project": "On a complete ambient space take a classically chosen point of the carrier nearest z, attaining the infimum of distances. On the whole space z itself has distance zero, so the projection equals z.",
+      "BanditRL.OnlineGradientDescent.step": "Take x minus eta times the real gradient of f at x and project onto the specified domain. This update uses the current loss's actual gradient at the current iterate.",
+      "BanditRL.OnlineGradientDescent.iterateVariable": "x_0 equals the provided initial point (parameter named x₁). Recursively x_(t+1) = step(V,eta_t,loss_t,x_t).",
+      "BanditRL.OnlineGradientDescent.regretVariable": "Sum over natural t=0,...,T-1 of loss_t(x_t)-loss_t(u), using the above recurrence. The post-update point x_T is outside the sum. Comparator u is fixed throughout.",
+      "BanditRL.OnlineHuber.fullSpace": "Carrier is all E, with nonemptiness, closedness, convexity.",
+      "BanditRL.OnlineUnboundedOSD.switchSlope": "Negative one when t < floor((T+1)/2), otherwise positive one. Natural division makes the cutoff ceil(T/2), giving ceil(T/2) initially negative rounds and floor(T/2) later positive rounds inside range T.",
+      "BanditRL.OnlineUnboundedOSD.switchLoss": "For horizon T and vector v, loss_t(z) = switchSlope(T,t) times the real inner product of v with z. Defined at every natural time. Its gradient is switchSlope(T,t) times v. A unit v gives 1-Lipschitz linear losses."
+    },
+    "general_theorem": {
+      "name": "BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+      "quantifiers": "For every nontrivial finite-dimensional real inner-product space E (with its normed additive commutative group structure), then every real alpha with 0<alpha<1, then every natural T with 2/((1-alpha)*phi(alpha)) <= real(T), there exists loss : N -> E -> R. Finite dimension supplies the completeness needed for the recurrence. Nontriviality excludes the zero-dimensional singleton and permits a unit direction.",
+      "regularity": "For every natural t<T the same loss_t is convex on all E, globally 1-Lipschitz (constant at most 1), and real differentiable everywhere.",
+      "bound": "For that sequence the full-space variable-step OGD regret from x_0=0 against u=0 over T rounds is at least (1/2)*phi(alpha)*real(T)^(2-alpha). The conclusion couples the regularity and the terminal cumulative inequality for one loss witness.",
+      "scope": "The witnesses may depend on E, alpha and T. The theorem does not identify them by name or quantify one loss sequence for all horizons, arbitrary initial points or comparators, arbitrary step schedules, or every online algorithm. It gives a terminal lower bound, with no per-round or all-prefix assertion. Time indices >=T are outside the regularity obligation. No probability, expectation, sampled feedback, adversarial oracle protocol, or value-only gradient estimator occurs."
+    },
+    "scalar": {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "abbreviations": {
+        "eta": "powerSteps(1/2)",
+        "scalarLoss": "switchLoss(2,1) on the real line",
+        "scalarRun(t)": "iterateVariable(fullSpace,eta,scalarLoss,0,t)",
+        "scalarRegret": "regretVariable(fullSpace,eta,scalarLoss,0,0,2)"
+      },
+      "conjuncts": [
+        "eta_0=1",
+        "eta_1=2^(-1/2)=1/sqrt(2)",
+        "0<eta_1",
+        "eta_1<eta_0",
+        "For every real z, loss_0(z)=-z and loss_1(z)=z. The integer cutoff floor(3/2)=1 selects the two signs.",
+        "For each t<2, loss_t is convex on R, globally 1-Lipschitz and real differentiable everywhere, as follows directly from signed linearity.",
+        "For every real z, grad(loss_0)(z)=-1 and grad(loss_1)(z)=1.",
+        "x_0=0",
+        "x_1=0-1*(-1)=1",
+        "x_2=1-2^(-1/2)*1=1-1/sqrt(2)",
+        "R_2=[-0-(-0)]+[1-0]=1, using the pre-update iterates.",
+        "2 < 2/((1-1/2)*phi(1/2)), so this explicit calculation is outside the large-horizon hypothesis. It does not establish failure of the numerical lower bound at T=2."
+      ]
+    },
+    "terminal": {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "ambient": "EuclideanSpace R (Fin 2), real two-dimensional Euclidean space, hence nontrivial, finite-dimensional, and complete. Alpha=1/2, T=64, eta_t=(t+1)^(-1/2). Initial point and comparator are both the zero vector.",
+      "conjuncts": [
+        "1/15 <= phi(1/2). Substitute to obtain 2/3 + 2*(1/sqrt(2)-1) = sqrt(2)-4/3. Since 2>49/25, sqrt(2)>7/5, which yields the claimed bound.",
+        "2/((1-1/2)*phi(1/2)) <= 64. The previous positive lower bound gives 4/phi(1/2) <= 60 <= 64. More exactly the threshold is 24+18*sqrt(2), approximately 49.455844, also proving the strict two-round exclusion.",
+        "64^(2-1/2)=64^(3/2)=8^3=512.",
+        "There exists one sequence loss : N -> (EuclideanSpace R (Fin 2)) -> R such that for all t<64 the round loss is convex on the whole space, globally 1-Lipschitz and everywhere real differentiable.",
+        "For that witness, (1/2)*phi(1/2)*64^(2-1/2) <= R_64, the specified full-space OGD regret. The left side equals 256*(sqrt(2)-4/3), approximately 20.705339.",
+        "256/15 <= the same R_64, by multiplying 1/15 <= phi(1/2) by 256.",
+        "17 < the same R_64, since 256/15=17+1/15."
+      ],
+      "scope": "The final three inequalities and the round regularity belong to the same existential witness. Neither the sequence's formula nor its exact regret or final iterate is asserted by this terminal statement. The scalar switch-loss computation is explicit and separate."
+    },
+    "limits": "The four packets provide statements and selected local definitions, without proof bodies for the three theorems, implementation of imported gradient/nearest-point primitives, external source, or any compilation or publication evidence. Decoding does not identify which construction a hidden existence proof uses, or establish correspondence with an unseen reference."
+  },
+  "witnesses": {
+    "scalar": "Real line alpha=1/2,T=2. Rates 1,1/sqrt(2), positive and strictly decreasing, linear losses -z,+z with gradients -1,+1 everywhere and required regularity. Actual iterate 0,1,1-1/sqrt(2) and regret 1. Horizon 2 is strictly below threshold. The scalar proof uses old OSD canary only for schedule facts, proves OGD gradient/iterate/regret itself and obtains below-threshold from phi_range.",
+    "terminal": "In dimension two alpha=1/2, phi=sqrt(2)-4/3 >= 1/15, threshold=24+18 sqrt(2) <64, 64^(3/2)=512. Old canary supplies phi bound and threshold. Apply new OGD theorem at 64 to get one witness carrying regularity, printed bound, 256/15<=R and 17<R. The last inequalities concern cumulative regret at common horizon, never terminal iterate. No explicit regret of a named vector stream is a test assertion."
+  },
+  "kernelChecked": [
+    {
+      "name": "BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "structuralTYPEEqualsFrozen": true,
+      "TYPEexprSHA256": "56b72138f39ed617dcfab11ad89ebe398d5ecd112547fef55ae9e68af9aac8bc",
+      "VALUEexprSHA256": "88406dc6a465896506f80a7e8d469b56dae0712426e880d9431f46d0102f8a9c",
+      "actualVALUEparents": [
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "BanditRL.OnlineGradientDescent.iterateVariable",
+        "BanditRL.OnlineSubgradientDescent.iterate"
+      ]
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "structuralTYPEEqualsFrozen": true,
+      "TYPEexprSHA256": "8e0046157c24e4c7b15d3e7c4c32bf067f15bc5ba08b92de3fa75920348f190d",
+      "VALUEexprSHA256": "00e5a17fef73ba737a271a1956d724804f8307dca60920a9618471087367dd0f",
+      "actualVALUEparents": [
+        "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds",
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineUnboundedOSD.phi_range"
+      ]
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "structuralTYPEEqualsFrozen": true,
+      "TYPEexprSHA256": "d407f80b5f82524df667064590c1733cbf25d024dd475fbbc5f2295b2b8bfd58",
+      "VALUEexprSHA256": "bd1b9c19254718d4e37dd8f7eb81879d624232c0d32bad6abe494e8fd43719ff",
+      "actualVALUEparents": [
+        "BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+        "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound"
+      ]
+    }
+  ],
+  "quantifiersAndRoute": {
+    "quantifiers": "For each nontrivial finite-dimensional real inner product space, alpha in (0,1) and natural T satisfying T >= 2/((1-alpha)phi(alpha)), there exists a horizon-dependent real loss sequence satisfying played-round regularity and the zero-comparator regret bound on the actual full-space variable-step OGD run from zero. Read t+1 for source rounds. Regret is the sum of pre-update losses.",
+    "route": "Choose one unit direction, take first ceil(T/2) losses with negative slope and remaining floor(T/2) positive. Actual gradient and canonical affine OSD support agree; actual iterateVariable and OSD iterate agree by induction, their regret by summing. Apply prior OSD switching_vector_lower_bound, preserving phi/2 and exponent 2-alpha. The original theorem is for OSD and the new declaration transfers on the chosen differentiable witness. Source alpha-left-limit is separate from growth over horizons."
+  },
+  "components": [
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 0,
+      "meaning": "eta_0=1",
+      "publicOccurrences": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun",
+        "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds"
+      ],
+      "constantCount": 33
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 1,
+      "meaning": "eta_1=2^(-1/2)=1/sqrt(2)",
+      "publicOccurrences": [
+        "UnboundedOGDProbe.eta",
+        "UnboundedOGDProbe.eta._proof_1"
+      ],
+      "constantCount": 92
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 2,
+      "meaning": "0<eta_1",
+      "publicOccurrences": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun",
+        "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds"
+      ],
+      "constantCount": 34
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 3,
+      "meaning": "eta_1<eta_0",
+      "publicOccurrences": [
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun",
+        "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds"
+      ],
+      "constantCount": 34
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 4,
+      "meaning": "For every real z, loss_0(z)=-z and loss_1(z)=z. The integer cutoff floor(3/2)=1 selects the two signs.",
+      "publicOccurrences": [
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "UnboundedOGDProbe.scalarLoss"
+      ],
+      "constantCount": 90
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 5,
+      "meaning": "For each t<2, loss_t is convex on R, globally 1-Lipschitz and real differentiable everywhere, as follows directly from signed linearity.",
+      "publicOccurrences": [
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "UnboundedOGDProbe.scalarLoss"
+      ],
+      "constantCount": 162
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 6,
+      "meaning": "For every real z, grad(loss_0)(z)=-1 and grad(loss_1)(z)=1.",
+      "publicOccurrences": [
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "UnboundedOGDProbe.scalarLoss"
+      ],
+      "constantCount": 92
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 7,
+      "meaning": "x_0=0",
+      "publicOccurrences": [
+        "UnboundedOGDProbe.scalarRun"
+      ],
+      "constantCount": 6
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 8,
+      "meaning": "x_1=0-1*(-1)=1",
+      "publicOccurrences": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.iterateVariable",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project.congr_simp",
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "UnboundedOGDProbe.eta",
+        "UnboundedOGDProbe.eta._proof_1",
+        "UnboundedOGDProbe.scalarLoss",
+        "UnboundedOGDProbe.scalarRun"
+      ],
+      "constantCount": 195
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 9,
+      "meaning": "x_2=1-2^(-1/2)*1=1-1/sqrt(2)",
+      "publicOccurrences": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.iterateVariable",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project.congr_simp",
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "UnboundedOGDProbe.eta",
+        "UnboundedOGDProbe.eta._proof_1",
+        "UnboundedOGDProbe.scalarLoss",
+        "UnboundedOGDProbe.scalarRun"
+      ],
+      "constantCount": 206
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 10,
+      "meaning": "R_2=[-0-(-0)]+[1-0]=1, using the pre-update iterates.",
+      "publicOccurrences": [
+        "BanditRL.OnlineGradientDescent.Domain",
+        "BanditRL.OnlineGradientDescent.iterateVariable",
+        "BanditRL.OnlineGradientDescent.project",
+        "BanditRL.OnlineGradientDescent.project.congr_simp",
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineHuber.project_fullSpace",
+        "BanditRL.OnlineUnboundedOSD.switchSlope",
+        "UnboundedOGDProbe.eta",
+        "UnboundedOGDProbe.eta._proof_1",
+        "UnboundedOGDProbe.scalarLoss",
+        "UnboundedOGDProbe.scalarRun"
+      ],
+      "constantCount": 229
+    },
+    {
+      "name": "UnboundedOGDProbe.scalar_actual_two_rounds",
+      "index0": 11,
+      "meaning": "2 < 2/((1-1/2)*phi(1/2)), so this explicit calculation is outside the large-horizon hypothesis. It does not establish failure of the numerical lower bound at T=2.",
+      "publicOccurrences": [
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.phi_range",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.scalarRun",
+        "BanditRL.OnlineUnboundedOSDCanary.scalar_actual_two_rounds"
+      ],
+      "constantCount": 227
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 0,
+      "meaning": "1/15 <= phi(1/2). Substitute to obtain 2/3 + 2*(1/sqrt(2)-1) = sqrt(2)-4/3. Since 2>49/25, sqrt(2)>7/5, which yields the claimed bound.",
+      "publicOccurrences": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSDCanary.direction",
+        "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRun"
+      ],
+      "constantCount": 112
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 1,
+      "meaning": "2/((1-1/2)*phi(1/2)) <= 64. The previous positive lower bound gives 4/phi(1/2) <= 60 <= 64. More exactly the threshold is 24+18*sqrt(2), approximately 49.455844, also proving the strict two-round exclusion.",
+      "publicOccurrences": [
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSDCanary.direction",
+        "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRun"
+      ],
+      "constantCount": 112
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 2,
+      "meaning": "64^(2-1/2)=64^(3/2)=8^3=512.",
+      "publicOccurrences": [],
+      "constantCount": 91
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 3,
+      "meaning": "There exists one sequence loss : N -> (EuclideanSpace R (Fin 2)) -> R such that for all t<64 the round loss is convex on the whole space, globally 1-Lipschitz and everywhere real differentiable.",
+      "publicOccurrences": [],
+      "constantCount": 0
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 4,
+      "meaning": "For that witness, (1/2)*phi(1/2)*64^(2-1/2) <= R_64, the specified full-space OGD regret. The left side equals 256*(sqrt(2)-4/3), approximately 20.705339.",
+      "publicOccurrences": [],
+      "constantCount": 0
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 5,
+      "meaning": "256/15 <= the same R_64, by multiplying 1/15 <= phi(1/2) by 256.",
+      "publicOccurrences": [
+        "BanditRL.OnlineGradientDescent.regretVariable",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSDCanary.direction",
+        "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRun",
+        "UnboundedOGDProbe.eta"
+      ],
+      "constantCount": 268
+    },
+    {
+      "name": "UnboundedOGDProbe.finiteDim_terminal_lower_bound",
+      "index0": 6,
+      "meaning": "17 < the same R_64, since 256/15=17+1/15.",
+      "publicOccurrences": [
+        "BanditRL.OnlineGradientDescent.regretVariable",
+        "BanditRL.OnlineHuber.fullSpace",
+        "BanditRL.OnlineSubgradientDescent.regret",
+        "BanditRL.OnlineUnboundedOSD.phi",
+        "BanditRL.OnlineUnboundedOSD.powerSteps",
+        "BanditRL.OnlineUnboundedOSD.switchLoss",
+        "BanditRL.OnlineUnboundedOSDCanary.direction",
+        "BanditRL.OnlineUnboundedOSDCanary.finiteDim_source_lower_bound",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRegret",
+        "BanditRL.OnlineUnboundedOSDCanary.vectorRun",
+        "UnboundedOGDProbe.eta"
+      ],
+      "constantCount": 277
+    }
+  ],
+  "canaryVerification": {
+    "scalarComponents": 12,
+    "terminalComponents": 7,
+    "allResolved": true,
+    "componentBindings": "#/components",
+    "oneExistentialWitness": "#3",
+    "witnessProvenance": "The outer cases scrutinee uses the new OGD lower-bound theorem, while a single Exists.intro reuses the same bound loss. The four properties inside that binder concern that same loss. The three pre-existential numerical components are separate. Full TYPE is structurally equal to the freshly elaborated frozen TYPE. Case continuations contain bound variables; treating every branch's unclosed VALUE as a public theorem would lose dependency scope.",
+    "scalar": "12 exact components. Current compiled proof uses actual iterateVariable, gradient_linear, project_fullSpace, phi_range, and the old scalar canary for schedule facts. At alpha=1/2 actual outputs 0,1,1-1/sqrt(2), R2=1. Two rounds lie below source threshold; no application of new large-horizon theorem occurs here.",
+    "terminal": "Seven logical components; three initial conjunction components then four under one existential. Fin 2, alpha=1/2, T=64. phi>=1/15, threshold<=64, power 512, one witness sequence of globally convex, 1-Lipschitz, everywhere differentiable losses on the played rounds, printed bound and two lower comparisons 256/15 and >17. Differentiability does not impose a gradient-Lipschitz constant."
+  },
+  "sourceFiles": {
+    "BanditRLProof/OnlineUnboundedOGD.lean": "313c8522a40599846d79df32d2a8a42014a3338f814286df7ffe9603554d6b50",
+    "Tests/OnlineUnboundedOGDCanary.lean": "e8defe495324af6b1f82500c8c1f2138feacf025ebcfeef245c96edb37f23662",
+    "BanditRLProof.lean": "1a99b3bd028d637e7ad0f3650509821318927c2d1d003cdbf6fd8d73de1218a2",
+    "Tests.lean": "85e51dd49937cb803eed41fbaed12a150cb033a6fc9ea07613a0980d96e87a51"
+  },
+  "historicalPR": 220
+}
