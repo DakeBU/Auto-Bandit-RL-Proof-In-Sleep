@@ -199,3 +199,6 @@ import Tests.OnlineEntropyKLBoundaryCanary
 import Tests.OnlineKTPotentialCanary
 import Tests.OnlineAdaptivePotentialCanary
 import Tests.OnlineAdaptiveOSDCanary
+import Tests.OnlineWeightedPotentialCanary
+import Tests.OnlineUnboundedOGDCanary
+import Tests.ConfidenceIntervalsCanary

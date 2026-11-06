@@ -1,0 +1,21 @@
+import BanditRLProof.OnlineUnboundedOSD
+import BanditRLProof.OnlineGradientDescentSource
+import Mathlib.Tactic
+
+noncomputable section
+open Set Finset
+open scoped InnerProductSpace
+namespace BanditRL.OnlineUnboundedOGD
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+variable [FiniteDimensional ℝ E]
+
+theorem regret_lower_bound [Nontrivial E] (α : ℝ) (hα0 : 0 < α) (hα1 : α < 1)
+    (T : ℕ) (hT : 2 / ((1 - α) * BanditRL.OnlineUnboundedOSD.phi α) ≤ (T : ℝ)) :
+    ∃ loss : ℕ → E → ℝ,
+      (∀ t < T, ConvexOn ℝ univ (loss t) ∧ LipschitzWith 1 (loss t) ∧
+        Differentiable ℝ (loss t)) ∧
+      (1 / 2 : ℝ) * BanditRL.OnlineUnboundedOSD.phi α * (T : ℝ) ^ (2 - α) ≤
+        BanditRL.OnlineGradientDescent.regretVariable BanditRL.OnlineHuber.fullSpace
+          (BanditRL.OnlineUnboundedOSD.powerSteps α) loss 0 0 T
+
+end BanditRL.OnlineUnboundedOGD
