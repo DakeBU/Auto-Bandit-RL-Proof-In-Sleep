@@ -88,7 +88,34 @@ def build_pages(data, output, verified, generated_at, layout, write_page):
         return f'<section class="hero"><p class="eyebrow">BanditRLBench · public development edition</p><h1 class="page-title">{title}</h1><p class="lede">{lede}</p></section>'
     warning = '<p class="bench-edition">Public dev · 4 cores · 2 Lean warmups · Gold admission and held-out tests pending</p>'
     nav = '<nav aria-label="Benchmark"><a href="../index.html">Overview</a> · <a href="../non-lean/index.html">Natural-language QA</a> · <a href="../lean/index.html">Lean QA</a> · <a href="../run/index.html">Run and train</a> · <a href="../review/index.html">Expert review</a> · <a href="../protocol/index.html">Task protocol</a></nav>'
-    emit('banditrlbench/index.html', 'BanditRLBench', landing())
+    emit('banditrlbench/index.html', 'BanditRLBench', landing() + '<section><h2>First expansion proposals</h2><p>Two families, six draft tasks: importance-weighted variance and finite-horizon Bellman evaluation. <a href="proposals/index.html">Inspect the task matrix, sources and admission gates →</a></p><p>These public development proposals are separate from the four legacy cores. They are not an admitted evaluation release.</p></section>')
+    expansion = json.loads((BENCH / 'expansion/families.json').read_text(encoding='utf-8'))
+    proposal_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    proposals = hero('First expansion proposals', 'Inspect the assumptions, try a task and review the evidence. Every task remains public dev and draft until its admission gates are met.') + nav
+    proposals += '<p>Knowledge rubrics score factual accuracy and conceptual understanding separately. Reasoning tasks require derivations, proof diagnosis or counterexamples. Lean tasks require library search and fixed-target proofs; kernel replay alone does not demonstrate agentic completion.</p>'
+    for family in expansion['families']:
+        proposals += '<section><h2>' + esc(family['title']) + '</h2><p><code>' + esc(family['id']) + '</code> · all views and solution aliases stay in public dev</p><p>' + esc(family['boundary']) + '</p><table><thead><tr><th>Task</th><th>Ability</th><th>Format</th><th>Access</th><th>Status</th></tr></thead><tbody>'
+        for identity in family['task_ids']:
+            task = json.loads((BENCH / 'tasks' / identity / 'task.json').read_text(encoding='utf-8'))
+            proposals += '<tr><td><a href="#' + esc(identity) + '">' + esc(identity) + '</a></td>' + ''.join('<td>' + esc(task[k]) + '</td>' for k in ('ability', 'answer_format', 'access', 'stage')) + '</tr>'
+        proposals += '</tbody></table>'
+        if family.get('near_solution'):
+            proposals += '<p>A near-complete variance solution exists in the permitted library. This task measures retrieval and adaptation; its difficulty has not been measured.</p>'
+        for identity in family['task_ids']:
+            package = BENCH / 'tasks' / identity
+            task = json.loads((package / 'task.json').read_text(encoding='utf-8'))
+            instruction = ''.join(('<h3>' + esc(block[2:]) + '</h3>') if block.startswith('# ') else ('<p>' + esc(block) + '</p>') for block in (package / 'instruction.md').read_text(encoding='utf-8').strip().split('\n\n'))
+            proposals += '<details class="task-browser"><summary>' + esc(identity + ' · ' + task['title']) + '</summary><article id="' + esc(identity) + '">' + instruction
+            if task['answer_format'] == 'lean':
+                target = json.loads((package / 'environment/workspace/target.json').read_text(encoding='utf-8'))
+                proposals += '<details><summary>Exact fixed Lean target</summary><pre class="lean-code"><code>' + esc('\n'.join('import ' + i for i in target['imports']) + '\ntheorem Submission ' + target['signature'] + ' := by\n  -- submit a proof expression') + '</code></pre></details>'
+            proposals += '<p>Source and graph navigation (correspondence overlays, not measured proof edges):</p><ul>'
+            for anchor in task['graph_anchors']:
+                proposals += '<li><code>' + esc(anchor['id']) + '</code> · <a href="' + esc(anchor['source_url']) + '">Pinned source</a> · <a href="../../lean-graph/index.html?node=' + quote(anchor['id'], safe='') + '">Graph</a></li>'
+            proposals += '</ul><p><a href="' + REPO + '/tree/' + proposal_commit + '/benchmarks/banditrlbench/tasks/' + identity + '">Review package, explicit solution and rubric</a></p></article></details>'
+        proposals += '</section>'
+    proposals += '<section><h2>Admission gates</h2><p>Available evidence consists of trusted local reference/control replay and distinct agent semantic reviews. Independent human rubric/gold review, access-enforced isolation, full adversarial controls, authentic isolated agent trials, an executed Harbor adapter, maintainer approval and a separately versioned suite manifest remain required. No model score is published.</p><p><a href="' + REPO + '/tree/' + proposal_commit + '/benchmarks/banditrlbench/expansion">Reproduction guide and gate ledger</a>. Prompt-only export is the default; training solutions require an explicit flag.</p></section>'
+    emit('banditrlbench/proposals/index.html', 'BanditRLBench · First expansion proposals', proposals)
     emit('banditrlbench/protocol/index.html', 'BanditRLBench · Task protocol', protocol_page())
     for track, title in [('non-lean', 'Natural-language QA'), ('lean', 'Lean QA')]:
         listing = '<p class="bench-toc">Jump to: ' + ' · '.join(f'<a href="#{c["core_id"]}">{c["core_id"]}</a>' for c in data['cores'] if track == 'non-lean' or c['core_id'] in targets) + '</p>'

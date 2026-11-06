@@ -1,0 +1,106 @@
+{
+  "reviewer": "Codex subagent /root/source_reviewer",
+  "rubric_sha256": "6e0f86c11e1c5218e2b8ea046bb3be49610f4765379c2102cf2a97b197d50f8c",
+  "controls": {
+    "reference": {
+      "response_sha256": "6d0471cc306c5aa69fad1b24d20c139f2f22716990eaf77504fb1fbc51a0713f",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 2,
+          "reason": "Identifies I=i as the sole nonzero contribution under the actual law and obtains l_i and l_i^2/p_i; this is the finite-sum cancellation in words."
+        },
+        {
+          "id": "c2",
+          "score": 2,
+          "reason": "Expands the centered square with normalization and displays l_i^2/p_i-2l_i^2+l_i^2=l_i^2(1/p_i-1)."
+        },
+        {
+          "id": "c3",
+          "score": 2,
+          "reason": "Explains inverse-probability weighting can exceed one. With p=(1/4,3/4), l=(1,0), the estimate is 4 or 0 and the centered-square variance is 3>1/4."
+        },
+        {
+          "id": "c4",
+          "score": 2,
+          "reason": "For zero support and loss 1, zero filling yields mean zero instead of one. The explanation identifies information loss beyond undefined division."
+        }
+      ]
+    },
+    "no-op": {
+      "response_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c2",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c3",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c4",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        }
+      ]
+    },
+    "wrong-answer": {
+      "response_sha256": "a7e7af36594f93b265a08c02db63120a67d0712ebd2dc1df0de7d7b4b34cffef",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 0,
+          "reason": "No correct raw moments or finite-sum derivation is provided."
+        },
+        {
+          "id": "c2",
+          "score": 0,
+          "reason": "The formula l_i^2(1-p_i) is false and omits inverse-probability normalization."
+        },
+        {
+          "id": "c3",
+          "score": 0,
+          "reason": "Repeats the false bounded-estimator premise and supplies no counterexample."
+        },
+        {
+          "id": "c4",
+          "score": 0,
+          "reason": "Incorrectly claims defining 0/0=0 restores unbiasedness at zero support."
+        }
+      ]
+    },
+    "placeholder": {
+      "response_sha256": "dd87dab8123da0d198537a906d8632606dfddb38ba1a31e655c2d6e576cacb61",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c2",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c3",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c4",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scale": {
+    "0": "incorrect or absent",
+    "1": "partially correct",
+    "2": "complete and justified"
+  },
+  "criteria": [
+    {
+      "id": "c1",
+      "axis": "reasoning",
+      "criterion": "Derives first and second moments by summing over the actual law."
+    },
+    {
+      "id": "c2",
+      "axis": "reasoning",
+      "criterion": "Expands the centered square and obtains l_i^2(1/p_i-1)."
+    },
+    {
+      "id": "c3",
+      "axis": "reasoning",
+      "criterion": "Identifies the invalid bounded-estimator step and computes a valid two-arm counterexample."
+    },
+    {
+      "id": "c4",
+      "axis": "understanding",
+      "criterion": "Explains zero-support information loss, not merely undefined notation."
+    }
+  ],
+  "pass_rule": "All criteria score 2 for the reference-control pass. Report each axis separately, never a combined capability score.",
+  "acceptable_alternatives": [
+    "Equivalent notation and finite-sum order are accepted.",
+    "Any correct derivation or fully verified counterexample satisfying the question is accepted.",
+    "For Lean, any proof of the unchanged target with permitted dependencies and axiom closure is accepted; no reference text matching."
+  ],
+  "common_errors": "The estimator is a loss in [0,1]; variance is always at most 1/4. Expanding the square gives l_i^2(1-p_i). Defining 0/0=0 makes unbiasedness valid for p_i=0.",
+  "assessment": "Independent rubric review required. The local verifier validates review bindings and arithmetic, not mathematical meaning. No calibrated automatic judge is available."
+}

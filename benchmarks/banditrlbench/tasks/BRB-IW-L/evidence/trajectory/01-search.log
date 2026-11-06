@@ -1,0 +1,50 @@
+BanditRLProof/Exp3ImportanceWeighted.lean:25:noncomputable def importanceWeightedLoss {Action : Type u}
+BanditRLProof/Exp3ImportanceWeighted.lean:34:    prob action * importanceWeightedLoss prob loss chosen action)
+BanditRLProof/Exp3ImportanceWeighted.lean:42:    weight action * importanceWeightedLoss prob loss chosen action)
+BanditRLProof/Exp3ImportanceWeighted.lean:48:    prob action * (importanceWeightedLoss prob loss chosen action) ^ 2)
+BanditRLProof/Exp3ImportanceWeighted.lean:50:theorem importanceWeightedLoss_nonneg {Action : Type u} [DecidableEq Action]
+BanditRLProof/Exp3ImportanceWeighted.lean:53:    0 <= importanceWeightedLoss prob loss chosen action := by
+BanditRLProof/Exp3ImportanceWeighted.lean:54:  unfold importanceWeightedLoss
+BanditRLProof/Exp3ImportanceWeighted.lean:60:theorem sum_prob_mul_importanceWeightedLoss_eq_loss {Action : Type u}
+BanditRLProof/Exp3ImportanceWeighted.lean:66:        prob chosen * importanceWeightedLoss prob loss chosen action) =
+BanditRLProof/Exp3ImportanceWeighted.lean:69:  · simp [importanceWeightedLoss]
+BanditRLProof/Exp3ImportanceWeighted.lean:73:    simp [importanceWeightedLoss, hne]
+BanditRLProof/Exp3ImportanceWeighted.lean:85:  · simp [importanceWeightedLoss]
+BanditRLProof/Exp3ImportanceWeighted.lean:89:    simp [importanceWeightedLoss, Ne.symm hne]
+BanditRLProof/Exp3ImportanceWeighted.lean:93:theorem sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss
+BanditRLProof/Exp3ImportanceWeighted.lean:107:theorem sum_prob_mul_weightedImportanceWeightedLoss_eq_weightedLoss
+BanditRLProof/Exp3ImportanceWeighted.lean:123:          (weight action * importanceWeightedLoss prob loss chosen action)) =
+BanditRLProof/Exp3ImportanceWeighted.lean:125:          prob chosen * importanceWeightedLoss prob loss chosen action) := by
+BanditRLProof/Exp3ImportanceWeighted.lean:131:      rw [sum_prob_mul_importanceWeightedLoss_eq_loss
+BanditRLProof/Exp3ImportanceWeighted.lean:144:  · simp [importanceWeightedLoss]
+BanditRLProof/Exp3ImportanceWeighted.lean:147:    simp [importanceWeightedLoss, Ne.symm hne]
+BanditRLProof/Exp3ImportanceWeighted.lean:151:theorem sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq
+BanditRLProof/Exp3ImportanceWeighted.lean:166:theorem sum_prob_mul_mixedSquaredImportanceWeightedLoss_le_card
+BanditRLProof/Exp3ImportanceWeighted.lean:176:  rw [sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq
+BanditRLProof/Exp3ComparatorBernstein.lean:115:theorem sum_prob_mul_sq_comparatorEstimatorDeviation_eq
+BanditRLProof/Exp3ComparatorBernstein.lean:123:          (importanceWeightedLoss prob loss chosen comparator - loss comparator) ^ 2) =
+BanditRLProof/Exp3ComparatorBernstein.lean:125:  let raw := fun chosen => importanceWeightedLoss prob loss chosen comparator
+BanditRLProof/Exp3ComparatorBernstein.lean:127:    simpa [raw] using sum_prob_mul_importanceWeightedLoss_eq_loss
+BanditRLProof/Exp3ComparatorBernstein.lean:132:    · simp [raw, importanceWeightedLoss]
+BanditRLProof/Exp3ComparatorBernstein.lean:135:      simp [raw, importanceWeightedLoss, hne]
+BanditRLProof/Exp3ComparatorBernstein.lean:151:theorem sum_prob_mul_sq_comparatorEstimatorDeviation_le_inv_floor
+BanditRLProof/Exp3ComparatorBernstein.lean:161:          (importanceWeightedLoss prob loss chosen comparator - loss comparator) ^ 2) <=
+BanditRLProof/Exp3ComparatorBernstein.lean:164:  rw [sum_prob_mul_sq_comparatorEstimatorDeviation_eq arms prob loss hdist
+BanditRLProof/Exp3ComparatorBernstein.lean:188:        importanceWeightedLoss prob loss chosen comparator - loss comparator)
+BanditRLProof/Exp3ComparatorBernstein.lean:191:    importanceWeightedLoss prob loss chosen comparator - loss comparator
+BanditRLProof/Exp3ComparatorBernstein.lean:207:    have hraw_nonneg : 0 <= importanceWeightedLoss prob loss chosen comparator :=
+BanditRLProof/Exp3ComparatorBernstein.lean:208:      importanceWeightedLoss_nonneg (chosen := chosen)
+BanditRLProof/Exp3ComparatorBernstein.lean:210:    have hraw_le : importanceWeightedLoss prob loss chosen comparator <= 1 / epsilon := by
+BanditRLProof/Exp3ComparatorBernstein.lean:211:      unfold importanceWeightedLoss
+BanditRLProof/Exp3ComparatorBernstein.lean:222:        _ <= importanceWeightedLoss prob loss chosen comparator - loss comparator := by
+BanditRLProof/Exp3ComparatorBernstein.lean:225:        importanceWeightedLoss prob loss chosen comparator - loss comparator <=
+BanditRLProof/Exp3ComparatorBernstein.lean:226:            importanceWeightedLoss prob loss chosen comparator := by
+BanditRLProof/Exp3ComparatorBernstein.lean:266:            sum_prob_mul_importanceWeightedLoss_eq_loss arms prob loss comparator
+BanditRLProof/Exp3ComparatorBernstein.lean:273:              sum_prob_mul_sq_comparatorEstimatorDeviation_le_inv_floor
+BanditRLProof/Exp3ComparatorBernstein.lean:305:        importanceWeightedLoss (prob (history omega)) (loss (history omega))
+BanditRLProof/Exp3ComparatorBernstein.lean:310:    importanceWeightedLoss (prob (history omega)) (loss (history omega))
+BanditRLProof/Exp3ComparatorBernstein.lean:314:      importanceWeightedLoss (prob (history omega)) (loss (history omega))
+BanditRLProof/Exp3ComparatorBernstein.lean:318:  have hrawPair := measurable_importanceWeightedLoss_score
+BanditRLProof/Exp3ComparatorBernstein.lean:351:            importanceWeightedLoss (prob (history omega)) (loss (history omega))
+BanditRLProof/Exp3ComparatorBernstein.lean:367:      importanceWeightedLoss (prob (history omega)) (loss (history omega))
+BanditRLProof/Exp3ComparatorBernstein.lean:400:    importanceWeightedLoss (prob (history omega)) (loss (history omega))

@@ -9,3 +9,9 @@ Do not add new families directly to the legacy four-core warmup registry.
 Draft and candidate packages are proposals, not admitted evaluation data.
 Maintain an independently reviewed, immutable suite release before exporting
 them for scored evaluation. No proposed agentic tasks are admitted here yet.
+
+The [first expansion](../expansion/README.md) proposes six public-dev drafts in
+two families: importance-weighted variance (`BRB-IW-K/R/L`) and finite-horizon
+Bellman evaluation (`BRB-BE-K/R/L`). Each family has knowledge/understanding,
+reasoning and Lean views. The evidence ledger distinguishes local kernel and
+rubric controls from isolated agent execution and release admission.

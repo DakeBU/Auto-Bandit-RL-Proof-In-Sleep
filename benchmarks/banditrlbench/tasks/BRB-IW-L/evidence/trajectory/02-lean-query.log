@@ -1,0 +1,12 @@
+BanditRLProof.Exp3.sum_prob_mul_importanceWeightedLoss_eq_loss.{u} {Action : Type u} [DecidableEq Action]
+  (arms : Finset Action) (prob loss : Action → ℝ) (action : Action) (haction : action ∈ arms)
+  (hprob : prob action ≠ 0) :
+  ∑ chosen ∈ arms, prob chosen * BanditRLProof.Exp3.importanceWeightedLoss prob loss chosen action = loss action
+Finset.sum_eq_single.{u_1, u_4} {ι : Type u_1} {M : Type u_4} [AddCommMonoid M] {s : Finset ι} {f : ι → M} (a : ι)
+  (h₀ : ∀ b ∈ s, b ≠ a → f b = 0) (h₁ : a ∉ s → f a = 0) : ∑ x ∈ s, f x = f a
+Finset.sum_add_distrib.{u_1, u_4} {ι : Type u_1} {M : Type u_4} {s : Finset ι} [AddCommMonoid M] {f g : ι → M} :
+  ∑ x ∈ s, (f x + g x) = ∑ x ∈ s, f x + ∑ x ∈ s, g x
+Finset.sum_sub_distrib.{u_1, u_5} {ι : Type u_1} {G : Type u_5} {s : Finset ι} [SubtractionCommMonoid G] (f g : ι → G) :
+  ∑ x ∈ s, (f x - g x) = ∑ x ∈ s, f x - ∑ x ∈ s, g x
+Finset.mul_sum.{u_1, u_4} {ι : Type u_1} {R : Type u_4} [NonUnitalNonAssocSemiring R] (s : Finset ι) (f : ι → R)
+  (a : R) : a * ∑ i ∈ s, f i = ∑ i ∈ s, a * f i
