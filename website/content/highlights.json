@@ -9089,6 +9089,45 @@
         "BanditRL.OnlineAdaptiveOSD.energy_nonneg",
         "BanditRL.OnlineAdaptiveBenchmark.source_benchmark_value"
       ]
+    },
+    {
+      "full_name": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
+      "title": "Why changing step sizes leaves an interior correction",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 20.5,
+      "source_match": "closest-source",
+      "plain": "Weight each drop in squared distance by the reciprocal of twice the step size. Adding over the rounds leaves both endpoints and an interior correction whenever the step size changes.",
+      "math": "\\begin{aligned}\\sum_{t=1}^{T}\\frac{\\|x_t-u\\|_2^2-\\|x_{t+1}-u\\|_2^2}{2\\eta_t}&=\\frac{\\|x_1-u\\|_2^2}{2\\eta_1}-\\frac{\\|x_{T+1}-u\\|_2^2}{2\\eta_T}\\\\&\\quad+\\frac12\\sum_{t=1}^{T-1}\\left(\\frac1{\\eta_{t+1}}-\\frac1{\\eta_t}\\right)\\|x_{t+1}-u\\|_2^2.\\end{aligned}",
+      "intuition": "With constant weights, adjacent potentials cancel completely; changing weights leaves their successive differences.",
+      "why": "The equality shows exactly where the distance at the final iterate enters the proof, before any diameter bound is applied.",
+      "position": "The first equality in the variable-step calculation at the top of printed page 14 carries the same gradient-energy sum on both sides. Cancel that sum to obtain the displayed distance identity. The same algebra applies to any trajectory in a normed additive commutative group. In the OGD proof, one then bounds the interior terms to obtain the regret inequality.",
+      "proof_idea": "Write a_t for squared distance and w_t for the reciprocal of twice the step size. Expand the weighted differences. An interior distance occurs twice, once with each adjacent weight, so its coefficient is their difference. The initial distance occurs once positively and the terminal distance once negatively. In a three-round example with affine loss slopes 1, −2, 2 and steps 1, 2, 1, projected OGD and projected subgradient descent both follow 0, −1, 3, 1 on the real line. At comparator 2 the initial term is 2, the terminal term is −1/2, and the interior correction is −2. Their sum is −1/2.",
+      "lean_notes": "The scalar identity applies to arbitrary real sequences of potentials and weights, including negative and zero values, with no terminal bound. Its proof uses Finset.sum_range_by_parts and Finset.sum_range_sub'. The distance theorem calls weighted_difference_sum_eq and specializes it to squared norms and reciprocal weights, retaining the positive horizon and positive played steps of the source. The displayed formula uses the Euclidean norm of the book. The two trajectory tests apply this identity to generated iterates. Lean numbers plays from zero, so x(T) is the last iterate and η(T−1) is the last played step.",
+      "dependencies": [
+        "BanditRL.OnlineWeightedPotential.weighted_difference_sum_eq"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineUnboundedOGD.regret_lower_bound",
+      "title": "Why decreasing-step OGD can fail without a bounded domain",
+      "chapter": "online-ogd",
+      "featured": false,
+      "teaching_order": 321,
+      "source_match": "closest-source",
+      "plain": "Fix a polynomially decreasing step schedule. At each sufficiently large horizon, affine losses that reverse direction partway through the run give gradient descent superlinear regret against zero. The switch time depends on the horizon.",
+      "math": "\\begin{gathered}\\phi(\\alpha)=\\frac1{2-\\alpha}+\\frac{2^{\\alpha-1}-1}{1-\\alpha},\\quad 0<\\alpha<1,\\quad T\\ge\\frac2{(1-\\alpha)\\phi(\\alpha)},\\\\ \\exists(\\ell_t)_{t=1}^{T}\\text{ convex, 1-Lipschitz and differentiable}:\\quad R_T^{\\mathrm{OGD}}(0)\\ge\\frac12\\phi(\\alpha)T^{2-\\alpha}.\\end{gathered}",
+      "intuition": "Larger early steps move the learner along a unit direction; after the affine slope switches halfway through, smaller later steps make the return too slow. The proof tracks the actual gradient trajectory.",
+      "why": "The example shows where a bounded-domain assumption matters in a decreasing-step OGD regret guarantee.",
+      "position": "The Chapter 2 remark (printed p. 14, PDF p. 26) points to Section 5.2. Theorem 5.4 (printed pp. 52–53, PDF pp. 64–65) gives the bound for unprojected subgradient descent. On its affine switching losses the unique subgradient equals the gradient at every point, so gradient descent follows the same iterates.",
+      "proof_idea": "Choose a unit vector and use its negative as the loss gradient for the first half of the rounds, rounding up. Then reverse the sign. The two update rules start at zero and take identical steps on every round. Their losses before each update agree, so the lower bound for the subgradient run gives the displayed bound for the gradient run.",
+      "lean_notes": "The space is a nontrivial finite-dimensional real inner-product space. Both the initial point and comparator are zero. Lean index 0 denotes the first play and the step at index t is (t+1) raised to the power −α. The switch time depends on the horizon.",
+      "dependencies": [
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+      ]
     }
   ]
 }

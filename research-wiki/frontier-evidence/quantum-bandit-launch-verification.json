@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-09",
+  "validated_launch_content_commit": "81838acc60d7edd96197f4d52e9e8ce0d5b896b8",
+  "tracking_issue": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/issues/206",
+  "checks": [
+    {
+      "command": "Python 3.14 tools/bandit.py check",
+      "exit_code": 0,
+      "scope": "lake build (9044 jobs); lake build Tests (9150 jobs); ProofGraphExport Lean API check; placeholder scan; full tool tests"
+    },
+    {
+      "command": "python website/scripts/build_site.py --lean-verified",
+      "exit_code": 0
+    },
+    {
+      "command": "python website/scripts/check_site.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python tools/check_contributor_contract.py --base 6847b678a73db68dee5101d6f05c2453c1405afc",
+      "exit_code": 0
+    },
+    {
+      "command": "lake build QuantumBanditAdapter Canary AdaptiveTranscript AdaptiveTranscriptCanary",
+      "cwd": "Bandit research/quantum-bandit",
+      "exit_code": 0,
+      "scope": "Replayed actual research-module/canary gate; no new mathematical source in release"
+    }
+  ],
+  "cache_provenance": "Initial cold launch build was deliberately interrupted to reuse prior verified own-worktree artifacts. 901 module source files checked byte-identical; root aggregate files excluded. Full launch gate then rerun to completion; source differences/dependency traces trigger normal rebuilds. No original collaborator checkout modified.",
+  "site_retry": "A second site build initially met WinError32 because our local preview server held the generated output directory. The server was stopped and both final site gates passed.",
+  "independent_review": "Disclosure/handoff review accepted with explicit byte-normalization semantics; original mathematical review unchanged. Reviewer does not self-certify new compiler run or visual layout.",
+  "visual_review": "NOT VERIFIED: browser tool initialization failed to write kernel assets (Windows missing path). Generated HTML structure, counts, frozen links and anchors checked; screenshot/layout gate remains for maintainer before merge.",
+  "main_merge": false,
+  "live_pages_deployment": false,
+  "full_A_or_B_complete": false,
+  "logs_sha256": {
+    "frontier-launch-bandit-check-final.log": "27d8b9e5912546c8255641e2387e1ceff426e65ec29de4c4c59abe98a134b234",
+    "frontier-launch-site-build-final.log": "c36614bfed8b91cd62c50ca64912c65bbffadba69aee3b4595dec70ed2381b22",
+    "frontier-launch-site-check-final.log": "36686d3d7e9819fac9b2f6f86e17c9ca7b4f646079a649fba8966938e22a9fe7",
+    "frontier-release-canary.log": "59aaa101c8196c015f5aca796a2353624a17031e4707c315291469e603b6a25c",
+    "frontier-launch-independent-review.md": "0fd829ce1a79067a0c294a15ff23dd8d0f42c82b8850706012293df6ce183ecb",
+    "frontier-launch-cache-reuse.json": "744ae23e2c2c0e3fb9bdd636b9fe1fe6b5658824a0e5fd4655c3852c8a6b4305"
+  }
+}

@@ -59,6 +59,8 @@ This repository has two connected contributions:
 - **2026-11-03 — BanditRLBench starts.** A source-bound development seed for sequential-learning QA now has [natural-language and Lean tracks](benchmarks/banditrlbench/), with explicit review and verification boundaries.
 
 - **2026-10 — Proof digestion + evidence memory.** BanditRLlib now seals source-facing theorem interfaces before proof search, salvages verified fragments from failed routes, separates mathematical refutation from API/environment failure, keeps scheduler changes matched-experiment gated, audits common blind spots across parallel proof routes, and requires an Exposition Seal before PURIFIED reader release.
+
+- **2026-10-09 — Quantum Bandit frontier.** We are auto-formalizing finite-coherence regret and circuit-certified cost-aware BAI with QuantumComputinglib. [Progress](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/banditrlwiki/frontier-topics/quantum-bandit/).
 - **2026-09 — Harness self-comparison.** Structured logs can compare hierarchical and master–worker runs and prepare a bounded GPT diagnosis; zero valid matched pairs means no winner is claimed.
 - **2026-09 — Textbook spine.** Ten teaching chapters and Part-IV Chapters 13–17 now link source pages, algorithms, theorem statements, Lean evidence, and named gaps.
 - **2026-09 — SGB frontier.** The finite missing-pull regret consumer compiles, while the source phase trigger and Theorem 2 terminal remain open.
