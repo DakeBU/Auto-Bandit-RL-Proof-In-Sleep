@@ -9386,6 +9386,60 @@
       ]
     },
     {
+      "full_name": "BanditRL.OnlineGamma.summable_midpointInvSq_and_tsum_le",
+      "title": "Bound the midpoint series",
+      "chapter": "online-gamma-curvature-estimates",
+      "featured": true,
+      "teaching_order": 1,
+      "source_match": "source-proof-step",
+      "plain": "For each real x>0, the midpoint reciprocal-square series converges and its sum is at most 1/x.",
+      "math": "\\sum_{k=0}^{\\infty}\\frac{1}{(x+k+1/2)^2}\\leq\\frac{1}{x}",
+      "intuition": "Write y=x+k. The identity (y+1/2)²=y(y+1)+1/4 bounds the summand by 1/y−1/(y+1). Summing cancels adjacent terms and leaves the finite remainder −1/(x+N).",
+      "why": "In Lemma A.13 this is the series estimate applied at the shifted argument of the trigamma function. The formal proof obtains the same upper bound by algebraic telescoping.",
+      "position": "Bound the midpoint series",
+      "proof_idea": "Write y=x+k. The identity (y+1/2)²=y(y+1)+1/4 bounds the summand by 1/y−1/(y+1). Summing cancels adjacent terms and leaves the finite remainder −1/(x+N).",
+      "lean_notes": "k,N are natural numbers and the finite sums have k<N.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.sum_midpointInvSq_le"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.hasDerivAt_logGammaSeq_and_slopeApprox",
+      "title": "Differentiate the finite Euler formula twice",
+      "chapter": "online-gamma-curvature-estimates",
+      "featured": true,
+      "teaching_order": 2,
+      "plain": "For each natural N and each y>0, the derivative of the finite Euler log-Gamma approximant L_N is S_N. The derivative of S_N is the reciprocal-square sum Q_N.",
+      "math": "\\begin{gathered}L_N^\\prime(y)=S_N(y),\\quad S_N^\\prime(y)=Q_N(y)\\\\S_N(y)=\\log N-\\sum_{k=0}^{N}\\frac{1}{y+k}\\\\Q_N(y)=\\sum_{k=0}^{N}\\frac{1}{(y+k)^2}\\end{gathered}",
+      "intuition": "Differentiate the N+1 logarithms in the finite Euler expression term by term. Differentiating the negative reciprocals gives the positive reciprocal squares.",
+      "why": "This auxiliary theorem concerns the finite approximants used to derive the trigamma series invoked from Proposition A.10(f). Identifying their limiting derivatives is a separate step.",
+      "position": "Differentiate the finite Euler formula twice",
+      "proof_idea": "Differentiate the N+1 logarithms in the finite Euler expression term by term. Differentiating the negative reciprocals gives the positive reciprocal squares.",
+      "lean_notes": "Both finite Euler sums run from k=0 through N, including both endpoints. At N=0 Lean uses log 0=0.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.logGammaSlopeApprox",
+        "BanditRL.OnlineGamma.logGammaCurvatureApprox"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.tendstoUniformlyOn_compensatedReciprocal_and_shiftedInvSq",
+      "title": "Control both series uniformly",
+      "chapter": "online-gamma-curvature-estimates",
+      "featured": true,
+      "teaching_order": 3,
+      "plain": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums.",
+      "math": "\\begin{gathered}m=k+1,\\quad A_k(y)=\\frac{1}{m}-\\frac{1}{y+m}\\\\B_k(y)=\\frac{1}{(y+m)^2}\\\\0\\leq A_k(y)\\leq b/m^2,\\quad 0\\leq B_k(y)\\leq 1/m^2\\end{gathered}",
+      "intuition": "Rewrite A as y/[m(y+m)] and use a≤y≤b. Both bounds are constant multiples of the summable shifted p-series with exponent two.",
+      "why": "These auxiliary uniform estimates control the tails needed when passing from finite Euler derivatives to the trigamma series in the proof of A.13.",
+      "position": "Control both series uniformly",
+      "proof_idea": "Rewrite A as y/[m(y+m)] and use a≤y≤b. Both bounds are constant multiples of the summable shifted p-series with exponent two.",
+      "lean_notes": "Each partial sum uses k<N with m=k+1. This indexing omits the unshifted first term of the Euler sums.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.compensatedReciprocal",
+        "BanditRL.OnlineGamma.shiftedInvSq"
+      ]
+    },
+    {
       "full_name": "BanditRL.OnlineWeightedPotential.distance_potential_sum_eq",
       "title": "Why changing step sizes leaves an interior correction",
       "chapter": "online-ogd",

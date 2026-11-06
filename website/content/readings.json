@@ -9101,6 +9101,168 @@
         ],
         "boundary": "Theorem 13.4 also needs a potential inequality for coins strictly between −1 and 1, wealth induction, and a lower estimate for the potential. The endpoint identities supply only the two equalities."
       }
+    },
+    {
+      "slug": "online-gamma-curvature-estimates",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Appendix A.2, proof of Lemma A.13 using Proposition A.10(f)",
+        "pages": "printed pp. 295–296 / PDF pp. 307–308",
+        "pdf_page": 307,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "x, y",
+          "meaning": "Positive real arguments. The midpoint estimate is evaluated at x, while y is the variable in the finite Euler derivatives."
+        },
+        {
+          "term": "k, N",
+          "meaning": "Natural summation index and truncation index. The Euler expression has N+1 terms. The compensated partial sum has N terms."
+        },
+        {
+          "term": "m, Aₖ, Bₖ",
+          "meaning": "Put m=k+1. Aₖ(y)=1/m−1/(y+m) and Bₖ(y)=1/(y+m)². Both series use these shifted terms for k≥0."
+        }
+      ],
+      "algorithm": {
+        "title": "From a midpoint sum to finite curvature",
+        "kind": "Analytic proof in Appendix A.2",
+        "steps": [
+          {
+            "title": "Bound the midpoint series",
+            "detail": "Write y=x+k. The identity (y+1/2)²=y(y+1)+1/4 bounds the summand by 1/y−1/(y+1). Summing cancels adjacent terms and leaves the finite remainder −1/(x+N).",
+            "math": "\\sum_{k=0}^{\\infty}\\frac{1}{(x+k+1/2)^2}\\leq\\frac{1}{x}",
+            "fallback": "For each real x>0, the midpoint reciprocal-square series converges and its sum is at most 1/x."
+          },
+          {
+            "title": "Differentiate the finite Euler formula twice",
+            "detail": "Differentiate the N+1 logarithms in the finite Euler expression term by term. Differentiating the negative reciprocals gives the positive reciprocal squares.",
+            "math": "\\begin{gathered}L_N^\\prime(y)=S_N(y),\\quad S_N^\\prime(y)=Q_N(y)\\\\S_N(y)=\\log N-\\sum_{k=0}^{N}\\frac{1}{y+k}\\\\Q_N(y)=\\sum_{k=0}^{N}\\frac{1}{(y+k)^2}\\end{gathered}",
+            "fallback": "For each natural N and each y>0, the derivative of the finite Euler log-Gamma approximant L_N is S_N. The derivative of S_N is the reciprocal-square sum Q_N."
+          },
+          {
+            "title": "Control both series uniformly",
+            "detail": "Rewrite A as y/[m(y+m)] and use a≤y≤b. Both bounds are constant multiples of the summable shifted p-series with exponent two.",
+            "math": "\\begin{gathered}m=k+1,\\quad A_k(y)=\\frac{1}{m}-\\frac{1}{y+m}\\\\B_k(y)=\\frac{1}{(y+m)^2}\\\\0\\leq A_k(y)\\leq b/m^2,\\quad 0\\leq B_k(y)\\leq 1/m^2\\end{gathered}",
+            "fallback": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGamma.summable_midpointInvSq_and_tsum_le",
+        "BanditRL.OnlineGamma.hasDerivAt_logGammaSeq_and_slopeApprox",
+        "BanditRL.OnlineGamma.tendstoUniformlyOn_compensatedReciprocal_and_shiftedInvSq"
+      ],
+      "source_theorems": [
+        {
+          "label": "Bound the midpoint series",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "pdf_page": 307,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\sum_{k=0}^{\\infty}\\frac{1}{(x+k+1/2)^2}\\leq\\frac{1}{x}",
+          "fallback": "For each real x>0, the midpoint reciprocal-square series converges and its sum is at most 1/x.",
+          "plain": "For each real x>0, the midpoint reciprocal-square series converges and its sum is at most 1/x.",
+          "relationship": "In Lemma A.13 this is the series estimate applied at the shifted argument of the trigamma function. The formal proof obtains the same upper bound by algebraic telescoping.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Real special functions and real-valued series.",
+            "assumptions": "x>0.",
+            "parameters": "k,N are natural numbers and the finite sums have k<N.",
+            "regret": "This estimate is used in the proof of the Gamma bound behind Theorem 13.4.",
+            "guarantee": "For each real x>0, the midpoint reciprocal-square series converges and its sum is at most 1/x."
+          }
+        },
+        {
+          "label": "Differentiate the finite Euler formula twice",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "pdf_page": 307,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{gathered}L_N^\\prime(y)=S_N(y),\\quad S_N^\\prime(y)=Q_N(y)\\\\S_N(y)=\\log N-\\sum_{k=0}^{N}\\frac{1}{y+k}\\\\Q_N(y)=\\sum_{k=0}^{N}\\frac{1}{(y+k)^2}\\end{gathered}",
+          "fallback": "For each natural N and each y>0, the derivative of the finite Euler log-Gamma approximant L_N is S_N. The derivative of S_N is the reciprocal-square sum Q_N.",
+          "plain": "For each natural N and each y>0, the derivative of the finite Euler log-Gamma approximant L_N is S_N. The derivative of S_N is the reciprocal-square sum Q_N.",
+          "relationship": "This auxiliary theorem concerns the finite approximants used to derive the trigamma series invoked from Proposition A.10(f). Identifying their limiting derivatives is a separate step.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Real special functions and real-valued series.",
+            "assumptions": "y>0, N a natural number.",
+            "parameters": "Both finite Euler sums run from k=0 through N, including both endpoints. At N=0 Lean uses log 0=0.",
+            "regret": "This estimate is used in the proof of the Gamma bound behind Theorem 13.4.",
+            "guarantee": "For each natural N and each y>0, the derivative of the finite Euler log-Gamma approximant L_N is S_N. The derivative of S_N is the reciprocal-square sum Q_N."
+          }
+        },
+        {
+          "label": "Control both series uniformly",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "pdf_page": 307,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\begin{gathered}m=k+1,\\quad A_k(y)=\\frac{1}{m}-\\frac{1}{y+m}\\\\B_k(y)=\\frac{1}{(y+m)^2}\\\\0\\leq A_k(y)\\leq b/m^2,\\quad 0\\leq B_k(y)\\leq 1/m^2\\end{gathered}",
+          "fallback": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums.",
+          "plain": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums.",
+          "relationship": "These auxiliary uniform estimates control the tails needed when passing from finite Euler derivatives to the trigamma series in the proof of A.13.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Real special functions and real-valued series.",
+            "assumptions": "0<a<b, y ranges over [a,b].",
+            "parameters": "Each partial sum uses k<N with m=k+1. This indexing omits the unshifted first term of the Euler sums.",
+            "regret": "This estimate is used in the proof of the Gamma bound behind Theorem 13.4.",
+            "guarantee": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Check the summation bounds by hand",
+        "intro": "The two truncation conventions already differ at the smallest indices.",
+        "steps": [
+          {
+            "title": "Bound the midpoint series",
+            "detail": "For x=1 and N=1 the midpoint summand is 4/9 and the finite upper bound is 1/2.",
+            "math": "\\frac{4}{9}\\leq 1-\\frac12",
+            "fallback": "For x=1 and N=1 the midpoint summand is 4/9 and the finite upper bound is 1/2."
+          },
+          {
+            "title": "Differentiate the finite Euler formula twice",
+            "detail": "For N=1 and y=1 the terms have denominators 1 and 2. They give slope −3/2 and curvature 5/4.",
+            "math": "S_1(1)=-1-\\tfrac12,\\quad Q_1(1)=1+\\tfrac14",
+            "fallback": "For N=1 and y=1 the terms have denominators 1 and 2. They give slope −3/2 and curvature 5/4."
+          },
+          {
+            "title": "Control both series uniformly",
+            "detail": "On [1,2], the empty partial sums vanish. For N=1 the first series at y=1 equals 1/2 and the second at y=2 equals 1/9.",
+            "math": "A_0(1)=1-\\tfrac12,\\quad B_0(2)=\\tfrac19",
+            "fallback": "On [1,2], the empty partial sums vanish. For N=1 the first series at y=1 equals 1/2 and the second at y=2 equals 1/9."
+          }
+        ],
+        "takeaway": "An Euler truncation with index zero retains its k=0 term. A compensated partial sum with index zero is empty.",
+        "boundary": "The differentiation statements require a strictly positive argument."
+      },
+      "proof_bridge": {
+        "title": "Where the series enters the simplex proof",
+        "summary": "The second derivative of the scalar log-objective requires an upper bound on the shifted trigamma series. The midpoint estimate gives its numerical bound, and the Euler estimates support its identification.",
+        "steps": [
+          {
+            "title": "Bound the midpoint series",
+            "detail": "Write y=x+k. The identity (y+1/2)²=y(y+1)+1/4 bounds the summand by 1/y−1/(y+1). Summing cancels adjacent terms and leaves the finite remainder −1/(x+N).",
+            "math": "\\sum_{k=0}^{\\infty}\\frac{1}{(x+k+1/2)^2}\\leq\\frac{1}{x}",
+            "fallback": "For each real x>0, the midpoint reciprocal-square series converges and its sum is at most 1/x."
+          },
+          {
+            "title": "Differentiate the finite Euler formula twice",
+            "detail": "Differentiate the N+1 logarithms in the finite Euler expression term by term. Differentiating the negative reciprocals gives the positive reciprocal squares.",
+            "math": "\\begin{gathered}L_N^\\prime(y)=S_N(y),\\quad S_N^\\prime(y)=Q_N(y)\\\\S_N(y)=\\log N-\\sum_{k=0}^{N}\\frac{1}{y+k}\\\\Q_N(y)=\\sum_{k=0}^{N}\\frac{1}{(y+k)^2}\\end{gathered}",
+            "fallback": "For each natural N and each y>0, the derivative of the finite Euler log-Gamma approximant L_N is S_N. The derivative of S_N is the reciprocal-square sum Q_N."
+          },
+          {
+            "title": "Control both series uniformly",
+            "detail": "Rewrite A as y/[m(y+m)] and use a≤y≤b. Both bounds are constant multiples of the summable shifted p-series with exponent two.",
+            "math": "\\begin{gathered}m=k+1,\\quad A_k(y)=\\frac{1}{m}-\\frac{1}{y+m}\\\\B_k(y)=\\frac{1}{(y+m)^2}\\\\0\\leq A_k(y)\\leq b/m^2,\\quad 0\\leq B_k(y)\\leq 1/m^2\\end{gathered}",
+            "fallback": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums."
+          }
+        ],
+        "boundary": "The derivative of the infinite Euler limit, the curvature of x log x−log Γ(x+1/2), its extension through zero, and vertex maximization on the closed simplex require further proofs."
+      }
     }
   ]
 }
