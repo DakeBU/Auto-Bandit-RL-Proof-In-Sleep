@@ -29,3 +29,7 @@ Two top-level docs should be read before broad theorem work:
 - `docs/adaptive_harness_design.md`: how upper route population, middle memory
   maintenance, Lean workers, retrieval workers, and natural-language prover
   branches coordinate.
+
+## Active research launches
+
+- [Quantum Bandit A+B frontier — started 2026-10-09](open-problems/quantum-bandit-frontier.md): public research checkpoints, explicit model/cost contracts, current compiled leaves and collaborator handoff. No completed research-root theorem is claimed.

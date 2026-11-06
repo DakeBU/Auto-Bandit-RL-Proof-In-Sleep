@@ -1,0 +1,156 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-CH2-UNBOUNDED-OGD-INTEGRATION-20261106",
+  "route": "online-learning/chapter-2/unbounded-actual-ogd",
+  "frontier_cell": "online-ogd",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv1912.13213v10 SHA256 cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchor": "Chapter 2 forward remark on printed page 14 (PDF 26). Section 5.2, Theorem 5.4 and its affine witness on printed pages 52–53 (PDF 64–65).",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=64"
+  },
+  "target": "For each nontrivial finite-dimensional real inner product space, alpha in (0,1) and natural T satisfying T >= 2/((1-alpha)phi(alpha)), there exists a horizon-dependent real loss sequence satisfying played-round regularity and the zero-comparator regret bound on the actual full-space variable-step OGD run from zero. Read t+1 for source rounds. Regret is the sum of pre-update losses.",
+  "affected_files": [
+    "BanditRLProof/OnlineUnboundedOGD.lean",
+    "BanditRLProof.lean",
+    "website/content/chapters.json",
+    "website/content/readings.json",
+    "website/content/highlights.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Current accepted OSD producer chain and actual OGD gradient/recurrence; frozen source/reuse contract."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGradientDescentSource.gradient_linear",
+      "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+      "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+      "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+    ],
+    "known_consumers": [
+      "UnboundedOGDProbe.finiteDim_terminal_lower_bound"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Explicit differentiable affine witness and actual gradient trajectory transfer; old opaque existential alone is insufficient."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "Original PR220 formalizer. The production and test modules preserve the original bytes.",
+    "blind_decoder": "Independent decoder given two statement packets containing three theorem headers and two definition packets.",
+    "source_reviewer": "Independent PDF-first reviewer who checked three frozen types, compiled proof values and 19 logical test components. Four terminal properties use the same existential witness.",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Choose one unit direction, take first ceil(T/2) losses with negative slope and remaining floor(T/2) positive. Actual gradient and canonical affine OSD support agree; actual iterateVariable and OSD iterate agree by induction, their regret by summing. Apply prior OSD switching_vector_lower_bound, preserving phi/2 and exponent 2-alpha. The original theorem is for OSD and the new declaration transfers on the chosen differentiable witness. Source alpha-left-limit is separate from growth over horizons."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "One affine witness trajectory transfer, not a general transport between settings.",
+    "focus_targets": [
+      "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+    ],
+    "visual_review": "The source-facing lesson must be checked on the exact candidate build.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: one source card and actual OGD lesson with shared canonical node mapping in the candidate integration.",
+    "banditrlwiki": "no-change-with-reason: no Bandit setting result.",
+    "results_ledger": "updated: Three frozen source rows identify the OGD transfer and its two OSD predecessors; one required forward container is resolved.",
+    "roadmap": "updated: The chapter retains seven required forward containers and five separately inherited obligations. Ten historical owners account for 31 later statement branches.",
+    "website_surfaces": [
+      "website/content/chapters.json",
+      "website/content/readings.json",
+      "website/content/highlights.json"
+    ]
+  },
+  "truth_boundary": "One OGD theorem, two compiled tests and one resolved forward container. Seven required forward containers remain. The 31 later statement branches belong to ten historical owners. Chapter 2 is partial and its mandatory proof total remains unknown.",
+  "verification": {
+    "focused_checks": [
+      "Focused original OGD production and test modules compiled. The shared BanditRLProof and Tests roots compiled together (9,304 jobs).",
+      "The compiled terminal test invokes the new theorem and applies the same existential loss witness to all its regret bounds."
+    ],
+    "bandit_check": "Required on the committed candidate.",
+    "site_build": "Build the candidate after verifying its Lean gate.",
+    "site_check": "Check the candidate website and actual declaration anchors.",
+    "independent_review": "PDF-first review, neutral reconstruction and compiled term comparison are recorded in the statement-and-proof evidence."
+  },
+  "contributor": {
+    "name": "ABRL agent-assisted OGD contribution",
+    "role": "Integration of the original PR220 theorem and tests."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-MATCHED-HARNESS-EVIDENCE",
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": true,
+      "status": "pending",
+      "reason": "The original source and evidence, including unsuccessful attempts, are retained under their original Git identifiers.",
+      "promoted_fragments": [
+        "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+      ],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "affine-witness-gradient-and-subgradient-run-equality"
+      ],
+      "expected_information_gain": "Verify that both updates and pre-update regret coincide for the same horizon-dependent losses.",
+      "shared_verified_context_digest": "f5ef90343197b115d4e49130cbb1836e83c786db"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "",
+      "canonical_route": "Identify gradient and selected subgradient on affine losses, prove equality of trajectories and transfer the OSD bound.",
+      "selection_reason": "The source witness and compiled proof use this same explicit sequence."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "Rendered-page review follows candidate build.",
+      "source_expansion_nodes": [
+        "source horizon threshold",
+        "horizon-dependent switch after the first half",
+        "global convexity, unit Lipschitz constant and differentiability on played rounds",
+        "pre-update regret against zero"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineGradientDescentSource.gradient_linear",
+        "BanditRL.OnlineUnboundedOSD.currentSubgradient_affine",
+        "BanditRL.OnlineUnboundedOSD.switching_loss_regular",
+        "BanditRL.OnlineUnboundedOSD.switching_vector_lower_bound",
+        "BanditRL.OnlineUnboundedOGD.regret_lower_bound"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}
