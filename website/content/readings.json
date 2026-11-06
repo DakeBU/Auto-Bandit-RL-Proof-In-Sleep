@@ -9215,7 +9215,190 @@
             "fallback": "For 0<a<b the partial sums of A and B each converge uniformly on the closed interval [a,b] to their respective infinite sums."
           }
         ],
-        "boundary": "The derivative of the infinite Euler limit, the curvature of x log x−log Γ(x+1/2), its extension through zero, and vertex maximization on the closed simplex require further proofs."
+        "boundary": "The Gamma simplex lesson supplies the limiting derivatives, half-line integral and extension of the convex objective to the closed simplex."
+      }
+    },
+    {
+      "slug": "online-gamma-simplex",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Appendix A.2.2, Lemma A.13 and its proof",
+        "pages": "printed pp. 295–296 / PDF pp. 307–308",
+        "pdf_page": 307,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "ψ, h",
+          "meaning": "ψ is the derivative of log Γ. The continuous scalar factor is h(u)=u log u−log Γ(u+1/2)."
+        },
+        {
+          "term": "P, T, eⱼ",
+          "meaning": "P is the product of the coordinate factors, T is the total mass, and eⱼ is a unit coordinate vector."
+        }
+      ],
+      "algorithm": {
+        "title": "From reciprocal squares to a simplex maximum",
+        "kind": "Proof of Lemma A.13",
+        "steps": [
+          {
+            "title": "Identify the trigamma series",
+            "detail": "The Euler approximants converge pointwise to log Γ. On a bounded open neighborhood of y, both sequences of derivatives converge uniformly. Apply differentiation of a pointwise limit twice.",
+            "math": "\\begin{gathered}\\psi(y)=(\\log\\Gamma)^\\prime(y)\\\\\\psi^\\prime(y)=\\sum_{k=0}^\\infty\\frac{1}{(y+k)^2}\\end{gathered}",
+            "fallback": "At each y>0 the derivative of log Γ is the limit of the finite slopes. Its derivative is the sum of the inverse squares starting at k=0."
+          },
+          {
+            "title": "Compare the sum with the half-line integral",
+            "detail": "The primitive −1/(x+t) tends to zero at infinity. On each unit interval the integral is the difference of its endpoint values. The midpoint estimate telescopes over those same endpoints.",
+            "math": "\\begin{gathered}g_x(t)=(x+t)^{-2}\\\\\\sum_{k=0}^\\infty g_x(k+1/2)\\\\{}\\leq\\int_0^\\infty g_x(t)\\,dt=1/x\\end{gathered}",
+            "fallback": "For x>0 the reciprocal-square kernel is integrable on the positive half-line. Its integral is 1/x and bounds the sum of its values at the midpoints."
+          },
+          {
+            "title": "Extend convexity through zero",
+            "detail": "Substituting y=x+1/2 in the trigamma series gives the midpoint sum. The integral estimate makes the second derivative nonnegative in the interior. Continuity of x log x and positivity of Γ at 1/2 extend convexity to zero.",
+            "math": "\\begin{gathered}h(x)=x\\log x-\\log\\Gamma(x+1/2)\\\\ h^{\\prime\\prime}(x)=1/x-\\psi^\\prime(x+1/2)\\geq 0\\quad(x>0)\\end{gathered}",
+            "fallback": "The scalar factor h is convex on the closed nonnegative half-line with h(0)=−log Γ(1/2)."
+          },
+          {
+            "title": "Maximize the Gamma product",
+            "detail": "Take logs to obtain a sum of convex coordinate functions. Express x as a convex combination of the vertices with weights xᵢ/T. All vertices have the same value by coordinate symmetry. Exponentiating preserves the bound.",
+            "math": "\\begin{gathered}P(x)=\\prod_i\\frac{x_i^{\\,x_i}}{\\Gamma(x_i+1/2)}\\\\P(x)\\leq P(Te_j)\\\\{}=\\frac{T^T}{\\Gamma(T+1/2)\\,\\Gamma(1/2)^{n-1}}\\end{gathered}",
+            "fallback": "Every mass-T vertex is feasible and attains the same maximum of the Gamma product over the closed simplex."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGamma.logGamma_derivatives",
+        "BanditRL.OnlineGamma.midpointInvSq_ray_integral",
+        "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
+        "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value"
+      ],
+      "source_theorems": [
+        {
+          "label": "Identify the trigamma series",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 307,
+          "math": "\\begin{gathered}\\psi(y)=(\\log\\Gamma)^\\prime(y)\\\\\\psi^\\prime(y)=\\sum_{k=0}^\\infty\\frac{1}{(y+k)^2}\\end{gathered}",
+          "fallback": "At each y>0 the derivative of log Γ is the limit of the finite slopes. Its derivative is the sum of the inverse squares starting at k=0.",
+          "plain": "At each y>0 the derivative of log Γ is the limit of the finite slopes. Its derivative is the sum of the inverse squares starting at k=0.",
+          "relationship": "A.13 invokes Proposition A.10(f) at y=x+1/2. Lean also identifies the first derivative with its compensated series.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "A real Gamma product on the nonnegative mass simplex.",
+            "assumptions": "y>0.",
+            "parameters": "k is a natural number, including zero.",
+            "regret": "This result supplies the Gamma comparison used in the KT wealth lower bound.",
+            "guarantee": "At each y>0 the derivative of log Γ is the limit of the finite slopes. Its derivative is the sum of the inverse squares starting at k=0."
+          }
+        },
+        {
+          "label": "Compare the sum with the half-line integral",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 307,
+          "math": "\\begin{gathered}g_x(t)=(x+t)^{-2}\\\\\\sum_{k=0}^\\infty g_x(k+1/2)\\\\{}\\leq\\int_0^\\infty g_x(t)\\,dt=1/x\\end{gathered}",
+          "fallback": "For x>0 the reciprocal-square kernel is integrable on the positive half-line. Its integral is 1/x and bounds the sum of its values at the midpoints.",
+          "plain": "For x>0 the reciprocal-square kernel is integrable on the positive half-line. Its integral is 1/x and bounds the sum of its values at the midpoints.",
+          "relationship": "The book uses Jensen on each unit interval. Lean proves the same cell comparison by evaluating the integral and bounding the midpoint algebraically.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "A real Gamma product on the nonnegative mass simplex.",
+            "assumptions": "x>0.",
+            "parameters": "The integral uses real Lebesgue measure on (0,∞).",
+            "regret": "This result supplies the Gamma comparison used in the KT wealth lower bound.",
+            "guarantee": "For x>0 the reciprocal-square kernel is integrable on the positive half-line. Its integral is 1/x and bounds the sum of its values at the midpoints."
+          }
+        },
+        {
+          "label": "Extend convexity through zero",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 307,
+          "math": "\\begin{gathered}h(x)=x\\log x-\\log\\Gamma(x+1/2)\\\\ h^{\\prime\\prime}(x)=1/x-\\psi^\\prime(x+1/2)\\geq 0\\quad(x>0)\\end{gathered}",
+          "fallback": "The scalar factor h is convex on the closed nonnegative half-line with h(0)=−log Γ(1/2).",
+          "plain": "The scalar factor h is convex on the closed nonnegative half-line with h(0)=−log Γ(1/2).",
+          "relationship": "The scalar extension supplies the value of every zero coordinate in the closed simplex.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "A real Gamma product on the nonnegative mass simplex.",
+            "assumptions": "x≥0 for convexity. The second derivative formula requires x>0.",
+            "parameters": "Lean assigns 0 log 0 the continuously extended value zero.",
+            "regret": "This result supplies the Gamma comparison used in the KT wealth lower bound.",
+            "guarantee": "The scalar factor h is convex on the closed nonnegative half-line with h(0)=−log Γ(1/2)."
+          }
+        },
+        {
+          "label": "Maximize the Gamma product",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 307,
+          "math": "\\begin{gathered}P(x)=\\prod_i\\frac{x_i^{\\,x_i}}{\\Gamma(x_i+1/2)}\\\\P(x)\\leq P(Te_j)\\\\{}=\\frac{T^T}{\\Gamma(T+1/2)\\,\\Gamma(1/2)^{n-1}}\\end{gathered}",
+          "fallback": "Every mass-T vertex is feasible and attains the same maximum of the Gamma product over the closed simplex.",
+          "plain": "Every mass-T vertex is feasible and attains the same maximum of the Gamma product over the closed simplex.",
+          "relationship": "Lemma A.13 asserts attainment at the vertices. The displayed value evaluates the book’s product at any one of them.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "A real Gamma product on the nonnegative mass simplex.",
+            "assumptions": "n≥1 is an integer, T≥1 is real, every xᵢ≥0, and the coordinates sum to T.",
+            "parameters": "j ranges over all n coordinates. At a zero coordinate the numerator is 0⁰=1.",
+            "regret": "This result supplies the Gamma comparison used in the KT wealth lower bound.",
+            "guarantee": "Every mass-T vertex is feasible and attains the same maximum of the Gamma product over the closed simplex."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Evaluate two boundary cases",
+        "intro": "The feasibility condition allows zero coordinates and fractional total mass.",
+        "steps": [
+          {
+            "title": "One coordinate, unit mass",
+            "detail": "The sole feasible vector is the vertex. The exponent n−1 vanishes and Γ(3/2)=√π/2.",
+            "math": "P(1)=1/\\Gamma(3/2)=2/\\sqrt{\\pi}",
+            "fallback": "At n=T=1 the maximum is 2/√π."
+          },
+          {
+            "title": "A face point at fractional mass",
+            "detail": "The coordinates (0,1/2,1) sum to 3/2. The zero coordinate contributes 1/Γ(1/2). At a vertex there are two zero coordinates and the other denominator is Γ(2)=1.",
+            "math": "\\begin{gathered}x=(0,1/2,1)\\\\P(x)\\leq P((3/2)e_j)\\\\{}=(3/2)^{3/2}/\\pi\\end{gathered}",
+            "fallback": "Every one of the three vertices attains (3/2)^(3/2)/π."
+          },
+          {
+            "title": "Check the nonvertex product",
+            "detail": "Using Γ(1/2)=√π, Γ(1)=1 and Γ(3/2)=√π/2 evaluates the three coordinate factors at (0,1/2,1).",
+            "math": "P(0,1/2,1)=\\frac{\\sqrt{2}}{\\pi}\\leq\\frac{(3/2)^{3/2}}{\\pi}",
+            "fallback": "The face point has product √2/π, below the common vertex value."
+          }
+        ],
+        "takeaway": "Each zero coordinate contributes the same Gamma factor to the denominator.",
+        "boundary": "The vertex inequality includes equality at every vertex."
+      },
+      "proof_bridge": {
+        "title": "Why the weights are xᵢ/T",
+        "summary": "The logarithm turns the product into a sum of continuous convex coordinate functions. Since T>0, dividing the coordinates by T gives a probability vector.",
+        "steps": [
+          {
+            "title": "Recover each coordinate",
+            "detail": "In coordinate i, only the ith vertex contributes. Its weight xᵢ/T multiplies its value T to give xᵢ.",
+            "math": "x=\\sum_j (x_j/T)\\,Te_j",
+            "fallback": "The weighted vertex average is exactly x."
+          },
+          {
+            "title": "Evaluate the weighted log bound",
+            "detail": "The log objective has the same value at each vertex. Its weighted average is that common value, which bounds the log objective at x.",
+            "math": "\\log P(x)\\leq\\sum_j (x_j/T)\\log P(Te_j)",
+            "fallback": "Finite Jensen bounds the log product by its value at a vertex."
+          },
+          {
+            "title": "Return to the product",
+            "detail": "The product is positive at every feasible point, including boundary points. The logarithm is increasing there, so the bound on log P gives the bound on P.",
+            "math": "\\log P(x)\\leq\\log P(Te_j)\\ \\Longrightarrow\\ P(x)\\leq P(Te_j)",
+            "fallback": "Positivity lets the log comparison imply the product comparison."
+          }
+        ],
+        "boundary": "Curvature is proved at positive scalar arguments. Continuity supplies every zero coordinate in the simplex."
       }
     }
   ]

@@ -802,3 +802,4 @@ import BanditRLProof.OnlineGammaIntegralEstimates
 import BanditRLProof.OnlineGammaSimplexBasic
 import BanditRLProof.OnlineGammaSimplexCurvature
 import BanditRLProof.OnlineGammaSimplexGeometry
+import BanditRLProof.OnlineGammaSimplexMaximum
