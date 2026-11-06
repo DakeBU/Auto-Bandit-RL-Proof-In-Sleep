@@ -47,6 +47,14 @@
       "simplexGammaProduct": "literal real product using real powers, including 0^0=1",
       "nonnegativeMassSimplex": "literal nonnegative coordinates with fixed sum",
       "massSimplexVertex": "literal Pi.single coordinate vector"
+    },
+    "generic_attainment": {
+      "signature_digest": "c89fd1a52855094b09acbde1aae73f5dd75a7a42643d38e322c19ebf33785184",
+      "binders": {
+        "n,T,G": "TYPING",
+        "1 ≤ n; 1 ≤ T; ConvexOn G on the mass simplex": "SOURCE"
+      },
+      "excess": []
     }
   },
   "source_proof_coverage": {
@@ -82,9 +90,14 @@
         "text": "Extend the log sum continuously to the closed simplex, including zero coordinates."
       },
       {
+        "id": "A13-GENERIC-MAXIMUM",
+        "kind": "NODE",
+        "text": "Every convex function on this simplex has a single vertex attaining its global maximum."
+      },
+      {
         "id": "A13-VERTEX",
         "kind": "NODE",
-        "text": "Use convexity on the simplex to attain the maximum at an extreme point."
+        "text": "The Gamma product has the same value at each vertex, so every vertex attains its maximum."
       }
     ],
     "source_gaps": [],
@@ -93,6 +106,12 @@
         "node": "A13-CELL-JENSEN",
         "source_route": "Convexity and integral Jensen",
         "lean_route": "The same unit-cell comparison follows from the evaluated primitive and algebraic midpoint bound. Both the interval and half-line integrals are proved.",
+        "relation": "OR"
+      },
+      {
+        "node": "A13-VERTEX",
+        "source_route": "Use the general convex-function vertex maximum, then the symmetry of the Gamma product.",
+        "lean_route": "The Gamma comparison applies finite Jensen directly and evaluates all vertex values. The general attained maximum is also proved separately from finite Jensen and finite vertex maximization.",
         "relation": "OR"
       }
     ]
@@ -113,7 +132,8 @@
     "new_reusable": [
       "Positive-domain derivatives of log Gamma",
       "Continuous and convex scalar log factor on the closed half-line",
-      "Closed-simplex product maximum"
+      "Closed-simplex product maximum",
+      "A single attained maximizing vertex for every convex function on the closed mass simplex"
     ],
     "source_to_lean": {
       "A13-PRODUCT": [
@@ -139,7 +159,12 @@
       ],
       "A13-VERTEX": [
         "convexOn_le_sum_massSimplexVertex",
-        "simplexGammaProduct_le_vertex_and_value"
+        "simplexGammaProduct_le_vertex_and_value",
+        "isGreatest_simplexGammaProduct_image"
+      ],
+      "A13-GENERIC-MAXIMUM": [
+        "convexOn_le_sum_massSimplexVertex",
+        "convexOn_exists_isGreatest_massSimplexVertex"
       ]
     }
   },
@@ -148,7 +173,7 @@
     "dead_code_audit": "All new public support statements feed the source theorem or concrete boundary consumers. Private helpers remain reachable from the named proofs.",
     "duplicate_semantics_audit": "Reuse the prior OnlineGammaEstimates and shared mathlib. Single definitions for the product, domain and vertices.",
     "canonicalization": "One shared Lean project and namespace BanditRL.OnlineGamma.",
-    "compressed_spine_delta": "Euler derivatives -> midpoint integral -> closed-domain convexity -> finite Jensen -> equal vertex values.",
-    "reader_default_view": "Four mathematical source cards with folded Lean declarations and graph drill-down."
+    "compressed_spine_delta": "Euler derivatives -> midpoint integral -> closed-domain convexity -> finite Jensen, followed by general vertex attainment and the equal Gamma vertex values.",
+    "reader_default_view": "Five mathematical source cards with folded Lean declarations and graph drill-down."
   }
 }

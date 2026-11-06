@@ -45,7 +45,8 @@
     "BanditRL.OnlineGamma.simplexLogFactor_derivatives",
     "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
     "BanditRL.OnlineGamma.continuousOn_and_convexOn_sum_simplexLogFactor",
-    "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image"
+    "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
+    "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex"
   ],
   "reuse_plan": {
     "classification": "adapt",
@@ -81,13 +82,15 @@
       "BanditRL.OnlineGamma.simplexLogFactor_derivatives",
       "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
       "BanditRL.OnlineGamma.continuousOn_and_convexOn_sum_simplexLogFactor",
-      "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image"
+      "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
+      "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex"
     ],
     "known_consumers": [
       "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
       "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
       "BanditRL.OnlineGamma.Canary.one_dimensional_unit_mass_vertex",
-      "BanditRL.OnlineGamma.Canary.three_dimensional_fractional_mass_boundary"
+      "BanditRL.OnlineGamma.Canary.three_dimensional_fractional_mass_boundary",
+      "BanditRL.OnlineGamma.Canary.coordinate_projection_mass_two_isGreatest"
     ],
     "planned_consumers": [
       "Theorem 13.4 KT wealth lower bound",
@@ -112,7 +115,7 @@
     "formalizer": "Distinct proof authors for positive-domain Gamma analysis and the closed-simplex maximum.",
     "blind_decoder": "Independent neutral reconstruction for the derivative, integral, closed-simplex and maximum statements.",
     "source_reviewer": "Independently checked exact domains, real T, n−1 zero-coordinate factors, finite Jensen calls and complete kernel expressions.",
-    "remaining_semantic_delta": "The cell comparison evaluates the integral and uses the algebraic midpoint bound. The source proves this same comparison by integral Jensen. Vertex-value evaluation is made explicit."
+    "remaining_semantic_delta": "The cell comparison evaluates the integral and uses the algebraic midpoint bound, while the source uses integral Jensen. The Gamma comparison applies finite Jensen directly; the source's generic convex-function attainment fact is also exposed as a separate theorem. Vertex-value evaluation is explicit."
   },
   "graph_contribution": {
     "lean_graph": "integration-node",
@@ -138,13 +141,14 @@
       "BanditRL.OnlineGamma.simplexLogFactor_derivatives",
       "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
       "BanditRL.OnlineGamma.continuousOn_and_convexOn_sum_simplexLogFactor",
-      "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image"
+      "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
+      "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex"
     ],
-    "visual_review": "Four new source cards are prepared. Their final exact-commit reader validation is pending.",
+    "visual_review": "Five source cards are prepared, including generic attained vertex maximization. Their final exact-commit reader validation is pending.",
     "edge_semantics": "formal-solid; overlays-dashed"
   },
   "progress_updates": {
-    "teaching_route": "updated: Gamma derivatives, the half-line integral, boundary convexity and the attained simplex vertex value.",
+    "teaching_route": "updated: Gamma derivatives, the half-line integral, boundary convexity, generic vertex attainment and the Gamma product maximum.",
     "banditrlwiki": "no-change-with-reason: The new route is in the Online Learning Book.",
     "results_ledger": "no-change-with-reason: The whole Chapter 2 remains open.",
     "roadmap": "no-change-with-reason: Full book and downstream KT obligations remain in the frozen inventory.",
@@ -161,11 +165,12 @@
     "bandit_check": "pending",
     "site_build": "pending",
     "site_check": "pending",
-    "independent_review": "The scalar derivatives, boundary extension, finite-sum convexity, product positivity, Jensen invocation and vertex evaluation were reviewed using complete imported types and proof terms.",
+    "independent_review": "Complete imported types and proof bodies were reviewed for the Gamma chain, generic attained maximum and all three boundary/affine consumers. Historical closed proof-argument expansions are recorded explicitly.",
     "test_paths": [
       "Tests.lean",
       "tools/test_book_registry.py",
-      "Tests/OnlineGammaSimplexCanary.lean"
+      "Tests/OnlineGammaSimplexCanary.lean",
+      "Tests/OnlineConvexSimplexMaximumCanary.lean"
     ]
   },
   "contributor": {
@@ -204,18 +209,20 @@
     "reader_backpressure": {
       "purification_status": "pending",
       "exposition_seal_status": "pending",
-      "reader_debt_delta": 4,
-      "exposition_evidence": "Four source cards expand to the exact providers in docs/contracts/online-gamma-simplex-v1/proof-digestion.json.",
+      "reader_debt_delta": 5,
+      "exposition_evidence": "Five source cards expand to the exact providers in docs/contracts/online-gamma-simplex-v1/proof-digestion.json.",
       "source_expansion_nodes": [
         "A13-CURVATURE",
         "A13-RAY",
         "A13-ZERO",
+        "A13-GENERIC-MAXIMUM",
         "A13-VERTEX"
       ],
       "lean_expansion_nodes": [
         "BanditRL.OnlineGamma.logGamma_derivatives",
         "BanditRL.OnlineGamma.midpointInvSq_ray_integral",
         "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
+        "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
         "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value"
       ],
       "assumptions_preserved": true,

@@ -9278,11 +9278,19 @@
       "notation": [
         {
           "term": "ψ, h",
-          "meaning": "ψ is the derivative of log Γ. The continuous scalar factor is h(u)=u log u−log Γ(u+1/2)."
+          "meaning": "ψ is the derivative of log Γ. The continuous scalar factor is h(u)=u log u−log Γ(u+1/2), with h(0)=−log Γ(1/2)."
         },
         {
-          "term": "P, T, eⱼ",
-          "meaning": "P is the product of the coordinate factors, T is the total mass, and eⱼ is a unit coordinate vector."
+          "term": "P",
+          "meaning": "P is the product of the coordinate factors u^u/Γ(u+1/2), using 0^0=1."
+        },
+        {
+          "term": "V, T, eⱼ",
+          "meaning": "V is the nonnegative simplex of total mass T. The unit coordinate vector eⱼ gives the mass-T vertex T eⱼ."
+        },
+        {
+          "term": "G",
+          "meaning": "G is any real-valued function convex on V. The general theorem selects a vertex attaining its maximum."
         }
       ],
       "algorithm": {
@@ -9319,6 +9327,7 @@
         "BanditRL.OnlineGamma.logGamma_derivatives",
         "BanditRL.OnlineGamma.midpointInvSq_ray_integral",
         "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
+        "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
         "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value"
       ],
       "source_theorems": [
@@ -9374,6 +9383,24 @@
             "parameters": "Lean assigns 0 log 0 the continuously extended value zero.",
             "regret": "This result supplies the Gamma comparison used in the KT wealth lower bound.",
             "guarantee": "The scalar factor h is convex on the closed nonnegative half-line with h(0)=−log Γ(1/2)."
+          }
+        },
+        {
+          "label": "Choose a maximizing vertex for any convex function",
+          "pages": "printed p. 296 / PDF p. 308",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 308,
+          "math": "\\begin{gathered}G\\text{ convex on }V\\\\\\exists j:\\ G(Te_j)=\\max_{x\\in V}G(x)\\end{gathered}",
+          "fallback": "Every real-valued convex function on the nonnegative mass simplex attains its maximum at some vertex.",
+          "plain": "Every real-valued convex function on the nonnegative mass simplex attains its maximum at some vertex.",
+          "relationship": "This is the general simplex fact used in the proof of Lemma A.13. The Gamma product additionally has equal values at all vertices.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "V consists of nonnegative real coordinates whose sum is T.",
+            "assumptions": "n≥1 is an integer, T≥1 is real, and G is convex on V.",
+            "parameters": "G is any real-valued function on the ambient coordinate space. T eⱼ is the mass-T vertex at coordinate j.",
+            "regret": "This general convexity result supplies the vertex-attainment step in the appendix argument.",
+            "guarantee": "One feasible vertex attains the greatest value of G over every point of V."
           }
         },
         {

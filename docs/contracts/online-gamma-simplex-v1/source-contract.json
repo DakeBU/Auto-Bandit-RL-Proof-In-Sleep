@@ -130,6 +130,11 @@
       "source_file": "BanditRLProof/OnlineGammaSimplexCurvature.lean"
     },
     {
+      "name": "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
+      "header": "theorem convexOn_exists_isGreatest_massSimplexVertex\n    (n : ℕ) (T : ℝ) (hn : 1 ≤ n) (hT : 1 ≤ T)\n    (G : (Fin n → ℝ) → ℝ)\n    (hG : ConvexOn ℝ (nonnegativeMassSimplex n T) G) :\n    ∃ j : Fin n,\n      IsGreatest (G '' nonnegativeMassSimplex n T) (G (massSimplexVertex T j))",
+      "source_file": "BanditRLProof/OnlineGammaSimplexMaximum.lean"
+    },
+    {
       "name": "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
       "header": "theorem simplexGammaProduct_le_vertex_and_value :\n  ∀ (n : ℕ) (T : ℝ), 1 ≤ n → 1 ≤ T →\n    ∀ (x : Fin n → ℝ), x ∈ nonnegativeMassSimplex n T →\n      ∀ j : Fin n, massSimplexVertex T j ∈ nonnegativeMassSimplex n T ∧\n        simplexGammaProduct n x ≤ simplexGammaProduct n (massSimplexVertex T j) ∧\n        simplexGammaProduct n (massSimplexVertex T j) =\n          T ^ T / (Real.Gamma (T + 1/2) * Real.Gamma (1/2) ^ (n - 1))",
       "source_file": "BanditRLProof/OnlineGammaSimplex.lean"
@@ -138,10 +143,11 @@
   "attained_maximum_interface": {
     "name": "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
     "module": "BanditRLProof.OnlineGammaSimplexMaximum",
-    "source_sha256": "f68fcba433a6fbba83298eb2203c7118d2a48a7f7a231e9513e9d50288e0912f",
+    "source_sha256": "31e77378c79e99f63767b6e07f26d9d39482f1afe4c9d41f565f8e41aafdc8dc",
     "private_source_sha256": "91779cce2b4e9fcfa9f32163eec8b2a5278d2ecccdb4364f3d9adc7934ba48f0",
     "typed_freeze": "1a16b93dbdff5195a90b6db87e922d24839aa8b387c4273e694728fa6d2be206",
-    "independent_review": "30d13ff369616cb7eacfe94e59bc3982903164255c9a04935be93dc2b8b11e79"
+    "independent_review": "30d13ff369616cb7eacfe94e59bc3982903164255c9a04935be93dc2b8b11e79",
+    "source_transport": "The original theorem source is an exact LF prefix of the extended module. Its complete imported TYPE and VALUE remain unchanged."
   },
   "concrete_consumers": {
     "module": "Tests.OnlineGammaSimplexCanary",
@@ -153,5 +159,27 @@
     "typed_freeze_sha256": "c2010f375385253f68858fb4c749566b609d206c361deaaa94cebff826a4c4d4",
     "independent_private_decision": "d26df4b5b181d6b93b1a32659c32507cf5a868242364b7e27bc7f6758040dd90",
     "independent_tests_import_decision": "2e9419e7fa79a9e8e7a2dc66feabe08c1c44f8c9f23bca8b7b4b5edc8ad53841"
+  },
+  "generic_vertex_attainment": {
+    "name": "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
+    "module": "BanditRLProof.OnlineGammaSimplexMaximum",
+    "source_sha256": "31e77378c79e99f63767b6e07f26d9d39482f1afe4c9d41f565f8e41aafdc8dc",
+    "scope": "For n≥1, real T≥1 and any real-valued convex G on the nonnegative mass simplex, one vertex attains the greatest value over the entire simplex. Continuity and symmetry are not assumed.",
+    "typed_freeze": "ce4967a5bd0c542e598660630f597ea540e4dc562c42d0b6c945f46e36ed8e5b",
+    "type_sha256": "c89fd1a52855094b09acbde1aae73f5dd75a7a42643d38e322c19ebf33785184",
+    "value_sha256": "02102e5b41a823e32733237444298455dbb0ff1040955911e0ccf15e35cf5e1e",
+    "independent_private_decision": "f1d352889d4eb50c958ef29c7c12d6dc69a820df196058daae8b64a558acf7b3",
+    "source_scope_review": "acc1cedbe92fb841c0017f655efb5e0dda9e141cb87515ac9ec5b8d7cb96ea86"
+  },
+  "generic_attainment_consumer": {
+    "name": "BanditRL.OnlineGamma.Canary.coordinate_projection_mass_two_isGreatest",
+    "module": "Tests.OnlineConvexSimplexMaximumCanary",
+    "source_sha256": "58208b9608c6ec77e00a8ab36af05e9e70bc6104f9e38a2bfbdd3dbb4b0e056b",
+    "scope": "For the coordinate projection on the two-dimensional simplex of mass two, the attained maximum is two, vertex zero is feasible, and vertex one has value zero.",
+    "typed_freeze": "c731faedf31b55321f6f6a8573e888640bb05b636636c27cd2acd820cfdaaddc",
+    "frozen_type_sha256": "15bc705b67173ab8e3878ce531ccdff6f5bc6fc2e1bcf6e40c76a0341fe342a7",
+    "actual_type_sha256": "6b2e189dfbcf1fb693c27fffe762a8df116c307416c81d14b82696bec6b67b0b",
+    "independent_private_decision": "f4d6cc62feb453bdec8ba6052c90ee92a7428cb82440182ed06704f9e11032d8",
+    "full_type_transport": "da1a127cc826d78309e3bcb43ba1aaa0744089e0ceca99b6b8ab4e9da10b37d9"
   }
 }

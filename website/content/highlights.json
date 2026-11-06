@@ -9482,11 +9482,29 @@
       ]
     },
     {
+      "full_name": "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
+      "title": "Choose a maximizing vertex for any convex function",
+      "chapter": "online-gamma-simplex",
+      "featured": true,
+      "teaching_order": 4,
+      "plain": "Every real-valued convex function on the nonnegative mass simplex attains its maximum at some vertex.",
+      "math": "\\begin{gathered}G\\text{ convex on }V\\\\\\exists j:\\ G(Te_j)=\\max_{x\\in V}G(x)\\end{gathered}",
+      "intuition": "Express each point as a convex combination of the vertices. Its function value is at most the weighted average of their values, which is at most the largest vertex value.",
+      "why": "This is the general simplex fact used in the proof of Lemma A.13. The Gamma product additionally has equal values at all vertices.",
+      "position": "From convexity on the closed simplex to an attained maximum.",
+      "proof_idea": "Choose a vertex with the largest value in the finite list before considering an arbitrary feasible point. Apply Jensen with weights xᵢ/T. The weights are nonnegative and sum to one, so that same vertex bounds every feasible value.",
+      "lean_notes": "The theorem returns one index j together with IsGreatest for the entire image of G on V.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.convexOn_le_sum_massSimplexVertex",
+        "BanditRL.OnlineGamma.massSimplexVertex_mem"
+      ]
+    },
+    {
       "full_name": "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
       "title": "Maximize the Gamma product",
       "chapter": "online-gamma-simplex",
       "featured": true,
-      "teaching_order": 4,
+      "teaching_order": 5,
       "plain": "Every mass-T vertex is feasible and attains the same maximum of the Gamma product over the closed simplex.",
       "math": "\\begin{gathered}P(x)=\\prod_i\\frac{x_i^{\\,x_i}}{\\Gamma(x_i+1/2)}\\\\P(x)\\leq P(Te_j)\\\\{}=\\frac{T^T}{\\Gamma(T+1/2)\\,\\Gamma(1/2)^{n-1}}\\end{gathered}",
       "intuition": "Take logs to obtain a sum of convex coordinate functions. Express x as a convex combination of the vertices with weights xᵢ/T. All vertices have the same value by coordinate symmetry. Exponentiating preserves the bound.",
