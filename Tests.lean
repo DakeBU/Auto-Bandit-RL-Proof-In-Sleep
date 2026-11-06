@@ -203,3 +203,4 @@ import Tests.OnlineGammaEstimatesCanary
 import Tests.OnlineWeightedPotentialCanary
 import Tests.OnlineUnboundedOGDCanary
 import Tests.ConfidenceIntervalsCanary
+import Tests.OnlineGammaSimplexCanary

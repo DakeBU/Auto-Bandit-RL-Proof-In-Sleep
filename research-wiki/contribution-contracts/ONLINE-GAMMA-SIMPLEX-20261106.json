@@ -24,7 +24,9 @@
     "website/content/chapters.json",
     "website/content/readings.json",
     "website/content/highlights.json",
-    "BanditRLProof/OnlineGammaSimplexMaximum.lean"
+    "BanditRLProof/OnlineGammaSimplexMaximum.lean",
+    "Tests.lean",
+    "Tests/OnlineGammaSimplexCanary.lean"
   ],
   "declarations": [
     "BanditRL.OnlineGamma.logGammaSlope",
@@ -85,7 +87,9 @@
     ],
     "known_consumers": [
       "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
-      "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image"
+      "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
+      "BanditRL.OnlineGamma.Canary.one_dimensional_unit_mass_vertex",
+      "BanditRL.OnlineGamma.Canary.three_dimensional_fractional_mass_boundary"
     ],
     "planned_consumers": [
       "Theorem 13.4 KT wealth lower bound",
@@ -162,7 +166,8 @@
     "independent_review": "The scalar derivatives, boundary extension, finite-sum convexity, product positivity, Jensen invocation and vertex evaluation were reviewed using complete imported types and proof terms.",
     "test_paths": [
       "Tests.lean",
-      "tools/test_book_registry.py"
+      "tools/test_book_registry.py",
+      "Tests/OnlineGammaSimplexCanary.lean"
     ]
   },
   "contributor": {
