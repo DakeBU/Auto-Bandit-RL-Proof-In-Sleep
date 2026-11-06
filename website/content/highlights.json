@@ -9158,6 +9158,136 @@
       ]
     },
     {
+      "full_name": "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+      "title": "Strong convexity on the weighted simplex",
+      "chapter": "online-entropy-geometry",
+      "featured": true,
+      "teaching_order": 1,
+      "source_match": "closest-source",
+      "plain": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|. For every x,y∈K and 0<a<1, F lies below its chord by at least a(1−a)‖x−y‖₁²/2. The set K is convex.",
+      "math": "F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\tfrac12a(1-a)\\lVert x-y\\rVert_1^2",
+      "intuition": "The coefficient is fixed by the gradient pairing along each feasible chord.",
+      "why": "Lemma 6.33 states this interpolation result. The preceding Entropy gap route proves the weighted pairing used here.",
+      "position": "Strong convexity on the weighted simplex",
+      "proof_idea": "The weighted gradient-pairing estimate controls squared ℓ¹ distance. Convexity keeps the entire segment in K, where each point has a global support. Apply the equivalence on that convex carrier.",
+      "lean_notes": "PiLp.norm_eq_of_L1 gives the sum of absolute coordinate differences. The chart used for the support pairing does not change the norm in the quadratic term.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.weightedEntropy_pairing",
+        "BanditRL.OnlineConvex.SupportCarrierExample.convex_carrier_equivalence"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+      "title": "Every feasible affine support has quadratic growth",
+      "chapter": "online-entropy-geometry",
+      "featured": false,
+      "teaching_order": 2,
+      "source_match": "consumer",
+      "plain": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|. Fix y∈K. The ambient derivative dF(y) gives the bound at every x∈K. The same bound holds for each continuous linear L satisfying F(y)+L(z−y)≤F(z) for every z∈K.",
+      "math": "F(x)\\ge F(y)+L(x-y)+\\tfrac12\\lVert x-y\\rVert_1^2",
+      "intuition": "A feasible displacement cancels any multiple of the mass constraint in the support.",
+      "why": "This consequence of Lemma 6.33 also covers affine minorants relative to K. Equation (6.4) motivates the derivative case.",
+      "position": "Every feasible affine support has quadratic growth",
+      "proof_idea": "Apply the interpolation bound on the segment from y to x. For the derivative instance, pull back the ambient derivative through the coordinate map and verify that it gives an affine minorant.",
+      "lean_notes": "The second conclusion quantifies over continuous linear maps on the whole carrier; the minorant test ranges only over K.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+        "BanditRL.OnlineConvex.stronglyConvex_support_growth"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+      "title": "Where the mass correction comes from",
+      "chapter": "online-entropy-geometry",
+      "featured": false,
+      "teaching_order": 3,
+      "source_match": "source-proof-step",
+      "plain": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0. Take xᵢ≥0 and yᵢ>0 with arbitrary total masses. H is differentiable at y. Expanding the derivative leaves the log sum plus ∑ᵢ(yᵢ−xᵢ).",
+      "math": "D(x,y)=\\sum_i\\bigl[x_i\\log(x_i/y_i)-x_i+y_i\\bigr]",
+      "intuition": "With one coordinate, x=0 and y=2 give a zero log sum and a mass correction of 2.",
+      "why": "Definition 6.4 sets the orientation. Example 6.6 gives the entropy formula. This statement makes the coordinate and derivative domains explicit.",
+      "position": "Where the mass correction comes from",
+      "proof_idea": "The derivative at the reference point has coefficients 1+log yᵢ. Apply the logarithm quotient formula for positive xᵢ and evaluate the zero-coordinate products separately.",
+      "lean_notes": "At xᵢ=0 both products containing xᵢ are zero. The yᵢ term remains.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.weightedEntropy_differential"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+      "title": "Equal unit masses cancel the correction",
+      "chapter": "online-entropy-geometry",
+      "featured": false,
+      "teaching_order": 4,
+      "source_match": "source-proof-step",
+      "plain": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0. For a probability vector x with xᵢ≥0 and a reference probability vector y with yᵢ>0, the Bregman divergence is exactly the finite KL sum.",
+      "math": "\\sum_i x_i=\\sum_i y_i=1\\quad\\Longrightarrow\\quad D(x,y)=\\mathrm{KL}(x,y)",
+      "intuition": "Two unit-mass vectors exchange exactly as much mass as they gain.",
+      "why": "This is the simplex specialization described immediately before Lemma 6.33, using Example 6.6.",
+      "position": "Equal unit masses cancel the correction",
+      "proof_idea": "In the generalized identity the two linear sums contribute −1+1. Zero numerator coordinates retain their zero log contribution.",
+      "lean_notes": "The nonlinear terms remain unchanged when the sums of masses cancel.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.KLBoundary.generalized_identity"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+      "title": "The ℓ¹ lower bound for positive probabilities",
+      "chapter": "online-entropy-geometry",
+      "featured": false,
+      "teaching_order": 5,
+      "source_match": "consumer",
+      "plain": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0. When both probability vectors have strictly positive coordinates, half their squared ℓ¹ distance bounds KL from below.",
+      "math": "\\tfrac12\\bigl(\\sum_i |x_i-y_i|\\bigr)^2\\le\\mathrm{KL}(x,y)",
+      "intuition": "The binary half-reference case will turn the vector distance into a scalar square.",
+      "why": "This specializes the weighted lemma using the Bregman bound in Eq. (6.4); positivity is relative to probability coordinates.",
+      "position": "The ℓ¹ lower bound for positive probabilities",
+      "proof_idea": "Choose all weights equal to one and identify the coordinate vectors with the ℓ¹ carrier. Subtract the entropy value and the derivative at y from the support-growth inequality. The simplex identity identifies the remainder.",
+      "lean_notes": "The derivative is taken at the second argument y, before restricting the evaluation to feasible points.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+        "BanditRL.OnlineEntropy.KLBoundary.simplex_identity"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+      "title": "Extend the binary bound to both endpoints",
+      "chapter": "online-entropy-geometry",
+      "featured": true,
+      "teaching_order": 6,
+      "source_match": "source-proof-step",
+      "plain": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome. On 0≤p≤1 the finite log sum agrees with the library Bernoulli KL core. It is continuous, equals log 2 at 0 and 1, and dominates 2(p−1/2)².",
+      "math": "k(0)=k(1)=\\log 2,\\qquad 2(p-1/2)^2\\le k(p)",
+      "intuition": "At either endpoint the surviving coordinate contributes log 2.",
+      "why": "The endpoint step occurs in the proof of Theorem 13.4. Here only the first Bernoulli parameter varies.",
+      "position": "Extend the binary bound to both endpoints",
+      "proof_idea": "Inside the interval use ‖b(p)−b(1/2)‖₁=2|p−1/2|. The continuous extension of x log x at zero and its reflection give both endpoint values and carry the interior inequality to the closed interval.",
+      "lean_notes": "The continuity argument varies p with q fixed at 1/2; Real.continuous_negMulLog supplies the endpoint extension.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+        "BanditRLProof.KLUCB.bernoulliKLCore"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use",
+      "title": "The KL inequality used in the coin-betting proof",
+      "chapter": "online-entropy-geometry",
+      "featured": false,
+      "teaching_order": 7,
+      "source_match": "consumer",
+      "plain": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome. For real t≥1 and |s|≤t set p=1/2+s/(2t). The binary bound yields s²/(2t)≤t k(p), including both extreme choices s=±t.",
+      "math": "\\frac{s^2}{2t}\\le t\\,k\\!\\left(\\frac12+\\frac{s}{2t}\\right)",
+      "intuition": "The substitution scales a squared displacement in probability space into s²/(2t).",
+      "why": "This is the KL substitution from the proof of Theorem 13.4, stated here for real t≥1. The wealth bound uses further estimates.",
+      "position": "The KL inequality used in the coin-betting proof",
+      "proof_idea": "The two inequalities −t≤s≤t put p in [0,1]. Multiply the binary lower bound by positive t and substitute p−1/2=s/(2t).",
+      "lean_notes": "The library statement permits real scales. The source uses the substitution with a round count.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.KLBoundary.binary_boundary"
+      ]
+    },
+    {
       "full_name": "BanditRL.OnlineAdaptiveOSD.regret_bound",
       "title": "Causal adaptive OSD retains the terminal-distance residual",
       "chapter": "online-ogd",

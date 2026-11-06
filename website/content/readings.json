@@ -8692,6 +8692,272 @@
         ],
         "boundary": "Only the first bullet is treated; other formulations of Theorem 4.3 have separate hypotheses."
       }
+    },
+    {
+      "slug": "online-entropy-geometry",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Lemma 6.33; Definition 6.4, Eq. (6.4), Example 6.6; KL estimate in the proof of Theorem 13.4",
+        "pages": "printed pp. 63–64, 80 and 210–211",
+        "pdf_page": 92,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "c, K, F",
+          "meaning": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|."
+        },
+        {
+          "term": "L and ‖·‖₁",
+          "meaning": "L is a continuous linear functional. An affine minorant at y only needs to bound F on K. The norm is the sum of absolute coordinates."
+        },
+        {
+          "term": "D(x,y), KL(x,y)",
+          "meaning": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0."
+        },
+        {
+          "term": "b(p), k(p)",
+          "meaning": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome."
+        }
+      ],
+      "algorithm": {
+        "title": "From gradient pairing to the binary inequality",
+        "kind": "Proof route through weighted entropy geometry",
+        "steps": [
+          {
+            "title": "Strong convexity on the weighted simplex",
+            "detail": "The weighted gradient-pairing estimate controls squared ℓ¹ distance. Convexity keeps the entire segment in K, where each point has a global support. Apply the equivalence on that convex carrier.",
+            "math": "F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\tfrac12a(1-a)\\lVert x-y\\rVert_1^2",
+            "fallback": "For every x,y∈K and 0<a<1, F lies below its chord by at least a(1−a)‖x−y‖₁²/2. The set K is convex."
+          },
+          {
+            "title": "Every feasible affine support has quadratic growth",
+            "detail": "Apply the interpolation bound on the segment from y to x. For the derivative instance, pull back the ambient derivative through the coordinate map and verify that it gives an affine minorant.",
+            "math": "F(x)\\ge F(y)+L(x-y)+\\tfrac12\\lVert x-y\\rVert_1^2",
+            "fallback": "Fix y∈K. The ambient derivative dF(y) gives the bound at every x∈K. The same bound holds for each continuous linear L satisfying F(y)+L(z−y)≤F(z) for every z∈K."
+          },
+          {
+            "title": "Where the mass correction comes from",
+            "detail": "The derivative at the reference point has coefficients 1+log yᵢ. Apply the logarithm quotient formula for positive xᵢ and evaluate the zero-coordinate products separately.",
+            "math": "D(x,y)=\\sum_i\\bigl[x_i\\log(x_i/y_i)-x_i+y_i\\bigr]",
+            "fallback": "Take xᵢ≥0 and yᵢ>0 with arbitrary total masses. H is differentiable at y. Expanding the derivative leaves the log sum plus ∑ᵢ(yᵢ−xᵢ)."
+          },
+          {
+            "title": "The ℓ¹ lower bound for positive probabilities",
+            "detail": "Choose all weights equal to one and identify the coordinate vectors with the ℓ¹ carrier. Subtract the entropy value and the derivative at y from the support-growth inequality. The simplex identity identifies the remainder.",
+            "math": "\\tfrac12\\bigl(\\sum_i |x_i-y_i|\\bigr)^2\\le\\mathrm{KL}(x,y)",
+            "fallback": "When both probability vectors have strictly positive coordinates, half their squared ℓ¹ distance bounds KL from below."
+          },
+          {
+            "title": "Extend the binary bound to both endpoints",
+            "detail": "Inside the interval use ‖b(p)−b(1/2)‖₁=2|p−1/2|. The continuous extension of x log x at zero and its reflection give both endpoint values and carry the interior inequality to the closed interval.",
+            "math": "k(0)=k(1)=\\log 2,\\qquad 2(p-1/2)^2\\le k(p)",
+            "fallback": "On 0≤p≤1 the finite log sum agrees with the library Bernoulli KL core. It is continuous, equals log 2 at 0 and 1, and dominates 2(p−1/2)²."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+        "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+        "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+        "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+        "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+        "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+        "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use"
+      ],
+      "source_theorems": [
+        {
+          "label": "Strong convexity on the weighted simplex",
+          "pages": "Lemma 6.33, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\tfrac12a(1-a)\\lVert x-y\\rVert_1^2",
+          "fallback": "For every x,y∈K and 0<a<1, F lies below its chord by at least a(1−a)‖x−y‖₁²/2. The set K is convex.",
+          "plain": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|. For every x,y∈K and 0<a<1, F lies below its chord by at least a(1−a)‖x−y‖₁²/2. The set K is convex.",
+          "relationship": "Lemma 6.33 states this interpolation result. The preceding Entropy gap route proves the weighted pairing used here.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|.",
+            "assumptions": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|.",
+            "parameters": "Unit curvature in the actual ℓ¹ norm; 0<a<1.",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "For every x,y∈K and 0<a<1, F lies below its chord by at least a(1−a)‖x−y‖₁²/2. The set K is convex."
+          }
+        },
+        {
+          "label": "Every feasible affine support has quadratic growth",
+          "pages": "Lemma 6.33, printed p. 80 / PDF p. 92; Eq. (6.4), printed p. 64 / PDF p. 76",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "F(x)\\ge F(y)+L(x-y)+\\tfrac12\\lVert x-y\\rVert_1^2",
+          "fallback": "Fix y∈K. The ambient derivative dF(y) gives the bound at every x∈K. The same bound holds for each continuous linear L satisfying F(y)+L(z−y)≤F(z) for every z∈K.",
+          "plain": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|. Fix y∈K. The ambient derivative dF(y) gives the bound at every x∈K. The same bound holds for each continuous linear L satisfying F(y)+L(z−y)≤F(z) for every z∈K.",
+          "relationship": "This consequence of Lemma 6.33 also covers affine minorants relative to K. Equation (6.4) motivates the derivative case.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Let c₁,…,c_d>0 and F(x)=∑ᵢ cᵢxᵢ log xᵢ. The feasible set K consists of positive vectors with ∑ᵢ xᵢ/cᵢ=1. Distances use the ℓ¹ norm ∑ᵢ|xᵢ|.",
+            "assumptions": "cᵢ>0, x,y∈K. The affine support condition is required only for z∈K.",
+            "parameters": "Base point y and query x.",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "Fix y∈K. The ambient derivative dF(y) gives the bound at every x∈K. The same bound holds for each continuous linear L satisfying F(y)+L(z−y)≤F(z) for every z∈K."
+          }
+        },
+        {
+          "label": "Where the mass correction comes from",
+          "pages": "Definition 6.4 and Example 6.6, printed pp. 63–64 / PDF pp. 75–76",
+          "pdf_page": 76,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "D(x,y)=\\sum_i\\bigl[x_i\\log(x_i/y_i)-x_i+y_i\\bigr]",
+          "fallback": "Take xᵢ≥0 and yᵢ>0 with arbitrary total masses. H is differentiable at y. Expanding the derivative leaves the log sum plus ∑ᵢ(yᵢ−xᵢ).",
+          "plain": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0. Take xᵢ≥0 and yᵢ>0 with arbitrary total masses. H is differentiable at y. Expanding the derivative leaves the log sum plus ∑ᵢ(yᵢ−xᵢ).",
+          "relationship": "Definition 6.4 sets the orientation. Example 6.6 gives the entropy formula. This statement makes the coordinate and derivative domains explicit.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0.",
+            "assumptions": "For every i, xᵢ≥0 and yᵢ>0.",
+            "parameters": "Ambient derivative at y.",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "Take xᵢ≥0 and yᵢ>0 with arbitrary total masses. H is differentiable at y. Expanding the derivative leaves the log sum plus ∑ᵢ(yᵢ−xᵢ)."
+          }
+        },
+        {
+          "label": "Equal unit masses cancel the correction",
+          "pages": "Before Lemma 6.33, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\sum_i x_i=\\sum_i y_i=1\\quad\\Longrightarrow\\quad D(x,y)=\\mathrm{KL}(x,y)",
+          "fallback": "For a probability vector x with xᵢ≥0 and a reference probability vector y with yᵢ>0, the Bregman divergence is exactly the finite KL sum.",
+          "plain": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0. For a probability vector x with xᵢ≥0 and a reference probability vector y with yᵢ>0, the Bregman divergence is exactly the finite KL sum.",
+          "relationship": "This is the simplex specialization described immediately before Lemma 6.33, using Example 6.6.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0.",
+            "assumptions": "For every i, xᵢ≥0 and yᵢ>0; both masses are one.",
+            "parameters": "Total masses equal to one.",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "For a probability vector x with xᵢ≥0 and a reference probability vector y with yᵢ>0, the Bregman divergence is exactly the finite KL sum."
+          }
+        },
+        {
+          "label": "The ℓ¹ lower bound for positive probabilities",
+          "pages": "Lemma 6.33, printed p. 80 / PDF p. 92; Eq. (6.4), printed p. 64 / PDF p. 76",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\tfrac12\\bigl(\\sum_i |x_i-y_i|\\bigr)^2\\le\\mathrm{KL}(x,y)",
+          "fallback": "When both probability vectors have strictly positive coordinates, half their squared ℓ¹ distance bounds KL from below.",
+          "plain": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0. When both probability vectors have strictly positive coordinates, half their squared ℓ¹ distance bounds KL from below.",
+          "relationship": "This specializes the weighted lemma using the Bregman bound in Eq. (6.4); positivity is relative to probability coordinates.",
+          "statement_provenance": "derived-instantiation",
+          "contract": {
+            "model": "Write H(x)=∑ᵢxᵢ log xᵢ and D(x,y)=H(x)−H(y)−dH(y)[x−y]. Write KL(x,y)=∑ᵢxᵢ log(xᵢ/yᵢ), with zero contribution when xᵢ=0 and yᵢ>0.",
+            "assumptions": "Both vectors have strictly positive coordinates and unit mass.",
+            "parameters": "All coordinate weights equal to one.",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "When both probability vectors have strictly positive coordinates, half their squared ℓ¹ distance bounds KL from below."
+          }
+        },
+        {
+          "label": "Extend the binary bound to both endpoints",
+          "pages": "Theorem 13.4 proof, printed pp. 210–211 / PDF pp. 222–223",
+          "pdf_page": 223,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "k(0)=k(1)=\\log 2,\\qquad 2(p-1/2)^2\\le k(p)",
+          "fallback": "On 0≤p≤1 the finite log sum agrees with the library Bernoulli KL core. It is continuous, equals log 2 at 0 and 1, and dominates 2(p−1/2)².",
+          "plain": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome. On 0≤p≤1 the finite log sum agrees with the library Bernoulli KL core. It is continuous, equals log 2 at 0 and 1, and dominates 2(p−1/2)².",
+          "relationship": "The endpoint step occurs in the proof of Theorem 13.4. Here only the first Bernoulli parameter varies.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome.",
+            "assumptions": "p∈[0,1] and the reference probability is 1/2.",
+            "parameters": "The Bernoulli parameter ranges over the closed interval.",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "On 0≤p≤1 the finite log sum agrees with the library Bernoulli KL core. It is continuous, equals log 2 at 0 and 1, and dominates 2(p−1/2)²."
+          }
+        },
+        {
+          "label": "The KL inequality used in the coin-betting proof",
+          "pages": "Theorem 13.4 proof, printed p. 211 / PDF p. 223",
+          "pdf_page": 223,
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "math": "\\frac{s^2}{2t}\\le t\\,k\\!\\left(\\frac12+\\frac{s}{2t}\\right)",
+          "fallback": "For real t≥1 and |s|≤t set p=1/2+s/(2t). The binary bound yields s²/(2t)≤t k(p), including both extreme choices s=±t.",
+          "plain": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome. For real t≥1 and |s|≤t set p=1/2+s/(2t). The binary bound yields s²/(2t)≤t k(p), including both extreme choices s=±t.",
+          "relationship": "This is the KL substitution from the proof of Theorem 13.4, stated here for real t≥1. The wealth bound uses further estimates.",
+          "statement_provenance": "derived-instantiation",
+          "contract": {
+            "model": "Write b(p)=(p,1−p) and k(p)=KL(b(p),b(1/2)). The reference assigns probability 1/2 to each outcome.",
+            "assumptions": "t and s are real, t≥1 and |s|≤t.",
+            "parameters": "p=1/2+s/(2t).",
+            "regret": "This result supplies a divergence estimate used in subsequent bounds.",
+            "guarantee": "For real t≥1 and |s|≤t set p=1/2+s/(2t). The binary bound yields s²/(2t)≤t k(p), including both extreme choices s=±t."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Weighted distances, mass and endpoints",
+        "intro": "These calculations test three different domain assumptions in the route.",
+        "steps": [
+          {
+            "title": "A weighted midpoint",
+            "detail": "Take c=(1,2), u=(1/2,1), and v=(1/4,3/2). Each weighted mass is one, although the ordinary sums are 3/2 and 7/4. Their midpoint is (3/8,5/4).",
+            "math": "\\lVert u-v\\rVert_1=3/4,\\qquad\\tfrac12\\cdot\\tfrac14(3/4)^2=9/128",
+            "fallback": "Subtract 9/128 from the average of the two endpoint entropies."
+          },
+          {
+            "title": "Two different feasible supports",
+            "detail": "Let L be the derivative at u and N(h)=h₀+h₁/2. N vanishes on every feasible displacement and N(1,0)=1. Thus L and L+N give the same affine bound on K but are distinct on the ambient space.",
+            "math": "F(v)\\ge F(u)+(L+N)(v-u)+9/32",
+            "fallback": "The support-growth correction is (3/4)²/2=9/32."
+          },
+          {
+            "title": "What happens when the masses differ?",
+            "detail": "In one coordinate take x=0 and y=2. The logarithmic contribution vanishes and the linear mass correction is 2.",
+            "math": "\\mathrm{KL}(0,2)=0,\\qquad D(0,2)=0-0+2=2",
+            "fallback": "The reference is positive; zero occurs only in the first argument."
+          },
+          {
+            "title": "From an interior probability to an endpoint",
+            "detail": "Quarter versus half gives distance 1/2 and KL at least 1/8. With t=3 and s=−3 the first probability becomes zero, where the binary divergence equals log 2.",
+            "math": "1/8\\le k(1/4),\\qquad 3/2\\le 3\\log 2",
+            "fallback": "Continuity supplies the endpoint value used at the extreme scale."
+          }
+        ],
+        "takeaway": "The same unit-modulus estimate gives the midpoint correction, support growth and the binary coefficient 2.",
+        "boundary": "Zero numerator coordinates enter the KL identity. The denominator stays strictly positive throughout."
+      },
+      "proof_bridge": {
+        "title": "From a pairing bound to the KL remainder",
+        "summary": "The preceding Entropy gap route proves the gradient-pairing estimate on the weighted simplex. Convexity of the feasible set and global supports at its positive points turn that estimate into the chord inequality.",
+        "steps": [
+          {
+            "title": "Strong convexity on the weighted simplex",
+            "detail": "The weighted gradient-pairing estimate controls squared ℓ¹ distance. Convexity keeps the entire segment in K, where each point has a global support. Apply the equivalence on that convex carrier.",
+            "math": "F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\tfrac12a(1-a)\\lVert x-y\\rVert_1^2",
+            "fallback": "For every x,y∈K and 0<a<1, F lies below its chord by at least a(1−a)‖x−y‖₁²/2. The set K is convex.",
+            "references": [
+              {
+                "label": "Read the weighted entropy gradient-pairing estimate",
+                "url": "../online-entropy-gap/index.html#decl-4578db4d5437-teaching"
+              }
+            ]
+          },
+          {
+            "title": "Equal unit masses cancel the correction",
+            "detail": "In the generalized identity the two linear sums contribute −1+1. Zero numerator coordinates retain their zero log contribution.",
+            "math": "\\sum_i x_i=\\sum_i y_i=1\\quad\\Longrightarrow\\quad D(x,y)=\\mathrm{KL}(x,y)",
+            "fallback": "For a probability vector x with xᵢ≥0 and a reference probability vector y with yᵢ>0, the Bregman divergence is exactly the finite KL sum."
+          },
+          {
+            "title": "The KL inequality used in the coin-betting proof",
+            "detail": "The two inequalities −t≤s≤t put p in [0,1]. Multiply the binary lower bound by positive t and substitute p−1/2=s/(2t).",
+            "math": "\\frac{s^2}{2t}\\le t\\,k\\!\\left(\\frac12+\\frac{s}{2t}\\right)",
+            "fallback": "For real t≥1 and |s|≤t set p=1/2+s/(2t). The binary bound yields s²/(2t)≤t k(p), including both extreme choices s=±t."
+          }
+        ],
+        "boundary": "The final application proves the scaled KL inequality appearing in the coin-betting argument. The remaining wealth estimates in Theorem 13.4 have their own hypotheses."
+      }
     }
   ]
 }

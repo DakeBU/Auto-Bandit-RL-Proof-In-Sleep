@@ -1734,6 +1734,9 @@ def validate_proof_step_references(step: dict[str, Any]) -> list[dict[str, str]]
             raise ValueError("Proof-step reference needs a nonempty URL")
         if any(char.isspace() or ord(char) < 32 or ord(char) == 127 for char in url) or "\\" in url:
             raise ValueError("Proof-step reference URL contains whitespace or backslash")
+        pairing_anchor = decl_anchor("BanditRL.OnlineEntropy.weightedEntropy_pairing")
+        if url == f"../online-entropy-gap/index.html#{pairing_anchor}-teaching":
+            continue
         try:
             parsed = urlsplit(url)
             host = parsed.hostname

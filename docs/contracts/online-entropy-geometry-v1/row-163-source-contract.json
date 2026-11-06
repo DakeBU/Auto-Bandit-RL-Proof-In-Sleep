@@ -1,0 +1,76 @@
+{
+  "row": 163,
+  "source": "Orabona, arXiv:1912.13213v10",
+  "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "locators": {
+    "75": "Definition 6.4, Bregman orientation / printed 63",
+    "76": "Eq (6.4), Example 6.6 / printed 64",
+    "92": "Simplex KL and Lemma 6.33 / printed 80",
+    "222-223": "Printed pp. 210–211: the proof of Theorem 13.4 for continuous coins uses the binary KL estimate and extends it to the endpoints. Only that estimate is in scope."
+  },
+  "scope": "Identity on x>=0,y>0; simplex cancellation; strictly positive unit simplex KL lower bound; fixed q=1/2 Bernoulli endpoints and scaled use. The growth step awaits row 143.",
+  "typing_head": "e7cdb3e9f0a9690845fd0bc4eff55d2bd7c515ed",
+  "typed_freeze_sha256": "9f8eb3db97ee86e69b28b3726054c55038bd8736793ff471a3f06feecf82f080",
+  "source_context": "import BanditRLProof.Algorithms.KLUCBBernoulli\nimport Mathlib.Analysis.Calculus.FDeriv.Basic\nimport Mathlib.Analysis.SpecialFunctions.Log.NegMulLog\n\nnoncomputable section\nopen Finset\nnamespace BanditRL.OnlineEntropy.KLBoundary\n\ndef entropy {d : ℕ} (x : Fin d → ℝ) : ℝ := ∑ i, x i * Real.log (x i)\ndef divergence {d : ℕ} (x y : Fin d → ℝ) : ℝ :=\n  entropy x - entropy y - fderiv ℝ entropy y (x-y)\ndef finiteKL {d : ℕ} (x y : Fin d → ℝ) : ℝ := ∑ i, x i * Real.log (x i / y i)\nabbrev binaryVector (p : ℝ) (i : Fin 2) : ℝ := if i = 0 then p else 1 - p\n",
+  "raw_source_context_sha256": "a17c50143b5e7c9b0a69265fee9147d5166b24613147bb5cfe97cbf4a9c26482",
+  "production_module": "BanditRLProof/OnlineEntropyKLBoundary.lean",
+  "headers": [
+    {
+      "name": "BanditRL.OnlineEntropy.KLBoundary.generalized_identity",
+      "header": "theorem generalized_identity {d : ℕ} (x y : Fin d → ℝ)\n    (hx : ∀ i, 0 ≤ x i) (hy : ∀ i, 0 < y i) :\n    DifferentiableAt ℝ entropy y ∧\n    divergence x y = ∑ i, (x i * Real.log (x i / y i) - x i + y i)\n",
+      "raw_source_sha256": "d5e5dc24f8a4c8532300975bcb99e7b20ba515370046b3db3b41cd95b37edcc4",
+      "header_lf_sha256": "d5e5dc24f8a4c8532300975bcb99e7b20ba515370046b3db3b41cd95b37edcc4",
+      "frozen_kernel_type": {
+        "bytes": 26218,
+        "sha256": "0438ba1205373bc0c015586b9d6eba8cac865f5ae69b1619f1529e24557d7142"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.KLBoundary.simplex_identity",
+      "header": "theorem simplex_identity {d : ℕ} (x y : Fin d → ℝ)\n    (hx : ∀ i, 0 ≤ x i) (hy : ∀ i, 0 < y i)\n    (sx : ∑ i, x i = 1) (sy : ∑ i, y i = 1) :\n    divergence x y = finiteKL x y\n",
+      "raw_source_sha256": "907ecf54e973d77a373bf9e7c3160c78b1c60413ae017bcacdeceb75c135ab88",
+      "header_lf_sha256": "907ecf54e973d77a373bf9e7c3160c78b1c60413ae017bcacdeceb75c135ab88",
+      "frozen_kernel_type": {
+        "bytes": 6872,
+        "sha256": "418fd013c917a4f27374df31ae2517bcd1a0984b42cdd9611296b1a09a51adc1"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.KLBoundary.interior_lower_bound",
+      "header": "theorem interior_lower_bound {d : ℕ} (x y : Fin d → ℝ)\n    (hx : ∀ i, 0 < x i) (hy : ∀ i, 0 < y i)\n    (sx : ∑ i, x i = 1) (sy : ∑ i, y i = 1) :\n    (∑ i, |x i - y i|)^2 / 2 ≤ finiteKL x y\n",
+      "raw_source_sha256": "cb5343f848108c6b8190d32b685357a5dec09e4ab13a5215c468ce6b9a88c651",
+      "header_lf_sha256": "cb5343f848108c6b8190d32b685357a5dec09e4ab13a5215c468ce6b9a88c651",
+      "frozen_kernel_type": {
+        "bytes": 12828,
+        "sha256": "cd758064d6755bc70f0f3fefbccfb9123b3e4df6369834f8b3c8f59d7d4aed2b"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.KLBoundary.binary_boundary",
+      "header": "theorem binary_boundary :\n    let k := fun p : ℝ => BanditRLProof.KLUCB.bernoulliKLCore p (1/2);\n    ContinuousOn k (Set.Icc 0 1) ∧\n    k 0 = Real.log 2 ∧ k 1 = Real.log 2 ∧\n    (∀ p ∈ Set.Icc (0 : ℝ) 1,\n      finiteKL (binaryVector p) (binaryVector (1/2)) = k p ∧\n      2 * (p - 1/2)^2 ≤ k p)\n",
+      "raw_source_sha256": "071de118b86e6e6312c124c2dcd28c9ed32ac3e5ca389fc39de7825d3bb85330",
+      "header_lf_sha256": "071de118b86e6e6312c124c2dcd28c9ed32ac3e5ca389fc39de7825d3bb85330",
+      "frozen_kernel_type": {
+        "bytes": 20643,
+        "sha256": "b6a3ce9ca77a5fce31993782c35902b645f490caee85ea627b248d438893d81a"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use",
+      "header": "theorem scaled_binary_use (t s : ℝ) (ht : 1 ≤ t) (hs : |s| ≤ t) :\n    s^2 / (2*t) ≤ t * BanditRLProof.KLUCB.bernoulliKLCore (1/2 + s/(2*t)) (1/2)\n",
+      "raw_source_sha256": "2a7efd70d523d0569b35161e77ba3696d7c6d4aabb5ddbca26a551fe00e35a93",
+      "header_lf_sha256": "2a7efd70d523d0569b35161e77ba3696d7c6d4aabb5ddbca26a551fe00e35a93",
+      "frozen_kernel_type": {
+        "bytes": 14068,
+        "sha256": "dd2eea03180b5d653d6fe2523fa7901b4d3e35770743a40358a7eee841afcdea"
+      }
+    }
+  ],
+  "stage": "Frozen source contracts and privately kernel-checked proofs. Production consumers, full project gates and semantic adjudication remain open.",
+  "locator_correction": {
+    "original_freeze": "The earlier source annotation attributed this step to Theorem 13.2.",
+    "verified_source": "https://arxiv.org/pdf/1912.13213v10#page=222",
+    "correction_receipt_sha256": "4437264b2ddd852ab32f14011e139c0c07ed4aae3d2ecf5f5448f6c247ecde73",
+    "effect": "Correct the attribution. All five frozen mathematical headers, the positivity requirements and the obligations on the closed interval are preserved."
+  }
+}

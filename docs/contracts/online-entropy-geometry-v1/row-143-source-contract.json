@@ -1,0 +1,35 @@
+{
+  "row": 143,
+  "source": "Orabona, arXiv:1912.13213v10",
+  "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "locators": "Orabona v10 Lemma 6.33, printed p80/PDF92, weighted part. Source proof curvature correction /88 and two comparisons /162 separately accounted.",
+  "scope": "Exact positive weighted simplex under the original ℓ¹ norm, all dimensions, unit modulus. The second statement distinguishes ambient differential from every functional supporting on the comparison set.",
+  "typing_head": "e7cdb3e9f0a9690845fd0bc4eff55d2bd7c515ed",
+  "typed_freeze_sha256": "ae1dd07d0849cc1b6240bc1ae79b12cc814d08672edd47a8ae3375d0ecd5c2a3",
+  "source_context": "import BanditRLProof.OnlineEntropyWeightedPairing\nimport Mathlib.Analysis.Normed.Lp.PiLp\n\nnoncomputable section\nnamespace BanditRL.OnlineEntropy\n\nabbrev EntropyL1 (d : ℕ) := PiLp 1 (fun _ : Fin d => ℝ)\n\nabbrev entropyCoordinates {d : ℕ} : EntropyL1 d ≃L[ℝ] (Fin d → ℝ) :=\n  PiLp.continuousLinearEquiv 1 ℝ (fun _ : Fin d => ℝ)\n\nabbrev entropyOnL1 {d : ℕ} (c : Fin d → ℝ) (x : EntropyL1 d) : ℝ :=\n  weightedEntropy c (entropyCoordinates x)\n\nabbrev entropyFeasible {d : ℕ} (c : Fin d → ℝ) : Set (EntropyL1 d) :=\n  entropyCoordinates ⁻¹' weightedSimplex c\n",
+  "raw_source_context_sha256": "7dd4d6637291b3ab6c63746e7af4116cbf32f418f6c93d762c34f421dcf2bce8",
+  "production_module": "BanditRLProof/OnlineEntropyL1.lean",
+  "headers": [
+    {
+      "name": "BanditRL.OnlineEntropy.weightedEntropy_l1_interpolation",
+      "header": "theorem weightedEntropy_l1_interpolation {d : ℕ} (c : Fin d → ℝ)\n    (hc : ∀ i, 0 < c i) :\n    Convex ℝ (entropyFeasible c) ∧\n    ∀ x ∈ entropyFeasible c, ∀ y ∈ entropyFeasible c, ∀ a : ℝ, 0 < a → a < 1 →\n      entropyOnL1 c (a • x + (1 - a) • y) ≤\n        a * entropyOnL1 c x + (1 - a) * entropyOnL1 c y -\n          a * (1 - a) / 2 * ‖x - y‖ ^ 2\n",
+      "raw_source_sha256": "9cbd0920b06497de320e8d60cf14ea362c533a50fbefe25a66dc23b117b5c31f",
+      "header_lf_sha256": "9cbd0920b06497de320e8d60cf14ea362c533a50fbefe25a66dc23b117b5c31f",
+      "frozen_kernel_type": {
+        "bytes": 81083,
+        "sha256": "cadc2e136e01f788bbff7b58ed11a36eb703ddb116e2e74d46af2f2f4cbbb15c"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.weightedEntropy_l1_support_growth",
+      "header": "theorem weightedEntropy_l1_support_growth {d : ℕ} (c : Fin d → ℝ)\n    (hc : ∀ i, 0 < c i) (x y : EntropyL1 d)\n    (hx : x ∈ entropyFeasible c) (hy : y ∈ entropyFeasible c) :\n    entropyOnL1 c y +\n        fderiv ℝ (weightedEntropy c) (entropyCoordinates y) (entropyCoordinates (x - y)) +\n        ‖x - y‖ ^ 2 / 2 ≤ entropyOnL1 c x ∧\n    ∀ L : EntropyL1 d →L[ℝ] ℝ,\n      (∀ z ∈ entropyFeasible c, entropyOnL1 c y + L (z - y) ≤ entropyOnL1 c z) →\n      entropyOnL1 c y + L (x - y) + ‖x - y‖ ^ 2 / 2 ≤ entropyOnL1 c x\n",
+      "raw_source_sha256": "61194c5d17a58f74f60e81c89f6cb26ebecf3fb40f718f96de335e2d5f107345",
+      "header_lf_sha256": "61194c5d17a58f74f60e81c89f6cb26ebecf3fb40f718f96de335e2d5f107345",
+      "frozen_kernel_type": {
+        "bytes": 711263,
+        "sha256": "4460355f70a1db96ea478a9c2e636c32f0301725f56db7df7068e9f5c86dc208"
+      }
+    }
+  ],
+  "stage": "Frozen source contracts and privately kernel-checked proofs. Production consumers, full project gates and semantic adjudication remain open."
+}
