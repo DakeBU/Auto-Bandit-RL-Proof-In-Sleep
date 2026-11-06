@@ -1,0 +1,6 @@
+{
+  "imports": [
+    "BanditRLProof.Exp3ImportanceWeighted"
+  ],
+  "signature": "{Action : Type} [DecidableEq Action]\n    (arms : Finset Action) (prob loss : Action → ℝ)\n    (action : Action) (haction : action ∈ arms)\n    (hnorm : arms.sum prob = 1) (hprob : prob action ≠ 0) :\n    arms.sum (fun chosen => prob chosen *\n      (BanditRLProof.Exp3.importanceWeightedLoss prob loss chosen action - loss action)^2)\n      = (loss action)^2 * (1 / prob action - 1)"
+}

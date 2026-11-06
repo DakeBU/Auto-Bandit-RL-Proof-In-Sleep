@@ -1,0 +1,10 @@
+by
+  exact Nat.decreasingInduction
+    (n := mdp.horizon)
+    (motive := fun t ht => v t = policy.valueAt t ht)
+    (fun t ht ih => by
+      change v t = policy.valueAt t _
+      rw [hstep t ht, policy.valueAt_bellman t ht, ih])
+    (by
+      change v mdp.horizon = policy.valueAt mdp.horizon _
+      rw [hterminal, policy.valueAt_horizon]) hstage

@@ -52,6 +52,10 @@ jobs:
           python3 -m unittest tools.test_banditrlbench
           python3 -m unittest tools.test_bench_task_contract
           python3 tools/bench_task_contract.py validate-all
+          python3 -m unittest tools.test_bench_expansion
+          for task in BRB-IW-K BRB-IW-R BRB-IW-L BRB-BE-K BRB-BE-R BRB-BE-L; do
+            python3 tools/bench_expansion.py controls --task "$task" --library . --output "_out/expansion/$task" --trusted-local
+          done
           lake env lean benchmarks/banditrlbench/lean/Reference.lean
           python3 tools/banditrlbench.py canary --library . --output _out/brb-canary --trusted-local
 

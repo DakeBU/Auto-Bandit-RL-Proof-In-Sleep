@@ -1,0 +1,126 @@
+{
+  "reviewer": "Codex subagent /root/source_reviewer",
+  "rubric_sha256": "1deaf3db8f1ca02df1c298c6dd08e74e9548a80aea27bacbfcf7b75ff09f155a",
+  "controls": {
+    "reference": {
+      "response_sha256": "00307129851e481065d24d57124c62e45769c91ed6bf1b7047a76c1aab43cadf",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 2,
+          "reason": "Conditioning on H fixes losses and probabilities. Explicitly computes p_i(l_i/p_i)=l_i and p_i(l_i/p_i)^2=l_i^2/p_i."
+        },
+        {
+          "id": "c2",
+          "score": 2,
+          "reason": "Positive support permits division and observation. A nonzero loss on an arm never sampled cannot be recovered by zero filling."
+        },
+        {
+          "id": "c3",
+          "score": 2,
+          "reason": "Computes p_i l_i/q_i when sampling uses p_i but the denominator is q_i, so the bias mechanism is explicit."
+        },
+        {
+          "id": "c4",
+          "score": 2,
+          "reason": "The fair two-arm action-dependent L_i=1{I=i} example has weighted mean 1 versus mean 1/2. It correctly says independent rounds are unnecessary."
+        },
+        {
+          "id": "c5",
+          "score": 2,
+          "reason": "Separates one-round moments from a regret rate and identifies accumulated-error and algorithmic potential analysis as additional work."
+        }
+      ]
+    },
+    "no-op": {
+      "response_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c2",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c3",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c4",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        },
+        {
+          "id": "c5",
+          "score": 0,
+          "reason": "Blank response: no required statement or justification is supplied."
+        }
+      ]
+    },
+    "wrong-answer": {
+      "response_sha256": "75372194dae1636358e5b03a8e359693c7899fb86bf84ff89bb5cd5351d4288b",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 0,
+          "reason": "Both raw moments are incorrectly normalized: the mean is l_i and second moment is l_i^2/p_i."
+        },
+        {
+          "id": "c2",
+          "score": 0,
+          "reason": "Reduces support to a software error and misses zero-probability observability failure."
+        },
+        {
+          "id": "c3",
+          "score": 0,
+          "reason": "No explanation of matching the actual sampling law to the denominator."
+        },
+        {
+          "id": "c4",
+          "score": 0,
+          "reason": "No action-dependent-loss analysis, and independent rounds are incorrectly required."
+        },
+        {
+          "id": "c5",
+          "score": 0,
+          "reason": "Incorrectly claims one-round identities imply logarithmic regret."
+        }
+      ]
+    },
+    "placeholder": {
+      "response_sha256": "dd87dab8123da0d198537a906d8632606dfddb38ba1a31e655c2d6e576cacb61",
+      "criteria": [
+        {
+          "id": "c1",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c2",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c3",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c4",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        },
+        {
+          "id": "c5",
+          "score": 0,
+          "reason": "Only a TODO placeholder; no required mathematics or explanation is supplied."
+        }
+      ]
+    }
+  }
+}
