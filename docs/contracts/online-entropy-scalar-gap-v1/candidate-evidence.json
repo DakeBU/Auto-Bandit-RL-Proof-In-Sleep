@@ -1,0 +1,129 @@
+{
+  "scope": "Private native compilation of the five originally frozen proof statements and the additional public-facing log-three consumer; this does not by itself check the production imports or complete the inventory row.",
+  "private_five_sha256": "176c99c1dab8be89586dda3dee2d0ae95b66bde2b2151677ebdf1a1cb861ded5",
+  "independent_five_review_sha256": "a3266a73652e8876291588b285dfea4200bb8dd3041e7dcb9f9a94e3779730c3",
+  "focused_Lean_exit": 0,
+  "original_raw_validator_exit": 3,
+  "historical": {
+    "streams": 17,
+    "raw_equal": 9,
+    "different": 8,
+    "occurrences": 32,
+    "generated_proof_declarations": 6,
+    "faithful_transport_sha256": "0875f581dbee05573cf496350e00bb4b16640577722524858950f8cbc2117c64",
+    "six_actual_proof_aliases": "50ed2537effda0cf9e8a2e18104496c3f64e9f69bb370974dd46e0b8e79ec966"
+  },
+  "proofs": [
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_curvature",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "TYPE": {
+        "bytes": 76220,
+        "sha256": "2b564079f54a485909b25d96aae011418f2d67d63c4e42406df171633f506cef"
+      },
+      "VALUE": {
+        "bytes": 83046070,
+        "sha256": "01b40be36d87b18f8a591a5e6aa6676a1b8459b1953745742a402f78307e9ecb"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_nonneg",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "TYPE": {
+        "bytes": 10613,
+        "sha256": "b33f4969487e48f57b9e9240fdbda18b6980fd1046bdde77f246f2ef67897bc8"
+      },
+      "VALUE": {
+        "bytes": 5176546,
+        "sha256": "24473813f1b6e49f0124064acbc5877a69cbee35f5db8d46ad807cfa8271dd7c"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_unit_contact",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "TYPE": {
+        "bytes": 40723,
+        "sha256": "2b58eb62f7b10019d179f94c8bcfe0783312fd3023d6948df840da824b5678a4"
+      },
+      "VALUE": {
+        "bytes": 2991646,
+        "sha256": "155bd3600f110e85caa14d351c9284db1860ac178b01bd242a35331ca68c8ae2"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.scalarGap_two_curvature",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "TYPE": {
+        "bytes": 40809,
+        "sha256": "6f6f1c897de24b4fdacf12473969839e2144c4a7cc241312875d1f6d4f0aadb8"
+      },
+      "VALUE": {
+        "bytes": 1273341,
+        "sha256": "23c9755f324f7a62a7bd2265b68b6c5de63988156d1c32b44cce1f1d2f32c6f5"
+      }
+    },
+    {
+      "name": "BanditRL.OnlineEntropy.positive_pair_log_ratio",
+      "axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+      ],
+      "TYPE": {
+        "bytes": 21728,
+        "sha256": "1a7fc81af393c95ebbf05f1d318d0c59a6c3f1e6951a222623561905c288d169"
+      },
+      "VALUE": {
+        "bytes": 21880802,
+        "sha256": "10b02fc2e2ee4f3484586a9ddc276f46063aa7e676ab31c44846b4c0e6b9449f"
+      }
+    }
+  ],
+  "calls_in_first_five": [
+    {
+      "pattern": "expectedUnit",
+      "matches": 1,
+      "expression_sha256": "2e08344e38e78b7f1ab9ca37b0647c9b9e440d21636eacfbabc9b9454891b8a7"
+    },
+    {
+      "pattern": "expectedUnitValue",
+      "matches": 1,
+      "expression_sha256": "eb316fbe4655a2dbae7442e4963eccc8d4415ab0ad148881c7fe0c67abc4f311"
+    },
+    {
+      "pattern": "expectedTwo",
+      "matches": 1,
+      "expression_sha256": "1bc35474c4ae44881c1f86d2e40c272ac69b51bc868d3c5c6ddea3e9c8b645e7"
+    },
+    {
+      "pattern": "expectedRatio",
+      "matches": 1,
+      "expression_sha256": "2ce83b9271cd813c7305d40b74527e2690d85522d0a0897e25b3ea39b2745eb8"
+    }
+  ],
+  "extra_canary": {
+    "name": "BanditRL.OnlineEntropy.log_three_lower_bound",
+    "statement": "1 ≤ Real.log 3",
+    "application": "First conjunct of positive_pair_log_ratio 3 1 h3 h1, evaluated at the two actual numeric arguments.",
+    "native_exit": 0,
+    "evidence_sha256": "035693e53436c2dafb2c1415be8ed2580872a46e45d1515a0ebb38e53a9b7af1",
+    "independent_review_sha256": "493b8fc216c757ab306f445d3a1c226e238d9ce3d9cb679125429216f529e33a"
+  },
+  "source_correction": "The proof of Lemma 6.33 claims strict positivity of the scalar second derivative everywhere on u>0. At u=1 it vanishes. This affects that proof step; the scalar inequality follows from convexity and its zero tangent at 1."
+}

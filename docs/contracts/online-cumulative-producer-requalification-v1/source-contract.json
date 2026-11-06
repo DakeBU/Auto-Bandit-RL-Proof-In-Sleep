@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-CUMULATIVE-PRODUCER-REQUALIFICATION-V1",
+  "base": "82cdceb43f717458bfe1f90b1f538731543747c6",
+  "declaration": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+  "source": {
+    "version": "Orabona arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": "Definition4.1 printed34/PDF46; Algorithm7.1 printed99/PDF111; Lemma7.5 printed101/PDF113; Corollary7.6 printed102/PDF114; Algorithm15.9/Theorem15.31 printed266/PDF278; downstream Theorem7.47 printed129-130/PDF141-142",
+    "downstream_open": [
+      "Lemma7.5",
+      "Theorem7.47",
+      "Theorem15.31"
+    ],
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "public_inventory_path": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json"
+  },
+  "parent_target_relations": [
+    {
+      "id": "dependency:Lemma7.5",
+      "pointer": "/effective_targets/134",
+      "relation": "Derived sufficient-condition producer for actual cumulative objective hypotheses, not full lemma closure."
+    },
+    {
+      "id": "later:FTRL-unbounded/branch-01",
+      "pointer": "/effective_targets/108",
+      "relation": "Strict-past objective psi+sum i<n loss+indicator; common finiteness is explicit sufficient branch."
+    },
+    {
+      "id": "dependency:Algorithm7.8-Theorem7.47",
+      "pointer": "/effective_targets/166",
+      "relation": "Actual cumulative curvature ingredient only; corrected terminal target retained."
+    },
+    {
+      "id": "dependency:Algorithm15.9-Theorem15.31",
+      "pointer": "/effective_targets/167",
+      "relation": "Common-domain sufficient producer; terminal repair and regret theorem separate."
+    }
+  ],
+  "exact_statement": "import BanditRLProof.OnlinePrescientBregmanSource\nimport Mathlib.Analysis.Convex.Strong\nimport Mathlib.Algebra.BigOperators.Group.Finset.Basic\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineConvex\n\ntheorem cumulative_regularizer_source_strongConvex {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (V : Set E) (hV : V.Nonempty)\n    (psi : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ)\n    (hlam : 0 ≤ lam) (hpsi : StrongConvexOn V lam psi)\n    (hbot : ∀ i < n, ∀ x, loss i x ≠ ⊥)\n    (hdom : ∀ i < n, V ⊆ effectiveDomain (loss i))\n    (hloss : ∀ i < n, ConvexOn ℝ V (fun x => (loss i x).toReal)) :\n    let F : E → EReal := fun x =>\n      (psi x : EReal) + ∑ i ∈ range n, loss i x + extendedIndicator V x\n    SourceProper F ∧ effectiveDomain F = V ∧\n      (∀ x ∈ V, F x = ((psi x + ∑ i ∈ range n, (loss i x).toReal : ℝ) : EReal)) ∧\n      (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n        F (a • x + (1 - a) • y) ≤\n          (a : EReal) * F x + ((1 - a : ℝ) : EReal) * F y -\n            (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n\nend BanditRL.OnlineConvex\n",
+  "core_canary": [
+    {
+      "path": "BanditRLProof/OnlineCumulativeStrongConvex.lean",
+      "sha256": "3dc5acad32e68f814463be52e5baa886c9c4fa7efb9991e9544304523a4aa8fa",
+      "exact_statement": "import BanditRLProof.OnlinePrescientBregmanSource\nimport Mathlib.Analysis.Convex.Strong\nimport Mathlib.Algebra.BigOperators.Group.Finset.Basic\n\nnoncomputable section\nopen Set Finset\nnamespace BanditRL.OnlineConvex\n\ntheorem cumulative_regularizer_source_strongConvex {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (V : Set E) (hV : V.Nonempty)\n    (psi : E → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (lam : ℝ)\n    (hlam : 0 ≤ lam) (hpsi : StrongConvexOn V lam psi)\n    (hbot : ∀ i < n, ∀ x, loss i x ≠ ⊥)\n    (hdom : ∀ i < n, V ⊆ effectiveDomain (loss i))\n    (hloss : ∀ i < n, ConvexOn ℝ V (fun x => (loss i x).toReal)) :\n    let F : E → EReal := fun x =>\n      (psi x : EReal) + ∑ i ∈ range n, loss i x + extendedIndicator V x\n    SourceProper F ∧ effectiveDomain F = V ∧\n      (∀ x ∈ V, F x = ((psi x + ∑ i ∈ range n, (loss i x).toReal : ℝ) : EReal)) ∧\n      (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n        F (a • x + (1 - a) • y) ≤\n          (a : EReal) * F x + ((1 - a : ℝ) : EReal) * F y -\n            (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n\nend BanditRL.OnlineConvex\n"
+    },
+    {
+      "path": "Tests/OnlineCumulativeStrongConvexCanary.lean",
+      "sha256": "505148315db44ce0c12c8364c35846978b83d108ed9928a935f0046507995caf",
+      "declarations": [
+        "twoLoss_actual_producer_tight_support",
+        "emptyPrefix_zeroCurvature_actual_producer"
+      ],
+      "imports": [
+        "OnlineCumulativeStrongConvex",
+        "OnlineStrongConvexSupport"
+      ]
+    }
+  ],
+  "historical_roles": {
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/cumulative_neutral_decoder_20261012",
+    "source_reviewer": "/root/support_reader_source_review_20261012"
+  },
+  "historical_evidence": [
+    {
+      "path": "docs/contracts/online-ch2-b4-cumulative-producer-v1/source-contract-v1.json",
+      "sha256": "35f245246668966431902047c7a5ff643964d22bf95fe6316c028308920ceb4f"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-freeze-20261012/local-freeze-and-body-authorization-v1.json",
+      "sha256": "c881c1a5b04ac16f85da8b47a704ccb45c9123ec24102fac0dc5e0a139678fb9"
+    },
+    {
+      "path": "tmp/neutral-declaration-20261012-cumulative/reconstruction-v1.json",
+      "sha256": "d79e438888cbbc5536c834ae1f3c71788f804baf9640260f45c9256e868544d1"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-source-review-20261012/pre-freeze-source-verdict-v1.json",
+      "sha256": "be948f31ec8ac8284d4aadaf5c7ab235c6d4022dbec7a620452c4de5afaf272b"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "9d2be08113f2fe0725d8da864d3f9e590c17b20b3e37be4641cb666883f8c5b2"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-canary-source-review-20261012/pre-freeze-source-verdict-v2.json",
+      "sha256": "83e0cd697901e1716511d186d50eda18a7d5bc6f6dd764b77efe0053d30d4667"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-canary-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "94297e3a46d89374fe2bb58f893d9a9a48f2544f299dd8b38175182d9be42045"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-body-20261012/compiled-candidate-report-v1.json",
+      "sha256": "8c532e82b383f6d444c6f733ae26a8d8c15a0e8c0916ebd4eb0026f6957bf699"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-canary-body-20261012/compiled-canary-report-v1.json",
+      "sha256": "30c203b56184d07a1016ab53516bfb40bfc1a41e331ad175d43500db09589f69"
+    },
+    {
+      "path": "tmp/online-b4-cumulative-producer-alpha-comparator-20261012/reference-v1/scratch-alpha-report-v1.json",
+      "sha256": "48659b98eb067afa1166280da22642dffaf89dae52adfb572f2bb0521c8fadc6"
+    }
+  ],
+  "shared_provider": {
+    "path": "BanditRLProof/OnlinePrescientBregmanSource.lean",
+    "fresh_main_Git_sha256": "57832c9dfb4e915f9a0578ffb122792b0aac2b3404da4f6c00f2aa9fcd36bc02",
+    "exact_old_RAW_equal": true,
+    "definition": "theorem sourceProper_of_domain (f : E → EReal) (V : Set E)\n    (hV : V.Nonempty) (hbot : ∀ z, f z ≠ ⊥)\n    (hdom : V ⊆ effectiveDomain f) :\n    SourceProper f := by\n  refine ⟨hbot, ?_⟩\n  obtain ⟨z, hz⟩ := hV\n  exact ⟨z, (f z).toReal, (EReal.coe_toReal (ne_of_lt (hdom hz)) (hbot z)).symm⟩\n",
+    "reuse": "Unchanged import and genuine helper application. No new helper, extraction, copy or whole old Prescient stack transplant."
+  },
+  "scope": {
+    "classification": "This is a derived sufficient-condition producer, not the full numbered source theorem. Regularizer-supplied curvature and convex component losses are stronger than assuming curvature of the total objective in Lemma7.5/7.47/15.31. Algorithm15.9 already prints a common-domain condition; common finiteness is a restriction relative to broader extended-real Algorithm7.1 branches, not a newly discovered omission there. Algorithm7.1 has psi:X to R with V subset X, while Corollary7.6 uses psi:V to R; arbitrary real extension outside V has no effect after the indicator. The below-top domain condition alone admits bottom; separate global no-bottom makes the included losses finite on V and prevents mixed-infinity addition. Zero n and zero lambda are allowed. No minimizer, support, finite-dimensionality, strict curvature, closedness or attainment is assumed or produced.",
+    "modulus_boundary": "The λ ≥ 0 binder is retained as a source condition. Mathlib StrongConvexOn itself permits an arbitrary real modulus; this does not authorize removing the binder.",
+    "proof_topology": "For each included loss, combine below-top on V with no-bottom to identify its value with the coercion of its real part. Induct over the finite sum to exclude bottom globally and compute the sum on V. The indicator then gives the real finite identity on V and top outside, hence dom(F)=V. Apply the existing sourceProper_of_domain to this actual F, its derived no-bottom property and nonempty V. Finally sum each loss-convexity inequality and add the strongly convex regularizer inequality; rewrite the finite identities and retain precisely (lambda/2)a(1-a)||x-y||^2 in the original E norm. The source proof graph is the sufficient regularizer-curvature branch feeding cumulative parents; attainment and stability nodes are excluded as still open. The implementation uses componentwise finite sums and the shared properness parent, not a supplied-support wrapper.",
+    "not_produced": [
+      "SourceClosed F",
+      "strictly positive curvature",
+      "global source subgradient domain nonempty for F",
+      "minimizer or unique attained constrained update",
+      "source-interior membership or valid trajectory",
+      "stability/regret or corrected negative terminal bounds"
+    ],
+    "historical_body_evidence_limit": "The retained BODY arity-6 observation is historical bounded evidence. Current execution must inspect the actual F operand and genuine first-conjunct calls; arity alone does not establish operand fidelity.",
+    "future_current_evidence": {
+      "focused_validation": null,
+      "independent_focused_review": null,
+      "publication_review": null,
+      "combined_gates": null,
+      "reader_acceptance": null
+    },
+    "inventory_boundary": "All 73 original rows and 172 overlapping effective records remain frozen. This producer is an ingredient of the listed parent targets, not closure of those parent theorems or Chapter 2."
+  },
+  "reader_review_sha256": "b0ec31a88b5bfdb06835533848cb155ad7ab29295ad2cae6a06aca17c3d05432",
+  "current_static_review_sha256": "842d607e479ee43c055e47c7b6bbc3bfca40aab3b77d53686f0dee2a0491229b",
+  "current_focused": {
+    "validation_sha256": "f3a31948dd79f2e02d3f03397baa82f13b8f2482cd978a13d54577c0e337c9a6",
+    "review_sha256": "287738855b52dea5172f117395b1f49c59e31084bdbbda9184c420bb07573ada",
+    "original_command_exits": [
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "single_audit_repair_exit": 0,
+    "total_current_stream_bytes": 451598953,
+    "all_match_historical_actual_scratch_report": true,
+    "historical_scope": "Bound actual report digests, not current execution of historical files; no old stream replay or copying.",
+    "capture_timing": "Provider fingerprints are post-only, not pre/post provider identity. Original 2981 input-key map unchanged; repaired validator keyset provenance retained.",
+    "failure_history": "Original audit walker failed at id wrapper after four successful commands. Exact id-wrapper repair reran only the bounded audit, which exited0. Original diagnostics and validator keyset repair retained. No proof source changed and no large streams repeated.",
+    "actual_operands": "Actual F, hFbot and domain operands plus shared properness first conjunct and genuine two canary producer/Support applications independently accepted.",
+    "streams": [
+      {
+        "path": "canonical-BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex-TYPE.txt",
+        "bytes": 233947,
+        "sha256": "9444e343a7e8aab3078c197f3023f66de96b2772ef89f2381518efb27f72c542",
+        "declaration": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+        "kind": "TYPE",
+        "historical_digest": "9444e343a7e8aab3078c197f3023f66de96b2772ef89f2381518efb27f72c542",
+        "historical_bytes": 233947,
+        "matches_actual_scratch_report": true
+      },
+      {
+        "path": "canonical-BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex-VALUE.txt",
+        "bytes": 297531658,
+        "sha256": "bffc6374eec7eeddd00541b831b5ead4adca486a40a119fbb0213ae633d5340e",
+        "declaration": "BanditRL.OnlineConvex.cumulative_regularizer_source_strongConvex",
+        "kind": "VALUE",
+        "historical_digest": "bffc6374eec7eeddd00541b831b5ead4adca486a40a119fbb0213ae633d5340e",
+        "historical_bytes": 297531658,
+        "matches_actual_scratch_report": true
+      },
+      {
+        "path": "canonical-BanditRL.Tests.OnlineCumulativeStrongConvexCanary.twoLoss_actual_producer_tight_support-TYPE.txt",
+        "bytes": 183070,
+        "sha256": "51bba3955f672a4cee4709d3dd6e42f6a5c27590543141bcc2c0ef15310db30d",
+        "declaration": "BanditRL.Tests.OnlineCumulativeStrongConvexCanary.twoLoss_actual_producer_tight_support",
+        "kind": "TYPE",
+        "historical_digest": "51bba3955f672a4cee4709d3dd6e42f6a5c27590543141bcc2c0ef15310db30d",
+        "historical_bytes": 183070,
+        "matches_actual_scratch_report": true
+      },
+      {
+        "path": "canonical-BanditRL.Tests.OnlineCumulativeStrongConvexCanary.twoLoss_actual_producer_tight_support-VALUE.txt",
+        "bytes": 143927922,
+        "sha256": "10539e1bd5219e210933c8939c5041b73e18e687a892f840049f482b1addd901",
+        "declaration": "BanditRL.Tests.OnlineCumulativeStrongConvexCanary.twoLoss_actual_producer_tight_support",
+        "kind": "VALUE",
+        "historical_digest": "10539e1bd5219e210933c8939c5041b73e18e687a892f840049f482b1addd901",
+        "historical_bytes": 143927922,
+        "matches_actual_scratch_report": true
+      },
+      {
+        "path": "canonical-BanditRL.Tests.OnlineCumulativeStrongConvexCanary.emptyPrefix_zeroCurvature_actual_producer-TYPE.txt",
+        "bytes": 170627,
+        "sha256": "f3d028bd959f27f66f291ac79ac265cacbcf6d697dbc15fa57c2bf17b245b7b7",
+        "declaration": "BanditRL.Tests.OnlineCumulativeStrongConvexCanary.emptyPrefix_zeroCurvature_actual_producer",
+        "kind": "TYPE",
+        "historical_digest": "f3d028bd959f27f66f291ac79ac265cacbcf6d697dbc15fa57c2bf17b245b7b7",
+        "historical_bytes": 170627,
+        "matches_actual_scratch_report": true
+      },
+      {
+        "path": "canonical-BanditRL.Tests.OnlineCumulativeStrongConvexCanary.emptyPrefix_zeroCurvature_actual_producer-VALUE.txt",
+        "bytes": 9551729,
+        "sha256": "15ce53cd65416f84a59142fb81b692de83c736058b2ee672f1d8df49d325de43",
+        "declaration": "BanditRL.Tests.OnlineCumulativeStrongConvexCanary.emptyPrefix_zeroCurvature_actual_producer",
+        "kind": "VALUE",
+        "historical_digest": "15ce53cd65416f84a59142fb81b692de83c736058b2ee672f1d8df49d325de43",
+        "historical_bytes": 9551729,
+        "matches_actual_scratch_report": true
+      }
+    ]
+  },
+  "authorship_snapshot": {
+    "compiled_claim": true,
+    "leaf_accepted": false,
+    "chapter_accepted": false
+  },
+  "external_evidence_policy": "Historical evidence paths are external provenance identifiers, not public links. Current compact execution evidence is bound in current_focused after independent review; large streams remain private."
+}

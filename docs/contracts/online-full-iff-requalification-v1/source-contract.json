@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-FULL-IFF-REQUALIFICATION-V1",
+  "base": "a8b7862e047583c0e6abdbd0bb1935b6b2ba5729",
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pages_read_this_audit": [
+      46,
+      47
+    ],
+    "printed_pages": [
+      34,
+      35
+    ],
+    "anchor": "Definition4.1 and Lemma4.2",
+    "public_inventory_path": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "target_id": "dependency:strong-convexity4.1-4.2",
+    "json_pointer": "/effective_targets/121",
+    "target_scope_warning": "The bundled frozen target includes Definition4.1 and Lemma4.2 context; leaf acceptance must account for that exact scope, not merely a new iff name."
+  },
+  "source_target": {
+    "id": "dependency:strong-convexity4.1-4.2",
+    "public_file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "json_pointer": "/effective_targets/121",
+    "statement_pointer": "/effective_targets/121/effective_statement"
+  },
+  "target_parts": [
+    {
+      "part": "Definition4.1",
+      "source_assumptions": "λ ≥ 0; f is proper; V is convex and V ⊆ dom f. No subgradient-existence premise belongs to this definition.",
+      "statement": "For every x,y ∈ V and 0 < a < 1, f(ax+(1−a)y) ≤ af(x)+(1−a)f(y) − (λ/2)a(1−a)‖x−y‖².",
+      "Lean_representation": "The exact interpolation predicate is expanded on the left-hand side of the iff header, with properness, convexity and λ ≥ 0 standing assumptions. The iff theorem additionally assumes all-point source support; this is not a definition of strong convexity with extra premises.",
+      "acceptance_obligation": "Current source/definition audit must check the standalone Definition4.1 interpretation and its finite-domain premise separately from the iff binder ledger; a compiled iff name alone does not close the bundled target."
+    },
+    {
+      "part": "Lemma4.2 full iff",
+      "source_assumptions": "λ ≥ 0; proper f; convex V ⊆ dom ∂f. Every p ∈ V has an actual global source subgradient. This stronger set inclusion belongs to the iff lemma, not Definition4.1.",
+      "statement": "Strong interpolation on V holds iff, for every p,q ∈ V and every global coordinate source subgradient g of f composed with e inverse at e(p), f(p)+⟨g,e(q−p)⟩+(λ/2)‖q−p‖²_E ≤ f(q).",
+      "derived_facts": "Coordinate properness and V ⊆ dom f are proved from properness and the all-point support assumption. No separate domain-inclusion premise, closedness, minimizer, global convexity or isometry is added.",
+      "acceptance_obligation": "Both current imported directions and all-point support flow must be reviewed; no support-existence producer is concluded."
+    }
+  ],
+  "definition4_1_mapping": {
+    "status": "PRIVATE_DEFINITION4.1_REPRESENTATION_AUDIT_FOR_INDEPENDENT_REVIEW",
+    "source_target_id": "dependency:strong-convexity4.1-4.2",
+    "public_pointer": "/effective_targets/121",
+    "source_pages": "printed34/PDF46 Definition4.1; printed34–35/PDF46–47 Lemma4.2",
+    "formal_representation_kind": "Existing compiled inline predicate and standing domain assumptions, not a new named definition or new theorem",
+    "definition4_1_standing_context": [
+      "E finite-dimensional real normed carrier represented by algebraic coordinates when needed",
+      "f : E → EReal",
+      "SourceProper f",
+      "V : Set E",
+      "Convex ℝ V",
+      "V ⊆ effectiveDomain f",
+      "lam : ℝ",
+      "0 ≤ lam"
+    ],
+    "definition4_1_exact_interpolation_predicate": "∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)",
+    "no_all_point_subgradient_condition_in_definition": true,
+    "existing_compiled_context": {
+      "path": "BanditRLProof/OnlineStrongConvexMinimum.lean",
+      "sha256": "55b37c648437e231f1b967cdc9cfa4102ce1bea6efde3ed81b23884604f89317",
+      "declaration": "BanditRL.OnlineConvex.stronglyConvex_minimum_growth",
+      "binder_group": "hf,hV,hdom,hlam,hstrong only",
+      "exclusions": "Later p,hp,hmin,q,hq binders are premises of the minimum-growth theorem, NOT parts of Definition4.1. No supplied minimizer is imported into this definition mapping."
+    },
+    "iff_mapping": {
+      "path": "BanditRLProof/OnlineStrongConvexSubgradientIff.lean",
+      "historical_raw_sha256": "7f5168bcb82044b850b891d7cf0872062f83293135169249f23962cadab40d44",
+      "lhs_matches_existing_inline_predicate_modulo_whitespace": true,
+      "additional_iff_premise": "For every p∈V, the global coordinate SourceSubdifferential at e(p) is nonempty. This supplies V⊆dom∂f for the iff only; hdom is derived internally from it and SourceProper.",
+      "all_subgradients_rhs": "For every feasible p,q and every g satisfying the global support inequality."
+    },
+    "definition_symbols": {
+      "effectiveDomain": "Points where f(x)<top; SourceProper excludes bottom globally, so V values are finite.",
+      "SourceProper": "No bottom anywhere and a finite real witness somewhere.",
+      "strict_weights": "Every real a with0<a<1; endpoint weights are not extra source requirements.",
+      "original_norm": "Norm on E in exact quadratic coefficient; algebraic coordinates do not replace it by Euclidean norm."
+    },
+    "evidence_boundary": "This is a source/syntax mapping audit. Existing Minimum compile evidence is retained in its accepted package; future current iff focused audit will verify full imported header. No fresh compiler run or new named definition asserted here.",
+    "no_target_completion_inferred": true,
+    "repo_mutations": false
+  },
+  "definition_mapping_review_sha256": "64e3eceed2a83ace0c3db99db5dacdf695b131943f2339f5458ffb561544275b",
+  "exact_header": "theorem stronglyConvex_iff_sourceSubgradient_growth {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (d : ℕ) (e : E ≃ₗ[ℝ] EuclideanSpace ℝ (Fin d))\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hV : Convex ℝ V) (hlam : 0 ≤ lam)\n    (hsub : ∀ p ∈ V,\n      (SourceSubdifferential (fun u => f (e.symm u)) (e p)).Nonempty) :\n    (∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal)) ↔\n    (∀ p ∈ V, ∀ q ∈ V, ∀ g : EuclideanSpace ℝ (Fin d),\n      g ∈ SourceSubdifferential (fun u => f (e.symm u)) (e p) →\n        (f p).toReal + inner ℝ g (e (q - p)) +\n          (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal)",
+  "core_canary": [
+    {
+      "path": "BanditRLProof/OnlineStrongConvexSubgradientIff.lean",
+      "RAW_sha256": "7f5168bcb82044b850b891d7cf0872062f83293135169249f23962cadab40d44"
+    },
+    {
+      "path": "Tests/OnlineStrongConvexSubgradientIffCanary.lean",
+      "RAW_sha256": "931badb9d37b248add71d3c6bddb924ab551ef9aee998d61788956e550de3c81"
+    }
+  ],
+  "historical_roles": {
+    "formalizer": "/root/b4_next_leaf_formalizer_20261012",
+    "blind_decoder": "/root/iff_neutral_decoder_20261012",
+    "source_reviewer": "/root/support_reader_source_review_20261012"
+  },
+  "historical_evidence": [
+    {
+      "path": "docs/contracts/online-ch2-b4-strong-convex-iff-v1/source-contract-v1.json",
+      "sha256": "0eaa4fb0166a3ff4f12a64848c26ef019236a2ea41e518739441268edbb591ee",
+      "bytes": 9770
+    },
+    {
+      "path": "tmp/online-b4-full-iff-header-proposal-20261012/proposed-header-v1.txt",
+      "sha256": "56a0e9247ff901eeb9ed7a48a2e181772396d57f9726c43affba52d21e21d4d1",
+      "bytes": 1006
+    },
+    {
+      "path": "tmp/neutral-declaration-20261012-iff/reconstruction-v1.json",
+      "sha256": "660b08bd54a9b79c219f632dfa7d1a2a68545974148edf682fc6115c120f730e",
+      "bytes": 8361
+    },
+    {
+      "path": "tmp/online-b4-full-iff-freeze-20261012/local-header-freeze-v1.json",
+      "sha256": "17a9695d8328726ea51468b91a101c5e48d8e567e1954a5438b75de0087d9b53",
+      "bytes": 6397
+    },
+    {
+      "path": "tmp/online-b4-full-iff-source-review-20261012/pre-freeze-source-verdict-v1.json",
+      "sha256": "c14885c25c9c69f221cc84aa646932980a22bf9409382322bc4f8f815be7666c",
+      "bytes": 4754
+    },
+    {
+      "path": "tmp/online-b4-full-iff-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "7ab6090455a3e8b157b7b4dfc8b27a59b5ab6518b5510815e5eddebd8f70a9c5",
+      "bytes": 6811
+    },
+    {
+      "path": "tmp/online-b4-full-iff-source-review-20261012/imported-operand-source-addendum-v2.json",
+      "sha256": "a95057620a17aaab0a987a218dd4f8f7a64be76c28feb637a5a2dcdf56797067",
+      "bytes": 2095
+    },
+    {
+      "path": "tmp/online-b4-full-iff-canary-source-review-20261012/pre-freeze-source-blind-verdict-v2.json",
+      "sha256": "33037405bafc4a25ed9a2e971f5609f133a72b9901dfc16e8bbec3cb5230c934",
+      "bytes": 4760
+    },
+    {
+      "path": "tmp/online-b4-full-iff-canary-source-review-20261012/body-source-verdict-v1.json",
+      "sha256": "5072cf0d7105c3256ca9211248912c48cd4879ed46a9f6b447aee6d32b170b18",
+      "bytes": 5167
+    },
+    {
+      "path": "tmp/online-b4-full-iff-body-20261012/compiled-candidate-report-v1.json",
+      "sha256": "932e0e94e522363d721539a1070a3814d55673fcc8b41c3448ceae4dbd7ac5cb",
+      "bytes": 7057
+    },
+    {
+      "path": "tmp/online-b4-full-iff-canary-body-20261012/compiled-canary-report-v1.json",
+      "sha256": "e4bdae76fc64563ea8277fb9f706fba04cc6cd9b0e0afb1be09fbf91fa4415b0",
+      "bytes": 6740
+    },
+    {
+      "path": "tmp/online-b4-full-iff-alpha-comparator-20261012/reference-v1/scratch-alpha-report-v1.json",
+      "sha256": "0e1a443a5fe671700b6cca0075e617d40da5df2689fad3274fdf5f17722df043",
+      "bytes": 64297
+    }
+  ],
+  "proof_only_correction": "Printed35/PDF47 has an erroneous second equality in the converse proof. The valid chain is 0=the weighted pairing <= a*f(x)+(1-a)*f(y)-f(z)-(lambda/2)a(1-a)||x-y||^2. The iff statement is unchanged; no saturation/equality assumption is added. The strict residual1/2 in the concrete canary refutes that printed equality and validates the inequality correction.",
+  "proof_topology": "Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct.",
+  "canary_scope": "The first closed experimental consumer uses E=R^2 with the sup norm, e=2 times ordinary coordinates, V=[-1,1]^2, and globally finite f(x)=(x0^2+x1^2)/2+x0. For every p it explicitly produces the global covector (p+(1,0))/2. It characterizes every global support algebraically and proves the quadratic growth premise independently, then its first conjunction genuinely applies the iff CONVERSE to obtain interpolation. At q=(1,1), original squared norm1 differs from coordinate squared norm8; pairing1 and f(q)=2 refute a substituted coordinate penalty5<=2. The same example at x=q,y=-q,a=1/2 has weighted residual1/2, so equality to0 is false. The second consumer proves f(t)=-t^2 proper with an EMPTY global subdifferential at every point. Support-indexed lambda0 growth is vacuous, but midpoint interpolation would require0<=-1. This is a counterexample to removing the all-point support premise, not to Lemma4.2. The concrete quadratic is globally finite; the canaries do not test top outside V, empty V, d0 or exhaustive edge coverage.",
+  "current_dependency": {
+    "path": "BanditRLProof/OnlineStrongConvexSourceSubgradient.lean",
+    "sha256": "72ac5b8037aefbb68e8e213cd808bc4892d45f6b11d3dfe00639c839b4c734a9",
+    "local_acceptance_sha256": "95f6ccb87dd758d11f97bdf5ea49e42bab70c6a55444115242d218e66cee1d84",
+    "ready": true
+  },
+  "current_static_review_sha256": "7b347bc2dc1b36bbdd3d54c0bf79802fbf390fd3022496797c17b4d7cc71137b",
+  "current_focused": {
+    "validation_file": "c2-full-iff-focused-current-v1/validation.json",
+    "validation_sha256": "b3540b47fe0091e095e6866f406dd5088019b5d9f909fb80d322ca8c69cd5806",
+    "review_file": "c2-full-iff-focused-independent-review-v1.json",
+    "review_sha256": "01fe0b8d135b19d563bc6ce93ed2b453a4fb98cf70b63f039af46bbfce080905",
+    "all_four_actual_exit_zero": true,
+    "six_current_normalized_streams": [
+      {
+        "declaration": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+        "kind": "TYPE",
+        "file": "canonical-BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth-TYPE.txt",
+        "sha256": "164caa1acb2ecc9c59dcfdc6019e2eec3191d913fa2f807de91c0bc8c003d4cb",
+        "bytes": 1390184,
+        "historical_record_sha256": "164caa1acb2ecc9c59dcfdc6019e2eec3191d913fa2f807de91c0bc8c003d4cb",
+        "equal": true
+      },
+      {
+        "declaration": "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+        "kind": "VALUE",
+        "file": "canonical-BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth-VALUE.txt",
+        "sha256": "b476a8083a6d14a800c8fca1068db1142ab9244c7963412e9285b4d4f7e46a19",
+        "bytes": 770581629,
+        "historical_record_sha256": "b476a8083a6d14a800c8fca1068db1142ab9244c7963412e9285b4d4f7e46a19",
+        "equal": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.box_converse_originalNorm",
+        "kind": "TYPE",
+        "file": "canonical-BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.box_converse_originalNorm-TYPE.txt",
+        "sha256": "2834d536fb155868d0318e33a48774e65cb3beb9e5c2791d22e43db3216be91d",
+        "bytes": 2377052,
+        "historical_record_sha256": "2834d536fb155868d0318e33a48774e65cb3beb9e5c2791d22e43db3216be91d",
+        "equal": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.box_converse_originalNorm",
+        "kind": "VALUE",
+        "file": "canonical-BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.box_converse_originalNorm-VALUE.txt",
+        "sha256": "2b8e64f11ef8a1963d9056ba2c8fbbc79efc86dbe662f524d377e616801be78c",
+        "bytes": 761775117,
+        "historical_record_sha256": "2b8e64f11ef8a1963d9056ba2c8fbbc79efc86dbe662f524d377e616801be78c",
+        "equal": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.absent_support_vacuity",
+        "kind": "TYPE",
+        "file": "canonical-BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.absent_support_vacuity-TYPE.txt",
+        "sha256": "4a820ce78e5ef37366e208aead48679ae602cfe1dafdb00923ee0e8778054796",
+        "bytes": 69084,
+        "historical_record_sha256": "4a820ce78e5ef37366e208aead48679ae602cfe1dafdb00923ee0e8778054796",
+        "equal": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.absent_support_vacuity",
+        "kind": "VALUE",
+        "file": "canonical-BanditRL.Tests.OnlineStrongConvexSubgradientIffCanary.absent_support_vacuity-VALUE.txt",
+        "sha256": "2e3ee8bba45d2fc2eaffbef8ebd178fd69228eb64fafba2bc7658991b095b777",
+        "bytes": 26428972,
+        "historical_record_sha256": "2e3ee8bba45d2fc2eaffbef8ebd178fd69228eb64fafba2bc7658991b095b777",
+        "equal": true
+      }
+    ],
+    "all_six_equal_historical_V6_record": true,
+    "historical_scope": "Current streams match actual historical V6 digest record, not fixtures or replayed oldstreams. Huge streams remain private.",
+    "actual_required_structural_rows": [
+      {
+        "point": "p",
+        "membership": "hp",
+        "check": "actual all-point support premise used"
+      },
+      {
+        "passed": true,
+        "check": "finite8 actual coordinate function equals hfcoord type, actual e(p),g,hg"
+      },
+      {
+        "passed": true,
+        "check": "forward19 exact original operands and derived hdom"
+      },
+      {
+        "point": "z",
+        "membership": "hz",
+        "check": "actual all-point support premise used"
+      },
+      {
+        "query": "x",
+        "passed": true,
+        "check": "converse actual assumed growth at same z,hz,g,hg"
+      },
+      {
+        "query": "y",
+        "passed": true,
+        "check": "converse actual assumed growth at same z,hz,g,hg"
+      }
+    ],
+    "axioms_each": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "inputs_actual_prepost_unchanged": true,
+    "provider_and_canary_review": "Actual forward19/finite8, same support at z for both endpoints, positive first conjunction via Iff.mpr with12arguments; independently constructed support/growth and negative VALUE exclude iff/SSG/Support dependencies.",
+    "capture_timing": "Existing selected provider artifacts have actualprepost evidence; newly built iff and canary artifacts are final captures only.",
+    "structural_limits": "Finite function equals actual hfcoord TYPE rather than independently synthesized lambda; construction source-inspected. Binder tests/summary counts do not independently establish all implicit-instance equality; full normalized TYPE/VALUE identity and retained source/body review provide bounded transport.",
+    "retained_failure_history": "Prelaunch resource hold/EOL diagnostic retained. Four actual commands all0; unused-variable probe warnings are preserved. complete.json pending-comparison text is an earlier execution snapshot, superseded only by later validation and this review."
+  },
+  "authorship_snapshot": {
+    "compiled_claim": true,
+    "target121_accepted": false,
+    "chapter_accepted": false
+  },
+  "boundary": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete.",
+  "private_evidence_policy": "External historical evidence paths are provenance identifiers, not public repository links. Actual current digests are bound in current_focused after independent review; huge streams remain private."
+}

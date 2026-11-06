@@ -1495,7 +1495,8 @@
         "BanditRL.OnlineGradientDescentSource.theorem_2_13_fixed",
         "BanditRL.OnlineGradientDescentSource.equation_2_1",
         "BanditRL.OnlinePrescientLinear.advance_proximal_minimizer",
-        "BanditRL.OnlinePrescientLinear.regret_sharp_bound"
+        "BanditRL.OnlinePrescientLinear.regret_sharp_bound",
+        "BanditRL.OnlineConvex.source_weierstrass_extended"
       ],
       "source_theorems": [
         {
@@ -1661,19 +1662,19 @@
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "\\begin{aligned}B_\\psi(a;b)&=\\psi(a)-\\psi(b)-D\\psi(b)[a-b],\\\\p&\\in\\arg\\min_{z\\in V}\\{f(z)+\\eta^{-1}B_\\psi(z;x)\\},\\\\Dh(p)&=\\eta^{-1}(D\\psi(p)-D\\psi(x)),\\\\f(p)-f(u)&\\le Dh(p)[u-p],\\\\\\eta(f(p)-f(u))&\\le(D\\psi(p)-D\\psi(x))[u-p]\\\\&=B_\\psi(u;x)-B_\\psi(u;p)-B_\\psi(p;x).\\end{aligned}",
           "plain": "Let E be a real normed vector space, V a convex subset, f and psi real-valued functions, and eta>0. Assume f is convex on V, p belongs to V and minimizes f(z)+eta^(-1) B_psi(z;x) there. The frozen comparison assumes ambient differentiability of psi at both x and p. Every comparator u belongs to V; x need not belong to V. No derivative of f, convexity of psi, inner product, completeness, closedness or minimum-existence theorem is assumed by this comparison.",
-          "fallback": "Differentiate the penalty h(z)=eta^(-1) B_psi(z;x) at p. Its derivative is eta^(-1)(Dpsi(p)-Dpsi(x)). The shared convex_minimizer_comparison uses the supplied feasible minimum and convexity of f to give f(p)-f(u)<=Dh(p)[u-p]. Multiply by positive eta. Apply three_point_identity with (p,x,u), then rearrange to retain both subtracted divergences. The derivative at x remains in the frozen interface for source instantiation, although the proof clears it: the fixed linear map Dpsi(x) is already differentiable as a function of z. Two illustrative tests construct their minimizing conditions. For psi(z)=z^4/4+z^2/2 and f(z)=|z| on R, eta=1, x=1/2 and p=0, the ordered divergences are B(1/2;0)=9/64 and B(0;1/2)=11/64. The potential is strictly convex and the loss is not differentiable at zero. The comparison at u=1/2 gives -1/2<=-5/16. For the globally strictly convex potential psi(z)=z^2/2 on R, again with f(z)=|z| and eta=1, take V=[0,1], x=-1 outside V and boundary minimizer p=0, with objective minimum value 1/2; B(0;-1)=1/2 and the comparison at u=1/2 gives -1/2<=1/2. Each full test retains its universal comparison and transports that comparison into its final numerical inequality. Both use the public gradient conversion. These are concrete instances, not a general attainment theorem or an algorithm construction. These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. The separate extended-loss bridges below establish feasible finite-part convexity and minimum transfer under their explicit assumptions. Source-domain and interior representative compatibility, the partial current-loss recursion, and conditional sharp fixed/variable same-run telescopes now have named proofs. The new source transport identifies each supplied valid argmin run with that recursion. General attainment and interior preservation remain open. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. In the two real-loss examples the minimizer is p=0, whereas the objective minimum values are 11/64 and 1/2. In the second example x=-1 is the center outside V=[0,1]; the value 1/2 is not the outside point.",
+          "fallback": "Differentiate the penalty h(z)=eta^(-1) B_psi(z;x) at p. Its derivative is eta^(-1)(Dpsi(p)-Dpsi(x)). The shared convex_minimizer_comparison uses the supplied feasible minimum and convexity of f to give f(p)-f(u)<=Dh(p)[u-p]. Multiply by positive eta. Apply three_point_identity with (p,x,u), then rearrange to retain both subtracted divergences. The derivative at x remains in the frozen interface for source instantiation, although the proof clears it: the fixed linear map Dpsi(x) is already differentiable as a function of z. Two illustrative tests construct their minimizing conditions. For psi(z)=z^4/4+z^2/2 and f(z)=|z| on R, eta=1, x=1/2 and p=0, the ordered divergences are B(1/2;0)=9/64 and B(0;1/2)=11/64. The potential is strictly convex and the loss is not differentiable at zero. The comparison at u=1/2 gives -1/2<=-5/16. For the globally strictly convex potential psi(z)=z^2/2 on R, again with f(z)=|z| and eta=1, take V=[0,1], x=-1 outside V and boundary minimizer p=0, with objective minimum value 1/2; B(0;-1)=1/2 and the comparison at u=1/2 gives -1/2<=1/2. Each full test retains its universal comparison and transports that comparison into its final numerical inequality. Both use the public gradient conversion. These are concrete instances, not a general attainment theorem or an algorithm construction. These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. The separate extended-loss bridges below establish feasible finite-part convexity and minimum transfer under their explicit assumptions. Source-domain and interior representative compatibility, the partial current-loss recursion, and conditional sharp fixed/variable same-run telescopes now have named proofs. The new source transport identifies each supplied valid argmin run with that recursion. General attainment and interior preservation remain open. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. In the two real-loss examples the minimizer is p=0, whereas the objective minimum values are 11/64 and 1/2. In the second example x=-1 is the center outside V=[0,1]; the value 1/2 is not the outside point.",
           "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Chapter 2 printed p.14 / PDF p.26; Definition 6.4 printed p.63 / PDF p.75; nonnegativity and Lemma 6.7 printed p.64 / PDF p.76; Algorithm 15.8 and Theorem 15.30 printed pp.265-266 / PDF pp.277-278. These normed-space and real-loss interfaces are explicit library derivations associated with the cited source formulas. The source defines Bregman divergence on X times int(X), with a strictly convex potential on X and differentiability on its nonempty interior. The library formula instead uses the actual total ambient Frechet derivative on a real normed vector space. At a nondifferentiable base, fderiv is zero. Recovering the source interface requires interior base points and a valid ambient extension with local derivative agreement; the total formula does not supply those facts.",
           "contract": {
             "model": "Static supplied minimum and actual derivative; no temporal or probabilistic model.",
             "assumptions": "Let E be a real normed vector space, V a convex subset, f and psi real-valued functions, and eta>0. Assume f is convex on V, p belongs to V and minimizes f(z)+eta^(-1) B_psi(z;x) there. The frozen comparison assumes ambient differentiability of psi at both x and p. Every comparator u belongs to V; x need not belong to V. No derivative of f, convexity of psi, inner product, completeness, closedness or minimum-existence theorem is assumed by this comparison. The source defines Bregman divergence on X times int(X), with a strictly convex potential on X and differentiability on its nonempty interior. The library formula instead uses the actual total ambient Frechet derivative on a real normed vector space. At a nondifferentiable base, fderiv is zero. Recovering the source interface requires interior base points and a valid ambient extension with local derivative agreement; the total formula does not supply those facts.",
             "parameters": "Positive eta and every comparator in the same V. No horizon, diameter or stochastic parameter.",
             "regret": "One current-loss comparison with both signed residuals; no cumulative regret conclusion.",
-            "guarantee": "Differentiate the penalty h(z)=eta^(-1) B_psi(z;x) at p. Its derivative is eta^(-1)(Dpsi(p)-Dpsi(x)). The shared convex_minimizer_comparison uses the supplied feasible minimum and convexity of f to give f(p)-f(u)<=Dh(p)[u-p]. Multiply by positive eta. Apply three_point_identity with (p,x,u), then rearrange to retain both subtracted divergences. The derivative at x remains in the frozen interface for source instantiation, although the proof clears it: the fixed linear map Dpsi(x) is already differentiable as a function of z. Two illustrative tests construct their minimizing conditions. For psi(z)=z^4/4+z^2/2 and f(z)=|z| on R, eta=1, x=1/2 and p=0, the ordered divergences are B(1/2;0)=9/64 and B(0;1/2)=11/64. The potential is strictly convex and the loss is not differentiable at zero. The comparison at u=1/2 gives -1/2<=-5/16. For the globally strictly convex potential psi(z)=z^2/2 on R, again with f(z)=|z| and eta=1, take V=[0,1], x=-1 outside V and boundary minimizer p=0, with objective minimum value 1/2; B(0;-1)=1/2 and the comparison at u=1/2 gives -1/2<=1/2. Each full test retains its universal comparison and transports that comparison into its final numerical inequality. Both use the public gradient conversion. These are concrete instances, not a general attainment theorem or an algorithm construction. These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. The separate extended-loss bridges below establish feasible finite-part convexity and minimum transfer under their explicit assumptions. Source-domain and interior representative compatibility, the partial current-loss recursion, and conditional sharp fixed/variable same-run telescopes now have named proofs. The new source transport identifies each supplied valid argmin run with that recursion. General attainment and interior preservation remain open. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. In the two real-loss examples the minimizer is p=0, whereas the objective minimum values are 11/64 and 1/2. In the second example x=-1 is the center outside V=[0,1]; the value 1/2 is not the outside point."
+            "guarantee": "Differentiate the penalty h(z)=eta^(-1) B_psi(z;x) at p. Its derivative is eta^(-1)(Dpsi(p)-Dpsi(x)). The shared convex_minimizer_comparison uses the supplied feasible minimum and convexity of f to give f(p)-f(u)<=Dh(p)[u-p]. Multiply by positive eta. Apply three_point_identity with (p,x,u), then rearrange to retain both subtracted divergences. The derivative at x remains in the frozen interface for source instantiation, although the proof clears it: the fixed linear map Dpsi(x) is already differentiable as a function of z. Two illustrative tests construct their minimizing conditions. For psi(z)=z^4/4+z^2/2 and f(z)=|z| on R, eta=1, x=1/2 and p=0, the ordered divergences are B(1/2;0)=9/64 and B(0;1/2)=11/64. The potential is strictly convex and the loss is not differentiable at zero. The comparison at u=1/2 gives -1/2<=-5/16. For the globally strictly convex potential psi(z)=z^2/2 on R, again with f(z)=|z| and eta=1, take V=[0,1], x=-1 outside V and boundary minimizer p=0, with objective minimum value 1/2; B(0;-1)=1/2 and the comparison at u=1/2 gives -1/2<=1/2. Each full test retains its universal comparison and transports that comparison into its final numerical inequality. Both use the public gradient conversion. These are concrete instances, not a general attainment theorem or an algorithm construction. These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. The separate extended-loss bridges below establish feasible finite-part convexity and minimum transfer under their explicit assumptions. Source-domain and interior representative compatibility, the partial current-loss recursion, and conditional sharp fixed/variable same-run telescopes now have named proofs. The new source transport identifies each supplied valid argmin run with that recursion. General attainment and interior preservation remain open. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. In the two real-loss examples the minimizer is p=0, whereas the objective minimum values are 11/64 and 1/2. In the second example x=-1 is the center outside V=[0,1]; the value 1/2 is not the outside point."
           },
           "local_status": {
             "status": "compiled",
             "label": "Locally compiled derived Bregman interfaces",
-            "boundary": "These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. The separate extended-loss bridges below establish feasible finite-part convexity and minimum transfer under their explicit assumptions. Source-domain and interior representative compatibility, the partial current-loss recursion, and conditional sharp fixed/variable same-run telescopes now have named proofs. The new source transport identifies each supplied valid argmin run with that recursion. General attainment and interior preservation remain open. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown."
+            "boundary": "These are derived real-valued supporting interfaces, not full Algorithm 15.8 or Theorem 15.30. The separate extended-loss bridges below establish feasible finite-part convexity and minimum transfer under their explicit assumptions. Source-domain and interior representative compatibility, the partial current-loss recursion, and conditional sharp fixed/variable same-run telescopes now have named proofs. The new source transport identifies each supplied valid argmin run with that recursion. General attainment and interior preservation remain open. The source fixed-step proof is left as an exercise. The printed variable-step eta_(T+1) indexing ambiguity and the unsupported use of differentiable Theorem 2.8 for a merely subdifferentiable loss remain explicit source obligations. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers."
           },
           "statement_provenance": "derived-support"
         },
@@ -1684,19 +1685,19 @@
           "url": "https://arxiv.org/pdf/1912.13213v10",
           "math": "\\begin{aligned}f_{\\rm fin}(z)&=(f(z)).\\mathrm{toReal},\\\\F(z)&=f(z)+\\uparrow(\\eta^{-1}B_\\psi(z;x)),\\\\p\\in\\arg\\min_{z\\in V}F(z)&\\iff p\\in\\arg\\min_{z\\in V}\\{f_{\\rm fin}(z)+\\eta^{-1}B_\\psi(z;x)\\},\\\\\\eta(f_{\\rm fin}(p)-f_{\\rm fin}(u))&\\le B_\\psi(u;x)-B_\\psi(u;p)-B_\\psi(p;x).\\end{aligned}",
           "plain": "In a real inner-product space, let V be convex and f be a proper extended-real function with a global source subgradient at every point of V. Then f is finite on V and f_fin(z)=(f(z)).toReal is convex on V. In a complete real inner-product space, take any set V, p in V, f finite at every point of V, any real-valued psi, any center x and any real eta. The EReal objective f(z)+eta^(-1)B_psi(z;x) is minimized over V at p if and only if the real objective f_fin(z)+eta^(-1)B_psi(z;x) is minimized there at p. In a complete real inner-product space, let V be convex, f proper with global source subgradients at every feasible point, and eta>0. Suppose p belongs to V and actually minimizes f(z)+eta^(-1)B_psi(z;x) there. If psi has ambient derivatives at both x and p, then every u in V satisfies eta*(f_fin(p)-f_fin(u))<=B_psi(u;x)-B_psi(u;p)-B_psi(p;x).",
-          "fallback": "First use subgradient_point_finite and properness to write f(z) as the real embedding of f_fin(z) at every feasible z. For a,b>=0 with a+b=1, take z=a*x+b*y in V and select a global support at z. Its inequalities at x and y become real inequalities. Multiply by a and b and add. The inner-product term cancels because a*(x-z)+b*(y-z)=0, leaving f_fin(z)<=a*f_fin(x)+b*f_fin(y). On V, the penalized EReal objective F is exactly the real embedding of f_fin(z)+eta^(-1)B_psi(z;x), so F is finite there. Apply minOn_finitePart_iff to F with the supplied membership p in V. Rewrite F.toReal at p and each feasible competitor to obtain both implications. Obtain feasible finiteness from the global supports and properness. Use finitePart_convex_of_subdifferentiable for convexity of f_fin on V, and proximal_finitePart_minimizer_iff for the actual real penalized minimum. Apply the shared real-valued proximal_one_step with the same V, psi, positive eta, center x, minimizer p and comparator u. Both subtracted divergences retain their ordered arguments. Two complete test examples use eta=1 and set the loss to positive infinity outside the indicated interval. On V=[-1,1], f(z)=|z| and psi(z)=z^4/4+z^2/2 give minimizer p=0 at center x=1/2, with objective minimum value 11/64. The potential is globally strictly convex, the loss is nondifferentiable at zero, and B(1/2;0)=9/64 while B(0;1/2)=11/64. On V=[0,1], f(z)=z and the globally strictly convex psi(z)=z^2/2 give boundary minimizer p=0 and objective minimum value 1/2 at center x=-1. This center is outside V and outside the finite-loss domain. Both examples prove properness, global supports on V, feasible finite-part convexity, failure of global finite-part convexity, the actual EReal minimum and the universal one-step comparison. At u=1/2 their final inequalities are -1/2<=-5/16 and -1/2<=1/2, obtained by equality transport of the extended one-step comparison. These examples do not prove general attainment or construct a trajectory. These three derived extended-loss bridges support the Chapter 2 prescient dependency. The library now supplies source-domain and interior representative compatibility, conditional actual-update correspondence, and sharp fixed/variable same-run telescopes. Full Algorithm 15.8/Theorem 15.30 acceptance and general guarantees of attained interior runs remain open. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown.",
+          "fallback": "First use subgradient_point_finite and properness to write f(z) as the real embedding of f_fin(z) at every feasible z. For a,b>=0 with a+b=1, take z=a*x+b*y in V and select a global support at z. Its inequalities at x and y become real inequalities. Multiply by a and b and add. The inner-product term cancels because a*(x-z)+b*(y-z)=0, leaving f_fin(z)<=a*f_fin(x)+b*f_fin(y). On V, the penalized EReal objective F is exactly the real embedding of f_fin(z)+eta^(-1)B_psi(z;x), so F is finite there. Apply minOn_finitePart_iff to F with the supplied membership p in V. Rewrite F.toReal at p and each feasible competitor to obtain both implications. Obtain feasible finiteness from the global supports and properness. Use finitePart_convex_of_subdifferentiable for convexity of f_fin on V, and proximal_finitePart_minimizer_iff for the actual real penalized minimum. Apply the shared real-valued proximal_one_step with the same V, psi, positive eta, center x, minimizer p and comparator u. Both subtracted divergences retain their ordered arguments. Two complete test examples use eta=1 and set the loss to positive infinity outside the indicated interval. On V=[-1,1], f(z)=|z| and psi(z)=z^4/4+z^2/2 give minimizer p=0 at center x=1/2, with objective minimum value 11/64. The potential is globally strictly convex, the loss is nondifferentiable at zero, and B(1/2;0)=9/64 while B(0;1/2)=11/64. On V=[0,1], f(z)=z and the globally strictly convex psi(z)=z^2/2 give boundary minimizer p=0 and objective minimum value 1/2 at center x=-1. This center is outside V and outside the finite-loss domain. Both examples prove properness, global supports on V, feasible finite-part convexity, failure of global finite-part convexity, the actual EReal minimum and the universal one-step comparison. At u=1/2 their final inequalities are -1/2<=-5/16 and -1/2<=1/2, obtained by equality transport of the extended one-step comparison. These examples do not prove general attainment or construct a trajectory. These three derived extended-loss bridges support the Chapter 2 prescient dependency. The library now supplies source-domain and interior representative compatibility, conditional actual-update correspondence, and sharp fixed/variable same-run telescopes. Full Algorithm 15.8/Theorem 15.30 acceptance and general guarantees of attained interior runs remain open. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers.",
           "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10 (21 June 2026). Definitions 2.18 and 2.20, Theorem 2.21: printed pp.16-17 / PDF pp.28-29. Definition 6.4 and Lemma 6.7: printed pp.63-64 / PDF pp.75-76. Chapter 2 forward reference: printed p.14 / PDF p.26. Algorithm 15.8 and Theorem 15.30: printed pp.265-266 / PDF pp.277-278. These are derived library bridges, not a direct extended-real instantiation of the globally real-valued Theorem 2.21. B_psi(a;b)=psi(a)-psi(b)-Dpsi(b)[a-b] uses the actual total ambient Frechet derivative at its second argument. The source domain is X times int(X); a source instantiation needs a valid ambient extension and agreement of derivatives at interior base points. These hypotheses are not supplied by the total formula.",
           "contract": {
             "model": "Static supplied minimum with ambient extended loss; no temporal or probabilistic model.",
             "assumptions": "In a real inner-product space, let V be convex and f be a proper extended-real function with a global source subgradient at every point of V. Then f is finite on V and f_fin(z)=(f(z)).toReal is convex on V. Proper means f never equals negative infinity and equals a real value at at least one ambient point. A global source subgradient g at z satisfies f(z)+<g,y-z><=f(y) for every ambient y, including points outside V. Combining this inequality with the finite witness excludes positive infinity at z; properness excludes negative infinity. In a complete real inner-product space, take any set V, p in V, f finite at every point of V, any real-valued psi, any center x and any real eta. The EReal objective f(z)+eta^(-1)B_psi(z;x) is minimized over V at p if and only if the real objective f_fin(z)+eta^(-1)B_psi(z;x) is minimized there at p. In a complete real inner-product space, let V be convex, f proper with global source subgradients at every feasible point, and eta>0. Suppose p belongs to V and actually minimizes f(z)+eta^(-1)B_psi(z;x) there. If psi has ambient derivatives at both x and p, then every u in V satisfies eta*(f_fin(p)-f_fin(u))<=B_psi(u;x)-B_psi(u;p)-B_psi(p;x). B_psi(a;b)=psi(a)-psi(b)-Dpsi(b)[a-b] uses the actual total ambient Frechet derivative at its second argument. The source domain is X times int(X); a source instantiation needs a valid ambient extension and agreement of derivatives at interior base points. These hypotheses are not supplied by the total formula.",
             "parameters": "Minimum equivalence permits every real eta, including zero and negative values with total inverse. The signed comparison requires eta>0. Each comparator belongs to V; x may lie outside V and the finite-loss domain.",
             "regret": "One finite loss difference with both signed residuals; no cumulative regret claim.",
-            "guarantee": "First use subgradient_point_finite and properness to write f(z) as the real embedding of f_fin(z) at every feasible z. For a,b>=0 with a+b=1, take z=a*x+b*y in V and select a global support at z. Its inequalities at x and y become real inequalities. Multiply by a and b and add. The inner-product term cancels because a*(x-z)+b*(y-z)=0, leaving f_fin(z)<=a*f_fin(x)+b*f_fin(y). On V, the penalized EReal objective F is exactly the real embedding of f_fin(z)+eta^(-1)B_psi(z;x), so F is finite there. Apply minOn_finitePart_iff to F with the supplied membership p in V. Rewrite F.toReal at p and each feasible competitor to obtain both implications. Obtain feasible finiteness from the global supports and properness. Use finitePart_convex_of_subdifferentiable for convexity of f_fin on V, and proximal_finitePart_minimizer_iff for the actual real penalized minimum. Apply the shared real-valued proximal_one_step with the same V, psi, positive eta, center x, minimizer p and comparator u. Both subtracted divergences retain their ordered arguments. Two complete test examples use eta=1 and set the loss to positive infinity outside the indicated interval. On V=[-1,1], f(z)=|z| and psi(z)=z^4/4+z^2/2 give minimizer p=0 at center x=1/2, with objective minimum value 11/64. The potential is globally strictly convex, the loss is nondifferentiable at zero, and B(1/2;0)=9/64 while B(0;1/2)=11/64. On V=[0,1], f(z)=z and the globally strictly convex psi(z)=z^2/2 give boundary minimizer p=0 and objective minimum value 1/2 at center x=-1. This center is outside V and outside the finite-loss domain. Both examples prove properness, global supports on V, feasible finite-part convexity, failure of global finite-part convexity, the actual EReal minimum and the universal one-step comparison. At u=1/2 their final inequalities are -1/2<=-5/16 and -1/2<=1/2, obtained by equality transport of the extended one-step comparison. These examples do not prove general attainment or construct a trajectory. These three derived extended-loss bridges support the Chapter 2 prescient dependency. The library now supplies source-domain and interior representative compatibility, conditional actual-update correspondence, and sharp fixed/variable same-run telescopes. Full Algorithm 15.8/Theorem 15.30 acceptance and general guarantees of attained interior runs remain open. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown."
+            "guarantee": "First use subgradient_point_finite and properness to write f(z) as the real embedding of f_fin(z) at every feasible z. For a,b>=0 with a+b=1, take z=a*x+b*y in V and select a global support at z. Its inequalities at x and y become real inequalities. Multiply by a and b and add. The inner-product term cancels because a*(x-z)+b*(y-z)=0, leaving f_fin(z)<=a*f_fin(x)+b*f_fin(y). On V, the penalized EReal objective F is exactly the real embedding of f_fin(z)+eta^(-1)B_psi(z;x), so F is finite there. Apply minOn_finitePart_iff to F with the supplied membership p in V. Rewrite F.toReal at p and each feasible competitor to obtain both implications. Obtain feasible finiteness from the global supports and properness. Use finitePart_convex_of_subdifferentiable for convexity of f_fin on V, and proximal_finitePart_minimizer_iff for the actual real penalized minimum. Apply the shared real-valued proximal_one_step with the same V, psi, positive eta, center x, minimizer p and comparator u. Both subtracted divergences retain their ordered arguments. Two complete test examples use eta=1 and set the loss to positive infinity outside the indicated interval. On V=[-1,1], f(z)=|z| and psi(z)=z^4/4+z^2/2 give minimizer p=0 at center x=1/2, with objective minimum value 11/64. The potential is globally strictly convex, the loss is nondifferentiable at zero, and B(1/2;0)=9/64 while B(0;1/2)=11/64. On V=[0,1], f(z)=z and the globally strictly convex psi(z)=z^2/2 give boundary minimizer p=0 and objective minimum value 1/2 at center x=-1. This center is outside V and outside the finite-loss domain. Both examples prove properness, global supports on V, feasible finite-part convexity, failure of global finite-part convexity, the actual EReal minimum and the universal one-step comparison. At u=1/2 their final inequalities are -1/2<=-5/16 and -1/2<=1/2, obtained by equality transport of the extended one-step comparison. These examples do not prove general attainment or construct a trajectory. These three derived extended-loss bridges support the Chapter 2 prescient dependency. The library now supplies source-domain and interior representative compatibility, conditional actual-update correspondence, and sharp fixed/variable same-run telescopes. Full Algorithm 15.8/Theorem 15.30 acceptance and general guarantees of attained interior runs remain open. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers."
           },
           "local_status": {
             "status": "compiled",
             "label": "Three locally compiled derived extended-loss bridges",
-            "boundary": "These three derived extended-loss bridges support the Chapter 2 prescient dependency. The library now supplies source-domain and interior representative compatibility, conditional actual-update correspondence, and sharp fixed/variable same-run telescopes. Full Algorithm 15.8/Theorem 15.30 acceptance and general guarantees of attained interior runs remain open. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown."
+            "boundary": "These three derived extended-loss bridges support the Chapter 2 prescient dependency. The library now supplies source-domain and interior representative compatibility, conditional actual-update correspondence, and sharp fixed/variable same-run telescopes. Full Algorithm 15.8/Theorem 15.30 acceptance and general guarantees of attained interior runs remain open. The nonsmooth optimality citation of differentiable Theorem 2.8, the eta_(T+1) indexing discrepancy and the fixed-step proof left as an exercise remain open. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers."
           },
           "statement_provenance": "derived-support"
         },
@@ -1714,12 +1715,12 @@
             "assumptions": "The generic definitions use a real normed space, arbitrary V, arbitrary real stepsizes (including zero and negative with total inverse), and arbitrary EReal losses. They allow infeasible initial centers and infinite objective minima. Classical choice is a mathematical selector, with no executable optimizer or measurable-selection claim. None means absence of a feasible attained minimum, not nonuniqueness, timeout, or failure of an interior test. Write D(a;b)=psi(a)-psi(b)-fderiv(psi,b)[a-b], target first and derivative base second. This ambient total formula agrees with source Bregman divergence only with a valid representation on X and interior derivative bases. At nondifferentiable points fderiv is zero by total convention; its resulting values are not source derivatives. In a complete real inner-product space, suppose V is convex and states t and t+1 of this same recursion return x and p. Require positive current eta, a proper current loss with a global supporting subgradient at every feasible point, and differentiability of psi at both x and p. Then every u in V satisfies eta*((loss p).toReal-(loss u).toReal) <= D(u;x)-D(u;p)-D(p;x). Proper means no negative infinity and a finite ambient witness; each support compares every ambient point. These premises make all compared feasible loss values finite. No loss differentiability, psi convexity, boundedness, or x in V is assumed. Both signed negative residuals remain.",
             "parameters": "State 0 is some x0. State t+1 consumes the whole current loss t and current stepsize t, matching source round t+1; it is played after that loss is received. The selector has no horizon, comparator or future loss input. Prefix equality concerns entire loss functions at indices below t.",
             "regret": "One actual-transition loss difference with both signed residuals; two concrete finite-run examples do not establish general cumulative regret.",
-            "guarantee": "Success specifies a feasible minimum, failure is exact nonattainment, prefix equality fixes the consumed state, and failure is absorbing. Finite completion assumes attainment only at every actually reached predecessor below the horizon. Initialization is always some x0. Four complete tests retain distinct roles. On [-1,1], restricted absolute then restricted affine -5z/8 losses and psi=z^4/4+z^2/2 yield actual states 1/2,0,1/2, movements 11/64 and 9/64, and the two-round comparison -1/2<=-5/16. A restricted linear loss on [0,1] starts at -1 outside feasibility and loss domain, selects boundary 0 and yields -1/2<=1/2. Both numeric conclusions consume the actual-transition bound. On (-infinity,0], f(z)=z and psi=exp give objective exp(z)-1 with no attained minimum, despite closed strict convex differentiable regularization; every positive partial state is none. Finally z^2+z and z^2+abs(z) agree on [0,infinity), with divergence 1 at target2/base1 but total-formula values4 and6 at boundarybase0. The second function is nondifferentiable there, so those boundary values are diagnostics. Eight derived lemmas and two literal partial definitions support the Chapter 2 prescient dependency. A successful partial state need not satisfy the source interior condition. The source-to-recursion layer now transports the stated source-domain and interior hypotheses along each supplied valid argmin run. The same-run cumulative layer supplies conditional fixed/variable inequalities. General attainment and interior preservation remain open; the source algorithm is not thereby made total. The printed nonsmooth-optimality citation and stepsize-index discrepancy remain unresolved. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. This is not full Algorithm 15.8, Theorem 15.30, chapter/book completion, or an approved source correction."
+            "guarantee": "Success specifies a feasible minimum, failure is exact nonattainment, prefix equality fixes the consumed state, and failure is absorbing. Finite completion assumes attainment only at every actually reached predecessor below the horizon. Initialization is always some x0. Four complete tests retain distinct roles. On [-1,1], restricted absolute then restricted affine -5z/8 losses and psi=z^4/4+z^2/2 yield actual states 1/2,0,1/2, movements 11/64 and 9/64, and the two-round comparison -1/2<=-5/16. A restricted linear loss on [0,1] starts at -1 outside feasibility and loss domain, selects boundary 0 and yields -1/2<=1/2. Both numeric conclusions consume the actual-transition bound. On (-infinity,0], f(z)=z and psi=exp give objective exp(z)-1 with no attained minimum, despite closed strict convex differentiable regularization; every positive partial state is none. Finally z^2+z and z^2+abs(z) agree on [0,infinity), with divergence 1 at target2/base1 but total-formula values4 and6 at boundarybase0. The second function is nondifferentiable there, so those boundary values are diagnostics. Eight derived lemmas and two literal partial definitions support the Chapter 2 prescient dependency. A successful partial state need not satisfy the source interior condition. The source-to-recursion layer now transports the stated source-domain and interior hypotheses along each supplied valid argmin run. The same-run cumulative layer supplies conditional fixed/variable inequalities. General attainment and interior preservation remain open; the source algorithm is not thereby made total. The printed nonsmooth-optimality citation and stepsize-index discrepancy remain unresolved. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. This is not full Algorithm 15.8, Theorem 15.30, chapter/book completion, or an approved source correction."
           },
           "local_status": {
             "status": "compiled",
             "label": "Eight derived lemmas and two partial definitions",
-            "boundary": "Eight derived lemmas and two literal partial definitions support the Chapter 2 prescient dependency. A successful partial state need not satisfy the source interior condition. The source-to-recursion layer now transports the stated source-domain and interior hypotheses along each supplied valid argmin run. The same-run cumulative layer supplies conditional fixed/variable inequalities. General attainment and interior preservation remain open; the source algorithm is not thereby made total. The printed nonsmooth-optimality citation and stepsize-index discrepancy remain unresolved. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. This is not full Algorithm 15.8, Theorem 15.30, chapter/book completion, or an approved source correction."
+            "boundary": "Eight derived lemmas and two literal partial definitions support the Chapter 2 prescient dependency. A successful partial state need not satisfy the source interior condition. The source-to-recursion layer now transports the stated source-domain and interior hypotheses along each supplied valid argmin run. The same-run cumulative layer supplies conditional fixed/variable inequalities. General attainment and interior preservation remain open; the source algorithm is not thereby made total. The printed nonsmooth-optimality citation and stepsize-index discrepancy remain unresolved. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. This is not full Algorithm 15.8, Theorem 15.30, chapter/book completion, or an approved source correction."
           },
           "statement_provenance": "derived-support"
         },
@@ -1737,14 +1738,175 @@
             "assumptions": "Work in a complete real inner-product space with convex feasible V and an ambient real-valued generator psi differentiable on interior X. The same canonical partial recursion must return some(x_t) for every 0<=t<=T, with each x_t in interior X. For every played t<T, the loss is proper (no negative infinity and at least one finite ambient value) and has a global supporting subgradient at every z in V, tested against every ambient point. This makes comparator and played feasible loss values finite. The fixed comparator u belongs to V. Write D(a;b)=psi(a)-psi(b)-fderiv(psi,b)[a-b], with derivative base second.",
             "parameters": "Shared sum: any T>=0 and arbitrary positive played steps, no monotonicity. Fixed forms: any T>=0 with a positive constant step. Only variable forms require T>0 and eta_(t+1)<=eta_t for t+1<T. Their cap/maximum is over x0,...,x_(T-1), excluding x_T. Sharp forms do not require psi convex or V subset X, and an arbitrary cap M need not be nonnegative. Final corollaries add V subset X and strict convexity of psi on X.",
             "regret": "Sum over t<T of loss_t(x_(t+1))-loss_t(u), using finite EReal.toReal values. Sharp bounds retain both negative terminal and movement residuals. Final corollaries retain every negative movement term.",
-            "guarantee": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. The source-to-recursion layer now derives properness and identifies each supplied valid interior argmin run with the canonical recursion. General attainment and interior preservation remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. Full acceptance of Algorithm 15.8, Theorem 15.30, the chapter, the book and the proposed source corrections remains open."
+            "guarantee": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. The source-to-recursion layer now derives properness and identifies each supplied valid interior argmin run with the canonical recursion. General attainment and interior preservation remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. This package leaves full Algorithm 15.8, Theorem 15.30, chapter and book acceptance, and source-correction approval open."
           },
           "local_status": {
             "status": "compiled",
             "label": "Five conditional same-run cumulative bounds",
-            "boundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. The source-to-recursion layer now derives properness and identifies each supplied valid interior argmin run with the canonical recursion. General attainment and interior preservation remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. Full acceptance of Algorithm 15.8, Theorem 15.30, the chapter, the book and the proposed source corrections remains open."
+            "boundary": "These five conditional library inequalities support the Chapter 2 prescient dependency. The finite Euclidean source uses a generator on X; the library uses an ambient representative on a complete real inner-product space. The source-to-recursion layer now derives properness and identifies each supplied valid interior argmin run with the canonical recursion. General attainment and interior preservation remain open. The printed nonsmooth invocation of Theorem 2.8 and the literal eta_(T+1) indexing discrepancy remain unresolved. The library compares only adjacent played steps; its T=0 fixed/sum cases are derived extensions, not a printed empty-horizon convention. The fixed-step proof is an exercise in the source and a derived library proof here. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. This package leaves full Algorithm 15.8, Theorem 15.30, chapter and book acceptance, and source-correction approval open."
           },
           "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Appendix A.3: extended-real compact attainment",
+          "pages": "Appendix Theorem A.3, printed291 / PDF303; necessary Chapter2 dependency",
+          "pdf_page": 303,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=303",
+          "math": "\\begin{gathered}X\\text{ Hausdorff},\\quad f:X\\to[-\\infty,+\\infty]\\text{ lower semicontinuous},\\\\V\\text{ compact},\\quad V\\cap\\{x:f(x)<+\\infty\\}\\ne\\varnothing\\\\\\Longrightarrow\\quad\\exists p\\in V,\\ \\forall q\\in V,\\ f(p)\\le f(q).\\end{gathered}",
+          "plain": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+          "fallback": "A globally lower-semicontinuous extended-real function attains its minimum on the source-qualified compact set, including a possible bottom value.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Theorem A.3, printed291/PDF303, cites Bauschke et al. (2003), Theorem1.29; that external work is not independently audited here. The source theorem is represented with its Hausdorff, global lower-semicontinuity, compactness and domain-intersection premises. The proof below reuses Mathlib rather than attributing an unprinted derivation to the book. Choose a point in V intersect dom f. Its membership in V proves that V is nonempty; its function value is below positive infinity, with negative infinity allowed. Global lower semicontinuity restricts to the same V. Apply Mathlib LowerSemicontinuousOn.exists_isMinOn to this nonempty compact set and the restricted lower semicontinuity to obtain p in V with f(p) <= f(q) for every q in V. The public statement retains the source Hausdorff and domain-intersection premises even though this Mathlib result needs less. For the boundary example f(x)=-infinity and V={0}, all premises hold and the attained minimum is -infinity, so properness or a finite-value conclusion cannot be inserted.",
+          "contract": {
+            "model": "Hausdorff topological X; extended-real f admits bottom and top.",
+            "assumptions": "Let X be a Hausdorff topological space, f:X→[-infinity,+infinity] globally lower semicontinuous, and V a compact set. If V intersects dom f={x | f(x)<+infinity}, then some p in V minimizes f over V: f(p)<=f(q) for every q in V. The function may take -infinity; no properness, no-bottom, continuity, convexity, norm or finite-dimensionality assumption is made.",
+            "parameters": "Compact V meeting effectiveDomain f; no metric, dimension or curvature parameter.",
+            "regret": "Necessary appendix dependency only; no regret or stability conclusion.",
+            "guarantee": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "A.3 compact-domain attainment",
+            "boundary": "Appendix A.3 establishes extended-order attainment on the specified compact set. The minimum may be negative infinity; uniqueness and a finite minimum are not asserted. This leaf does not establish the strong-convex attainment theorem6.9, construct a constrained cumulative minimizer, or complete Chapter2 or the book. Those frozen targets and their dependencies remain separate."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Derived quadratic growth at a supplied minimum",
+          "pages": "Definition 4.1, printed 34 / PDF 46; Definition 2.18, printed 16 / PDF 28",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad p\\in\\operatorname{argmin}_{x\\in V}f(x),\\quad q\\in V.\\\\c=\\frac{\\lambda}{2}\\lVert q-p\\rVert^2,\\quad g=f(q)-f(p)\\ge0.\\\\g<c\\Longrightarrow a=\\frac{g+c}{2c}\\in(0,1),\\quad 0\\le(1-a)(g-ca)<0.\\end{gathered}",
+          "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+          "fallback": "A supplied feasible minimum of a strongly convex extended-real objective has quadratic growth on the convex feasible set where the objective is finite.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. This is a derived conditional consequence of Definition 4.1, with properness from Definition 2.18, generalized from the source finite-dimensional setting to an arbitrary real normed space. It is not a direct restatement of Lemma 7.1. The implementation uses the following alternative segment argument; the source-support proof remains distinct. SourceProper excludes negative infinity, while V is contained in effectiveDomain f, excluding positive infinity on V. Thus f(p) and f(q) are finite, and their real values preserve order. Set c = (λ/2)‖q − p‖² and g = f(q) − f(p) ≥ 0. Suppose g < c. Then c > 0 and a = (g + c)/(2c) lies strictly between 0 and 1. Convexity places a p + (1 − a)q in V. Minimality and strong convexity give f(p) ≤ a f(p) + (1 − a)f(q) − c a(1 − a). Composing these extended-real inequalities and converting their finite endpoints yields 0 ≤ (1 − a)(g − ca). But ca = (g + c)/2 > g and 1 − a > 0, a contradiction. If λ = 0 or p = q, the nonnegative gap cannot be smaller than c = 0.",
+          "contract": {
+            "model": "One proper extended-real objective on a convex feasible set where f is finite; no algorithmic run or selected cumulative objective is asserted.",
+            "assumptions": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, so f is finite on V, and let λ ≥ 0. Assume the strong-convexity interpolation inequality with coefficient λ/2 for every feasible pair and every real weight 0 < a < 1. Supply p ∈ V that minimizes f over V. Then every q ∈ V satisfies f(p) + (λ/2)‖q − p‖² ≤ f(q), interpreted through toReal only at these finite endpoints.",
+            "parameters": "λ ≥ 0, a supplied attained minimum p, and any feasible comparator q. The coefficient is exactly λ/2.",
+            "regret": "No regret bound is asserted by this lemma.",
+            "guarantee": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, verification of Theorem 6.9’s printed nonempty-subgradient-domain premise for concrete applications, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled conditional minimum growth",
+            "boundary": "This inequality assumes a supplied feasible minimizer. It does not prove existence or uniqueness of a minimum, construct a cumulative FTRL or BTRL trajectory, or establish a regret bound. The FTRL telescoping identity in Lemma 7.1, verification of Theorem 6.9’s printed nonempty-subgradient-domain premise for concrete applications, and the corrected terminal terms in Theorems 7.47 and 15.31 remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Derived quadratic growth above a supplied support",
+          "pages": "Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}f(p)+g(q-p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le f(q),\\quad q\\in V.\\\\F(x)=f(x)-g(x-p),\\qquad F(p)\\le F(z)\\ (z\\in V).\\\\F(p)+\\frac{\\lambda}{2}\\lVert q-p\\rVert^2\\le F(q).\\end{gathered}",
+          "plain": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+          "fallback": "A supplied feasible affine support of a strongly convex objective has the exact quadratic strengthening, with the same lambda/2 coefficient.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This library statement keeps only the forward implication at one supplied support, restricted to V, and generalizes the finite-dimensional vector pairing to a continuous real covector on an arbitrary normed space. Continuity is stronger than algebraic necessity. No inner-product norm is imposed. The affine-tilt implementation below is distinct from the source segment-and-limit proof. Define the extended-real function F(x) = f(x) − g(x − p), including outside V. The subtracted term is always real. Since f never equals negative infinity, neither does F; the feasible point p supplies a finite witness. Thus F is proper and finite on V. For a feasible segment, linearity gives g(a x + (1 − a)y − p) = a g(x − p) + (1 − a)g(y − p). Subtracting this identity from the strong interpolation inequality preserves the same λ/2 penalty, so F satisfies the same strong-convexity hypothesis. The supplied support gives F(p) ≤ F(z) for every z ∈ V, using g(0) = 0. This proves a minimum of the tilt internally; no minimum premise is added. Apply stronglyConvex_minimum_growth to F and simplify its finite endpoint values to recover the quadratic support bound for f.",
+          "contract": {
+            "model": "One proper extended-real objective and one supplied V-local continuous linear support; no algorithmic cumulative objective is produced.",
+            "assumptions": "Let E be an arbitrary real normed space and f : E → EReal be SourceProper: f never equals negative infinity and has a finite value somewhere. Let V be convex and contained in effectiveDomain f, and let λ ≥ 0. Assume the strong interpolation inequality with coefficient λ/2 for every feasible pair and every 0 < a < 1. Supply p ∈ V and a continuous real linear functional g with f(p) + g(z − p) ≤ f(z) for every z ∈ V. Then every q ∈ V satisfies f(p) + g(q − p) + (λ/2)‖q − p‖² ≤ f(q). Properness and domain inclusion make the endpoint values finite. Both λ = 0 and g = 0 are allowed.",
+            "parameters": "λ ≥ 0, supplied p ∈ V and continuous linear g, with local support on V; q is any feasible point. No minimum premise.",
+            "regret": "Pointwise quadratic support inequality; no regret guarantee.",
+            "guarantee": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. Theorem 6.9 explicitly assumes a nonempty subgradient domain; verifying this premise for concrete algorithmic objectives and proving corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled conditional support growth",
+            "boundary": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. Theorem 6.9 explicitly assumes a nonempty subgradient domain; verifying this premise for concrete algorithmic objectives and proving corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Derived source-vector growth in the original norm",
+          "pages": "Definition 2.20, printed 16–17 / PDF 28–29; Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\begin{gathered}\\bar f=f\\circ e^{-1},\\quad g\\in\\partial\\bar f(e(p)),\\quad L(z)=\\langle g,e(z)\\rangle.\\\\f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).\\end{gathered}",
+          "plain": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+          "fallback": "An algebraic coordinate vector support gives the exact quadratic lower bound in the original chosen norm.",
+          "relationship": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 2.20 and the forward implication associated with Definition 4.1 and Lemma 4.2. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This adapter uses one supplied global source subgradient and represents the source coordinates through an algebraic linear equivalence. It retains the separately chosen original norm. The source segment-and-limit proof remains distinct from this library reuse through Support growth. The coordinate equivalence e gives finite dimensionality of E. Define the real linear map L(v) = ⟨g, e(v)⟩. Every linear map from this finite-dimensional normed space is continuous, so L supplies the continuous covector required by Support growth. Evaluate the supplied global subgradient inequality at e(z); cancel e⁻¹(e(z)) and use e(z) − e(p) = e(z − p). This yields f(p) + L(z − p) ≤ f(z) for each z ∈ V. Apply stronglyConvex_support_growth with this internally constructed L and support proof. The pairing uses coordinates, but the curvature term remains ‖q − p‖²_E. Neither an isometry nor a separate continuity or finite-dimensionality premise is added.",
+          "contract": {
+            "model": "Finite coordinate representation of an arbitrary real normed space; supplied global source vector support, literal convex finite-domain set.",
+            "assumptions": "Let E be a real normed space and e : E ≃ Rᵈ an algebraic linear equivalence, not necessarily an isometry. Let f : E → EReal be proper, V a convex subset of its effective domain, and λ ≥ 0. Assume strong interpolation on V with coefficient λ/2 in the original E norm. Supply p, q ∈ V and a global source subgradient g ∈ ∂(f ∘ e⁻¹)(e(p)). Then f(p) + ⟨g, e(q − p)⟩ + (λ/2)‖q − p‖²_E ≤ f(q). Properness and domain inclusion make both endpoint values finite. Zero λ and zero g are allowed.",
+            "parameters": "λ ≥ 0; algebraic coordinates e, supplied global subgradient g and feasible p, q. The penalty uses the original E norm.",
+            "regret": "Pointwise support growth only, not a regret bound.",
+            "guarantee": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled source-vector growth adapter",
+            "boundary": "This is a generalized forward implication for a supplied global subgradient, not the full equivalence in Lemma 4.2 or a support-existence theorem. Theorem 6.9 explicitly assumes a nonempty subgradient domain; concrete algorithmic applications must establish its premises. Cumulative attainment and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Theorem 6.9: existence and uniqueness of a minimizer",
+          "pages": "Theorem 6.9, printed 66 / PDF 78",
+          "pdf_page": 78,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=78",
+          "math": "\\begin{gathered}\\lambda>0,\\quad \\operatorname{dom}\\partial(f\\circ e^{-1})\\ne\\varnothing,\\\\f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2,\\\\\\exists!p\\in\\operatorname{dom}f,\\quad \\forall q\\in E,\\ f(p)\\le f(q).\\end{gathered}",
+          "plain": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+          "fallback": "Positive curvature, properness, closedness and a source support point yield a unique finite global minimizer.",
+          "relationship": "The source derives coercivity and then compact sublevels. This proof directly bounds the one sublevel needed by A.3, without adding a compactness or coercivity premise. The source and implementation proof routes remain separately recorded. Choose a point y and a source subgradient from the assumed nonempty subgradient domain. The coordinate pairing defines a continuous linear functional L on the original space. Source-vector growth supplies a quadratic lower bound in the original norm. On the sublevel S = {x : f(x) ≤ f(y)}, quadratic growth and the operator-norm bound imply (λ/2)‖x−y‖² ≤ ‖L‖‖x−y‖. Thus S lies in the closed ball of radius 2‖L‖/λ about y. Closedness of f makes S closed, and finite dimensionality makes that ball compact. Apply A.3 to the nonempty compact sublevel. Properness and the finite upper bound ensure its minimizer has finite value. Points outside the sublevel have value greater than f(y), so the same point minimizes f globally. Apply the existing minimum-growth inequality at the attained minimizer. Any other minimizer has zero value gap, so λ > 0 forces their distance to be zero. Public frozen target dependency:Theorem6.9 is at docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/135; its A.3 dependency is /effective_targets/136.",
+          "contract": {
+            "model": "Finite-dimensional real normed space with algebraic Euclidean coordinates; extended-real objective.",
+            "assumptions": "Let E be a real normed space with a linear equivalence e to a finite-dimensional Euclidean coordinate space. The map e need not preserve norms. Let f : E → EReal be proper and closed, and λ > 0. Assume the strong-convexity interpolation inequality on the entire effective domain, with penalty (λ/2)a(1−a)‖x−y‖² in the original E norm for every 0 < a < 1. Assume that the global source subgradient domain of f composed with e⁻¹ is nonempty. Then exactly one point p in the effective domain minimizes f over all E.",
+            "parameters": "Strictly positive λ; original E norm; global interpolation on effectiveDomain f; literal printed nonempty source-subgradient domain.",
+            "regret": "Global minimizer existence and uniqueness, not a regret bound.",
+            "guarantee": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled Theorem 6.9: unique global minimizer",
+            "boundary": "The nonempty source subgradient domain is an explicit premise of Theorem 6.9. Concrete algorithmic and constrained cumulative objectives must establish all premises in their own setting. The stronger claim omitting that premise is separate. No complete regret guarantee, Chapter 2 completion or whole-book completion follows from this theorem alone."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Definition 4.1: strong convexity on the finite domain",
+          "pages": "Definition 4.1, printed 34 / PDF 46",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "\\lambda\\ge0,\\quad V\\subseteq\\operatorname{dom}f,\\qquad f(ax+(1-a)y)\\le af(x)+(1-a)f(y)-\\frac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2.",
+          "plain": "Strong convexity is defined for a proper function on a convex subset of its effective domain. It requires a quadratic improvement of the ordinary convex interpolation inequality. This definition does not require subgradients to exist.",
+          "fallback": "Quadratic interpolation on a convex subset of the effective domain.",
+          "relationship": "Definition 4.1 assumes λ ≥ 0, proper f and a convex set V contained in dom f. The quantifiers are every x,y ∈ V and every real a with 0 < a < 1. The formal representation is the existing inline hstrong interpolation predicate together with hf,hV,hdom,hlam, as recorded in the current minimum-growth header. Its later minimizer binders are not part of this definition. That existing header allows arbitrary normed E; the source finite-dimensional context is a specialization. No all-point subgradient premise is added. Public target dependency:strong-convexity4.1-4.2 is docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/121.",
+          "contract": {
+            "model": "Proper extended-real function on a finite-dimensional real normed space; the quadratic penalty uses the original E norm, and the algebraic coordinate map need not preserve norms.",
+            "assumptions": "λ ≥ 0; f is proper; V is convex and V ⊆ dom f. No subgradient-existence premise belongs to this definition. Every x,y ∈ V and 0<a<1.",
+            "parameters": "λ ≥ 0, including zero; original E norm.",
+            "regret": "Definition and pointwise characterization only, not a regret guarantee.",
+            "guarantee": "This definition requires V ⊆ dom f, not V ⊆ dom ∂f. The stronger all-point support premise belongs only to the iff lemma. The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Definition 4.1: compiled inline representation",
+            "boundary": "This definition requires V ⊆ dom f, not V ⊆ dom ∂f. The stronger all-point support premise belongs only to the iff lemma. The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "Lemma 4.2: the full subgradient characterization",
+          "pages": "Lemma 4.2 and proof, printed 34–35 / PDF 46–47",
+          "pdf_page": 46,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=46",
+          "math": "e(V)\\subseteq\\operatorname{dom}\\partial(f\\circ e^{-1}),\\qquad \\text{strong interpolation}\\ \\Longleftrightarrow\\ f(p)+\\langle g,e(q-p)\\rangle+\\frac{\\lambda}{2}\\lVert q-p\\rVert_E^2\\le f(q).",
+          "plain": "On a convex set where a global source subgradient exists at every point, the interpolation inequality is equivalent to the quadratic supporting inequality for every such subgradient. The curvature modulus may be zero. Finite-dimensional coordinates supply the pairing, while the quadratic term uses the original norm; the coordinate map need not be an isometry.",
+          "fallback": "Quadratic interpolation is equivalent to every global subgradient lower bound when a support exists at every feasible point.",
+          "relationship": "The source forward proof evaluates support along a segment, divides by the positive interpolation weight and takes its limit to zero. The current body reuses the already reviewed source-vector growth result. In the converse, choose one support at the interpolated point and use it for both endpoint inequalities; their weighted linear terms cancel. On printed page 35 / PDF page 47, the second equality in the converse proof must be an inequality. The valid chain is 0 = the weighted pairing ≤ af(x)+(1−a)f(y)−f(z)−(λ/2)a(1−a)‖x−y‖². The statement of Lemma4.2 is unchanged and no equality or saturation hypothesis is added. Transport the actual properness witness to coordinates. At each feasible p choose a support from the explicit all-point premise and apply subgradient_point_finite to derive f(p)<top; combine with no-bottom to obtain the finite-value identity. The forward implication genuinely calls stronglyConvex_sourceSubgradient_growth on the original f,V,lambda,e and the internally derived domain inclusion. For the converse put z=a*x+(1-a)*y in V and choose ONE actual global support g at z. Apply the hypothesized quadratic growth to (z,x) and (z,y), multiply by a and1-a, and add. The weighted pairing cancels. Original norm homogeneity gives ||x-z||^2=(1-a)^2||x-y||^2 and ||y-z||^2=a^2||x-y||^2, yielding exactly the source curvature term. Finally convert finite real values back to EReal. The source forward proof instead uses support based at y evaluated at a*x+(1-a)*y, division by positive a and the limit a down to0; implementation reuse and source topology are kept distinct. Public target: docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json /effective_targets/121.",
+          "contract": {
+            "model": "Proper extended-real function on a finite-dimensional real normed space; the quadratic penalty uses the original E norm, and the algebraic coordinate map need not preserve norms.",
+            "assumptions": "λ ≥ 0; proper f; convex V ⊆ dom ∂f. Every p ∈ V has an actual global source subgradient. This stronger set inclusion belongs to the iff lemma, not Definition4.1. Every p,q ∈ V and every global coordinate subgradient g at e(p) for f composed with e inverse. The coordinate map need not be an isometry.",
+            "parameters": "λ ≥ 0, including zero; original E norm.",
+            "regret": "Definition and pointwise characterization only, not a regret guarantee.",
+            "guarantee": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled full Lemma 4.2 iff",
+            "boundary": "The theorem assumes all-point global support; it does not produce it. Empty V and λ = 0 are allowed by the header. The concrete canaries do not establish exhaustive edge-case coverage. Concrete cumulative objectives, their closedness/support/attainment premises, source-interior conditions and corrected regret endpoints remain separate obligations. Chapter 2 and the book remain incomplete."
+          },
+          "statement_provenance": "source-restatement"
         },
         {
           "label": "Chapter 2 prescient dependency: source hypotheses and the actual valid run",
@@ -1760,12 +1922,58 @@
             "assumptions": "The source-facing bounds use a finite-dimensional real inner-product space. V is nonempty, closed and convex, with V subset X. The real ambient representative psi is strictly convex on X, differentiable on interior X, and its extension by positive infinity outside X has closed real sublevels. Every x_t for 0<=t<=T is interior to X. Each played loss excludes negative infinity everywhere, is finite on V, and has a global supporting subgradient at every point of V, tested against every ambient point. Each x_(t+1) is feasible and actually minimizes Q_t over V. The comparator u belongs to V. Feasible finiteness justifies every toReal loss value; no convexity of a global zero-default real extension is assumed.",
             "parameters": "Fixed: T>=0 and positive constant eta. Variable: T>0, positive played rates with eta_(t+1)<=eta_t only for t+1<T. Both use one comparator u in V and post-update losses. The variable maximum includes x0 and excludes x_T.",
             "regret": "Sum over t<T of loss_t(x_(t+1))-loss_t(u). Source-facing formulas retain all negative movement penalties and omit only the nonpositive terminal comparator term. Feasible losses are finite.",
-            "guarantee": "These are four derived library transports and two conditional valid-run bounds supporting the Chapter 2 prescient dependency. Supplied minimizers are the algorithm update relation, not an assumed regret inequality. Closedness and strict convexity do not guarantee universal attainment or interior preservation. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. No full Algorithm 15.8, Theorem 15.30, chapter/book completion, whole-carrier literal-definition seal or source-repair approval follows. The variable theorem compares only adjacent played rates, t+1<T. The printed extra comparison mentions eta_(T+1), which the algorithm does not supply; the library omits it as an explicit stronger extension, without declaring a source correction. The fixed theorem also permits T=0, an explicit extension with conclusion 0<=B(u;x0)/eta. The smooth Theorem 2.8 citation does not itself prove the nonsmooth optimality step. The implementation instead reuses the derived feasible-segment comparison. The fixed-step argument is left as an exercise in the source and is proved by the library telescope."
+            "guarantee": "These are four derived library transports and two conditional valid-run bounds supporting the Chapter 2 prescient dependency. Supplied minimizers are the algorithm update relation, not an assumed regret inequality. Closedness and strict convexity do not guarantee universal attainment or interior preservation. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. No full Algorithm 15.8, Theorem 15.30, chapter/book completion, whole-carrier literal-definition seal or source-repair approval follows. The variable theorem compares only adjacent played rates, t+1<T. The printed extra comparison mentions eta_(T+1), which the algorithm does not supply; the library omits it as an explicit stronger extension, without declaring a source correction. The fixed theorem also permits T=0, an explicit extension with conclusion 0<=B(u;x0)/eta. The smooth Theorem 2.8 citation does not itself prove the nonsmooth optimality step. The implementation instead reuses the derived feasible-segment comparison. The fixed-step argument is left as an exercise in the source and is proved by the library telescope."
           },
           "local_status": {
             "status": "compiled",
             "label": "Conditional source-to-recursion transport",
-            "boundary": "These are four derived library transports and two conditional valid-run bounds supporting the Chapter 2 prescient dependency. Supplied minimizers are the algorithm update relation, not an assumed regret inequality. Closedness and strict convexity do not guarantee universal attainment or interior preservation. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. No full Algorithm 15.8, Theorem 15.30, chapter/book completion, whole-carrier literal-definition seal or source-repair approval follows."
+            "boundary": "These are four derived library transports and two conditional valid-run bounds supporting the Chapter 2 prescient dependency. Supplied minimizers are the algorithm update relation, not an assumed regret inequality. Closedness and strict convexity do not guarantee universal attainment or interior preservation. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. No full Algorithm 15.8, Theorem 15.30, chapter/book completion, whole-carrier literal-definition seal or source-repair approval follows."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Strong convexity of a constrained cumulative objective",
+          "pages": "Definition4.1 printed34/PDF46; Algorithm7.1 printed99/PDF111; Lemma7.5 printed101/PDF113; Corollary7.6 printed102/PDF114; Algorithm15.9/Theorem15.31 printed266/PDF278; downstream Theorem7.47 printed129-130/PDF141-142",
+          "pdf_page": 113,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=113",
+          "math": "F(x)=\\psi(x)+\\sum_{i=0}^{n-1}\\ell_i(x)+\\iota_V(x)\\qquad F(ax+(1-a)y)\\le aF(x)+(1-a)F(y)-\\frac{\\lambda}{2}a(1-a)\\|x-y\\|_E^2",
+          "plain": "This actual F is proper, its effective domain is exactly V, and on V it equals the real-valued regularizer plus the sum of the real loss values. It satisfies the same λ-strong interpolation inequality as the regularizer. The interpolation inequality holds for every x,y ∈ V and every real 0 < a < 1. Both n = 0 and λ = 0 are permitted.",
+          "fallback": "Add the regularizer, the strict-past loss prefix and the indicator of V. The indicator is zero on V and +∞ outside V.",
+          "relationship": "This is a sufficient-condition construction for cumulative objectives used in FTRL arguments. Requiring the regularizer to supply the curvature and the component losses to be convex is stronger than merely assuming curvature of their total. The common finite domain is already explicit in Algorithm 15.9; it selects a sufficient branch of the broader extended-real formulation of Algorithm 7.1. A real extension of ψ outside V does not affect the constrained objective. For each included loss, combine the below-top domain condition with the global exclusion of bottom. On V the loss is then the coercion of its real part. The domain condition alone would not exclude bottom. Induct over the finite prefix to exclude bottom from the sum and compute its finite values on V. Adding the indicator gives +∞ outside V and the real-sum identity inside V, so dom F = V. Apply the existing properness theorem to this actual F, its derived exclusion of bottom and the nonempty set V. Properness is produced from these premises, rather than supplied as an assumption about F. Sum the convexity inequalities of the real loss restrictions and add the strong convexity inequality for ψ. Rewrite the finite identities to recover the displayed inequality with exactly the original-norm quadratic penalty.",
+          "contract": {
+            "model": "A real normed space E, a nonempty constraint set V, a real-valued regularizer ψ and extended-real losses. The quadratic penalty uses the original norm on E.",
+            "assumptions": "Let n be a natural number and λ ≥ 0. The regularizer is λ-strongly convex on V. Each included loss ℓᵢ, for i < n, is globally different from −∞, finite on V, and has a convex real restriction on V. Convexity of V follows from the regularizer assumption. No finite-dimensionality, completeness or inner-product structure is required.",
+            "parameters": "n ≥ 0 and λ ≥ 0; λ = 0 and empty prefix allowed.",
+            "regret": "Cumulative objective construction only, not a regret bound.",
+            "guarantee": "This actual F is proper, its effective domain is exactly V, and on V it equals the real-valued regularizer plus the sum of the real loss values. It satisfies the same λ-strong interpolation inequality as the regularizer."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled cumulative-objective producer",
+            "boundary": "This construction does not establish closedness, positive curvature, a global source subgradient, or an attained minimum of F. Applying Theorem 6.9 to F still requires its remaining premises, including its printed nonempty subgradient-domain premise. Algorithm-specific support witnesses, constrained attainment, interior membership, trajectories and regret bounds remain separate obligations."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Finite regret accounting with an explicit terminal gap",
+          "pages": "Derived finite-real accounting for Theorem 7.47 printed 129–130/PDF 141–142 and Theorem 15.31 printed 266–267/PDF 278–279; Orabona v10. Not literal Lemma 7.1.",
+          "pdf_page": 141,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=141",
+          "math": "y_t=\\begin{cases}z&t=T,\\\\x_t&t\\ne T,\\end{cases}\\qquad G_t(v)=\\psi_t(v)+\\sum_{i=0}^{t}\\ell_i(v)\\qquad \\begin{aligned}\\sum_{t=0}^{T-1}(\\ell_t(y_t)-\\ell_t(u))={}&\\psi_{T-1}(u)-\\psi_0(y_0)\\\\&+\\sum_{t=0}^{T-1}(G_t(y_t)-G_t(y_{t+1}))\\\\&+\\sum_{t=0}^{T-2}(\\psi_t(y_{t+1})-\\psi_{t+1}(y_{t+1}))\\\\&+G_{T-1}(z)-G_{T-1}(u).\\end{aligned}",
+          "plain": "The regret equals the initial/comparator regularizer difference, the successive potential drops, the regularizer-change sum, and the explicit terminal gap. An empty regularizer-change sum at T = 1 is zero.",
+          "fallback": "Set yₜ = xₜ for t ≠ T and y_T = z. Define Gₜ(v) = ψₜ(v) + ∑ᵢ₌₀ᵗ ℓᵢ(v), including the current loss. For all t < T, yₜ = xₜ, so changing z does not change the regret on the left.",
+          "relationship": "Derived finite-real terminal-accounting subclause of repairs for Theorems 7.47 and 15.31, not a restatement of Lemma 7.1. Expand the inclusive cumulative potential to obtain Gₙ₊₁(v) = Gₙ(v) + ψₙ₊₁(v) − ψₙ(v) + ℓₙ₊₁(v). All operations are ordinary real arithmetic. For a prefix of n + 1 rounds, retain the last term Gₙ(yₙ₊₁) − Gₙ(u). The one-round case follows by expanding G₀ and cancelling terms. Extend the identity by one round. Expand each finite sum at its last index and substitute the recurrence for G. The intermediate potential terms cancel; the change from ψₙ to ψₙ₊₁ remains as the explicit regularizer-change summand. Use T > 0 to set n = T − 1, then substitute y_T = z. This gives the displayed terminal gap without assigning it a sign.",
+          "contract": {
+            "model": "Let E be any type. For every natural index t, let ψₜ and ℓₜ be total real-valued functions on E. Let x be any E-valued sequence, u and z any points of E, and T a positive natural number. No norm, convexity, minimization rule or feasibility condition is assumed.",
+            "assumptions": "Set yₜ = xₜ for t ≠ T and y_T = z. Define Gₜ(v) = ψₜ(v) + ∑ᵢ₌₀ᵗ ℓᵢ(v), including the current loss. For all t < T, yₜ = xₜ, so changing z does not change the regret on the left.",
+            "parameters": "T > 0; arbitrary x, u and terminal point z. At T = 1 the regularizer-change sum is empty.",
+            "regret": "Exact real-valued regret accounting, with terminal gap retained; no inequality after deleting the gap.",
+            "guarantee": "The regret equals the initial/comparator regularizer difference, the successive potential drops, the regularizer-change sum, and the explicit terminal gap. An empty regularizer-change sum at T = 1 is zero."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled finite-real accounting identity",
+            "boundary": "This identity does not establish an argmin trajectory, a nonpositive terminal gap, or a regret bound after deleting that gap. It is not the literal Lemma 7.1 statement: the source adapter must preserve its strict-past objective, ψ_(T+1), minimum of the initial regularizer and first-T iterate independence. Extended-real cases still require a finite-value branch, a separate one-sided +∞ comparator branch, and an explicit disposition of undefined infinity subtraction."
           },
           "statement_provenance": "derived-support"
         },
@@ -1783,14 +1991,198 @@
             "assumptions": "For 0<alpha<1, take a natural T with T>=2/((1-alpha)*phi(alpha)), in a nontrivial finite-dimensional real inner-product space. Start the fixed unprojected OSD recursion at zero with source step eta_t=t^(-alpha). There exists a real-valued convex 1-Lipschitz loss sequence whose pre-update regret against zero is at least phi(alpha)*T^(2-alpha)/2.",
             "parameters": "0<alpha<1; natural T>=2/((1-alpha)*phi(alpha)); zero initial point and zero comparator; positive finite dimension. The witness may depend on the horizon.",
             "regret": "R_T(0)=sum_{t<T}(loss_t(X_t)-loss_t(0)) >= phi(alpha)*T^(2-alpha)/2. The source coefficient lies in (0,1-log(2)) and has left limit 1-log(2)>=3/10.",
-            "guarantee": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. Whole-book acceptance remains open."
+            "guarantee": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. Whole-book acceptance remains open."
           },
           "local_status": {
             "status": "compiled",
             "label": "Theorem 5.4 and coefficient supplements",
-            "boundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. Seven required Chapter 2 forward containers remain open. The total number of required chapter proofs is unknown. Whole-book acceptance remains open."
+            "boundary": "The lower bound concerns this fixed unprojected OSD recursion with polynomially decreasing steps. The adversarial loss sequence may depend on T. Four definitions, eight derived supporting theorems and three source-facing components describe one printed result. Theorem 5.4, phi_range and phi_limit together cover its bound, coefficient range and left-limit supplement. At the time of this package review, the chapter inventory grouped the open forward obligations into eight containers. Whole-book acceptance remains open."
           },
           "statement_provenance": "source-restatement"
+        },
+        {
+          "label": "FTRL accounting when the used extended-real values are finite",
+          "pages": "Orabona v10, Lemma 7.1, printed p. 100/PDF p. 112; explicit finite-value branch of the printed extended-real claim.",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}\\sum_{t=1}^{T}(\\ell_t(x_t)-\\ell_t(u))={}&\\psi_{T+1}(u)-\\min_{v\\in V}\\psi_1(v)\\\\&+\\sum_{t=1}^{T}\\bigl[F_t(x_t)-F_{t+1}(x_{t+1})+\\ell_t(x_t)\\bigr]\\\\&+F_{T+1}(x_{T+1})-F_{T+1}(u).\\end{aligned}",
+          "plain": "The displayed equality is interpreted through the real values of the finite extended-real terms. The terminal difference is retained with its sign unchanged. At T = 0, the empty-round identity follows from the attained initial minimum.",
+          "fallback": "Source F_t(v) = ψ_t(v) + ∑_{i=1}^{t−1}ℓ_i(v). Lean index n corresponds to source n+1: Lean ψ T is source ψ_(T+1), and Lean x T is the terminal point. This is distinct from the earlier inclusive G_t accounting identity.",
+          "relationship": "The source-domain regularizers are extended outside X by an arbitrary real value using Function.extend. A proved restriction identity and a private subtype back-transport show that objectives, minimizer assumptions, finite-use assumptions, initial minimum and the final equality agree on all source-used points. The source codomain excludes bottom. Together with the finite-use conditions this proves every relevant value equals the coercion of its real part. A finite-prefix induction expands the comparator cumulative value without invoking any default value of toReal at infinity. At the initial point, the empty-prefix objective is ψ₁. Feasibility and its supplied minimizer inequality give a nonempty image and an attained lower bound, so the real sInf used in Lean equals the actual minimum ψ₁(x₁). Telescope the real values F_t(x_t), retain the played-loss sum, and expand F_(T+1)(u). Substitute the attained initial minimum. No convexity, unique minimizer or global finite-loss premise is added.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty. Source regularizers ψ₁,…,ψ_(T+1) are real-valued on X. Losses may take +∞ but never −∞. Let u ∈ X; u need not belong to V.",
+            "assumptions": "Supply a feasible minimizer x_t of each strict-past objective F_t over V through the terminal index T+1. Require the cumulative values at those selected points, each played loss, and each comparator loss to be finite. These finiteness conditions qualify the finite branch; they are not silently attributed to the unrestricted printed statement.",
+            "parameters": "T is any natural number, including zero. Source F_t(v) = ψ_t(v) + ∑_{i=1}^{t−1}ℓ_i(v). Lean index n corresponds to source n+1: Lean ψ T is source ψ_(T+1), and Lean x T is the terminal point. This is distinct from the earlier inclusive G_t accounting identity.",
+            "regret": "The displayed equality is interpreted through the real values of the finite extended-real terms. The terminal difference is retained with its sign unchanged. At T = 0, the empty-round identity follows from the attained initial minimum.",
+            "guarantee": "The displayed equality is interpreted through the real values of the finite extended-real terms. The terminal difference is retained with its sign unchanged. At T = 0, the empty-round identity follows from the attained initial minimum."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled finite-value branch",
+            "boundary": "This declaration proves only the finite-used-values regret equality, with the terminal difference retained. It does not prove prefix coupling or construct an argmin run. Other B7 regimes remain separate, including lawful infinite-played cases, one-sided +∞ comparator cases, and undefined infinity subtraction. This list is not an exhaustive classification of extended-real cases. For the exact domain of the printed equality, see “When the printed FTRL right side is defined”. Its companion statements distinguish a one-sided infinite value from undefined arithmetic."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Regularizer extensions agree on the source domain",
+          "pages": "Representation interface for Orabona v10 Lemma 7.1, printed p. 100/PDF p. 112; not a separately printed source theorem.",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\psi_n|_X=\\widetilde\\psi_n|_X\\ (0\\le n\\le T)\\Longrightarrow F_n|_X=\\widetilde F_n|_X,\\quad \\operatorname{argmin}_V F_n=\\operatorname{argmin}_V\\widetilde F_n.",
+          "plain": "The objectives agree on X, the minimizer predicates agree for every feasible point, and the initial real infima agree. Equality of infima here follows from equality of the image sets; it does not assert attainment.",
+          "fallback": "Let V ⊆ X ⊆ ℝᵈ and T be any natural number. Take two total real-valued regularizer sequences and one shared extended-real loss sequence.",
+          "relationship": "Add the same strict-past loss prefix to equal regularizer values on X. Use V ⊆ X and feasibility of the candidate minimizer to rewrite both sides of each minimizer inequality. The initial regularizers have the same image on V, so their sInf values are identical.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ and T be any natural number. Take two total real-valued regularizer sequences and one shared extended-real loss sequence. Define the zero-based strict-past objectives Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v) and F̃ₙ(v) = ψ̃ₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), using the same loss sequence; the sums are empty at n = 0.",
+            "assumptions": "The regularizers agree at every point of X through the terminal index. This representation theorem permits arbitrary EReal losses, including bottom, because it compares identical expressions and makes no finite-arithmetic claim.",
+            "parameters": "T is any natural number, including zero. ",
+            "regret": "The objectives agree on X, the minimizer predicates agree for every feasible point, and the initial real infima agree. Equality of infima here follows from equality of the image sets; it does not assert attainment.",
+            "guarantee": "The objectives agree on X, the minimizer predicates agree for every feasible point, and the initial real infima agree. Equality of infima here follows from equality of the image sets; it does not assert attainment."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled representation interface",
+            "boundary": "This is a representation generalization, not an unrestricted source regret equality. It does not prove finiteness, attainment, trajectory existence or equality of independently selected minimizers."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Changing the terminal regularizer preserves a coupled prefix",
+          "pages": "Explicit coupled interpretation of the final independence clause in Orabona v10 Lemma 7.1, printed p. 100/PDF p. 112.",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "x_n^\\prime=\\begin{cases}x_n&n<T,\\\\z&n=T,\\end{cases}\\qquad x_n^\\prime\\in\\operatorname{argmin}_{v\\in V}\\widetilde F_n(v)\\quad(0\\le n\\le T).",
+          "plain": "The changed run has exactly the supplied first T points and is valid through its supplied terminal minimizer. At T = 0 the prefix is empty and the result uses z alone; it does not claim x′₀ = x₀.",
+          "fallback": "Let V ⊆ X ⊆ ℝᵈ and T be any natural number. Keep the loss sequence fixed and let two regularizer sequences agree on X at all indices before T.",
+          "relationship": "Before the terminal index, the new point equals the supplied old point. The two objectives agree on X, so the original minimizer inequality remains valid on V. At the terminal index, feasibility and minimality are exactly the supplied properties of z.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ and T be any natural number. Keep the loss sequence fixed and let two regularizer sequences agree on X at all indices before T. Define the zero-based strict-past objectives Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v) and F̃ₙ(v) = ψ̃ₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), using the same loss sequence; the sums are empty at n = 0.",
+            "assumptions": "Supply the same feasible minimizing prefix x_n for n < T and a feasible minimizer z for the changed terminal objective. Losses may be arbitrary EReal here: this statement transports minimizer predicates without cancelling infinities. No uniqueness is assumed.",
+            "parameters": "T is any natural number, including zero. ",
+            "regret": "The changed run has exactly the supplied first T points and is valid through its supplied terminal minimizer. At T = 0 the prefix is empty and the result uses z alone; it does not claim x′₀ = x₀.",
+            "guarantee": "The changed run has exactly the supplied first T points and is valid through its supplied terminal minimizer. At T = 0 the prefix is empty and the result uses z alone; it does not claim x′₀ = x₀."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled coupled-run interface",
+            "boundary": "This declaration proves only the validity of an explicitly coupled prefix and supplied terminal minimizer. It permits arbitrary EReal losses and proves no finite-value regret equality, finiteness, automatic attainment or equality of independently selected minimizers. For the exact domain of the printed equality, see “When the printed FTRL right side is defined”. Its companion statements distinguish a one-sided infinite value from undefined arithmetic."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "When the printed FTRL right side is defined",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\nR\\text{ is defined}\\iff (\\forall n\\le T,\\ a_n<+\\infty)\\ \\land\\ \\neg(P\\land C).",
+          "plain": "No selected-finiteness premise is assumed for this characterization. The right side is defined exactly when every selected objective is finite and played and comparator infinities do not both occur.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "First prove the initial real infimum is an attained minimum. If a selected objective first becomes +∞, its minimizing inequality at the preceding feasible point forces that round’s played loss to be +∞; the printed bracket then contains undefined infinity arithmetic. If every selected objective is finite, bracket sums are finite or +∞ according to P, while the terminal comparator contributes −∞ exactly according to C. Their ordered combination is defined precisely when P and C do not both hold.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "No selected-finiteness premise is assumed for this characterization. The right side is defined exactly when every selected objective is finite and played and comparator infinities do not both occur.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "No selected-finiteness premise is assumed for this characterization. The right side is defined exactly when every selected objective is finite and played and comparator infinities do not both occur."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "This is a definedness characterization of R, not a claim that L is undefined whenever R is undefined. The selected-top model has L = +∞ and undefined R. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "FTRL equality on its lawful arithmetic domain",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land\\neg(P\\land C)\\Longrightarrow L=R\\text{ and both are defined}.",
+          "plain": "Require finite selected objectives and exclude the simultaneous occurrence of played and comparator +∞ values. The equality is then a lawful partial-arithmetic equality, never an equality of two undefined expressions. At T = 0 it gives 0 = 0.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "Split according to P and C. When neither occurs, no-bottom and the selected-finiteness premise identify every used value with the coercion of its real part. Invoke the existing strict-past finite-values theorem with all its arguments and the attained initial minimum. The remaining two cases use the one-sided infinite identities below, without cancelling infinities. A private source-domain certificate constructs Function.extend, proves restriction on X, transports objectives and the initial image/minimum, and applies this theorem before transporting the result back to source-subtype regularizers.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives and exclude the simultaneous occurrence of played and comparator +∞ values. The equality is then a lawful partial-arithmetic equality, never an equality of two undefined expressions. At T = 0 it gives 0 = 0.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives and exclude the simultaneous occurrence of played and comparator +∞ values. The equality is then a lawful partial-arithmetic equality, never an equality of two undefined expressions. At T = 0 it gives 0 = 0."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "The equality requires the displayed lawful-domain qualification; it is not the unrestricted printed equality. No new prefix-coupling theorem or trajectory existence follows. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "A played infinity gives a lawful positive-infinite identity",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land P\\land\\neg C\\Longrightarrow L=R=+\\infty.",
+          "plain": "Require finite selected objectives, at least one played +∞ loss, and no comparator +∞ loss.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "Every comparator loss is finite. Each regret summand is finite or +∞, and a witnessed played infinity makes their sum +∞. Each printed bracket has finite selected endpoints; its sum likewise contains +∞. The remaining finite terminal arithmetic preserves +∞. No infinite cancellation is used.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives, at least one played +∞ loss, and no comparator +∞ loss.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives, at least one played +∞ loss, and no comparator +∞ loss."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "This proves only the played-infinite, comparator-finite regime. It does not permit both kinds of infinity or an infinite selected objective. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "A comparator infinity gives a lawful negative-infinite identity",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land\\neg P\\land C\\Longrightarrow L=R=-\\infty.",
+          "plain": "Require finite selected objectives, no played +∞ loss, and at least one comparator +∞ loss.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "Each played loss is finite. The regret terms are finite or −∞, and a comparator infinity supplies a −∞ term. The bracket sum is finite, while F_T(u) is +∞, so the final subtraction gives −∞. The conclusion follows by one-sided ordered arithmetic rather than cancellation.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives, no played +∞ loss, and at least one comparator +∞ loss.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives, no played +∞ loss, and at least one comparator +∞ loss."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "This proves only the comparator-infinite, played-finite regime. A −∞ regret value here is a defined extended-real result, not an undefined expression. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Both types of infinity make the printed equality undefined",
+          "pages": "Orabona v10, Lemma 7.1: printed p. 100 / PDF p. 112",
+          "pdf_page": 112,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=112",
+          "math": "\\begin{aligned}L&=\\sum_{n=0}^{T-1}(\\ell_n(x_n)-\\ell_n(u)),\\\\R&=\\bigl((\\psi_T(u)-\\min_{v\\in V}\\psi_0(v))+\\sum_{n=0}^{T-1}[(a_n-a_{n+1})+\\ell_n(x_n)]\\bigr)+a_T-F_T(u).\\end{aligned}\n(\\forall n\\le T,\\ a_n<+\\infty)\\land P\\land C\\Longrightarrow L\\text{ and }R\\text{ are undefined}.",
+          "plain": "Require finite selected objectives and the occurrence of both a played and a comparator +∞ loss; these occurrences need not share an index.",
+          "fallback": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+          "relationship": "At a common index, the regret difference is +∞ minus +∞ and is undefined. At different indices, either a local difference is already undefined or the ordered sum contains both a lawful +∞ and a lawful −∞ term, so it cannot have a defined result. On the right, a positive-infinite bracket sum meets the negative-infinite terminal comparator contribution. The same-index model has finite attained selected objectives, so this arithmetic obstruction does not depend on how an all-infinite argmin would be interpreted.",
+          "contract": {
+            "model": "Let V ⊆ X ⊆ ℝᵈ, with V closed and nonempty, and let T be any natural number. Regularizers are real-valued on X. For every i < T, losses take values in ℝ ∪ {+∞}, never −∞, on the ambient space. Supply feasible order minimizers xₙ of Fₙ over V for 0 ≤ n ≤ T. The comparator u lies in X and need not lie in V. Lean uses an ambient real-valued extension agreeing with the source regularizer on X. The actual Function.extend restriction and source-subtype backtransport certificate recover the X-domain formulation without changing values on X.",
+            "assumptions": "Require finite selected objectives and the occurrence of both a played and a comparator +∞ loss; these occurrences need not share an index.",
+            "parameters": "Use zero-based Fₙ(v) = ψₙ(v) + ∑ᵢ₌₀ⁿ⁻¹ ℓᵢ(v), with an empty sum at n = 0. Lean n corresponds to printed n+1, so ψ_T and x_T represent printed ψ_(T+1) and x_(T+1). Let aₙ = Fₙ(xₙ), P mean some played loss ℓᵢ(xᵢ) is +∞, and C mean some comparator loss ℓᵢ(u) is +∞. Evaluate the printed arithmetic as partial extended-real arithmetic: opposing infinities cannot be added, equal infinities cannot be subtracted, and an undefined subexpression makes its ordered enclosing expression undefined. A defined result may be finite, +∞ or −∞. Lean some z records that defined value; none records undefined arithmetic, not a numerical value.",
+            "regret": "L and R denote the two sides of the printed equality, evaluated in their displayed order.",
+            "guarantee": "Require finite selected objectives and the occurrence of both a played and a comparator +∞ loss; these occurrences need not share an index."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled partial-arithmetic result",
+            "boundary": "The theorem identifies undefined arithmetic, not a lawful none = none regret identity. Distinct-index examples show why checking each individual difference is insufficient. This package concerns the arithmetic domain of a supplied minimizing run. It does not construct a run, justify algorithm-specific terminal-term deletion, or finish targets 133/168, the algorithm-specific targets 86/87, Chapter 2 or the book. Selected-top examples are obstructions for the order-minimizer interface; attributing them to the printed algorithm depends on its argmin convention. The finite-selected same-index both-top example is independent of that convention."
+          },
+          "statement_provenance": "derived-support"
         },
         {
           "label": "Generic strict-past FTL: conditional minimizer and feasible initialization",
@@ -1811,7 +2203,143 @@
           "local_status": {
             "status": "compiled",
             "label": "Conditional FTL selector and its library properties",
-            "boundary": "One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The 65 overlapping source containers are navigation, not an independent proof denominator. Seven required forward containers and whole-chapter reconciliation remain open. Chapter 2 stays partial and its proof denominator remains unknown. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied."
+            "boundary": "One algorithm-definition anchor has four definitions and nine derived library proofs. It adds no printed theorem count or regret bound. Existing scalar linear and squared-loss FTL strategies remain source-qualified specializations without a proved equality to this generic selector. The generic FTL package used an earlier inventory of 65 overlapping source containers. The published Chapter 2 inventory lists 73 original source rows, 172 overlapping effective records and 121 dependency edges. Chapter 2 remains partial. Whole-chapter acceptance requires reconciliation of the individual obligations. This library realization uses one fixed noncomputable classical Option choice: some p certifies an attained feasible minimum; none means no such minimum exists. No convexity or attainment premise is needed by the definitions or conditional soundness statements; the named unique-output lemma separately assumes an attained feasible minimizer and uniqueness. The source Euclidean setting is generalized to arbitrary X. Tied source choices need not agree; equality results compare this same fixed selector. Each prefix is queried separately, so a later some after none does not provide a complete online interaction. Feedback acquisition, a computable or measurable optimizer, unconditional attainment and a new regret bound are not supplied."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "BTRL regret with the last actual iterate",
+          "pages": "Algorithm 15.9 / Theorem 15.31, printed pp. 266–267, PDF pp. 278–279",
+          "pdf_page": 278,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=278",
+          "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T\\bigl(\\ell_t(x_t)-\\ell_t(u)\\bigr),\\\\\nM&=\\sum_{t=1}^{T-1}\\tfrac{\\lambda_t}{2}\\lVert x_t-x_{t+1}\\rVert^2,\\\\\nD&=\\sum_{t=1}^{T-1}\\bigl(\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})\\bigr),\\\\\nB&=\\psi_T(u)-\\psi_1(x_1)-M+D,\\\\\nR_T(u)&\\le B-\\tfrac{\\lambda_T}{2}\\lVert u-x_T\\rVert^2\\le B.\n\\end{aligned}",
+          "plain": "The regret is at most B minus the final comparator penalty, hence also at most B. Each genuine transition earns a negative quadratic term. There is no transition to a new algorithm iterate after the last round.",
+          "fallback": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1). The comparator u belongs to V. An empty movement or drift sum at T=1 is zero. Why specify the endpoint? With T=1, X=V=ℝ, λ₁=2, ψ(v)=v²/2, ℓ(v)=(v−1)²/2 and u=x₁=1/2, the regret and corrected bound are zero. Minimizing ψ+2ℓ invents a second point 2/3 and would give 0≤−1/36.",
+          "relationship": "In the inclusive regret identity choose the auxiliary endpoint z=x_T. The last difference G_T(x_T)−G_T(z) is then zero. For t<T, constrained minimum growth bounds Gₜ(xₜ)−Gₜ(xₜ₊₁) by −(λₜ/2)‖xₜ−xₜ₊₁‖². Apply the same growth inequality at t=T to u to retain the last comparator penalty. The changes of regularizer have sign ψₜ(xₜ₊₁)−ψₜ₊₁(xₜ₊₁). The book reaches its formula through Theorem 7.47 by using the current loss as a hint. This proof uses the inclusive identity and minimum growth directly.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space, with V nonempty, closed and convex. On round t=1,…,T, the learner sees ℓₜ before choosing xₜ. The regularizer ψₜ is real on X; the ambient loss takes values in ℝ ∪ {+∞} and is finite on V. The inclusive objective is Gₜ(v)=ψₜ(v)+∑ᵢ₌₁ᵗ ℓᵢ(v) on X. It is proper, closed and λₜ-strongly convex in the original norm. The repaired result uses T≥1 and λₜ>0.",
+            "assumptions": "Supply a feasible minimizer xₜ of Gₜ on V for each real round and u∈V. All values used in the regret and in the inclusive telescoping identity are finite. Positive curvatures and the source assumptions on the cumulative objectives are retained. Lean uses real sublevels relative to X. A closed ambient representative agreeing on X gives relative closedness. Agreement only on V gives closed feasible sublevels. For finite endpoints p,q in X, the interpolation inequality is required at each point a·p+(1−a)·q that belongs to X. The entire chord need not lie in X. Convexity of V ensures membership for every feasible chord. No closedness of X or convexity of each individual loss is needed.",
+            "parameters": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1). The comparator u belongs to V. An empty movement or drift sum at T=1 is zero.",
+            "regret": "Cumulative played loss minus cumulative loss of the one feasible comparator u.",
+            "guarantee": "The regret is at most B minus the final comparator penalty, hence also at most B. Each genuine transition earns a negative quadratic term. There is no transition to a new algorithm iterate after the last round."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Corrected BTRL terminal bound",
+            "boundary": "Theorem 15.31 prints a movement sum up to T; Algorithm 15.9 defines no x_(T+1). This is the labelled last-iterate repair, with an additional endpoint refinement. It does not assert the unqualified printed formula for an arbitrary next point."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Why the BTRL round has a unique feasible choice",
+          "pages": "Algorithm 15.9 / Theorem 15.31, printed pp. 266–267, PDF pp. 278–279",
+          "pdf_page": 278,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=278",
+          "math": "\\begin{aligned}\nH_t(v)&=\\begin{cases}G_t(v)&v\\in V,\\\\+\\infty&v\\notin V,\\end{cases}\\\\\n\\operatorname{dom}H_t&=V,\\\\\n\\forall t\\in\\{1,\\ldots,T\\},\\quad&\n\\exists!\\,p\\in V:\\ \\forall q\\in V,\\ G_t(p)\\le G_t(q).\n\\end{aligned}",
+          "plain": "Every real round has exactly one feasible minimizer. The minimum is taken over V even when the unconstrained optimum lies elsewhere. This is an existence theorem, not a computable selection algorithm.",
+          "fallback": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1). If X=(−1,1), V=[−1/2,1/2] and G(v)=v², the level-1 sublevel of the extension by +∞ off X is the nonclosed interval X. Restricting instead to closed V gives the closed sublevel needed in the proof.",
+          "relationship": "Extend Gₜ by +∞ off V, leaving its values on V unchanged. For each real threshold, restrict the sublevel from X to V and use closedness of V in the ambient space: the extended function Hₜ is closed. It is proper with effective domain V. Strong convexity on V makes the restricted epigraph convex. In finite-dimensional coordinates, a relative-interior point of the domain supplies a supporting subgradient. Apply the strong-convexity attainment theorem to Hₜ with its original norm, then translate its unique global minimum back to V.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space, with V nonempty, closed and convex. On round t=1,…,T, the learner sees ℓₜ before choosing xₜ. The regularizer ψₜ is real on X; the ambient loss takes values in ℝ ∪ {+∞} and is finite on V. The inclusive objective is Gₜ(v)=ψₜ(v)+∑ᵢ₌₁ᵗ ℓᵢ(v) on X. It is proper, closed and λₜ-strongly convex in the original norm. The repaired result uses T≥1 and λₜ>0.",
+            "assumptions": "No minimizing trajectory is supplied. For every t, the finite loss domains cover V. On X the inclusive objective has closed real sublevels, satisfies the properness conditions, and has the stated positive curvature. Lean uses real sublevels relative to X. A closed ambient representative agreeing on X gives relative closedness. Agreement only on V gives closed feasible sublevels. For finite endpoints p,q in X, the interpolation inequality is required at each point a·p+(1−a)·q that belongs to X. The entire chord need not lie in X. Convexity of V ensures membership for every feasible chord. No closedness of X or convexity of each individual loss is needed.",
+            "parameters": "The formulas use the printed one-based indices. In Lean index n=t−1, so source x_T is x (T−1).",
+            "regret": "No regret bound is needed to prove per-round feasibility and uniqueness.",
+            "guarantee": "Every real round has exactly one feasible minimizer. The minimum is taken over V even when the unconstrained optimum lies elsewhere. This is an existence theorem, not a computable selection algorithm."
+          },
+          "local_status": {
+            "status": "compiled",
+            "label": "Derived BTRL attainment",
+            "boundary": "This is a library proof of the well-definedness needed by Algorithm 15.9 under the repaired hypotheses, not a separately numbered source theorem. It does not require the extension by +∞ off X to be globally closed or identify the minimizer with an unconstrained ambient one."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Why every actual hinted round has a unique choice",
+          "pages": "Algorithm 7.8 / Theorem 7.47, printed pp. 129–130, PDF pp. 141–142",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\forall t\\in\\{1,\\dots,T\\},\\quad\\exists!\\,p\\in V:\\quad\\forall q\\in V,\\ A_t(p)\\le A_t(q).",
+          "plain": "Each real round has one and only one feasible minimizer of its hinted, strictly-past objective.",
+          "fallback": "Each real round has one and only one feasible minimizer of its hinted, strictly-past objective. This is a unique feasible point on each actual round. The current loss has not yet been revealed. A minimum of an unhinted objective is not asserted here.",
+          "relationship": "Transfer hinted curvature from its own separating norm to the displayed norm. Extend the hinted objective by +∞ outside closed V. Map the available supporting functional to finite-dimensional Euclidean coordinates and apply the shared attainment Theorem 6.9 in the original norm. Its unique feasible minimizer is the unique round prediction.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1.",
+            "assumptions": "The Aₜ assumptions concern each actual round, including existence of a positive modulus in some norm, closed finite values on V and a support at every feasible point. The first conclusion of Theorem 7.47 states that each actual round has a unique minimizer. The Lean interface makes finiteness and supporting functionals on all of V explicit. Algorithm 7.8 separately requires the loss revealed after the choice to be finite at the played point.",
+            "parameters": "The zero-based Lean index n is source t−1. At n=0 there are no past losses. ",
+            "regret": "This is an attainment statement about a feasible minimizer.",
+            "guarantee": "This is a unique feasible point on each actual round. The current loss has not yet been revealed. A minimum of an unhinted objective is not asserted here. The first conclusion of Theorem 7.47 states that each actual round has a unique minimizer. The Lean interface makes finiteness and supporting functionals on all of V explicit. Algorithm 7.8 separately requires the loss revealed after the choice to be finite at the played point. With the regularizer and hint fixed for the present round, the objective uses only losses strictly before that round. A support or a finite value of the yet-unrevealed loss is not assumed to construct the minimizer."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "Why the terminal point exists even at zero inclusive curvature",
+          "pages": "Algorithm 7.8 / Theorem 7.47, printed pp. 129–130, PDF pp. 141–142",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\exists z\\in V,\\quad\\forall q\\in V,\\quad G_T(z)\\le G_T(q).",
+          "plain": "There is a feasible z whose final inclusive value is no larger than that of any feasible comparator; there can be more than one such z.",
+          "fallback": "There is a feasible z whose final inclusive value is no larger than that of any feasible comparator; there can be more than one such z. With terminal hint zero, the ghost minimizes the unhinted G_T. Existence is enough. For A₁(q)=q²/2 on [0,∞) and G₁(q)=max(q−1,0)²/2, the actual play is uniquely 0 while the terminal argmin is all of [0,1].",
+          "relationship": "The last hinted objective grows at least quadratically away from x_T. The support of the forecast error adds an affine lower bound to it. Their sum bounds the G_T-sublevel containing x_T inside a ball. It is nonempty, closed and compact; take its minimum and compare with points outside. This proof does not need λ_T>0.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1.",
+            "assumptions": "Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. Supply a real minimizing run xₜ and a support of ℓₜ−hₜ on V at each played point. These additional premises belong to the second part of the source theorem.",
+            "parameters": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. In both continuations set ψ_(T+1)=ψ_T. For the labelled correction set h_(T+1)=0 on V.",
+            "regret": "This is an attainment statement about a feasible minimizer.",
+            "guarantee": "With terminal hint zero, the ghost minimizes the unhinted G_T. Existence is enough. For A₁(q)=q²/2 on [0,∞) and G₁(q)=max(q−1,0)²/2, the actual play is uniquely 0 while the terminal argmin is all of [0,1]. This is the terminal existence needed by the labelled zero-hint correction. The terminal point is auxiliary and never incurs a played loss."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "The sharp regret bound with a zero terminal hint",
+          "pages": "Algorithm 7.8 / Theorem 7.47, printed pp. 129–130, PDF pp. 141–142",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T[\\ell_t(x_t)-\\ell_t(u)],\\\\\nK_T(u)&=\\psi_T(u)-\\psi_1(x_1)+\\sum_{t=1}^{T-1}[\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})],\\\\\ny_{t+1}(z)&=\\begin{cases}x_{t+1}&t<T,\\\\z&t=T,\\end{cases}\\\\\nS_T(z)&=\\sum_{t=1}^{T}\\left[g_t(x_t-y_{t+1}(z))-\\tfrac{\\lambda_t}{2}\\lVert x_t-y_{t+1}(z)\\rVert^2\\right],\\\\\nR_T(u)&\\le K_T(u)+S_T(z).\n\\end{aligned}",
+          "plain": "Regret is bounded by the final-minus-initial regularizer and its drift, plus the sum of the support pairing minus quadratic movement over the real transitions and the zero-hint terminal displacement.",
+          "fallback": "Regret is bounded by the final-minus-initial regularizer and its drift, plus the sum of the support pairing minus quadratic movement over the real transitions and the zero-hint terminal displacement. The signed sum sees every actual transition and the terminal displacement. For two actual rounds one can have R=11, regularizer baseline 5/2, drift 4, and sharp contributions 0 and 9/2. Removing the drift gives a false bound of 7.",
+          "relationship": "The optimality inequality for Aₜ and the support for ℓₜ−hₜ give an affine support for Gₜ at xₜ. Strong growth in the original norm bounds each inclusive difference. Apply the finite regret identity first with arbitrary z; for this z the terminal G_T-gap is nonpositive.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1.",
+            "assumptions": "Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. Take any supporting gₜ of ℓₜ−hₜ at xₜ on V, any feasible terminal minimizer z of G_T, and any comparator u∈V. For a covector g, g(v) is its value on the primal vector v.",
+            "parameters": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. In both continuations set ψ_(T+1)=ψ_T. For the labelled correction set h_(T+1)=0 on V.",
+            "regret": "K is the final regularizer at u minus the first regularizer at the first play, plus the regularizer drift through t=T−1. R is cumulative played loss minus cumulative loss at the same fixed feasible u.",
+            "guarantee": "The signed sum sees every actual transition and the terminal displacement. For two actual rounds one can have R=11, regularizer baseline 5/2, drift 4, and sharp contributions 0 and 9/2. Removing the drift gives a false bound of 7. The printed proof repeats the terminal hint. The inequality here uses a zero terminal hint and the final regularizer. A repeated-hint minimizer needs the separate residual bound."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "A comparator bound in the actual dual norm",
+          "pages": "Algorithm 7.8 / Theorem 7.47, printed pp. 129–130, PDF pp. 141–142",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T[\\ell_t(x_t)-\\ell_t(u)],\\\\\nK_T(u)&=\\psi_T(u)-\\psi_1(x_1)+\\sum_{t=1}^{T-1}[\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})],\\\\\nR_T(u)&\\le K_T(u)+\\sum_{t=1}^{T}\\frac{\\lVert g_t\\rVert_*^2}{2\\lambda_t}.\n\\end{aligned}",
+          "plain": "Regret is at most the same baseline and drift plus the sum of squared dual norms divided by twice the corresponding positive modulus.",
+          "fallback": "Regret is at most the same baseline and drift plus the sum of squared dual norms divided by twice the corresponding positive modulus. With primal sup norm on a two-dimensional box, g(a,b)=a+b has dual norm 2. In the frozen positive-curvature model the regret is 8/3 and the valid Young bound is 10/3. Substituting the Euclidean gradient length gives 7/3 and fails. An announced zero modulus makes the divided source expression undefined.",
+          "relationship": "Choose a terminal point by existence, then use the sharp bound, g(v)≤‖g‖_*‖v‖, and a real square completion for each positive λₜ.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1.",
+            "assumptions": "Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. For this bound every specified λₜ is strictly positive. Take any comparator u∈V and any gₜ supporting ℓₜ−hₜ at xₜ against every q∈V. The user does not need to supply a terminal minimizer.",
+            "parameters": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. In both continuations set ψ_(T+1)=ψ_T. For the labelled correction set h_(T+1)=0 on V.",
+            "regret": "K is the final regularizer at u minus the first regularizer at the first play, plus the regularizer drift through t=T−1. R is cumulative played loss minus cumulative loss at the same fixed feasible u.",
+            "guarantee": "With primal sup norm on a two-dimensional box, g(a,b)=a+b has dual norm 2. In the frozen positive-curvature model the regret is 8/3 and the valid Young bound is 10/3. Substituting the Euclidean gradient length gives 7/3 and fails. An announced zero modulus makes the divided source expression undefined. The printed expression divides by the chosen λₜ. Definition 4.1 permits a specified zero modulus. This finite, real-valued endpoint is stated only for strictly positive chosen moduli."
+          },
+          "statement_provenance": "derived-support"
+        },
+        {
+          "label": "What remains if the final hint is repeated",
+          "pages": "Algorithm 7.8 / Theorem 7.47, printed pp. 129–130, PDF pp. 141–142",
+          "pdf_page": 142,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=142",
+          "math": "\\begin{aligned}\nR_T(u)&=\\sum_{t=1}^T[\\ell_t(x_t)-\\ell_t(u)],\\\\\nK_T(u)&=\\psi_T(u)-\\psi_1(x_1)+\\sum_{t=1}^{T-1}[\\psi_t(x_{t+1})-\\psi_{t+1}(x_{t+1})],\\\\\ny_{t+1}(z)&=\\begin{cases}x_{t+1}&t<T,\\\\z&t=T,\\end{cases}\\\\\nS_T(z)&=\\sum_{t=1}^{T}\\left[g_t(x_t-y_{t+1}(z))-\\tfrac{\\lambda_t}{2}\\lVert x_t-y_{t+1}(z)\\rVert^2\\right],\\\\\nR_T(u)&\\le K_T(u)+S_T(z)+h_T(u)-h_T(z).\n\\end{aligned}",
+          "plain": "Use the sharp sum for the repeated-hint point and add the last hint at the comparator minus the last hint at the terminal point.",
+          "fallback": "Use the sharp sum for the repeated-hint point and add the last hint at the comparator minus the last hint at the terminal point. In the one-round quadratic model the real point and comparator are 1/2, but the repeated-hint point is 2/3. The sharp term without the residual would give 0≤−1/36. The residual is 5/72 and the actual right-hand side is 1/24.",
+          "relationship": "Reuse the arbitrary-terminal decomposition. From (G_T+h_T)(z)≤(G_T+h_T)(u), bound G_T(z)−G_T(u) by h_T(u)−h_T(z). No other term changes.",
+          "contract": {
+            "model": "Let V ⊆ X in a finite-dimensional real normed space. V is nonempty, convex and closed in the ambient space. On round t, the real regularizer ψₜ lives on X and the hint hₜ on V. Choose xₜ to minimize Aₜ=ψₜ+∑_{i<t} ℓᵢ+hₜ over V, then observe the ambient loss ℓₜ, which never equals −∞ but may be +∞. Write Gₜ=ψₜ+∑_{i≤t} ℓᵢ for the inclusive objective without a hint. Real rounds have indices 1 through T, T≥1; Lean n represents t−1.",
+            "assumptions": "Each Aₜ is finite, closed and supported on V and is strongly convex with a positive modulus in some norm, which may depend on t. For the quantitative conclusions, Gₜ is finite, closed, supported and λₜ-strongly convex on V in the displayed norm. Its λₜ is nonnegative and need not be the positive modulus of Aₜ. The covectors below use the displayed norm and its dual. Take any comparator u∈V and any gₜ supporting ℓₜ−hₜ at xₜ against every q∈V. The specified inclusive curvatures may be zero. Now supply a minimizer z of G_T+h_T over V; it need not minimize G_T.",
+            "parameters": "The zero-based Lean index n is source t−1. The support is a continuous linear functional tested at every feasible comparison point. The printed proof repeats h_(T+1)=h_T on V and keeps ψ_(T+1)=ψ_T. This choice leaves a residual; it cannot justify the zero-hint inequality with the repeated-hint point.",
+            "regret": "K is the final regularizer at u minus the first regularizer at the first play, plus the regularizer drift through t=T−1. R is cumulative played loss minus cumulative loss at the same fixed feasible u.",
+            "guarantee": "In the one-round quadratic model the real point and comparator are 1/2, but the repeated-hint point is 2/3. The sharp term without the residual would give 0≤−1/36. The residual is 5/72 and the actual right-hand side is 1/24. This quantifies over supplied minimizers of the repeated-hint objective. The zero-hint terminal existence theorem alone does not supply such a minimizer."
           },
           "statement_provenance": "derived-support"
         },
@@ -6193,7 +6721,7 @@
           "local_status": {
             "status": "compiled",
             "label": "Four derived initialized-FTL results",
-            "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. Their count is not a proof denominator. Exercises 1.1 and 1.2 are separate; the mandatory proof-leaf total is unknown, and chapter/book completion is not claimed."
+            "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. The source acceptance contract fixes these 17 mandatory objects and 13 explicit dependency obligations. Internal proof-helper count is not a source-target denominator. Exercises 1.1 and 1.2 are separate. Current Chapter 1 main-text acceptance is recorded only by the separately reviewed successor evidence receipt at docs/contracts/online-ch1-source-closure-v1/acceptance-evidence.json, bound to source/rendered candidate af0821053ed64b4b54084fa180b1337d5c79dbc0. That decision covers exactly the frozen main-text requirements and preserves the stated model and metric boundaries. It does not accept independent exercises, Chapter 2, later chapters or the whole book."
           },
           "statement_provenance": "derived-support"
         }
@@ -6242,9 +6770,19 @@
           },
           {
             "title": "Actual stability and finite regret",
-            "detail": "For t>0 use the running-mean recurrence and interval bounds in the difference of squares. Treat the initial-half prediction separately. Lean stability uses a recurrence and squared-distance coefficient calculation instead of the source factor/absolute-value/triangle route. Figure 1.1 illustrates the later harmonic-sum/integral comparison, whose bound is supplied by harmonic_le_one_add_log. The displayed refined chain is the source/teaching branch: insert feasible empirical minimizers into Be-the-Leader, split off the first quarter, and sum the positive-round tail. The actual retained theorem_1_3 instead instantiates Be-the-Leader on Set.univ with empiricalMean_minimizes, applies the coarser 4/(t+1) stability bound to every round, and uses harmonic_le_one_add_log. It does not call meanPredict_regret_refined.",
-            "math": "\\begin{gathered}(p_0-y_0)^2-(a_1-y_0)^2\\le\\tfrac14,\\qquad (p_t-y_t)^2-(a_{t+1}-y_t)^2\\le\\frac4{t+1}\\\\R_T\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s\\le4+4\\log T\\end{gathered}",
-            "fallback": "The initial round has a quarter bound; subsequent stability terms decay reciprocally. The finite tail refines the same source logarithmic upper bound."
+            "detail": "For t>0 use the running-mean recurrence and interval bounds in the difference of squares. Treat the initial-half prediction separately. Lean stability uses a recurrence and squared-distance coefficient calculation instead of the source factor/absolute-value/triangle route. Figure 1.1 illustrates the later harmonic-sum/integral comparison, whose bound is supplied by harmonic_le_one_add_log. The displayed refined chain is the source/teaching branch: insert feasible empirical minimizers into Be-the-Leader, split off the first quarter, and sum the positive-round tail. The actual retained theorem_1_3 instead instantiates Be-the-Leader on Set.univ with empiricalMean_minimizes, applies the coarser 4/(t+1) stability bound to every round, and uses harmonic_le_one_add_log. It does not call meanPredict_regret_refined. For T>=1, write H_T=sum from s=1 to T of 1/s. For each s=2,...,T, the decreasing curve 1/(x-1) on [s,s+1] lies above the rectangle of height 1/s. Add these areas and the first term 1. Substituting u=x-1 gives the integral of 1/u from 1 to T, equal to ln T. Multiplication by4 gives4+4 ln T. At T=1 the tail sum and both integrals are zero. This positive-horizon argument makes no claim about an improper integral at T=0.",
+            "math": "\\begin{gathered}(p_0-y_0)^2-(a_1-y_0)^2\\le\\tfrac14,\\qquad (p_t-y_t)^2-(a_{t+1}-y_t)^2\\le\\frac4{t+1}\\quad(t>0),\\\\ H_T:=\\sum_{s=1}^{T}\\frac1s,\\qquad T\\ge1,\\\\ H_T\\le1+\\int_{2}^{T+1}\\frac{dx}{x-1}\\\\ =1+\\int_{1}^{T}\\frac{du}{u}=1+\\ln T,\\\\ R_T\\le\\tfrac14+4\\sum_{s=2}^{T}\\frac1s\\le4H_T\\le4+4\\ln T.\\end{gathered}",
+            "fallback": "For T>=1, the first harmonic term is1. Each later reciprocal1/s is bounded by the area under1/(x-1) on[s,s+1]. Thus H_T<=1+integral from2 toT+1 of1/(x-1)=1+integral from1 toT of1/u=1+lnT. The half-initial quarter-plus-tail bound is at most4H_T, hence4+4lnT. At T=1 the tail and integrals vanish.",
+            "references": [
+              {
+                "label": "Source proof: Figure 1.1 and harmonic comparison (printed pp.5–6)",
+                "url": "https://arxiv.org/pdf/1912.13213v10#page=17"
+              },
+              {
+                "label": "Reused Mathlib fact: harmonic_le_one_add_log",
+                "url": "https://github.com/leanprover-community/mathlib4/blob/5e932f97dd25535344f80f9dd8da3aab83df0fe6/Mathlib/NumberTheory/Harmonic/Bounds.lean#L33-L57"
+              }
+            ]
           },
           {
             "title": "Fixed comparators and explicit evaluation domains",
@@ -6307,7 +6845,7 @@
             "fallback": "A proved half-initial ordinary limit and a constant-over-horizon correction give the general-initial ordinary best-regret limit."
           }
         ],
-        "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. Their count is not a proof denominator. Exercises 1.1 and 1.2 are separate; the mandatory proof-leaf total is unknown, and chapter/book completion is not claimed. The stochastic and logarithmic-lower-bound cards retain their own causal information models, expectation benchmarks and non-sharp derived constants. No arbitrary protocol reduction, high-probability or full minimax conclusion is added."
+        "boundary": "The four derived guarantees concern one initialized strict-past squared-loss FTL run. The positive-horizon identity allows arbitrary real inputs. The finite regret bound uses a legal initial value and only the scored unit-valued prefix; the two asymptotic results use one all-time unit-valued stream. Upper-epsilon regret and ordinary convergence of best-comparator regret are separate from ordinary fixed-comparator limits. No universal fixed-comparator ordinary-limit inference or author-approved source repair follows. The Chapter 1 reconciliation retains all 17 original main-text claim objects and their explicit model/metric boundaries. The source acceptance contract fixes these 17 mandatory objects and 13 explicit dependency obligations. Internal proof-helper count is not a source-target denominator. Exercises 1.1 and 1.2 are separate. Current Chapter 1 main-text acceptance is recorded only by the separately reviewed successor evidence receipt at docs/contracts/online-ch1-source-closure-v1/acceptance-evidence.json, bound to source/rendered candidate af0821053ed64b4b54084fa180b1337d5c79dbc0. That decision covers exactly the frozen main-text requirements and preserves the stated model and metric boundaries. It does not accept independent exercises, Chapter 2, later chapters or the whole book. The stochastic and logarithmic-lower-bound cards retain their own causal information models, expectation benchmarks and non-sharp derived constants. No arbitrary protocol reduction, high-probability or full minimax conclusion is added."
       }
     },
     {
@@ -7689,6 +8227,222 @@
         ],
         "takeaway": "The actual path witness demonstrates the role of inverse-square rate compensation, not a universal strict path change or worse regret. Structural equalities and finite-loss bounds have different hypotheses.",
         "boundary": "Whole real line, one explicit chosen policy, fixed rate1 and specified loss. No arbitrary-domain, independent-policy, stochastic or source-gap completion claim."
+      }
+    },
+    {
+      "slug": "online-entropy-gap",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Scalar and weighted-pairing steps in the proof of Lemma 6.33",
+        "pages": "printed p. 80 / PDF p. 92",
+        "pdf_page": 92,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "u, x, y",
+          "meaning": "The scalar gap takes any u>0. For the pair bound x and y are positive numbers with no normalization and u=x/y. In the weighted bound x and y are vectors."
+        },
+        {
+          "term": "φ",
+          "meaning": "The logarithmic gap between (u−1)log u and 2(u−1)²/(u+1)."
+        },
+        {
+          "term": "cᵢ, K",
+          "meaning": "Positive weights cᵢ define K by xᵢ>0 and ∑ᵢ xᵢ/cᵢ=1."
+        },
+        {
+          "term": "Dψ(x)[v]",
+          "meaning": "The ambient derivative acts on any real vector v. The weighted-simplex constraint applies only when comparing feasible points."
+        }
+      ],
+      "algorithm": {
+        "title": "From one positive coordinate to the weighted pairing",
+        "kind": "Proof calculation for Lemma 6.33",
+        "steps": [
+          {
+            "title": "Inspect curvature",
+            "detail": "Factor the second derivative; the positive denominator and quadratic factor leave only the squared distance to 1 as a possible zero.",
+            "math": "\\phi''(u)=\\frac{(u-1)^2(u^2+6u+1)}{u^2(u+1)^3}",
+            "fallback": "The curvature vanishes exactly at 1 on the positive half-line."
+          },
+          {
+            "title": "Use the tangent at 1",
+            "detail": "The function is convex and the tangent at 1 is horizontal at height zero.",
+            "math": "\\phi(u)\\ge\\phi(1)+\\phi'(1)(u-1)=0",
+            "fallback": "The tangent bound holds both for u below 1 and for u above 1."
+          },
+          {
+            "title": "Scale a positive ratio",
+            "detail": "Put u=x/y, then multiply the gap by y and expand the logarithm of the ratio.",
+            "math": "y\\phi(x/y)=(x-y)(\\log x-\\log y)-\\frac{2(x-y)^2}{x+y}",
+            "fallback": "The nonnegative scaled gap is precisely the difference of the two-coordinate terms."
+          },
+          {
+            "title": "The ambient derivative of weighted entropy",
+            "detail": "Differentiate each coordinate map on the positive orthant. The product rule contributes log xᵢ+1. The derivative of the finite sum adds the resulting linear functionals.",
+            "math": "\\begin{aligned}\\psi(x)&=\\sum_i c_i x_i\\log x_i,\\\\D\\psi(x)[v]&=\\sum_i c_i(\\log x_i+1)v_i.\\end{aligned}",
+            "fallback": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ."
+          },
+          {
+            "title": "From coordinate ratios to the squared ℓ¹ distance",
+            "detail": "Use weights wᵢ=(xᵢ+yᵢ)/(2cᵢ), whose sum is 1 because x and y both satisfy the weighted normalization. Apply Jensen to the square at |xᵢ−yᵢ|/wᵢ to obtain the first inequality. For the second, multiply the scalar ratio inequality by cᵢ and sum. Subtracting the two ambient derivatives cancels the constant terms.",
+            "math": "\\begin{aligned}L&=\\sum_i |x_i-y_i|,\\quad M=\\sum_i\\frac{2c_i(x_i-y_i)^2}{x_i+y_i},\\\\L^2&\\le M\\le (D\\psi(x)-D\\psi(y))[x-y].\\end{aligned}",
+            "fallback": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y]."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineEntropy.scalarGap_curvature",
+        "BanditRL.OnlineEntropy.scalarGap_nonneg",
+        "BanditRL.OnlineEntropy.positive_pair_log_ratio",
+        "BanditRL.OnlineEntropy.weightedEntropy_differential",
+        "BanditRL.OnlineEntropy.weightedEntropy_pairing"
+      ],
+      "source_theorems": [
+        {
+          "label": "Where the entropy gap has zero curvature",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}\\phi(u)&=(u-1)\\log u-\\frac{2(u-1)^2}{u+1},\\\\ \\phi^\\prime(u)&=\\log u-1-\\frac1u+\\frac{8}{(u+1)^2},\\\\ \\phi^{\\prime\\prime}(u)&=\\frac{(u-1)^2(u^2+6u+1)}{u^2(u+1)^3}.\\end{aligned}",
+          "plain": "On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero.",
+          "fallback": "On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero. The factor (u−1)² forces curvature to vanish at 1. At 2 the same formula gives 17/108.",
+          "relationship": "The proof of Lemma 6.33 states that the second derivative is strictly positive for every u>0. Its proof needs only a nonnegative second derivative. The exception at 1 does not invalidate the lemma. Differentiate the logarithm and the rational term on the open positive half-line. The first-derivative formula holds on a neighborhood of every positive point, so differentiating it gives the second derivative of the actual gap. Factor the numerator and use positivity of the denominator.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "One real coordinate u and the logarithmic gap φ(u)=(u−1)log u−2(u−1)²/(u+1).",
+            "assumptions": "u>0. All derivatives use the ordinary real function on a neighborhood within the positive half-line.",
+            "parameters": "The logarithm is natural.",
+            "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
+            "guarantee": "On the positive half-line the gap has two derivatives. Its second derivative is positive except at 1, where it is zero."
+          }
+        },
+        {
+          "label": "Why the scalar entropy gap stays nonnegative",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}\\phi(u)&=(u-1)\\log u-\\frac{2(u-1)^2}{u+1},\\\\\\phi(1)&=\\phi^\\prime(1)=0,\\\\ \\phi(u)&\\ge\\phi(1)+\\phi^\\prime(1)(u-1)=0\\quad(u>0).\\end{aligned}",
+          "plain": "The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input.",
+          "fallback": "The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input. A horizontal tangent to a convex function lies below the graph on both sides of the contact point.",
+          "relationship": "This is the scalar inequality used before summing over the weighted simplex. It holds on both sides of 1 even though the curvature vanishes at the contact point. Use the nonnegative second derivative to obtain convexity. Compare the chord from u to 1 for u<1 and the chord from 1 to u for u>1 with the zero derivative at 1. Equality at 1 handles the remaining case.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "One real coordinate u and the logarithmic gap φ(u)=(u−1)log u−2(u−1)²/(u+1).",
+            "assumptions": "The domain of convexity and of the lower bound is u>0.",
+            "parameters": "The logarithm is natural.",
+            "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
+            "guarantee": "The gap is convex on the positive half-line. Its value and slope vanish at 1, so it is nonnegative for every positive input."
+          }
+        },
+        {
+          "label": "From a positive ratio to a pair of coordinates",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}x,y&>0,\\\\ (x-y)(\\log x-\\log y)&\\ge\\frac{2(x-y)^2}{x+y},\\\\ x=y&\\implies (x-y)(\\log x-\\log y)=\\frac{2(x-y)^2}{x+y}=0.\\end{aligned}",
+          "plain": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree.",
+          "fallback": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree. Both sides are unchanged by interchanging x and y. Their difference equals y times the scalar gap at x/y.",
+          "relationship": "This reusable two-coordinate statement is the input to the weighted sum in the proof of Lemma 6.33. No simplex normalization or boundary convention is required at this step. Apply nonnegativity at x/y and multiply by y. Expand the gap, use log(x/y)=log x−log y, and simplify. Substitution x=y gives the stated equality.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Two positive real coordinates x and y; substitute u=x/y in the same scalar logarithmic gap.",
+            "assumptions": "x>0 and y>0. No weights and no normalization are assumed.",
+            "parameters": "The logarithm is natural.",
+            "regret": "This is an analytic step in a strong-convexity proof; there is no online run or regret term.",
+            "guarantee": "For any two positive coordinates, the product of their difference and their log difference dominates a rational squared-distance term. The two sides agree when the coordinates agree."
+          }
+        },
+        {
+          "label": "The ambient derivative of weighted entropy",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}\\psi(x)&=\\sum_i c_i x_i\\log x_i,\\\\D\\psi(x)[v]&=\\sum_i c_i(\\log x_i+1)v_i.\\end{aligned}",
+          "plain": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ.",
+          "fallback": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ. With c=(1,2) and x=(1/4,3/2), the direction v=(0,1) changes the weighted mass at rate 1/2. Its derivative is 2(log(3/2)+1).",
+          "relationship": "Differentiate each coordinate map on the positive orthant. The product rule contributes log xᵢ+1. The derivative of the finite sum adds the resulting linear functionals.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "For finitely many coordinates, set ψ(x)=∑ᵢ cᵢxᵢ log xᵢ on the positive orthant.",
+            "assumptions": "Every xᵢ is positive. The coefficients cᵢ are arbitrary real numbers and v is any real direction.",
+            "parameters": "Natural logarithms and finitely many real coordinates.",
+            "regret": "Analytic ingredients for the strong-convexity argument in Lemma 6.33.",
+            "guarantee": "The derivative at x in direction v is ∑ᵢ cᵢ(log xᵢ+1)vᵢ."
+          }
+        },
+        {
+          "label": "From coordinate ratios to the squared ℓ¹ distance",
+          "pages": "Lemma 6.33, proof, printed p. 80 / PDF p. 92",
+          "pdf_page": 92,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+          "math": "\\begin{aligned}L&=\\sum_i |x_i-y_i|,\\quad M=\\sum_i\\frac{2c_i(x_i-y_i)^2}{x_i+y_i},\\\\L^2&\\le M\\le (D\\psi(x)-D\\psi(y))[x-y].\\end{aligned}",
+          "plain": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y].",
+          "fallback": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y]. With c=(1,2), x=(1/4,3/2) and y=(3/4,1/2), both points have weighted mass 1. Their ordinary coordinate sums are 7/4 and 5/4. The two comparisons become 9/4 ≤ 5/2 ≤ (5/2)log 3. Setting y=x makes all three terms zero.",
+          "relationship": "Use weights wᵢ=(xᵢ+yᵢ)/(2cᵢ), whose sum is 1 because x and y both satisfy the weighted normalization. Apply Jensen to the square at |xᵢ−yᵢ|/wᵢ to obtain the first inequality. For the second, multiply the scalar ratio inequality by cᵢ and sum. Subtracting the two ambient derivatives cancels the constant terms.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "For finitely many coordinates, set ψ(x)=∑ᵢ cᵢxᵢ log xᵢ and K={x : xᵢ>0, ∑ᵢ xᵢ/cᵢ=1}.",
+            "assumptions": "Each weight cᵢ is positive, and both x and y belong to K.",
+            "parameters": "Natural logarithms and finitely many real coordinates.",
+            "regret": "Analytic ingredients for the strong-convexity argument in Lemma 6.33.",
+            "guarantee": "The squared sum of absolute coordinate differences is bounded by an explicit rational sum, which is itself bounded by (Dψ(x)−Dψ(y))[x−y]."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Two curvature checks and a log bound",
+        "intro": "Three substitutions distinguish a false strict inequality from its useful non-strict consequence.",
+        "steps": [
+          {
+            "title": "At the contact point",
+            "detail": "The derivative and curvature both vanish. The gap itself is also zero.",
+            "math": "\\phi(1)=\\phi'(1)=\\phi''(1)=0",
+            "fallback": "At 1 all three quantities are zero."
+          },
+          {
+            "title": "At a second point",
+            "detail": "The denominator is 4 times 27, and the nonzero numerator is 17.",
+            "math": "\\phi''(2)=\\frac{17}{108}>0",
+            "fallback": "At 2 the curvature is positive, with value 17/108."
+          },
+          {
+            "title": "Choose x=3 and y=1",
+            "detail": "The rational term is 2, and the logarithmic term is 2 log 3.",
+            "math": "2\\le 2\\log 3,\\qquad 1\\le\\log 3",
+            "fallback": "The positive-pair comparison gives a lower bound on log 3."
+          }
+        ],
+        "takeaway": "The curvature can vanish at the minimum and still give a concrete inequality away from it.",
+        "boundary": "All coordinates are positive. No value of the logarithm at zero is used."
+      },
+      "proof_bridge": {
+        "title": "Why the second derivative is the derivative of the gap",
+        "summary": "Matching a formula for the slope at a single point would not justify differentiating it. The proof works on a neighborhood and keeps the positive-domain condition throughout.",
+        "steps": [
+          {
+            "title": "Stay in the domain",
+            "detail": "For u>0 there is a neighborhood of u in which every t is positive. Both t and t+1 are then nonzero.",
+            "math": "0<u\\Longrightarrow\\exists\\delta>0,\\ (u-\\delta,u+\\delta)\\subset(0,\\infty)",
+            "fallback": "Choose an open interval about u inside the positive half-line."
+          },
+          {
+            "title": "Identify the derivative locally",
+            "detail": "On that whole interval the derivative agrees with the explicit first-derivative formula. Transferring the derivative of that formula along local equality gives the stated second derivative.",
+            "math": "\\phi'(t)=\\log t-1-\\frac{1}{t}+\\frac{8}{(t+1)^2}",
+            "fallback": "The first-derivative identity holds near u, not just at u."
+          },
+          {
+            "title": "Check both sides of the contact",
+            "detail": "For u<1 bound the chord slope above by the slope at 1. For u>1 bound the chord slope below by that same slope. In each case the chord inequality puts the graph above the tangent.",
+            "math": "\\frac{\\phi(1)-\\phi(u)}{1-u}\\le0\\ (u<1),\\qquad 0\\le\\frac{\\phi(u)-\\phi(1)}{u-1}\\ (u>1)",
+            "fallback": "At u=1 equality holds, and each open side yields the same lower bound."
+          }
+        ],
+        "boundary": "The later weighted Jensen step and the extension of KL to endpoints require additional proofs."
       }
     }
   ]

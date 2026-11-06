@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "id": "ONLINE-SUPPORT-GROWTH-REQUALIFICATION-V1",
+  "base": "9ee34d7456ac0fea79a7b35e7e43afd4d7eeec75",
+  "declaration": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "attribution": "Generalized forward-only conditional support-growth consequence of Definition4.1 and Lemma4.2 forward (printed34–35/PDF46–47). Not the full source iff or a support-existence theorem."
+  },
+  "source_delta": "Orabona, Online Learning: A Modern Introduction Using Convex Optimization, arXiv:1912.13213v10. Definition 4.1 and Lemma 4.2 forward, printed 34–35 / PDF 46–47. The printed lemma is an equivalence with a subgradient-domain condition throughout V. This library statement keeps only the forward implication at one supplied support, restricted to V, and generalizes the finite-dimensional vector pairing to a continuous real covector on an arbitrary normed space. Continuity is stronger than algebraic necessity. No inner-product norm is imposed. The affine-tilt implementation below is distinct from the source segment-and-limit proof.",
+  "exact_header": "theorem stronglyConvex_support_growth {E : Type*}\n    [NormedAddCommGroup E] [NormedSpace ℝ E]\n    (f : E → EReal) (V : Set E) (lam : ℝ)\n    (hf : SourceProper f) (hV : Convex ℝ V)\n    (hdom : V ⊆ effectiveDomain f) (hlam : 0 ≤ lam)\n    (hstrong : ∀ x ∈ V, ∀ y ∈ V, ∀ a : ℝ, 0 < a → a < 1 →\n      f (a • x + (1 - a) • y) ≤\n        (a : EReal) * f x + ((1 - a : ℝ) : EReal) * f y -\n          (((lam / 2) * a * (1 - a) * ‖x - y‖ ^ 2 : ℝ) : EReal))\n    (p : E) (hp : p ∈ V) (g : E →L[ℝ] ℝ)\n    (hsupport : ∀ z ∈ V, f p + (g (z - p) : EReal) ≤ f z)\n    (q : E) (hq : q ∈ V) :\n    (f p).toReal + g (q - p) + (lam / 2) * ‖q - p‖ ^ 2 ≤ (f q).toReal",
+  "core_canary": [
+    {
+      "path": "BanditRLProof/OnlineStrongConvexSupport.lean",
+      "sha256": "f3a475b58661a4efefdb33b9715852a08008940bd437e1cb3ad64862b772d1e5",
+      "bytes": 3491
+    },
+    {
+      "path": "Tests/OnlineStrongConvexSupportCanary.lean",
+      "sha256": "62163851ea2edb131a6f365d624de4523aa19d16e62ad16a598db66386afa01c",
+      "bytes": 6109
+    }
+  ],
+  "historical_evidence": [
+    {
+      "path": "docs/contracts/online-ch2-b4-strong-convex-support-v1/neutral-frozen-header-v1.txt",
+      "sha256": "23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57"
+    },
+    {
+      "path": "tmp/online-b4-support-neutral-20261011/blind-reconstruction-v2.json",
+      "sha256": "b2ee7114b1348c3ac901746ef82f06c2204d770814158817f8995e7eab60f7dc"
+    },
+    {
+      "path": "tmp/online-ch2-b4-next-after-growth-source-review-20261011/next-dependency-source-review-v2.json",
+      "sha256": "dbc67731c562ce1b1e783f89f37ee3a5642a09b08ca3c6ecdb28ac3ad563d126"
+    },
+    {
+      "path": "tmp/online-b4-support-freeze-20261011/independent-applied-freeze-review-v1.json",
+      "sha256": "474493741bb4b3ec16875d1b9fbdbbe510c7ec74c08506420523da2f530da5d8"
+    },
+    {
+      "path": "tmp/online-b4-support-body-source-review-20261011/candidate-body-source-review-v1.json",
+      "sha256": "a66697d4196a75c2413e4c7f1e356052f8d93696785c791ca89153f02e9d0d7e"
+    },
+    {
+      "path": "tmp/online-b4-support-canary-source-review-20261011/canary-body-source-review-v1.json",
+      "sha256": "ebdf335d6fc5b754c6db862e855f7235101bf254c302769e0bd887b508ced5a3"
+    }
+  ],
+  "supplied_premises": [
+    "Proper extended-real f, convex literal V contained in effectiveDomain f, λ≥0, exact strong interpolation",
+    "p∈V, q∈V, supplied continuous linear functional g",
+    "Explicit local support hsupport: for every z∈V, f(p)+g(z−p)≤f(z)"
+  ],
+  "not_produced": [
+    "Support existence at p or other V points",
+    "Global SourceSubdifferential/vector-to-continuous-dual conversion",
+    "Full Lemma4.2 iff/converse source correction",
+    "Attainment/coercivity/compactness or constrained cumulative objective hypotheses",
+    "Theorem6.9 support witness or full corrected regret bounds"
+  ],
+  "native_proof": "Define the extended-real function F(x) = f(x) − g(x − p), including outside V. The subtracted term is always real. Since f never equals negative infinity, neither does F; the feasible point p supplies a finite witness. Thus F is proper and finite on V. For a feasible segment, linearity gives g(a x + (1 − a)y − p) = a g(x − p) + (1 − a)g(y − p). Subtracting this identity from the strong interpolation inequality preserves the same λ/2 penalty, so F satisfies the same strong-convexity hypothesis. The supplied support gives F(p) ≤ F(z) for every z ∈ V, using g(0) = 0. This proves a minimum of the tilt internally; no minimum premise is added. Apply stronglyConvex_minimum_growth to F and simplify its finite endpoint values to recover the quadratic support bound for f.",
+  "boundary": "This is a generalized forward implication at a supplied local support, not the full equivalence in Lemma 4.2. It does not establish support existence, a global source subgradient, vector-to-covector transport, or attainment for a cumulative objective. The source-support obligation in Theorem 6.9 and corrected full regret bounds remain separate. Chapter 2 and the book remain incomplete.",
+  "static_review_sha256": "b8b3488c00a48f008e20c98799e329bcafa2bba06452e3dc4b7300adadbf315c",
+  "target_freeze": {
+    "source_rows": 73,
+    "effective_targets": 172,
+    "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "no_target_deletion": true
+  },
+  "current_focused": {
+    "validation_file": "c2-support-focused-current-v1/validation.json",
+    "validation_sha256": "61be208ef2a68e1df08937da7a927eb01aa27318575113d5960555516abe2645",
+    "source_review_file": "c2-support-focused-independent-review-v1.json",
+    "source_review_sha256": "2312af7c998ff4d077903dd28425d522c2b511f772f7a9f0e1e4deb34434470b",
+    "streams": {
+      "BanditRL.OnlineConvex.stronglyConvex_support_growth-TYPE.txt": {
+        "sha256": "09fdfbe43118201e6f1d7824fc2b52554bf64f472bad0e384ca11555b73bd8cd",
+        "bytes": 309008
+      },
+      "BanditRL.OnlineConvex.stronglyConvex_support_growth-VALUE.txt": {
+        "sha256": "2cb586c80c73a1f1ef984c6375b646104080cf70305a78a9089119418e71b377",
+        "bytes": 458258607
+      },
+      "BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain-TYPE.txt": {
+        "sha256": "e120e460d51695b7c0d952e3020396e791a3dfd2f69b43d1b40212c3021fc924",
+        "bytes": 201963
+      },
+      "BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain-VALUE.txt": {
+        "sha256": "6d8db72b9309031fdb45ad269a4cb9f1edfdc2e27f3959f5d2ea65e94f31511a",
+        "bytes": 74643652
+      },
+      "BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp-TYPE.txt": {
+        "sha256": "68244a444f64806144e74c499bd84c38fa64c5779312d93195b9ef1d7ed12045",
+        "bytes": 153940
+      },
+      "BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp-VALUE.txt": {
+        "sha256": "8d1f88c2cd7b342c566e93f54cb2310dbd33e9f747196a08ed0283e52fe68be2",
+        "bytes": 51237307
+      }
+    },
+    "historical_set_comparisons": [
+      {
+        "declaration": "BanditRL.OnlineConvex.stronglyConvex_support_growth",
+        "TYPE_count": 99,
+        "VALUE_count": 299,
+        "historical_TYPE_set_equal": true,
+        "historical_VALUE_set_equal": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexSupportCanary.nonzero_point_nonzero_support_sharp",
+        "TYPE_count": 68,
+        "VALUE_count": 284,
+        "historical_TYPE_set_equal": true,
+        "historical_VALUE_set_equal": true,
+        "actual_support_call_and_nonzero_covector_checked": true
+      },
+      {
+        "declaration": "BanditRL.Tests.OnlineStrongConvexSupportCanary.boundary_nonzero_support_extended_domain",
+        "TYPE_count": 79,
+        "VALUE_count": 400,
+        "historical_TYPE_set_equal": true,
+        "historical_VALUE_set_equal": true,
+        "actual_support_call_and_nonzero_covector_checked": true
+      }
+    ],
+    "core_normalized_digest_comparison": {
+      "TYPE": {
+        "current": {
+          "sha256": "09fdfbe43118201e6f1d7824fc2b52554bf64f472bad0e384ca11555b73bd8cd",
+          "bytes": 309008
+        },
+        "historical_record_sha256": "09fdfbe43118201e6f1d7824fc2b52554bf64f472bad0e384ca11555b73bd8cd",
+        "historical_record_bytes": 309008,
+        "match": true
+      },
+      "VALUE": {
+        "current": {
+          "sha256": "2cb586c80c73a1f1ef984c6375b646104080cf70305a78a9089119418e71b377",
+          "bytes": 458258607
+        },
+        "historical_record_sha256": "2cb586c80c73a1f1ef984c6375b646104080cf70305a78a9089119418e71b377",
+        "historical_record_bytes": 458258607,
+        "match": true
+      }
+    },
+    "historical_digest_provenance": {
+      "artifact": "online-b4-support-body-20261011/imported-production-comparison-v1.json",
+      "sha256": "59d69531247525de9c366c9a8bc063433cb245d2bd0695c67c9381a1cc80ddc2",
+      "scope": "Current streams match retained historical normalized core digests; historical huge rawstdout not replayed."
+    },
+    "historical_canary_whole_VALUE_equality_claim": false,
+    "large_streams": "Private retained evidence; only hashes/bytes published, no multi-hundred-MB artifacts copied."
+  },
+  "combined_gates": "pending",
+  "reader": "pending",
+  "chapter2_accepted": false,
+  "book_accepted": false,
+  "historical_semantic_roles": {
+    "required": true,
+    "status": "accepted",
+    "formalizer": "/root/strongconvex_growth_formalizer",
+    "blind_decoder": "/root/b4_finite_identity_blind; blind V2 SHA b2ee7114b1348c3ac901746ef82f06c2204d770814158817f8995e7eab60f7dc; header/definitions only with disclosed prior unrelated-header exposure",
+    "source_reviewer": "Distinct source reviewer V2 SHA dbc67731c562ce1b1e783f89f37ee3a5642a09b08ca3c6ecdb28ac3ad563d126; independent BODY review SHA a66697d4196a75c2413e4c7f1e356052f8d93696785c791ca89153f02e9d0d7e",
+    "verdict": "accepted-with-explicit-delta",
+    "remaining_semantic_delta": "Printed Lemma4.2 (printed34-35/PDF46-47) is an iff with V subset dom(partial f). This theorem is explicitly its generalized forward implication at one supplied support at p, localized to literal V; support existence at other V points is dropped. The finite-dimensional vector/dot-product interface is generalized to a continuous real dual functional on an arbitrary normed space. Vector representation, indicator restriction/extension and transport to the source chosen arbitrary norm remain unfinished. No inner-product norm on E is imposed. Whole frozen header SHA23e26732b827730a343a1dd758a19a39d4f8d4af06941330f9636272d3114d57; lifecycle fingerprint dbb5c35bfeca990dca67a1f696b6e4eaa69dc446e09324d9f5843ae87ed7f359. Semantic acceptance here covers only the independently reviewed generalized forward header/BODY; this V3 publication proposal still requires distinct independent review and does not accept a full source iff, package, chapter, rendering or deployment."
+  }
+}

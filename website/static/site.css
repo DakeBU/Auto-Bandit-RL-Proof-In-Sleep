@@ -2697,6 +2697,10 @@ tbody tr:hover {
   line-height: 1.5;
 }
 
+.proof-bridge-step .proof-bridge-references {
+  grid-column: 1 / -1;
+}
+
 .proof-bridge-step .math-statement {
   grid-column: 1 / -1;
   margin: 0.75rem 0 0;
@@ -2948,9 +2952,15 @@ tbody tr:hover {
 
 .source-theorem-heading {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.source-theorem-heading > div {
+  flex: 1 1 18rem;
+  min-width: 0;
 }
 
 .source-theorem-heading > a {
@@ -2958,7 +2968,10 @@ tbody tr:hover {
   min-height: 2.75rem;
   align-items: center;
   padding-inline: 0.25rem;
-  flex: 0 0 auto;
+  flex: 1 1 18rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   font-size: 0.86rem;
 }
 

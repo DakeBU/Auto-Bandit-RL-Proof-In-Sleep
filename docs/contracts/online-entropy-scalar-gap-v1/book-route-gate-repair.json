@@ -1,0 +1,29 @@
+{
+  "failed_head": "b81da43c6ab5fe06fda9bb83835004ed34d1b9cb",
+  "command": "python tools/bandit.py check",
+  "exit": 1,
+  "stdout_sha256": "23c7ac3260c5e5a2141723dc7d57d087db8ffbb6a432554a508e9d1f494635cd",
+  "stderr_sha256": "bc7730b29d1d5b683f1e6ff84bf65e1ab466305d7da72b5b8f472d6332890f2c",
+  "lean_build_jobs": [
+    9129,
+    9318
+  ],
+  "python_tests": {
+    "run": 487,
+    "failed": 2,
+    "skipped": 7
+  },
+  "failures": [
+    {
+      "test": "test_navigation_has_one_current_page_and_shared_chapter_context",
+      "expected": 31,
+      "actual": 32
+    },
+    {
+      "test": "test_online_routes_preserve_bandit_coverage_and_shared_identity",
+      "unlisted_route": "online-entropy-gap"
+    }
+  ],
+  "repair": "Add the new owned chapter to the exact route set and update the exact navigation count. Retain all Bandit ownership and shared-identity checks.",
+  "scope": "Review this repair with a fresh combined gate. No theorem, proof or source contract changed."
+}

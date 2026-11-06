@@ -1,0 +1,424 @@
+{
+  "kind": "Versioned source and frozen statement record",
+  "row": {
+    "inventory": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "pointer": "/effective_targets/87",
+    "sha256": "61cf1901a632aeee35ee71511ba53b115ae0958649ea78b786536a4404684ba1",
+    "id": "repair:15.31-terminal",
+    "operative_statement": "For BTRL with T>=1,proper closed lambda_t-strongly convex cumulative G_t,lambda_t>0,finite feasible played/comparator values and actual minimizers x_t, define ghost x_(T+1)=x_T. Prove R_T(u)<=psi_T(u)-psi1(x1)-sum_(t<T)lambda_t||x_t-x_(t+1)||^2/2+sum_(t<T)(psi_t(x_(t+1))-psi_(t+1)(x_(t+1))). Optional stronger endpoint is-lambda_T||u-x_T||^2/2. Original Algorithm15.9 defines no x_(T+1); repeating last loss gives checked0<=-1/36 and is not accepted."
+  },
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "locator": "Algorithm 15.9 and Theorem 15.31, printed pp. 266–267 (PDF pp. 278–279)",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=278"
+  },
+  "printed_vs_repaired": {
+    "printed": "With source rounds 1,…,T and comparator u∈V, the printed upper bound is ψ_T(u)−ψ₁(x₁)−Σ_{t=1}^T (λ_t/2)‖x_t−x_{t+1}‖²+Σ_{t=1}^{T−1}(ψ_t(x_{t+1})−ψ_{t+1}(x_{t+1})). The algorithm only chooses x₁,…,x_T.",
+    "repair": "Take T≥1 and positive supplied λ_t. Set the endpoint in the inclusive identity to x_T. Thus there are exactly T−1 actual movement terms. The stronger inequality also subtracts (λ_T/2)‖u−x_T‖². A separate theorem derives a unique feasible minimizer at each actual round.",
+    "rejected": "Repeating the last loss instead of using the last real point invents a different update. For T=1, ψ(v)=v²/2, ℓ(v)=(v−1)²/2, x₁=u=1/2 and λ₁=2, that update is 2/3 and would give the false inequality 0≤−1/36.",
+    "zero_based": "Source round t is Lean t−1. The last real index is T−1; it is not the natural-number extension x T of the supplied trajectory."
+  },
+  "carriers": {
+    "source": "Regularizers live on X, real-round losses are ambient and take values in ℝ∪{+∞}, finite on V. The inclusive objective is real-valued on V; no convexity or closedness of every individual loss is assumed.",
+    "relative": "Closed real sublevels on X restrict along the continuous inclusion V→X. Since V is closed in the ambient space, their feasible restrictions are ambient closed. Chords of V stay in V and hence in X.",
+    "ambient": "Let F be an ambient representative agreeing with the inclusive objective on X. If F is proper, it excludes −∞ on X. Its finite witness need not belong to X. Instead choose a point of nonempty V ⊆ X: the regularizer is real and each loss through the current round is finite there, so the inclusive objective is finite there. For finite endpoints in X, ambient strong convexity applies on the effective domain of F and transfers to each interpolated point that lies in X. Closed real sublevels of F restrict to closed relative sublevels on X. If a closed F agrees only on V, closedness of V still makes the feasible real sublevels closed in the ambient space.",
+    "boundary": "X itself need not be closed. Extending by +∞ off X may destroy closedness, as x² on (−1,1) shows. Positive curvature and the regret penalties use the original norm; coordinates are used only to obtain a supporting functional."
+  },
+  "sealed_main": {
+    "btrl_real_round_minimizer_existsUnique.declaration.txt": {
+      "text_LF": "theorem btrl_real_round_minimizer_existsUnique {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (hVX : V ⊆ X)\n    (hVconv : Convex ℝ V) (hVclosed : IsClosed V) (hVnonempty : V.Nonempty)\n    (psi : ℕ → X → ℝ) (loss : ℕ → E → EReal)\n    (hlossBot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hlossDom : ∀ i < T, V ⊆ effectiveDomain (loss i))\n    (lam : ℕ → ℝ) (hlam : ∀ t < T, 0 < lam t)\n    (hproper : ∀ t < T, SourceProper (sourceInclusive X psi loss t))\n    (hclosed : ∀ t < T, SourceClosed (sourceInclusive X psi loss t))\n    (hstrong : ∀ t < T, ∀ p q : X,\n      sourceInclusive X psi loss t p < ⊤ → sourceInclusive X psi loss t q < ⊤ →\n      ∀ a : ℝ, 0 < a → a < 1 → ∀ hz : a • p.val + (1 - a) • q.val ∈ X,\n        sourceInclusive X psi loss t ⟨a • p.val + (1 - a) • q.val, hz⟩ ≤\n          (a : EReal) * sourceInclusive X psi loss t p +\n          ((1 - a : ℝ) : EReal) * sourceInclusive X psi loss t q -\n          (((lam t / 2) * a * (1 - a) * ‖p.val - q.val‖ ^ 2 : ℝ) : EReal)) :\n    ∀ t < T, ∃! p : E, p ∈ V ∧ IsMinOn (feasibleInclusive X V hVX psi loss t) V p\n",
+      "physical_sha256_at_seal": "01c80e8074d55337cbb80aacb7b8a86f0f1cb3e321c3e3fa23a93e108fde3c21",
+      "text_LF_sha256": "01c80e8074d55337cbb80aacb7b8a86f0f1cb3e321c3e3fa23a93e108fde3c21"
+    },
+    "corrected_btrl_terminal_bound.declaration.txt": {
+      "text_LF": "theorem corrected_btrl_terminal_bound {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]\n    (T : ℕ) (hT : 0 < T) (X V : Set E) (hVX : V ⊆ X)\n    (hVconv : Convex ℝ V) (hVclosed : IsClosed V) (hVnonempty : V.Nonempty)\n    (psi : ℕ → X → ℝ) (loss : ℕ → E → EReal)\n    (hlossBot : ∀ i < T, ∀ v, loss i v ≠ ⊥)\n    (hlossDom : ∀ i < T, V ⊆ effectiveDomain (loss i))\n    (lam : ℕ → ℝ) (hlam : ∀ t < T, 0 < lam t)\n    (hproper : ∀ t < T, SourceProper (sourceInclusive X psi loss t))\n    (hclosed : ∀ t < T, SourceClosed (sourceInclusive X psi loss t))\n    (hstrong : ∀ t < T, ∀ p q : X,\n      sourceInclusive X psi loss t p < ⊤ → sourceInclusive X psi loss t q < ⊤ →\n      ∀ a : ℝ, 0 < a → a < 1 → ∀ hz : a • p.val + (1 - a) • q.val ∈ X,\n        sourceInclusive X psi loss t ⟨a • p.val + (1 - a) • q.val, hz⟩ ≤\n          (a : EReal) * sourceInclusive X psi loss t p +\n          ((1 - a : ℝ) : EReal) * sourceInclusive X psi loss t q -\n          (((lam t / 2) * a * (1 - a) * ‖p.val - q.val‖ ^ 2 : ℝ) : EReal))\n    (x : ℕ → E) (hx : ∀ t < T, x t ∈ V)\n    (hmin : ∀ t < T, IsMinOn (feasibleInclusive X V hVX psi loss t) V (x t))\n    (u : E) (hu : u ∈ V) :\n    let r := regularizerValue X psi\n    let regret := (∑ t ∈ range T, (loss t (x t)).toReal) -\n      ∑ t ∈ range T, (loss t u).toReal\n    let corrected := r (T - 1) u - r 0 (x 0) -\n      (∑ t ∈ range (T - 1), (lam t / 2) * ‖x t - x (t + 1)‖ ^ 2) +\n      ∑ t ∈ range (T - 1), (r t (x (t + 1)) - r (t + 1) (x (t + 1)))\n    regret ≤ corrected - (lam (T - 1) / 2) * ‖u - x (T - 1)‖ ^ 2 ∧\n      regret ≤ corrected\n",
+      "physical_sha256_at_seal": "e320bdcfb26ef602a2e66e634045e8daad75337932c9eada6ebf9c5b7cb770d6",
+      "text_LF_sha256": "e320bdcfb26ef602a2e66e634045e8daad75337932c9eada6ebf9c5b7cb770d6"
+    },
+    "definition-context.txt": {
+      "text_LF": "import BanditRLProof.OnlineCumulativePotential\nimport BanditRLProof.OnlineStrongConvexMinimum\nimport BanditRLProof.OnlineStrongConvexAttainment\n\nnoncomputable section\nattribute [local instance] Classical.propDecidable\nopen Set Finset\nopen BanditRL.OnlineConvex\nnamespace BanditRL.OnlineBTRL\n\n/-- A real extension for evaluating a source regularizer. All uses in the regret bound are in X. -/\ndef regularizerValue {E : Type*} (X : Set E) (psi : ℕ → X → ℝ) (n : ℕ) : E → ℝ :=\n  Function.extend Subtype.val (psi n) (fun _ => 0)\n\n/-- Source inclusive objective on its given carrier. -/\ndef sourceInclusive {E : Type*} (X : Set E) (psi : ℕ → X → ℝ)\n    (loss : ℕ → E → EReal) (n : ℕ) (w : X) : EReal :=\n  (psi n w : EReal) + ∑ i ∈ range (n + 1), loss i w.val\n\n/-- Restriction to the feasible set, extended by top outside it. -/\ndef feasibleInclusive {E : Type*} (X V : Set E) (hVX : V ⊆ X)\n    (psi : ℕ → X → ℝ) (loss : ℕ → E → EReal) (n : ℕ) (v : E) : EReal :=\n  if hv : v ∈ V then sourceInclusive X psi loss n ⟨v, hVX hv⟩ else ⊤\n",
+      "physical_sha256_at_seal": "882de1f2310b5980ce08f263201bd307703e0f5804a709be4baed4514692d9a0",
+      "text_LF_sha256": "882de1f2310b5980ce08f263201bd307703e0f5804a709be4baed4514692d9a0"
+    }
+  },
+  "sealed_concrete_canaries": {
+    "context.lean.txt": {
+      "text_LF": "import Mathlib\nnoncomputable section\nattribute [local instance] Classical.propDecidable\nopen Set Finset\nnamespace BanditRL.OnlineBTRLCanary\n\nstructure Model where\n  T : ℕ\n  X : Set ℝ\n  V : Set ℝ\n  psi : ℕ → X → ℝ\n  loss : ℕ → ℝ → EReal\n  lam : ℕ → ℝ\n  x : ℕ → ℝ\n  u : ℝ\n\ndef repeatedLast : Model :=\n  ⟨1, univ, univ, fun _ w => w.val^2 / 2,\n    fun _ v => (((v-1)^2 / 2 : ℝ) : EReal), fun _ => 2,\n    fun t => if t = 0 then 1/2 else 17, 1/2⟩\n\ndef twoRounds : Model :=\n  ⟨2, univ, Icc (-1) 3, fun t w => if t = 0 then w.val^2/2 else w.val^2,\n    fun t v => if v ∈ Icc (-1:ℝ) 3 then\n      ((if t = 0 then -v else -3*v : ℝ) : EReal) else ⊤,\n    fun t => if t = 0 then 1 else 2,\n    fun t => if t = 0 then 1 else if t = 1 then 2 else 100, 0⟩\n\ndef constrained : Model :=\n  ⟨1, univ, Icc 0 1, fun _ w => w.val^2/2,\n    fun _ v => ((-2*v : ℝ) : EReal), fun _ => 1,\n    fun t => if t = 0 then 1 else 17, 0⟩\n\ndef openCarrier : Model :=\n  ⟨1, Ioo (-1) 1, Icc (-1/2) (1/2), fun _ w => w.val^2,\n    fun _ _ => 0, fun _ => 2, fun t => if t = 0 then 0 else 17, 1/2⟩\n\ndef r (m : Model) (t : ℕ) : ℝ → ℝ :=\n  Function.extend Subtype.val (m.psi t) (fun _ => 0)\n\ndef g (m : Model) (t : ℕ) (v : m.X) : EReal :=\n  (m.psi t v : EReal) + ∑ i ∈ range (t+1), m.loss i v.val\n\ndef h (m : Model) (t : ℕ) (v : ℝ) : EReal :=\n  if hv : v ∈ m.V then\n    if hx : v ∈ m.X then g m t ⟨v,hx⟩ else ⊤\n  else ⊤\n\ndef regret (m : Model) : ℝ :=\n  (∑ t ∈ range m.T, (m.loss t (m.x t)).toReal) -\n    ∑ t ∈ range m.T, (m.loss t m.u).toReal\n\ndef baseline (m : Model) : ℝ := r m (m.T-1) m.u - r m 0 (m.x 0)\ndef movement (m : Model) : ℝ :=\n  -(∑ t ∈ range (m.T-1), (m.lam t / 2) * ‖m.x t - m.x (t+1)‖ ^ 2)\ndef drift (m : Model) : ℝ :=\n  ∑ t ∈ range (m.T-1), (r m t (m.x (t+1)) - r m (t+1) (m.x (t+1)))\ndef terminal (m : Model) : ℝ :=\n  -(m.lam (m.T-1) / 2) * ‖m.u - m.x (m.T-1)‖ ^ 2\ndef weak (m : Model) : ℝ := baseline m + movement m + drift m\ndef sharp (m : Model) : ℝ := weak m + terminal m\n\ndef bounds (m : Model) : Prop := regret m ≤ sharp m ∧ regret m ≤ weak m\ndef attainment (m : Model) : Prop :=\n  ∀ t < m.T, ∃! p : ℝ, p ∈ m.V ∧ IsMinOn (h m t) m.V p\ndef runValid (m : Model) : Prop :=\n  m.V ⊆ m.X ∧ Convex ℝ m.V ∧ IsClosed m.V ∧ m.V.Nonempty ∧ m.u ∈ m.V ∧\n    ∀ t < m.T, m.x t ∈ m.V ∧ IsMinOn (h m t) m.V (m.x t)\ndef closedLevels {α : Type*} [TopologicalSpace α] (f : α → EReal) : Prop :=\n  ∀ c : ℝ, IsClosed {v | f v ≤ (c : EReal)}\ndef wrongExtension (v : ℝ) : EReal :=\n  if v ∈ openCarrier.X then ((v^2 : ℝ) : EReal) else ⊤\n",
+      "physical_sha256_at_seal": "58389fb9f70e94880b1573a75fe8f130ecf7bf89af5457ce7e0be343d19b57c8",
+      "text_LF_sha256": "58389fb9f70e94880b1573a75fe8f130ecf7bf89af5457ce7e0be343d19b57c8"
+    },
+    "repeated_last_bound_and_fake_ghost.declaration.txt": {
+      "text_LF": "theorem repeated_last_bound_and_fake_ghost :\n    let m := repeatedLast\n    bounds m ∧ attainment m ∧ runValid m ∧\n    m.x 0 = 1/2 ∧ m.u = 1/2 ∧ m.x 1 = 17 ∧\n    regret m = 0 ∧ weak m = 0 ∧ sharp m = 0 ∧\n    (∀ p : ℝ, IsMinOn (h m 0) m.V p ↔ p = 1/2) ∧\n    (∀ p : ℝ, IsMinOn (fun v => r m 0 v + 2 * (m.loss 0 v).toReal) m.V p ↔ p = 2/3) ∧\n    weak m - (m.lam 0 / 2) * ‖m.x 0 - (2/3 : ℝ)‖ ^ 2 = -(1/36 : ℝ) ∧\n    ¬ regret m ≤ weak m - (m.lam 0 / 2) * ‖m.x 0 - (2/3 : ℝ)‖ ^ 2\n",
+      "physical_sha256_at_seal": "47ab46075df4c7a7576b485264f0c7d586e6f738d5194cbaaf7e0216273d4e56",
+      "text_LF_sha256": "47ab46075df4c7a7576b485264f0c7d586e6f738d5194cbaaf7e0216273d4e56"
+    },
+    "two_round_endpoint_and_drift.declaration.txt": {
+      "text_LF": "theorem two_round_endpoint_and_drift :\n    let m := twoRounds\n    bounds m ∧ attainment m ∧ runValid m ∧\n    m.x 0 = 1 ∧ m.x 1 = 2 ∧ m.x 2 = 100 ∧ m.x 2 ≠ m.x (m.T-1) ∧\n    m.loss 0 4 = ⊤ ∧ m.loss 1 4 = ⊤ ∧ regret m = -7 ∧ baseline m = -(1/2 : ℝ) ∧\n    movement m = -(1/2 : ℝ) ∧ drift m = -2 ∧ terminal m = -4 ∧ sharp m = -7 ∧ weak m = -3\n",
+      "physical_sha256_at_seal": "c01c2600b69e134c0285a9f25ceae77b8e6d746395c62b306d84298a487a0e91",
+      "text_LF_sha256": "c01c2600b69e134c0285a9f25ceae77b8e6d746395c62b306d84298a487a0e91"
+    },
+    "constrained_minimum_and_ambient_minimum.declaration.txt": {
+      "text_LF": "theorem constrained_minimum_and_ambient_minimum :\n    let m := constrained\n    bounds m ∧ attainment m ∧ runValid m ∧\n    m.x 0 = 1 ∧ (2 : ℝ) ∉ m.V ∧\n    (∀ p : ℝ, IsMinOn (fun v => r m 0 v + (m.loss 0 v).toReal) univ p ↔ p = 2) ∧\n    (∀ p : ℝ, (p ∈ m.V ∧ IsMinOn (h m 0) m.V p) ↔ p = 1) ∧\n    regret m = -2 ∧ weak m = -(1/2 : ℝ) ∧ terminal m = -(1/2 : ℝ) ∧ sharp m = -1\n",
+      "physical_sha256_at_seal": "af4baaf39ff5f856cdc7cb9026e95032c0adad9d188962ba1ee9ac87dd877338",
+      "text_LF_sha256": "af4baaf39ff5f856cdc7cb9026e95032c0adad9d188962ba1ee9ac87dd877338"
+    },
+    "open_carrier_closed_transfer.declaration.txt": {
+      "text_LF": "theorem open_carrier_closed_transfer :\n    let m := openCarrier\n    bounds m ∧ attainment m ∧ runValid m ∧\n    ¬ IsClosed m.X ∧ closedLevels (g m 0) ∧\n    closedLevels (fun v : ℝ => ((v^2 : ℝ) : EReal)) ∧\n    (∀ v : m.X, g m 0 v = ((v.val ^ 2 : ℝ) : EReal)) ∧\n    closedLevels (h m 0) ∧ {v : ℝ | wrongExtension v ≤ 1} = m.X ∧\n    ¬ closedLevels wrongExtension ∧ m.x 0 = 0 ∧\n    regret m = 0 ∧ weak m = 1/4 ∧ sharp m = 0\n",
+      "physical_sha256_at_seal": "9cdcf9742163dc0dbff1c3f006e58a3f4743fef26a91545bce9cb2741d62a6e8",
+      "text_LF_sha256": "9cdcf9742163dc0dbff1c3f006e58a3f4743fef26a91545bce9cb2741d62a6e8"
+    }
+  },
+  "mathematical_dependencies": [
+    "finite_regret_identity (regularizerValue X psi) (fun i v => (loss i v).toReal) x u (x (T-1)) T hT; prove finite EReal interpretation and real regularizer restriction on V.",
+    "stronglyConvex_minimum_growth for actual H_n on V for n<T−1, p=x_n, q=x_(n+1); at n=T−1, p=x_(T−1), q=u. Derive its proper/domain/interpolation from source hypotheses using the transfers above.",
+    "Later real-round attainment uses stronglyConvex_existsUnique_minimizer on H_n with derived support and closedness. Quantitative penalty stays in original norm; use coordinates only for topology and dual witness."
+  ],
+  "required_call_map": [
+    {
+      "model": "repeatedLast",
+      "required_parent_uses": [
+        {
+          "conjunct": "first",
+          "name": "corrected_btrl_terminal_bound",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong",
+            "x",
+            "hx",
+            "hmin",
+            "u",
+            "hu"
+          ],
+          "proof": "All source premises must be obtained from this concrete model. Use its actual current minimizers and its finite real-round index and original norm."
+        },
+        {
+          "conjunct": "second",
+          "name": "btrl_real_round_minimizer_existsUnique",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong"
+          ],
+          "proof": "Use full real-round constrained existence/uniqueness parent once proved. During a supplied-run-only milestone this conjunct is a retained future obligation, never filled by a new hypothesis."
+        }
+      ],
+      "remaining_conjuncts": "T1 x0=u=1/2 gives regret=weak=sharp=0, G0 has unique minimizer1/2. Choose artificial repeated loss minimizer2/3 of psi+2loss and prove false0≤−1/36 for that completion. The unobserved x1=17 differs from the auxiliary ghost1/2.",
+      "instance_proof_obligations": "Complete squares for both actual minimizations; derive domain/coercions and positive curvature2.",
+      "transport": "For first conjunct regroup signed terms by real addition/subtraction. For second rewrite h to feasibleInclusive using the derived V subset X and subtype proof irrelevance. Both applications must supply every concrete source premise; runValid is a separately proved conjunct, never an external assumption."
+    },
+    {
+      "model": "twoRounds",
+      "required_parent_uses": [
+        {
+          "conjunct": "first",
+          "name": "corrected_btrl_terminal_bound",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong",
+            "x",
+            "hx",
+            "hmin",
+            "u",
+            "hu"
+          ],
+          "proof": "All source premises must be obtained from this concrete model. Use its actual current minimizers and its finite real-round index and original norm."
+        },
+        {
+          "conjunct": "second",
+          "name": "btrl_real_round_minimizer_existsUnique",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong"
+          ],
+          "proof": "Use full real-round constrained existence/uniqueness parent once proved. During a supplied-run-only milestone this conjunct is a retained future obligation, never filled by a new hypothesis."
+        }
+      ],
+      "remaining_conjuncts": "T2 x0=1,x1=2,u=0. Regret−7, regularizer baseline−1/2, movement−1/2, drift−2, terminal−4; sharp−7 and weak−3. Loss at4 is top, x2=100 differs from ghost2.",
+      "instance_proof_obligations": "Use actual constrained minimizers of G0,G1 on [−1,3]; curvature1,2. Relative source closed sublevels for extended objectives on R, proper/strong interpolation on their feasible domains.",
+      "transport": "For first conjunct regroup signed terms by real addition/subtraction. For second rewrite h to feasibleInclusive using the derived V subset X and subtype proof irrelevance. Both applications must supply every concrete source premise; runValid is a separately proved conjunct, never an external assumption."
+    },
+    {
+      "model": "constrained",
+      "required_parent_uses": [
+        {
+          "conjunct": "first",
+          "name": "corrected_btrl_terminal_bound",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong",
+            "x",
+            "hx",
+            "hmin",
+            "u",
+            "hu"
+          ],
+          "proof": "All source premises must be obtained from this concrete model. Use its actual current minimizers and its finite real-round index and original norm."
+        },
+        {
+          "conjunct": "second",
+          "name": "btrl_real_round_minimizer_existsUnique",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong"
+          ],
+          "proof": "Use full real-round constrained existence/uniqueness parent once proved. During a supplied-run-only milestone this conjunct is a retained future obligation, never filled by a new hypothesis."
+        }
+      ],
+      "remaining_conjuncts": "T1 V=[0,1], x0=1,u=0, regret−2, baseline−1/2, terminal−1/2, sharp−1. Unconstrained psi+loss has minimizer2 outside V.",
+      "instance_proof_obligations": "Prove 1 uniquely minimizes H on V and 2 uniquely minimizes unconstrained polynomial; derive all source assumptions and the zero-drift/movement case.",
+      "transport": "For first conjunct regroup signed terms by real addition/subtraction. For second rewrite h to feasibleInclusive using the derived V subset X and subtype proof irrelevance. Both applications must supply every concrete source premise; runValid is a separately proved conjunct, never an external assumption."
+    },
+    {
+      "model": "openCarrier",
+      "required_parent_uses": [
+        {
+          "conjunct": "first",
+          "name": "corrected_btrl_terminal_bound",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong",
+            "x",
+            "hx",
+            "hmin",
+            "u",
+            "hu"
+          ],
+          "proof": "All source premises must be obtained from this concrete model. Use its actual current minimizers and its finite real-round index and original norm."
+        },
+        {
+          "conjunct": "second",
+          "name": "btrl_real_round_minimizer_existsUnique",
+          "arguments": [
+            "T",
+            "hT",
+            "X",
+            "V",
+            "hVX",
+            "hVconv",
+            "hVclosed",
+            "hVnonempty",
+            "psi",
+            "loss",
+            "hlossBot",
+            "hlossDom",
+            "lam",
+            "hlam",
+            "hproper",
+            "hclosed",
+            "hstrong"
+          ],
+          "proof": "Use full real-round constrained existence/uniqueness parent once proved. During a supplied-run-only milestone this conjunct is a retained future obligation, never filled by a new hypothesis."
+        }
+      ],
+      "remaining_conjuncts": "T1 X=(−1,1),V=[−1/2,1/2],u=1/2,x0=0. Regret0, weak1/4, sharp0, lambda=2. The rejected extension top off X has level1 sublevel X, which is not closed in R.",
+      "instance_proof_obligations": "Demonstrate relative source sublevel closedness, closed agreeing ambient square, closed feasible restriction via both transfers; no hypothesis X closed. The actual G0 and H0 minimize at0.",
+      "transport": "For first conjunct regroup signed terms by real addition/subtraction. For second rewrite h to feasibleInclusive using the derived V subset X and subtype proof irrelevance. Both applications must supply every concrete source premise; runValid is a separately proved conjunct, never an external assumption."
+    }
+  ],
+  "required_carrier_certificates": [
+    "Demonstrate relative closed G→closed H on V via restriction then closed embedding",
+    "Separately use ambient closed square agreeing on X→relative closed G→closed H; retain both concrete proof witnesses in audit",
+    "The open-X countermodel concerns a rejected ambient-top-off-X representation premise; it does not refute the corrected source reading."
+  ],
+  "fingerprints": {
+    "main_seal": "b353eef75e475246929c905cb2959bdd2c95b78919eba7036abc9f46cd1256c1",
+    "canary_seal": "118b9e55d10c9170d13ce525b7ed22e790c4825bb50f747d65ade78996f66ac4",
+    "main_typing": {
+      "BanditRL.OnlineBTRL.btrl_real_round_minimizer_existsUnique-PROPOSED-THEOREM-TYPE.txt": "1cd3140f6ad95c1c3e14ef90183d3b64f7948b20b7215e04d82db762a3c114ac",
+      "BanditRL.OnlineBTRL.btrl_real_round_minimizer_existsUnique-TYPE.txt": "2512150bfed67f105113e6f18666dca266830edc0982568e5569223a50af96c4",
+      "BanditRL.OnlineBTRL.btrl_real_round_minimizer_existsUnique-VALUE.txt": "651b8ce15bc9bbfa594953b2c961c34d4971f7f9959cdaef50391419a82a640f",
+      "BanditRL.OnlineBTRL.corrected_btrl_terminal_bound-PROPOSED-THEOREM-TYPE.txt": "6ef9453acfedb9c4581450aa2f739b77d626a0fb799f0fb5fdee08135dc306c3",
+      "BanditRL.OnlineBTRL.corrected_btrl_terminal_bound-TYPE.txt": "024c46b7be4dfac00bef47aa6204867b7c1fa926766b49b0acff4d95a376cbf5",
+      "BanditRL.OnlineBTRL.corrected_btrl_terminal_bound-VALUE.txt": "e619abcb599e979511acbef18faa99ca3bf31ae88d4f12e4978d56f9b74a8587",
+      "BanditRL.OnlineBTRL.feasibleInclusive-TYPE.txt": "f7815411c51ccbdb6c4995db1035e93c9870960fecf4f0e7e37a589211f3beb6",
+      "BanditRL.OnlineBTRL.feasibleInclusive-VALUE.txt": "96ba98f7f3d2a52a16f153f0ca4a54f3634660dcb12dd8353378c601f4c939fa",
+      "BanditRL.OnlineBTRL.regularizerValue-TYPE.txt": "e299f1e186efa39073de8ade8882629ee464f95ea22453e03a1d41e03b41cca5",
+      "BanditRL.OnlineBTRL.regularizerValue-VALUE.txt": "5346a3936d42de3eaf5ec9d6a87b10595cac01d8645ee851b5a4e1851f790983",
+      "BanditRL.OnlineBTRL.sourceInclusive-TYPE.txt": "aabeb6041f8c11dbc6b4d973095140694808cea2e8533e170c9b0ed9332e336f",
+      "BanditRL.OnlineBTRL.sourceInclusive-VALUE.txt": "e036d7277e1b8b7c22166c704a6c4208896fbdd413e1793216421c19b99853e6",
+      "definition-types-and-axioms.json": "3e8cac64eecfe31e42138044aa4b31e6bd2798fc6c7b50942d788fdb5592c771",
+      "search-path.json": "e34c5b238bbc8ac3c233beee9721f0be4a4e0914a7df8bdf820dd1499099030e"
+    },
+    "canary_typing": {
+      "0-BanditRL.OnlineBTRLCanary.repeatedLast-TYPE.txt": "83be18755856723a0c2518b8a512bb41b563266a5d237050618471ddc0d57e28",
+      "0-BanditRL.OnlineBTRLCanary.repeatedLast-VALUE.txt": "457d22fb4de85ce1e443fccb9100927f8812af3c4cf11aa54a99132d280c0b89",
+      "1-BanditRL.OnlineBTRLCanary.twoRounds-TYPE.txt": "83be18755856723a0c2518b8a512bb41b563266a5d237050618471ddc0d57e28",
+      "1-BanditRL.OnlineBTRLCanary.twoRounds-VALUE.txt": "c2e52aeaf4034049c61cdfaefc1b65f492f3d4d55340bf9fac35324c24b7ffba",
+      "10-BanditRL.OnlineBTRLCanary.drift-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "10-BanditRL.OnlineBTRLCanary.drift-VALUE.txt": "4c1a74608eb387db538767699e017128bc011b54c334ac2d501a70daeb803e75",
+      "11-BanditRL.OnlineBTRLCanary.terminal-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "11-BanditRL.OnlineBTRLCanary.terminal-VALUE.txt": "9b332746be37015adb712c8370b3be602310f3c8a2b1f606d25833357eac75b9",
+      "12-BanditRL.OnlineBTRLCanary.weak-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "12-BanditRL.OnlineBTRLCanary.weak-VALUE.txt": "19d5f6e0c4c281acc96ba1ab607d93c90311de6fe771b7bd9bab3067afe85ddc",
+      "13-BanditRL.OnlineBTRLCanary.sharp-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "13-BanditRL.OnlineBTRLCanary.sharp-VALUE.txt": "14ba585bb2a1b796bc8a0eda2b91b68bb1ed9bdcb78d137ed4f927f94540dfd7",
+      "14-BanditRL.OnlineBTRLCanary.bounds-TYPE.txt": "4def85fb04fac3c1c7d811b31c6550c543fcb510415b462ce8c525ed8da7f999",
+      "14-BanditRL.OnlineBTRLCanary.bounds-VALUE.txt": "41157e97c5ec2e8aa5f6c6551afa51e10c769504d203ce8800898ea08e17d80c",
+      "15-BanditRL.OnlineBTRLCanary.attainment-TYPE.txt": "4def85fb04fac3c1c7d811b31c6550c543fcb510415b462ce8c525ed8da7f999",
+      "15-BanditRL.OnlineBTRLCanary.attainment-VALUE.txt": "95286806f8f4f49698ac6c02d02f198e7953bae424c7abee9618536048525891",
+      "16-BanditRL.OnlineBTRLCanary.runValid-TYPE.txt": "4def85fb04fac3c1c7d811b31c6550c543fcb510415b462ce8c525ed8da7f999",
+      "16-BanditRL.OnlineBTRLCanary.runValid-VALUE.txt": "9d0fbebfd776a4fda0b6cb5d95ef647e813b613e3889af80f28e2ba4fd99f355",
+      "17-BanditRL.OnlineBTRLCanary.closedLevels-TYPE.txt": "02d97e818e250f59bbea6f19a27cc1fc220469fc43a355b81d7c013aac5bb905",
+      "17-BanditRL.OnlineBTRLCanary.closedLevels-VALUE.txt": "48111793998650c0c808c0b6a933521396f53555b035435be4fd5c6dfc679b89",
+      "18-BanditRL.OnlineBTRLCanary.wrongExtension-TYPE.txt": "9e533e92f74829108137db0681727e5e8bb4a796aa3d45018afb9e6d63a01b94",
+      "18-BanditRL.OnlineBTRLCanary.wrongExtension-VALUE.txt": "1566610ac340338f23a605287a6879550978de5d67232b3ada5692c07aa404ac",
+      "19-BanditRL.OnlineBTRLCanary.Model.T-TYPE.txt": "11c421072d3c648f3b1e1169675adb5c11a7908a53062ff6033b6caa42e0ed45",
+      "19-BanditRL.OnlineBTRLCanary.Model.T-VALUE.txt": "993ecd0a1ede221acf2cbb0c069b1be05ab2e59680aa14ecb4a39de2899c03b9",
+      "2-BanditRL.OnlineBTRLCanary.constrained-TYPE.txt": "83be18755856723a0c2518b8a512bb41b563266a5d237050618471ddc0d57e28",
+      "2-BanditRL.OnlineBTRLCanary.constrained-VALUE.txt": "b1927a9011cb17618aeee6711cb276dd29d306308c6b4ef2a3d44e5b370e2bc9",
+      "20-BanditRL.OnlineBTRLCanary.Model.X-TYPE.txt": "2b3e8a4ad60ce6655716f7388b07745361d3f1976d08f8d77f5964f9645a5039",
+      "20-BanditRL.OnlineBTRLCanary.Model.X-VALUE.txt": "b52b3e57561d2ce292f5502682fc8440f22a88215ca513b4deb3fcc28a3166d3",
+      "21-BanditRL.OnlineBTRLCanary.Model.V-TYPE.txt": "2b3e8a4ad60ce6655716f7388b07745361d3f1976d08f8d77f5964f9645a5039",
+      "21-BanditRL.OnlineBTRLCanary.Model.V-VALUE.txt": "66f0c2237fe0d6a4d66b8fff3e86909d10c54df62d483add66534842622f8087",
+      "22-BanditRL.OnlineBTRLCanary.Model.psi-TYPE.txt": "c76729d00ab53115dac7a3215ba8b9be50f5444daf6093ae0809b56b239bacd4",
+      "22-BanditRL.OnlineBTRLCanary.Model.psi-VALUE.txt": "ce0be7198e4080b9d4eeeb6da3aa198dff18244f9c24a75d4ace8ec4aaa91bc8",
+      "23-BanditRL.OnlineBTRLCanary.Model.loss-TYPE.txt": "96ec7ef74062fe5b4acfeaf42654ee86e9f2780ab43c96b79822dc1cd9dab25a",
+      "23-BanditRL.OnlineBTRLCanary.Model.loss-VALUE.txt": "4db444b18bd988bc11b8b056b3dac8d73c340ee18f3d387d2585588e5b03c361",
+      "24-BanditRL.OnlineBTRLCanary.Model.lam-TYPE.txt": "ea42396a660009b9d57b8d0154916d1b2d78993146a2d811d4bc43f3f65190a8",
+      "24-BanditRL.OnlineBTRLCanary.Model.lam-VALUE.txt": "bcea1aa9915052e268567b44ff4aa4368b4864bd8e427d2db2d77b91557310c9",
+      "25-BanditRL.OnlineBTRLCanary.Model.x-TYPE.txt": "ea42396a660009b9d57b8d0154916d1b2d78993146a2d811d4bc43f3f65190a8",
+      "25-BanditRL.OnlineBTRLCanary.Model.x-VALUE.txt": "8db17ffa0c43af760ad613d706492bb7d9df7f9df408e3d255f677dc16fd13bd",
+      "26-BanditRL.OnlineBTRLCanary.Model.u-TYPE.txt": "534f776f2ab384f4bf8e66734410175704f61d0b8ecb7bdaafe01d17389ee2a3",
+      "26-BanditRL.OnlineBTRLCanary.Model.u-VALUE.txt": "8e3d042f1f1d7ad37a47b3e424ea291fdcd48d2d5938b227e85afcb2a0a48ecc",
+      "27-BanditRL.OnlineBTRLCanary.constrained_minimum_and_ambient_minimum-PROPOSED-THEOREM-TYPE.txt": "fdf8917f76f07ad29f19043dea8f92fcebf06ea6fecef003bdb83d7f2e0be97a",
+      "27-BanditRL.OnlineBTRLCanary.constrained_minimum_and_ambient_minimum-TYPE.txt": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde",
+      "27-BanditRL.OnlineBTRLCanary.constrained_minimum_and_ambient_minimum-VALUE.txt": "fdf8917f76f07ad29f19043dea8f92fcebf06ea6fecef003bdb83d7f2e0be97a",
+      "28-BanditRL.OnlineBTRLCanary.open_carrier_closed_transfer-PROPOSED-THEOREM-TYPE.txt": "149e5edd305737b175c6b3987861a95430a3c23209149737ae870b1f8c5d99be",
+      "28-BanditRL.OnlineBTRLCanary.open_carrier_closed_transfer-TYPE.txt": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde",
+      "28-BanditRL.OnlineBTRLCanary.open_carrier_closed_transfer-VALUE.txt": "149e5edd305737b175c6b3987861a95430a3c23209149737ae870b1f8c5d99be",
+      "29-BanditRL.OnlineBTRLCanary.repeated_last_bound_and_fake_ghost-PROPOSED-THEOREM-TYPE.txt": "0c026f6b176d66bcbdfe856e01072dca0f513e566499a244bf1d22fca881f509",
+      "29-BanditRL.OnlineBTRLCanary.repeated_last_bound_and_fake_ghost-TYPE.txt": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde",
+      "29-BanditRL.OnlineBTRLCanary.repeated_last_bound_and_fake_ghost-VALUE.txt": "0c026f6b176d66bcbdfe856e01072dca0f513e566499a244bf1d22fca881f509",
+      "3-BanditRL.OnlineBTRLCanary.openCarrier-TYPE.txt": "83be18755856723a0c2518b8a512bb41b563266a5d237050618471ddc0d57e28",
+      "3-BanditRL.OnlineBTRLCanary.openCarrier-VALUE.txt": "b0ede9ae2bf8b6394a6f59413ddfc7427e11272aeb3133a056268d7f915c16ab",
+      "30-BanditRL.OnlineBTRLCanary.two_round_endpoint_and_drift-PROPOSED-THEOREM-TYPE.txt": "429892eeff57ea04e6eb6187f4c762bd3a1499811b87cd811964c7e128da5cfd",
+      "30-BanditRL.OnlineBTRLCanary.two_round_endpoint_and_drift-TYPE.txt": "7eb9c843b0fd71b8fd2d1fabbb34bb5e51c5767a961a5fe1323fb9a277b48cde",
+      "30-BanditRL.OnlineBTRLCanary.two_round_endpoint_and_drift-VALUE.txt": "429892eeff57ea04e6eb6187f4c762bd3a1499811b87cd811964c7e128da5cfd",
+      "4-BanditRL.OnlineBTRLCanary.r-TYPE.txt": "e67615cc258f3df573511c27dd505577a04a5075df6b45bb26c33568be2664fb",
+      "4-BanditRL.OnlineBTRLCanary.r-VALUE.txt": "5a03c3e01859c20c4eaf093b94ae06ba0a5585e23a8ea828b525745a55e5e0c2",
+      "5-BanditRL.OnlineBTRLCanary.g-TYPE.txt": "19008370b5d4664aea778686dafcdbfde0d3985fa74c9a62ac2fab49def173f0",
+      "5-BanditRL.OnlineBTRLCanary.g-VALUE.txt": "62c86dca2e9cf27d710c2636addb443c2e8c155f989948aeca2f385b09485341",
+      "6-BanditRL.OnlineBTRLCanary.h-TYPE.txt": "7751fd375d4063cc61e5c81b978c2c2270efba9832357fcb332e1423863b6b8d",
+      "6-BanditRL.OnlineBTRLCanary.h-VALUE.txt": "2350b217741f570ba590c812350532a2221eae2554e1cf608a3f97220ff52d27",
+      "7-BanditRL.OnlineBTRLCanary.regret-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "7-BanditRL.OnlineBTRLCanary.regret-VALUE.txt": "19e005e84f1c971664469cb53c545e1f69050b8ba7a0e26e1aae51f7fcd86a0e",
+      "8-BanditRL.OnlineBTRLCanary.baseline-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "8-BanditRL.OnlineBTRLCanary.baseline-VALUE.txt": "af7cd3b8ab0172dd5d1515101bc7edcab9cb955a22e744e00cd7dabbad53d2bb",
+      "9-BanditRL.OnlineBTRLCanary.movement-TYPE.txt": "64ae3ed7d6199917eecc2e8b6b3acdef88f4e586eebc91367a825091c6b08332",
+      "9-BanditRL.OnlineBTRLCanary.movement-VALUE.txt": "2e779a41c6fcf599035d0be28012b5aca4e85c1698d91df377dd0124a56f4708",
+      "BanditRL.OnlineBTRLCanary.Model-STRUCTURE-TYPE.txt": "b4611575b2b62eb57ff8b514cf96bf01666158b035ac2fcc89065136260d1e05",
+      "BanditRL.OnlineBTRLCanary.Model.mk-STRUCTURE-TYPE.txt": "b0b8658ae121513d6d78e2bfde7ff4e8287357ba5cdf094438f3aa7e9c8f146f",
+      "definition-types-and-axioms.json": "99b8f5be8b960d8d8d92ceb195644b9ba6ebea79a89a2fd1bbdc61e99f82e295",
+      "search-path.json": "e34c5b238bbc8ac3c233beee9721f0be4a4e0914a7df8bdf820dd1499099030e"
+    }
+  },
+  "provenance": "The expression digests above identify authoring-time, type-only captures; they are not theorem-proof VALUE fingerprints. The original case-insensitive exporter collision (Model.X vs Model.x) is recorded separately from the successful case-safe ordinal capture. Independent theorem/canary and integration checks are separate evidence.",
+  "boundary": "This statement record does not itself accept the repaired row, Algorithm 7.8/Theorem 7.47, Chapter 2, any later chapter, or a main/live update."
+}
