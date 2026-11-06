@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated": "2026-08-27",
+  "updated": "2026-10-09",
   "title": "BanditRLwiki",
   "scope": "A curated, assumption-indexed atlas of upper bounds, lower bounds, optimality gaps, primary sources, and local BanditRLlib evidence. It is not an exhaustive claim about all bandit or reinforcement-learning literature.",
   "active_source_audits": [
@@ -5037,6 +5037,93 @@
       "id": "lean",
       "label": "Canonical Lean references and completion boundary",
       "pending": "Pending source verification"
+    }
+  ],
+  "active_research_projects": [
+    {
+      "id": "quantum-bandit-finite-coherence-cost-aware-bai",
+      "title": "Quantum Bandit A+B: finite coherent-block regret and circuit-certified cost-aware BAI",
+      "started": "2026-10-09",
+      "status": "research-started",
+      "model": "Classical arm choice between reset blocks; at most D forward/inverse calls to one fixed arm per block; all quantum state discarded at block end; every oracle direction charged to T and pseudo-regret.",
+      "scope": "A studies finite-coherence regret; B studies epsilon-BAI with fixed circuit bias, feasible fidelities and certified resource costs. Automated formalization begins at the physical estimation/testing primitive and reuses BanditRLlib decision skeletons.",
+      "evidence": "Public research branches contain kernel-checked Born/circuit bias, query/gate accounting, a genuine cross-library adapter and fixed-n computational-basis adaptive transcript information. Historical receipts and independent reviews are linked; these nodes are outside main and are not admitted atlas endpoints.",
+      "boundary": "Neither full algorithm nor regret/BAI complexity bound is proved. Estimation tails remain a missing producer. Novelty and optimality are unresolved; classical multi-fidelity and recent quantum papers are explicit prior art. No quantum advantage is claimed by this launch.",
+      "open_leaves": [
+        "QB-ESTIMATOR-MEASUREMENT-AND-CONDITIONAL-CONFIDENCE",
+        "QB-A-HORIZON-SAFE-POLICY-AND-REGRET",
+        "QB-B-FIDELITY-SELECTOR-STOPPING-AND-GATE-COST",
+        "QB-STOPPED-INFORMATION-HARD-ORACLES-AND-TESTING"
+      ],
+      "bandit_commit": "64eb285ebecbdc4bf236318776aabc6160fb1851",
+      "quantum_commit": "b541c64bfbc0c1f416db8959d306d360508e2cf6",
+      "checkpoint_url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/ce9308902fd5d84da574b9518db06f6a6cfb29ec/research/quantum-bandit/README.md",
+      "handoff_url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/blob/ce9308902fd5d84da574b9518db06f6a6cfb29ec/research/quantum-bandit/COLLABORATOR-HANDOFF.md",
+      "quantum_url": "https://github.com/DakeBU/Quantum-Computing-Block-Encoding/tree/b541c64bfbc0c1f416db8959d306d360508e2cf6",
+      "topic_path": "banditrlwiki/frontier-topics/quantum-bandit/index.html",
+      "updated": "2026-10-09",
+      "tracking_url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/issues/206",
+      "summary": "Two linked research topics: finite coherent-block regret and circuit-certified cost-aware best-arm identification.",
+      "topics": [
+        {
+          "id": "finite-coherence",
+          "title": "Finite coherent-block regret",
+          "question": "How does a finite coherent oracle-query budget change cumulative bandit regret?",
+          "compiled": "Forward/inverse accounting, fresh reset histories and fixed-finite-block adaptive information bounds.",
+          "current": "Build an actual depth-limited estimator with conditional confidence before implementing horizon-safe elimination.",
+          "open": "Complete regret upper bounds, stopped information comparison, hard oracle instances and matching lower bounds."
+        },
+        {
+          "id": "cost-aware-bai",
+          "title": "Circuit-certified cost-aware BAI",
+          "question": "How should epsilon-BAI choose actual circuit fidelity and coherence under certified bias and gate costs?",
+          "compiled": "Circuit-to-reward bias and primitive gate accounting; recommendation correctness is conditional on supplied statistical tails.",
+          "current": "Produce a finite feasible-fidelity selector and honest integer query/shot/gate cost certificates.",
+          "open": "Actual statistical producer, stopping, total-cost comparison and mixed-fidelity information lower bounds."
+        }
+      ],
+      "progress": [
+        {
+          "milestone": "Circuit and measurement foundations",
+          "status": "Compiled research increment",
+          "evidence": "Born stability, aligned circuit bias, actual forward/inverse semantics and primitive gate costs.",
+          "boundary": "Circuit alignment is supplied explicitly; loading and general reflection synthesis are not automatically produced."
+        },
+        {
+          "milestone": "Adaptive transcript information",
+          "status": "Compiled research increment",
+          "evidence": "Actual finite PMF/history bridge and Hellinger information accumulation.",
+          "boundary": "Fixed finite blocks, basis measurement, deterministic policy, natural budget and both environments' costs; stopping and K-arm reduction remain open."
+        },
+        {
+          "milestone": "Confidence and recommendation",
+          "status": "Conditional transport",
+          "evidence": "Bias plus statistical radius, interval elimination and epsilon-optimal recommendation.",
+          "boundary": "Actual quantum estimates and conditional statistical tails must still be produced."
+        },
+        {
+          "milestone": "A: complete policy and regret",
+          "status": "Open",
+          "evidence": "A concrete dyadic/horizon-safe policy is the next consumer.",
+          "boundary": "No complete regret upper/lower theorem, novelty or optimality claim."
+        },
+        {
+          "milestone": "B: fidelity selection and total cost",
+          "status": "Open",
+          "evidence": "Finite selection, stopping and certified resource comparisons are the next consumers.",
+          "boundary": "No complete epsilon-BAI cost theorem or mixed-fidelity optimality claim."
+        }
+      ],
+      "activity": [
+        {
+          "date": "2026-10-09",
+          "note": "Launched the two topics, released kernel-checked research checkpoints and historical independent audit evidence."
+        },
+        {
+          "date": "2026-10-09",
+          "note": "Latest proof checkpoint: actual adaptive transcript PMF/history bridge and natural-budget Hellinger information bound. A/B algorithm roots remain open."
+        }
+      ]
     }
   ]
 }
