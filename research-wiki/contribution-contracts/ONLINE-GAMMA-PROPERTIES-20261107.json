@@ -1,0 +1,239 @@
+{
+  "schema_version": "3.0",
+  "id": "ONLINE-GAMMA-PROPERTIES-20261107",
+  "route": "online-learning/chapter-2/gamma-properties-a8-a12",
+  "frontier_cell": "online-gamma-properties",
+  "source_facing": true,
+  "source": {
+    "kind": "book",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "anchor": "Appendix A.8–A.12, printed294–295/PDF306–307",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=306"
+  },
+  "target": "All A8–A12 source clauses retained, including complex A8, strict A10d, existing A10f series and the two-stage d2 Hence chain.",
+  "affected_files": [
+    "BanditRLProof.lean",
+    "BanditRLProof/OnlineGammaSourceInterfaces.lean",
+    "BanditRLProof/OnlineGammaRatios.lean",
+    "BanditRLProof/OnlineGammaDigammaStrict.lean",
+    "BanditRLProof/OnlineGammaReciprocalBounds.lean",
+    "BanditRLProof/OnlineGammaDigammaBounds.lean",
+    "BanditRLProof/OnlineGammaBatir.lean",
+    "BanditRLProof/OnlineGammaDimensionBounds.lean",
+    "BanditRLProof/OnlineGammaLogDimensionBounds.lean",
+    "website/content/books.json",
+    "website/content/chapters.json",
+    "website/content/highlights.json",
+    "website/content/readings.json"
+  ],
+  "declarations": [
+    "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+    "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+    "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+    "BanditRL.OnlineGamma.gamma_wendel_ratio",
+    "BanditRL.OnlineGamma.gamma_ratio_dimension_two",
+    "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+    "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+    "BanditRL.OnlineGamma.reciprocal_prefix_log_bounds",
+    "BanditRL.OnlineGamma.logGammaSlope_bounds",
+    "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+    "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+    "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension",
+    "BanditRL.OnlineGamma.logGamma_derivatives"
+  ],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Eight exact private named sources, accepted H2 Gamma derivatives and pinned mathlib."
+    ],
+    "reused_declarations": [
+      "BanditRL.OnlineGamma.logGamma_derivatives"
+    ],
+    "new_shared_declarations": [
+      "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+      "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+      "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+      "BanditRL.OnlineGamma.gamma_wendel_ratio",
+      "BanditRL.OnlineGamma.gamma_ratio_dimension_two",
+      "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+      "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+      "BanditRL.OnlineGamma.reciprocal_prefix_log_bounds",
+      "BanditRL.OnlineGamma.logGammaSlope_bounds",
+      "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+      "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+      "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension"
+    ],
+    "known_consumers": [
+      "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension"
+    ],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Integrate accepted private named proofs unchanged; reuse A10f instead of duplicating it.",
+    "source_phase_accepted_consumers": [
+      "Tests.OnlineGammaPropertiesCanary.complex_nonreal_integral",
+      "Tests.OnlineGammaPropertiesCanary.positive_half_digamma",
+      "Tests.OnlineGammaPropertiesCanary.batir_boundary_and_noninteger",
+      "Tests.OnlineGammaPropertiesCanary.general_even_odd_dimensions"
+    ],
+    "consumer_final_head_integration": "PENDING"
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": true,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "accepted",
+    "verdict": "accepted-with-explicit-delta",
+    "formalizer": "BLIND and executor private candidate authors; exact public names retained.",
+    "blind_decoder": "Distinct neutral packet reconstruction actors; four-consumer decode b2deec56 and original source freezes.",
+    "source_reviewer": "Independent SOURCE: readiness2afc4 and per-module actual proof decisions; four-consumer postblind82cff5.",
+    "remaining_semantic_delta": "A11 recurrence remains an explicit alternative proof; all source domains and constants unchanged. Four original consumer propositions are kernel equal to actual proof types, including six nonProp instance differences. Raw3 is retained. Final-head integration/validation remains pending."
+  },
+  "graph_contribution": {
+    "lean_graph": "integration-node",
+    "overview_graph": "updated",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Analytic Gamma substrate, no new cross-domain functor certificate.",
+    "focus_targets": [
+      "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+      "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+      "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+      "BanditRL.OnlineGamma.gamma_wendel_ratio",
+      "BanditRL.OnlineGamma.gamma_ratio_dimension_two",
+      "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+      "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+      "BanditRL.OnlineGamma.reciprocal_prefix_log_bounds",
+      "BanditRL.OnlineGamma.logGammaSlope_bounds",
+      "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+      "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+      "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension",
+      "BanditRL.OnlineGamma.logGamma_derivatives"
+    ],
+    "visual_review": "Pending actual final-head generated pages and graph.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "updated: source A8–A12 with exact assumptions and formulas",
+    "banditrlwiki": "no-change-with-reason: Online Learning teaching registry uses books/chapters; Bandit wiki untouched.",
+    "results_ledger": "no-change-with-reason: private acceptance does not close frozen rows144/145; no completion overlay yet.",
+    "roadmap": "no-change-with-reason: full Chapter2 and KT obligations remain open.",
+    "website_surfaces": [
+      "Online Learning Book",
+      "shared declaration catalog",
+      "Lean Graph"
+    ]
+  },
+  "truth_boundary": "Source-phase public root, twelve production declarations and four concrete consumer proofs/imports independently accepted at 33b81f6cd8126ef61cc7a9d000cf150ebdab889d. Final-head integrated root/Tests revalidation, full16, reader seal, CI, PR, Chapter 2, main integration and live verification remain pending.",
+  "verification": {
+    "focused_checks": [
+      "Private exact module native0/0 and independent type/proof adjudication retained in proof-attempts.json; source-phase public transport now independently accepted.",
+      "Source-phase root+8 native0 and twelve-public-declaration import native0 accepted at 33b81f6cd8126ef61cc7a9d000cf150ebdab889d; raw3 retained and independently adjudicated. See docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_source_phase_evidence",
+      "Four genuine Tests consumers native0/0 and original-whole-Prop kernel certificates independently accepted; raw3 retained. Portable receipt: docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence"
+    ],
+    "bandit_check": "pending",
+    "site_build": "pending",
+    "site_check": "pending",
+    "independent_review": "Source-phase root, production and four consumer proof/imports accepted; final-head root/Tests, full16, reader and CI pending.",
+    "test_paths": [
+      "Tests.lean",
+      "tools/test_book_registry.py",
+      "Tests/OnlineGammaPropertiesCanary.lean"
+    ]
+  },
+  "contributor": {
+    "name": "Ji Cheng with Codex assistance",
+    "role": "Formalizer with distinct neutral decoder, independent source/body reviewer and independent executor."
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "All syntax and raw comparison failures retained in private immutable receipts; no weaker target substituted.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [
+        "gamma-properties:c233018ad3e6556de7ec20223573637979b1d650a2d50c7ed51c7f0183d71342"
+      ],
+      "expected_information_gain": "Serial private leaves followed by integrated import and concrete consumers.",
+      "shared_verified_context_digest": "c233018ad3e6556de7ec20223573637979b1d650a2d50c7ed51c7f0183d71342"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "Source and actual proof routes independently compared; A11 alternative recurrence explicitly retained.",
+      "canonical_route": "Exact accepted named Gamma providers",
+      "selection_reason": "Preserve all source domains and constants."
+    },
+    "reader_backpressure": {
+      "purification_status": "pending",
+      "exposition_seal_status": "pending",
+      "reader_debt_delta": 11,
+      "exposition_evidence": "Eleven A8–A12 source cards with exact formulas and source-to-Lean ledger, actual seal pending.",
+      "source_expansion_nodes": [
+        "A.8",
+        "A.9",
+        "A.10(a)",
+        "A.10(b)",
+        "A.10(c)",
+        "A.10(d)",
+        "A.10(e)",
+        "A.10(f)",
+        "A.11",
+        "A.12 general",
+        "A.12 Hence d=2"
+      ],
+      "lean_expansion_nodes": [
+        "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+        "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+        "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+        "BanditRL.OnlineGamma.gamma_wendel_ratio",
+        "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+        "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+        "BanditRL.OnlineGamma.logGammaSlope_bounds",
+        "BanditRL.OnlineGamma.logGamma_derivatives",
+        "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+        "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension",
+        "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two"
+      ],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  },
+  "source_phase_validation": {
+    "scope": "SOURCE_PHASE_ONLY",
+    "head": "33b81f6cd8126ef61cc7a9d000cf150ebdab889d",
+    "public_root": "ACCEPTED",
+    "production_import": "ACCEPTED_WITH_RETAINED_RAW3",
+    "root_review_sha256": "c73a684d93a72dafc46b1ac142e998b793727d66448c35ddce68ff0ad9cc14fe",
+    "import_review_sha256": "c32534f2135886a34ca367348003efdc59f492f70a8bb849822a68ca5449ea0e",
+    "portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_source_phase_evidence",
+    "consumer": "ACCEPTED_SOURCE_PHASE_PRIVATE_TESTS_IMPORT",
+    "final_head": null,
+    "full16": "PENDING",
+    "reader": "PENDING",
+    "CI": "PENDING",
+    "PR": "PENDING",
+    "chapter": "PENDING",
+    "main_live": "PENDING",
+    "consumer_review_sha256": "86863488ea908efcdba173aad3fda0a7c0864c8a90c7fdcbe9b9daacbac01bc8",
+    "consumer_whole_equality_review_sha256": "66fcc09299bd2db5d37e958647256cff7f65f365f67bcf7a2aac5d167fd4eea2",
+    "consumer_portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence",
+    "final_head_integrated_Tests": "PENDING"
+  }
+}

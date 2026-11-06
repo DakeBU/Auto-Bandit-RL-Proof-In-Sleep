@@ -1,0 +1,572 @@
+{
+  "status": "SOURCE_PHASE_PRODUCTION_AND_CONSUMERS_ACCEPTED_FINAL_ACCEPTANCE_PENDING",
+  "source": {
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pdf_pages": [
+      306,
+      307
+    ],
+    "printed_pages": [
+      294,
+      295
+    ],
+    "fresh_pdftotext_sha256": "0ea326e60d843c30fd59e6c87a034a1c297711fa2e98592ed7d85f29a7d38373"
+  },
+  "frozen_rows": [
+    {
+      "target_id": "dependency:A.8-10",
+      "source_id": "A.8-10",
+      "scope_tag": "necessarydependency",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "Gamma(z)=integral_0^infinity t^(z-1)e^(-t)dt for Re z>0; digamma psi=(ln Gamma)prime. Required A.10 properties: log-convexity; (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma(x))<=1 for0<s<1,x>0; Gamma(x)>=((x-1/2)/e)^(x-1/2)sqrt(2e) for x>=1; digamma increasing/concave, ln x-1/x<=psi(x)<=ln x-1/(2x); psi_prime(x)=sum_{k>=0}(x+k)^(-2).",
+      "branch": "selected dependency",
+      "status": "selected source dependency; proof pending",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          306
+        ],
+        "printed_pages": [
+          294
+        ],
+        "marker": "Definition A.8",
+        "excerpt": "Definition A.8Forℜ(x)>0, thegamma functionis defined as\nΓ(x) :=\nZ ∞\n0\ntx−1e−t dt .\nDefinition A.9Thedigamma functionis defined as\nψ(x) := d\ndx ln Γ(x) = Γ′(x)\nΓ(x) ,∀x >0.\nProposition A.10For the gamma and digamma functions, we have the following proper-\nties:\n(a) The gamma function is log-convex onR >0, i.e.,ln Γis convex.\n(b) Wendel’s double inequality (Wendel, 1948)\n\u0012 x\nx+s\n\u00131−s\n≤ Γ(x+s)\nxsΓ(x) ≤1,∀0< s <1,∀x >0.\n(c)Γ(x)≥\n\u0010\nx−1/2\ne\n\u0011x−1/2 √\n2e, x≥1(Batir, 2008, Theorem 1.5).\n(d) The digamma function is strictly increasing and strictly concav",
+        "excerpt_sha256": "5b4ba7922d15d2e7186647b39423a05b1d047e4675869a3e009277fb80154ea6"
+      },
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    },
+    {
+      "target_id": "dependency:A.11-12",
+      "source_id": "A.11-12",
+      "scope_tag": "necessarydependency",
+      "domain": "Finite-dimensional real Euclidean space unless explicitly quantified otherwise",
+      "assumptions": "Exactly the explicit premises in effective_statement and named child interfaces; no historical recommendation adds premises implicitly",
+      "effective_statement": "Integers T>=1,d>=2: Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2). LemmaA.12: ln(sqrt(pi) Gamma(T+d/2)/(Gamma(d/2)Gamma(T+1/2))) <=(d-1)/2 ln(T/((d-1)/2)+1)+d/2-1+(1/2)ln(pi/2). For d=2, <=(ln T)/2+1.",
+      "branch": "selected dependency",
+      "status": "selected source dependency; proof pending",
+      "implementation_acceptance": false,
+      "source_locator": {
+        "pdf_pages_1based": [
+          306,
+          307
+        ],
+        "printed_pages": [
+          294,
+          295
+        ],
+        "marker": "Lemma A.11",
+        "excerpt": "Lemma A.11LetT≥1andd≥2be integers. Then, we have\nΓ(T+d/2)\nΓ(T+ 1/2) ≤(T+d/2−1/2) (d−1)/2 .\nProofFrom the definition of the digamma functionψ, we have\nln Γ(T+d/2−1/2)\nΓ(T+ 1/2) =\nZ T+d/2−1/2\nT+1/2\nψ(t) dt≤\nZ T+d/2−1/2\nT+1/2\nψ(T+d/2−1/2) dt\n= d−2\n2 ψ(T+d/2−1/2)≤ d−2\n2 ln (T+d/2−1/2),\nwhere we used the fact that the digamma is increasing (Proposition A.10(d)) and the upper\nboundψ(x)<ln(x)(Proposition A.10(e)). Then, from Proposition A.10(b), we use the\nfact thatΓ(T+d/2)≤\np\nT+d/2−1/2 Γ(T+d/2−1/2). Hence, we have\nln Γ(T+d/2)\nΓ(T+ 1/2) ≤ d−1\n2 ln (T+",
+        "excerpt_sha256": "38541339604760560c314dc3bfc384225d166f478ebc8692ffbd9d59c067223c"
+      },
+      "semantic_decisions_pending": [],
+      "proof_body_ready": false,
+      "proof_body_ready_reason": "No next proof before distinct effective-target freeze approval; listed semantic decisions and open repairs remain explicit.",
+      "claim_kind": "mathematical target or required repair obligation"
+    }
+  ],
+  "clause_ledger": [
+    {
+      "clause": "A.8",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+      "declaration": "complexGamma_integral_and_integrable",
+      "reader_required": true,
+      "assumptions_ledger": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.9",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+      "declaration": "logGammaSlope_eq_deriv_and_gamma_quotient",
+      "reader_required": true,
+      "assumptions_ledger": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.10(a)",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+      "declaration": "convexOn_logGamma_positive",
+      "reader_required": true,
+      "assumptions_ledger": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.10(b)",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+      "declaration": "gamma_wendel_ratio",
+      "reader_required": true,
+      "assumptions_ledger": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.10(c)",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+      "declaration": "gamma_lower_bound_batir",
+      "reader_required": true,
+      "assumptions_ledger": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.10(d)",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+      "declaration": "logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+      "reader_required": true,
+      "assumptions_ledger": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.10(e)",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+      "declaration": "logGammaSlope_bounds",
+      "reader_required": true,
+      "assumptions_ledger": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.10(f)",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+      "declaration": "logGamma_derivatives",
+      "reader_required": true,
+      "assumptions_ledger": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+      "production_status": "EXISTING_ACCEPTED_PRODUCTION_PROVIDER_REUSED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.8-10",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "reuse_mapping": [
+        "logGamma_derivatives actual second HasDerivAt projection -> .deriv",
+        "same theorem actual HasSum projection -> .tsum_eq; start k=0, x>0; genuine summability"
+      ],
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.11",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+      "route": "Explicit alternate two-step dimension recurrence, not falsely attributed to the printed digamma integral proof.",
+      "declaration": "gamma_ratio_general_dimension",
+      "reader_required": true,
+      "assumptions_ledger": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.11-12",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.12 general",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+      "declaration": "log_gamma_ratio_general_dimension",
+      "reader_required": true,
+      "assumptions_ledger": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.11-12",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    },
+    {
+      "clause": "A.12 Hence d=2",
+      "status": "Source-phase public library and concrete consumers accepted; final-head/full-gate/reader acceptance pending",
+      "scope": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+      "declaration": "log_gamma_ratio_dimension_two",
+      "reader_required": true,
+      "assumptions_ledger": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+      "production_status": "SOURCE_PHASE_ACCEPTED",
+      "public_target_provenance": {
+        "target_id": "dependency:A.11-12",
+        "source_pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+        "source_pdf_pages": [
+          306,
+          307
+        ],
+        "frozen_inventory_sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10"
+      },
+      "reuse_mapping": [
+        "log_gamma_ratio_dimension_two.1 gives gamma-log <=half log(pi*T+pi/2)",
+        "log_gamma_ratio_dimension_two.2 gives intermediate <=half log T+1"
+      ],
+      "current_private_status": "accepted private; source-phase public root/import now accepted"
+    }
+  ],
+  "internal_helper": {
+    "declaration": "reciprocal_prefix_log_bounds",
+    "role": "finite prefix producer for A10e, not separately attributed Appendix theorem"
+  },
+  "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+  "author": "Francesco Orabona",
+  "version": "arXiv:1912.13213v10",
+  "pdf_url": "https://arxiv.org/pdf/1912.13213v10#page=306",
+  "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "printed_pages": [
+    294,
+    295
+  ],
+  "pdf_pages": [
+    306,
+    307
+  ],
+  "inventory": "../online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+  "target_pointers": [
+    "/effective_targets/144",
+    "/effective_targets/145"
+  ],
+  "statement": "All A8–A12 source clauses retained, including complex A8, strict A10d, existing A10f series and the two-stage d2 Hence chain.",
+  "accepted_private_dependencies": [
+    {
+      "module": "OnlineGammaSourceInterfaces",
+      "source_sha256": "3304e4b3f458af2f3dc917a89329aa467873e02b01c8681857ac91d1350ad8c9",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-row144-interfaces-independent-actual-proof-review-v1.json",
+      "public_declarations": [
+        "complexGamma_integral_and_integrable",
+        "logGammaSlope_eq_deriv_and_gamma_quotient",
+        "convexOn_logGamma_positive"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaDerivatives",
+        "Mathlib.Analysis.SpecialFunctions.Gamma.Deriv",
+        "Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 0
+    },
+    {
+      "module": "OnlineGammaRatios",
+      "source_sha256": "58b5cffc56e94b75483c0c961eabf29d07c4168f95bcd6684e5420dae73b51be",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-kt-ratios-h2-independent-imported-adjudication-v1.json",
+      "public_declarations": [
+        "gamma_wendel_ratio",
+        "gamma_ratio_dimension_two",
+        "log_gamma_ratio_dimension_two"
+      ],
+      "imports": [
+        "Mathlib"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 3
+    },
+    {
+      "module": "OnlineGammaDigammaStrict",
+      "source_sha256": "7e943512e51d9ece3c9bf5f29356ef8d56092f964b26aa69feccf35f9fa1f3a2",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-row144-a10d-independent-actual-proof-review-v1.json",
+      "public_declarations": [
+        "logGamma_deriv_strictMonoOn_and_strictConcaveOn"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaDerivatives",
+        "Mathlib.Analysis.Convex.Deriv",
+        "Mathlib.Topology.Algebra.InfiniteSum.Real"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 0
+    },
+    {
+      "module": "OnlineGammaReciprocalBounds",
+      "source_sha256": "26a2880d914ad9cda6c63fac78c7f2a2c6208b76f956e26204af751e5b2e9a41",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-row144-reciprocal-independent-actual-proof-adjudication-v1.json",
+      "public_declarations": [
+        "reciprocal_prefix_log_bounds"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaDerivatives",
+        "Mathlib.Analysis.SpecialFunctions.Integrals.Basic"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 3
+    },
+    {
+      "module": "OnlineGammaDigammaBounds",
+      "source_sha256": "ed8f712fcdd5e97b37650d7836c6b610b26b95e5ba6181bc34898b0c0affac6d",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-row144-a10e-independent-actual-proof-adjudication-v1.json",
+      "public_declarations": [
+        "logGammaSlope_bounds"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaReciprocalBounds"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 3
+    },
+    {
+      "module": "OnlineGammaBatir",
+      "source_sha256": "f18c62f17dcba686f062bd5cf782dd9a0f0182ebb585c26908718608b5c40acc",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-row144-a10c-independent-actual-proof-adjudication-v1.json",
+      "public_declarations": [
+        "gamma_lower_bound_batir"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaDigammaBounds",
+        "BanditRLProof.OnlineGammaSimplexCurvature"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 3
+    },
+    {
+      "module": "OnlineGammaDimensionBounds",
+      "source_sha256": "6dcde093f1962fe925429db5fc475ecb4e85b39b19e83973bff58fb901e5f56d",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-kt-a11-independent-actual-proof-adjudication-v1.json",
+      "public_declarations": [
+        "gamma_ratio_general_dimension"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaRatios"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 3
+    },
+    {
+      "module": "OnlineGammaLogDimensionBounds",
+      "source_sha256": "5b3da04ff78f33b90cd9e98d12fafaabbb646decbb3a9e1e78e193c07f838e86",
+      "status": "PRIVATE_ACCEPTED_AND_SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+      "review": "c2-kt-a12-independent-actual-proof-adjudication-v1.json",
+      "public_declarations": [
+        "log_gamma_ratio_general_dimension"
+      ],
+      "imports": [
+        "BanditRLProof.OnlineGammaDimensionBounds",
+        "BanditRLProof.OnlineGammaBatir"
+      ],
+      "actual_native": [
+        0,
+        0
+      ],
+      "preserved_raw_comparator_exit": 3
+    }
+  ],
+  "source_vs_lean": [
+    {
+      "clause": "A.8",
+      "source_statement": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+      "lean_statement": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+      "source_proof_vs_lean_proof": "Apply the actual complex Gamma integral and integrability theorems at the same complex argument with positive real part. The power remains complex; the integration variable is real.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.9",
+      "source_statement": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+      "lean_statement": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+      "source_proof_vs_lean_proof": "Use positive-domain differentiability of Gamma, positivity of Gamma for division, and the actual first log-Gamma derivative provider. Both derivative identities share the same positive argument.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.10(a)",
+      "source_statement": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+      "lean_statement": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+      "source_proof_vs_lean_proof": "Reuse the pinned real log-Gamma convexity theorem on the positive half-line.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.10(b)",
+      "source_statement": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+      "lean_statement": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+      "source_proof_vs_lean_proof": "Apply real log-convexity at the two Gamma arguments and Gamma recurrence; retain both Wendel bounds and strict 0<s<1.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.10(c)",
+      "source_statement": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+      "lean_statement": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+      "source_proof_vs_lean_proof": "Set G(x)=psi(x)-log(x-1/2). Actual A13 scalar curvature makes G nonincreasing; the full digamma bounds give its limit zero, hence G>=0. Integrate this derivative sign for F(x)=logGamma(x)-(x-1/2)(log(x-1/2)-1)-log(2e)/2, evaluate F(1)=0 and use positive logarithmic order.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.10(d)",
+      "source_statement": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+      "lean_statement": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+      "source_proof_vs_lean_proof": "Compare the actual convergent inverse-square sums strictly at index zero. Positivity yields strict increase; strict decrease of the derivative yields strict concavity.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.10(e)",
+      "source_statement": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+      "lean_statement": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+      "source_proof_vs_lean_proof": "Prove both finite reciprocal-prefix bounds by unit-cell integrals and induction. Pass to the authentic Euler derivative limit with both endpoint corrections and closed-order limit inequalities.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.10(f)",
+      "source_statement": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+      "lean_statement": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+      "source_proof_vs_lean_proof": "Reuse the production logGamma_derivatives second HasDerivAt and HasSum projections. HasDerivAt.deriv and HasSum.tsum_eq give the displayed equality; summability is explicit.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.11",
+      "source_statement": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+      "lean_statement": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+      "source_proof_vs_lean_proof": "The printed proof uses a digamma integral and Wendel. The accepted Lean proof instead uses dimension-two and dimension-three bases and Gamma recurrence in a two-step dimension induction; this is an alternative proof, not a claimed kernel digamma edge.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.12 general",
+      "source_statement": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+      "lean_statement": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+      "source_proof_vs_lean_proof": "Take the logarithm of the actual A11 positive Gamma ratio, subtract the full-real Batir lower log bound at d/2, and rearrange with m=(d-1)/2>0. Preserve sqrt(pi), log(pi/2), and d/2-1.",
+      "extra_hypotheses": []
+    },
+    {
+      "clause": "A.12 Hence d=2",
+      "source_statement": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+      "lean_statement": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+      "source_proof_vs_lean_proof": "Reuse both conjunction projections of log_gamma_ratio_dimension_two. The first gives the intermediate half-log(pi*T+pi/2); the second bounds that intermediate expression by half-log T+1.",
+      "extra_hypotheses": []
+    }
+  ],
+  "remaining_gates": [
+    "Final-head integrated root/Tests and production/consumer revalidation",
+    "final-head full16 combined gates",
+    "reader/clipboard/source seal",
+    "exact-final-head CI",
+    "PR/main integration/live verification",
+    "KT and complete Chapter 2 obligations"
+  ],
+  "a12_final_private_receipt_sha256": "c233018ad3e6556de7ec20223573637979b1d650a2d50c7ed51c7f0183d71342",
+  "source_phase_validation": {
+    "scope": "SOURCE_PHASE_ONLY",
+    "head": "33b81f6cd8126ef61cc7a9d000cf150ebdab889d",
+    "public_root": "ACCEPTED",
+    "production_import": "ACCEPTED_WITH_RETAINED_RAW3",
+    "root_review_sha256": "c73a684d93a72dafc46b1ac142e998b793727d66448c35ddce68ff0ad9cc14fe",
+    "import_review_sha256": "c32534f2135886a34ca367348003efdc59f492f70a8bb849822a68ca5449ea0e",
+    "portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_source_phase_evidence",
+    "consumer": "ACCEPTED_SOURCE_PHASE_PRIVATE_TESTS_IMPORT",
+    "final_head": null,
+    "full16": "PENDING",
+    "reader": "PENDING",
+    "CI": "PENDING",
+    "PR": "PENDING",
+    "chapter": "PENDING",
+    "main_live": "PENDING",
+    "consumer_review_sha256": "86863488ea908efcdba173aad3fda0a7c0864c8a90c7fdcbe9b9daacbac01bc8",
+    "consumer_whole_equality_review_sha256": "66fcc09299bd2db5d37e958647256cff7f65f365f67bcf7a2aac5d167fd4eea2",
+    "consumer_portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence",
+    "final_head_integrated_Tests": "PENDING"
+  }
+}

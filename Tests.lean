@@ -205,3 +205,4 @@ import Tests.OnlineUnboundedOGDCanary
 import Tests.ConfidenceIntervalsCanary
 import Tests.OnlineGammaSimplexCanary
 import Tests.OnlineConvexSimplexMaximumCanary
+import Tests.OnlineGammaPropertiesCanary
