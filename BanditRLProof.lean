@@ -797,6 +797,13 @@ import BanditRLProof.OnlineAdaptivePotential
 import BanditRLProof.OnlineAdaptiveOSD
 import BanditRLProof.OnlineAdaptiveBenchmark
 import BanditRLProof.OnlineGammaEstimates
+import BanditRLProof.OnlineGammaDerivatives
+import BanditRLProof.OnlineGammaIntegralEstimates
+import BanditRLProof.OnlineGammaSimplexBasic
+import BanditRLProof.OnlineGammaSimplexCurvature
+import BanditRLProof.OnlineGammaSimplexGeometry
+import BanditRLProof.OnlineGammaSimplexMaximum
 import BanditRLProof.OnlineWeightedPotential
 import BanditRLProof.OnlineUnboundedOGD
 import BanditRLProof.ConfidenceIntervals
+import BanditRLProof.OnlineGammaSimplex

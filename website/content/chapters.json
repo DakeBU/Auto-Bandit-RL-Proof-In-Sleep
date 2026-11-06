@@ -1184,9 +1184,7 @@
       "summary": "A scalar logarithmic inequality controls the contribution from one coordinate. Weighted Jensen combines the coordinates to bound the squared ℓ¹ distance by a difference of entropy derivatives.",
       "audience": "Readers following the proof of Orabona, Lemma 6.33, or the entropy dependencies of the Chapter 2 regret estimates.",
       "completion_definition": "Derivatives and nonnegativity of the positive scalar gap, the coordinate ratio inequality, the ambient entropy differential, and the two-step pairing estimate on the positive weighted simplex.",
-      "completion_blockers": [
-        "The full strong-convexity conclusion requires a support argument on the feasible set. The KL identity and boundary extension require separate proofs."
-      ],
+      "completion_blockers": [],
       "learning_goals": [
         "Check why the printed strict curvature claim fails at u=1.",
         "Use a horizontal tangent to bound the gap on both sides of 1.",
@@ -1199,7 +1197,7 @@
         "BanditRLProof/OnlineEntropyWeightedPairing.lean"
       ],
       "open_gaps": [
-        "The full weighted L1 strong-convexity theorem, KL corollary and Bernoulli endpoints are outside this scalar step."
+        "The weighted entropy interpolation and the binary KL endpoints are covered in the entropy geometry lesson."
       ]
     },
     {
@@ -1222,7 +1220,7 @@
         "BanditRLProof/OnlineStrongMonotonicity.lean"
       ],
       "open_gaps": [
-        "Weighted entropy on the positive simplex requires its own convex carrier and a bound in the ℓ¹ norm."
+        "The differentiable part of Theorem 4.3 uses its own hypotheses."
       ]
     },
     {
@@ -1242,13 +1240,11 @@
         "BanditRLProof/OnlineEntropyL1.lean",
         "BanditRLProof/OnlineEntropyKLBoundary.lean"
       ],
-      "completion_blockers": [
-        "The combined Book build and desktop and mobile reading checks for this route are pending."
-      ],
+      "completion_blockers": [],
       "open_gaps": [
         "Singular reference distributions and the remaining coin-betting wealth estimates have separate scope."
       ],
-      "status": "partial"
+      "status": "compiled"
     },
     {
       "slug": "online-kt-endpoints",
@@ -1264,13 +1260,11 @@
       "module_globs": [
         "BanditRLProof/OnlineKTPotential.lean"
       ],
-      "completion_blockers": [
-        "Combined project gates and reader verification are pending."
-      ],
+      "completion_blockers": [],
       "open_gaps": [
         "Theorem 13.4 also needs a potential inequality for coins strictly between −1 and 1, wealth induction, and a lower estimate for the potential. The endpoint identities supply only the two equalities."
       ],
-      "status": "partial"
+      "status": "compiled"
     },
     {
       "slug": "online-gamma-curvature-estimates",
@@ -1286,11 +1280,37 @@
       "module_globs": [
         "BanditRLProof/OnlineGammaEstimates.lean"
       ],
+      "completion_blockers": [],
+      "open_gaps": [
+        "The application to Lemma A.13 uses the derivative of the Euler limit, the half-line integral and maximization on the closed simplex."
+      ],
+      "status": "compiled"
+    },
+    {
+      "slug": "online-gamma-simplex",
+      "title": "The Gamma product on the closed simplex",
+      "short_title": "Gamma simplex maximum",
+      "summary": "Follow the curvature proof of Lemma A.13 from the trigamma series to the common value at every vertex.",
+      "audience": "Readers studying the Gamma ratio in the KT wealth bound.",
+      "completion_definition": "The bound and the attained value for every real mass T≥1 and every integer dimension n≥1.",
+      "learning_goals": [
+        "Use a half-line integral to control the second derivative of a log factor.",
+        "Recover the vertex weights and evaluate the zero coordinates."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineGammaDerivatives.lean",
+        "BanditRLProof/OnlineGammaIntegralEstimates.lean",
+        "BanditRLProof/OnlineGammaSimplexBasic.lean",
+        "BanditRLProof/OnlineGammaSimplexCurvature.lean",
+        "BanditRLProof/OnlineGammaSimplexGeometry.lean",
+        "BanditRLProof/OnlineGammaSimplex.lean",
+        "BanditRLProof/OnlineGammaSimplexMaximum.lean"
+      ],
       "completion_blockers": [
-        "Production validation and reader checks are pending."
+        "Combined project and reader acceptance for the complete simplex proof."
       ],
       "open_gaps": [
-        "The derivative of the infinite Euler limit, the curvature of x log x−log Γ(x+1/2), its extension through zero, and vertex maximization on the closed simplex require further proofs."
+        "Applying the simplex bound to the two Gamma factors in Theorem 13.4 requires the KT potential argument."
       ],
       "status": "partial"
     }

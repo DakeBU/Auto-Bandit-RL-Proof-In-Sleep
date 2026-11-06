@@ -1,0 +1,182 @@
+{
+  "source": {
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "author": "Francesco Orabona",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "printed_pages": [
+      295,
+      296
+    ],
+    "pdf_pages": [
+      307,
+      308
+    ]
+  },
+  "statement_seal": {
+    "signature_digest": "89134230f23323b13f9460a875820ce74b7d6ee99b48e1c3457d51338403e8cd",
+    "binder_audit": [
+      {
+        "binder": "n : Nat",
+        "classification": "TYPING"
+      },
+      {
+        "binder": "T : Real",
+        "classification": "TYPING"
+      },
+      {
+        "binder": "1 <= n; 1 <= T",
+        "classification": "SOURCE"
+      },
+      {
+        "binder": "x : Fin n -> Real",
+        "classification": "TYPING"
+      },
+      {
+        "binder": "each x_i >= 0; sum x_i = T",
+        "classification": "SOURCE"
+      },
+      {
+        "binder": "j : Fin n",
+        "classification": "TYPING"
+      }
+    ],
+    "excess": [],
+    "definitions": {
+      "simplexLogFactor": "literal continuous extension at zero",
+      "simplexGammaProduct": "literal real product using real powers, including 0^0=1",
+      "nonnegativeMassSimplex": "literal nonnegative coordinates with fixed sum",
+      "massSimplexVertex": "literal Pi.single coordinate vector"
+    },
+    "generic_attainment": {
+      "signature_digest": "c89fd1a52855094b09acbde1aae73f5dd75a7a42643d38e322c19ebf33785184",
+      "binders": {
+        "n,T,G": "TYPING",
+        "1 ≤ n; 1 ≤ T; ConvexOn G on the mass simplex": "SOURCE"
+      },
+      "excess": []
+    }
+  },
+  "source_proof_coverage": {
+    "inventory": [
+      {
+        "id": "A13-PRODUCT",
+        "kind": "NODE",
+        "text": "The product, the nonnegative simplex and the convention 0^0=1."
+      },
+      {
+        "id": "A13-LOG",
+        "kind": "NODE",
+        "text": "Take logarithms and define the scalar h."
+      },
+      {
+        "id": "A13-CURVATURE",
+        "kind": "NODE",
+        "text": "Compute h second derivative using Proposition A.10(f)."
+      },
+      {
+        "id": "A13-CELL-JENSEN",
+        "kind": "NODE",
+        "text": "Use convexity of the reciprocal-square kernel and integral Jensen on each unit cell."
+      },
+      {
+        "id": "A13-RAY",
+        "kind": "NODE",
+        "text": "Sum the cell bounds, evaluate the half-line integral as 1/x and deduce nonnegative curvature."
+      },
+      {
+        "id": "A13-ZERO",
+        "kind": "NODE",
+        "text": "Extend the log sum continuously to the closed simplex, including zero coordinates."
+      },
+      {
+        "id": "A13-GENERIC-MAXIMUM",
+        "kind": "NODE",
+        "text": "Every convex function on this simplex has a single vertex attaining its global maximum."
+      },
+      {
+        "id": "A13-VERTEX",
+        "kind": "NODE",
+        "text": "The Gamma product has the same value at each vertex, so every vertex attains its maximum."
+      }
+    ],
+    "source_gaps": [],
+    "alternative_routes": [
+      {
+        "node": "A13-CELL-JENSEN",
+        "source_route": "Convexity and integral Jensen",
+        "lean_route": "The same unit-cell comparison follows from the evaluated primitive and algebraic midpoint bound. Both the interval and half-line integrals are proved.",
+        "relation": "OR"
+      },
+      {
+        "node": "A13-VERTEX",
+        "source_route": "Use the general convex-function vertex maximum, then the symmetry of the Gamma product.",
+        "lean_route": "The Gamma comparison applies finite Jensen directly and evaluates all vertex values. The general attained maximum is also proved separately from finite Jensen and finite vertex maximization.",
+        "relation": "OR"
+      }
+    ]
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Real Gamma Euler approximants and their limit",
+      "Differentiation under locally uniform convergence",
+      "Fundamental theorems of calculus",
+      "Finite Jensen inequality",
+      "Positive logarithmic order"
+    ],
+    "bookkeeping": [
+      "Shifted series indexing",
+      "Finite coordinate and vertex sum evaluation",
+      "Gamma factors at the zero coordinates"
+    ],
+    "new_reusable": [
+      "Positive-domain derivatives of log Gamma",
+      "Continuous and convex scalar log factor on the closed half-line",
+      "Closed-simplex product maximum",
+      "A single attained maximizing vertex for every convex function on the closed mass simplex"
+    ],
+    "source_to_lean": {
+      "A13-PRODUCT": [
+        "simplexGammaProduct",
+        "nonnegativeMassSimplex"
+      ],
+      "A13-LOG": [
+        "simplexGammaProduct_pos_and_log"
+      ],
+      "A13-CURVATURE": [
+        "logGamma_derivatives",
+        "simplexLogFactor_derivatives"
+      ],
+      "A13-CELL-JENSEN": [
+        "midpointInvSq_unitCell_integral"
+      ],
+      "A13-RAY": [
+        "midpointInvSq_ray_integral"
+      ],
+      "A13-ZERO": [
+        "continuousOn_simplexLogFactor_and_zero",
+        "continuousOn_and_convexOn_sum_simplexLogFactor"
+      ],
+      "A13-VERTEX": [
+        "convexOn_le_sum_massSimplexVertex",
+        "simplexGammaProduct_le_vertex_and_value",
+        "isGreatest_simplexGammaProduct_image"
+      ],
+      "A13-GENERIC-MAXIMUM": [
+        "convexOn_le_sum_massSimplexVertex",
+        "convexOn_exists_isGreatest_massSimplexVertex"
+      ]
+    }
+  },
+  "purification": {
+    "status": "accepted",
+    "dead_code_audit": "All new public support statements feed the source theorem or concrete boundary consumers. Private helpers remain reachable from the named proofs.",
+    "duplicate_semantics_audit": "Reuse the prior OnlineGammaEstimates and shared mathlib. Single definitions for the product, domain and vertices.",
+    "canonicalization": "One shared Lean project and namespace BanditRL.OnlineGamma.",
+    "compressed_spine_delta": "Euler derivatives -> midpoint integral -> closed-domain convexity -> finite Jensen, followed by general vertex attainment and the equal Gamma vertex values.",
+    "reader_default_view": "Five mathematical source cards with folded Lean declarations and graph drill-down.",
+    "accepted_head": "8c1939f93aa1a42ceca3263af0b5b13c19618484",
+    "acceptance_record": "local-acceptance-8c1939f93.json",
+    "independent_decision_sha256": "9f189967b9470a3d19c8abf2ff81f47cd00cbc462e23bce93e9c7044651ca76e"
+  }
+}

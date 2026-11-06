@@ -1,0 +1,198 @@
+{
+  "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+  "author": "Francesco Orabona",
+  "version": "arXiv:1912.13213v10",
+  "pdf_url": "https://arxiv.org/pdf/1912.13213v10#page=307",
+  "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+  "printed_pages": [
+    295,
+    296
+  ],
+  "pdf_pages": [
+    307,
+    308
+  ],
+  "inventory": "../online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+  "target_pointers": [
+    "/effective_targets/146",
+    "/effective_targets/165"
+  ],
+  "scope": "Lemma A.13 and the proof through the nonnegative simplex boundary. Both identifiers refer to the same printed lemma.",
+  "statement": "For integer n≥1 and real T≥1, on xᵢ≥0 with sum xᵢ=T, the product of xᵢ^xᵢ/Γ(xᵢ+1/2) is maximized at every vertex T eⱼ. Its vertex value is T^T/[Γ(T+1/2) Γ(1/2)^(n−1)].",
+  "conventions": [
+    "At xᵢ=0 the numerator is 0^0=1, and h(0)=−log Γ(1/2).",
+    "All derivatives are ordinary real derivatives at strictly positive arguments. Continuity and convexity include the boundary.",
+    "All vertices attain the bound. The theorem does not assert a characterization of all equality cases."
+  ],
+  "proof_route": [
+    "Identify the first and second derivatives of the real log Gamma function by the locally uniform limits of the finite Euler derivatives.",
+    "Compare the shifted inverse squares to their unit-cell integrals. Evaluate the half-line integral of (x+t)^−2 as 1/x. The Lean cell proof evaluates a primitive and applies the finite difference inequality. The printed proof uses integral Jensen.",
+    "Deduce h″≥0 at positive points and extend convexity across zero by continuity.",
+    "Take the log of the positive product on the closed simplex, use the finite sum of continuous convex coordinate functions, and apply Jensen with weights xᵢ/T.",
+    "At a vertex, the n−1 zero coordinates each contribute 1/Γ(1/2)."
+  ],
+  "accepted_private_dependencies": [
+    {
+      "scope": "log Gamma derivatives",
+      "module": "BanditRLProof.OnlineGammaDerivatives",
+      "source_sha256": "6fc988d6302de2c349faeb6bc0362f97da98b502969cc3806e1c86b20cc76ec8",
+      "typed_freeze_sha256": "6d7e1a2261af9e28ec85c55d74f4254c603ac7f0066f45a7d05107f2d7cd124d",
+      "frozen_expressions": {
+        "firstApproximant-TYPE.txt": "c46674c8d4a0e148a495cc63e9aa5c73106b84c1f08f7b54313393cd97ccbd2c",
+        "firstApproximant-VALUE.txt": "8991eb9cbae62b27d0e3c624e1686529705c3412338456812d0f0b437aaa0076",
+        "firstLimit-TYPE.txt": "270972c22c1d7fc7aa2157161fffd6be08b03ce3d17a51ba106ddbf5c06fa5f1",
+        "firstLimit-VALUE.txt": "9b21ec84c0d8bc079511b3bb7192cf5957cb1a8302f1bbe7be9309e307889e87",
+        "log_gamma_derivatives-TYPE.txt": "b44b47c235b97a519d044a0aab27ba8887b9bda123d270a81541b5383145fd0f",
+        "secondApproximant-TYPE.txt": "c46674c8d4a0e148a495cc63e9aa5c73106b84c1f08f7b54313393cd97ccbd2c",
+        "secondApproximant-VALUE.txt": "0897d02dceaa8f99b2eb5a59bfab6862aa4db544d05d91915857f4c153932feb",
+        "secondLimit-TYPE.txt": "270972c22c1d7fc7aa2157161fffd6be08b03ce3d17a51ba106ddbf5c06fa5f1",
+        "secondLimit-VALUE.txt": "60ccb87c4b46e978a1a77fe4b380fd993379875552208a3a83370e0e29dc75e5"
+      },
+      "named_review_sha256": "94548d3d1d9c2f0675b727aca2689cfba2535b410fca152fea0ba115cd618437"
+    },
+    {
+      "scope": "unit cell and half-line integral",
+      "module": "BanditRLProof.OnlineGammaIntegralEstimates",
+      "source_sha256": "91bb177c5690d52828a2f94060c8938ac7ceb176c4913c15c861adee35cbc2ae",
+      "typed_freeze_sha256": "059148902c8bb78b9741b4e95889a40770084d3e80a59852ff4b19c5678bde2c",
+      "frozen_expressions": {
+        "Packet.q0-PROPOSED-THEOREM-TYPE.txt": "32973f40c3bfb478705ae5a5421b6a98bd54969b7d4e4b4a37679109026f03c6",
+        "Packet.q1-PROPOSED-THEOREM-TYPE.txt": "51e70c61a4cd277b173e48817b5756359b0d4174c701ca2b8469ccfd5127f273"
+      },
+      "named_review_sha256": "aa68ccd3f483159834035a747d11caed4470e66d0c00193c7e997abfe3c585ad"
+    },
+    {
+      "scope": "coordinate factors, closed simplex and vertex Jensen bound",
+      "module": "BanditRLProof.OnlineGammaSimplexBasic",
+      "source_sha256": "195414bf946ad4f9d4666c70a32fc39eb2db8c16b16445e9d2edd7d138e9037e",
+      "typed_freeze_sha256": "d21af5cf2749c3f47f649a9c35d76b02fc7ac82c5543ad3d7c9f8df007bac726",
+      "frozen_expressions": {
+        "Packet.b0-TYPE.txt": "a6adfd25b32ecf563e5bf88dd46ba821a69a6a0cf8264a2a38872986e47b098f",
+        "Packet.b1-TYPE.txt": "2c4553e2eee60122ff61e4010d4427af18ed26b512e4673cd378192748663865",
+        "Packet.b2-TYPE.txt": "51b8dd4919696e4a09bb881555a4fab51f2e83bf5aa29f096e2ca82face128d0",
+        "Packet.b3-TYPE.txt": "06f820a1281ef889a3192f483146b0586dd40933817c39a5c27d2d270ea3fc7c",
+        "Packet.q0-PROPOSED-THEOREM-TYPE.txt": "5a95bf9dbcf9ac668eb3ae480904264872aa6cabb57870279e63b0f28b33a960",
+        "Packet.q1-PROPOSED-THEOREM-TYPE.txt": "d611069a16b13f8493fb3d9c3b66fa480533deb3767f1a2cfe58706db384f456",
+        "Packet.q2-PROPOSED-THEOREM-TYPE.txt": "1d0eac18c004dc1eb6931a47be41a726853614de8cd0b1db5bf76fc84f5870df",
+        "Packet.q3-PROPOSED-THEOREM-TYPE.txt": "0fd37ddbf4d494d0f6945e4f87508bb6868d4281eacf532463f89b050e7999d4"
+      },
+      "named_review_sha256": "6157e4f9f3e9e28c163750bb98772241c4be3f6ef55ba96f45eb042ed37586e3"
+    },
+    {
+      "scope": "interior derivatives and closed-half-line convexity",
+      "module": "BanditRLProof.OnlineGammaSimplexCurvature",
+      "source_sha256": "a1e0c41744ad88e84b33da91ff0aa10b97aa03a7282d586e4d867764fc8be6d5",
+      "typed_freeze_sha256": "f02a4c53c19771c7d6bb0c5e77233653d8d9bc0097f7ead802ff3eb58bbe6d36",
+      "frozen_expressions": {
+        "BanditRL.OnlineGamma.simplexLogFactor_convexOn-TYPE.txt": "f34f538cc9aa117e69b0d2ddfb279c7dd8e906a9f604c7b9a66e1cf874d0de11",
+        "BanditRL.OnlineGamma.simplexLogFactor_derivatives-TYPE.txt": "2de8ad2b9db60050d830c69f33cc0b184e9e8ea746cfa2b9ef0fde061aa5833b"
+      },
+      "named_review_sha256": "a4b75311887e877fd2fa6dcc44f82a04e03448938c42914e07144bc1d7718b08",
+      "private_source_sha256": "1b62bab67bffbe350b81880a1a631a309da582baa9c694bcbd6bd30b9a737653",
+      "source_transport": "Private CRLF newlines normalized to Git LF. Every other source byte matches."
+    },
+    {
+      "scope": "Continuous finite sum and convexity on the entire closed simplex.",
+      "module": "BanditRLProof.OnlineGammaSimplexGeometry",
+      "source_sha256": "ebdf025e8b655f59b3de238527cbd4c4b3acb246cdec273a564efb7b02a9aaac",
+      "typed_freeze_sha256": "b307d5bdb2421add10aa4e81230d5e29b6a6e974a201dd67265a5dc969f67e6e",
+      "frozen_expressions": {
+        "BanditRL.OnlineGamma.continuousOn_and_convexOn_sum_simplexLogFactor": "36ca00c7ae2a1b9698d579bbdb98285812bdcd801cc308998002f67eb9c012af"
+      },
+      "named_review_sha256": "8e9008eda999bfe244863c6242ef5f05ac22abf7e79c84b7088ed68d2481de13",
+      "private_source_sha256": "73ee5258082a7dfe0ef3018da9f6b32e2732d36ecbbd40b7e162ab1f5a793568",
+      "source_transport": "Private CRLF newlines normalized to Git LF. Every other source byte matches."
+    }
+  ],
+  "previous_estimates": "../online-gamma-curvature-estimates-v1/local-acceptance-f446a8f1.json",
+  "downstream": "Theorem 13.4 also needs the real-coin potential inequality, wealth induction, Gamma ratio estimates and the Bernoulli entropy lower bound.",
+  "maximum": {
+    "module": "BanditRLProof.OnlineGammaSimplex",
+    "source_sha256": "8447ab2494d8aec1b050c72e062ebd5c812030938b230079b5aaa00cc5d025d0",
+    "frozen_type": "89134230f23323b13f9460a875820ce74b7d6ee99b48e1c3457d51338403e8cd",
+    "named_typed_freeze": "b43f225375895b322c3036bf86d64dd40e3407ccbe4bc93fe2bf65a86b8adab6",
+    "independent_private_decision": "dfe5115de596c04912b73e10cb8fd169a790c55061b65cc1eb381424c3774e4f"
+  },
+  "statements": [
+    {
+      "name": "BanditRL.OnlineGamma.logGamma_derivatives",
+      "header": "theorem logGamma_derivatives (y : ℝ) (hy : 0 < y) :\n    HasDerivAt (fun z : ℝ => Real.log (Real.Gamma z)) (logGammaSlope y) y ∧\n    HasDerivAt (deriv (fun z : ℝ => Real.log (Real.Gamma z))) (logGammaCurvature y) y ∧\n    HasSum (fun k : ℕ => 1 / (y + (k : ℝ)) ^ 2) (logGammaCurvature y)",
+      "source_file": "BanditRLProof/OnlineGammaDerivatives.lean"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.midpointInvSq_ray_integral",
+      "header": "theorem midpointInvSq_ray_integral :\n  ∀ (x : ℝ), 0 < x →\n    IntegrableOn (fun t : ℝ => 1 / (x + t)^2) (Ioi (0 : ℝ)) ∧\n    (∫ t in Ioi (0 : ℝ), 1 / (x + t)^2) = 1 / x ∧\n    (∑' k : ℕ, 1 / (x + (k : ℝ) + 1/2)^2) ≤\n      ∫ t in Ioi (0 : ℝ), 1 / (x + t)^2",
+      "source_file": "BanditRLProof/OnlineGammaIntegralEstimates.lean"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
+      "header": "theorem simplexLogFactor_convexOn : ConvexOn ℝ (Set.Ici 0) simplexLogFactor",
+      "source_file": "BanditRLProof/OnlineGammaSimplexCurvature.lean"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
+      "header": "theorem convexOn_exists_isGreatest_massSimplexVertex\n    (n : ℕ) (T : ℝ) (hn : 1 ≤ n) (hT : 1 ≤ T)\n    (G : (Fin n → ℝ) → ℝ)\n    (hG : ConvexOn ℝ (nonnegativeMassSimplex n T) G) :\n    ∃ j : Fin n,\n      IsGreatest (G '' nonnegativeMassSimplex n T) (G (massSimplexVertex T j))",
+      "source_file": "BanditRLProof/OnlineGammaSimplexMaximum.lean"
+    },
+    {
+      "name": "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
+      "header": "theorem simplexGammaProduct_le_vertex_and_value :\n  ∀ (n : ℕ) (T : ℝ), 1 ≤ n → 1 ≤ T →\n    ∀ (x : Fin n → ℝ), x ∈ nonnegativeMassSimplex n T →\n      ∀ j : Fin n, massSimplexVertex T j ∈ nonnegativeMassSimplex n T ∧\n        simplexGammaProduct n x ≤ simplexGammaProduct n (massSimplexVertex T j) ∧\n        simplexGammaProduct n (massSimplexVertex T j) =\n          T ^ T / (Real.Gamma (T + 1/2) * Real.Gamma (1/2) ^ (n - 1))",
+      "source_file": "BanditRLProof/OnlineGammaSimplex.lean"
+    }
+  ],
+  "attained_maximum_interface": {
+    "name": "BanditRL.OnlineGamma.isGreatest_simplexGammaProduct_image",
+    "module": "BanditRLProof.OnlineGammaSimplexMaximum",
+    "source_sha256": "31e77378c79e99f63767b6e07f26d9d39482f1afe4c9d41f565f8e41aafdc8dc",
+    "private_source_sha256": "91779cce2b4e9fcfa9f32163eec8b2a5278d2ecccdb4364f3d9adc7934ba48f0",
+    "typed_freeze": "1a16b93dbdff5195a90b6db87e922d24839aa8b387c4273e694728fa6d2be206",
+    "independent_review": "30d13ff369616cb7eacfe94e59bc3982903164255c9a04935be93dc2b8b11e79",
+    "source_transport": "The original theorem source is an exact LF prefix of the extended module. Its complete imported TYPE and VALUE remain unchanged."
+  },
+  "concrete_consumers": {
+    "module": "Tests.OnlineGammaSimplexCanary",
+    "source_sha256": "d6a27d92a89249c5bc745a036e5880edecedf6796590c9455dcc7aef7b0af9d5",
+    "scope": [
+      "n=1, T=1, exact vertex value 2/sqrt(pi) including the zero power.",
+      "n=3, T=3/2, feasible boundary point (0,1/2,1), all three vertices and their exact value."
+    ],
+    "typed_freeze_sha256": "c2010f375385253f68858fb4c749566b609d206c361deaaa94cebff826a4c4d4",
+    "independent_private_decision": "d26df4b5b181d6b93b1a32659c32507cf5a868242364b7e27bc7f6758040dd90",
+    "independent_tests_import_decision": "2e9419e7fa79a9e8e7a2dc66feabe08c1c44f8c9f23bca8b7b4b5edc8ad53841"
+  },
+  "generic_vertex_attainment": {
+    "name": "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
+    "module": "BanditRLProof.OnlineGammaSimplexMaximum",
+    "source_sha256": "31e77378c79e99f63767b6e07f26d9d39482f1afe4c9d41f565f8e41aafdc8dc",
+    "scope": "For n≥1, real T≥1 and any real-valued convex G on the nonnegative mass simplex, one vertex attains the greatest value over the entire simplex. Continuity and symmetry are not assumed.",
+    "typed_freeze": "ce4967a5bd0c542e598660630f597ea540e4dc562c42d0b6c945f46e36ed8e5b",
+    "type_sha256": "c89fd1a52855094b09acbde1aae73f5dd75a7a42643d38e322c19ebf33785184",
+    "value_sha256": "02102e5b41a823e32733237444298455dbb0ff1040955911e0ccf15e35cf5e1e",
+    "independent_private_decision": "f1d352889d4eb50c958ef29c7c12d6dc69a820df196058daae8b64a558acf7b3",
+    "source_scope_review": "acc1cedbe92fb841c0017f655efb5e0dda9e141cb87515ac9ec5b8d7cb96ea86"
+  },
+  "generic_attainment_consumer": {
+    "name": "BanditRL.OnlineGamma.Canary.coordinate_projection_mass_two_isGreatest",
+    "module": "Tests.OnlineConvexSimplexMaximumCanary",
+    "source_sha256": "58208b9608c6ec77e00a8ab36af05e9e70bc6104f9e38a2bfbdd3dbb4b0e056b",
+    "scope": "For the coordinate projection on the two-dimensional simplex of mass two, the attained maximum is two, vertex zero is feasible, and vertex one has value zero.",
+    "typed_freeze": "c731faedf31b55321f6f6a8573e888640bb05b636636c27cd2acd820cfdaaddc",
+    "frozen_type_sha256": "15bc705b67173ab8e3878ce531ccdff6f5bc6fc2e1bcf6e40c76a0341fe342a7",
+    "actual_type_sha256": "6b2e189dfbcf1fb693c27fffe762a8df116c307416c81d14b82696bec6b67b0b",
+    "independent_private_decision": "f4d6cc62feb453bdec8ba6052c90ee92a7428cb82440182ed06704f9e11032d8",
+    "full_type_transport": "da1a127cc826d78309e3bcb43ba1aaa0744089e0ceca99b6b8ab4e9da10b37d9"
+  },
+  "local_acceptance": {
+    "head": "8c1939f93aa1a42ceca3263af0b5b13c19618484",
+    "record": "local-acceptance-8c1939f93.json",
+    "record_sha256": "a5efd21a714ac37fa546108314228317436bfcf2165dd38f77721ce40edbc295",
+    "independent_decision_sha256": "9f189967b9470a3d19c8abf2ff81f47cd00cbc462e23bce93e9c7044651ca76e",
+    "frozen_rows": [
+      146,
+      165
+    ],
+    "chapter2_complete": false,
+    "merged": false,
+    "live_verified": false
+  }
+}

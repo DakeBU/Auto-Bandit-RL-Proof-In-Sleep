@@ -149,14 +149,16 @@
     },
     {
       "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
-      "chapter": "probability",
-      "plain": "If the joint law of environment and history is the canonical prior-likelihood law, the canonical posterior kernel agrees almost everywhere with the conditional distribution of the environment given history.",
-      "math": "\\(\\mathcal L(E,H)=\\pi\\otimes L\\Longrightarrow \\Pi(\\cdot\\mid H)=\\operatorname{condDistrib}(E\\mid H)\\quad\\text{a.e.}\\)",
-      "intuition": "Bayes' posterior and measure-theoretic conditional distribution are two descriptions of the same object once their joint law is identified.",
-      "why": "Thompson sampling needs to replace a reference posterior sampler by the actual conditional environment law along a generated history.",
-      "position": "This theorem is the principal posterior-law transport in the Thompson proof DAG.",
-      "proof_idea": "Rewrite the supplied pair pushforward as the canonical joint measure and use Mathlib's posterior/conditional-distribution identity, transporting the almost-everywhere statement along the history marginal.",
-      "lean_notes": "The conclusion is kernel equality almost everywhere, not pointwise equality. Standard Borel and finiteness hypotheses make conditional distributions available.",
+      "title": "The canonical posterior is the conditional environment law",
+      "chapter": "thompson",
+      "featured": true,
+      "plain": "If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.",
+      "math": "\\(\\Pi(\\cdot\\mid H)=\\mathcal L(E\\mid H)\\quad\\text{a.e.}\\)",
+      "intuition": "A posterior is a measurable kernel from histories to environments; the theorem identifies that constructed kernel with the measure-theoretic conditional distribution.",
+      "why": "Probability matching is valid only after the algorithmic posterior is tied to the actual environment-history law.",
+      "position": "It is the posterior-law root of the Chapter 6 proof DAG.",
+      "proof_idea": "Use uniqueness of regular conditional distributions under the equality of the observed pair pushforward and the canonical prior-likelihood joint measure.",
+      "lean_notes": "The theorem requires Standard Borel and nonempty environment, measurable environment/history maps, a probability prior, a Markov likelihood kernel, and exact pair-law equality. It does not accept an arbitrary posterior kernel.",
       "dependencies": []
     },
     {
@@ -358,20 +360,6 @@
       "dependencies": [
         "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
       ]
-    },
-    {
-      "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
-      "title": "The canonical posterior is the conditional environment law",
-      "chapter": "thompson",
-      "featured": true,
-      "plain": "If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.",
-      "math": "\\(\\Pi(\\cdot\\mid H)=\\mathcal L(E\\mid H)\\quad\\text{a.e.}\\)",
-      "intuition": "A posterior is a measurable kernel from histories to environments; the theorem identifies that constructed kernel with the measure-theoretic conditional distribution.",
-      "why": "Probability matching is valid only after the algorithmic posterior is tied to the actual environment-history law.",
-      "position": "It is the posterior-law root of the Chapter 6 proof DAG.",
-      "proof_idea": "Use uniqueness of regular conditional distributions under the equality of the observed pair pushforward and the canonical prior-likelihood joint measure.",
-      "lean_notes": "The theorem requires Standard Borel and nonempty environment, measurable environment/history maps, a probability prior, a Markov likelihood kernel, and exact pair-law equality. It does not accept an arbitrary posterior kernel.",
-      "dependencies": []
     },
     {
       "full_name": "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction",
@@ -9437,6 +9425,97 @@
       "dependencies": [
         "BanditRL.OnlineGamma.compensatedReciprocal",
         "BanditRL.OnlineGamma.shiftedInvSq"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.logGamma_derivatives",
+      "title": "Identify the trigamma series",
+      "chapter": "online-gamma-simplex",
+      "featured": true,
+      "teaching_order": 1,
+      "plain": "At each y>0 the derivative of log Γ is the limit of the finite slopes. Its derivative is the sum of the inverse squares starting at k=0.",
+      "math": "\\begin{gathered}\\psi(y)=(\\log\\Gamma)^\\prime(y)\\\\\\psi^\\prime(y)=\\sum_{k=0}^\\infty\\frac{1}{(y+k)^2}\\end{gathered}",
+      "intuition": "The Euler approximants converge pointwise to log Γ. On a bounded open neighborhood of y, both sequences of derivatives converge uniformly. Apply differentiation of a pointwise limit twice.",
+      "why": "A.13 invokes Proposition A.10(f) at y=x+1/2. Lean also identifies the first derivative with its compensated series.",
+      "position": "Identify the trigamma series",
+      "proof_idea": "The Euler approximants converge pointwise to log Γ. On a bounded open neighborhood of y, both sequences of derivatives converge uniformly. Apply differentiation of a pointwise limit twice.",
+      "lean_notes": "k is a natural number, including zero.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.tendstoUniformlyOn_logGammaSlopeApprox_and_curvatureApprox",
+        "BanditRL.OnlineGamma.hasDerivAt_logGammaSeq_and_slopeApprox"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.midpointInvSq_ray_integral",
+      "title": "Compare the sum with the half-line integral",
+      "chapter": "online-gamma-simplex",
+      "featured": true,
+      "teaching_order": 2,
+      "plain": "For x>0 the reciprocal-square kernel is integrable on the positive half-line. Its integral is 1/x and bounds the sum of its values at the midpoints.",
+      "math": "\\begin{gathered}g_x(t)=(x+t)^{-2}\\\\\\sum_{k=0}^\\infty g_x(k+1/2)\\\\{}\\leq\\int_0^\\infty g_x(t)\\,dt=1/x\\end{gathered}",
+      "intuition": "The primitive −1/(x+t) tends to zero at infinity. On each unit interval the integral is the difference of its endpoint values. The midpoint estimate telescopes over those same endpoints.",
+      "why": "The book uses Jensen on each unit interval. Lean proves the same cell comparison by evaluating the integral and bounding the midpoint algebraically.",
+      "position": "Compare the sum with the half-line integral",
+      "proof_idea": "The primitive −1/(x+t) tends to zero at infinity. On each unit interval the integral is the difference of its endpoint values. The midpoint estimate telescopes over those same endpoints.",
+      "lean_notes": "The integral uses real Lebesgue measure on (0,∞).",
+      "dependencies": [
+        "BanditRL.OnlineGamma.midpointInvSq_unitCell_integral",
+        "BanditRL.OnlineGamma.summable_midpointInvSq_and_tsum_le"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.simplexLogFactor_convexOn",
+      "title": "Extend convexity through zero",
+      "chapter": "online-gamma-simplex",
+      "featured": true,
+      "teaching_order": 3,
+      "plain": "The scalar factor h is convex on the closed nonnegative half-line with h(0)=−log Γ(1/2).",
+      "math": "\\begin{gathered}h(x)=x\\log x-\\log\\Gamma(x+1/2)\\\\ h^{\\prime\\prime}(x)=1/x-\\psi^\\prime(x+1/2)\\geq 0\\quad(x>0)\\end{gathered}",
+      "intuition": "Substituting y=x+1/2 in the trigamma series gives the midpoint sum. The integral estimate makes the second derivative nonnegative in the interior. Continuity of x log x and positivity of Γ at 1/2 extend convexity to zero.",
+      "why": "The scalar extension supplies the value of every zero coordinate in the closed simplex.",
+      "position": "Extend convexity through zero",
+      "proof_idea": "Substituting y=x+1/2 in the trigamma series gives the midpoint sum. The integral estimate makes the second derivative nonnegative in the interior. Continuity of x log x and positivity of Γ at 1/2 extend convexity to zero.",
+      "lean_notes": "Lean assigns 0 log 0 the continuously extended value zero.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.simplexLogFactor_derivatives",
+        "BanditRL.OnlineGamma.continuousOn_simplexLogFactor_and_zero"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.convexOn_exists_isGreatest_massSimplexVertex",
+      "title": "Choose a maximizing vertex for any convex function",
+      "chapter": "online-gamma-simplex",
+      "featured": true,
+      "teaching_order": 4,
+      "plain": "Every real-valued convex function on the nonnegative mass simplex attains its maximum at some vertex.",
+      "math": "\\begin{gathered}G\\text{ convex on }V\\\\\\exists j:\\ G(Te_j)=\\max_{x\\in V}G(x)\\end{gathered}",
+      "intuition": "Express each point as a convex combination of the vertices. Its function value is at most the weighted average of their values, which is at most the largest vertex value.",
+      "why": "This is the general simplex fact used in the proof of Lemma A.13. The Gamma product additionally has equal values at all vertices.",
+      "position": "From convexity on the closed simplex to an attained maximum.",
+      "proof_idea": "Choose a vertex with the largest value in the finite list before considering an arbitrary feasible point. Apply Jensen with weights xᵢ/T. The weights are nonnegative and sum to one, so that same vertex bounds every feasible value.",
+      "lean_notes": "The theorem returns one index j together with IsGreatest for the entire image of G on V.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.convexOn_le_sum_massSimplexVertex",
+        "BanditRL.OnlineGamma.massSimplexVertex_mem"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
+      "title": "Maximize the Gamma product",
+      "chapter": "online-gamma-simplex",
+      "featured": true,
+      "teaching_order": 5,
+      "plain": "Every mass-T vertex is feasible and attains the same maximum of the Gamma product over the closed simplex.",
+      "math": "\\begin{gathered}P(x)=\\prod_i\\frac{x_i^{\\,x_i}}{\\Gamma(x_i+1/2)}\\\\P(x)\\leq P(Te_j)\\\\{}=\\frac{T^T}{\\Gamma(T+1/2)\\,\\Gamma(1/2)^{n-1}}\\end{gathered}",
+      "intuition": "Take logs to obtain a sum of convex coordinate functions. Express x as a convex combination of the vertices with weights xᵢ/T. All vertices have the same value by coordinate symmetry. Exponentiating preserves the bound.",
+      "why": "Lemma A.13 asserts attainment at the vertices. The displayed value evaluates the book’s product at any one of them.",
+      "position": "Maximize the Gamma product",
+      "proof_idea": "Take logs to obtain a sum of convex coordinate functions. Express x as a convex combination of the vertices with weights xᵢ/T. All vertices have the same value by coordinate symmetry. Exponentiating preserves the bound.",
+      "lean_notes": "j ranges over all n coordinates. At a zero coordinate the numerator is 0⁰=1.",
+      "dependencies": [
+        "BanditRL.OnlineGamma.continuousOn_and_convexOn_sum_simplexLogFactor",
+        "BanditRL.OnlineGamma.convexOn_le_sum_massSimplexVertex",
+        "BanditRL.OnlineGamma.simplexGammaProduct_pos_and_log"
       ]
     },
     {
