@@ -1,0 +1,48 @@
+{
+  "title": "Krichevsky–Trofimov potential at the two coin endpoints",
+  "target": {
+    "id": "dependency:KT-endpoint-recurrence",
+    "inventory_file": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "pointer": "/effective_targets/164/effective_statement"
+  },
+  "source": {
+    "book": "Francesco Orabona, Online Learning: A Modern Introduction Using Convex Optimization, v10",
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "locations": [
+      "Algorithm 13.1, printed 208 / PDF 220 (initial wealth ε>0).",
+      "Theorem 13.4 proof, printed 210 / PDF 222 (ε-scaled potential, initial value and endpoint update).",
+      "Problem 13.1, printed 226 / PDF 238 (unscaled endpoint exercise)."
+    ]
+  },
+  "namespace": "BanditRL.OnlineKT",
+  "public_module": "BanditRLProof.OnlineKTPotential",
+  "definition": "noncomputable def ktPotential (ε : ℝ) (t : ℕ) (x : ℝ) : ℝ :=\n  ε * (2 : ℝ)^t * Real.Gamma (((t : ℝ) + 1 + x) / 2) *\n    Real.Gamma (((t : ℝ) + 1 - x) / 2) /\n      (Real.pi * Real.Gamma ((t : ℝ) + 1))",
+  "headers": [
+    "theorem ktPotential_initial (ε : ℝ) :\n    ktPotential ε 0 0 = ε",
+    "theorem ktPotential_endpoint (ε : ℝ) (t : ℕ) (ht : 1 ≤ t)\n    (x c : ℝ) (hx : |x| ≤ (t : ℝ) - 1) (hc : c = -1 ∨ c = 1) :\n    ktPotential ε t (x + c) = (1 + c * x / (t : ℝ)) * ktPotential ε (t - 1) x"
+  ],
+  "relation": "The printed argument uses t≥1, |x|≤t−1 and c∈{−1,1}. These imply |x+c|≤t and both prior Gamma arguments (t±x)/2≥1/2, including t=1,x=0. Lean represents the formula on all real x; the recurrence asserts an identity on the printed carrier. Both equalities extend to every real scale ε by homogeneity; the bettor starts with strictly positive wealth.",
+  "proof": "At t=0, Γ(1/2)=√π and Γ(1)=1 give F₀(0)=ε. Moving from t−1 to t doubles 2^(t−1) and changes Γ(t) to tΓ(t). The right coin increments only (t+x)/2; the left coin increments only (t−x)/2. Gamma recurrence gives factors 1+x/t and 1−x/t. All denominator cancellation uses t>0, π>0, and Γ(t)>0.",
+  "actual_direct_providers": [
+    "Real.Gamma_one_half_eq",
+    "Real.Gamma_one",
+    "Real.Gamma_add_one",
+    "Real.Gamma_pos_of_pos"
+  ],
+  "consumer_module": "Tests.OnlineKTPotentialCanary",
+  "consumer_headers": [
+    "theorem first_round_two_outcomes :\n    ktPotential 7 1 (-1) = 7 ∧ ktPotential 7 1 1 = 7",
+    "theorem fractional_history_two_outcomes :\n    ktPotential 1 3 (3/2) = (7/6 : ℝ) * ktPotential 1 2 (1/2) ∧\n    ktPotential 1 3 (-(1/2)) = (5/6 : ℝ) * ktPotential 1 2 (1/2) ∧\n    0 < ktPotential 1 3 (-(1/2)) ∧\n    ktPotential 1 3 (-(1/2)) < ktPotential 1 3 (3/2)"
+  ],
+  "consumer_meaning": "At t=1 both outcomes preserve initial wealth 7. At t=3 and real prior history x=1/2 the two factors are 7/6 and 5/6, with strictly different positive outcomes.",
+  "remaining_source_obligations": [
+    "Interior coin inequality (13.1) for −1<c<1 via log-convexity and interpolation",
+    "Wealth induction using Algorithm 13.1",
+    "Second exponential lower bound and A.13 dependency"
+  ],
+  "proof_status": "All four private proofs compiled and were independently reviewed. Production imports, project gates and reader checks remain pending at handoff.",
+  "evidence": {
+    "main": "60a7dccff3437b62f253c3f75a7f370a6844e2ab7bfdd25fa3f5edce0084bb83",
+    "consumers": "b0f57b78f4473a623b7d39e2484c9eed915fec18849e3270007a1e8567d2f9d2"
+  }
+}
