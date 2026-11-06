@@ -1,0 +1,46 @@
+{
+  "check": "python -m unittest tools.test_book_registry on a fresh Windows worktree",
+  "exit": 1,
+  "error": "Stale or invalid declaration boundary: BanditRL.OnlinePrescientBregman.iterate",
+  "file": "BanditRLProof/OnlinePrescientBregman.lean",
+  "checkout_sha256": "ca33201a527e3bf0b07bbaa82f979c5d3b06b344a8f692f5edd9a525fc740265",
+  "expected_and_git_sha256": "777826797a512b541d001a488899c6918f9d1404c1ba2f97811a11220648f3fc",
+  "boundary_file_count_checked": 12,
+  "affected_file_count": 1,
+  "repair": "Pin the existing full-file boundary to LF at checkout. Both the committed Lean source and the boundary hashes are retained.",
+  "next_run": {
+    "tests": 30,
+    "failures": 1,
+    "test": "test_navigation_has_one_current_page_and_shared_chapter_context",
+    "actual_owned_navigation_links": 33,
+    "previous_expected": 32,
+    "repair": "Include the new route in both the expected owned chapter set and the navigation count."
+  },
+  "verified_after_repairs": {
+    "command": "python -m unittest tools.test_book_registry",
+    "tests": 30,
+    "exit": 0,
+    "runtime_seconds": 10.914
+  },
+  "unverified_site_preflight": {
+    "exit": 1,
+    "missing_highlight_dependency": "exists_nat_gt",
+    "repair": "Keep the two ABRL declarations in the graph dependency list and describe the external Archimedean lemma in the adjacent Lean notes."
+  },
+  "unverified_preview_rerun": {
+    "build_exit": 0,
+    "check_exit": 1,
+    "diagnostics": [
+      "site was not built with --lean-verified",
+      "public snapshot must be built from a clean source tree"
+    ],
+    "scope": "Dirty source preview only. Both production checks remain required."
+  },
+  "contributor_contract": {
+    "head": "ae6d16e75624e86d9522e0a7bb678485b27718c7",
+    "base": "b5bd0faab774468c36510be853d052a6e5d32167",
+    "exit": 1,
+    "issue": "Three test paths were placed in affected_files, which enumerates only protected production surfaces.",
+    "repair": "Keep the three paths in verification.test_paths, preserving all tests and the complete production list."
+  }
+}

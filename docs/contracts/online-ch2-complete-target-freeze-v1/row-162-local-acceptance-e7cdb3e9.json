@@ -1,0 +1,104 @@
+{
+  "status": "ACCEPTED_LOCAL",
+  "head": "e7cdb3e9f0a9690845fd0bc4eff55d2bd7c515ed",
+  "target": "Chapter 2 freeze /effective_targets/162, necessary dependency from the proof of Lemma 6.33",
+  "source": {
+    "version": "arXiv:1912.13213v10",
+    "locator": "Printed page 80, PDF page 92",
+    "url": "https://arxiv.org/pdf/1912.13213v10#page=92",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17"
+  },
+  "mathematics": [
+    "For ψ(x)=∑ᵢ cᵢxᵢlog xᵢ, the ambient derivative at positive x acts on every direction v as ∑ᵢ cᵢ(log xᵢ+1)vᵢ.",
+    "If cᵢ>0 and x,y are positive with ∑ᵢ xᵢ/cᵢ=∑ᵢ yᵢ/cᵢ=1, set L=∑ᵢ|xᵢ−yᵢ| and M=∑ᵢ 2cᵢ(xᵢ−yᵢ)²/(xᵢ+yᵢ). Then L²≤M≤(Dψ(x)−Dψ(y))[x−y]."
+  ],
+  "proof": {
+    "scalar_dependency": "Previously accepted row 88, positive_pair_log_ratio",
+    "jensen": "ConvexOn.map_sum_le with weights (xᵢ+yᵢ)/(2cᵢ) and arguments |xᵢ−yᵢ|/wᵢ",
+    "tests": [
+      "Non-tangent ambient direction",
+      "Non-unit weights: 9/4 ≤ 5/2 ≤ (5/2)log 3",
+      "Diagonal equality"
+    ],
+    "public_sources": [
+      {
+        "path": "BanditRLProof/OnlineEntropyWeightedPairing.lean",
+        "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/e7cdb3e9f0a9690845fd0bc4eff55d2bd7c515ed/BanditRLProof/OnlineEntropyWeightedPairing.lean",
+        "http": 200,
+        "bytes": 3317,
+        "blob": "f1e8ad7917b2991897808c30835d281b2aba4ba7",
+        "sha256": "248e31e0e72d8a849608b048630799ea4905443d6a9158ee3b2d5921f293f74f"
+      },
+      {
+        "path": "Tests/OnlineEntropyWeightedPairingCanary.lean",
+        "url": "https://raw.githubusercontent.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/e7cdb3e9f0a9690845fd0bc4eff55d2bd7c515ed/Tests/OnlineEntropyWeightedPairingCanary.lean",
+        "http": 200,
+        "bytes": 3617,
+        "blob": "7bf4f55f96c19f72a40c979bf0abf40984516666",
+        "sha256": "65b2960c2746ce4fa951eb21152bae21177c65aa9fa15f0db98563d6c8d20c9e"
+      }
+    ],
+    "import_at": "f52a4bc4542ba58c28d52456153210bf2da9e789",
+    "import_adjudication": "9d19d7d6d7fb2bd946e5e6a3b2222e800542c9e1cc58d8a11297594a7275082d",
+    "artifact_identity": "8dd200fdf5e5820451e723e059b6d24ac4c83bac62834fefd8356ebc2668e121",
+    "same_artifacts": 29,
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "project": {
+    "base": "252506881204325c2fff777d42a21d0167d27c30",
+    "gate_exits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "root_jobs": 9130,
+    "test_jobs": 9320,
+    "harness_tests": 496,
+    "configured_skips": 7,
+    "html_pages": 996,
+    "module_count": 882,
+    "declaration_count": 11202,
+    "placeholder_count": 0,
+    "kernel_gate": "4c1335bbc5fa81209b9c4fd60768815a2fa0ef28c43b952c5ea5eb80e1374899",
+    "bench_canary": "81a8348c94d55937aacb39ded678dab05c9b342c7ca874d3633a351253700f63"
+  },
+  "reader": {
+    "visible_cards": 5,
+    "desktop_mobile_clipboard_reads": 10,
+    "new_graph_catalog_round_trips": 2,
+    "screenshots": 16,
+    "browser_sha256": "72a936e36f356375c6ae9c1aa260fe7b85fa500e63dba85643b06a6560ad0f01",
+    "clipboard_sha256": "dc612f91d864f9bc221b9c2dd4f8892ebb6e47d737f2fe0ea5a4ed7a28c284fa",
+    "identical_raw_types": 5,
+    "verified_declaration_origins": 8,
+    "offline_pages": 72,
+    "offline_unique_formulas": 1000,
+    "offline_errors": [],
+    "offline_report": "317cadea092ff083a0f5d00fc1b2963224133dc222198717b3a7d5d91724ed81"
+  },
+  "independent_final_adjudication": "145beb1b3e9920573e656951d3814f55f75ecfa4b29a570d28db1868f6aae449",
+  "remaining": [
+    "Weighted ℓ¹ strong convexity (/143)",
+    "Convex-carrier equivalence and original countermodel (/149)",
+    "Bregman/KL and Bernoulli endpoints (/163)",
+    "Remaining Chapter 2 targets and subsequent chapter gates"
+  ],
+  "retained_failures": "See online-entropy-weighted-pairing-v1/validation-repairs.json, proof-attempts.json and private-candidate-evidence.json. The original production-import wrapper exited 1 before complete expression reconciliation."
+}

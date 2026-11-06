@@ -9029,6 +9029,135 @@
       ]
     },
     {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.carrier_and_convexity",
+      "title": "A convex function with a boundary jump",
+      "chapter": "online-strong-monotonicity",
+      "featured": false,
+      "teaching_order": 1,
+      "source_match": "counterexample-step",
+      "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. The real epigraph is convex, the objective is proper, and its effective domain is the closed upper half-plane. The real-valued restriction is convex there.",
+      "math": "\\operatorname{dom}f=\\{(s,t):t\\ge0\\}",
+      "intuition": "Along a chord with an interior endpoint, its interior has the quadratic value. Raising a boundary endpoint only increases the chord bound. A chord entirely on the boundary uses convexity of the maximum.",
+      "why": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+      "position": "A convex function with a boundary jump",
+      "proof_idea": "Along a chord with an interior endpoint, its interior has the quadratic value. Raising a boundary endpoint only increases the chord bound. A chord entirely on the boundary uses convexity of the maximum.",
+      "lean_notes": "Along a chord with an interior endpoint, its interior has the quadratic value. Raising a boundary endpoint only increases the chord bound. A chord entirely on the boundary uses convexity of the maximum.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.convexExtended_iff_toReal"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.all_supports",
+      "title": "Which points have a global supporting plane?",
+      "chapter": "online-strong-monotonicity",
+      "featured": false,
+      "teaching_order": 2,
+      "source_match": "counterexample-step",
+      "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. At t>0 the only subgradient is 2p. At t=0 a subgradient exists precisely when |s|≥1, and then all of them are (2s,b) with b≤0.",
+      "math": "\\partial f(s,0)=\\{(2s,b):b\\le0\\}\\quad (|s|\\ge1)",
+      "intuition": "Approach the boundary from above to test every proposed affine minorant. On the outer rays a downward vertical normal preserves the bound at every feasible query.",
+      "why": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+      "position": "Which points have a global supporting plane?",
+      "proof_idea": "Approach the boundary from above to test every proposed affine minorant. On the outer rays a downward vertical normal preserves the bound at every feasible query.",
+      "lean_notes": "Approach the boundary from above to test every proposed affine minorant. On the outer rays a downward vertical normal preserves the bound at every feasible query.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SupportCarrierExample.carrier_and_convexity",
+        "BanditRL.OnlineConvex.subgradient_point_finite"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.support_carrier",
+      "title": "Two supported endpoints with an unsupported midpoint",
+      "chapter": "online-strong-monotonicity",
+      "featured": false,
+      "teaching_order": 3,
+      "source_match": "counterexample-step",
+      "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. S consists of the open upper half-plane and the two boundary rays |s|≥1. The endpoints (−1,0) and (1,0) belong to S; their midpoint does not.",
+      "math": "S=\\{t>0\\}\\cup\\{t=0,\\ |s|\\ge1\\}",
+      "intuition": "Use the full subgradient classification to decide existence. The two endpoints and the missing origin then disprove convexity of S.",
+      "why": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+      "position": "Two supported endpoints with an unsupported midpoint",
+      "proof_idea": "Use the full subgradient classification to decide existence. The two endpoints and the missing origin then disprove convexity of S.",
+      "lean_notes": "Use the full subgradient classification to decide existence. The two endpoints and the missing origin then disprove convexity of S.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SupportCarrierExample.all_supports"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.every_pair_strongly_monotone",
+      "title": "Every pair of supports passes the monotonicity test",
+      "chapter": "online-strong-monotonicity",
+      "featured": false,
+      "teaching_order": 4,
+      "source_match": "counterexample-step",
+      "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. For all p,q in S and every g∈∂f(p), h∈∂f(q), the pairing dominates twice the squared Euclidean distance.",
+      "math": "2\\lVert p-q\\rVert_2^2\\le\\langle g-h,p-q\\rangle",
+      "intuition": "Write each support as twice its point plus a vertical correction. The correction is nonpositive and its product with its own height is zero. The two remaining cross terms have the required signs.",
+      "why": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+      "position": "Every pair of supports passes the monotonicity test",
+      "proof_idea": "Write each support as twice its point plus a vertical correction. The correction is nonpositive and its product with its own height is zero. The two remaining cross terms have the required signs.",
+      "lean_notes": "The public support classification enters through a private normal decomposition.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SupportCarrierExample.all_supports"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.interpolation_fails",
+      "title": "Evaluate the midpoint inequality",
+      "chapter": "online-strong-monotonicity",
+      "featured": false,
+      "teaching_order": 5,
+      "source_match": "counterexample-step",
+      "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. The endpoints (−1,0),(1,0) and their midpoint have value 1. At weight 1/2 and modulus 2 the proposed upper bound is 0, so the midpoint violates it.",
+      "math": "1>\\tfrac12+\\tfrac12-\\tfrac{2}{2}\\tfrac14\\cdot4=0",
+      "intuition": "Compute the midpoint and the squared Euclidean distance 4 before inserting the three function values.",
+      "why": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+      "position": "Evaluate the midpoint inequality",
+      "proof_idea": "Compute the midpoint and the squared Euclidean distance 4 before inserting the three function values.",
+      "lean_notes": "Compute the midpoint and the squared Euclidean distance 4 before inserting the three function values.",
+      "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.concrete_converse_counterexample",
+      "title": "Why endpoint monotonicity alone is insufficient",
+      "chapter": "online-strong-monotonicity",
+      "featured": true,
+      "teaching_order": 6,
+      "source_match": "source-counterexample",
+      "plain": "Write p=(s,t) in the Euclidean plane. Above t=0 set f(p)=s²+t². On the boundary set f(s,0)=max{s²,1}; below it set f=+∞. This proper convex function has a globally 2-strongly monotone subdifferential on S. Two supported endpoints violate the chord bound at their midpoint.",
+      "math": "\\langle (2,0)-(-2,0),(1,0)-(-1,0)\\rangle=8=2\\cdot4",
+      "intuition": "Combine the universal support-pair result with membership of both endpoints and the failed midpoint inequality. The endpoint calculation illustrates one pair; the preceding theorem covers them all.",
+      "why": "The book states the equivalence on the set S of points having a global subgradient. This example tests that carrier in the converse.",
+      "position": "Why endpoint monotonicity alone is insufficient",
+      "proof_idea": "Combine the universal support-pair result with membership of both endpoints and the failed midpoint inequality. The endpoint calculation illustrates one pair; the preceding theorem covers them all.",
+      "lean_notes": "Combine the universal support-pair result with membership of both endpoints and the failed midpoint inequality. The endpoint calculation illustrates one pair; the preceding theorem covers them all.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.SupportCarrierExample.carrier_and_convexity",
+        "BanditRL.OnlineConvex.SupportCarrierExample.support_carrier",
+        "BanditRL.OnlineConvex.SupportCarrierExample.every_pair_strongly_monotone",
+        "BanditRL.OnlineConvex.SupportCarrierExample.interpolation_fails"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineConvex.SupportCarrierExample.convex_carrier_equivalence",
+      "title": "Recover the equivalence on a convex supported carrier",
+      "chapter": "online-strong-monotonicity",
+      "featured": true,
+      "teaching_order": 7,
+      "source_match": "corrected-carrier",
+      "plain": "Let E be a real normed space with a linear coordinate equivalence e to Euclidean d-space. Let f:E→EReal be proper and convex, λ≥0, and V convex. Every point of V has a global subgradient of f in these coordinates. The λ-strong chord bound for every pair in V and every weight 0<a<1 is equivalent to the pairing bound for every choice of both global subgradients. The squared distance uses the original norm of E.",
+      "math": "\\begin{gathered}\n f(ax+(1-a)y)\\\\\n \\le a f(x)+(1-a)f(y)\\\\\n \\qquad-\\tfrac{\\lambda}{2}a(1-a)\\lVert x-y\\rVert_E^2\\\\\n (x,y\\in V,\\ 0<a<1)\\\\\n \\Updownarrow\\\\\n \\lambda\\lVert p-q\\rVert_E^2\\le\\langle g-h,e(p-q)\\rangle\\\\\n (p,q\\in V,\\ g\\in G(p),\\ h\\in G(q))\n\\end{gathered}",
+      "intuition": "Add the two support-growth inequalities for the forward direction. Conversely subdivide the segment in V, choose a support at each subdivision point and sum the affine minorants. Passing to arbitrarily fine subdivisions gives the factor λ/2.",
+      "why": "This is the convex-carrier repair of the converse. The segment stays inside V, where every point admits a global supporting plane.",
+      "position": "Recover the equivalence on a convex supported carrier",
+      "proof_idea": "Add the two support-growth inequalities for the forward direction. Conversely subdivide the segment in V, choose a support at each subdivision point and sum the affine minorants. Passing to arbitrarily fine subdivisions gives the factor λ/2.",
+      "lean_notes": "The support-growth equivalence, subgradient finiteness and arbitrarily large natural subdivisions are proof dependencies. The proof uses the Archimedean lemma exists_nat_gt to choose a sufficiently fine subdivision.",
+      "dependencies": [
+        "BanditRL.OnlineConvex.stronglyConvex_iff_sourceSubgradient_growth",
+        "BanditRL.OnlineConvex.subgradient_point_finite"
+      ]
+    },
+    {
       "full_name": "BanditRL.OnlineAdaptiveOSD.regret_bound",
       "title": "Causal adaptive OSD retains the terminal-distance residual",
       "chapter": "online-ogd",
