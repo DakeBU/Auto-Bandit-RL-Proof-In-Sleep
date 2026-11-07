@@ -1,0 +1,91 @@
+{
+  "schema": "online-kt-wealth-proof-attempts-v1",
+  "source_commit": "48382cd4ae038850eac766e09b4e8e5887c8a1b4",
+  "provider_commit": "886f42e109931fddbf1dc173742e817c5fc4a48e",
+  "toolchain": "leanprover/lean4:v4.29.1",
+  "attempts": [
+    {
+      "module": "BanditRLProof.OnlineKTInterpolation",
+      "native_exit": 1,
+      "input_raw_sha256": "9675fc2367fb4c48145716bf13d88d355cafaddb938f44f011d04e685517a8f2",
+      "stdout_sha256": "9ee350d251497d837a0e7f5cd209dc96d185a508827e7c81a737808110006327",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostic_kind": "api-name",
+      "diagnostic": "Lean could not resolve Real.convexOn_exp. The pinned Mathlib theorem is exported as convexOn_exp.",
+      "proposed_repair_raw_sha256": "10b38d5fccf8d756aefd9b3716164b4274284145bc5d69dfa783f1773e8e18aa"
+    },
+    {
+      "module": "BanditRLProof.OnlineKTExponentialLower",
+      "native_exit": 1,
+      "input_raw_sha256": "e08a0ab2a05b2f95ccb191a0839b6a72cbb960ab94224eb52df088cc6ba507ec",
+      "stdout_sha256": "a669fe8aac2041feaf314eba035765ccd03f2b721090307a999713dd49d46101",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diagnostic_kind": "cast-elaboration",
+      "diagnostic": "exact_mod_cast retained the natural-number hypothesis when the real horizon was abbreviated by N. Expose the coercion of n before applying exact_mod_cast.",
+      "proposed_repair_raw_sha256": "997e76d4cbbb673471eff193897f5e25a19b8be0d85fb8c98e674dfb075ab3ba"
+    }
+  ],
+  "canonical_project_artifacts_unchanged": true,
+  "repair_validation": {
+    "proof_commit": "d69b69c560a345026862f69f31d65b6e795aeb5e",
+    "compile_exits": [
+      0,
+      0
+    ],
+    "focused_build_summary_sha256": "61c86141e27f86a8b49b7f166d0914485d292dee46372494e533d19efa2d2828",
+    "import_review_sha256": "f846ff4d5262cc897e69ddf0462cc7937e5b7904c38c77b088b26d23702453e5",
+    "import_native_exit": 0,
+    "failed_original_wrapper_exit": 1,
+    "original_raw_comparator_exit": null,
+    "corrected_raw_comparator_exit": 3,
+    "original_proof_audit_oom_exit": 1,
+    "replayed_events": 655,
+    "owned_declarations": 7,
+    "import_stream_count": 46,
+    "declarations": [
+      {
+        "name": "BanditRL.OnlineKT.ktPotential_interpolate",
+        "owner": "BanditRLProof.OnlineKTInterpolation",
+        "axioms": [
+          "propext",
+          "Quot.sound",
+          "Classical.choice"
+        ],
+        "levels": [],
+        "TYPE_sha256": "7ec3c8e01a62f67cfd7156c6c1a7437d45cf85f20cdf93d0a4cdab4cb91e7458",
+        "VALUE_sha256": "07ed644ab56da2c7e28d6b12c6550e74d79189469799d92f9eee351fb49476d7",
+        "olean_sha256": "430ed57edd656438f2a9c4f5fa1464a6dc96024a3ee4b7e41c2f7a2420dc4079"
+      },
+      {
+        "name": "BanditRL.OnlineKT.ktPotential_exp_lower",
+        "owner": "BanditRLProof.OnlineKTExponentialLower",
+        "axioms": [
+          "propext",
+          "Quot.sound",
+          "Classical.choice"
+        ],
+        "levels": [],
+        "TYPE_sha256": "71c7122f217a8eb6cbb297c895d95ae2a1d06b42644b40676fbeb9f1cbfdc050",
+        "VALUE_sha256": "cf528fce9609f2e4afe536d69e304310d03e63c57028c2b372c96423ab96db2e",
+        "olean_sha256": "e18b1bfbd54e6c75e814d15e9ec7d41bac678b19f75b8663bfe4b3265d2a43fd"
+      }
+    ],
+    "certificate": "Actual Eq.{1} Prop original actual and Eq.refl.{1} Prop original, both full operands reconstructed. Exactly two expanded closed numeral-proof slots. Retained raw mismatch. Cross-environment recursion compared 32232 constants. Old aux and kernel certificate axioms checked.",
+    "actual_parent_uses": "Interpolation calls both seven-argument signed endpoints and two zero-argument logGamma convex witnesses within 12-argument And.right applications, genuine weights/positivity/normalization; exp theorem uses the four-argument finite closed KL, A13 simplex and positive/log at zero masses, both projections of the two-argument d2 log-ratio, zero-aware private algebra, positive log prefactor, exact -log(n)/2-1.",
+    "scope": "Focused verification at the recorded proof commit. The two remaining wealth inequalities, integration through the library and Tests, Book mapping and chapter gate have separate obligations."
+  },
+  "prefix_candidate": {
+    "declaration": "BanditRL.OnlineKT.ktPrefix_succ",
+    "owner": "KT138PrefixCandidate",
+    "independent_review_sha256": "3b849fead9575b5c364438d5abe0b6e0d8048e9ebca93795f0d79e401c54f681",
+    "original_native_exits": [
+      0,
+      1
+    ],
+    "reused_olean_sha256": "ae2c386f7b97c7dba62f47247f241b0ef9dd1be4191021519aaf9893a5962ba2",
+    "import_native_exit": 0,
+    "raw_comparator_exit": 3,
+    "stream_count": 136,
+    "transport": "Twenty-one binder-name differences in the wealth recursion and its generated matcher. The prefix theorem type matches the frozen proposition exactly. Its complete proof applies Finset.sum_range_succ at the coin sequence and the prefix length."
+  }
+}

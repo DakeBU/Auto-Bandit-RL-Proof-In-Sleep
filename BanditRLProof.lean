@@ -815,3 +815,8 @@ import BanditRLProof.OnlineGammaDigammaBounds
 import BanditRLProof.OnlineGammaBatir
 import BanditRLProof.OnlineGammaDimensionBounds
 import BanditRLProof.OnlineGammaLogDimensionBounds
+import BanditRLProof.OnlineKTWealthBasic
+import BanditRLProof.OnlineKTInterpolation
+import BanditRLProof.OnlineKTExponentialLower
+import BanditRLProof.OnlineKTWealthLower
+import BanditRLProof.OnlineKTWealth

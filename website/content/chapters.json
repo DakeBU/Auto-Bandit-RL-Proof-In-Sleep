@@ -1262,7 +1262,7 @@
       ],
       "completion_blockers": [],
       "open_gaps": [
-        "Theorem 13.4 also needs a potential inequality for coins strictly between −1 and 1, wealth induction, and a lower estimate for the potential. The endpoint identities supply only the two equalities."
+        "The endpoint equalities remain available in OnlineKTPotential. The online-kt-wealth route follows real-coin interpolation, induction and the exponential estimate. At d69b69c, focused imports of interpolation and the exponential estimate were accepted. Final wealth and combined project validation remain open."
       ],
       "status": "compiled"
     },
@@ -1365,6 +1365,34 @@
         "consumer_portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence",
         "final_head_integrated_Tests": "PENDING"
       }
+    },
+    {
+      "slug": "online-kt-wealth",
+      "title": "KT wealth for bounded real coins",
+      "short_title": "KT wealth",
+      "summary": "How the KT bettor converts its signed coin history into a Gamma potential and a lower bound on wealth.",
+      "audience": "Readers following the coin-betting argument behind one-dimensional online learning.",
+      "completion_definition": "Verify the two inequalities of Theorem 13.4 on every played real coin prefix, then integrate the reusable modules, concrete consumers and reader checks in the shared project.",
+      "learning_goals": [
+        "Identify the information available before each bet.",
+        "Use both endpoint updates to handle an arbitrary real coin.",
+        "Track the Gamma prefactor and both inequalities through the terminal bound."
+      ],
+      "module_globs": [
+        "BanditRLProof/OnlineKTWealthBasic.lean",
+        "BanditRLProof/OnlineKTInterpolation.lean",
+        "BanditRLProof/OnlineKTWealthLower.lean",
+        "BanditRLProof/OnlineKTExponentialLower.lean",
+        "BanditRLProof/OnlineKTWealth.lean"
+      ],
+      "completion_blockers": [
+        "Public ownership/import and actual proof audit of the wealth induction and terminal conjunction.",
+        "Concrete consumers, combined library/Tests validation and final reader review."
+      ],
+      "open_gaps": [
+        "The KT wealth result is a dependency of the Chapter 2 reduction. The regret–reward duality and conjugate estimate have their own source obligations."
+      ],
+      "status": "partial"
     }
   ]
 }

@@ -9099,7 +9099,7 @@
             "fallback": "For every natural t≥1, real history |x|≤t−1 and coin c∈{−1,1}, multiply the previous potential by 1+cx/t."
           }
         ],
-        "boundary": "Theorem 13.4 also needs a potential inequality for coins strictly between −1 and 1, wealth induction, and a lower estimate for the potential. The endpoint identities supply only the two equalities."
+        "boundary": "The endpoint equalities remain available in OnlineKTPotential. The online-kt-wealth route follows real-coin interpolation, induction and the exponential estimate. At d69b69c, focused imports of interpolation and the exponential estimate were accepted. Final wealth and combined project validation remain open."
       }
     },
     {
@@ -9856,6 +9856,254 @@
         "consumer_portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence",
         "final_head_integrated_Tests": "PENDING"
       }
+    },
+    {
+      "slug": "online-kt-wealth",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Algorithm 13.1, Theorem 13.4 and equation (13.1)",
+        "pages": "printed pp. 208, 210–211 / PDF pp. 220, 222–223",
+        "pdf_page": 222,
+        "url": "https://arxiv.org/pdf/1912.13213v10#page=222"
+      },
+      "notation": [
+        {
+          "term": "ε, cᵢ",
+          "meaning": "Initial wealth ε>0 and a real coin. The source starts its index at one; Lean coin c n is played in round n+1."
+        },
+        {
+          "term": "Sₙ, βₙ₊₁",
+          "meaning": "Sₙ is the sum of the first n coins. The next betting fraction is Sₙ/(n+1), computed before cₙ arrives."
+        },
+        {
+          "term": "Fₜ(x)",
+          "meaning": "The Γ-based potential has real argument x and natural time t. The source uses |x|≤t; every Γ argument on this carrier is at least 1/2."
+        },
+        {
+          "term": "Wₙ",
+          "meaning": "The recursive wealth after n coins, initialized at ε."
+        }
+      ],
+      "algorithm": {
+        "title": "The KT bettor",
+        "kind": "One-dimensional coin betting",
+        "steps": [
+          {
+            "title": "Read the past",
+            "detail": "Start with S₀=0 and W₀=ε. Compute the next fraction before seeing the new coin.",
+            "math": "\\beta_{n+1}=S_n/(n+1)",
+            "fallback": "Divide the strict-past sum by the upcoming round number."
+          },
+          {
+            "title": "Observe cₙ and update",
+            "detail": "The bettor places the fraction of current wealth on the new real coin.",
+            "math": "W_{n+1}=W_n(1+\\beta_{n+1}c_n),\\qquad S_{n+1}=S_n+c_n",
+            "fallback": "Update wealth multiplicatively, then add the coin to the prefix."
+          },
+          {
+            "title": "Evaluate the potential",
+            "detail": "The two Γ factors exchange roles when the sign of the history changes.",
+            "math": "F_t(x)=\\frac{\\varepsilon 2^t\\Gamma((t+1+x)/2)\\Gamma((t+1-x)/2)}{\\pi\\Gamma(t+1)}",
+            "fallback": "The Γ product is evaluated at the current time and signed history."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineKT.ktPotential_interpolate",
+        "BanditRL.OnlineKT.ktPrefix_succ",
+        "BanditRL.OnlineKT.ktPotential_le_wealth",
+        "BanditRL.OnlineKT.ktPotential_exp_lower",
+        "BanditRL.OnlineKT.ktWealth_two_step"
+      ],
+      "source_theorems": [
+        {
+          "label": "Real-coin interpolation",
+          "pages": "Theorem 13.4, printed 210 / PDF 222",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=222",
+          "math": "F_t(x+c)\\leq(1+cx/t)F_{t-1}(x)",
+          "fallback": "For t≥1, |x|≤t−1 and every real |c|≤1, including both endpoints.",
+          "plain": "For t≥1, |x|≤t−1 and every real |c|≤1, including both endpoints.",
+          "relationship": "At c=−1 and c=1 the update is exact. The book takes the logarithm of the update ratio and uses convexity on the coin interval. The Lean proof applies log-Gamma convexity to both numerator factors, uses exponential convexity with weights (1−c)/2 and (1+c)/2, then inserts the endpoint values.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Scalar real coins, positive initial wealth, natural round indices.",
+            "assumptions": "For t≥1, |x|≤t−1 and every real |c|≤1, including both endpoints.",
+            "parameters": "The future tail is unrestricted.",
+            "guarantee": "F_t(x+c)\\leq(1+cx/t)F_{t-1}(x)"
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Focused evidence",
+            "boundary": "Focused proof/import accepted at d69b69c. Final integrated-head validation remains pending."
+          }
+        },
+        {
+          "label": "The strict past",
+          "pages": "Theorem 13.4, printed 210 / PDF 222",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=222",
+          "math": "S_0=0,\\qquad S_{n+1}=S_n+c_n",
+          "fallback": "Sₙ uses indices 0 through n−1. The new coin is cₙ.",
+          "plain": "Sₙ uses indices 0 through n−1. The new coin is cₙ.",
+          "relationship": "Splitting the last term from the finite sum gives the successor identity, also at n=0. No bound on the coins is needed for this identity.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Scalar real coins, positive initial wealth, natural round indices.",
+            "assumptions": "Sₙ uses indices 0 through n−1. The new coin is cₙ.",
+            "parameters": "The future tail is unrestricted.",
+            "guarantee": "S_0=0,\\qquad S_{n+1}=S_n+c_n"
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Focused evidence",
+            "boundary": "The prefix theorem matched its frozen proposition in the private candidate import. Public owner validation remains pending."
+          }
+        },
+        {
+          "label": "Wealth dominates the potential",
+          "pages": "Theorem 13.4, printed 210 / PDF 222",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=222",
+          "math": "F_n(S_n)\\le W_n,\\qquad W_{n+1}=W_n(1+c_n S_n/(n+1))",
+          "fallback": "For n≥0 the only coin hypotheses are |cᵢ|≤1 for i<n.",
+          "plain": "For n≥0 the only coin hypotheses are |cᵢ|≤1 for i<n.",
+          "relationship": "At zero the potential and wealth both equal ε. At the next round, |Sₙ|≤n and |cₙ|≤1 make the multiplier at least 1/(n+1). Multiply the induction inequality by this nonnegative factor, then apply interpolation at t=n+1.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Scalar real coins, positive initial wealth, natural round indices.",
+            "assumptions": "For n≥0 the only coin hypotheses are |cᵢ|≤1 for i<n.",
+            "parameters": "The future tail is unrestricted.",
+            "guarantee": "F_n(S_n)\\le W_n,\\qquad W_{n+1}=W_n(1+c_n S_n/(n+1))"
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Typed statement",
+            "boundary": "Statement typing accepted. Producer proof/import and final integrated-head validation remain pending."
+          }
+        },
+        {
+          "label": "An exponential lower bound",
+          "pages": "Theorem 13.4, printed 210–211 / PDF 222–223",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=222",
+          "math": "\\varepsilon\\exp\\!\\left(x^2/(2n)-\\tfrac12\\log n-1\\right)\\le F_n(x)",
+          "fallback": "For n≥1, ε>0 and |x|≤n, including x=−n and x=n.",
+          "plain": "For n≥1, ε>0 and |x|≤n, including x=−n and x=n.",
+          "relationship": "Set N=n, u=(N+x)/2 and v=(N−x)/2. A.13 bounds a product whose logarithm is u log u + v log v − log Γ(u+1/2) − log Γ(v+1/2). Separately, N times the binary relative entropy of (u/N,v/N) against (1/2,1/2) equals u log u + v log v − N log(N/2), including 0 log 0=0. Combining these identities isolates the Gamma prefactor. The closed binary entropy bound contributes x²/(2N), and both dimension-two log-ratio inequalities bound the cost by log(N)/2+1.",
+          "statement_provenance": "derived-support",
+          "contract": {
+            "model": "Scalar real coins, positive initial wealth, natural round indices.",
+            "assumptions": "For n≥1, ε>0 and |x|≤n, including x=−n and x=n.",
+            "parameters": "The future tail is unrestricted.",
+            "guarantee": "\\varepsilon\\exp\\!\\left(x^2/(2n)-\\tfrac12\\log n-1\\right)\\le F_n(x)"
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Focused evidence",
+            "boundary": "Focused proof/import accepted at d69b69c. Final integrated-head validation remains pending."
+          }
+        },
+        {
+          "label": "Theorem 13.4",
+          "pages": "Theorem 13.4, printed 210–211 / PDF 222–223",
+          "pdf_page": 222,
+          "url": "https://arxiv.org/pdf/1912.13213v10#page=222",
+          "math": "W_T\\ge F_T(S_T)\\ge\\varepsilon\\exp\\!\\left(S_T^2/(2T)-\\tfrac12\\log T-1\\right)",
+          "fallback": "For T≥1 and ε>0, every played real coin lies in [−1,1]. Coins at indices i≥T are unrestricted.",
+          "plain": "For T≥1 and ε>0, every played real coin lies in [−1,1]. Coins at indices i≥T are unrestricted.",
+          "relationship": "Apply the wealth inequality and the exponential estimate to the same S_T. The triangle inequality gives |S_T|≤T from the played coins alone.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Scalar real coins, positive initial wealth, natural round indices.",
+            "assumptions": "For T≥1 and ε>0, every played real coin lies in [−1,1]. Coins at indices i≥T are unrestricted.",
+            "parameters": "The future tail is unrestricted.",
+            "guarantee": "W_T\\ge F_T(S_T)\\ge\\varepsilon\\exp\\!\\left(S_T^2/(2T)-\\tfrac12\\log T-1\\right)"
+          },
+          "local_status": {
+            "status": "partial",
+            "label": "Typed statement",
+            "boundary": "Statement typing accepted. Producer proof/import and final integrated-head validation remain pending."
+          }
+        }
+      ],
+      "worked_example": {
+        "title": "Two checks at horizon two",
+        "intro": "These arithmetic examples correspond to proposed consumer statements. Their proofs have separate acceptance checks.",
+        "steps": [
+          {
+            "title": "A fractional coin, then a loss",
+            "detail": "Start with ε=2 and play 1/2 then −1. The first multiplier is 1 and the second is 3/4. Every later coin equals 7, outside the played-coin unit interval. The two-round theorem only tests indices 0 and 1.",
+            "math": "S_2=-1/2,\\quad W_2=3/2\\ge F_2(-1/2)\\ge 2e^{1/16-(\\log 2)/2-1}",
+            "fallback": "At t=1 interpolation also gives F₁(1/2)≤F₀(0)=2."
+          },
+          {
+            "title": "Two identical endpoint coins",
+            "detail": "Start with ε=1 and play the same s=−1 or s=1 twice. Both endpoint updates are equalities. The two A.13 masses are (0,2) in the negative case and (2,0) in the positive case.",
+            "math": "S_2=2s,\\quad W_2=F_2(2s)=3/2\\ge e^{-(\\log 2)/2}",
+            "fallback": "The square contributes one to the exponent and cancels the terminal minus one."
+          }
+        ],
+        "takeaway": "Only the played prefix enters the bound; zero-mass endpoints retain the displayed constants.",
+        "boundary": "Both consumers are derived examples. Their actual public Tests proofs and final project checks remain pending."
+      },
+      "proof_bridge": {
+        "title": "From endpoints to wealth",
+        "summary": "The source uses five mathematical steps. The focused proof records below distinguish verified producers from the remaining terminal checks.",
+        "steps": [
+          {
+            "title": "Real-coin interpolation",
+            "detail": "At c=−1 and c=1 the update is exact. The book takes the logarithm of the update ratio and uses convexity on the coin interval. The Lean proof applies log-Gamma convexity to both numerator factors, uses exponential convexity with weights (1−c)/2 and (1+c)/2, then inserts the endpoint values.",
+            "math": "F_t(x+c)\\leq(1+cx/t)F_{t-1}(x)",
+            "fallback": "For t≥1, |x|≤t−1 and every real |c|≤1, including both endpoints."
+          },
+          {
+            "title": "The strict past",
+            "detail": "Splitting the last term from the finite sum gives the successor identity, also at n=0. No bound on the coins is needed for this identity.",
+            "math": "S_0=0,\\qquad S_{n+1}=S_n+c_n",
+            "fallback": "Sₙ uses indices 0 through n−1. The new coin is cₙ."
+          },
+          {
+            "title": "Wealth dominates the potential",
+            "detail": "At zero the potential and wealth both equal ε. At the next round, |Sₙ|≤n and |cₙ|≤1 make the multiplier at least 1/(n+1). Multiply the induction inequality by this nonnegative factor, then apply interpolation at t=n+1.",
+            "math": "F_n(S_n)\\le W_n,\\qquad W_{n+1}=W_n(1+c_n S_n/(n+1))",
+            "fallback": "For n≥0 the only coin hypotheses are |cᵢ|≤1 for i<n."
+          },
+          {
+            "title": "An exponential lower bound",
+            "detail": "Set N=n, u=(N+x)/2 and v=(N−x)/2. A.13 bounds a product whose logarithm is u log u + v log v − log Γ(u+1/2) − log Γ(v+1/2). Separately, N times the binary relative entropy of (u/N,v/N) against (1/2,1/2) equals u log u + v log v − N log(N/2), including 0 log 0=0. Combining these identities isolates the Gamma prefactor. The closed binary entropy bound contributes x²/(2N), and both dimension-two log-ratio inequalities bound the cost by log(N)/2+1.",
+            "math": "\\varepsilon\\exp\\!\\left(x^2/(2n)-\\tfrac12\\log n-1\\right)\\le F_n(x)",
+            "fallback": "For n≥1, ε>0 and |x|≤n, including x=−n and x=n."
+          },
+          {
+            "title": "Theorem 13.4",
+            "detail": "Apply the wealth inequality and the exponential estimate to the same S_T. The triangle inequality gives |S_T|≤T from the played coins alone.",
+            "math": "W_T\\ge F_T(S_T)\\ge\\varepsilon\\exp\\!\\left(S_T^2/(2T)-\\tfrac12\\log T-1\\right)",
+            "fallback": "For T≥1 and ε>0, every played real coin lies in [−1,1]. Coins at indices i≥T are unrestricted."
+          }
+        ],
+        "boundary": "The endpoint equalities remain available in OnlineKTPotential. The online-kt-wealth route follows real-coin interpolation, induction and the exponential estimate. At d69b69c, focused imports of interpolation and the exponential estimate were accepted. Final wealth and combined project validation remain open."
+      },
+      "companions": [
+        {
+          "title": "KT bettor and its initial wealth",
+          "authors": "Francesco Orabona",
+          "sections": "Algorithm 13.1",
+          "pages": "printed p. 208 / PDF p. 220",
+          "pdf_page": 220,
+          "url": "https://arxiv.org/pdf/1912.13213v10"
+        },
+        {
+          "title": "Gamma ratio and the closed mass simplex",
+          "authors": "Francesco Orabona",
+          "sections": "Appendix A.2.2, Lemmas A.12 and A.13",
+          "pages": "printed pp. 295–296 / PDF pp. 307–308",
+          "pdf_page": 307,
+          "url": "https://arxiv.org/pdf/1912.13213v10"
+        }
+      ]
     }
   ]
 }
