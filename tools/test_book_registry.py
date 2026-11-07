@@ -11,6 +11,22 @@ from website.scripts.book_registry import build_registry, membership_index, veri
 from website.scripts.check_site import declaration_has_expected_badge, expected_book_chapters, expected_navigation_groups, LinkCollector
 
 
+ONLINE_LEARNING_ROUTES = {
+    "online-affine-subgradient", "online-barycenter", "online-closed-proper",
+    "online-convex", "online-convex-closures", "online-convex-nonsmooth",
+    "online-entropy-gap", "online-entropy-geometry", "online-expectation",
+    "online-first-order", "online-foundations", "online-ftl-failure",
+    "online-gamma-curvature-estimates", "online-gamma-properties", "online-gamma-simplex",
+    "online-guessing-ogd", "online-guessing-osd", "online-hinge", "online-huber",
+    "online-jensen", "online-kt-endpoints", "online-linearization", "online-lipschitz",
+    "online-minorant", "online-normal-cone", "online-ogd", "online-optimal-step",
+    "online-optimality", "online-osd", "online-osd-policy", "online-strong-monotonicity",
+    "online-subgradient-absolute", "online-subgradient-basic",
+    "online-subgradient-differentiability", "online-subgradient-interior",
+    "online-subgradient-max", "online-subgradient-sum", "online-unit-scaling",
+}
+
+
 class BookRegistryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -308,7 +324,13 @@ class BookRegistryTests(unittest.TestCase):
                 bandit_nav = nav.split('data-nav-group="bandit-book"', 1)[1].split('</details>', 1)[0]
                 self.assertNotIn('chapters/online-', bandit_nav)
                 online_nav = nav.split('data-nav-group="online-learning-book"', 1)[1].split('</details>', 1)[0]
-                self.assertEqual(37, online_nav.count('class="book-nav-link"'))
+                online_links = LinkCollector()
+                online_links.feed(online_nav)
+                self.assertEqual(len(ONLINE_LEARNING_ROUTES), online_links.book_nav_link_count)
+                self.assertCountEqual(
+                    [site.href_from(path, f"chapters/{slug}/index.html") for slug in ONLINE_LEARNING_ROUTES],
+                    [value for attr, value in online_links.links if attr == "href"],
+                )
                 self.assertNotIn('chapters/probability/', online_nav)
             breadcrumb = site.render_book_breadcrumb("chapters/finite-horizon-rl/index.html")
             self.assertIn("Reinforcement Learning Book", breadcrumb)
@@ -328,7 +350,7 @@ class BookRegistryTests(unittest.TestCase):
             self.assertEqual("online-learning", site.primary_teaching_book("online-ogd")["id"])
             self.assertEqual("bandit", site.primary_teaching_book("probability")["id"])
             online = site.teaching_chapters_for_book("online-learning", owned_only=True)
-            self.assertEqual({'online-jensen', 'online-minorant', 'online-ogd', 'online-expectation', 'online-first-order', 'online-optimality', 'online-convex-closures', 'online-convex', 'online-barycenter', 'online-closed-proper', 'online-subgradient-basic', 'online-subgradient-interior', 'online-subgradient-differentiability', 'online-subgradient-sum', 'online-subgradient-absolute', 'online-normal-cone', 'online-subgradient-max', 'online-hinge', 'online-affine-subgradient', 'online-lipschitz', 'online-convex-nonsmooth', 'online-osd', 'online-foundations', 'online-ftl-failure', 'online-guessing-ogd', 'online-huber', 'online-guessing-osd', 'online-osd-policy', 'online-linearization', 'online-optimal-step', 'online-unit-scaling', 'online-entropy-gap', 'online-strong-monotonicity', 'online-entropy-geometry', 'online-kt-endpoints', 'online-gamma-curvature-estimates', 'online-gamma-simplex'},
+            self.assertEqual(ONLINE_LEARNING_ROUTES,
                              {chapter["slug"] for chapter in online})
             shared = site.teaching_chapters_for_book("online-learning")
             self.assertIn("probability", {chapter["slug"] for chapter in shared})
