@@ -9473,6 +9473,389 @@
         ],
         "boundary": "Curvature is proved at positive scalar arguments. Continuity supplies every zero coordinate in the simplex."
       }
+    },
+    {
+      "slug": "online-gamma-properties",
+      "primary": {
+        "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+        "authors": "Francesco Orabona",
+        "edition": "arXiv:1912.13213v10",
+        "sections": "Appendix A.2.2, Definition A.8, Definition A.9, Proposition A.10 and Lemmas A.11–A.12",
+        "pages": "printed pp. 294–295 / PDF pp. 306–307",
+        "pdf_page": 306,
+        "url": "https://arxiv.org/pdf/1912.13213v10"
+      },
+      "notation": [
+        {
+          "term": "Γ(z)",
+          "meaning": "Complex Gamma for Re z>0; real Gamma at positive real arguments. The integral variable t is real and t^(z-1) is complex."
+        },
+        {
+          "term": "ψ(x)",
+          "meaning": "The actual real derivative of log Γ, equivalently Γ′/Γ for x>0."
+        },
+        {
+          "term": "T,d,m",
+          "meaning": "Natural T>=1,d>=2, cast to real before division; m=(d-1)/2>0."
+        }
+      ],
+      "algorithm": {
+        "title": "Gamma identities and quantitative bounds",
+        "kind": "Appendix dependency proof route",
+        "steps": [
+          {
+            "title": "A.8",
+            "detail": "Apply the actual complex Gamma integral and integrability theorems at the same complex argument with positive real part. The power remains complex; the integration variable is real.",
+            "math": "\\Gamma(z)=\\int_0^\\infty e^{-t}t^{z-1}\\,dt,\\quad \\Re z>0",
+            "fallback": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction."
+          },
+          {
+            "title": "A.9",
+            "detail": "Use positive-domain differentiability of Gamma, positivity of Gamma for division, and the actual first log-Gamma derivative provider. Both derivative identities share the same positive argument.",
+            "math": "\\psi(x)=(\\log\\Gamma)′(x)=\\Gamma′(x)/\\Gamma(x),\\quad x>0",
+            "fallback": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition."
+          },
+          {
+            "title": "A.10(a)",
+            "detail": "Reuse the pinned real log-Gamma convexity theorem on the positive half-line.",
+            "math": "\\log\\Gamma\\text{ is convex on }(0,\\infty)",
+            "fallback": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity."
+          },
+          {
+            "title": "A.10(b)",
+            "detail": "Apply real log-convexity at the two Gamma arguments and Gamma recurrence; retain both Wendel bounds and strict 0<s<1.",
+            "math": "(x/(x+s))^{1-s}\\le\\Gamma(x+s)/(x^s\\Gamma(x))\\le1,\\quad x>0,\\ 0<s<1",
+            "fallback": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations."
+          },
+          {
+            "title": "A.10(c)",
+            "detail": "Set G(x)=psi(x)-log(x-1/2). Actual A13 scalar curvature makes G nonincreasing; the full digamma bounds give its limit zero, hence G>=0. Integrate this derivative sign for F(x)=logGamma(x)-(x-1/2)(log(x-1/2)-1)-log(2e)/2, evaluate F(1)=0 and use positive logarithmic order.",
+            "math": "((x-1/2)/e)^{x-1/2}\\sqrt{2e}\\le\\Gamma(x),\\quad x\\ge1",
+            "fallback": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute."
+          },
+          {
+            "title": "A.10(d)",
+            "detail": "Compare the actual convergent inverse-square sums strictly at index zero. Positivity yields strict increase; strict decrease of the derivative yields strict concavity.",
+            "math": "\\psi\\text{ is strictly increasing and strictly concave on }(0,\\infty)",
+            "fallback": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave."
+          },
+          {
+            "title": "A.10(e)",
+            "detail": "Prove both finite reciprocal-prefix bounds by unit-cell integrals and induction. Pass to the authentic Euler derivative limit with both endpoint corrections and closed-order limit inequalities.",
+            "math": "\\log x-1/x\\le\\psi(x)\\le\\log x-1/(2x),\\quad x>0",
+            "fallback": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening."
+          },
+          {
+            "title": "A.10(f)",
+            "detail": "Reuse the production logGamma_derivatives second HasDerivAt and HasSum projections. HasDerivAt.deriv and HasSum.tsum_eq give the displayed equality; summability is explicit.",
+            "math": "\\psi′(x)=\\sum_{k=0}^\\infty1/(x+k)^2,\\quad x>0",
+            "fallback": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax."
+          },
+          {
+            "title": "A.11",
+            "detail": "The printed proof uses a digamma integral and Wendel. The accepted Lean proof instead uses dimension-two and dimension-three bases and Gamma recurrence in a two-step dimension induction; this is an alternative proof, not a claimed kernel digamma edge.",
+            "math": "\\Gamma(T+d/2)/\\Gamma(T+1/2)\\le(T+d/2-1/2)^{(d-1)/2},\\quad T\\ge1,\\ d\\ge2",
+            "fallback": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds."
+          },
+          {
+            "title": "A.12 general",
+            "detail": "Take the logarithm of the actual A11 positive Gamma ratio, subtract the full-real Batir lower log bound at d/2, and rearrange with m=(d-1)/2>0. Preserve sqrt(pi), log(pi/2), and d/2-1.",
+            "math": "\\log(\\sqrt\\pi\\Gamma(T+d/2)/(\\Gamma(d/2)\\Gamma(T+1/2)))\\le m\\log(T/m+1)+d/2-1+\\tfrac12\\log(\\pi/2),\\quad m=(d-1)/2,\\quad T,d\\in\\mathbb{N},\\quad T\\ge1,\\ d\\ge2",
+            "fallback": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained."
+          },
+          {
+            "title": "A.12 Hence d=2",
+            "detail": "Reuse both conjunction projections of log_gamma_ratio_dimension_two. The first gives the intermediate half-log(pi*T+pi/2); the second bounds that intermediate expression by half-log T+1.",
+            "math": "\\log(\\sqrt\\pi\\Gamma(T+1)/(\\Gamma(1)\\Gamma(T+1/2)))\\le\\tfrac12\\log(\\pi T+\\pi/2)\\le\\tfrac12\\log T+1",
+            "fallback": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12."
+          }
+        ]
+      },
+      "teaching_route": [
+        "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+        "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+        "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+        "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+        "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension"
+      ],
+      "source_theorems": [
+        {
+          "label": "A.8 — complexGamma_integral_and_integrable",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\Gamma(z)=\\int_0^\\infty e^{-t}t^{z-1}\\,dt,\\quad \\Re z>0",
+          "fallback": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+          "plain": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+          "relationship": "Apply the actual complex Gamma integral and integrability theorems at the same complex argument with positive real part. The power remains complex; the integration variable is real.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction."
+          }
+        },
+        {
+          "label": "A.9 — logGammaSlope_eq_deriv_and_gamma_quotient",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\psi(x)=(\\log\\Gamma)′(x)=\\Gamma′(x)/\\Gamma(x),\\quad x>0",
+          "fallback": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+          "plain": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+          "relationship": "Use positive-domain differentiability of Gamma, positivity of Gamma for division, and the actual first log-Gamma derivative provider. Both derivative identities share the same positive argument.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition."
+          }
+        },
+        {
+          "label": "A.10(a) — convexOn_logGamma_positive",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\log\\Gamma\\text{ is convex on }(0,\\infty)",
+          "fallback": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+          "plain": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+          "relationship": "Reuse the pinned real log-Gamma convexity theorem on the positive half-line.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity."
+          }
+        },
+        {
+          "label": "A.10(b) — gamma_wendel_ratio",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "(x/(x+s))^{1-s}\\le\\Gamma(x+s)/(x^s\\Gamma(x))\\le1,\\quad x>0,\\ 0<s<1",
+          "fallback": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+          "plain": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+          "relationship": "Apply real log-convexity at the two Gamma arguments and Gamma recurrence; retain both Wendel bounds and strict 0<s<1.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations."
+          }
+        },
+        {
+          "label": "A.10(c) — gamma_lower_bound_batir",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "((x-1/2)/e)^{x-1/2}\\sqrt{2e}\\le\\Gamma(x),\\quad x\\ge1",
+          "fallback": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+          "plain": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+          "relationship": "Set G(x)=psi(x)-log(x-1/2). Actual A13 scalar curvature makes G nonincreasing; the full digamma bounds give its limit zero, hence G>=0. Integrate this derivative sign for F(x)=logGamma(x)-(x-1/2)(log(x-1/2)-1)-log(2e)/2, evaluate F(1)=0 and use positive logarithmic order.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute."
+          }
+        },
+        {
+          "label": "A.10(d) — logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\psi\\text{ is strictly increasing and strictly concave on }(0,\\infty)",
+          "fallback": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+          "plain": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+          "relationship": "Compare the actual convergent inverse-square sums strictly at index zero. Positivity yields strict increase; strict decrease of the derivative yields strict concavity.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave."
+          }
+        },
+        {
+          "label": "A.10(e) — logGammaSlope_bounds",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\log x-1/x\\le\\psi(x)\\le\\log x-1/(2x),\\quad x>0",
+          "fallback": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+          "plain": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+          "relationship": "Prove both finite reciprocal-prefix bounds by unit-cell integrals and induction. Pass to the authentic Euler derivative limit with both endpoint corrections and closed-order limit inequalities.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening."
+          }
+        },
+        {
+          "label": "A.10(f) — logGamma_derivatives",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\psi′(x)=\\sum_{k=0}^\\infty1/(x+k)^2,\\quad x>0",
+          "fallback": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+          "plain": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+          "relationship": "Reuse the production logGamma_derivatives second HasDerivAt and HasSum projections. HasDerivAt.deriv and HasSum.tsum_eq give the displayed equality; summability is explicit.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax."
+          }
+        },
+        {
+          "label": "A.11 — gamma_ratio_general_dimension",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\Gamma(T+d/2)/\\Gamma(T+1/2)\\le(T+d/2-1/2)^{(d-1)/2},\\quad T\\ge1,\\ d\\ge2",
+          "fallback": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+          "plain": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+          "relationship": "The printed proof uses a digamma integral and Wendel. The accepted Lean proof instead uses dimension-two and dimension-three bases and Gamma recurrence in a two-step dimension induction; this is an alternative proof, not a claimed kernel digamma edge.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds."
+          }
+        },
+        {
+          "label": "A.12 general — log_gamma_ratio_general_dimension",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\log(\\sqrt\\pi\\Gamma(T+d/2)/(\\Gamma(d/2)\\Gamma(T+1/2)))\\le m\\log(T/m+1)+d/2-1+\\tfrac12\\log(\\pi/2),\\quad m=(d-1)/2,\\quad T,d\\in\\mathbb{N},\\quad T\\ge1,\\ d\\ge2",
+          "fallback": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+          "plain": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+          "relationship": "Take the logarithm of the actual A11 positive Gamma ratio, subtract the full-real Batir lower log bound at d/2, and rearrange with m=(d-1)/2>0. Preserve sqrt(pi), log(pi/2), and d/2-1.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained."
+          }
+        },
+        {
+          "label": "A.12 Hence d=2 — log_gamma_ratio_dimension_two",
+          "pages": "printed pp. 294–295 / PDF pp. 306–307",
+          "url": "https://arxiv.org/pdf/1912.13213v10",
+          "pdf_page": 306,
+          "math": "\\log(\\sqrt\\pi\\Gamma(T+1)/(\\Gamma(1)\\Gamma(T+1/2)))\\le\\tfrac12\\log(\\pi T+\\pi/2)\\le\\tfrac12\\log T+1",
+          "fallback": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+          "plain": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+          "relationship": "Reuse both conjunction projections of log_gamma_ratio_dimension_two. The first gives the intermediate half-log(pi*T+pi/2); the second bounds that intermediate expression by half-log T+1.",
+          "statement_provenance": "source-restatement",
+          "contract": {
+            "model": "Complex Gamma on Re z>0, or real Gamma/digamma on positive real arguments.",
+            "assumptions": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12.",
+            "parameters": "T,d are natural numbers with T>=1,d>=2 when present; cast before real arithmetic. No theorem conclusion is a premise.",
+            "regret": "Appendix dependencies used by the KT potential argument; no wealth or regret conclusion here.",
+            "guarantee": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12."
+          }
+        }
+      ],
+      "proof_bridge": {
+        "title": "Separate the source route from the compiled route",
+        "summary": "Each formula retains its domain and constants. A11 uses an independently audited recurrence proof; A10(f) reuses the existing derivative-series provider.",
+        "steps": [
+          {
+            "title": "A.10(f)",
+            "detail": "Reuse the production logGamma_derivatives second HasDerivAt and HasSum projections. HasDerivAt.deriv and HasSum.tsum_eq give the displayed equality; summability is explicit.",
+            "math": "\\psi′(x)=\\sum_{k=0}^\\infty1/(x+k)^2,\\quad x>0",
+            "fallback": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax."
+          },
+          {
+            "title": "A.11",
+            "detail": "The printed proof uses a digamma integral and Wendel. The accepted Lean proof instead uses dimension-two and dimension-three bases and Gamma recurrence in a two-step dimension induction; this is an alternative proof, not a claimed kernel digamma edge.",
+            "math": "\\Gamma(T+d/2)/\\Gamma(T+1/2)\\le(T+d/2-1/2)^{(d-1)/2},\\quad T\\ge1,\\ d\\ge2",
+            "fallback": "All natural T>=1,d>=2; Gamma(T+d/2)/Gamma(T+1/2)<=(T+d/2-1/2)^((d-1)/2), casts before arithmetic, all dimensions including odd, d2,T1. Natural formulation parametrizes precisely the source integers satisfying the lower bounds."
+          },
+          {
+            "title": "A.12 general",
+            "detail": "Take the logarithm of the actual A11 positive Gamma ratio, subtract the full-real Batir lower log bound at d/2, and rearrange with m=(d-1)/2>0. Preserve sqrt(pi), log(pi/2), and d/2-1.",
+            "math": "\\log(\\sqrt\\pi\\Gamma(T+d/2)/(\\Gamma(d/2)\\Gamma(T+1/2)))\\le m\\log(T/m+1)+d/2-1+\\tfrac12\\log(\\pi/2),\\quad m=(d-1)/2,\\quad T,d\\in\\mathbb{N},\\quad T\\ge1,\\ d\\ge2",
+            "fallback": "All natural T>=1,d>=2; log(sqrt(pi)*Gamma(T+d/2)/(Gamma(d/2)*Gamma(T+1/2))) <= m*log(T/m+1)+d/2-1+(1/2)*log(pi/2), m=((d:Real)-1)/2. Whole denominator and additive constants retained."
+          },
+          {
+            "title": "A.12 Hence d=2",
+            "detail": "Reuse both conjunction projections of log_gamma_ratio_dimension_two. The first gives the intermediate half-log(pi*T+pi/2); the second bounds that intermediate expression by half-log T+1.",
+            "math": "\\log(\\sqrt\\pi\\Gamma(T+1)/(\\Gamma(1)\\Gamma(T+1/2)))\\le\\tfrac12\\log(\\pi T+\\pi/2)\\le\\tfrac12\\log T+1",
+            "fallback": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12."
+          }
+        ],
+        "boundary": "Source-phase public root, twelve production declarations and four concrete consumer proofs/imports independently accepted at 33b81f6cd8126ef61cc7a9d000cf150ebdab889d. Final-head integrated root/Tests revalidation, full16, reader seal, CI, PR, Chapter 2, main integration and live verification remain pending."
+      },
+      "worked_example": {
+        "title": "Concrete domains checked by the four consumers",
+        "intro": "These examples have actual source-phase Tests proofs and imported kernel checks; final-head integrated Tests and combined gates remain pending.",
+        "steps": [
+          {
+            "title": "Nonreal Gamma input",
+            "detail": "1+i has real part1 and imaginary part1, so the complex integral interface applies.",
+            "math": "\\Re(1+i)=1,\\quad\\Im(1+i)=1",
+            "fallback": "The input is genuinely nonreal."
+          },
+          {
+            "title": "Half argument",
+            "detail": "At x=1/2 the two source corrections are2 and1; strict increase also compares ψ(1/2) with ψ(1).",
+            "math": "\\log(1/2)-2\\le\\psi(1/2)\\le\\log(1/2)-1,\\quad\\psi(1/2)<\\psi(1)",
+            "fallback": "Both weak bounds and the separate strict comparison are retained."
+          },
+          {
+            "title": "Boundary and parity",
+            "detail": "Batir is exercised at1 and3/2. General dimension bounds are exercised at T=1 and d=4,5; equality of the Batir expression at1 is independently proved.",
+            "math": "x\\in\\{1,3/2\\},\\quad T=1,\\quad d\\in\\{4,5\\}",
+            "fallback": "Boundary, noninteger, even and odd cases are separate proof obligations."
+          }
+        ],
+        "takeaway": "Concrete examples test source domains without narrowing the general theorems.",
+        "boundary": "Four original frozen consumer propositions and actual proof dataflows independently accepted, with raw3 retained and whole-proposition kernel equality. Final-head public validation remains pending."
+      },
+      "source_phase_validation": {
+        "scope": "SOURCE_PHASE_ONLY",
+        "head": "33b81f6cd8126ef61cc7a9d000cf150ebdab889d",
+        "public_root": "ACCEPTED",
+        "production_import": "ACCEPTED_WITH_RETAINED_RAW3",
+        "root_review_sha256": "c73a684d93a72dafc46b1ac142e998b793727d66448c35ddce68ff0ad9cc14fe",
+        "import_review_sha256": "c32534f2135886a34ca367348003efdc59f492f70a8bb849822a68ca5449ea0e",
+        "portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_source_phase_evidence",
+        "consumer": "ACCEPTED_SOURCE_PHASE_PRIVATE_TESTS_IMPORT",
+        "final_head": null,
+        "full16": "PENDING",
+        "reader": "PENDING",
+        "CI": "PENDING",
+        "PR": "PENDING",
+        "chapter": "PENDING",
+        "main_live": "PENDING",
+        "consumer_review_sha256": "86863488ea908efcdba173aad3fda0a7c0864c8a90c7fdcbe9b9daacbac01bc8",
+        "consumer_whole_equality_review_sha256": "66fcc09299bd2db5d37e958647256cff7f65f365f67bcf7a2aac5d167fd4eea2",
+        "consumer_portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence",
+        "final_head_integrated_Tests": "PENDING"
+      }
     }
   ]
 }

@@ -1,0 +1,485 @@
+{
+  "source": {
+    "sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "pdf_pages": [
+      306,
+      307
+    ],
+    "printed_pages": [
+      294,
+      295
+    ],
+    "fresh_pdftotext_sha256": "0ea326e60d843c30fd59e6c87a034a1c297711fa2e98592ed7d85f29a7d38373"
+  },
+  "statement_seal": {
+    "scope": "Source-phase production and four exact original consumer propositions accepted at 33b81f6cd8126ef61cc7a9d000cf150ebdab889d; final integrated head revalidation pending",
+    "public_headers": [
+      {
+        "full_name": "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+        "module": "OnlineGammaSourceInterfaces",
+        "exact_lean_header": "theorem complexGamma_integral_and_integrable :\n  ∀ (z : ℂ), 0 < z.re →\n    MeasureTheory.IntegrableOn\n      (fun t : ℝ => (Real.exp (-t) : ℂ) * (t : ℂ) ^ (z - 1)) (Set.Ioi 0) ∧\n    Complex.Gamma z = ∫ t in Set.Ioi (0 : ℝ),\n      (Real.exp (-t) : ℂ) * (t : ℂ) ^ (z - 1)",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+        "module": "OnlineGammaSourceInterfaces",
+        "exact_lean_header": "theorem logGammaSlope_eq_deriv_and_gamma_quotient :\n  ∀ (x : ℝ), 0 < x →\n    logGammaSlope x = deriv (fun y : ℝ => Real.log (Real.Gamma y)) x ∧\n    logGammaSlope x = deriv Real.Gamma x / Real.Gamma x",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+        "module": "OnlineGammaSourceInterfaces",
+        "exact_lean_header": "theorem convexOn_logGamma_positive :\n  ConvexOn ℝ (Set.Ioi (0 : ℝ)) (fun x : ℝ => Real.log (Real.Gamma x))",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.gamma_wendel_ratio",
+        "module": "OnlineGammaRatios",
+        "exact_lean_header": "theorem gamma_wendel_ratio (x s : ℝ) (hx : 0 < x) (hs₀ : 0 < s) (hs₁ : s < 1) :\n  (x / (x + s)) ^ (1 - s) ≤ Real.Gamma (x + s) / (x ^ s * Real.Gamma x) ∧\n  Real.Gamma (x + s) / (x ^ s * Real.Gamma x) ≤ 1",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.gamma_ratio_dimension_two",
+        "module": "OnlineGammaRatios",
+        "exact_lean_header": "theorem gamma_ratio_dimension_two (T : ℕ) (hT : 1 ≤ T) :\n  Real.Gamma ((T : ℝ) + 1) / Real.Gamma ((T : ℝ) + 1 / 2) ≤\n  ((T : ℝ) + 1 / 2) ^ (1 / 2 : ℝ)",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+        "module": "OnlineGammaRatios",
+        "exact_lean_header": "theorem log_gamma_ratio_dimension_two (T : ℕ) (hT : 1 ≤ T) :\n  Real.log (Real.sqrt Real.pi * Real.Gamma ((T : ℝ) + 1) /\n    (Real.Gamma 1 * Real.Gamma ((T : ℝ) + 1 / 2))) ≤\n    (1 / 2 : ℝ) * Real.log (Real.pi * (T : ℝ) + Real.pi / 2) ∧\n  (1 / 2 : ℝ) * Real.log (Real.pi * (T : ℝ) + Real.pi / 2) ≤\n    (1 / 2 : ℝ) * Real.log (T : ℝ) + 1",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+        "module": "OnlineGammaDigammaStrict",
+        "exact_lean_header": "theorem logGamma_deriv_strictMonoOn_and_strictConcaveOn :\n  StrictMonoOn (deriv (fun y : ℝ => Real.log (Real.Gamma y))) (Set.Ioi (0 : ℝ)) ∧\n    StrictConcaveOn ℝ (Set.Ioi (0 : ℝ))\n      (deriv (fun y : ℝ => Real.log (Real.Gamma y)))",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.reciprocal_prefix_log_bounds",
+        "module": "OnlineGammaReciprocalBounds",
+        "exact_lean_header": "theorem reciprocal_prefix_log_bounds :\n  ∀ (x : ℝ) (N : ℕ), 0 < x →\n    Real.log (x + (N : ℝ)) - Real.log x +\n        (1 / x - 1 / (x + (N : ℝ))) / 2 ≤\n      ∑ k ∈ Finset.range N, 1 / (x + (k : ℝ)) ∧\n    (∑ k ∈ Finset.range N, 1 / (x + (k : ℝ))) ≤\n      Real.log (x + (N : ℝ)) - Real.log x + 1 / x - 1 / (x + (N : ℝ))",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.logGammaSlope_bounds",
+        "module": "OnlineGammaDigammaBounds",
+        "exact_lean_header": "theorem logGammaSlope_bounds :\n  ∀ (x : ℝ), 0 < x →\n    Real.log x - 1 / x ≤ logGammaSlope x ∧\n    logGammaSlope x ≤ Real.log x - 1 / (2 * x)",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+        "module": "OnlineGammaBatir",
+        "exact_lean_header": "theorem gamma_lower_bound_batir :\n  ∀ (x : ℝ), 1 ≤ x →\n    ((x - 1 / 2) / Real.exp 1) ^ (x - 1 / 2) *\n      Real.sqrt (2 * Real.exp 1) ≤ Real.Gamma x",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+        "module": "OnlineGammaDimensionBounds",
+        "exact_lean_header": "theorem gamma_ratio_general_dimension :\n  ∀ (T d : ℕ), 1 ≤ T → 2 ≤ d →\n    Real.Gamma ((T:ℝ) + (d:ℝ)/2) / Real.Gamma ((T:ℝ) + 1/2) ≤ ((T:ℝ) + (d:ℝ)/2 - 1/2) ^ (((d:ℝ)-1)/2)",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      },
+      {
+        "full_name": "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension",
+        "module": "OnlineGammaLogDimensionBounds",
+        "exact_lean_header": "theorem log_gamma_ratio_general_dimension :\n  ∀ (T d : ℕ), 1 ≤ T → 2 ≤ d →\n    Real.log (Real.sqrt Real.pi * Real.Gamma ((T:ℝ) + (d:ℝ)/2) /\n      (Real.Gamma ((d:ℝ)/2) * Real.Gamma ((T:ℝ)+1/2))) ≤\n      (((d:ℝ)-1)/2) * Real.log ((T:ℝ) / (((d:ℝ)-1)/2) + 1) +\n        (d:ℝ)/2 - 1 + (1/2:ℝ)*Real.log (Real.pi/2)",
+        "proof_status": "SOURCE_PHASE_PUBLIC_IMPORT_ACCEPTED",
+        "required_reader_fields": [
+          "exact math formula",
+          "domain and boundary hypotheses",
+          "printed source route vs actual proof route",
+          "actual audited parent calls",
+          "remaining acceptance boundary"
+        ]
+      }
+    ],
+    "assumption_audit": [
+      {
+        "clause": "A.8",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "All complex z with Re z>0; Lebesgue IntegrableOn on real Ioi 0 and equality to Complex.Gamma, complex power (t:Complex)^(z-1), exp(-t). Multiplication order matches by commutativity; no real-only restriction."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.9",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "Every real x>0: logGammaSlope x equals actual deriv(log o Real.Gamma) x AND deriv Real.Gamma x / Real.Gamma x. Positivity and differentiability supplied in proof, not extra hypotheses. No identification with complex digamma is required by this real source definition."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.10(a)",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "ConvexOn Real (Ioi 0) (fun x => log(Gamma x)), exactly source log-convexity."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.10(b)",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "All real x>0 and STRICT 0<s<1; both (x/(x+s))^(1-s)<=Gamma(x+s)/(x^s Gamma x) and ratio<=1. Source and frozen statement exclude s=0 and s=1. Endpoint equality extensions are optional and not claimed as accepted public declarations."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.10(c)",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "Every real x>=1, ((x-1/2)/exp 1)^(x-1/2)*sqrt(2*exp 1)<=Gamma x. Includes x=1, real rpow, original constant; no natural/half-integer substitute."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.10(d)",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "StrictMonoOn AND StrictConcaveOn actual deriv(log o Gamma) on Ioi 0. Source strictness retained despite shortened frozen prose increasing/concave."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.10(e)",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "All real x>0, log x-1/x<=logGammaSlope x<=log x-1/(2*x), weak inequalities. A.9 transports to source psi. No upper replacement 1/(2*x+...) or asymptotic-only weakening."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.10(f)",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "For every real x>0 actual HasDerivAt of deriv(log o Gamma) has value logGammaCurvature x, and HasSum over natural k starting0 of 1/(x+k)^2 to the same value. HasDerivAt.deriv and HasSum.tsum_eq yield the displayed psi-prime series equality. Summability is genuine, not merely totalized tsum syntax."
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.11",
+        "items": [
+          {
+            "kind": "TYPING",
+            "text": "T,d : Nat"
+          },
+          {
+            "kind": "SOURCE",
+            "text": "1 <= T"
+          },
+          {
+            "kind": "SOURCE",
+            "text": "2 <= d"
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.12 general",
+        "items": [
+          {
+            "kind": "TYPING",
+            "text": "T,d : Nat"
+          },
+          {
+            "kind": "SOURCE",
+            "text": "1 <= T"
+          },
+          {
+            "kind": "SOURCE",
+            "text": "2 <= d"
+          }
+        ],
+        "excess": []
+      },
+      {
+        "clause": "A.12 Hence d=2",
+        "items": [
+          {
+            "kind": "SOURCE",
+            "text": "Original gamma-log expression <= (1/2)*log(pi*T+pi/2) <= (1/2)*log T+1 for all natural T>=1. This two-stage chain is retained independently; it does not prove general A.12."
+          }
+        ],
+        "excess": []
+      }
+    ]
+  },
+  "source_proof_coverage": {
+    "inventory": [
+      {
+        "id": "A.8",
+        "kind": "NODE",
+        "formula": "\\Gamma(z)=\\int_0^\\infty e^{-t}t^{z-1}\\,dt,\\quad \\Re z>0",
+        "lean": "BanditRL.OnlineGamma.complexGamma_integral_and_integrable",
+        "proof": "Apply the actual complex Gamma integral and integrability theorems at the same complex argument with positive real part. The power remains complex; the integration variable is real."
+      },
+      {
+        "id": "A.9",
+        "kind": "NODE",
+        "formula": "\\psi(x)=(\\log\\Gamma)′(x)=\\Gamma′(x)/\\Gamma(x),\\quad x>0",
+        "lean": "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient",
+        "proof": "Use positive-domain differentiability of Gamma, positivity of Gamma for division, and the actual first log-Gamma derivative provider. Both derivative identities share the same positive argument."
+      },
+      {
+        "id": "A.10(a)",
+        "kind": "NODE",
+        "formula": "\\log\\Gamma\\text{ is convex on }(0,\\infty)",
+        "lean": "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+        "proof": "Reuse the pinned real log-Gamma convexity theorem on the positive half-line."
+      },
+      {
+        "id": "A.10(b)",
+        "kind": "NODE",
+        "formula": "(x/(x+s))^{1-s}\\le\\Gamma(x+s)/(x^s\\Gamma(x))\\le1,\\quad x>0,\\ 0<s<1",
+        "lean": "BanditRL.OnlineGamma.gamma_wendel_ratio",
+        "proof": "Apply real log-convexity at the two Gamma arguments and Gamma recurrence; retain both Wendel bounds and strict 0<s<1."
+      },
+      {
+        "id": "A.10(c)",
+        "kind": "NODE",
+        "formula": "((x-1/2)/e)^{x-1/2}\\sqrt{2e}\\le\\Gamma(x),\\quad x\\ge1",
+        "lean": "BanditRL.OnlineGamma.gamma_lower_bound_batir",
+        "proof": "Set G(x)=psi(x)-log(x-1/2). Actual A13 scalar curvature makes G nonincreasing; the full digamma bounds give its limit zero, hence G>=0. Integrate this derivative sign for F(x)=logGamma(x)-(x-1/2)(log(x-1/2)-1)-log(2e)/2, evaluate F(1)=0 and use positive logarithmic order."
+      },
+      {
+        "id": "A.10(d)",
+        "kind": "NODE",
+        "formula": "\\psi\\text{ is strictly increasing and strictly concave on }(0,\\infty)",
+        "lean": "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn",
+        "proof": "Compare the actual convergent inverse-square sums strictly at index zero. Positivity yields strict increase; strict decrease of the derivative yields strict concavity."
+      },
+      {
+        "id": "A.10(e)",
+        "kind": "NODE",
+        "formula": "\\log x-1/x\\le\\psi(x)\\le\\log x-1/(2x),\\quad x>0",
+        "lean": "BanditRL.OnlineGamma.logGammaSlope_bounds",
+        "proof": "Prove both finite reciprocal-prefix bounds by unit-cell integrals and induction. Pass to the authentic Euler derivative limit with both endpoint corrections and closed-order limit inequalities."
+      },
+      {
+        "id": "A.10(f)",
+        "kind": "NODE",
+        "formula": "\\psi′(x)=\\sum_{k=0}^\\infty1/(x+k)^2,\\quad x>0",
+        "lean": "BanditRL.OnlineGamma.logGamma_derivatives",
+        "proof": "Reuse the production logGamma_derivatives second HasDerivAt and HasSum projections. HasDerivAt.deriv and HasSum.tsum_eq give the displayed equality; summability is explicit."
+      },
+      {
+        "id": "A.11",
+        "kind": "NODE",
+        "formula": "\\Gamma(T+d/2)/\\Gamma(T+1/2)\\le(T+d/2-1/2)^{(d-1)/2},\\quad T\\ge1,\\ d\\ge2",
+        "lean": "BanditRL.OnlineGamma.gamma_ratio_general_dimension",
+        "proof": "The printed proof uses a digamma integral and Wendel. The accepted Lean proof instead uses dimension-two and dimension-three bases and Gamma recurrence in a two-step dimension induction; this is an alternative proof, not a claimed kernel digamma edge."
+      },
+      {
+        "id": "A.12 general",
+        "kind": "NODE",
+        "formula": "\\log(\\sqrt\\pi\\Gamma(T+d/2)/(\\Gamma(d/2)\\Gamma(T+1/2)))\\le m\\log(T/m+1)+d/2-1+\\tfrac12\\log(\\pi/2),\\quad m=(d-1)/2",
+        "lean": "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension",
+        "proof": "Take the logarithm of the actual A11 positive Gamma ratio, subtract the full-real Batir lower log bound at d/2, and rearrange with m=(d-1)/2>0. Preserve sqrt(pi), log(pi/2), and d/2-1."
+      },
+      {
+        "id": "A.12 Hence d=2",
+        "kind": "NODE",
+        "formula": "\\log(\\sqrt\\pi\\Gamma(T+1)/(\\Gamma(1)\\Gamma(T+1/2)))\\le\\tfrac12\\log(\\pi T+\\pi/2)\\le\\tfrac12\\log T+1",
+        "lean": "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+        "proof": "Reuse both conjunction projections of log_gamma_ratio_dimension_two. The first gives the intermediate half-log(pi*T+pi/2); the second bounds that intermediate expression by half-log T+1."
+      }
+    ],
+    "alternative_routes": [
+      {
+        "node": "A.11",
+        "source_route": "digamma integral then Wendel",
+        "lean_route": "two-step dimension recurrence with d2/d3 bases",
+        "relation": "source-route-versus-compiled-alternative",
+        "source_route_compiled": false,
+        "lean_route_private_compiled": true,
+        "scope": "The printed digamma-integral argument is source exposition only in this packet; only the recurrence alternative has an actual compiled proof. No second typed route is claimed."
+      }
+    ],
+    "source_gaps": []
+  },
+  "proof_digestion": {
+    "existing_substrate": [
+      "Actual Gamma derivatives and convergent series",
+      "mathlib Gamma integral/log-convexity/recurrence",
+      "positive logarithmic order"
+    ],
+    "new_reusable": [
+      "OnlineGammaSourceInterfaces",
+      "OnlineGammaRatios",
+      "OnlineGammaDigammaStrict",
+      "OnlineGammaReciprocalBounds",
+      "OnlineGammaDigammaBounds",
+      "OnlineGammaBatir",
+      "OnlineGammaDimensionBounds",
+      "OnlineGammaLogDimensionBounds"
+    ],
+    "source_to_lean": {
+      "A.8": [
+        "BanditRL.OnlineGamma.complexGamma_integral_and_integrable"
+      ],
+      "A.9": [
+        "BanditRL.OnlineGamma.logGammaSlope_eq_deriv_and_gamma_quotient"
+      ],
+      "A.10(a)": [
+        "BanditRL.OnlineGamma.convexOn_logGamma_positive"
+      ],
+      "A.10(b)": [
+        "BanditRL.OnlineGamma.gamma_wendel_ratio"
+      ],
+      "A.10(c)": [
+        "BanditRL.OnlineGamma.gamma_lower_bound_batir"
+      ],
+      "A.10(d)": [
+        "BanditRL.OnlineGamma.logGamma_deriv_strictMonoOn_and_strictConcaveOn"
+      ],
+      "A.10(e)": [
+        "BanditRL.OnlineGamma.logGammaSlope_bounds"
+      ],
+      "A.10(f)": [
+        "BanditRL.OnlineGamma.logGamma_derivatives"
+      ],
+      "A.11": [
+        "BanditRL.OnlineGamma.gamma_ratio_general_dimension"
+      ],
+      "A.12 general": [
+        "BanditRL.OnlineGamma.log_gamma_ratio_general_dimension"
+      ],
+      "A.12 Hence d=2": [
+        "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two"
+      ]
+    },
+    "reuse_a10f": [
+      "HasDerivAt.deriv of second derivative projection",
+      "HasSum.tsum_eq of natural-index0 series projection"
+    ],
+    "d2_hence": [
+      ".1 exact intermediate bound",
+      ".2 intermediate to half-log T+1"
+    ]
+  },
+  "purification": {
+    "status": "pending",
+    "dead_code_audit": "Actual production owned closure and four consumer proof dataflows independently accepted. Consumer whole original propositions kernel-certified, including six nonProp instance occurrences. Final-head gates remain pending.",
+    "duplicate_semantics_audit": "Reuse existing A10f provider; preserve single project and definitions.",
+    "canonicalization": "BanditRL.OnlineGamma in shared project",
+    "compressed_spine_delta": "Gamma identities -> finite prefix/derivatives -> Batir and dimension ratios",
+    "reader_default_view": "Source formulas and proof sketches; Lean folded with actual graph drilldown after build."
+  },
+  "source_phase_validation": {
+    "scope": "SOURCE_PHASE_ONLY",
+    "head": "33b81f6cd8126ef61cc7a9d000cf150ebdab889d",
+    "public_root": "ACCEPTED",
+    "production_import": "ACCEPTED_WITH_RETAINED_RAW3",
+    "root_review_sha256": "c73a684d93a72dafc46b1ac142e998b793727d66448c35ddce68ff0ad9cc14fe",
+    "import_review_sha256": "c32534f2135886a34ca367348003efdc59f492f70a8bb849822a68ca5449ea0e",
+    "portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_source_phase_evidence",
+    "consumer": "ACCEPTED_SOURCE_PHASE_PRIVATE_TESTS_IMPORT",
+    "final_head": null,
+    "full16": "PENDING",
+    "reader": "PENDING",
+    "CI": "PENDING",
+    "PR": "PENDING",
+    "chapter": "PENDING",
+    "main_live": "PENDING",
+    "consumer_review_sha256": "86863488ea908efcdba173aad3fda0a7c0864c8a90c7fdcbe9b9daacbac01bc8",
+    "consumer_whole_equality_review_sha256": "66fcc09299bd2db5d37e958647256cff7f65f365f67bcf7a2aac5d167fd4eea2",
+    "consumer_portable_evidence": "docs/contracts/online-gamma-properties-v1/proof-attempts.json#portable_consumer_evidence",
+    "final_head_integrated_Tests": "PENDING"
+  }
+}

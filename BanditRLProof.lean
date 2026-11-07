@@ -807,3 +807,11 @@ import BanditRLProof.OnlineWeightedPotential
 import BanditRLProof.OnlineUnboundedOGD
 import BanditRLProof.ConfidenceIntervals
 import BanditRLProof.OnlineGammaSimplex
+import BanditRLProof.OnlineGammaSourceInterfaces
+import BanditRLProof.OnlineGammaRatios
+import BanditRLProof.OnlineGammaDigammaStrict
+import BanditRLProof.OnlineGammaReciprocalBounds
+import BanditRLProof.OnlineGammaDigammaBounds
+import BanditRLProof.OnlineGammaBatir
+import BanditRLProof.OnlineGammaDimensionBounds
+import BanditRLProof.OnlineGammaLogDimensionBounds
