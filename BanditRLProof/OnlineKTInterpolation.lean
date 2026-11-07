@@ -50,7 +50,7 @@ theorem ktPotential_interpolate (ε : ℝ) (hε : 0 < ε) (t : ℕ) (ht : 1 ≤ 
   have hexp : Real.exp (a * L (-1) + b * L 1) ≤
       a * Real.exp (L (-1)) + b * Real.exp (L 1) := by
     simpa only [smul_eq_mul] using
-      (Real.convexOn_exp.2 (Set.mem_univ (L (-1))) (Set.mem_univ (L 1)) ha hb hab)
+      (convexOn_exp.2 (Set.mem_univ (L (-1))) (Set.mem_univ (L 1)) ha hb hab)
   have hchord := (Real.exp_le_exp.mpr hL).trans hexp
   let K : ℝ := ε * (2 : ℝ)^t / (Real.pi * Real.Gamma ((t : ℝ) + 1))
   have hden : 0 < Real.pi * Real.Gamma ((t : ℝ) + 1) :=

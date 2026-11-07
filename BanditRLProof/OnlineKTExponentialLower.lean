@@ -27,13 +27,13 @@ private theorem binary_scaled_log_identity (N u v : ℝ) (hN : 0 < N)
     field_simp [hN.ne']
     linarith
   have harg (z : ℝ) : (z / N) / (1 / 2 : ℝ) = z / (N / 2) := by
-    field_simp [hN.ne'] <;> ring
+    field_simp [hN.ne']
   rw [BanditRLProof.KLUCB.bernoulliKLCore, hvN,
     show (1 : ℝ) - 1 / 2 = 1 / 2 by norm_num, harg u, harg v]
   calc
     N * (u / N * Real.log (u / (N / 2)) + v / N * Real.log (v / (N / 2))) =
         u * Real.log (u / (N / 2)) + v * Real.log (v / (N / 2)) := by
-      field_simp [hN.ne'] <;> ring
+      field_simp [hN.ne']
     _ = u * Real.log u + v * Real.log v - (u + v) * Real.log N +
         (u + v) * Real.log 2 := by
       rw [weighted_log_scale N u hN hu, weighted_log_scale N v hN hv]
@@ -119,7 +119,9 @@ theorem ktPotential_exp_lower (ε : ℝ) (hε : 0 < ε) (n : ℕ) (hn : 1 ≤ n)
   let N : ℝ := (n : ℝ)
   let u : ℝ := (N + x) / 2
   let v : ℝ := (N - x) / 2
-  have hN : 1 ≤ N := by exact_mod_cast hn
+  have hN : 1 ≤ N := by
+    change (1 : ℝ) ≤ (n : ℝ)
+    exact_mod_cast hn
   have hN0 : 0 < N := by linarith
   obtain ⟨hxlo, hxhi⟩ := abs_le.mp hx
   have hu : 0 ≤ u := by dsimp [u, N]; linarith
