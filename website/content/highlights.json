@@ -9736,6 +9736,102 @@
       "proof_idea": "Take the logarithm of the actual A11 positive Gamma ratio, subtract the full-real Batir lower log bound at d/2, and rearrange with m=(d-1)/2>0. Preserve sqrt(pi), log(pi/2), and d/2-1.",
       "lean_notes": "theorem log_gamma_ratio_general_dimension :\n  ∀ (T d : ℕ), 1 ≤ T → 2 ≤ d →\n    Real.log (Real.sqrt Real.pi * Real.Gamma ((T:ℝ) + (d:ℝ)/2) /\n      (Real.Gamma ((d:ℝ)/2) * Real.Gamma ((T:ℝ)+1/2))) ≤\n      (((d:ℝ)-1)/2) * Real.log ((T:ℝ) / (((d:ℝ)-1)/2) + 1) +\n        (d:ℝ)/2 - 1 + (1/2:ℝ)*Real.log (Real.pi/2)",
       "dependencies": []
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktPotential_interpolate",
+      "title": "Real-coin interpolation",
+      "chapter": "online-kt-wealth",
+      "featured": true,
+      "teaching_order": 1,
+      "source_match": "source-proof-step",
+      "plain": "For t≥1, |x|≤t−1 and every real |c|≤1, including both endpoints.",
+      "math": "F_t(x+c)\\leq(1+cx/t)F_{t-1}(x)",
+      "intuition": "At c=−1 and c=1 the update is exact. The book takes the logarithm of the update ratio and uses convexity on the coin interval. The Lean proof applies log-Gamma convexity to both numerator factors, uses exponential convexity with weights (1−c)/2 and (1+c)/2, then inserts the endpoint values.",
+      "why": "Connects the KT update to the two-stage wealth lower bound.",
+      "position": "Real-coin interpolation",
+      "proof_idea": "At c=−1 and c=1 the update is exact. The book takes the logarithm of the update ratio and uses convexity on the coin interval. The Lean proof applies log-Gamma convexity to both numerator factors, uses exponential convexity with weights (1−c)/2 and (1+c)/2, then inserts the endpoint values.",
+      "lean_notes": "Focused proof/import accepted at d69b69c. Final integrated-head validation remains pending.",
+      "dependencies": [
+        "BanditRL.OnlineKT.ktPotential_endpoint",
+        "BanditRL.OnlineGamma.convexOn_logGamma_positive"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktPrefix_succ",
+      "title": "The strict past",
+      "chapter": "online-kt-wealth",
+      "featured": true,
+      "teaching_order": 2,
+      "source_match": "source-proof-step",
+      "plain": "Sₙ uses indices 0 through n−1. The new coin is cₙ.",
+      "math": "S_0=0,\\qquad S_{n+1}=S_n+c_n",
+      "intuition": "Splitting the last term from the finite sum gives the successor identity, also at n=0. No bound on the coins is needed for this identity.",
+      "why": "Connects the KT update to the two-stage wealth lower bound.",
+      "position": "The strict past",
+      "proof_idea": "Splitting the last term from the finite sum gives the successor identity, also at n=0. No bound on the coins is needed for this identity.",
+      "lean_notes": "The prefix theorem matched its frozen proposition in the private candidate import. Public owner validation remains pending.",
+      "dependencies": [
+        "BanditRL.OnlineKT.ktPrefix"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktPotential_le_wealth",
+      "title": "Wealth dominates the potential",
+      "chapter": "online-kt-wealth",
+      "featured": true,
+      "teaching_order": 3,
+      "source_match": "source-proof-step",
+      "plain": "For n≥0 the only coin hypotheses are |cᵢ|≤1 for i<n.",
+      "math": "F_n(S_n)\\le W_n,\\qquad W_{n+1}=W_n(1+c_n S_n/(n+1))",
+      "intuition": "At zero the potential and wealth both equal ε. At the next round, |Sₙ|≤n and |cₙ|≤1 make the multiplier at least 1/(n+1). Multiply the induction inequality by this nonnegative factor, then apply interpolation at t=n+1.",
+      "why": "Connects the KT update to the two-stage wealth lower bound.",
+      "position": "Wealth dominates the potential",
+      "proof_idea": "At zero the potential and wealth both equal ε. At the next round, |Sₙ|≤n and |cₙ|≤1 make the multiplier at least 1/(n+1). Multiply the induction inequality by this nonnegative factor, then apply interpolation at t=n+1.",
+      "lean_notes": "Statement typing accepted. Producer proof/import and final integrated-head validation remain pending.",
+      "dependencies": [
+        "BanditRL.OnlineKT.ktPotential_interpolate",
+        "BanditRL.OnlineKT.ktPrefix_succ",
+        "BanditRL.OnlineKT.ktPotential_initial"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktPotential_exp_lower",
+      "title": "An exponential lower bound",
+      "chapter": "online-kt-wealth",
+      "featured": true,
+      "teaching_order": 4,
+      "source_match": "source-proof-step",
+      "plain": "For n≥1, ε>0 and |x|≤n, including x=−n and x=n.",
+      "math": "\\varepsilon\\exp\\!\\left(x^2/(2n)-\\tfrac12\\log n-1\\right)\\le F_n(x)",
+      "intuition": "Set N=n, u=(N+x)/2 and v=(N−x)/2. A.13 bounds a product whose logarithm is u log u + v log v − log Γ(u+1/2) − log Γ(v+1/2). Separately, N times the binary relative entropy of (u/N,v/N) against (1/2,1/2) equals u log u + v log v − N log(N/2), including 0 log 0=0. Combining these identities isolates the Gamma prefactor. The closed binary entropy bound contributes x²/(2N), and both dimension-two log-ratio inequalities bound the cost by log(N)/2+1.",
+      "why": "Connects the KT update to the two-stage wealth lower bound.",
+      "position": "An exponential lower bound",
+      "proof_idea": "Set N=n, u=(N+x)/2 and v=(N−x)/2. A.13 bounds a product whose logarithm is u log u + v log v − log Γ(u+1/2) − log Γ(v+1/2). Separately, N times the binary relative entropy of (u/N,v/N) against (1/2,1/2) equals u log u + v log v − N log(N/2), including 0 log 0=0. Combining these identities isolates the Gamma prefactor. The closed binary entropy bound contributes x²/(2N), and both dimension-two log-ratio inequalities bound the cost by log(N)/2+1.",
+      "lean_notes": "Focused proof/import accepted at d69b69c. Final integrated-head validation remains pending.",
+      "dependencies": [
+        "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use",
+        "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+        "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value"
+      ]
+    },
+    {
+      "full_name": "BanditRL.OnlineKT.ktWealth_two_step",
+      "title": "Theorem 13.4",
+      "chapter": "online-kt-wealth",
+      "featured": true,
+      "teaching_order": 5,
+      "source_match": "closest-source",
+      "plain": "For T≥1 and ε>0, every played real coin lies in [−1,1]. Coins at indices i≥T are unrestricted.",
+      "math": "W_T\\ge F_T(S_T)\\ge\\varepsilon\\exp\\!\\left(S_T^2/(2T)-\\tfrac12\\log T-1\\right)",
+      "intuition": "Apply the wealth inequality and the exponential estimate to the same S_T. The triangle inequality gives |S_T|≤T from the played coins alone.",
+      "why": "Connects the KT update to the two-stage wealth lower bound.",
+      "position": "Theorem 13.4",
+      "proof_idea": "Apply the wealth inequality and the exponential estimate to the same S_T. The triangle inequality gives |S_T|≤T from the played coins alone.",
+      "lean_notes": "Statement typing accepted. Producer proof/import and final integrated-head validation remain pending.",
+      "dependencies": [
+        "BanditRL.OnlineKT.ktPotential_le_wealth",
+        "BanditRL.OnlineKT.ktPotential_exp_lower"
+      ]
     }
   ]
 }

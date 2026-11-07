@@ -18,7 +18,7 @@ ONLINE_LEARNING_ROUTES = {
     "online-first-order", "online-foundations", "online-ftl-failure",
     "online-gamma-curvature-estimates", "online-gamma-properties", "online-gamma-simplex",
     "online-guessing-ogd", "online-guessing-osd", "online-hinge", "online-huber",
-    "online-jensen", "online-kt-endpoints", "online-linearization", "online-lipschitz",
+    "online-jensen", "online-kt-endpoints", "online-kt-wealth", "online-linearization", "online-lipschitz",
     "online-minorant", "online-normal-cone", "online-ogd", "online-optimal-step",
     "online-optimality", "online-osd", "online-osd-policy", "online-strong-monotonicity",
     "online-subgradient-absolute", "online-subgradient-basic",
@@ -339,6 +339,20 @@ class BookRegistryTests(unittest.TestCase):
             self.assertNotIn("Bandit Book", online_breadcrumb)
         finally:
             site.SITE_CHAPTERS, site.SITE_BOOKS, site.SITE_TEXTBOOK_SPINE, site.SITE_REGISTRY = saved
+
+    def test_kt_wealth_and_endpoints_keep_distinct_module_owners(self):
+        chapters = {chapter["slug"]: chapter for chapter in self.chapters}
+        self.assertEqual(
+            ["BanditRLProof/OnlineKTPotential.lean"],
+            chapters["online-kt-endpoints"]["module_globs"],
+        )
+        wealth_names = {"ktPrefix", "ktWealth", "ktPrefix_succ", "ktPotential_interpolate",
+                        "ktPotential_le_wealth", "ktPotential_exp_lower", "ktWealth_two_step"}
+        owners = {decl["full_name"]: decl["chapter"] for decl in self.declarations}
+        for name in wealth_names:
+            self.assertEqual("online-kt-wealth", owners["BanditRL.OnlineKT." + name])
+        for name in ("ktPotential", "ktPotential_initial", "ktPotential_endpoint"):
+            self.assertEqual("online-kt-endpoints", owners["BanditRL.OnlineKT." + name])
 
     def test_online_routes_preserve_bandit_coverage_and_shared_identity(self):
         with patch.multiple(site, SITE_CHAPTERS=self.chapters, SITE_BOOKS=self.config,
