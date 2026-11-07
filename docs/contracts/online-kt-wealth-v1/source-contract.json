@@ -1,0 +1,205 @@
+{
+  "schema": "online-kt-wealth-source-contract-v1",
+  "title": "Krichevsky–Trofimov wealth for bounded real coins",
+  "proof_status": "PENDING",
+  "source": {
+    "author": "Francesco Orabona",
+    "title": "Online Learning: A Modern Introduction Using Convex Optimization",
+    "version": "arXiv:1912.13213v10",
+    "pdf_sha256": "cef4edfa97a6e063e53e9c532717c50aa156e5bc782ea49f969b3385011a1b17",
+    "anchors": [
+      {
+        "name": "Algorithm 13.1, bettor initialization and update",
+        "printed_pages": [
+          208
+        ],
+        "pdf_pages": [
+          220
+        ],
+        "url": "https://arxiv.org/pdf/1912.13213v10#page=220"
+      },
+      {
+        "name": "Theorem 13.4 and equation (13.1), wealth induction and exponential lower bound",
+        "printed_pages": [
+          210,
+          211
+        ],
+        "pdf_pages": [
+          222,
+          223
+        ],
+        "url": "https://arxiv.org/pdf/1912.13213v10#page=222"
+      }
+    ],
+    "theorem_extract_sha256": "61afed98cfed748d454759416bf22b9451a1c1f9b177b6648b172bf6b1305748"
+  },
+  "inventory": {
+    "path": "docs/contracts/online-ch2-complete-target-freeze-v1/effective-targets-frozen-v3.2.json",
+    "sha256": "632d013145d276fdba0857811566f6729b240300da00e02e4a63bd47f8a98d10",
+    "pointer": "/effective_targets/138",
+    "target_id": "dependency:KT13.4",
+    "source_id": "KT13.4",
+    "effective_statement": "For arbitrary c_t in[-1,1], initial epsilon>0, KT beta_t=sum_{i<t}c_i/t and wealth update W_t=W_(t-1)(1+beta_t c_t) satisfy W_T>=epsilon*2^T*Gamma((T+1+sum c)/2)*Gamma((T+1-sum c)/2)/(pi Gamma(T+1))>=epsilon exp((sum c)^2/(2T)-(ln T)/2-1).",
+    "raw_row_object_sha256": "8c28550345807613074742f9bbffdeb1cfc831ece810ef9ba567f737fbdc8d7e",
+    "raw_row_hash_method": "SHA-256 of the UTF-8 JSON object token, from its opening brace through its matching closing brace in the original inventory bytes, without adjacent indentation, comma or newline.",
+    "canonical_row_object_sha256": "00908474fc711ee268fde9a459149101fe5fc5bc8a6979dc6f1ba6c628272835",
+    "canonical_row_hash_method": "UTF-8 JSON with sorted keys, unescaped Unicode and no whitespace outside strings.",
+    "source_excerpt_sha256": "0b9de0f44f2dbf8583cc65ba2335e5184d261d1ce178f660d33660f5f72bfbed"
+  },
+  "indexing": {
+    "source_round": "t=1,…,T",
+    "lean_coin": "Source round t uses c (t−1).",
+    "prefix": "ktPrefix c n = ∑ i<n, c i. It excludes c n and is zero for n=0.",
+    "bet_and_update": "At source round n+1, β=ktPrefix c n/(n+1) and W_(n+1)=W_n(1+c n·β). Wealth starts at ε>0.",
+    "quantified_space": "Coins, wealth and potential arguments are real scalars. Time indices are natural numbers."
+  },
+  "potential": {
+    "name": "BanditRL.OnlineKT.ktPotential",
+    "owner": "BanditRLProof.OnlineKTPotential",
+    "source": "BanditRLProof/OnlineKTPotential.lean",
+    "definition": "noncomputable def ktPotential (ε : ℝ) (t : ℕ) (x : ℝ) : ℝ :=\n  ε * (2 : ℝ)^t * Real.Gamma (((t : ℝ) + 1 + x) / 2) *\n    Real.Gamma (((t : ℝ) + 1 - x) / 2) /\n      (Real.pi * Real.Gamma ((t : ℝ) + 1))",
+    "source_domain": "The book uses F_t on [−t,t]. Lean defines the displayed real expression everywhere, and the named inequalities impose the printed domains."
+  },
+  "namespace": "BanditRL.OnlineKT",
+  "definitions": [
+    {
+      "name": "ktPrefix",
+      "text": "def ktPrefix (c : ℕ → ℝ) (n : ℕ) : ℝ :=\n  ∑ i ∈ range n, c i",
+      "planned_public_owner": "BanditRLProof.OnlineKTWealthBasic"
+    },
+    {
+      "name": "ktWealth",
+      "text": "def ktWealth (ε : ℝ) (c : ℕ → ℝ) : ℕ → ℝ\n  | 0 => ε\n  | n + 1 => ktWealth ε c n * (1 + c n * ktPrefix c n / ((n : ℝ) + 1))",
+      "planned_public_owner": "BanditRLProof.OnlineKTWealthBasic"
+    }
+  ],
+  "theorem_headers": [
+    {
+      "name": "ktPotential_interpolate",
+      "header": "theorem ktPotential_interpolate (ε : ℝ) (hε : 0 < ε) (t : ℕ) (ht : 1 ≤ t)\n    (x c : ℝ) (hx : |x| ≤ (t : ℝ) - 1) (hc : |c| ≤ 1) :\n  ktPotential ε t (x + c) ≤ (1 + c * x / (t : ℝ)) * ktPotential ε (t - 1) x",
+      "meaning": "Equation (13.1). For t≥1 and |x|≤t−1, the next potential is bounded by the previous potential times 1+cx/t for every real c∈[−1,1]. This includes c=±1 and |x|=t−1. For t=1 the prior sum is x=0. The multiplier is at least 1/t>0.",
+      "planned_public_owner": "BanditRLProof.OnlineKTInterpolation",
+      "proof_status": "PENDING"
+    },
+    {
+      "name": "ktPrefix_succ",
+      "header": "theorem ktPrefix_succ (c : ℕ → ℝ) (n : ℕ) :\n  ktPrefix c (n + 1) = ktPrefix c n + c n",
+      "meaning": "Finite-sum bookkeeping. The prefix of n+1 coins adds c n to the prefix of n coins. This identity needs no bound on c, including when n=0.",
+      "planned_public_owner": "BanditRLProof.OnlineKTWealthBasic",
+      "proof_status": "PENDING"
+    },
+    {
+      "name": "ktPotential_le_wealth",
+      "header": "theorem ktPotential_le_wealth (ε : ℝ) (hε : 0 < ε) (c : ℕ → ℝ) (n : ℕ)\n    (hc : ∀ i < n, |c i| ≤ 1) :\n  ktPotential ε n (ktPrefix c n) ≤ ktWealth ε c n",
+      "meaning": "First wealth bound at every n≥0. Only i<n coins are bounded; the next and future coins are arbitrary. At n=0 the sum is empty and both potential and wealth equal ε.",
+      "planned_public_owner": "BanditRLProof.OnlineKTWealthLower",
+      "proof_status": "PENDING"
+    },
+    {
+      "name": "ktPotential_exp_lower",
+      "header": "theorem ktPotential_exp_lower (ε : ℝ) (hε : 0 < ε) (n : ℕ) (hn : 1 ≤ n)\n    (x : ℝ) (hx : |x| ≤ (n : ℝ)) :\n  ε * Real.exp (x^2 / (2 * (n : ℝ)) - Real.log (n : ℝ) / 2 - 1) ≤ ktPotential ε n x",
+      "meaning": "Second bound at every n≥1 and every |x|≤n, including x=±n. The final cost is log(n)/2+1. The two simplex masses (n+x)/2 and (n−x)/2 are nonnegative and may vanish.",
+      "planned_public_owner": "BanditRLProof.OnlineKTExponentialLower",
+      "proof_status": "PENDING"
+    },
+    {
+      "name": "ktWealth_two_step",
+      "header": "theorem ktWealth_two_step (ε : ℝ) (hε : 0 < ε) (c : ℕ → ℝ) (T : ℕ) (hT : 1 ≤ T)\n    (hc : ∀ i < T, |c i| ≤ 1) :\n  ktPotential ε T (ktPrefix c T) ≤ ktWealth ε c T ∧\n  ε * Real.exp ((ktPrefix c T)^2 / (2 * (T : ℝ)) - Real.log (T : ℝ) / 2 - 1) ≤\n    ktPotential ε T (ktPrefix c T)",
+      "meaning": "Theorem 13.4. For every T≥1 and real coin sequence bounded only at i<T, both inequalities hold at the same S_T: F_T(S_T)≤W_T and ε exp(S_T²/(2T)−log(T)/2−1)≤F_T(S_T).",
+      "planned_public_owner": "BanditRLProof.OnlineKTWealth",
+      "proof_status": "PENDING"
+    }
+  ],
+  "source_and_candidate_routes": {
+    "printed": "Equation (13.1) uses convexity of log F_t(x+c)−log(1+cx/t) on the closed coin interval and the two endpoint equalities. Wealth induction then yields the first bound. A.13, the closed binary KL lower bound and the dimension-two Gamma ratio yield the second bound.",
+    "candidate_interpolation": "The candidate applies convexity separately to both log-Gamma terms, uses convexity of exp, and substitutes the same two endpoint equalities. This is an alternative proof of equation (13.1).",
+    "candidate_exponential_bound": "Take the logarithm of the actual two-coordinate simplex product. Zero masses use the closed log-product identity and weighted zero-log terms. The two dimension-two ratio conjuncts preserve the final −1.",
+    "extra_candidate_parent": {
+      "name": "BanditRL.OnlineGamma.simplexGammaProduct_pos_and_log",
+      "owner": "BanditRLProof.OnlineGammaSimplexBasic",
+      "source_file": "BanditRLProof/OnlineGammaSimplexBasic.lean",
+      "role": "Closed-product logarithm including zero coordinates. Future proof audit must capture this additional parent separately from the seven typing parents."
+    }
+  },
+  "typing_parents": [
+    {
+      "ordinal": 0,
+      "name": "BanditRL.OnlineKT.ktPotential",
+      "owner": "BanditRLProof.OnlineKTPotential",
+      "source_file": "BanditRLProof/OnlineKTPotential.lean",
+      "role_in_candidate_proofs": "Shared ε-scaled potential used by the four potential/wealth statements."
+    },
+    {
+      "ordinal": 1,
+      "name": "BanditRL.OnlineKT.ktPotential_initial",
+      "owner": "BanditRLProof.OnlineKTPotential",
+      "source_file": "BanditRLProof/OnlineKTPotential.lean",
+      "role_in_candidate_proofs": "Base case F₀(0)=ε for wealth induction."
+    },
+    {
+      "ordinal": 2,
+      "name": "BanditRL.OnlineKT.ktPotential_endpoint",
+      "owner": "BanditRLProof.OnlineKTPotential",
+      "source_file": "BanditRLProof/OnlineKTPotential.lean",
+      "role_in_candidate_proofs": "Equality at both extreme coins for the closed-interval interpolation step."
+    },
+    {
+      "ordinal": 3,
+      "name": "BanditRL.OnlineGamma.convexOn_logGamma_positive",
+      "owner": "BanditRLProof.OnlineGammaSourceInterfaces",
+      "source_file": "BanditRLProof/OnlineGammaSourceInterfaces.lean",
+      "role_in_candidate_proofs": "Positive-domain log-Gamma convexity for both Gamma arguments of the potential."
+    },
+    {
+      "ordinal": 4,
+      "name": "BanditRL.OnlineGamma.simplexGammaProduct_le_vertex_and_value",
+      "owner": "BanditRLProof.OnlineGammaSimplex",
+      "source_file": "BanditRLProof/OnlineGammaSimplex.lean",
+      "role_in_candidate_proofs": "Closed mass-simplex bound at dimension two, mass n and both nonnegative masses, including a zero coordinate."
+    },
+    {
+      "ordinal": 5,
+      "name": "BanditRL.OnlineEntropy.KLBoundary.scaled_binary_use",
+      "owner": "BanditRLProof.OnlineEntropyKLBoundary",
+      "source_file": "BanditRLProof/OnlineEntropyKLBoundary.lean",
+      "role_in_candidate_proofs": "Closed binary KL lower bound x²/(2n)≤n KL, valid at x=±n."
+    },
+    {
+      "ordinal": 6,
+      "name": "BanditRL.OnlineGamma.log_gamma_ratio_dimension_two",
+      "owner": "BanditRLProof.OnlineGammaRatios",
+      "source_file": "BanditRLProof/OnlineGammaRatios.lean",
+      "role_in_candidate_proofs": "Both conjuncts of the dimension-two log ratio bound supply the intermediate half-log(πn+π/2) and final half-log(n)+1."
+    }
+  ],
+  "semantic_roundtrip": {
+    "named_header_text_sha256": "a2be7f1dfe92423882f70afd8ff90a20b1d374ba8e4acd73621549deeb61313d",
+    "neutral_packet_sha256": "7d59dc326fa16e02cb52127dcca0187f50dc3ae72dadc6846546a0ced9b0c2fb",
+    "source_blind_reconstruction_sha256": "8a1f3763fed1a68d8745e1f9fbf4265b8ecd187cca408d258c7ed4a42bfb422f",
+    "independent_source_comparison_sha256": "4bd05e232a42810d6c51c11110f0571cb3dd0a8bc88d3e5eef6d0fc58e9319ed",
+    "source_comparison": "The reconstruction retained real coins including both endpoints, strict past indexing, the empty prefix, positive ε, both wealth inequalities and the final constant."
+  },
+  "typing_evidence": "typed-fingerprints.json",
+  "status": {
+    "original_types": "FROZEN",
+    "candidate_source_math_review": "Reviewed for all five heads",
+    "candidate_review_records": [
+      {
+        "record": "c2-row138-prefix-interpolation-independent-candidate-review-v1.json",
+        "sha256": "be6fd9a55c2e0ecdc7c2eaa480657798934ec2e59ecc12b6611935eaea344cae"
+      },
+      {
+        "record": "c2-row138-wealth-combination-independent-candidate-review-v1.json",
+        "sha256": "b122b2c63b5682da838e21853207fe6d8154ad0e701aa72b35967e8c2c707c3b"
+      },
+      {
+        "record": "c2-row138-exponential-lower-independent-candidate-review-v1.json",
+        "sha256": "3d5e145a89b559921719dd30ec7b943bee3ae83e64690e531750cdbb4099aeff"
+      }
+    ],
+    "actual_proof_build_import": "PENDING",
+    "public_integration": "PENDING",
+    "combined_project_and_reader_validation": "PENDING",
+    "row138": "OPEN"
+  }
+}
