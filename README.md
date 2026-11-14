@@ -52,6 +52,8 @@ This repository has two connected contributions:
 
 `BanditRLProof` remains the mature internal Lean namespace. **BanditRLlib** is the public library and website name; renaming the namespace would unnecessarily break existing code.
 
+[License and reuse scope](https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep/attribution/#license) · [Apache 2.0 text](LICENSE) · [Scope and exceptions](LICENSE_SCOPE.md)
+
 ## 📰 News
 
 - **2026-11-04 — BanditRLBench workflows.** Readable formula proofs, exact Lean Graph locations, prompt-only run bundles, expert-review packets and trusted-local Lean replay with positive/negative canaries. Public dev only; isolated untrusted-code evaluation and held-out tests remain open.

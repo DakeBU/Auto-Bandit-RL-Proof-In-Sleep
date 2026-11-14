@@ -1,0 +1,97 @@
+{
+  "schema_version": "2.0",
+  "id": "APACHE-REUSE-20261103",
+  "route": "project licensing and website reuse entry",
+  "frontier_cell": "project-license-and-reuse",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Apache License 2.0 standard text and project reuse scope",
+    "version": "2.0, January 2004; scope 2026-11-03",
+    "anchor": "LICENSE; LICENSE_SCOPE.md; attribution/#license",
+    "url": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+  },
+  "target": "Add standard Apache 2.0 distribution text, retain earlier MIT notices, delimit reuse and link website scope without mathematical or completion changes.",
+  "affected_files": [
+    "CONTRIBUTING.md",
+    "website/scripts/build_site.py"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Existing LICENSE, NOTICE.md, README, contributor policy and attribution route",
+      "Apache Software Foundation standard LICENSE-2.0.txt"
+    ],
+    "reused_declarations": [],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "README readers",
+      "Website attribution/footer readers",
+      "Downstream code and original QA reuse"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse the attribution route and unchanged standard license; retain provenance and prior MIT text."
+  },
+  "reader_contract": {
+    "source_anchor_visible": false,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": false,
+    "source_vs_lean_delta_visible": false,
+    "lean_folded": false,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": false,
+    "status": "not-required",
+    "formalizer": "Codex /root",
+    "blind_decoder": "",
+    "source_reviewer": "",
+    "verdict": "Not source-facing mathematics; no theorem, definition or algorithm guarantee changes.",
+    "remaining_semantic_delta": "No mathematical delta."
+  },
+  "graph_contribution": {
+    "lean_graph": "no-change-with-reason",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "Licensing/navigation only; no mathematical nodes or dependencies.",
+    "focus_targets": [
+      "attribution/#license",
+      "README reuse entry"
+    ],
+    "visual_review": "Actual generated attribution page inspected in headless Edge at 1440 and 390 widths; readable with no page overflow. Preview explicitly unverified; no Lean or deployment certification.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: license documentation only; no mathematical status promotion.",
+    "banditrlwiki": "no-change-with-reason: license documentation only; no mathematical status promotion.",
+    "results_ledger": "no-change-with-reason: license documentation only; no mathematical status promotion.",
+    "roadmap": "no-change-with-reason: license documentation only; no mathematical status promotion.",
+    "website_surfaces": [
+      "README reuse entry",
+      "attribution/#license",
+      "Footer license/reuse link"
+    ]
+  },
+  "truth_boundary": "No Lean changes. Apache applies within LICENSE_SCOPE.md; retained MIT and third-party terms remain. No new quantum estimator, regret/BAI bound, QA correctness, or main integration claim.",
+  "verification": {
+    "focused_checks": [
+      "python -m py_compile website/scripts/build_site.py",
+      "Standard Apache SHA-256 and prior MIT text equality",
+      "Actual attribution-section rendering and all scope paragraphs checked",
+      "git diff --check",
+      "python tools/check_contributor_contract.py --base ee8c0b805c785220ee31799012325f4179dad875"
+    ],
+    "bandit_check": "Not rerun for unchanged Lean; full current-main gates required before merge.",
+    "site_build": "Passed unverified preview after temporary restoration of exact Git source bytes; no Lean diff retained.",
+    "site_check": "Passed website/scripts/check_site.py --allow-unverified; full Lean gate remains pre-merge.",
+    "independent_review": "No source-facing theorem changes; semantic round trip not required."
+  },
+  "contributor": {
+    "name": "Codex /root for Dake Bu",
+    "role": "License, reuse boundary and website entry documentation"
+  }
+}

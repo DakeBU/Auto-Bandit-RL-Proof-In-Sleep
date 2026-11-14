@@ -148,7 +148,7 @@ used to close mathematics.
 Community packets and substantive manifests retain contributor identity and the
 specific contribution scope. Community credit does not automatically imply ABRL
 paper authorship. Intentional contributions are licensed under the repository's
-MIT License; contributors must have the right to submit the material.
+Apache License 2.0, subject to LICENSE_SCOPE.md; contributors must have the right to submit the material.
 
 Follow the [Code of Conduct](CODE_OF_CONDUCT.md) and
 [Governance](GOVERNANCE.md).
