@@ -69,9 +69,24 @@ def graph_locations(data, output):
     return locations
 
 
+def answer_sections(answer, sections):
+    """Partition sealed prose at explicit anchors, retaining every byte in order."""
+    starts = []
+    for title, anchor in sections:
+        if answer.count(anchor) != 1:
+            raise ValueError('Ambiguous or missing answer-layout anchor: ' + anchor)
+        starts.append(answer.index(anchor))
+    if not starts or starts[0] != 0 or starts != sorted(set(starts)):
+        raise ValueError('Answer-layout anchors must cover the answer in order')
+    ends = starts[1:] + [len(answer)]
+    return [(section[0], answer[start:end])
+            for section, start, end in zip(sections, starts, ends)]
+
+
 def build_pages(data, output, verified, generated_at, layout, write_page):
     esc = html.escape
     notation = json.loads((BENCH / 'notation.json').read_text(encoding='utf-8'))
+    reading_layout = json.loads((BENCH / 'reading-layout.json').read_text(encoding='utf-8'))
     targets = json.loads((BENCH / 'targets.json').read_text(encoding='utf-8'))
     replay = json.loads((BENCH / 'reference-replay.json').read_text(encoding='utf-8'))
     replay_results = {r['core_id']: r for r in replay['results']}
@@ -102,10 +117,14 @@ def build_pages(data, output, verified, generated_at, layout, write_page):
             listing += f'<details class="task-browser"'+(' open' if cid == 'BRB-001' else '')+f'><summary>{cid} · {esc(core["title"])}</summary><article class="bench-task" id="{cid}"><p class="eyebrow">{cid} · {esc(core["family_id"])} · dev</p><h2>{esc(core["title"])}</h2><h3>Assumptions</h3><ul>' + ''.join('<li>' + p(a) + '</li>' for a in core['assumptions']) + '</ul><h3>Your task</h3><p>' + p(question) + '</p>'
             if track == 'lean':
                 listing += '<p class="callout">Only the fixed signature below is graded. The NL assumptions describe the parent problem; the signature is the exact formal contract.</p><pre class="lean-code"><code>' + esc('theorem Submission ' + targets[cid]['signature'] + ' := by\n  -- your proof') + '</code></pre>'
-            listing += '<details><summary>Solution and assessment rubric</summary><div class="bench-proof">' + p(core['answer']) + '</div><ol>' + ''.join('<li>' + p(r) + '</li>' for r in core['rubric']) + '</ol>'
             if track == 'lean':
-                listing += '<h3>Reference for this subtarget</h3><pre class="lean-code"><code>' + esc(targets[cid]['reference_proof']) + '</code></pre><p>This library-application proof does not certify the complete NL answer or demonstrate novel proof synthesis.</p>'
-            listing += '</details><section class="bench-location"><h3>Locate this mathematics</h3><p><a href="../../lean-graph/index.html?node=' + quote(loc['node_id'], safe='') + '">Open exact Lean Graph node →</a> · <a href="../../lean-graph/' + esc(loc['reader_url']) + '">Read the declaration →</a></p><p><code>' + esc(core['source_declaration']) + '</code></p><p>Relation: <strong>' + loc['source_relation'] + '</strong>. ' + ('This is context for an original counterexample, not a proof of its answer.' if cid == 'BRB-004' else 'The declaration anchors this core; formal companion scope is stated separately.') + '</p></section>'
+                listing += '<details class="bench-formal-solution"><summary>Reference proof for the graded Lean target</summary><pre class="lean-code"><code>' + esc(targets[cid]['reference_proof']) + '</code></pre><p>Scope: the fixed formal signature above. This is a library-application warmup.</p></details>'
+            solution_title = 'Parent natural-language explanation and rubric' if track == 'lean' else 'Solution and assessment rubric'
+            listing += '<details class="bench-nl-solution"><summary>' + solution_title + '</summary><p class="bench-edition">Natural-language reference · independent gold review pending</p><div class="bench-proof">'
+            for heading, paragraph in answer_sections(core['answer'], reading_layout[cid]):
+                listing += '<section class="bench-proof-step"><h3>' + esc(heading) + '</h3><div>' + p(paragraph) + '</div></section>'
+            listing += '</div><h3>Assessment criteria for the natural-language task</h3><ol>' + ''.join('<li>' + p(r) + '</li>' for r in core['rubric']) + '</ol></details>'
+            listing += '<section class="bench-location"><h3>Locate this mathematics</h3><p><a href="../../lean-graph/index.html?node=' + quote(loc['node_id'], safe='') + '">Open exact Lean Graph node →</a> · <a href="../../lean-graph/' + esc(loc['reader_url']) + '">Read the declaration →</a></p><p><code>' + esc(core['source_declaration']) + '</code></p><p>Relation: <strong>' + loc['source_relation'] + '</strong>. ' + ('This is context for an original counterexample, not a proof of its answer.' if cid == 'BRB-004' else 'The declaration anchors this core; formal companion scope is stated separately.') + '</p></section>'
             if cid in replay_results:
                 measured = replay_results[cid]
                 actual = [name for name in measured['dependencies']['value_constants'] if name.startswith('BanditRLProof.')]

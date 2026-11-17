@@ -6,6 +6,12 @@ formats. Ability, format, difficulty and permitted access are separate axes.
 
 ## Ability contracts
 
+Task authors and reviewers follow the shared
+[mathematical reading standard](../../docs/mathematical-reading-standard.md).
+Keep the task well-posed through explicit notation and assumptions. Put the
+proof outline, derivation, rubric, and evidence in the solution/reviewer view.
+Audit the formal subtarget's relationship to the parent natural-language task.
+
 | Ability | Required mathematical work | Evidence |
 | --- | --- | --- |
 | Knowledge | State definitions, assumptions, guarantees and limits | Explicit criterion rubric and independent expert judgment |

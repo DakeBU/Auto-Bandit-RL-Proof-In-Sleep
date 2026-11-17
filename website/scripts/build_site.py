@@ -3536,6 +3536,7 @@ def build_community(output: Path, verified: bool, generated_at: str) -> None:
 <section id="codex-contract">
   <p class="eyebrow">Repository-enforced publication protocol</p>
   <h2>Collaborators and their Codex agents follow the same contract</h2>
+  <p>For library lessons and both QA formats, follow the <a href="{GITHUB_REPO}/blob/main/docs/mathematical-reading-standard.md">mathematical reading standard</a>. Define the setting, explain the proof idea, justify each step, and keep sources and remaining scope visible.</p>
   <p>Before substantial work, read <code>AGENTS.md</code>, <code>CONTRIBUTING.md</code>, <code>docs/contributor-codex-contract.md</code>, <code>docs/theorem-publication-protocol.md</code>, and the substantive-advance / semantic-roundtrip skills. The thin reusable bootstrap is <code>.agents/prompts/collaborator-contribution.md</code>.</p>
   <div class="card-grid">
     <article class="info-card"><h3>Reuse before new Lean</h3><p>Search BanditRLlib, Mathlib, LML and compatible upstreams. New shared leaves name real consumers; wrapper-only duplication is rejected by the contribution contract.</p></article>
