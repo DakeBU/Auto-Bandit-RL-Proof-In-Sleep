@@ -105,7 +105,7 @@ Run the conceptual-mirror audit. Routine local lemmas can return `none-found-wit
 
 ## Reader rendering rules
 
-Apply [the mathematical reading standard](mathematical-reading-standard.md)
+Apply [the Bandit and RL theory reading standard](mathematical-reading-standard.md)
 to explanations, probability semantics, algorithm costs, citations, and evidence
 labels. Use its page-specific review record for the Exposition Seal.
 

@@ -1,8 +1,13 @@
-# Mathematical reading standard
+# Bandit and reinforcement learning theory reading standard
 
-This standard applies to library lessons, research pages, and both natural-language
-and Lean BanditRLBench tasks. Authors and reviewers use it alongside the theorem
-publication protocol and the benchmark task protocol. Public content is English.
+This standard covers Bandit and reinforcement learning theory in BanditRLlib
+lessons, research pages, and both natural-language and Lean BanditRLBench tasks.
+Authors and reviewers use it alongside the theorem publication protocol and the
+benchmark task protocol.
+
+Write all reader templates, maintenance instructions, website copy, QA prompts,
+solutions, rubrics, captions, and review reports in English. Use standard LaTeX
+for mathematics and preserve exact Lean identifiers in formal references.
 
 ## Reading order
 
@@ -29,7 +34,19 @@ in nearby prose. Check matrix shapes and units where applicable. Long equations
 must remain readable on mobile and with the formula renderer unavailable.
 An illustrative example should clarify a defined claim and retain its assumptions.
 
-## Probability and algorithms
+## Bandit and RL models, probability, and algorithms
+
+For bandit results, specify the arm or action space, contexts when present,
+reward assumptions, stochastic or adversarial environment, and observed feedback.
+Define the benchmark policy or comparator and the precise objective, such as
+pseudo-regret, realized regret, or best-arm identification. For identification,
+state the fixed-confidence or fixed-budget setting, accuracy, and success event.
+
+For RL results, specify the state and action spaces, transition and reward model,
+policy class, initial distribution, and episodic, discounted, or average-reward
+setting. Define the value or regret criterion and the data-access model, such as
+online interaction, a generative model, or a fixed offline dataset. State coverage,
+exploration, realizability, or mixing assumptions when the result requires them.
 
 For a stochastic claim, specify the probability space or law, random variables,
 conditioning, and expectation. State measurability and integrability requirements.
@@ -43,10 +60,12 @@ rule, resource model, and applicable convergence, stability, or error guarantee.
 State the regime and parameter dependence of each complexity bound. Compare
 methods under explicitly matched objectives, access models, and accuracy.
 
-For quantum algorithms, also specify state encoding, preparation, oracle and
-inverse access, coherent memory, queries, shots, gates, depth, readout, and error
-accounting as applicable. Support any claimed advantage with a comparison under
-those contracts. Identify the cost of loading data and producing the output.
+Account for rounds, pulls, episodes, transitions, sample complexity, computation,
+and memory in the units used by the result. For a bound, identify its dependence
+on horizon, arm count or state/action complexity, gaps, accuracy, and confidence
+as applicable. Explain how the proof controls the objective through the relevant
+steps, such as concentration, regret decomposition, Bellman recursion, occupancy
+identities, or a change-of-measure argument.
 
 ## Sources and evidence
 
@@ -86,6 +105,8 @@ For each changed page, record the route, the reviewer, identified defects,
 repairs, and remaining gaps. Check symbols and assumptions, the justification
 of each mathematical move, evidence status, source links, and formal scope.
 Include desktop/mobile and rendered-formula checks for changed layouts.
+Check that the model, objective, and examples match the Bandit or RL topic and
+that all authored explanatory and maintenance text is English.
 
 Structural CI checks and visual checks establish their stated properties.
 Independent mathematical review supplies the semantic verdict. Record both

@@ -7,7 +7,8 @@ formats. Ability, format, difficulty and permitted access are separate axes.
 ## Ability contracts
 
 Task authors and reviewers follow the shared
-[mathematical reading standard](../../docs/mathematical-reading-standard.md).
+[Bandit and RL theory reading standard](../../docs/mathematical-reading-standard.md).
+Write task instructions, explanations, rubrics, and maintenance guidance in English.
 Keep the task well-posed through explicit notation and assumptions. Put the
 proof outline, derivation, rubric, and evidence in the solution/reviewer view.
 Audit the formal subtarget's relationship to the parent natural-language task.

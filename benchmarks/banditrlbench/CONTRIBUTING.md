@@ -25,7 +25,7 @@ the full NL solution or promote an unrelated source theorem.
 
 ## Expert review workflow
 
-Apply the [mathematical reading standard](../../docs/mathematical-reading-standard.md)
+Apply the [Bandit and RL theory reading standard](../../docs/mathematical-reading-standard.md)
 to each prompt and revealed solution. Record missing definitions, unjustified
 steps, probability-model ambiguity, source uncertainty, and formal-scope mismatch
 as concrete defects. Review prompt clarity separately from solution exposition.

@@ -19,8 +19,9 @@ The contribution manifest records `searched_existing`, exact reused declarations
 
 ## 2. Reader quality is part of theorem publication
 
-Follow [the mathematical reading standard](mathematical-reading-standard.md)
-for library pages and both benchmark formats. Record remaining exposition gaps
+Follow [the Bandit and RL theory reading standard](mathematical-reading-standard.md)
+for library pages and both benchmark formats. Author reader and maintenance
+material in English. Record remaining exposition gaps
 for each changed page alongside its mathematical and compilation evidence.
 
 For source-facing results, the website must show the mathematics, not merely advertise the Lean artifact.
