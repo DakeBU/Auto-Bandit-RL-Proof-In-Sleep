@@ -25,6 +25,11 @@ the full NL solution or promote an unrelated source theorem.
 
 ## Expert review workflow
 
+Apply the [Bandit and RL theory reading standard](../../docs/mathematical-reading-standard.md)
+to each prompt and revealed solution. Record missing definitions, unjustified
+steps, probability-model ambiguity, source uncertainty, and formal-scope mismatch
+as concrete defects. Review prompt clarity separately from solution exposition.
+
 Prepare prompts with `tools/banditrlbench.py prepare`. After collecting responses,
 use `review-pack` to generate reviewer-only data. Fill each criterion with 0, 1 or
 2, a reason and reviewer identity, then use `assess`. The response SHA-256 binds

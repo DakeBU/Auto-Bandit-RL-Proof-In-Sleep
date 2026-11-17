@@ -3,7 +3,7 @@ import copy
 import unittest
 from website.scripts import banditrlbench as bench
 from website.scripts.check_site import LinkCollector, check_benchmark_source_bindings
-from website.scripts.banditrlbench_reader import prose, graph_locations
+from website.scripts.banditrlbench_reader import prose, graph_locations, answer_sections
 import json
 import tempfile
 from pathlib import Path
@@ -11,6 +11,17 @@ from pathlib import Path
 class SeedTests(unittest.TestCase):
     def setUp(self):
         self.data=bench.load()
+
+    def test_reading_sections_preserve_all_sealed_answer_text(self):
+        layout = json.loads((bench.ROOT / 'benchmarks/banditrlbench/reading-layout.json').read_text())
+        for core in self.data['cores']:
+            parts = answer_sections(core['answer'], layout[core['core_id']])
+            self.assertEqual(''.join(text for _, text in parts), core['answer'])
+        for sections in ([], [('Step', 'absent')], [('Step', 'b')],
+                         [('First', 'a'), ('Again', 'a')],
+                         [('First', 'a'), ('Last', 'c'), ('Middle', 'b')]):
+            with self.assertRaises(ValueError):
+                answer_sections('abc', sections)
 
     def test_prompt_exports_hide_gold_in_both_tracks(self):
         for track in ('non-lean','lean'):

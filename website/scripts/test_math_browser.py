@@ -155,6 +155,8 @@ def main():
             page.goto(base + '/banditrlbench/run/index.html', wait_until='domcontentloaded')
             assert page.locator('.reader-depth:not([open])').count() >= 4
             page.goto(base + '/banditrlbench/non-lean/index.html', wait_until='domcontentloaded')
+            assert page.locator('#BRB-001 .bench-proof-step').count() == 3
+            assert not page.locator('#BRB-001 .bench-nl-solution').evaluate('(node) => node.open')
             assert not page.locator('#BRB-002').is_visible()
             page.locator('a[href="#BRB-002"]').click()
             page.wait_for_function('document.getElementById("BRB-002").closest(".task-browser").open')
@@ -168,6 +170,15 @@ def main():
             }''')
             page.goto(base + '/lean-graph/index.html?node=declaration:DOES_NOT_EXIST', wait_until='domcontentloaded')
             page.wait_for_function('document.querySelector("[data-graph-count]")?.textContent.includes("absent")')
+
+            page.goto(base + '/banditrlbench/lean/index.html', wait_until='domcontentloaded')
+            formal = page.locator('#BRB-001 .bench-formal-solution')
+            parent = page.locator('#BRB-001 .bench-nl-solution')
+            assert not formal.evaluate('(node) => node.open')
+            assert not parent.evaluate('(node) => node.open')
+            formal.locator('summary').click()
+            assert formal.locator('pre').is_visible()
+            assert not parent.locator('.bench-proof').is_visible()
 
             if (root / 'live/index.html').exists() and (root / 'data/research-workspaces.json').exists():
                 page.goto(base + '/live/index.html', wait_until='domcontentloaded')
