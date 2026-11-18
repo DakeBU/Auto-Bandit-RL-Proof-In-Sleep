@@ -1,0 +1,6 @@
+{
+  "imports": [
+    "BanditRLProof.RL.FiniteHorizonPolicy"
+  ],
+  "signature": "{State Action : Type}\n    [MeasurableSpace State] [MeasurableSpace Action]\n    [Fintype State] [Fintype Action]\n    (mdp : BanditRLProof.FiniteHorizonRL.MDP State Action)\n    (policy : BanditRLProof.FiniteHorizonRL.MarkovPolicy mdp)\n    (v : ℕ → State → ℝ)\n    (hterminal : v mdp.horizon = fun _ => 0)\n    (hstep : ∀ (t : ℕ) (ht : t < mdp.horizon),\n      v t = policy.bellman ⟨t, ht⟩ (v (t + 1)))\n    (stage : ℕ) (hstage : stage ≤ mdp.horizon) :\n    v stage = policy.valueAt stage hstage"
+}

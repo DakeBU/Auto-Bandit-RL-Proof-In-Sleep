@@ -1,0 +1,54 @@
+{
+  "pinned_base": "abc2959ff7c866c47e8bee5714d43a336a857353",
+  "checks": [
+    {
+      "id": "combined-library",
+      "command": "PYTHONUTF8=1 python tools/bandit.py check",
+      "log_sha256": "3bd68d27bc3d8c5e2e64c0bf6baa5812d6148e3fa9d394812d30b2efb5430ab1",
+      "log_bytes": 3279484,
+      "summary": [
+        "Ran 497 tests in 208.595s",
+        "OK (skipped=7)",
+        "check passed"
+      ],
+      "raw_log_location": "Local retained worktree _out/checks/bandit-final.log"
+    },
+    {
+      "id": "site-build",
+      "command": "python website/scripts/build_site.py --lean-verified",
+      "log_sha256": "e8101d8b86f878729898bb2c845d3eac558e05849622a79970a1540e6f3b4b95",
+      "log_bytes": 3311,
+      "summary": [],
+      "raw_log_location": "Local retained worktree _out/checks/site-verified.log"
+    },
+    {
+      "id": "site-check",
+      "command": "python website/scripts/check_site.py",
+      "log_sha256": "e24de62e2d82cfaf30489021280e156cbc7cf9238492a9218404cf90934228fd",
+      "log_bytes": 668,
+      "summary": [],
+      "raw_log_location": "Local retained worktree _out/checks/site-check.log"
+    },
+    {
+      "id": "browser",
+      "command": "MATH_BROWSER_EXECUTABLE=<installed Edge> python website/scripts/test_math_browser.py --root website/_site --report <output>/math-browser-report.json",
+      "log_sha256": "23f7065bfce121d474e3215c32fd3662402bd3c35ab3b6c1039ad34ce3d5172b",
+      "log_bytes": 117,
+      "summary": [],
+      "raw_log_location": "Local retained worktree _out/checks/math-browser.log"
+    }
+  ],
+  "local_environment": "Windows; Python 3.13.5 (py -3.12 launcher entry), PYTHONUTF8=1; Lean 4.29.1; Mathlib/dependency lock pinned; packages read through a local junction, own copied build cache. Full gate executed, not inferred from cache.",
+  "initial_failures": "GBK default decoding and CRLF versus Git-byte boundary: resolved using UTF-8 and LF bytes. Two reference tactic syntax errors were fixed without target changes; failed author attempts retained locally.",
+  "controls": {
+    "tasks": 6,
+    "outcomes": 38,
+    "matched_expected": 38,
+    "scope": "Trusted-local mathematical/rubric and preflight controls, not full isolation/security admission"
+  },
+  "harbor_executed": false,
+  "isolated_agent_runs": 0,
+  "model_trials": 0,
+  "hash_convention": "Source and text-log hashes normalize CRLF to LF. Public package artifacts are committed as LF; PNG files are binary.",
+  "contributor_contract": "Passed against abc2959ff7c866c47e8bee5714d43a336a857353 on code commit 9b8bcb9559caed211d2eaa705636f99c7a2c9d9b; see contributor.log."
+}

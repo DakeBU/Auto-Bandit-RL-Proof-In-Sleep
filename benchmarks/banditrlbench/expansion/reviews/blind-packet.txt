@@ -1,0 +1,32 @@
+Decode the following two Lean targets independently. You are source-blind:
+do not inspect source identities, reference proofs, task instructions, or prior
+verdicts. Reconstruct objects, quantifiers, assumptions, conclusion, constants,
+probability/feedback semantics and excluded regimes. Do not try to certify a
+source match. Only the following context is supplied.
+
+Target A context: importanceWeightedLoss prob loss chosen action is
+if chosen=action then loss action/prob action else 0 over the real numbers.
+{Action : Type} [DecidableEq Action]
+    (arms : Finset Action) (prob loss : Action → ℝ)
+    (action : Action) (haction : action ∈ arms)
+    (hnorm : arms.sum prob = 1) (hprob : prob action ≠ 0) :
+    arms.sum (fun chosen => prob chosen *
+      (BanditRLProof.Exp3.importanceWeightedLoss prob loss chosen action - loss action)^2)
+      = (loss action)^2 * (1 / prob action - 1)
+
+Target B context: MDP contains a finite horizon, finite state and action types,
+measurable spaces, a Markov transition kernel and measurable real reward.
+policy supplies Markov action kernels at stages Fin horizon. bellman integrates
+reward plus the transition integral of its continuation over that action kernel.
+valueAt is backward evaluation with zero terminal data.
+{State Action : Type}
+    [MeasurableSpace State] [MeasurableSpace Action]
+    [Fintype State] [Fintype Action]
+    (mdp : BanditRLProof.FiniteHorizonRL.MDP State Action)
+    (policy : BanditRLProof.FiniteHorizonRL.MarkovPolicy mdp)
+    (v : ℕ → State → ℝ)
+    (hterminal : v mdp.horizon = fun _ => 0)
+    (hstep : ∀ (t : ℕ) (ht : t < mdp.horizon),
+      v t = policy.bellman ⟨t, ht⟩ (v (t + 1)))
+    (stage : ℕ) (hstage : stage ≤ mdp.horizon) :
+    v stage = policy.valueAt stage hstage

@@ -1,0 +1,65 @@
+{
+  "version": "first-expansion-v1-draft",
+  "split": "dev",
+  "admission": "not-granted",
+  "source_snapshot": "abc2959ff7c866c47e8bee5714d43a336a857353",
+  "families": [
+    {
+      "id": "iw-variance-v1",
+      "title": "Importance weighting: support, conditional law and variance",
+      "source": "BanditRLProof/Exp3ImportanceWeighted.lean",
+      "context": "BanditRLProof/Exp3ConditionalMoments.lean",
+      "declarations": [
+        "BanditRLProof.Exp3.importanceWeightedLoss",
+        "BanditRLProof.Exp3.sum_prob_mul_importanceWeightedLoss_eq_loss",
+        "BanditRLProof.Exp3.sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq"
+      ],
+      "boundary": "The formal task is finite-sum algebra. Conditional expectation interpretation additionally needs the actual conditional sampling law and predictable losses. No adaptive regret bound is certified.",
+      "task_ids": [
+        "BRB-IW-K",
+        "BRB-IW-R",
+        "BRB-IW-L"
+      ],
+      "solution_aliases": [
+        "iw-variance-v1:BRB-IW-K:reference-v1",
+        "iw-variance-v1:BRB-IW-R:reference-v1",
+        "iw-variance-v1:BRB-IW-L:reference-v1",
+        "declaration:BanditRLProof.Exp3.sum_prob_mul_sq_comparatorEstimatorDeviation_eq"
+      ],
+      "held_out_eligible": false,
+      "related_public_dev_families": [
+        "estimator-semantics"
+      ],
+      "near_solution": {
+        "id": "declaration:BanditRLProof.Exp3.sum_prob_mul_sq_comparatorEstimatorDeviation_eq",
+        "file": "BanditRLProof/Exp3ComparatorBernstein.lean",
+        "sha256": "6023057b65b5c4551af9e70de08d74c01d01d1db4ca10e82b2d7e51756d95ea0",
+        "relation": "source-correspondence",
+        "delta": "Existing source assumes FiniteActionDistribution (nonnegativity plus normalization); this formal task keeps only normalization and selected nonzero weight. The proof is a near-complete reusable solution. Retrieval/adaptation difficulty is unmeasured."
+      }
+    },
+    {
+      "id": "bellman-evaluation-v1",
+      "title": "Finite-horizon policy evaluation: terminal data and uniqueness",
+      "source": "BanditRLProof/RL/FiniteHorizonPolicy.lean",
+      "context": "BanditRLProof/RL/FiniteHorizonMDP.lean",
+      "declarations": [
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt",
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_bellman",
+        "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_horizon"
+      ],
+      "boundary": "Finite-horizon evaluation of a fixed Markov policy with zero terminal value. This is neither optimal control nor an infinite-horizon contraction theorem. The abstract Lean uniqueness argument does not certify trajectory-return semantics for arbitrary measurable spaces.",
+      "task_ids": [
+        "BRB-BE-K",
+        "BRB-BE-R",
+        "BRB-BE-L"
+      ],
+      "solution_aliases": [
+        "bellman-evaluation-v1:BRB-BE-K:reference-v1",
+        "bellman-evaluation-v1:BRB-BE-R:reference-v1",
+        "bellman-evaluation-v1:BRB-BE-L:reference-v1"
+      ],
+      "held_out_eligible": false
+    }
+  ]
+}

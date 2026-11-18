@@ -1,0 +1,4 @@
+import BanditRLProof.RL.FiniteHorizonPolicy
+#check BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_bellman
+#check BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_horizon
+#check Nat.decreasingInduction

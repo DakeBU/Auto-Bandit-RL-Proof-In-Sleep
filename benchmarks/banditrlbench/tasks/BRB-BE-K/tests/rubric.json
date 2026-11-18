@@ -1,0 +1,37 @@
+{
+  "scale": {
+    "0": "incorrect or absent",
+    "1": "partially correct",
+    "2": "complete and justified"
+  },
+  "criteria": [
+    {
+      "id": "c1",
+      "axis": "factual-accuracy",
+      "criterion": "Correct terminal value, chronological indices and two expectations."
+    },
+    {
+      "id": "c2",
+      "axis": "understanding",
+      "criterion": "Explains terminal data as the anchor and how g propagates."
+    },
+    {
+      "id": "c3",
+      "axis": "understanding",
+      "criterion": "Explains fixed-policy versus maximization with a computed example."
+    },
+    {
+      "id": "c4",
+      "axis": "factual-accuracy",
+      "criterion": "Correctly rejects a need for strict discount in finite horizon."
+    }
+  ],
+  "pass_rule": "All criteria score 2 for the reference-control pass. Report each axis separately, never a combined capability score.",
+  "acceptable_alternatives": [
+    "Equivalent notation and finite-sum order are accepted.",
+    "Any correct derivation or fully verified counterexample satisfying the question is accepted.",
+    "For Lean, any proof of the unchanged target with permitted dependencies and axiom closure is accepted; no reference text matching."
+  ],
+  "common_errors": "V_0=0 and V_H is the sum of immediate rewards. Use max_a at each stage even for a fixed policy. A discount less than one is necessary for any uniqueness theorem.",
+  "assessment": "Independent rubric review required. The local verifier validates review bindings and arithmetic, not mathematical meaning. No calibrated automatic judge is available."
+}

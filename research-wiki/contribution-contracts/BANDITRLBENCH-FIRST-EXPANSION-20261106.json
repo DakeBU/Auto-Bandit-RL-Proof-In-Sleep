@@ -1,0 +1,142 @@
+{
+  "schema_version": "3.0",
+  "id": "BANDITRLBENCH-FIRST-EXPANSION-20261106",
+  "route": "BanditRLBench first reproducible public-dev expansion",
+  "frontier_cell": "banditrlbench-task-intake",
+  "source_facing": false,
+  "source": {
+    "kind": "internal-design",
+    "title": "Original benchmark tasks derived from existing finite-sum and Bellman APIs",
+    "version": "first-expansion-v1-draft",
+    "anchor": "benchmarks/banditrlbench/expansion/PLAN.md; six sealed tasks",
+    "url": "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/tree/abc2959ff7c866c47e8bee5714d43a336a857353"
+  },
+  "target": "Six draft task packages in importance-weighted variance and finite-horizon Bellman evaluation, per-task reference/control evidence, exact source/graph anchors and reproducible public-dev exports. No production declaration or release admission.",
+  "affected_files": [
+    ".github/workflows/documentation.yml",
+    "website/scripts/banditrlbench_reader.py"
+  ],
+  "declarations": [],
+  "reuse_plan": {
+    "classification": "adapt",
+    "decision": "adapt_existing",
+    "searched_existing": [
+      "Four legacy cores; no existing task packages; no open BanditRLBench proposals at start",
+      "Exp3ImportanceWeighted / Exp3ConditionalMoments / Exp3ComparatorBernstein",
+      "RL/FiniteHorizonMDP / FiniteHorizonPolicy / FiniteHorizonOptimality",
+      "Mathlib finite-sum and Nat.decreasingInduction APIs"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.Exp3.sum_prob_mul_importanceWeightedLoss_eq_loss",
+      "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_bellman",
+      "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_horizon"
+    ],
+    "new_shared_declarations": [],
+    "known_consumers": [
+      "Public-dev NL and Lean benchmark views",
+      "Independent rubric/semantic reviewers",
+      "Opt-in training users"
+    ],
+    "planned_consumers": [],
+    "no_duplicate_wrapper": true,
+    "decision_reason": "Reuse existing library interfaces; signed-weight variance adapts a near-complete probability-weighted solution, recorded as an alias. No production theorem wrappers or library duplication."
+  },
+  "reader_contract": {
+    "source_anchor_visible": true,
+    "natural_language_formula_proof": false,
+    "hidden_assumptions_visible": true,
+    "source_vs_lean_delta_visible": true,
+    "lean_folded": true,
+    "dependencies_visible": true,
+    "remaining_boundary_visible": true
+  },
+  "semantic_roundtrip": {
+    "required": true,
+    "status": "source-reviewed",
+    "formalizer": "Codex /root",
+    "blind_decoder": "Codex subagent /root/blind_decoder",
+    "source_reviewer": "Codex subagent /root/source_reviewer",
+    "verdict": "accepted-with-explicit-delta by distinct agents; independent human expert gold admission is pending",
+    "remaining_semantic_delta": "IW formal target is signed-weight algebra, not a conditional law. BE is uniqueness of a supplied total Bellman recursion, not trajectory semantics/optimality. Reports: benchmarks/banditrlbench/expansion/reviews/."
+  },
+  "graph_contribution": {
+    "lean_graph": "reuse-only",
+    "overview_graph": "no-change-with-reason",
+    "functor_hypergraph": "none-found-with-reason",
+    "functor_reason": "New assessment overlays over existing mechanisms; no new transport theorem or stabilized conceptual bridge.",
+    "focus_targets": [
+      "banditrlbench/index.html",
+      "banditrlbench/proposals/index.html"
+    ],
+    "visual_review": "Actual Edge 156 with Playwright 1.58: 1440/390 proposal index and expanded fixed target screenshots inspected; six tasks visible, no document overflow. Full offline math browser gate: 972 unique formulas across 71 pages, no errors. In-app browser timed out; no live deployment claimed.",
+    "edge_semantics": "formal-solid; overlays-dashed"
+  },
+  "progress_updates": {
+    "teaching_route": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "banditrlwiki": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "results_ledger": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "roadmap": "no-change-with-reason: benchmark development overlay only; no production theorem or mathematical status promotion.",
+    "website_surfaces": [
+      "New draft proposal index with six task prompts, exact targets, source and graph links",
+      "Landing link to proposal index",
+      "Reproduction guide, rubric/alias reviews and per-gate evidence"
+    ]
+  },
+  "truth_boundary": "All six packages remain draft. Local reference/control evidence is separate from isolated agent execution. Agent semantic reviews do not replace independent human expert admission. CPU/memory/process-tree isolation, full adversarial controls, authentic agent trials, executed Harbor adapter, maintainer approval and a versioned suite release are pending. No model scores, protected data, production theorem changes, merge or deployment.",
+  "verification": {
+    "focused_checks": [
+      "python tools/bench_task_contract.py validate-all",
+      "python -m unittest tools.test_bench_expansion tools.test_bench_task_contract tools.test_banditrlbench",
+      "Per-task controls with python tools/bench_expansion.py controls",
+      "Actual search/Lean query/reference replay with tools/bench_reference_trajectory.py",
+      "Git archive portability replay: all six committed packages and auxiliary artifact seals validate"
+    ],
+    "bandit_check": "Final combined root, Tests, ProofGraphExport and harness gate passed: 497 tests, 7 skips; evidence/validation.json. Contributor contract passes against pinned current main.",
+    "site_build": "Passed verified local build after the full combined Lean gate; generated output excluded from Git.",
+    "site_check": "Passed static site links/mappings/formula checks, existing offline math browser gate and responsive proposal inspection.",
+    "independent_review": "Distinct source-blind and anti-anchored agent reports plus per-criterion NL fixture judgments completed. Human expert gold admission and independent authentic agent trials pending."
+  },
+  "contributor": {
+    "name": "Codex /root for Dake Bu",
+    "role": "Task author, package/verifier implementation and review orchestration; distinct decoder/source reviewer named above"
+  },
+  "learning_contract": {
+    "control_plane_math_authority": false,
+    "process_memory_checked": true,
+    "process_memory_ids": [
+      "ABRL-PM-ATOMIC-SOURCE-ASSUMPTIONS",
+      "ABRL-NK-WINDOWS-PATH-LENGTH"
+    ],
+    "failure_class": "NONE",
+    "salvage": {
+      "required": false,
+      "status": "not-applicable",
+      "reason": "No mathematical route was discarded. Early tactic syntax and local encoding failures were repaired without target mutation.",
+      "promoted_fragments": [],
+      "discarded_fragments": []
+    },
+    "parallelism": {
+      "decision": "serial",
+      "direction_fingerprints": [],
+      "expected_information_gain": "One author; distinct review roles, not competing mathematical proof routes.",
+      "shared_verified_context_digest": "5fdfb11fd94f4ff48332a3f59e54f3ce7a6d0f03d3045ebb11dd4d377f7e8389"
+    },
+    "cross_route_blind_spot_audit": {
+      "required": false,
+      "status": "not-applicable",
+      "evidence": "No parallel competing proof directions.",
+      "canonical_route": "Finite moments and backward induction",
+      "selection_reason": "Reference routes align with the fixed task targets."
+    },
+    "reader_backpressure": {
+      "purification_status": "not-applicable",
+      "exposition_seal_status": "not-applicable",
+      "reader_debt_delta": 0,
+      "exposition_evidence": "No source-facing production declaration added. Draft task explanations and semantic limits are in packages/review reports.",
+      "source_expansion_nodes": [],
+      "lean_expansion_nodes": [],
+      "assumptions_preserved": true,
+      "boundary_preserved": true
+    }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "task": "BRB-BE-L",
+  "family": "bellman-evaluation-v1",
+  "ability": "agentic-lean",
+  "access": "lean-assisted",
+  "split": "dev",
+  "contract_sha256": "c9e930c41b44f04b8f1744bf206126683dfadb54e196911644d2de950176c96a",
+  "environment": {
+    "pinned_library_commit": "abc2959ff7c866c47e8bee5714d43a336a857353",
+    "checkout_commit": "abc2959ff7c866c47e8bee5714d43a336a857353",
+    "checkout_dirty": true,
+    "python": "3.13.5",
+    "python_executable_sha256": "388fe2cffda8a134e7d7dc4e978f7c478857ece6b69694daecbed25e51ec633a",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "toolchain": "leanprover/lean4:v4.29.1",
+    "dependency_lock_sha256": "0e3f2484ec3c7570c47f2c633c4db9c17a1e468b8c7da47d0d08ec56b3324750",
+    "lean_version": "Lean (version 4.29.1, x86_64-w64-windows-gnu, commit f72c35b3f637c8c6571d353742168ab66cc22c00, Release)",
+    "runner_sha256": "b8c3802d3a4cc609354d2b0746d2e5fcf0c05a0a422ce780303496ec9a232cc4",
+    "sandbox": false,
+    "harbor_executed": false,
+    "access_enforcement": "Operator-declared only; no isolated model run",
+    "resource_enforcement": "Per compiler wall-clock timeout only; CPU/memory/process-tree caps pending"
+  },
+  "controls": [
+    {
+      "control": "reference",
+      "status": "pass",
+      "prediction_sha256": "b91aca4cdb7bfe70eeae367fb33ff7a24c157f996c2480f6636ddcbb1387f55d",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "source_sha256": "350b6d070488b6714f147cd7b5a604aa2f5ecd8dd09668b56aa3df1d1e59ec3c",
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<output>/reference.lean"
+      ],
+      "timeout_seconds": 600,
+      "exit_code": 0,
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "dependencies": {
+        "type_constants": [
+          "BanditRLProof.FiniteHorizonRL.MDP",
+          "BanditRLProof.FiniteHorizonRL.MDP.horizon",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.bellman",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt",
+          "Eq",
+          "Fin.mk",
+          "Fintype",
+          "HAdd.hAdd",
+          "LE.le",
+          "LT.lt",
+          "MeasurableSpace",
+          "Nat",
+          "OfNat.ofNat",
+          "Real",
+          "Real.instZero",
+          "Zero.toOfNat0",
+          "instAddNat",
+          "instHAdd",
+          "instLENat",
+          "instLTNat",
+          "instOfNatNat"
+        ],
+        "value_constants": [
+          "BanditRLProof.FiniteHorizonRL.MDP",
+          "BanditRLProof.FiniteHorizonRL.MDP.horizon",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.bellman",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_bellman",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_bellman._proof_1",
+          "BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_horizon",
+          "Decidable.byContradiction",
+          "Eq",
+          "Eq.mpr",
+          "Eq.refl",
+          "Fin.mk",
+          "Fintype",
+          "HAdd.hAdd",
+          "LE.le",
+          "LT.lt",
+          "MeasurableSpace",
+          "Nat",
+          "Nat.decLe",
+          "Nat.decreasingInduction",
+          "Nat.instPreorder",
+          "Nat.le_of_lt",
+          "Nat.le_of_succ_le",
+          "Nat.le_refl",
+          "Not",
+          "OfNat.ofNat",
+          "Real",
+          "Real.instZero",
+          "Zero.toOfNat0",
+          "congrArg",
+          "id",
+          "instAddNat",
+          "instHAdd",
+          "instLENat",
+          "instLTNat",
+          "instOfNatNat",
+          "le_rfl"
+        ]
+      },
+      "elapsed_seconds": 10.416682,
+      "log_sha256": "c1c390e9cbd1b9d0ce1eff71c1fdc2ffb320a091d698141baed2c53b5ba0dfdb",
+      "expected": "pass",
+      "assessment": "fixed-target kernel control only",
+      "agentic_rubric": {
+        "c1": "pass",
+        "c2": "unassessed; independent trajectory review required"
+      }
+    },
+    {
+      "control": "no-op",
+      "status": "fail",
+      "prediction_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "reason": "Empty proof",
+      "expected": "fail",
+      "assessment": "fixed-target kernel control only",
+      "agentic_rubric": {
+        "c1": "fail",
+        "c2": "unassessed; independent trajectory review required"
+      }
+    },
+    {
+      "control": "wrong-answer",
+      "status": "fail",
+      "prediction_sha256": "433e1adc006a25a006b67754f6341e1e6c8f44a72572c2ebda3555300374450b",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "source_sha256": "645bc4454bebec790dfc99cc11b6793876d6242771024571aca6a03ca3e3bd4f",
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<output>/wrong-answer.lean"
+      ],
+      "timeout_seconds": 600,
+      "exit_code": 1,
+      "reason": "Lean rejected the fixed target",
+      "elapsed_seconds": 12.142448,
+      "log_sha256": "af542c83a746a962af892f60d4b3aab933871075e8fe135a9e107bb3f5c19c65",
+      "expected": "fail",
+      "assessment": "fixed-target kernel control only",
+      "agentic_rubric": {
+        "c1": "fail",
+        "c2": "unassessed; independent trajectory review required"
+      }
+    },
+    {
+      "control": "placeholder",
+      "status": "fail",
+      "prediction_sha256": "26f51390193316d1028961c80d7baaf642386f80da2a233c3fac01e555d0c6dd",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "reason": "Forbidden placeholder or command in proof expression",
+      "expected": "fail",
+      "assessment": "fixed-target kernel control only",
+      "agentic_rubric": {
+        "c1": "fail",
+        "c2": "unassessed; independent trajectory review required"
+      }
+    },
+    {
+      "control": "statement-mutation",
+      "status": "fail",
+      "prediction_sha256": "b91aca4cdb7bfe70eeae367fb33ff7a24c157f996c2480f6636ddcbb1387f55d",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "reason": "Fixed target/import mismatch",
+      "expected": "fail"
+    },
+    {
+      "control": "import-mutation",
+      "status": "fail",
+      "prediction_sha256": "b91aca4cdb7bfe70eeae367fb33ff7a24c157f996c2480f6636ddcbb1387f55d",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "reason": "Fixed target/import mismatch",
+      "expected": "fail"
+    },
+    {
+      "control": "axiom-injection",
+      "status": "fail",
+      "prediction_sha256": "b6f1f636fd82367ad093108e073e6f69d84bd321d64e277b12bb664d339264b3",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "reason": "Forbidden placeholder or command in proof expression",
+      "expected": "fail"
+    },
+    {
+      "control": "output-spoofing",
+      "status": "fail",
+      "prediction_sha256": "cb3453e58cc4f28e4c1c064c6f3a2c96907105181431d0b41d6098ad03d8c6cb",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "reason": "Forbidden placeholder or command in proof expression",
+      "expected": "fail"
+    },
+    {
+      "control": "timeout",
+      "status": "fail",
+      "prediction_sha256": "b91aca4cdb7bfe70eeae367fb33ff7a24c157f996c2480f6636ddcbb1387f55d",
+      "target_sha256": "d4c01d68bfdef0bd5704639d5af5ea6903c4e673e2a82bceddc4130e0623bf4a",
+      "evidence_scope": "trusted-local",
+      "source_sha256": "350b6d070488b6714f147cd7b5a604aa2f5ecd8dd09668b56aa3df1d1e59ec3c",
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "<output>/timeout.lean"
+      ],
+      "timeout_seconds": 0.001,
+      "reason": "Compiler wall-clock timeout; process-tree isolation not established",
+      "timeout": true,
+      "elapsed_seconds": 0.021861,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "fail"
+    },
+    {
+      "control": "verifier-tampering",
+      "status": "fail",
+      "reason": "Modified verifier contract rejected by intake seal",
+      "evidence_scope": "contract preflight; not runtime sandbox tamper resistance",
+      "expected": "fail"
+    },
+    {
+      "control": "solution-leakage",
+      "status": "fail",
+      "reason": "Exposure probe found no solution/test files in staged visible inputs",
+      "visible_files": [
+        "environment/workspace/target.json",
+        "instruction.md"
+      ],
+      "evidence_scope": "staging inventory only; no access-enforced isolation, image-layer or adversarial probe",
+      "expected": "fail"
+    }
+  ],
+  "all_expected": true,
+  "performance_claim": false,
+  "agentic_completion": false,
+  "scope": "Reference/control development evidence only; no system score, independent human admission, isolated agent or Harbor run."
+}

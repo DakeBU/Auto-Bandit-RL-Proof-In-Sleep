@@ -1,0 +1,42 @@
+{
+  "scale": {
+    "0": "incorrect or absent",
+    "1": "partially correct",
+    "2": "complete and justified"
+  },
+  "criteria": [
+    {
+      "id": "c1",
+      "axis": "factual-accuracy",
+      "criterion": "Both conditional moments and the estimator are correctly normalized."
+    },
+    {
+      "id": "c2",
+      "axis": "understanding",
+      "criterion": "Explains the support/observability role and failure at zero probability."
+    },
+    {
+      "id": "c3",
+      "axis": "understanding",
+      "criterion": "Explains why the actual sampling law must match the denominator."
+    },
+    {
+      "id": "c4",
+      "axis": "understanding",
+      "criterion": "Explains predictability using action-dependent loss failure; does not demand independent rounds."
+    },
+    {
+      "id": "c5",
+      "axis": "factual-accuracy",
+      "criterion": "Separates one-round moments from a regret guarantee."
+    }
+  ],
+  "pass_rule": "All criteria score 2 for the reference-control pass. Report each axis separately, never a combined capability score.",
+  "acceptable_alternatives": [
+    "Equivalent notation and finite-sum order are accepted.",
+    "Any correct derivation or fully verified counterexample satisfying the question is accepted.",
+    "For Lean, any proof of the unchanged target with permitted dependencies and axiom closure is accepted; no reference text matching."
+  ],
+  "common_errors": "The mean is l_i/p_i and the second moment is l_i^2. Positive support only avoids a software error. Independent rounds are required, and these identities prove logarithmic regret.",
+  "assessment": "Independent rubric review required. The local verifier validates review bindings and arithmetic, not mathematical meaning. No calibrated automatic judge is available."
+}

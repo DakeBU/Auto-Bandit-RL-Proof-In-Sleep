@@ -1,0 +1,29 @@
+BanditRLProof/RL/FiniteHorizonOptimality.lean:213:theorem valueAt_le_optimalValueAt
+BanditRLProof/RL/FiniteHorizonOptimality.lean:216:    policy.valueAt stage hstage state <=
+BanditRLProof/RL/FiniteHorizonOptimality.lean:218:  exact Nat.decreasingInduction
+BanditRLProof/RL/FiniteHorizonOptimality.lean:221:      policy.valueAt stage hstage state <=
+BanditRLProof/RL/FiniteHorizonOptimality.lean:224:      rw [policy.valueAt_bellman current hcurrent]
+BanditRLProof/RL/FiniteHorizonOptimality.lean:233:      rw [policy.valueAt_horizon, mdp.optimalValueAt_horizon])
+BanditRLProof/RL/FiniteHorizonOptimality.lean:269:theorem optimalPolicy_valueAt_eq_optimalValueAt
+BanditRLProof/RL/FiniteHorizonOptimality.lean:272:    mdp.optimalPolicy.valueAt stage hstage =
+BanditRLProof/RL/FiniteHorizonOptimality.lean:274:  exact Nat.decreasingInduction
+BanditRLProof/RL/FiniteHorizonOptimality.lean:277:      mdp.optimalPolicy.valueAt stage hstage =
+BanditRLProof/RL/FiniteHorizonOptimality.lean:280:      change mdp.optimalPolicy.valueAt current _ =
+BanditRLProof/RL/FiniteHorizonOptimality.lean:282:      rw [mdp.optimalPolicy.valueAt_bellman current hcurrent]
+BanditRLProof/RL/FiniteHorizonOptimality.lean:289:      change mdp.optimalPolicy.valueAt mdp.horizon _ =
+BanditRLProof/RL/FiniteHorizonOptimality.lean:291:      rw [mdp.optimalPolicy.valueAt_horizon, mdp.optimalValueAt_horizon])
+BanditRLProof/RL/FiniteHorizonOptimality.lean:302:        policy.valueAt stage hstage state <=
+BanditRLProof/RL/FiniteHorizonOptimality.lean:306:          policy.valueAt stage hstage = mdp.optimalValueAt stage hstage) := by
+BanditRLProof/RL/FiniteHorizonOptimality.lean:309:    exact policy.valueAt_le_optimalValueAt stage hstage state
+BanditRLProof/RL/FiniteHorizonOptimality.lean:310:  · exact ⟨mdp.optimalPolicy, mdp.optimalPolicy_valueAt_eq_optimalValueAt⟩
+BanditRLProof/RL/FiniteHorizonPolicy.lean:99:noncomputable def valueAt
+BanditRLProof/RL/FiniteHorizonPolicy.lean:105:theorem measurable_valueAt
+BanditRLProof/RL/FiniteHorizonPolicy.lean:108:    Measurable (policy.valueAt stage hstage) :=
+BanditRLProof/RL/FiniteHorizonPolicy.lean:123:theorem valueAt_horizon
+BanditRLProof/RL/FiniteHorizonPolicy.lean:125:    policy.valueAt mdp.horizon le_rfl = fun _ => 0 := by
+BanditRLProof/RL/FiniteHorizonPolicy.lean:126:  unfold valueAt
+BanditRLProof/RL/FiniteHorizonPolicy.lean:138:theorem valueAt_bellman
+BanditRLProof/RL/FiniteHorizonPolicy.lean:141:    policy.valueAt stage (Nat.le_of_lt hstage) =
+BanditRLProof/RL/FiniteHorizonPolicy.lean:143:        (policy.valueAt (stage + 1) (by omega)) := by
+BanditRLProof/RL/FiniteHorizonPolicy.lean:154:    policy.valueAt stage (Nat.le_of_lt hstage) =
+BanditRLProof/RL/FiniteHorizonPolicy.lean:164:          (policy.valueAt (stage + 1) (by omega)) := by

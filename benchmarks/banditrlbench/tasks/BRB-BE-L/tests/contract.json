@@ -1,0 +1,21 @@
+{
+  "trajectory_required": true,
+  "expected_controls": {
+    "reference": "pass",
+    "no-op": "fail",
+    "wrong-answer": "fail",
+    "placeholder": "fail"
+  },
+  "grader": "lean-kernel",
+  "runner": "python tools/bench_expansion.py controls --task BRB-BE-L --library . --output _out/BRB-BE-L --trusted-local",
+  "additional_agentic_controls": [
+    "statement-mutation",
+    "import-mutation",
+    "axiom-injection",
+    "verifier-tampering",
+    "output-spoofing",
+    "timeout",
+    "solution-leakage"
+  ],
+  "boundary": "Local mutation/preflight tests are not container-security evidence. Full process-tree isolation and agent trajectories require separate admission."
+}

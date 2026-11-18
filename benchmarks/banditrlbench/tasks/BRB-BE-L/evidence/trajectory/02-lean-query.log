@@ -1,0 +1,12 @@
+BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_bellman.{u, v} {State : Type u} {Action : Type v}
+  [MeasurableSpace State] [MeasurableSpace Action] [Fintype State] [Fintype Action]
+  {mdp : BanditRLProof.FiniteHorizonRL.MDP State Action} (policy : BanditRLProof.FiniteHorizonRL.MarkovPolicy mdp)
+  (stage : ℕ) (hstage : stage < mdp.horizon) :
+  policy.valueAt stage ⋯ = policy.bellman ⟨stage, hstage⟩ (policy.valueAt (stage + 1) ⋯)
+BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueAt_horizon.{u, v} {State : Type u} {Action : Type v}
+  [MeasurableSpace State] [MeasurableSpace Action] [Fintype State] [Fintype Action]
+  {mdp : BanditRLProof.FiniteHorizonRL.MDP State Action} (policy : BanditRLProof.FiniteHorizonRL.MarkovPolicy mdp) :
+  policy.valueAt mdp.horizon ⋯ = fun x => 0
+Nat.decreasingInduction.{u_1} {n : ℕ} {motive : (m : ℕ) → m ≤ n → Sort u_1}
+  (of_succ : (k : ℕ) → (h : k < n) → motive (k + 1) h → motive k ⋯) (self : motive n ⋯) {m : ℕ} (mn : m ≤ n) :
+  motive m mn
